@@ -4,7 +4,6 @@ import 'package:listenmebaby71_s_application17/core/services/payments/yookassa_p
 import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
 import 'package:yookassa_payments_flutter/yookassa_payments_flutter.dart';
 import '../../user_data/user.dart';
-import 'package:appscheme/appscheme.dart';
 import 'package:uuid/uuid.dart';
 
 class YookassaPayments {
@@ -28,14 +27,12 @@ class YookassaPayments {
     final _amount = Amount(value: amountInRub ?? 990, currency: Currency.rub);
     final _shopId = "224344";
     final _clientId = 'td00l1l9g7g7i80jbu9l62g5ia4b82lv';
-    final appScheme = AppSchemeImpl.getInstance();
     final _description =
         subtitle ?? "Ограниченный доступ к рекомендациям, статистике и аудио";
     final _tokenizationModuleInputData = TokenizationModuleInputData(
       clientApplicationKey: _clientApplicationKey,
       title: title ?? "Rigel PSY",
       subtitle: _description,
-      applicationScheme: (await appScheme!.getInitScheme())?.dataString,
       amount: _amount,
       shopId: _shopId,
       testModeSettings: testMode
