@@ -1,3 +1,4 @@
+/*
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
@@ -53,13 +54,8 @@ class AwesomeNotificationService extends NotificationService {
   }
 
   void notificationActionStream (BuildContext context) {
-    AwesomeNotifications().actionStream.listen((action) {
 
-      if(action.buttonKeyPressed == "open"){
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.concrete_pill, (route) => false, arguments: action.payload!);
-      }
-    });
   }
 
 
-}
+}*/

@@ -16,7 +16,6 @@ final _clientSecret = Platform.isAndroid
 
 class GoogleDriveService {
 
-  final storage = SecureStorage();
 
   //Get Authenticated Http Client
 
@@ -32,32 +31,7 @@ class GoogleDriveService {
     return ga.DriveApi(client);
   }
 
-  Future<http.Client> _getHttpClient() async {
-    //Get Credentials
-    var credentials = await storage.getCredentials();
-    if (credentials == null) {
-      //Needs user authentication
-      var authClient = await clientViaUserConsent(
-          ClientId(_clientId, _clientSecret), _scopes, (url) {
-        //Open Url in Browser
-        launch(url);
-      });
-      //Save Credentials
-      await storage.saveCredentials(authClient.credentials.accessToken,
-          authClient.credentials.refreshToken!);
-      return authClient;
-    } else {
-      print(credentials["expiry"]);
-      //Already authenticated
-      return authenticatedClient(
-          http.Client(),
-          AccessCredentials(
-              AccessToken(credentials["type"], credentials["data"],
-                  DateTime.tryParse(credentials["expiry"]) ?? DateTime.now()),
-              credentials["refreshToken"],
-              _scopes));
-    }
-  }
+
 
   Future<String> upload(File file) async {
     final drive = await _getClient();

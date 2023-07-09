@@ -1,5 +1,5 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:listenmebaby71_s_application17/core/services/notifications/flutter_local_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
 import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
@@ -70,7 +70,7 @@ void callbackDispatcher() async{
 
     final workmanagerModel = WorkManagerModel.fromJson(inputData!);
 
-    final NotificationService notificationService = AwesomeNotificationService();
+    final NotificationService notificationService = FlutterLocalNotificationService();
     await notificationService.showNotification(workmanagerModel);
     return Future.value(true);
   });

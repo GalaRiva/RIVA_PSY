@@ -15,16 +15,21 @@ Future<void> _messageHandler(RemoteMessage message) async {
 }
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_messageHandler);
-  await HiveDB.initDB();
-  await WorkManagerService().initService();
-  await CurrentUser.init();
-  runApp(MyApp());
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_messageHandler);
+    await HiveDB.initDB();
+    await WorkManagerService().initService();
+    await CurrentUser.init();
+    runApp(MyApp());
+  } catch (_) {
+    print('start error - ' + _.toString());
+  }
+
 }
 
 class MyApp extends StatelessWidget {

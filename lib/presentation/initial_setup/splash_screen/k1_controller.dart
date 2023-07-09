@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/awesome_notification_service.dart';
+import 'package:listenmebaby71_s_application17/core/services/notifications/flutter_local_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/splash_screen/repository.dart';
 import '../../../core/models/audio/audio.dart';
@@ -25,7 +26,7 @@ class K1Controller extends GetxController {
 
   Timer timer(BuildContext context) =>
       Timer(Duration(seconds: secondsToNewPage), () async {
-        final notificationService = AwesomeNotificationService();
+        final notificationService = FlutterLocalNotificationService();
 
         if (FirebaseAuth.instance.currentUser == null)
           Navigator.pushNamedAndRemoveUntil(
