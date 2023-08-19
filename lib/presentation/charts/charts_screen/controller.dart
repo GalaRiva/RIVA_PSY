@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/db/hive_db.dart';
 import 'package:listenmebaby71_s_application17/core/models/event_model.dart';
+import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
 import '../../main/main_screen/repository.dart';
 import '../../main/path/what_emotion_screen/repository.dart';
 import '../../records/records_screen/repository.dart';
+import '../../settings/settings_pills/models/pill_model.dart';
 import 'models/place_model.dart';
 import '../../../core/models/day_event_model.dart';
 import '../../../core/models/emotional_state_model.dart';
@@ -18,6 +20,8 @@ import 'models/report_model.dart';
 class K61Controller extends GetxController {
   bool loading = true;
 
+
+  var pills = <PillModel>[];
   void init() async {
     loading = false;
     dataForChart = await getIntensity();
@@ -61,12 +65,10 @@ class K61Controller extends GetxController {
   ];
 
   bool _dateInRange(DateTime date) {
-    if (date.day < dateEnd.day + 1 &&
-        date.month < dateEnd.month + 1 &&
-        date.year < dateEnd.year + 1 &&
-        date.day > dateStart.day - 1 &&
-        date.month > dateStart.month - 1 &&
-        date.year > dateStart.year - 1) {
+    var start = DateTime(dateStart.year, dateStart.month, dateStart.day -1 );
+    var end = DateTime(dateEnd.year, dateEnd.month, dateEnd.day +1 );
+
+    if (start.isBefore(date) && end.isAfter(date)) {
       return true;
     }
     return false;
@@ -78,6 +80,7 @@ class K61Controller extends GetxController {
     for (var event in dayEvents) {
       if (_dateInRange(event.date!)) listForReturn.add(event);
     }
+    print(listForReturn.length);
     return listForReturn;
   }
 
@@ -406,6 +409,5 @@ class K61Controller extends GetxController {
   double getTabHeight() {
         return size.height - 214;
   }
-
 
 }

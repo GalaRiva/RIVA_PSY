@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/db/hive_db.dart';
 import 'models/pill_model.dart';
 
@@ -24,4 +26,13 @@ class PillsRepo {
     }
   }
 
+  Future<bool> scheduleIsCreated () async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('scheduleIsCreated') ?? false;
+}
+
+  Future setSchedule (bool val) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('scheduleIsCreated', val);
+  }
 }

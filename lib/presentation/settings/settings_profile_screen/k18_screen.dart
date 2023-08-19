@@ -87,14 +87,14 @@ class K18Screen extends GetWidget {
                                   height: getVerticalSize(1),
                                   thickness: getVerticalSize(1),
                                   color: ColorConstant.gray8008c)),
-                          Padding(
+                          /*Padding(
                               padding: getPadding(top: 39),
                               child: Text("Номер телефона",
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
-                                  style: AppStyle.txtSFProDisplayLight16)),
+                                  style: AppStyle.txtSFProDisplayLight16)),*/
 
-                          GetBuilder(
+                          /*GetBuilder(
                             builder: (K18Controller _c) => Padding(
                                 padding: getPadding(left: 3, top: 14),
                                 child: Row(children: [
@@ -122,13 +122,13 @@ class K18Screen extends GetWidget {
                                         ))
                                   ),
                                 ])),
-                          ),
-                          Padding(
+                          ),*/
+                          /*Padding(
                               padding: getPadding(top: 9),
                               child: Divider(
                                   height: getVerticalSize(1),
                                   thickness: getVerticalSize(1),
-                                  color: ColorConstant.gray8008c)),
+                                  color: ColorConstant.gray8008c)),*/
                           Visibility(
                             visible: CurrentUser.repo.authService.trim() == '',
                             child: GetBuilder(
@@ -139,12 +139,12 @@ class K18Screen extends GetWidget {
                                 subtitle:
                                     'Пароль должен содержать 8 символов и по крайне мере, одну цифру и один символ, такой как !·\$%&?',
                                 hintText: '',
-                                textController: controller.newPasswordController,
+                                textController: controller.oldPasswordController,
                                 child: (password) => Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Подтверждение нового пароля',
+                                      'Старый пароль',
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayLight16,
@@ -154,8 +154,8 @@ class K18Screen extends GetWidget {
                                         child:
                                         CustomTextFormField(
                                           focusNode: FocusNode(),
-                                          isObscureText: true,
-                                          controller: controller.passwordRepeatController,
+                                          isObscureText: false,
+                                          controller: controller.newPasswordController,
                                           margin: getMargin(top: 16),
                                           maxLength: 26,
                                           variant: TextFormFieldVariant
@@ -164,7 +164,7 @@ class K18Screen extends GetWidget {
                                           fontStyle: TextFormFieldFontStyle
                                               .SFProDisplayRegular14,
                                           validator: (text) {
-                                            if (text!.trim() == "") return "Заполните поле";
+                                            if (text!.trim() != "")
 
                                             if(text.trim() != controller.newPasswordController.text) {
                                               return 'Пароли не совпадают';
@@ -174,18 +174,18 @@ class K18Screen extends GetWidget {
                                         )),
 
                                     Text(
-                                      'Старый пароль',
+                                      'Новый пароль',
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayLight16,
                                     ),
                                     Padding(
-                                        padding: getPadding(left: 3, top: 16),
+                                        padding: getPadding(left: 3, top: 16,bottom: 16),
                                         child:
                                         CustomTextFormField(
                                           focusNode: FocusNode(),
-                                          isObscureText: true,
-                                          controller: controller.oldPasswordController,
+                                          isObscureText: false,
+                                          controller: controller.passwordRepeatController,
                                           margin: getMargin(top: 16),
                                           maxLength: 26,
                                           variant: TextFormFieldVariant
@@ -194,11 +194,17 @@ class K18Screen extends GetWidget {
                                           fontStyle: TextFormFieldFontStyle
                                               .SFProDisplayRegular14,
                                           validator: (text) {
-                                            if (text!.trim() == "") return "Заполните поле";
+                                            if (controller.newPasswordController.text != '' || controller.passwordRepeatController.text.isNotEmpty || text!.trim() == "") return "Заполните поле";
 
                                           },
 
                                         )),
+                                    Text(
+                                      'Подтверждение нового пароля',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: AppStyle.txtSFProDisplayLight16,
+                                    ),
 
                                   ],
                                 ),

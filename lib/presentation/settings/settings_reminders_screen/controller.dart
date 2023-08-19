@@ -38,7 +38,7 @@ class K12Controller extends GetxController {
 
   Future updateData (int index, String time) async {
     CurrentUser.user.reminderTimeInStr[index] = time;
-    await CurrentUser.repo.setReminderTimeInStr(CurrentUser.user.reminderTimeInStr);
+    await CurrentUser.repo.setLocalUserData(reminderTimeInStr: CurrentUser.user.reminderTimeInStr);
     await WorkManagerService().initService();
 
   }
@@ -72,8 +72,7 @@ class K12Controller extends GetxController {
         CurrentUser.user.reminderTimeInStr.add(hour.timeFormatted() + ':' + minutes.timeFormatted());
       }
     }
-    await CurrentUser.repo.setReminderTimeInStr(CurrentUser.user.reminderTimeInStr);
-    await CurrentUser.repo.setReminderTime(quantity);
+    await CurrentUser.repo.setLocalUserData(reminderTimeInStr: CurrentUser.user.reminderTimeInStr,reminderTime: quantity);
     await WorkManagerService().initService();
 
     return lastNotifications;

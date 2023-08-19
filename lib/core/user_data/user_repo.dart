@@ -21,12 +21,41 @@ class UserRepo {
 
   String userId()
       {
-        final id =
-        ((FirebaseAuth.instance.currentUser!.email ??
-            CurrentUser.user.number!) + ' ' + authService).trim();
-        return id == '' ? CurrentUser.user.number! : id;
+        final id = (CurrentUser.user.email! + ' ' + authService).trim();
+        return id == '' ? CurrentUser.user.email! : id;
       }
   var authService = '';
+
+  Future setLocalUserData ({
+    String? login,
+    String? email,
+    String? password,
+    int? reminderTime,
+    int? old,
+    bool? male,
+    bool? passwordEnable,
+    TariffModel? currentTariff,
+    DateTime? registrationDate,
+    List<String>? reminderTimeInStr
+}) async {
+    try {
+      await _setTariff(currentTariff ?? await getTariff());
+      await _setGender(male ?? await getGender());
+      // await _setNumber(number ?? await getNumber());
+      await _setOld(old ?? await getOld());
+      await _setLogin(login ?? await getLogin());
+      await _setPass(password ?? await getPass());
+      await _setPasswordEnable(passwordEnable ?? await getPasswordEnable());
+      await _setEmail(email ?? await getEmail());
+      await _setReminderTime(reminderTime ?? await getReminderTime());
+      await _setReminderTimeInStr(
+          reminderTimeInStr ?? await getReminderTimeInStr());
+      await _setRegistrationDate(
+          registrationDate ?? await getRegistrationDate());
+    } catch (_) {
+      print(_);
+    }
+    }
 
   Future setService(String service) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
@@ -40,134 +69,71 @@ class UserRepo {
   }
 
   // set
-  Future setLogin(String text) async {
+  Future _setLogin(String text) async {
     print(userId());
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setString('login', text);
-    await _collection.doc(userId()).update({
-      "login": text,
-      "number": CurrentUser.user.number,
-      "tariff": CurrentUser.user.currentTariff!.name,
-      "tariff_is_end":
-          CurrentUser.user.currentTariff!.endDate.toIso8601String(),
-      "registration_date": CurrentUser.user.registrationDate.toIso8601String(),
-      "male": CurrentUser.user.male,
-      'old': CurrentUser.user.old
-    });
     CurrentUser.user.login = text;
   }
 
-  Future setPass(String text) async {
+  Future _setPass(String text) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setString('pass', text);
     CurrentUser.user.password = text;
   }
 
-  Future setRegistrationDate(DateTime date) async {
+  Future _setRegistrationDate(DateTime date) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setString('registrationDate', date.toIso8601String());
     CurrentUser.user.registrationDate = date;
   }
 
-  Future setNumber(String text) async {
+  Future _setNumber(String text) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setString('number', text);
-    if (userId() == CurrentUser.user.number){
-    await _collection
-        .doc(userId() == CurrentUser.user.number ? text : userId())
-        .set({
-      "login": CurrentUser.user.login,
-      "number": text,
-      "tariff": CurrentUser.user.currentTariff!.name,
-      "tariff_is_end":
-          CurrentUser.user.currentTariff!.endDate.toIso8601String(),
-      "registration_date": CurrentUser.user.registrationDate.toIso8601String(),
-      "male": CurrentUser.user.male,
-      'old': CurrentUser.user.old
-    });
-
       await _fireStoreRepo.updateUserDataNumber(number: text);
-      if (CurrentUser.user.number != text) {
-      try {
-        _collection.doc(CurrentUser.user.number).delete();
-        _collectionUsersData.doc(CurrentUser.user.number).delete();
-      } catch (_) {}
-    }
-    } else {
-      await _collectionUsersData
-          .doc(userId())
-          .update({
-        "number": text,
-      });
-    }
-    CurrentUser.user.number = text;
+    //CurrentUser.user.number = text;
   }
 
-  Future setPasswordEnable(bool val) async {
+  Future _setPasswordEnable(bool val) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setBool('passEnable', val);
     CurrentUser.user.passwordEnable = val;
   }
 
-  Future setReminderTime(int val) async {
+  Future _setReminderTime(int val) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setInt('reminderTime', val);
     CurrentUser.user.reminderTime = val;
   }
 
-  Future setOld(int val) async {
+  Future _setOld(int val) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setInt('old', val);
-    await _collection.doc(userId()).update({
-      "login": CurrentUser.user.login,
-      "number": CurrentUser.user.number,
-      "tariff": CurrentUser.user.currentTariff!.name,
-      "tariff_is_end":
-          CurrentUser.user.currentTariff!.endDate.toIso8601String(),
-      "registration_date": CurrentUser.user.registrationDate.toIso8601String(),
-      "male": CurrentUser.user.male,
-      'old': val
-    });
     CurrentUser.user.old = val;
   }
 
-  Future setGender(bool val) async {
+  Future _setGender(bool val) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setBool('gender', val);
-    await _collection.doc(userId()).update({
-      "login": CurrentUser.user.login,
-      "number": CurrentUser.user.number,
-      "tariff": CurrentUser.user.currentTariff!.name,
-      "tariff_is_end":
-          CurrentUser.user.currentTariff!.endDate.toIso8601String(),
-      "registration_date": CurrentUser.user.registrationDate.toIso8601String(),
-      "male": val,
-      'old': CurrentUser.user.old
-    });
     CurrentUser.user.male = val;
   }
 
-  Future setReminderTimeInStr(List<String> list) async {
+  Future _setEmail(String val) async {
+    if (prefs == null) prefs = await SharedPreferences.getInstance();
+    await prefs!.setString('email', val);
+    CurrentUser.user.email = val;
+  }
+
+  Future _setReminderTimeInStr(List<String> list) async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     await prefs!.setStringList('reminderTimeInStr', list);
     CurrentUser.user.reminderTimeInStr = list;
   }
 
-  Future<void> setTariff(TariffModel tariffModel) async {
+  Future<void> _setTariff(TariffModel tariffModel) async {
     final _repo = K17Repo();
     await _repo.updateTariff(tariffModel);
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userId())
-        .update({
-      "login": CurrentUser.user.login,
-      "number": CurrentUser.user.number,
-      "tariff": tariffModel.name,
-      "tariff_is_end": tariffModel.endDate.toIso8601String(),
-      "registration_date": CurrentUser.user.registrationDate.toIso8601String(),
-      "male": CurrentUser.user.male,
-      'old': CurrentUser.user.old
-    });
   }
 
   // get local
@@ -184,6 +150,11 @@ class UserRepo {
   Future<String> getNumber() async {
     if (prefs == null) prefs = await SharedPreferences.getInstance();
     return prefs!.getString('number') ?? '';
+  }
+
+  Future<String> getEmail() async {
+    if (prefs == null) prefs = await SharedPreferences.getInstance();
+    return prefs!.getString('email') ?? '';
   }
 
   Future<bool> getPasswordEnable() async {

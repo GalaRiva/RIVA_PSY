@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/db/hive_db.dart';
 import '../../../core/models/audio/audio.dart';
 
@@ -19,6 +21,11 @@ class K1Repo {
     for(var item in events) {
       HiveDB.setBox(item.toJson(), _eventTag);
     }
+  }
+
+  Future<bool> needInitialSettings () async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('needInitialSettings') ?? true;
   }
 
 }

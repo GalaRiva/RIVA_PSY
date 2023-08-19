@@ -5,7 +5,7 @@ part 'generated/user_model.g.dart';
 @JsonSerializable()
 class UserModel {
    String? login;
-   String? number;
+   String? email;
    String? password;
    int? reminderTime;
    TariffModel? currentTariff;
@@ -17,7 +17,7 @@ class UserModel {
 
   UserModel({
     this.login,
-    this.number,
+    this.email,
     this.password,
     this.reminderTime,
     this.currentTariff,
@@ -39,11 +39,9 @@ class UserModel {
            description: TariffModel.STANDARD_TARIFF.description,
            cost: TariffModel.STANDARD_TARIFF.cost,
            advantages: TariffModel.STANDARD_TARIFF.advantages) : TariffModel.BASE_TARIFF,
-       number: json['number'],
+       email: json['email'],
        male: json['male'],
        old: json['old'],
-
-
      );
    }
 
@@ -54,7 +52,7 @@ class UserModel {
      'login': this.login,
      'tariff': this.currentTariff!.name,
      'tariff_is_end': this.currentTariff!.endDate.toIso8601String(),
-     'number': this.number,
+     'email': this.email,
      'male': this.male,
      'old': this.old
    };

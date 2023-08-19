@@ -15,9 +15,7 @@ class ServicesAuthService {
 
   Future<bool> authWithGoogle () async {
     try {
-    final googleSignIn = GoogleSignIn.standard(scopes: [
-      ga.DriveApi.driveAppdataScope,
-    ]);
+    final googleSignIn = GoogleSignIn();
 
 
     final googleUser = await googleSignIn.signIn();

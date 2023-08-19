@@ -16,12 +16,10 @@ class MonthModel {
       {required this.currentMonth, required this.dayEvents});
 
   bool _dateInRange(DateTime date, DateTime dateStart, DateTime dateEnd) {
-    if (date.day < dateEnd.day + 1 &&
-        date.month < dateEnd.month + 1 &&
-        date.year < dateEnd.year + 1 &&
-        date.day > dateStart.day - 1 &&
-        date.month > dateStart.month - 1 &&
-        date.year > dateStart.year - 1) {
+    final start = DateTime(dateStart.year, dateStart.month, dateStart.day - 1);
+    final end = DateTime(dateEnd.year, dateEnd.month, dateEnd.day + 1);
+
+    if (date.isAfter(start) && date.isBefore(end)) {
       return true;
     }
     return false;
@@ -58,15 +56,21 @@ class MonthModel {
       }
 
       dayList.add(DayModel(
+        month: currentMonth.month, year: currentMonth.year,
+
           type: dayType,
           day: i + 1,
           isActive: true,
           dayEventModel: dayEventModel,
           onTap: _onTap));
     }
-    dayList = _getInactiveDays(previousMonth).reversed.toList() +
+    dayList = _getInactiveDays(previousMonth, onTap: (i, m) {
+
+    }).reversed.toList() +
         dayList +
-        _getInactiveDays(nextMonth);
+        _getInactiveDays(nextMonth, onTap: (i, m) {
+
+        });
     return dayList;
   }
 
@@ -74,7 +78,7 @@ class MonthModel {
       CalendarController controller,
       BuildContext context,
       PeriodState state,
-      Function(int date) onTap,
+      Function(int date, int month) onTap,
       DateTime? start,
       DateTime? end) {
     final DateTime previousMonth =
@@ -93,14 +97,16 @@ class MonthModel {
               start, end)) {
         inPeriod = true;
       }
-      if(start?.day == i + 1) isStart = true;
-      if(end?.day == i + 1) isEnd = true;
+      if(start == DateTime(currentMonth.year, currentMonth.month, i+1)) isStart = true;
+      if(end == DateTime(currentMonth.year, currentMonth.month, i+1)) isEnd = true;
       dayList.add(DayModel(
+        month: currentMonth.month, year: currentMonth.year,
+
           type: dayType,
           day: i + 1,
           isActive: true,
           onTap: () {
-            onTap(i + 1);
+            onTap(i + 1,currentMonth.month);
             controller.getDaysForRows = controller.initializeDaysList();
             controller.update();
           },
@@ -108,9 +114,18 @@ class MonthModel {
           periodStart: isStart,
           inPeriod: inPeriod));
     }
-    dayList = _getInactiveDays(previousMonth).reversed.toList() +
+    dayList = _getInactiveDays(previousMonth, onTap: (int i, m) {
+      onTap(i, m);
+      controller.getDaysForRows = controller.initializeDaysList();
+      controller.update();
+    },
+    start: start, end: end).reversed.toList() +
         dayList +
-        _getInactiveDays(nextMonth);
+        _getInactiveDays(nextMonth,   onTap: (int i, m) {
+          onTap(i, m);
+          controller.getDaysForRows = controller.initializeDaysList();
+          controller.update();
+        }, start: start, end: end);
     return dayList;
   }
 
@@ -128,7 +143,7 @@ class MonthModel {
     }
   }
 
-  List<DayModel> _getInactiveDays(DateTime someMonth) {
+  List<DayModel> _getInactiveDays(DateTime someMonth, {required Function(int day, int month) onTap,  DateTime? start, DateTime? end}) {
     List<DayModel> list = [];
     if (someMonth.month < currentMonth.month &&
         someMonth.year <= currentMonth.year) {
@@ -136,10 +151,31 @@ class MonthModel {
           DateTime(currentMonth.year, currentMonth.month, 1);
       if (firstDayInCurrentMonth.weekday > 1)
         for (int i = 1; i < firstDayInCurrentMonth.weekday; i++) {
+
+          bool inPeriod = false;
+          bool isStart = false;
+          bool isEnd = false;
+          if (start != null &&
+              end != null &&
+              _dateInRange(DateTime(someMonth.year, someMonth.month,  _getMonthLength(someMonth) + 1 - i),
+                  start, end)) {
+            inPeriod = true;
+          }
+          if(start == DateTime(someMonth.year, someMonth.month,  _getMonthLength(someMonth) + 1 - i)) isStart = true;
+          if(end == DateTime(someMonth.year, someMonth.month,  _getMonthLength(someMonth) + 1 - i)) isEnd = true;
+
+
           list.add(DayModel(
+            month: someMonth.month, year: someMonth.year,
+              onTap: () =>onTap(_getMonthLength(someMonth) + 1 - i, someMonth.month),
               day: _getMonthLength(someMonth) + 1 - i,
               isActive: false,
-              type: dayType));
+              type: dayType,
+              inPeriod: inPeriod,
+            periodEnd: isEnd,
+            periodStart: isStart,
+
+          ));
         }
     } else if (someMonth.month > currentMonth.month &&
         someMonth.year < currentMonth.year) {
@@ -147,17 +183,56 @@ class MonthModel {
           DateTime(currentMonth.year, currentMonth.month, 1);
       if (firstDayInCurrentMonth.weekday > 1)
         for (int i = 1; i < firstDayInCurrentMonth.weekday; i++) {
+int day = _getMonthLength(someMonth) - 1 - i;
+          bool inPeriod = false;
+          bool isStart = false;
+          bool isEnd = false;
+          if (start != null &&
+              end != null &&
+              _dateInRange(DateTime(someMonth.year, someMonth.month, day),
+                  start, end)) {
+            inPeriod = true;
+          }
+          if(start == DateTime(someMonth.year, someMonth.month, day)) isStart = true;
+          if(end == DateTime(someMonth.year, someMonth.month, day)) isEnd = true;
+
+
           list.add(DayModel(
+            month: someMonth.month, year: someMonth.year,
+              onTap: () =>onTap(day,someMonth.month),
+
               day: _getMonthLength(someMonth) - 1 - i,
               isActive: false,
-              type: dayType));
+              type: dayType,inPeriod: inPeriod,periodEnd: isEnd, periodStart: isStart,));
         }
     } else {
       final DateTime lastDayInCurrentMonth = DateTime(
           currentMonth.year, currentMonth.month, _getMonthLength(currentMonth));
       if (lastDayInCurrentMonth.weekday < 7)
         for (int i = 1; i <= 7 - lastDayInCurrentMonth.weekday; i++) {
-          list.add(DayModel(day: i, isActive: false, type: dayType));
+
+          int day = i;
+          bool inPeriod = false;
+          bool isStart = false;
+          bool isEnd = false;
+          if (start != null &&
+              end != null &&
+              _dateInRange(DateTime(someMonth.year, someMonth.month, day),
+                  start, end)) {
+            inPeriod = true;
+          }
+          if(start == DateTime(someMonth.year, someMonth.month, day)) isStart = true;
+          if(end == DateTime(someMonth.year, someMonth.month, day)) isEnd = true;
+
+
+
+          list.add(DayModel(
+              onTap: () => onTap(i,someMonth.month),
+              inPeriod: inPeriod,
+              periodStart: isStart,
+              periodEnd: isEnd,
+              month: someMonth.month, year: someMonth.year,
+              day: i, isActive: false, type: dayType));
         }
     }
     return list;

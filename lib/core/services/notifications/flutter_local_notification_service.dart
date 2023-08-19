@@ -7,7 +7,7 @@ import '../workmanager/workmanager_model.dart';
 
 class FlutterLocalNotificationService extends NotificationService{
   @override
-  Future showNotification(WorkManagerModel workManagerModel) async{
+  Future showNotification(WorkManagerModel workManagerModel, Duration dur) async{
     FlutterLocalNotificationsPlugin flip = new FlutterLocalNotificationsPlugin();
 
     var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -26,12 +26,14 @@ class FlutterLocalNotificationService extends NotificationService{
     );
     var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
+
+
+
     // initialise channel platform for both Android and iOS device.
     var platformChannelSpecifics = new NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics
     );
-
 
     await flip.show(0, 'Rigel Psy',
       workManagerModel.pillName != '' ? 'Приём' : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
@@ -40,7 +42,7 @@ class FlutterLocalNotificationService extends NotificationService{
   }
 
   @override
-  void notificationActionStream(BuildContext context) {
+  void navigator(BuildContext context, Function otherNavigationFunc) {
     // TODO: implement notificationActionStream
   }
 

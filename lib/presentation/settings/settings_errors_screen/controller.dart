@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/services/firebase_cloud_storage.dart';
+import '../../../core/services/firebase/firebase_cloud_storage.dart';
 import '../../../core/user_data/user.dart';
 
 class K11Controller extends GetxController {
@@ -26,7 +26,7 @@ class K11Controller extends GetxController {
     final collection = FirebaseFirestore.instance.collection('Errors');
     CloudStorageResult storageResult;
     storageResult = await _service.uploadImage(
-        imageToUpload: model.value.file!, title: '${CurrentUser.user.number} ${model.value.fileName}');
+        imageToUpload: model.value.file!, title: '${CurrentUser.repo.userId()} ${model.value.fileName}');
 
 
     await collection.doc('${CurrentUser.repo.userId()} ${DateTime.now().toIso8601String()}').set({

@@ -30,8 +30,9 @@ class K16Controller {
         if (promoModel.discount == 100) {
           tariff.cost = 0;
           if (await _fireStoreRepo.activatePromo(promo: promo)) {
+            _fireStoreRepo.updateUser(userId: CurrentUser.repo.userId(), currentTariff: tariff);
             Navigator.pushNamed(context, AppRoutes.tariffActivated);
-            await CurrentUser.repo.setTariff(tariff);
+            await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
           }
         } else {
           final costWithDiscount = ((tariff.cost / 100) * promoModel.discount);

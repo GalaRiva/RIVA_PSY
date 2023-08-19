@@ -17,12 +17,12 @@ class DataSourceService {
   }
 
   static void getDataSourceType() {
-    if (CurrentUser.tariffIsStandard()) {
-      setLocalDataSource();
-    } else {
+    //if (CurrentUser.tariffIsStandard()) {
+     // setLocalDataSource();
+    //} else {
       setRemoteDataSource();
-    }
+    //}
   }
 }
 
-enum DataSource { Local, Remote }
+enum DataSource {Local, Remote }

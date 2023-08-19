@@ -24,7 +24,6 @@ class K6Screen extends GetWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-
                               Padding(
                                   padding: getPadding(top: 64),
                                   child: Divider(
@@ -46,57 +45,66 @@ class K6Screen extends GetWidget {
                                   svgIcon: ImageConstant.imgRefresh,
                                   controller: controller,
                                   svgSize: 24),
-                              CardSettingsButtonWidget(context,
-                                  onTap: () => controller.password
-                                      ? onTapRowlock(context)
-                                      : null,
-                                  title: 'Пароль',
-                                  svgIcon: ImageConstant.imgLock,
-                                  controller: controller,
-                                  svgSize: 20,
-                              onSwitch: (value) {
-                                controller
-                                    .changePasswordState(
-                                    context);
-                                controller.update();
-                              }, valueForSwitch: controller.password),
-                              CardSettingsButtonWidget(context,
-                                  onTap: () => controller.onTapDataAndRecovery(context),
-                                  title: 'Данные и востановление',
-                                  svgIcon: ImageConstant.imgClip,
-                                  controller: controller,
-                                  svgSize: 20,
+                              GetBuilder(
+                                builder: (K6Controller _c) => CardSettingsButtonWidget(context,
+                                    onTap: () => controller.password
+                                        ? onTapRowlock(context)
+                                        : null,
+                                    title: 'Пароль',
+                                    svgIcon: ImageConstant.imgLock,
+                                    controller: controller,
+                                    svgSize: 20,
+                                    onSwitch: (value) {
+                                      controller.changePasswordState(context);
+                                      controller.update();
+                                    },
+                                    valueForSwitch: controller.password),
                               ),
-
-                              /*SizedBox(
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () =>
+                                    controller.onTapDataAndRecovery(context),
+                                title: 'Данные и востановление',
+                                svgIcon: ImageConstant.imgClip,
+                                controller: controller,
+                                svgSize: 20,
+                              ),
+                              SizedBox(
                                 height: getVerticalSize(21),
                               ),
-                              CardSettingsButtonWidget(context,
-                                  onTap: () async => await controller.onTapPill(context),
-                                title: 'Напоминания о приеме',
-                                svgIcon: ImageConstant.imgPill,
-                                controller: controller,
-                                svgSize: 24,
-                                height: 53
-                              ),*/
+                              Visibility(
+                                  child: CardSettingsButtonWidget(context,
+                                      onTap: () async =>
+                                          await controller.onTapPill(
+                                              context,
+                                              GlobalKey<
+                                                  ScaffoldMessengerState>()),
+                                      title: 'Напоминания о приеме',
+                                      svgIcon: ImageConstant.imgPill,
+                                      controller: controller,
+                                      svgSize: 24,
+                                      height: 53)),
                               SizedBox(
-                                height: getVerticalSize(85),
+                                height: getVerticalSize(21),
                               ),
-                              CardSettingsButtonWidget(context,
+                              CardSettingsButtonWidget(
+                                context,
                                 onTap: () => onTapRowcheckmark(context),
                                 title: 'Предложение по улучшению',
                                 svgIcon: ImageConstant.imgCheckmarkGray800,
                                 controller: controller,
                                 svgSize: 24,
                               ),
-                              CardSettingsButtonWidget(context,
+                              CardSettingsButtonWidget(
+                                context,
                                 onTap: () => onTapRowcheckmarkone(context),
                                 title: 'Сообщить об ошибке',
                                 svgIcon: ImageConstant.imgCheckmarkGray80024x24,
                                 controller: controller,
                                 svgSize: 24,
                               ),
-                              CardSettingsButtonWidget(context,
+                              CardSettingsButtonWidget(
+                                context,
                                 onTap: () => Navigator.pushNamed(
                                     context, AppRoutes.reminders),
                                 title: 'Напоминания',
@@ -104,7 +112,8 @@ class K6Screen extends GetWidget {
                                 controller: controller,
                                 svgSize: 24,
                               ),
-                              CardSettingsButtonWidget(context,
+                              CardSettingsButtonWidget(
+                                context,
                                 onTap: () => onTapRowclose(context),
                                 title: 'Подписка',
                                 svgIcon: ImageConstant.imgClose,
@@ -114,7 +123,8 @@ class K6Screen extends GetWidget {
                               SizedBox(
                                 height: getVerticalSize(40),
                               ),
-                              CardSettingsButtonWidget(context,
+                              CardSettingsButtonWidget(
+                                context,
                                 onTap: () => Navigator.pushNamed(
                                     context, AppRoutes.profile),
                                 title: 'Ваш профиль',
@@ -124,7 +134,7 @@ class K6Screen extends GetWidget {
                               ),
                             ])))),
             bottomNavigationBar:
-            CustomBottomBar(onChanged: (BottomBarEnum type) {})));
+                CustomBottomBar(onChanged: (BottomBarEnum type) {})));
   }
 
   onTapRowrefresh(BuildContext context) {

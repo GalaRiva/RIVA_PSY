@@ -20,33 +20,36 @@ Widget CardSettingsButtonWidget(BuildContext context,
       onTap: onTap,
       child: Container(
         height: getVerticalSize(height),
-          margin: getMargin(top: 1),
           padding: getPadding(left: 7, top: 5, right: 7, bottom: 5),
           decoration: AppDecoration.outlineBluegray80014
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder3),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            CustomImageView(
-                svgPath: svgIcon,
-                height: getVerticalSize(svgSize ?? 20),
-                width: getHorizontalSize(svgSize ?? 20),
-                margin: getMargin(top: 3, bottom: 5)),
-            Padding(
-                padding: getPadding(left: 21, top: 5, bottom: 2),
-                child: Text(title,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtSFProDisplayLight16)),
-            Spacer(),
-            onSwitch == null || valueForSwitch == null
-                ? CustomImageView(
-                    svgPath: ImageConstant.imgArrowrightGray700,
-                    height: getVerticalSize(8),
-                    width: getHorizontalSize(4),
-                    margin: getMargin(top: 8, right: 9, bottom: 8))
-                : GetBuilder(
-                    builder: (K6Controller _c) => CustomSwitch(
-                        value: valueForSwitch,
-                        onChanged: onSwitch),
-                  )
-          ])));
+          child: Center(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start, children: [
+              CustomImageView(
+                  svgPath: svgIcon,
+                  height: getVerticalSize(svgSize ?? 20),
+                  width: getHorizontalSize(svgSize ?? 20),
+                  margin: getMargin(top: 3, bottom: 5)),
+              Padding(
+                  padding: getPadding(left: 21, top: 5, bottom: 2),
+                  child: Text(title,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: AppStyle.txtSFProDisplayLight16)),
+              Spacer(),
+              onSwitch == null || valueForSwitch == null
+                  ? CustomImageView(
+                      svgPath: ImageConstant.imgArrowrightGray700,
+                      height: getVerticalSize(8),
+                      width: getHorizontalSize(4),
+                      margin: getMargin(top: 8, right: 9, bottom: 8))
+                  : GetBuilder(
+                      builder: (K6Controller _c) => CustomSwitch(
+                          value: valueForSwitch,
+                          onChanged: onSwitch),
+                    )
+            ]),
+          )));
 }

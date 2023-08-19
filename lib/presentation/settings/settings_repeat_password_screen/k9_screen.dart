@@ -29,7 +29,7 @@ class K9Screen extends GetWidget<K9Controller> {
           'Пароль успешно сохранён',
         ), );
         CurrentUser.user.password = text;
-        await CurrentUser.repo.setPass(text);
+        await CurrentUser.repo.setLocalUserData(password: text);
       } if (text.length >= 4 && text != password) {
         showDialog(context: context, builder: (BuildContext context) => CustomMessageBox(
           title: 'Пароль',

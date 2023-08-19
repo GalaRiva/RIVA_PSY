@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/models/backup_model.dart';
+import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
 import 'package:listenmebaby71_s_application17/core/models/user_data_model.dart';
 import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
 
 import '../../../../presentation/settings/settings_promo_screen/models/promo_model.dart';
+import '../../../models/user_model.dart';
 import '../../../user_data/user.dart';
 import '../domain/repository.dart';
 
@@ -15,7 +17,8 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   final String _userBackupsCollection = 'Backups';
   final String _promoCollection = 'Promo';
   final String _promoActivatedUsersCollection = 'ActivatedUsers';
-  String _userId () => CurrentUser.repo.userId();
+
+  String _userId() => CurrentUser.repo.userId();
 
   @override
   Future addServiceBackup(BackupModel backupModel) async {
@@ -31,14 +34,14 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
     final collectionData = await instance
         .collection(_userCollection)
         .doc(_userId())
-        .collection(_userBackupsCollection).where('service', isEqualTo: service).get();
+        .collection(_userBackupsCollection)
+        .where('service', isEqualTo: service)
+        .get();
     final listToResult = <BackupModel>[];
-    for(var doc in collectionData.docs) {
+    for (var doc in collectionData.docs) {
       try {
         listToResult.add(BackupModel.fromJson(doc.data()));
-      } catch(_) {
-
-      }
+      } catch (_) {}
     }
     return listToResult;
   }
@@ -48,43 +51,47 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
     final collectionData = await instance
         .collection(_userCollection)
         .doc(_userId())
-        .collection(_userBackupsCollection).where('file_ID', isEqualTo: backupModel.file_ID).get();
+        .collection(_userBackupsCollection)
+        .where('file_ID', isEqualTo: backupModel.file_ID)
+        .get();
     String id = collectionData.docs[0].id;
     await instance
         .collection(_userCollection)
         .doc(_userId())
-        .collection(_userBackupsCollection).doc(id).delete();
-
+        .collection(_userBackupsCollection)
+        .doc(id)
+        .delete();
   }
 
   @override
   Future updateUserDataPassword({required String password}) async {
-    final collection = instance
-        .collection(_userDataCollection)
-        .doc(_userId());
-    final userData = UserDataModel(number: _userId(), passwordHash: password!.md5());
+    final collection = instance.collection(_userDataCollection).doc(_userId());
+    final userData =
+        UserDataModel(number: _userId(), passwordHash: password!.md5());
     await collection.update(userData.toJson());
   }
 
   @override
   Future updateUserDataNumber({required String number}) async {
-    final collection = instance
-        .collection(_userDataCollection);
+    final collection = instance.collection(_userDataCollection);
     if (!(await collection.doc(number).get()).exists) {
-      final oldUserData = UserDataModel.fromJson((await collection.doc(_userId()).get()).data()!);
-      final newUserData = UserDataModel(number: number, passwordHash: oldUserData.passwordHash);
+      final oldUserData = UserDataModel.fromJson(
+          (await collection.doc(_userId()).get()).data()!);
+      final newUserData =
+          UserDataModel(number: number, passwordHash: oldUserData.passwordHash);
       await collection.doc(number).set(newUserData.toJson());
       await collection.doc(_userId()).delete();
-
     }
   }
 
   @override
   Future<bool> canActivatePromo({required PromoModel promo}) async {
     final doc = instance.collection(_promoCollection).doc(promo.promo);
-    final activatedUsersCollection = doc.collection(_promoActivatedUsersCollection);
-    final activatedUsersDocs = (await doc.collection(_promoActivatedUsersCollection).get()).docs;
-    if(promo is DisposablePromo) {
+    final activatedUsersCollection =
+        doc.collection(_promoActivatedUsersCollection);
+    final activatedUsersDocs =
+        (await doc.collection(_promoActivatedUsersCollection).get()).docs;
+    if (promo is DisposablePromo) {
       if (!promo.activatedUsers.contains(_userId()) &&
           promo.maxActivated > activatedUsersDocs.length) {
         return true;
@@ -101,12 +108,12 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   Future<Map<String, dynamic>> getPromoModel({required String promo}) async {
     final doc = instance.collection(_promoCollection).doc(promo.toUpperCase());
     final data = (await doc.get()).data();
-    if(data == null){
+    if (data == null) {
       return {};
-    }
-    else {
-      final activatedUsers = (await doc.collection(_promoActivatedUsersCollection).get()).docs;
-      if(activatedUsers.isNotEmpty) {
+    } else {
+      final activatedUsers =
+          (await doc.collection(_promoActivatedUsersCollection).get()).docs;
+      if (activatedUsers.isNotEmpty) {
         data['activated_users'] = activatedUsers.map((e) => e.id).toList();
       }
       return data;
@@ -130,5 +137,63 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
     }
   }
 
+  @override
+  Future updateUser(
+      {required String userId,
+      UserModel? user,
+      String? login,
+      String? email,
+      int? old,
+      bool? male,
+      TariffModel? currentTariff,
+      DateTime? registrationDate,
+      bool create = false,
+      Function? onError}) async {
+    // TODO: implement updateUser
+    Map<String, dynamic> userDataForUpdate = {};
+    if (user != null) {
+      userDataForUpdate = user.userToFirebase();
+    } else {
+      if (login != null) userDataForUpdate['login'] = login;
+      if (email != null) userDataForUpdate['email'] = email;
+      if (old != null) userDataForUpdate['old'] = old;
+      if (male != null) userDataForUpdate['male'] = male;
+      if (currentTariff != null) {
+        userDataForUpdate['tariff'] = currentTariff.name;
+        userDataForUpdate['tariff_is_end'] =
+            currentTariff.endDate.toIso8601String();
+      }
+      if (registrationDate != null)
+        userDataForUpdate['registration_date'] =
+            registrationDate.toIso8601String();
+    }
+    try {
+      if (!create)
+        await instance
+            .collection(_userCollection)
+            .doc(userId)
+            .update(userDataForUpdate);
+      else
+        await instance
+            .collection(_userCollection)
+            .doc(userId)
+            .set(userDataForUpdate);
+    } catch (_) {
+      if (onError != null) onError();
+    }
+  }
 
+  @override
+  Future<bool> createPostInFirestoreDatabase(
+      {required String selectedCollection,
+      required String docPath,
+      required Map<String, dynamic> content}) async {
+    try {
+      instance.collection(selectedCollection).doc(docPath).set(content);
+      return true;
+    } catch (_) {
+      return false;
+      print(_);
+    }
+  }
 }

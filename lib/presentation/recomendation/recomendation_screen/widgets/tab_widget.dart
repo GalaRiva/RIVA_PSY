@@ -178,6 +178,7 @@ class TabWidget extends StatelessWidget {
                                 ),
                               )),
                         ),
+                        SizedBox(height: 20,)
                       ],
                 ),
                   ),

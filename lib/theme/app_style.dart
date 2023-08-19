@@ -8,7 +8,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Gray8008c = TextStyle(
@@ -17,7 +17,25 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle txtSFProDisplayLight8Gray500 = TextStyle(
+    color: ColorConstant.gray500,
+    fontSize: getFontSize(
+      8,
+    ),
+    fontFamily: 'SF Pro Display',
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle txtSFProDisplayLight8blueGray = TextStyle(
+    color: ColorConstant.bluegray400,
+    fontSize: getFontSize(
+      8,
+    ),
+    fontFamily: 'SF Pro Display',
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight11Cyan7001 = TextStyle(
@@ -26,7 +44,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14 = TextStyle(
@@ -35,7 +53,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtAkrobatBold20 = TextStyle(
@@ -53,7 +71,7 @@ class AppStyle {
       16,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight16DeepPurple = TextStyle(
@@ -62,7 +80,7 @@ class AppStyle {
       16,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Cyan700 = TextStyle(
@@ -71,7 +89,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight20 = TextStyle(
@@ -80,7 +98,7 @@ class AppStyle {
       20,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight16Cyan700 = TextStyle(
@@ -89,7 +107,7 @@ class AppStyle {
       16,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtRobotoRegular20 = TextStyle(
@@ -107,7 +125,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular11Gray80038 = TextStyle(
@@ -125,7 +143,7 @@ class AppStyle {
       10,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight10w400 = TextStyle(
@@ -143,7 +161,7 @@ class AppStyle {
       10,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
 
@@ -153,7 +171,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight11 = TextStyle(
@@ -162,7 +180,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight9Gray50 = TextStyle(
@@ -171,7 +189,7 @@ class AppStyle {
       9,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight11Gray8001 = TextStyle(
@@ -180,7 +198,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Gray800a0 = TextStyle(
@@ -189,7 +207,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Gray8006e = TextStyle(
@@ -198,7 +216,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Gray800 = TextStyle(
@@ -207,7 +225,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular14Deeppurple600 = TextStyle(
@@ -225,7 +243,7 @@ class AppStyle {
       9,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight12Gray800 = TextStyle(
@@ -234,7 +252,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Cyan700a0 = TextStyle(
@@ -243,7 +261,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtH2 = TextStyle(
@@ -252,7 +270,7 @@ class AppStyle {
       16,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle txtSFProDisplayLight11Deeppurple600 = TextStyle(
@@ -261,7 +279,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtH1 = TextStyle(
@@ -270,7 +288,7 @@ class AppStyle {
       24,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle txtSFProDisplayLight14Gray80038 = TextStyle(
@@ -279,7 +297,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular14 = TextStyle(
@@ -324,7 +342,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Black = TextStyle(
@@ -333,7 +351,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular11Gray800 = TextStyle(
@@ -351,7 +369,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight14Gray80070 = TextStyle(
@@ -360,7 +378,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayMedium9 = TextStyle(
@@ -369,7 +387,7 @@ class AppStyle {
       9,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight10Gray8001 = TextStyle(
@@ -378,7 +396,7 @@ class AppStyle {
       10,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtAkrobatBold20Cyan700 = TextStyle(
@@ -396,7 +414,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular11Cyan700 = TextStyle(
@@ -414,7 +432,7 @@ class AppStyle {
       9,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular11Gray80054 = TextStyle(
@@ -432,7 +450,7 @@ class AppStyle {
       10,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight12Cyan700 = TextStyle(
@@ -441,7 +459,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayRegular9 = TextStyle(
@@ -468,7 +486,7 @@ class AppStyle {
       14,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtH1WhiteA700 = TextStyle(
@@ -477,7 +495,7 @@ class AppStyle {
       24,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle txtSFProDisplayThin12 = TextStyle(
@@ -486,7 +504,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle txtRobotoRegular16 = TextStyle(
@@ -504,7 +522,7 @@ class AppStyle {
       16,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle txtSFProDisplayLight12Gray500 = TextStyle(
@@ -513,7 +531,7 @@ class AppStyle {
       12,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight11Bluegray400 = TextStyle(
@@ -522,7 +540,7 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle txtSFProDisplayLight11Gray800 = TextStyle(
@@ -531,6 +549,6 @@ class AppStyle {
       11,
     ),
     fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
   );
 }

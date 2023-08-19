@@ -17,19 +17,7 @@ class BuySubscriptionController extends GetxController {
   late final YookassaPayments _yookassa;
 
   Future onTapGoToTariff(TariffModel tariff, BuildContext context) async {
-    //if((await FirebaseFirestore.instance.collection('Permissions').doc('payment').get()).data()?['value'] == false){
-    /*showDialog(
-    context: context, builder: (BuildContext context) =>
-    CustomMessageBox(
-    title: 'Rigel PSY',
-    content:
-    'В данный момент, возможность оплаты в приложении, заблокирована. Извините за неудобства.',
-    ),);
-    } else*/
-
       _pay(tariff, context);
-
-
   }
 
   Future _pay(TariffModel tariff, BuildContext context) async {
@@ -52,7 +40,8 @@ class BuySubscriptionController extends GetxController {
   }
 
   Future _updateTariff(TariffModel tariff) async {
-    await CurrentUser.repo.setTariff(tariff);
+    await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
+    FireStoreRepositoryImpl().updateUser(userId: CurrentUser.repo.userId(), currentTariff: tariff);
     update();
   }
 }

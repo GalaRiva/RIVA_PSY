@@ -12,7 +12,7 @@ class K62Controller extends CalendarController {
 
   K62Controller(this.context) : super(context);
 
-  void init () {
+  void init() {
     state = PeriodState.Start;
     periodStart = null;
     periodEnd = null;
@@ -30,27 +30,28 @@ class K62Controller extends CalendarController {
 
   PeriodState state = PeriodState.Start;
 
-  void popWithData() {
+  void popWithData(BuildContext context) {
     if (periodStart != null && periodEnd != null)
-      Timer(Duration(seconds: 1), () {
-         Navigator.pop(context, {'start': periodStart, 'end': periodEnd});
-         Get.delete<K62Controller>();
-      });
+      Navigator.pop(context, {'start': periodStart, 'end': periodEnd});
+    Get.delete<K62Controller>();
   }
 
-  void _onTap(int i) {
+  void _onTap(int i, int m) {
     if (state == PeriodState.Start) {
-      periodStart = DateTime(currentDate.year, currentDate.month, i);
+      periodStart = DateTime(currentDate.year, m, i);
       state = PeriodState.End;
       update();
     } else if (state == PeriodState.End) {
-      if (i < periodStart!.day)
-        return null;
-      else {
-        periodEnd = DateTime(currentDate.year, currentDate.month, i);
+        var period = DateTime(currentDate.year, m, i);
+        if(period.isBefore(periodStart!)) {
+        periodEnd = periodStart;
+        periodStart = period;
+      } else {
+          periodEnd = period;
+        }
+
         update();
-        popWithData();
-      }
+
     } else
       return null;
   }

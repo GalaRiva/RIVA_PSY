@@ -153,7 +153,7 @@ class K1Screen extends GetWidget {
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: getPadding(bottom: 50),
-                    child: Text('Идёт установка дополнительный файлов, пожалуйста подождите', style: AppStyle.txtSFProDisplayLight10Gray800,),
+                    child: Text('Идёт установка дополнительный файлов, пожалуйста, подождите', style: AppStyle.txtSFProDisplayLight10Gray800,),
                   ),
                 )),
           )

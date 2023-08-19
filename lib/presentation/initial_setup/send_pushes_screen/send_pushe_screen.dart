@@ -1,7 +1,9 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../widgets/custom_button.dart';
 
@@ -31,7 +33,10 @@ class SendPushesScreen extends StatelessWidget {
                     width: getHorizontalSize(
                       137,
                     ),
-                    onTap: () {
+                    onTap: () async {
+
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('needInitialSettings', false);
                       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.main, (route) => false);
                     },
                     text: "нет".toUpperCase(),
@@ -46,8 +51,19 @@ class SendPushesScreen extends StatelessWidget {
                     width: getHorizontalSize(
                       137,
                     ),
-                    onTap: () {
+                    onTap: () async {
+                      AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+                        if (!isAllowed) {
+                          // This is just a basic example. For real apps, you must show some
+                          // friendly dialog box before call the request method.
+                          // This is very important to not harm the user experience
+                          AwesomeNotifications().requestPermissionToSendNotifications();
+                        }
+                      });
                       FirebaseMessaging.onBackgroundMessage(_messageHandler);
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('needInitialSettings', false);
+
                       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.main, (route) => false);
 
                     },

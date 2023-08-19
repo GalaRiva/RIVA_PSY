@@ -1,53 +1,102 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:listenmebaby71_s_application17/core/utils/color_constant.dart';
 import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
+import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
 
+import '../../../../core/services/workmanager/workmanager_service.dart';
 import '../models/pill_model.dart';
+import 'pills_list_model.dart';
+import 'widgets/pill_list_widget.dart';
 
 class PillsController extends GetxController {
-
   var _currentPillsList = PillsList.actual;
+
   PillsList get currentPillsList => _currentPillsList;
 
-  void changePillsListState (PillsList state) {
-    if(state == PillsList.actual) _currentPillsList = PillsList.onData;
-    else _currentPillsList = PillsList.actual;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
+  void addPill(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: ColorConstant.gray300,
+        context: context,
+        builder: (context) => PillsAddBottomSheet()).then((value) {
+
+          update();});
+  }
+
+
+  PillListWidget getListOnListType(PillsList currentType) {
+    if(currentType == PillsList.onData) {
+      return PillListWidget(pills: onDataPills, isSelected: _currentPillsList == currentType, update: update, title: 'По дате внесения');
+    } else {
+      return PillListWidget(pills: actualPills, isSelected: _currentPillsList == currentType, update: update, title: 'Актуальные назначения');
+    }
+  }
+
+  void changePillsListState(PillsList state) {
+    if (state == PillsList.onData)
+      _currentPillsList = PillsList.onData;
+    else
+      _currentPillsList = PillsList.actual;
     update();
   }
 
-  final List<PillModel> actualPills = [];
-  final List<PillModel> onDataPills = [];
+   List<PillModel> actualPills = [];
+   List<PillModel> onDataPills = [];
 
   final repo = PillsRepo();
 
-  Future getPills () async {
+  bool textIsVisible () {
+    if (_currentPillsList == PillsList.actual) {
+      if(actualPills.isEmpty) return false;
+      return true;
+    } else {
+      if(onDataPills.isEmpty) return false;
+      return true;
+    }
+  }
+
+  Future<PillsListModel> getPills() async {
     final pills = await repo.getEvent();
-    pills.sort((d1,d2) => d1.compareTo(d2));
-    for (var item in pills) {
-      if(item.actual) {
-       if(_pillsActual(item)){
-         actualPills.add(item);
-       } else {
-         item.actual = false;
-         onDataPills.add(item);
-       }
-      } else onDataPills.add(item);
+    final actual = <PillModel>[];
+    final onData = <PillModel>[];
+    for (int i = 0; i < pills.length; i++) {
+      final item = pills[i];
+      if (item.actual) {
+        if (checkDateInRange(DateTime.now(), item.startDate!, item.endDate)) {
+          actual.add(item);
+        } else {
+          item.actual = false;
+        }
+      }
+      else {
+        if (checkDateInRange(DateTime.now(), item.startDate!, item.endDate)) {
+          item.actual = true;
+          actual.add(item);
+        }
+      }
+        onData.add(item);
 
     }
+    onDataPills = onData;
+    actualPills = actual;
+
+    onDataPills.sort((d1, d2) => d1.compareTo(d2));
     await repo.updateEvent(pills);
-    update();
+    return PillsListModel(actualList: actual, onDataList: onData);
   }
 
-  bool _pillsActual (PillModel pillModel) {
-    if(DateTime.now().difference(pillModel.startDate!).inDays > pillModel.duration.inDays) {
-      return false;
-    }
-    return true;
+  bool checkDateInRange(DateTime date, DateTime startDate, DateTime endDate) {
+    var start = DateTime(startDate.year, startDate.month, startDate.day - 1);
+    var end = DateTime(startDate.year, startDate.month, startDate.day + 1);
+
+    return date.isAfter(start) && date.isBefore(end);
   }
-
-
 }
 
-enum PillsList {
-  actual, onData
-
-}
+enum PillsList { actual, onData }

@@ -147,7 +147,7 @@ class CustomButton extends StatelessWidget {
       case ButtonVariant.White:
         return Colors.white;
       case ButtonVariant.White24:
-        return Colors.white.withOpacity(24);
+        return Colors.white.withOpacity(0.44);
       default:
         return ColorConstant.whiteA70038;
     }
@@ -261,6 +261,18 @@ class CustomButton extends StatelessWidget {
             1.22,
           ),
         );
+      case ButtonFontStyle.SFProDisplayRegular12Gray:
+        return TextStyle(
+          color: ColorConstant.gray900,
+          fontSize: getFontSize(
+            12,
+          ),
+          fontFamily: 'SF Pro Display',
+          fontWeight: FontWeight.w400,
+          height: getVerticalSize(
+            1.25,
+          ),
+        );
       default:
         return TextStyle(
           color: ColorConstant.deepPurple600,
@@ -300,6 +312,7 @@ enum ButtonVariant {
 }
 enum ButtonFontStyle {
   SFProDisplayRegular12,
+  SFProDisplayRegular12Gray,
   SFProDisplayRegular12Cyan700,
   SFProDisplayLight14,
   SFProDisplayRegular10,

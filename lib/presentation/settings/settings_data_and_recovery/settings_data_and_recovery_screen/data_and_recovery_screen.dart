@@ -95,42 +95,8 @@ class DataAndRecoveryScreen extends StatelessWidget {
                           'Ваши данные будут автоматически копироваться в ${controller.service} каждую неделю.',
                           style: AppStyle.txtSFProDisplayLight11Gray800,
                         ),
-                      ),/*
-                      Padding(
-                          padding: getPadding(top: 53),
-                          child: Text("КОПИЯ ПО ПОЧТЕ",
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtSFProDisplayLight16)),
-                      Padding(
-                        padding: getPadding(top: 19),
-                        child: CardDataAndRecoveryButtonWidget(
-                          context,
-                          controller: controller,
-                          title: 'Резервная копия',
-                            suffixWidget: Column(
-                              children: [
-                                Text(
-                                  'Последняя копия',
-                                  style: AppStyle.txtSFProDisplayLight11Gray800,
-                                ),
-                                Text(
-                                  controller.getDays(controller.copyData),
-                                  style: AppStyle.txtSFProDisplayLight11,
-                                )
-                              ],
-                            )
-                        ),
                       ),
-                      CardDataAndRecoveryButtonWidget(context,
-                          controller: controller,
-                          title: 'Восстановить',
-                          suffixWidget: CustomImageView(
-                              svgPath: ImageConstant.imgArrowrightGray700,
-                              height: getVerticalSize(8),
-                              width: getHorizontalSize(4),
-                              margin: getMargin(top: 8, right: 9, bottom: 8))),*/
-                    ]),
+                  ]),
               ),
             )));
   }

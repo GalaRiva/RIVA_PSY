@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
 import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/pill_model.dart';
 import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills_edit_bottom_sheet/settings_pills_edit_bottom_sheet.dart';
 
@@ -13,22 +14,21 @@ import '../../../../../widgets/custom_image_view.dart';
 Widget PillCardWidget(BuildContext context, {required PillModel pillModel, required bool isSelected, required Function update}) {
 
   _onTap () {
-    showBottomSheet(context: context, builder: (context) => WillPopScope(onWillPop: () async {
-      update();
-      return true;
-    },
-    child: PillsEditBottomSheet(pill: pillModel)));
+    showModalBottomSheet (
+        backgroundColor: ColorConstant.gray300,
+        context: context, builder: (context) => PillsEditBottomSheet(pill: pillModel)).then((value) {
+          update();});
   }
 
-  final _bodyHeight = getVerticalSize(pillModel.hoursOfTakingPills.length > 4 ? 47  + ((pillModel.hoursOfTakingPills.length - 4) * 21) : 47);
-
+  final _bodyHeight = getVerticalSize(pillModel.hoursOfTakingPills.length > 2 ? 47  + ((pillModel.hoursOfTakingPills.length % 2) * 21) : 47);
+  String getDurationText () {
+    if(pillModel.startDate == null || pillModel.endDate == null) return 'установить длительность приема'.toUpperCase();
+    return '${(pillModel.startDate!).dateInText()} - ${pillModel.endDate!.dateInText()}'.toUpperCase();
+  }
   return Container(
     height: getVerticalSize(30) + _bodyHeight,
-    margin: getMargin(left: 10, right: 10),
     decoration: BoxDecoration(
-        color: !isSelected
-            ? ColorConstant.fromHex('#7F7F90')
-            : ColorConstant.fromHex('#F9F9F9'),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(3)),
     child: Column(
       children: [
@@ -36,7 +36,9 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
           height: getVerticalSize(30),
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
-              color: ColorConstant.cyan700,
+              color: !isSelected
+                  ? ColorConstant.fromHex('#7F7F90')
+                  : ColorConstant.cyan700,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(3),
                 topRight: Radius.circular(3),
@@ -52,7 +54,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
                     pillModel.name,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
-                    style: AppStyle.txtSFProDisplayLight14,
+                    style: AppStyle.txtSFProDisplayLight14.copyWith(color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -95,6 +97,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
         ),
          Container(
             height: _bodyHeight,
+            alignment: Alignment.topCenter,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -108,16 +111,33 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
                       )),
                   child: Padding(
                     padding: getPadding(top: 17, bottom: 17, right: 10, left: 10),
-                    child: Wrap(
-                      spacing: getHorizontalSize(18),
-                      direction: Axis.horizontal,
-                      children: pillModel.hoursOfTakingPills.map((e) => Padding(
-                        padding: getPadding(bottom: 10),
-                        child: Text(e, style: AppStyle.txtSFProDisplayLight11,),
-                      )).toList(),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Wrap(
+                        spacing: getHorizontalSize(18),
+                        direction: Axis.horizontal,
+                        children: pillModel.hoursOfTakingPills.map((e) => Padding(
+                          padding: getPadding(bottom: 10),
+                          child: Text(e, style: AppStyle.txtSFProDisplayLight11.copyWith(color: ColorConstant.gray800)),
+                        )).toList(),
+                      ),
                     ),
                   ),
                 ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: getPadding(
+                      all: 17
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(getDurationText() ,style: AppStyle.txtSFProDisplayLight11.copyWith(
+                        color: ColorConstant.gray800
+                      )),
+                    ),
+                  ),
+                )
               ],
             )
           ),

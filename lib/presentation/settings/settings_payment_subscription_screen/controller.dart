@@ -32,7 +32,7 @@ class PaymentSubscriptionController extends GetxController {
     final _repo = K17Repo();
     await _repo.updateTariff(tariff);
     CurrentUser.user.currentTariff = tariff;
-    CurrentUser.repo.setTariff(tariff);
+    CurrentUser.repo.setLocalUserData(currentTariff: tariff);
   }
 
 }

@@ -8,7 +8,7 @@ import '../models/user_model.dart';
 class CurrentUser extends UserModel {
   static UserModel user = UserModel(
       login: '',
-      number: '',
+      email: '',
       password: '',
       reminderTime: 1,
       currentTariff: TariffModel.BASE_TARIFF,
@@ -18,7 +18,6 @@ class CurrentUser extends UserModel {
   CurrentUser()
       : super(
             login: user.login,
-            number: user.number,
             password: user.password,
             reminderTime: user.reminderTime,
             currentTariff: user.currentTariff,
@@ -44,17 +43,17 @@ class CurrentUser extends UserModel {
     repo.authService = await repo.getService();
     user.login = await repo.getLogin();
     user.password = await repo.getPass();
-    user.number = await repo.getNumber();
     user.passwordEnable = await repo.getPasswordEnable();
     user.reminderTime = await repo.getReminderTime();
     user.old = await repo.getOld();
     user.male = await repo.getGender();
+    user.email = await repo.getEmail();
     user.currentTariff = await repo.getTariff();
     user.reminderTimeInStr = await repo.getReminderTimeInStr();
     user.registrationDate = await repo.getRegistrationDate();
     if (!repo.checkActualTariff(user.currentTariff!)) {
       user.currentTariff = TariffModel.BASE_TARIFF;
-      await repo.setTariff(user.currentTariff!);
+      await repo.setLocalUserData(currentTariff: user.currentTariff);
     }
   }
 

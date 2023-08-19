@@ -5,8 +5,10 @@ import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
 import 'package:listenmebaby71_s_application17/core/utils/text_field_formatters/text_field_time_formatter.dart';
 
+import '../../../../core/services/workmanager/workmanager_service.dart';
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';
+import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_message_box.dart';
 import '../models/pill_model.dart';
 import '../repository.dart';
@@ -19,7 +21,7 @@ class PillsBottomSheetController extends GetxController {
 
   final _repo = PillsRepo();
   final nameController = TextEditingController();
-  final time = <String>[];
+  var time = <String>[];
   
   DateTime? _startDate;
   DateTime? _endDate;
@@ -30,14 +32,15 @@ class PillsBottomSheetController extends GetxController {
     return '${(_startDate!).dateInText()} - ${_endDate!.dateInText()}'.toUpperCase();
   }
 
-  void addTime ({String? initialTime}) {
-    final timeController = initialTime == null ? TextEditingController() : TextEditingController(text: initialTime!);
+  void addTime ({int? itemIndex, required BuildContext context}) {
+    final timeController = itemIndex == null ? TextEditingController() : TextEditingController(text: time[itemIndex!]);
     showDialog(
         context: context,
         builder: (BuildContext context) {
           Color lineColor = ColorConstant.fromHex('#3B3B4A');
           return GetBuilder(
             builder: (PillsBottomSheetController _c) => CustomMessageBox(
+              height: getVerticalSize(300),
               title: 'Напоминание ${time.length + 1}',
               content: Center(
                 child: Column(
@@ -60,15 +63,7 @@ class PillsBottomSheetController extends GetxController {
                       child: SizedBox(
                         height: getVerticalSize(17),
                         child: TextFormField(
-                          onFieldSubmitted: (text) {
-                            if (text.length < 5)
-                              lineColor = Colors.red;
-                            else {
-                              lineColor = ColorConstant.fromHex('#3B3B4A');
-                              time.add(text);
-                              Navigator.pop(context, text);
-                            }
-                            update();
+                          onChanged: (text) {
                           },
                           textAlign: TextAlign.center,
                           maxLength: 5,
@@ -94,7 +89,28 @@ class PillsBottomSheetController extends GetxController {
                         width: getHorizontalSize(102),
                         height: 1,
                       ),
-                    )
+                    ),
+                    CustomButton(
+                        height: getVerticalSize(32),
+                        width: getHorizontalSize(186),
+                        onTap: () async {
+                          final text = timeController.text;
+                          if (text.length < 5 || int.parse(text[0] + text[1] ) > 24 || int.parse(text[3] + text[4]) > 60)
+                          lineColor = Colors.red;
+                        else {
+                          lineColor = ColorConstant.fromHex('#3B3B4A');
+                          if(itemIndex != null) {
+                            time[itemIndex] = text;
+                          } else {
+                            time.add(text);
+                          }
+                          Navigator.pop(context, text);
+                        }
+                        update();
+                        },
+                        text: "сохранить".toUpperCase(),
+                        padding: ButtonPadding.PaddingT8,
+                        alignment: Alignment.center),
                   ],
                 ),
               ),
@@ -105,7 +121,8 @@ class PillsBottomSheetController extends GetxController {
   }
 
   void setDurationOfReception (BuildContext context) {
-    Navigator.pushNamed<Map<String, dynamic>?>(context, AppRoutes.pills_calendar).then((value) {
+    Navigator.pushNamed(context, AppRoutes.pills_calendar).then((value) {
+      value as Map<String, dynamic>?;
       try {
         if(value != null) {
           _startDate = value['start'];
@@ -120,14 +137,29 @@ class PillsBottomSheetController extends GetxController {
 
   }
 
-  Future addPill () async {
-    if(nameController.text.trim() != '' && _startDate != null && time.isNotEmpty && _duration != null) {
+  Future addPill (BuildContext context) async {
+    if(nameController.text.trim() == ''  || _startDate == null || time.isEmpty){
+      showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Добавление препарата', content: 'Заполните все поля'));
+    }
+    else {
       final list = await _repo.getEvent();
-      list.add(PillModel(name: nameController.text, duration: _duration!, hoursOfTakingPills: time, startDate: _startDate, createDate: DateTime.now(), actual: true));
+      final actual = checkDateInRange(DateTime.now(), _startDate!, _endDate!);
+      list.add(PillModel(name: nameController.text, hoursOfTakingPills: time, startDate: _startDate!, createDate: DateTime.now(), actual: actual, endDate: _endDate!, adoptions: []));
       await _repo.updateEvent(list);
+      nameController.text = '';
+      _duration = null;
+      time = [];
+      _startDate = null;
+      _endDate = null;
+
+      WorkManagerService().initService();
       Navigator.pop(context);
       Navigator.pushNamed(context, AppRoutes.pills);
     }
   }
 
+
+  bool checkDateInRange(DateTime date, DateTime startDate, DateTime endDate) {
+    return date.isAfter(startDate) && date.isBefore(endDate);
+  }
 }

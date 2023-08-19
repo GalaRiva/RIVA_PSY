@@ -53,7 +53,7 @@ class K32Controller extends GetxController {
       case 'грудная клетка':
         return 314;
       case 'плечи и руки':
-        return 314;
+        return 350;
       case 'ноги':
         return 266;
         case 'живот':

@@ -6,6 +6,7 @@ import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
 import '../../../../widgets/calendar/calendar_days_row_widget.dart';
 import '../../../../widgets/calendar/calendar_text_button_widget.dart';
 import '../../../../widgets/calendar/calendar_widget.dart';
+import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
 
@@ -15,6 +16,7 @@ class PillsCalendarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final controller = Get.put(PillsCalendarController(context));
+    controller.initializeDaysList();
     return SafeArea(child: Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -70,21 +72,11 @@ class PillsCalendarScreen extends StatelessWidget {
                         left: 14,
                         top: 26,
                       ),
-                      child: GetBuilder(
-                        builder: (PillsCalendarController _c) => ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: getVerticalSize(
-                                35,
-                              ),
-                            );
-                          },
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return CalendarTextButtonWidget(controller.year.toString(), controller.onYearMinus, controller.onYearPlus, 20);
-                          },
+                      child: SizedBox(
+                        width: getHorizontalSize(90),
+                        child: GetBuilder(
+                          builder: (PillsCalendarController _c) =>CalendarTextButtonWidget(controller.year.toString(), controller.onYearMinus, controller.onYearPlus, 20)
+
                         ),
                       ),
                     ),
@@ -94,32 +86,20 @@ class PillsCalendarScreen extends StatelessWidget {
                         top: 26,
                       ),
                       child: GetBuilder(
-                        builder: (PillsCalendarController _c) => ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: getVerticalSize(
-                                35,
-                              ),
-                            );
-                          },
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return CalendarTextButtonWidget(controller.month.monthInText(), controller.onMonthMinus, controller.onMonthPlus, 14);
-                          },
-                        ),
+                        builder: (PillsCalendarController _c) =>
+                             CalendarTextButtonWidget(controller.month.monthInText(), controller.onMonthMinus, controller.onMonthPlus, 14)
+
                       ),
                     ),
-                      CustomImageView(
-                        svgPath: ImageConstant.imgCalendarHand,
-                        fit: BoxFit.scaleDown,
-                        height: getVerticalSize(160),
-                        width: getHorizontalSize(75),
-                      )
                       ],
                 ),
               ),
+                    CustomImageView(
+                      svgPath: ImageConstant.imgCalendarHand,
+                      fit: BoxFit.scaleDown,
+                      height: getVerticalSize(160),
+                      width: getHorizontalSize(75),
+                    )
                   ],
                 ),
               ),
@@ -176,6 +156,25 @@ class PillsCalendarScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              CustomButton(
+                  height: getVerticalSize(32),
+                  width: getHorizontalSize(186),
+                  onTap: () async {
+                       controller.popWithData(context);
+                  },
+                  text: "сохранить".toUpperCase(),
+                  padding: ButtonPadding.PaddingT8,
+                  margin: getMargin(top: 40),
+                  alignment: Alignment.center),
+              CustomButton(
+                  height: getVerticalSize(32),
+                  width: getHorizontalSize(186),
+                  onTap: () {
+                    controller.cancel(context);},
+                  text: "отмена".toUpperCase(),
+                  margin: getMargin(top: 10, bottom: 40),
+                  padding: ButtonPadding.PaddingT8,
+                  alignment: Alignment.center),
             ],
           ),
         ),

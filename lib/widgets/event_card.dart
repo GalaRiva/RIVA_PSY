@@ -53,7 +53,7 @@ class EventCard extends StatelessWidget {
                 CustomImageView(
                   alignment: Alignment.center,
                   svgPath: model.svgPath,
-                  color: iconColor == null ? ColorConstant.cyan700 : iconColor,
+                  color: iconColor ?? ColorConstant.cyan700,
                   fit: BoxFit.scaleDown,
                   height: getVerticalSize(
                     33,
@@ -74,7 +74,8 @@ class EventCard extends StatelessWidget {
             ),
             Visibility(
               visible: model.name.isNotEmpty,
-              child: SizedBox(
+              child: Container(
+                alignment: Alignment.topCenter,
                 width:
                     width,
                 height: getVerticalSize(
@@ -98,7 +99,7 @@ class EventCard extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 3,
             style: AppStyle
-                .txtSFProDisplayLight10Gray800
+                .txtSFProDisplayLight11Gray800
         ),
       );
     else return Text(
@@ -106,7 +107,7 @@ class EventCard extends StatelessWidget {
         textAlign: TextAlign.center,
         maxLines: 3,
         style: AppStyle
-            .txtSFProDisplayLight10Gray800
+            .txtSFProDisplayLight11Gray800
 
     );
   }

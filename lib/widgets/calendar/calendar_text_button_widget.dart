@@ -12,25 +12,30 @@ class CalendarTextButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomImageView(
-          svgPath: ImageConstant.imgVector41,
-          onTap: onPlus,
-          height: getVerticalSize(
-            8,
-          ),
-          width: getHorizontalSize(
-            4,
-          ),
-          radius: BorderRadius.circular(
-            getHorizontalSize(
-              1,
-            ),
-          ),
-          margin: getMargin(
-            top: 8,
-            bottom: 7,
+        SizedBox(
+      width: getHorizontalSize(
+      20,
+    ),
+          child: IconButton(
+            icon: CustomImageView(
+              svgPath: ImageConstant.imgVector41,
+              height: getVerticalSize(
+                8,
+              ),
+              width: getHorizontalSize(
+                4,
+              ),
+              radius: BorderRadius.circular(
+                getHorizontalSize(
+                  1,
+                ),
+              ),
+              margin: getMargin(
+                top: 8,
+                bottom: 7,
+              ),
+            ), onPressed:onPlus,
           ),
         ),
         Text(
@@ -44,23 +49,31 @@ class CalendarTextButtonWidget extends StatelessWidget {
             ),
           ),
         ),
-        CustomImageView(
-          svgPath: ImageConstant.imgVector46,
-          onTap: onMinus,
-          height: getVerticalSize(
-            8,
-          ),
+        SizedBox(
           width: getHorizontalSize(
-            4,
+            20,
           ),
-          radius: BorderRadius.circular(
-            getHorizontalSize(
-              1,
+          child: IconButton(
+            onPressed: onMinus,
+
+            icon: CustomImageView(
+              svgPath: ImageConstant.imgVector46,
+              height: getVerticalSize(
+                8,
+              ),
+              width: getHorizontalSize(
+                4,
+              ),
+              radius: BorderRadius.circular(
+                getHorizontalSize(
+                  1,
+                ),
+              ),
+              margin: getMargin(
+                top: 8,
+                bottom: 7,
+              ),
             ),
-          ),
-          margin: getMargin(
-            top: 8,
-            bottom: 7,
           ),
         ),
       ],

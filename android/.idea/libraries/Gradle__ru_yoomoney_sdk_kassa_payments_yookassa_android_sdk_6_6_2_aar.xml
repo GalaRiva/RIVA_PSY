@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.yoomoney.sdk.kassa.payments:yookassa-android-sdk:6.6.2@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42a741c59cd3d9e4774fa28c819d35ae/transformed/jetified-yookassa-android-sdk-6.6.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42a741c59cd3d9e4774fa28c819d35ae/transformed/jetified-yookassa-android-sdk-6.6.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/42a741c59cd3d9e4774fa28c819d35ae/transformed/jetified-yookassa-android-sdk-6.6.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.kassa.payments/yookassa-android-sdk/6.6.2/dd594ff1ebefcf2b9c5c93c51a9b88fc696a160c/yookassa-android-sdk-6.6.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.kassa.payments/yookassa-android-sdk/6.6.2/9f00020be4791b06d14bf0efc9524b7b38745067/yookassa-android-sdk-6.6.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

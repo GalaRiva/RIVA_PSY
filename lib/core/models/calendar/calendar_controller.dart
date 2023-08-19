@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'day_model.dart';
-import 'month_model.dart';
 
 abstract class CalendarController extends GetxController {
   final BuildContext context;
@@ -12,7 +11,7 @@ abstract class CalendarController extends GetxController {
 
   List<List<DayModel>> initializeDaysList();
 
-  void popWithData();
+  void popWithData(BuildContext context);
 
   void onYearPlus();
 

@@ -5,6 +5,6 @@ import 'package:listenmebaby71_s_application17/presentation/settings/settings_pi
 import '../workmanager/workmanager_model.dart';
 
 abstract class NotificationService {
-  Future showNotification (WorkManagerModel workManagerModel);
-  void notificationActionStream (BuildContext context);
+  Future showNotification (WorkManagerModel workManagerModel, Duration dur);
+  void navigator (BuildContext context, Function otherNavigationFunc);
 }

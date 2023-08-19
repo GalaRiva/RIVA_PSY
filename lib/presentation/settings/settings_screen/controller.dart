@@ -9,22 +9,28 @@ import 'package:listenmebaby71_s_application17/presentation/settings/settings_pi
 class K6Controller extends GetxController {
   bool password = CurrentUser.user.passwordEnable;
 
-  void onTapDataAndRecovery (context) {
+  void onTapDataAndRecovery(context) {
     Navigator.pushNamed(context, AppRoutes.data_and_recovery);
   }
 
-  Future onTapPill (context) async {
+  Future onTapPill(context, GlobalKey<ScaffoldMessengerState> key) async {
     final pillRepo = PillsRepo();
-    if((await pillRepo.getEvent()).isNotEmpty) Navigator.pushNamed(context, AppRoutes.pills);
-    else showBottomSheet(context: context, builder: (context) => PillsAddBottomSheet());
+    if ((await pillRepo.getEvent()).isNotEmpty)
+      Navigator.pushNamed(context, AppRoutes.pills);
+    else
+      showModalBottomSheet(
+          context: context, builder: (context) => PillsAddBottomSheet(),
+      backgroundColor: ColorConstant.gray300,);
   }
 
-  void changePasswordState (BuildContext context) {
+  void changePasswordState(BuildContext context) {
     password = !password;
+    print(password);
     CurrentUser.user.passwordEnable = password;
-    CurrentUser.repo.setPasswordEnable(password);
-    if(password) {
-      Navigator.pushNamed(context, AppRoutes.setPassword);
+    CurrentUser.repo.setLocalUserData(passwordEnable: password);
+    if (password) {
+      Navigator.pushNamed(context, AppRoutes.setPassword).then((value) => update());
     }
+    update();
   }
 }

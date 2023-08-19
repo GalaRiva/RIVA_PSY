@@ -338,7 +338,10 @@ variant: ButtonVariant.Base,
                                 if(controller.emotion == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете эмоцию или создайте новую')));
                                 } else {
-                                  List<EventModel> list = await controller.initCurrentEventList(1) + await controller.initCurrentEventList(2) + await controller.initCurrentEventList(3);
+                                  List<EventModel> list = [];
+                                  if(controller.currentTab == 1) list = await controller.initCurrentEventList(1);
+                                  else if(controller.currentTab == 2) list = await controller.initCurrentEventList(2);
+                                  else if(controller.currentTab == 3) list = await controller.initCurrentEventList(3);
                                   for (int i = 0; i < list.length; i++) {
                                     if (controller.emotion!.name == list[i].name) {
                                       list.removeAt(i);

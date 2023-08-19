@@ -5,6 +5,7 @@ import '../../../core/models/calendar/month_model.dart';
 import '../../../widgets/calendar/calendar_days_row_widget.dart';
 import '../../../widgets/calendar/calendar_text_button_widget.dart';
 import '../../../widgets/calendar/calendar_widget.dart';
+import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
@@ -83,7 +84,6 @@ class K62Screen extends GetWidget {
                           padding: getPadding(
                             left: 14,
                             top: 26,
-                            right: 231,
                           ),
                           child: GetBuilder(
                             builder: (K62Controller _c) => ListView.separated(
@@ -107,7 +107,6 @@ class K62Screen extends GetWidget {
                           padding: getPadding(
                             left: 14,
                             top: 26,
-                            right: 231,
                           ),
                           child: GetBuilder(
                             builder: (K62Controller _c) => ListView.separated(
@@ -173,12 +172,29 @@ class K62Screen extends GetWidget {
                                 },
                                 itemCount: controller.getDaysForRows.length,
                                 itemBuilder: (context, index) {
-                                  return CalendarWidget(controller.getDaysForRows[index]);
+                                  return CalendarWidget(controller.getDaysForRows[index],);
                                 },
                               ),
                             ),
                           ),
                         ),
+                        CustomButton(
+                            height: getVerticalSize(32),
+                            width: getHorizontalSize(186),
+                            onTap: () async {
+                              controller.popWithData(context);
+                            },
+                            text: "сохранить".toUpperCase(),
+                            padding: ButtonPadding.PaddingT8,
+                            margin: getMargin(top: 90),
+                            alignment: Alignment.center),
+                        CustomButton(
+                            height: getVerticalSize(32),
+                            width: getHorizontalSize(186),
+                            onTap: () => Navigator.pop(context),
+                            text: "отмена".toUpperCase(),
+                            padding: ButtonPadding.PaddingT8,
+                            alignment: Alignment.center),
                       ],
                     ),
                   ),

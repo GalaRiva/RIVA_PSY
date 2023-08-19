@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'widgets/admission_schedule/admission_schedule_widget.dart';
 import 'widgets/diagnosis_of_the_condition_widget.dart';
 import 'widgets/report_widget.dart';
 import 'widgets/what_emotion_widget.dart';
@@ -68,7 +69,7 @@ class K61Screen extends GetWidget{
                       top: 14,
                     ),
                     child: DefaultTabController(
-                      length: 5,
+                      length: 6,
                       child: Column(
                         children: [
                           Padding(
@@ -99,42 +100,50 @@ class K61Screen extends GetWidget{
                                   labelColor: ColorConstant.cyan700,
                                   tabs: [
                                     SizedBox(
-                                      width: getHorizontalSize(83),
-                                      height: getVerticalSize(50),
+                                    width: getHorizontalSize(120),
+                                height: getVerticalSize(70),
+                                child: Tab(
+                                  text: '''График приема\nи пропуска\nпрепаратов''',
+                                  height: getVerticalSize(70),
+                                ),
+                              ),
+                                    SizedBox(
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
                                       child: Tab(
                                         text: 'Диагностика\nсостояния',
-                                        height: getVerticalSize(50),
+                                        height: getVerticalSize(70),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(83),
-                                      height: getVerticalSize(50),
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
                                       child: Tab(
                                         text: 'Сводный отчет\nо состоянии',
-                                        height: getVerticalSize(50),
+                                        height: getVerticalSize(70),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(83),
-                                      height: getVerticalSize(50),
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
                                       child: Tab(
                                         text: 'Какие эмоции\nя испытываю',
-                                        height: getVerticalSize(50),
+                                        height: getVerticalSize(70),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(90),
-                                      height: getVerticalSize(50),
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
                                       child: Tab(
                                         text: 'Где в теле живут\nмои эмоции',
-                                        height: getVerticalSize(50),
+                                        height: getVerticalSize(70),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(83),
-                                      height: getVerticalSize(50),
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
                                       child: Tab(
-                                        height: getVerticalSize(50),
+                                        height: getVerticalSize(70),
                                         text: 'Где и какие\nиспытываю\nэмоции',
                                       ),
                                     ),
@@ -157,6 +166,7 @@ class K61Screen extends GetWidget{
                                       width: size.width,
                                       child: TabBarView(
                                         children: [
+                                          AdmissionScheduleWidget(),
                                           DiagnosticOfTheConditionWidget(
                                             start: controller.dateStart,
                                             end: controller.dateEnd,

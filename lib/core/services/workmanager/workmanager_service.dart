@@ -9,14 +9,15 @@ import '../notifications/awesome_notification_service.dart';
 import 'workmanager_model.dart';
 
 class WorkManagerService {
-  final workmanager = Workmanager();
+ final workmanager = Workmanager();
   Future initService() async {
-    workmanager.initialize(callbackDispatcher,
-        isInDebugMode: false
+    /*  workmanager.initialize(callbackDispatcher,
+        isInDebugMode: true
     );
     // Periodic task registration
-    await workmanager.cancelAll();
-
+    await workmanager.cancelAll();*/
+    final AwesomeNotificationService notificationService = AwesomeNotificationService();
+    notificationService.canselAllSchedules();
     List<Map<String, dynamic>> _time = [];
     _time += await _getReminders();
     _time += await _getRemindersAboutPills();
@@ -27,16 +28,19 @@ class WorkManagerService {
       final workmanagerModel = WorkManagerModel.fromJson(_time[i]);
       final date = DateTime(_now.year, _now.month, _now.day, workmanagerModel.hour, workmanagerModel.minute);
       print(workmanagerModel.hour.toString() + ' ' + workmanagerModel.minute.toString());
-      final dur = Duration(hours: date.hour < _now.hour ? 24 -  (_now.hour - date.hour) : date.hour == _now.hour && date.minute < _now.minute ? 24 : date.hour - _now.hour, minutes: date.minute <= _now.minute ? 60 - (_now.minute - date.minute) : (date.minute - _now.minute) );
-
+      final dur = _getTimeRemaining(date);
+      workmanagerModel.duration = dur;
       print(dur);
-      await workmanager.registerPeriodicTask(
+      await notificationService.init(workmanagerModel);
+      await notificationService.showNotification(workmanagerModel, dur);
+
+      /*await workmanager.registerPeriodicTask(
           i.toString(),
           "simplePeriodicTask $i",
           frequency: Duration(hours: 24),
           initialDelay: dur,
         inputData: workmanagerModel.toJson()
-      );
+      );*/
     }
   }
 
@@ -45,6 +49,7 @@ class WorkManagerService {
     List<Map<String, dynamic>> time = list.map((e) => {
       'hour': int.parse(e[0]+e[1]),
       'minute': int.parse(e[3]+e[4]),
+      'end': DateTime(DateTime.now().month + 1)
     }).toList();
     return time;
   }
@@ -53,28 +58,26 @@ class WorkManagerService {
     final list = await PillsRepo().getEvent();
     List<Map<String, dynamic>> time = [];
     for (final item in list) {
-      time += item.hoursOfTakingPills.map((e) => {
-        'hour': int.parse(e[0]+e[1]),
-        'minute': int.parse(e[3]+e[4]),
-        'pillName': item.name
-      }).toList();
+      if(item.actual) {
+        time += item.hoursOfTakingPills
+            .map((e) => {
+                  'hour': int.parse(e[0] + e[1]),
+                  'minute': int.parse(e[3] + e[4]),
+                  'pillName': item.name,
+          'end': item.endDate
+                })
+            .toList();
+      }
     }
     return time;
   }
 }
 
-
-
-void callbackDispatcher() async{
-  Workmanager().executeTask((task, inputData) async{
-
-    final workmanagerModel = WorkManagerModel.fromJson(inputData!);
-
-    final NotificationService notificationService = FlutterLocalNotificationService();
-    await notificationService.showNotification(workmanagerModel);
-    return Future.value(true);
-  });
+Duration _getTimeRemaining(DateTime targetDateTime) {
+  DateTime now = DateTime.now();
+  if (now.isAfter(targetDateTime)) {
+    final newDate = DateTime(targetDateTime.year, targetDateTime.month, targetDateTime.day + 1, targetDateTime.hour, targetDateTime.minute);
+    return newDate.difference(now);
+  }
+  return targetDateTime.difference(now);
 }
-
-
-

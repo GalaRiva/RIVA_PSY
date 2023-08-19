@@ -178,7 +178,6 @@ class CustomBottomBar extends StatelessWidget {
         }),
         onTap: (index) {
           selectedIndex = index;
-          onChanged!(bottomMenuList[index].type);
           getCurrentPage(selectedIndex);
         },
       ),

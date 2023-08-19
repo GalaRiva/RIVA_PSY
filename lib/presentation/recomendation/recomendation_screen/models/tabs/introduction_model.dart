@@ -23,7 +23,7 @@ class IntroductionModel extends NegativeEmotionsModelTab {
         final audio = Audio.fromJson(item.data());
         String filePath = appDocPath + '/' + '${audio.folder}/${audio.fileName}.${audio.format}';
         if(DataSourceService.dataSourceIsRemote()) {
-          filePath = audio.url ?? await FirebaseStorage.instance.ref(audio.folder + '/' + audio.fileName + '.' + audio.format).getDownloadURL();
+          filePath = await FirebaseStorage.instance.ref(audio.folder + '/' + audio.fileName + '.' + audio.format).getDownloadURL();
         }
         if(audio.tab == 'introduction') {
           if(audio.name == 'Введение'){

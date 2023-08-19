@@ -47,7 +47,6 @@ class ExerciseContentController extends GetxController {
     additionalAudios = [];
     for (var audio in audios) {
       try {
-
         if ((audio.emotions ?? [])
             .map((e) => e.toLowerCase())
             .contains(mainEmotion!.name.toLowerCase())) {
@@ -65,11 +64,15 @@ class ExerciseContentController extends GetxController {
                   : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}'));
         }
         if (additionalEmotions != null) {
-
           for (var item in additionalEmotions!) {
             if ((audio.emotions ?? [])
-                .map((e) => e.toLowerCase())
-                .contains(item.name.toLowerCase())) {
+                    .map((e) => e.toLowerCase())
+                    .toList()
+                    .contains(item.name.toLowerCase()) &&
+                !additionalAudios
+                    .map((e) => e.title.toLowerCase())
+                    .toList()
+                    .contains(audio.name.toLowerCase())) {
               additionalAudios.add(AudioCardModel(
                   audio.name,
                   DataSourceService.dataSourceIsRemote()
@@ -85,7 +88,6 @@ class ExerciseContentController extends GetxController {
             }
           }
         }
-
       } catch (_) {
         print(_);
       }

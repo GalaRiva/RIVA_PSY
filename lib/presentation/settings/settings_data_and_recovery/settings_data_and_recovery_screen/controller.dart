@@ -7,6 +7,7 @@ import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/services/firebase/firebase_exception_exporter.dart';
 import '../../../../core/services/google_drive_service.dart';
 
 class DataAndRecoveryController extends GetxController {
@@ -60,17 +61,19 @@ class DataAndRecoveryController extends GetxController {
                   content:
                       'Вы успешно добавили резервную копию приложения в свой $service'));
         } catch (_) {
+          FirebaseExceptionExporter.exportException(_);
           if (showErrorMessage)
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
-                    'Произошла ошибка, проверьте подключение к интернету или попробуйте позднее')));
+                    'Произошла ошибка, проверьте подключение к интернету или попробуйте позднее\nОписание ошибки - $_')));
         }
         update();
       } catch (_) {
+        FirebaseExceptionExporter.exportException(_);
         print(_);
         if (showErrorMessage)
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Произошла непредвиденная ошибка')));
+              SnackBar(content: Text('Произошла непредвиденная ошибка\nОписание ошибки - $_')));
       }
     }
   }

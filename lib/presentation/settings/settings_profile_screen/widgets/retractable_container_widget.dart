@@ -12,7 +12,7 @@ class RetractableContainerWidget extends StatefulWidget {
   final String hintText;
   final VoidCallback? update;
   final Widget Function(String) child;
-  final  TextEditingController textController;
+  final TextEditingController textController;
 
   const RetractableContainerWidget(
       {Key? key,
@@ -20,7 +20,9 @@ class RetractableContainerWidget extends StatefulWidget {
       required this.title,
       this.subtitle,
       required this.hintText,
-      required this.child, this.update, required this.textController})
+      required this.child,
+      this.update,
+      required this.textController})
       : super(key: key);
 
   @override
@@ -28,13 +30,14 @@ class RetractableContainerWidget extends StatefulWidget {
       _RetractableContainerWidgetState();
 }
 
-class _RetractableContainerWidgetState
-    extends State<RetractableContainerWidget> with TickerProviderStateMixin {
+class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
+    with TickerProviderStateMixin {
   late AnimationController fadeController;
   late AnimationController slideController;
   late Animation<Offset> slideAnimation;
 
   bool wasTapped = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -85,47 +88,39 @@ class _RetractableContainerWidgetState
               )),
           Padding(
               padding: getPadding(left: 3, top: 16),
-              child:
-                Stack(
-                  alignment: Alignment.centerLeft,
-                  children:[ IgnorePointer(
-                    ignoring: !wasTapped,
-                    child: CustomTextFormField(
-              focusNode: FocusNode(),
-      controller: widget.textController,
-      hintText:widget.hintText,
-      margin: getMargin(top: 16),
-      isObscureText: true,
-      maxLength: 26,
-      variant: TextFormFieldVariant
-          .UnderLineWhiteA700,
-      counterText: '',
-      fontStyle: TextFormFieldFontStyle
-          .SFProDisplayRegular14,
-      validator: (text) {
-        if(text!.trim() == "") return "Заполните поле";
-        else if (text!.trim().length < 8) {
-          return 'Длина пароля должна быть больше чем 8 символов';
-        }
-        else if (text!.trim().length > 26) {
-          return 'Длина пароля должна быть меньше чем 26 символов';
-        }
-
-        else if(!_isPasswordCompliant(text)){
-          return 'Пароль должен содержать по крайней мере одну\nцифру, одну строчкую и заглавную букву\nи один уникальныйсимвол, такой как !#\$%&?';
-
-        }
-      },
-
-                    ),
+              child: Stack(alignment: Alignment.centerLeft, children: [
+                IgnorePointer(
+                  ignoring: !wasTapped,
+                  child: CustomTextFormField(
+                    focusNode: FocusNode(),
+                    controller: widget.textController,
+                    hintText: widget.hintText,
+                    margin: getMargin(top: 16),
+                    isObscureText: true,
+                    maxLength: 26,
+                    variant: TextFormFieldVariant.UnderLineWhiteA700,
+                    counterText: '',
+                    fontStyle: TextFormFieldFontStyle.SFProDisplayRegular14,
+                    validator: (text) {
+                      if (text!.trim() != "") {
+                        if (text!.trim().length < 8) {
+                          return 'Длина пароля должна быть больше чем 8 символов';
+                        } else if (text!.trim().length > 26) {
+                          return 'Длина пароля должна быть меньше чем 26 символов';
+                        } else if (!_isPasswordCompliant(text)) {
+                          return 'Пароль должен содержать по крайней мере одну\nцифру, одну строчкую и заглавную букву\nи один уникальныйсимвол, такой как !#\$%&?';
+                        }
+                      }
+                    },
                   ),
-                  Align(alignment: Alignment.centerRight,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
                   child: InkWell(
                     onTap: () async {
                       if (wasTapped) {
                         fadeController.reverse();
-                        slideController
-                            .reverse();
+                        slideController.reverse();
                         wasTapped = !wasTapped;
                       } else {
                         wasTapped = !wasTapped;
@@ -138,46 +133,45 @@ class _RetractableContainerWidgetState
                         padding: getPadding(bottom: 1),
                         child: wasTapped
                             ? Icon(
-                          Icons.close_outlined,
-                          color: ColorConstant.deepPurple600,
-                          size: getVerticalSize(20),
-                        )
+                                Icons.close_outlined,
+                                color: ColorConstant.deepPurple600,
+                                size: getVerticalSize(20),
+                              )
                             : Text("Изменить",
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle
-                                .txtSFProDisplayLight12Deeppurple600.copyWith(
-                            decoration: TextDecoration.underline
-                            ))),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle
+                                    .txtSFProDisplayLight12Deeppurple600
+                                    .copyWith(
+                                        decoration: TextDecoration.underline))),
                   ),
-                  )
-                  ]
-                )),
-
-                Visibility(
-                    visible: wasTapped,
-                    child: FadeTransition(
-                        opacity: fadeController,
-                        child: Padding(
-                          padding: getPadding(top: 16),
-                          child: SlideTransition(
-                              position: slideAnimation, child: widget.child(widget.textController.text)),
-                        )))
-
+                )
+              ])),
+          Visibility(
+              visible: wasTapped,
+              child: FadeTransition(
+                  opacity: fadeController,
+                  child: Padding(
+                    padding: getPadding(top: 16),
+                    child: SlideTransition(
+                        position: slideAnimation,
+                        child: widget.child(widget.textController.text)),
+                  )))
         ],
       ),
     );
   }
 }
-bool _isPasswordCompliant(String password) {
 
+bool _isPasswordCompliant(String password) {
   bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
   if (hasUppercase) {
     bool hasDigits = password.contains(RegExp(r'[0-9]'));
     if (hasDigits) {
       bool hasLowercase = password.contains(RegExp(r'[a-z]'));
       if (hasLowercase) {
-        bool hasSpecialCharacters = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+        bool hasSpecialCharacters =
+            password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
         return hasSpecialCharacters;
       }
     }

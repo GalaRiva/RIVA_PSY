@@ -23,34 +23,35 @@ class PillsCalendarController extends CalendarController {
   DateTime? periodStart;
   DateTime? periodEnd;
 
-  late DateTime currentDate = DateTime.now();
   List<List<DayModel>> getDaysForRows = [];
-  late int year;
-  late int month;
+
+  DateTime currentDate = DateTime.now();
+  int year = DateTime.now().year;
+  int month = DateTime.now().month;
 
   PeriodState state = PeriodState.Start;
 
-  void popWithData() {
+  void popWithData(BuildContext context) {
     if (periodStart != null && periodEnd != null)
-      Timer(Duration(seconds: 1), () {
         Navigator.pop(context, {'start': periodStart, 'end': periodEnd});
       _update();
-      });
   }
 
-  void _onTap(int i) {
+  void _onTap(int d, int m) {
     if (state == PeriodState.Start) {
-      periodStart = DateTime(currentDate.year, currentDate.month, i);
+      periodStart = DateTime(currentDate.year, m, d);
       state = PeriodState.End;
       update();
     } else if (state == PeriodState.End) {
-      if (i < periodStart!.day)
-        return null;
-      else {
-        periodEnd = DateTime(currentDate.year, currentDate.month, i);
-        update();
-        popWithData();
+      var period = DateTime(currentDate.year, m, d);
+      if(period.isBefore(periodStart!)) {
+        periodEnd = periodStart;
+        periodStart = period;
+      } else {
+        periodEnd = period;
       }
+
+      update();
     } else
       return null;
   }
@@ -96,5 +97,9 @@ class PillsCalendarController extends CalendarController {
     getDaysForRows = [];
     getDaysForRows = initializeDaysList();
     update();
+  }
+  void cancel (BuildContext context) {
+    _update();
+    Navigator.pop(context);
   }
 }

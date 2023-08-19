@@ -96,81 +96,72 @@ class AudioCardWidget extends StatelessWidget {
                       borderRadius: BorderRadiusStyle.roundedBorder3,
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: getPadding(left: 8),
-                          child: InkWell(
-                            onTap: (){
-                              if(currentAudioIndex != index && state == AudioState.Playing) {
-                                state = AudioState.Stopped;
-                              }
+                        InkWell(
+                          onTap: (){
+                            if(currentAudioIndex != index && state == AudioState.Playing) {
+                              state = AudioState.Stopped;
+                            }
+                            currentAudioIndex = index;
+                            if(state == AudioState.Stopped){
+                              state = AudioState.Playing;
+                              playFun!(duration);
+                              _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+                                duration = Duration(seconds: duration.inSeconds + 1);
+                                if(duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble()){
+                                  currentAudioIndex = index;
+                                  _timer.cancel();
+                                  stopFun!();
+                                  state = AudioState.Stopped;
+                                  duration = Duration.zero;
+                                }
+                              _c.update();
+                              });
+
+                            } else {
                               currentAudioIndex = index;
-                              if(state == AudioState.Stopped){
-                                state = AudioState.Playing;
-                                playFun!(duration);
-                                _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-                                  duration = Duration(seconds: duration.inSeconds + 1);
-                                  if(duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble()){
-                                    currentAudioIndex = index;
-                                    _timer.cancel();
-                                    stopFun!();
-                                    state = AudioState.Stopped;
-                                    duration = Duration.zero;
-                                  }
-                                _c.update();
-                                });
+                              _timer.cancel();
+                              stopFun!();
+                              state = AudioState.Stopped;
+                              _c.update();
+                            }
+                          },
 
-                              } else {
-                                currentAudioIndex = index;
-                                _timer.cancel();
-                                stopFun!();
-                                state = AudioState.Stopped;
-                                _c.update();
-                              }
-                            },
-
-                            child: CustomImageView(
-                              height: getSize(30),
-                              width: getSize(30),
-                              svgPath: (state == AudioState.Stopped || currentAudioIndex != index) ? ImageConstant.buttonStart : ImageConstant.imgVolume,
-                            ),
+                          child: CustomImageView(
+                            height: getSize(30),
+                            width: getSize(30),
+                            svgPath: (state == AudioState.Stopped || currentAudioIndex != index) ? ImageConstant.buttonStart : ImageConstant.imgVolume,
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(left: 10),
-                          child: SizedBox(
-                            width: size.width - 159,
-                            child: SliderTheme(
+                        SizedBox(
+                          width: size.width - 159,
+                          child: SliderTheme(
 
-                                data: SliderTheme.of(context).copyWith(
-                                  trackHeight: 1,
-                                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
-                                ),
-                                child: Slider(
-                                  value: duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble() ? maxDuration.inSeconds.toDouble() : duration.inSeconds.toDouble(),
-                                  min: 0.0,
-                                  thumbColor: ColorConstant.cyan700,
-                                  activeColor: ColorConstant.cyan700,
-                                  inactiveColor: Colors.white,
-                                  max: maxDuration.inSeconds.toDouble(),
-                                  onChanged: (double value) {
-                                      duration = Duration(seconds: value.toInt());
-                                      onChange(duration);
-                                  },
-                                ),
-                              )
+                              data: SliderTheme.of(context).copyWith(
+                                trackHeight: 1,
+                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
+                              ),
+                              child: Slider(
+                                value: duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble() ? maxDuration.inSeconds.toDouble() : duration.inSeconds.toDouble(),
+                                min: 0.0,
+                                thumbColor: ColorConstant.cyan700,
+                                activeColor: ColorConstant.cyan700,
+                                inactiveColor: Colors.white,
+                                max: maxDuration.inSeconds.toDouble(),
+                                onChanged: (double value) {
+                                    duration = Duration(seconds: value.toInt());
+                                    onChange(duration);
+                                },
+                              ),
+                            )
 
-                          ),
                         ),
-                        Padding(
-                          padding: getPadding(left: 10),
-                          child: Text(
-                            _formatTime(maxDuration.inMilliseconds),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtSFProDisplayMedium9,
-                          ),
+                        Text(
+                          _formatTime(maxDuration.inMilliseconds),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: AppStyle.txtSFProDisplayMedium9,
                         ),
                       ],
                     ),

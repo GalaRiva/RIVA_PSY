@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/verification_screen/verification_screen.dart';
+import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/charts/concrete_pill/concrete_pill_screen.dart';
 
 import '../presentation/charts/charts_calendar/k62_screen.dart';
@@ -7,10 +7,10 @@ import '../presentation/charts/charts_screen/k61_screen.dart';
 import '../presentation/enter_password_screen/enter_password_screen.dart';
 import '../presentation/initial_setup/recomendation_buy_tariff_screen/k4_screen.dart';
 import '../presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
-import '../presentation/initial_setup/sign_in/reset_password_screen/reset_password_screen.dart';
+import '../presentation/initial_setup/sign_in/presentation/reset_password_screen/reset_password_screen.dart';
 import '../presentation/initial_setup/set_reminders_screen/k3_screen.dart';
-import '../presentation/initial_setup/sign_in/sign_in_screen/k2_screen.dart';
-import '../presentation/initial_setup/sign_in/sign_up_screen/k2_screen.dart';
+import '../presentation/initial_setup/sign_in/presentation/sign_in_screen/k2_screen.dart';
+import '../presentation/initial_setup/sign_in/presentation/sign_up_screen/k2_screen.dart';
 import '../presentation/initial_setup/splash_screen/k1_screen.dart';
 import '../presentation/main/main_screen/k20_screen.dart';
 import '../presentation/main/path/add_emotion_screen/k24_page.dart';
@@ -144,6 +144,9 @@ static const String enterPasswordScreen = '/enter_password_screen';
 
   static String currentRoute = main;
 
+  static String initialRoute = splashScreen;
+
+  static bool notificationScreenIsInitial = true;
 
   static Map<String, WidgetBuilder> routes = {
     enterPasswordScreen: (context) => EnterPasswordScreen(),
