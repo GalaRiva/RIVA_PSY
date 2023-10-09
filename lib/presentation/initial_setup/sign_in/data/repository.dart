@@ -188,8 +188,7 @@ class SignInDataRepository extends SignInDomainRepository {
   Future<FirebaseResult> resetUserPassword(
       String userId, String password) async {
     try {
-      final _collection = _firestoreInstance.collection('Users');
-
+      final _collection = _firestoreInstance.collection('UsersData');
       final _doc = _collection.doc(userId);
       await _doc.update(UserDataModel(passwordHash: password.md5()).toJson());
       return FirebaseUserResult(

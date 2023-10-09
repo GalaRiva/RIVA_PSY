@@ -11,39 +11,49 @@ import '../../../../../../core/services/datasource_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ExerciseContentController extends GetxController {
-  final DayEventModel dayEvent;
+  ExerciseContentController();
 
-  ExerciseContentController(this.dayEvent);
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    audioInstance.dispose();
+  }
 
   int currentAudioIndex = 0;
 
   AudioPlayer audioInstance = AudioPlayer(
       audioLoadConfiguration: AudioLoadConfiguration(
           androidLoadControl: AndroidLoadControl(
-    maxBufferDuration: Duration(seconds: 300),
-    bufferForPlaybackDuration: Duration(seconds: 5),
-    bufferForPlaybackAfterRebufferDuration: Duration(seconds: 10),
+
   )));
 
   List<AudioCardModel> mainAudios = [];
   EventModel? mainEmotion;
   List<AudioCardModel> additionalAudios = [];
   List<EventModel>? additionalEmotions;
+  DayEventModel? dayEvent;
 
   Future getAudios() async {
+    audioInstance = AudioPlayer(
+
+        audioLoadConfiguration: AudioLoadConfiguration(
+            androidLoadControl: AndroidLoadControl(
+              maxBufferDuration: Duration(seconds: 300),
+              bufferForPlaybackDuration: Duration(seconds: 5),
+              bufferForPlaybackAfterRebufferDuration: Duration(seconds: 10),
+            )
+        ));
     mainAudios = [];
     var collectionAudio =
         await FirebaseFirestore.instance.collection('Audio').get();
     var audios =
         collectionAudio.docs.map((e) => Audio.fromJson(e.data())).toList();
-    mainEmotion = dayEvent.whatEmotion![0];
-
-    if (dayEvent.whatEmotion!.length > 1) {
-      additionalEmotions = dayEvent.whatEmotion!
-          .getRange(1, dayEvent.whatEmotion!.length)
-          .toList();
-    }
-    mainAudios = [];
+    mainEmotion = dayEvent!.whatEmotion![0];
+    print(dayEvent!.whatEmotion!.map((e) => e.name).toList());
+    additionalEmotions = dayEvent!.whatEmotion!
+        .getRange(1, dayEvent!.whatEmotion!.length)
+        .toList();
     additionalAudios = [];
     for (var audio in audios) {
       try {
@@ -53,14 +63,10 @@ class ExerciseContentController extends GetxController {
           mainAudios.add(AudioCardModel(
               audio.name,
               DataSourceService.dataSourceIsRemote()
-                  ? audio.url ??
-                      await FirebaseStorage.instance
-                          .ref(audio.folder +
-                              '/' +
-                              audio.fileName +
-                              '.' +
-                              audio.format)
-                          .getDownloadURL()
+                  ? 'http://95.181.164.171/' +
+                  audio.fileName +
+                  '.' +
+                  audio.format
                   : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}'));
         }
         if (additionalEmotions != null) {
@@ -76,14 +82,10 @@ class ExerciseContentController extends GetxController {
               additionalAudios.add(AudioCardModel(
                   audio.name,
                   DataSourceService.dataSourceIsRemote()
-                      ? audio.url ??
-                          await FirebaseStorage.instance
-                              .ref(audio.folder +
-                                  '/' +
-                                  audio.fileName +
-                                  '.' +
-                                  audio.format)
-                              .getDownloadURL()
+                      ? 'http://95.181.164.171/' +
+                          audio.fileName +
+                          '.' +
+                          audio.format
                       : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}'));
             }
           }

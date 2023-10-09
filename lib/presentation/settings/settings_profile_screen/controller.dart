@@ -102,6 +102,7 @@ class K18Controller extends GetxController {
     DataSourceService.setRemoteDataSource();
     Navigator.pushNamedAndRemoveUntil(
         context, AppRoutes.signUp, (route) => false);
+    AppRoutes.currentRoute = AppRoutes.main;
   }
 
   Future showLoginDialog(BuildContext context, K18Controller controller) =>

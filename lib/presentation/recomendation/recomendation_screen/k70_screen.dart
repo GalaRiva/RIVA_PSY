@@ -34,6 +34,11 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       controller.currentTabSecond = 0;
     }
     controller.init(this);
+    controller.tabControllerSecond!.addListener(() {
+      controller.currentTabSecond = controller.tabControllerSecond!.index;
+
+      controller.update();
+    });
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -185,68 +190,64 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                       ),
                       Container(
                         decoration: AppDecoration.fillGray200,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: getPadding(top: 30),
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    height: getVerticalSize(50),
-                                    width: MediaQuery.of(context)
-                                        .size
-                                        .width,
-                                    child: TabBar(
-                                      controller:  controller.tabControllerSecond,
-                                        isScrollable: true,
-                                        onTap: (val) async {
-                                          controller.currentAudioIndex = null;
-                                          controller.currentTabSecond =
-                                              val;
-                                          if(controller.audioInstance.playing) await controller.audioInstance.pause();
-
-                                          controller.update();
-                                        },
-                                        indicatorColor:
-                                        ColorConstant.fromHex(
-                                            '#1499A1'),
-                                        unselectedLabelColor:
-                                        ColorConstant.gray800,
-                                        labelStyle: TextStyle(
-                                          color:
-                                          ColorConstant.gray800,
-                                          fontSize: getFontSize(
-                                            14,
-                                          ),
-                                          fontFamily:
-                                          'SF Pro Display',
-                                          fontWeight:
-                                          FontWeight.w300,
-                                        ),
-                                        labelColor:
-                                        ColorConstant.cyan700,
-                                        tabs: controller
-                                            .negativeEmotionsModel!
-                                            .tabs),
-                                  ),
-                                ),
-                              ),
-
-                              Padding(
-                                padding: getPadding(top: 6),
-                                child: SizedBox(
-                                  height: controller.getTabHeight() - 72.5,
-                                  width: size.width,
-                                  child: TabBarView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: getPadding(top: 30),
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  height: getVerticalSize(50),
+                                  width: MediaQuery.of(context)
+                                      .size
+                                      .width,
+                                  child: TabBar(
                                     controller:  controller.tabControllerSecond,
-                                      children: controller
+                                      isScrollable: true,
+                                      onTap: (val) async {
+                                        controller.currentAudioIndex = null;
+                                        controller.currentTabSecond =
+                                            val;
+                                        if(controller.audioInstance.playing) await controller.audioInstance.pause();
+
+                                        controller.update();
+                                      },
+                                      indicatorColor:
+                                      ColorConstant.fromHex(
+                                          '#1499A1'),
+                                      unselectedLabelColor:
+                                      ColorConstant.gray800,
+                                      labelStyle: TextStyle(
+                                        color:
+                                        ColorConstant.gray800,
+                                        fontSize: getFontSize(
+                                          14,
+                                        ),
+                                        fontFamily:
+                                        'SF Pro Display',
+                                        fontWeight:
+                                        FontWeight.w300,
+                                      ),
+                                      labelColor:
+                                      ColorConstant.cyan700,
+                                      tabs: controller
                                           .negativeEmotionsModel!
-                                          .tabBodies),
+                                          .tabs),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+
+                            GetBuilder(
+                              builder: (K70Controller _c) => Expanded(
+                                child: TabBarView(
+                                  clipBehavior: Clip.none,
+                                  controller:  controller.tabControllerSecond,
+                                    children: controller
+                                        .negativeEmotionsModel!
+                                        .tabBodies),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       TabWidget(

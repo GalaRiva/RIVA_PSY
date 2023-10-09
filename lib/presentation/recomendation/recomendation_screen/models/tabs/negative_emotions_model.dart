@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../../core/models/audio/audio.dart';
@@ -56,6 +57,7 @@ class NegativeEmotionsModel {
   ];
 
   List<Widget> tabBodies = [];
+  List<double> tabHeights = [];
 
   Future<List<AudioCardModel>?> _audioAssets(String tab) async {
     try {
@@ -65,24 +67,20 @@ class NegativeEmotionsModel {
       final Directory appDocDir = await getApplicationDocumentsDirectory();
       final String appDocPath = appDocDir.path;
       for (var item in collection.docs) {
+        final audio = Audio.fromJson(item.data());
         try {
-          final audio = Audio.fromJson(item.data());
+
           String filePath = appDocPath +
               '/' +
               '${audio.folder}/${audio.fileName}.${audio.format}';
           if (DataSourceService.dataSourceIsRemote()) {
-            filePath = audio.url ??
-                await FirebaseStorage.instance
-                    .ref(audio.folder +
-                        '/' +
-                        audio.fileName +
-                        '.' +
-                        audio.format)
-                    .getDownloadURL();
+            filePath = 'http://95.181.164.171/' + audio.fileName + '.' + audio.format;
           }
           if (audio.tab == tab)
             audios.add(AudioCardModel(audio.name, filePath));
-        } catch (_) {         print (_);
+        } catch (_) {
+          print('error load ${ 'http://95.181.164.171/' + audio.fileName + '.' + audio.format}');
+          print (_);
         }
       }
       return audios;
@@ -113,20 +111,23 @@ class NegativeEmotionsModel {
 
   Future<List<Widget>> getTabBodies() async {
     final list = <Widget>[];
+    tabHeights = [];
     tabs = NegativeEmotionTabs.tabs.map((e) => Tab(text: e.title)).toList();
-
     for (var item in NegativeEmotionTabs.tabs) {
+      final audios =  await _audioAssets(item.tag);
       if (item.tag == 'panic') controller.panicTab = item.tabIndex;
       final tab = NegativeTab(
-          funAudioAssets: await _audioAssets(item.tag),
+          funAudioAssets: audios,
           funTitleText:
               'Каждое упражнение заканчивайте глубоким вдохом и выдохом через рот 3 раза. Почувствуйте, как изменилось ощущение в руках, ногах, груди',
           funButtons: await _funButtons(item.tag),
           funTitleImage: item.imagePath);
+      final tabHeight = ((audios?.length ?? 0) * (getVerticalSize(65) + 30)) + 200;
+      tabHeights.add(tabHeight);
       list.add(TabWidget(
         tab: tab,
         controller: controller,
-        height: item.tag == 'panic' ? 673 : 523,
+        height: tabHeight,
         isStandardCheck: item.tag == 'panic' ? false : true,
       ));
     }

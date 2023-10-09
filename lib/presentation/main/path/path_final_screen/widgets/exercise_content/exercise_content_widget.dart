@@ -15,7 +15,10 @@ class ExerciseContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ExerciseContentController(dayEvent));
+
+    final controller = Get.put(ExerciseContentController());
+    controller.dayEvent = dayEvent;
+    controller.update();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -102,7 +105,7 @@ class ExerciseContentWidget extends StatelessWidget {
             return Column(children: [
               Padding(
                 padding: getPadding(top: 12,),
-                child: AudioContainers(audios: controller.mainAudios, controller: controller,),
+                child: AudioContainers(audios: controller.mainAudios, controller: controller, startIndex: 0,),
               ),
               Visibility(
                   visible: dayEvent.whatEmotion!.length > 1,

@@ -36,20 +36,30 @@ class TabWidget extends StatelessWidget {
       required this.height, this.enableScroll = true, this.isStandardCheck = true})
       : super(key: key);
 
+  List<Widget> _audios = [];
+  int? audioLength;
+
   @override
   Widget build(BuildContext context) {
-
+print('h - $height');
     Future<List<Duration?>> _durations () async {
       final List<Duration?> list = [];
-      for (var item in (await tab.audioAssets())!){
-        if(DataSourceService.dataSourceIsRemote()) {
-          list.add(await controller.audioInstance.setUrl(item.audioAsset, initialPosition: Duration.zero));
-        } else
-        list.add(await controller.audioInstance.setAudioSource(AudioSource.file(item.audioAsset), initialPosition: Duration.zero));
+      for (var item in (await tab.audioAssets())!) {
+        try {
+          if (DataSourceService.dataSourceIsRemote()) {
+            list.add(await controller.audioInstance.setUrl(
+                item.audioAsset, initialPosition: Duration.zero));
+          } else
+            list.add(await controller.audioInstance.setAudioSource(
+                AudioSource.file(item.audioAsset),
+                initialPosition: Duration.zero));
+        } catch (_) {
+          print('error load - ${item.audioAsset}');
+          list.add(Duration.zero );
+        }
       }
       return list;
     }
-
     Future<List<Widget>> _audiosFun () async {
       List<Widget> list = [];
 
@@ -57,7 +67,8 @@ class TabWidget extends StatelessWidget {
       final session = await AudioSession.instance;
       await session.configure(AudioSessionConfiguration.speech());
       List<Duration?> dur = await _durations();
-       for (int i = 0; i < (await tab.audioAssets())!.length; i++) {
+      audioLength = (await tab.audioAssets())!.length;
+       for (int i = 0; i < audioLength!; i++) {
           list.add(AudioCardWidget(
             index: i,
                 text: (await tab.audioAssets())![i].title,
@@ -85,25 +96,26 @@ class TabWidget extends StatelessWidget {
 
       return list;
     }
-    List<Widget> _audios = [];
-    if(tab.audioAssets() != null)
+
+    if(audioLength != _audios.length) {
+      if (tab.audioAssets() != null)
         _audiosFun().then((value) {
           _audios = value;
           controller.update();
         });
+    }
 
     return GetBuilder(
       builder: (K70Controller _c) => Container(
             height: getVerticalSize(height),
             width: size.width,
-            decoration: AppDecoration.fillGray200,
+            color: ColorConstant.grayLight,
             child: Stack(
               children: [
-            SingleChildScrollView(
-            //physics: enableScroll! ? ScrollPhysics() : NeverScrollableScrollPhysics(),(
-            child:Padding(
+            Padding(
                   padding: getPadding(top: 16),
-                  child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Visibility(

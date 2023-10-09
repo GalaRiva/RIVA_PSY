@@ -15,7 +15,7 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/189d2b7367da4fc2f41a4d3ac8728daf/transformed/jetified-libs.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/55a64bc844a1725442e7fa1cee2e3a29/transformed/jetified-libs.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/firebase_messaging/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/cloud_firestore/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/firebase_analytics/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
@@ -27,7 +27,6 @@
                 <arg>$MODULE_DIR$/../../../../build/path_provider_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/just_audio/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/shared_preferences_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
-                <arg>$MODULE_DIR$/../../../../build/flutter_background/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/record/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/flutter_sound/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$MODULE_DIR$/../../../../build/image_picker_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
@@ -185,7 +184,6 @@
     <orderEntry type="module" module-name="io.flutter.plugins.pathprovider.android.path_provider_android.main" scope="TEST" />
     <orderEntry type="module" module-name="com.ryanheise.just_audio.android.just_audio.main" scope="TEST" />
     <orderEntry type="module" module-name="io.flutter.plugins.sharedpreferences.android.shared_preferences_android.main" scope="TEST" />
-    <orderEntry type="module" module-name="android.flutter_background.main" scope="TEST" />
     <orderEntry type="module" module-name="android.record.main" scope="TEST" />
     <orderEntry type="module" module-name="android.flutter_sound.main" scope="TEST" />
     <orderEntry type="module" module-name="android.image_picker_android.main" scope="TEST" />

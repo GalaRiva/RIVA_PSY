@@ -11,21 +11,6 @@ class ReportModel {
   List<String> _columnTags = ['Дата', 'Ситуация', 'Эмоции', 'Тело', 'Действия', 'Мысли'];
   List<double> _columnWeight = [79, 130, 130, 130, 130, 130];
 
-
-final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
-  Future<Uint8List> makePdf(List<DayEventModel> events) async {
-    final imageLogo = MemoryImage(
-        (await rootBundle.load(ImageConstant.pdfLogo)).buffer.asUint8List());
-    final imageQr = MemoryImage(
-        (await rootBundle.load(ImageConstant.pdfQR)).buffer.asUint8List());
-    final imageText = MemoryImage(
-        (await rootBundle.load(ImageConstant.pdfText)).buffer.asUint8List());
-    final _textStyle = TextStyle(
-      color: PdfColor.fromHex('#3B3B4A'),
-      fontSize: getFontSize(
-        10,
-      ),
-    );
   String _getTextFromEvent (int index, DayEventModel event){
     switch (index) {
       case 0:
@@ -52,6 +37,30 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
         return text;
     }
   }
+
+  final _headerStyle = TextStyle(
+    color: PdfColor.fromHex('#3B3B4A'),
+    fontSize: getFontSize(
+      12,
+    ),
+  );
+
+
+final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
+  Future<Uint8List> makePdf(List<DayEventModel> events) async {
+    final imageLogo = MemoryImage(
+        (await rootBundle.load(ImageConstant.pdfLogo)).buffer.asUint8List());
+    final imageQr = MemoryImage(
+        (await rootBundle.load(ImageConstant.pdfQR)).buffer.asUint8List());
+    final imageText = MemoryImage(
+        (await rootBundle.load(ImageConstant.pdfText)).buffer.asUint8List());
+    final _textStyle = TextStyle(
+      color: PdfColor.fromHex('#3B3B4A'),
+      fontSize: getFontSize(
+        10,
+      ),
+    );
+
     final pdf = Document(
       theme: ThemeData.withFont(
         base: await PdfGoogleFonts.rubikRegular(),
@@ -59,12 +68,18 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
     )
     );
 
-    final _headerStyle = TextStyle(
-      color: PdfColor.fromHex('#3B3B4A'),
-      fontSize: getFontSize(
-        12,
-      ),
-    );
+    List<List<DayEventModel>> eventsInMatrix = [[]];
+    print(events.length);
+    for(int i = 0; i < events.length; i++) {
+      if(i != 0) {
+        if (i % 4 == 0 && eventsInMatrix.length > 2)
+          eventsInMatrix.add([]);
+        else if (i % 3 == 0 && eventsInMatrix.length < 2)
+          eventsInMatrix.add([]);
+      }
+      eventsInMatrix[eventsInMatrix.length - 1].add(events[i]);
+    }
+
     pdf.addPage(Page(
         pageFormat: PdfPageFormat.a4.landscape,
         build: (context) {
@@ -139,25 +154,39 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
             )))),
 
         SizedBox(height: 2),
-        SizedBox(
-          height: (100 * events.length.toDouble()),
+        _listEvents(eventsInMatrix[0])
+      ]);
+    }));
+    if(eventsInMatrix.length > 1) {
+      for(int i = 1; i < eventsInMatrix.length; i++) {
+        pdf.addPage(Page(
+            pageFormat: PdfPageFormat.a4.landscape,
+            build: (context) => _listEvents(eventsInMatrix[i])));
+      }
+    }
+    return pdf.save();
+  }
+
+
+  Widget _listEvents(List<DayEventModel> events) {
+    return SizedBox(
+        height: (100 * events.length.toDouble()),
         child : ListView.builder(itemBuilder: (context, index) {
           return Row(children: List<Widget>.generate(6, (_index) => Padding(padding: EdgeInsets.only(right: 3, bottom: 2),
               child:
               Container(
-                height: (98),
+                  height: (98),
                   width: (_columnWeight[_index]),
                   decoration: BoxDecoration(
                       border: Border.all(color: _borderColor)
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 8),
+                      padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 8),
                       child: Text(_getTextFromEvent(_index, events[index]), style: _headerStyle.copyWith(), maxLines: 8)
                   )
               ))));
-        }, itemCount: events.length))
-      ]);
-    }));
-    return pdf.save();
+        }, itemCount: events.length > 3 ? 3 : events.length));
   }
+
+
 }

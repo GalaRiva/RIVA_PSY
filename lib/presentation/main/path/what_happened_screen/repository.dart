@@ -43,7 +43,7 @@ class K22Repo {
     EventModel('Выступление', ImageConstant.eventPerformance),
     EventModel('Экзамен', ImageConstant.eventExams),
     EventModel('Тест', ImageConstant.eventTest),
-    EventModel('Убока', ImageConstant.eventCleaning),
+    EventModel('Уборка', ImageConstant.eventCleaning),
     EventModel('Готовка', ImageConstant.eventCooking),
     EventModel('Неожиданная\nвстреча', ImageConstant.eventMeeting2),
     EventModel('Ожидание\nчеловека', ImageConstant.eventWaiting),

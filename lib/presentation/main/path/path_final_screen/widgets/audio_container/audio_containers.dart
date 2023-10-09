@@ -14,26 +14,36 @@ class AudioContainers extends StatelessWidget {
   final ExerciseContentController controller;
   const AudioContainers({Key? key, required this.audios, this.startIndex = 0, required this.controller}) : super(key: key);
 
+  Future<List<Duration?>> _durations () async {
+    final List<Duration?> list = [];
+    for (var item in audios) {
+      print(item.audioAsset.replaceAll(' ', '%20'));
+      try {
+        if (DataSourceService.dataSourceIsRemote()) {
+          list.add(await controller.audioInstance.setUrl(
+              item.audioAsset.replaceAll(' ', '%20'), initialPosition: Duration.zero, preload: true));
+        } else
+          list.add(await controller.audioInstance.setAudioSource(
+              AudioSource.file(item.audioAsset),
+              initialPosition: Duration.zero));} catch (_) {
+        list.add(null);
+      }
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    Future<List<Duration?>> _durations () async {
-      final List<Duration?> list = [];
-      for (var item in audios){
-        if(DataSourceService.dataSourceIsRemote()) {
-          list.add(await controller.audioInstance.setUrl(item.audioAsset, initialPosition: Duration.zero));
-        } else
-          list.add(await controller.audioInstance.setAudioSource(AudioSource.file(item.audioAsset), initialPosition: Duration.zero));
-      }
-      return list;
-    }
 
     return Container(
       height: getVerticalSize(95 * audios.length.toDouble()),
       width: size.width,
       color:  ColorConstant.fromHex('#E7EAEA'),
       child: FutureBuilder(
-        future: _durations(),
+        future: Future<List<Duration?>>.delayed(Duration(seconds: startIndex,) ,() {
+          return _durations();
+        }),
         builder: (context, AsyncSnapshot<List<Duration?>>snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return Center(
@@ -42,18 +52,13 @@ class AudioContainers extends StatelessWidget {
                   width: 50,
                   child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
             );
-          } if(snapshot.hasData)
+          }
+          print(audios);
           return Padding(
             padding: getPadding( left: 10, right: 10),
             child: Wrap(
-              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(audioCardModel: audios[index], index: startIndex + index, audioPlayer: controller.audioInstance, maxDuration: (snapshot.data)![index] ?? Duration.zero, currentAudioIndex: controller.currentAudioIndex, controller: controller)),
+              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(audioCardModel: audios[index], index: startIndex + index, audioPlayer: controller.audioInstance, maxDuration: (snapshot.data)?[index] ?? Duration.zero, currentAudioIndex: controller.currentAudioIndex, controller: controller)),
             ),
-          );
-          return Center(
-            child: SizedBox(
-                height: 50,
-                width: 50,
-                child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
           );
         },
       )

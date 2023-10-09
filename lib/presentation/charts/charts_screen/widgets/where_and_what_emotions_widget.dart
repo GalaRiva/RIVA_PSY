@@ -72,7 +72,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
               ),
             ),
 
-            Padding(padding: getPadding(top: 32, left: 16, right: 16),
+            Padding(padding: getPadding(top: 32, left: 16, right: 16, bottom: 32),
             child: Wrap(
               spacing: 30,
 direction: Axis.vertical,
@@ -114,29 +114,34 @@ direction: Axis.vertical,
                     ],
                   ),
                   Padding(padding: getPadding(top: 16),
-                      child: Wrap(
-                        spacing: 16,
-                        children: e.emotions.map((_e) => Padding(
-                        padding: getPadding(bottom: 18),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              color: (_e).color,
-                              width: getSize(14),
-                              height: getSize(14),
-                            ),
-                            Padding(padding: getPadding(left: 6),
-                              child: Text('${(_e).name} ${(((_e).quantity  / _sum(e.emotions)) * 100).toInt()}%',
-                                overflow:
-                                TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: AppStyle
-                                    .txtSFProDisplayLight10Gray800,),
-                            )
-                          ],
-                        ),
-                      )).toList(),)
+                      child: SizedBox(
+                        width: size.width,
+                        height: getSize(50),
+                        child: ListView(
+                          physics: PageScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          children: e.emotions.map((_e) => Padding(
+                          padding: getPadding(bottom: 18, right: 16),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                color: (_e).color,
+                                width: getSize(14),
+                                height: getSize(14),
+                              ),
+                              Padding(padding: getPadding(left: 6),
+                                child: Text('${(_e).name} ${(((_e).quantity  / _sum(e.emotions)) * 100).toInt()}%',
+                                  overflow:
+                                  TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle
+                                      .txtSFProDisplayLight10Gray800,),
+                              )
+                            ],
+                          ),
+                        )).toList(),),
+                      )
                   )
                 ],
               )).toList(),

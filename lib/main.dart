@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background/flutter_background.dart';
 import 'package:listenmebaby71_s_application17/core/db/hive_db.dart';
 import 'package:listenmebaby71_s_application17/core/services/workmanager/workmanager_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';

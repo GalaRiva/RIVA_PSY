@@ -56,7 +56,7 @@ class K1Controller extends GetxController {
         final controller = Get.put(K70Controller());
         await controller.initNegativeEmotions();
         print(DataSourceService.dataSourceIsRemote());
-        /*if (!DataSourceService.dataSourceIsRemote()) {
+        if (!DataSourceService.dataSourceIsRemote()) {
           var collectionAudio =
               await FirebaseFirestore.instance.collection('Audio').get();
           var collectionImages =
@@ -78,10 +78,10 @@ class K1Controller extends GetxController {
             secondsToNewPage = 0;
             timer(context);
           });
-        } else {*/
+        } else {
           loading = false;
           timer(context);
-        //}
+        }
       } else timer(context);
     } catch (_) {
       print('error $_');
@@ -116,9 +116,7 @@ class K1Controller extends GetxController {
                 }
               }
               if (!wasDownloaded) {
-                final String path = audio.folder.trim() +
-                    '/' +
-                    audio.fileName.trim() +
+                final String path = audio.fileName.trim() +
                     '.' +
                     audio.format.trim();
                 await storage.downloadFile(() {

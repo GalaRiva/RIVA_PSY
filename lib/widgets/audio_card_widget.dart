@@ -44,18 +44,27 @@ class AudioCardWidget extends StatelessWidget {
       return "$minutes.$seconds";
     }
 
-    late Timer _timer;
+    Timer? _timer;
 
     audioInstance.playerStateStream.listen((playerState) {
       final processingState = playerState.processingState;
 
       if(audioInstance.playing && currentAudioIndex != index){
         state = AudioState.Stopped;
-        _timer.cancel();
-      } if (processingState == ProcessingState.completed) { // completed
-        audioInstance.seek(Duration.zero);
-        audioInstance.pause();
-      }
+        try {
+          if(_timer != null)
+          _timer!.cancel();
+        } catch(_) {
+
+        }
+        } if (processingState == ProcessingState.completed) { // completed
+        try {
+          audioInstance.seek(Duration.zero);
+          audioInstance.pause();
+        } catch (_) {
+
+        }
+        }
     });
     return GetBuilder(
         builder: (K70Controller _c) =>
@@ -93,6 +102,7 @@ class AudioCardWidget extends StatelessWidget {
                     width: size.width - 74,
                     height: getVerticalSize(32),
                     decoration: AppDecoration.back.copyWith(
+                      color: ColorConstant.gray300,
                       borderRadius: BorderRadiusStyle.roundedBorder3,
                     ),
                     child: Row(
@@ -111,7 +121,8 @@ class AudioCardWidget extends StatelessWidget {
                                 duration = Duration(seconds: duration.inSeconds + 1);
                                 if(duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble()){
                                   currentAudioIndex = index;
-                                  _timer.cancel();
+                                  if(_timer != null)
+                                    _timer!.cancel();
                                   stopFun!();
                                   state = AudioState.Stopped;
                                   duration = Duration.zero;
@@ -121,7 +132,8 @@ class AudioCardWidget extends StatelessWidget {
 
                             } else {
                               currentAudioIndex = index;
-                              _timer.cancel();
+                              if(_timer != null)
+                                _timer!.cancel();
                               stopFun!();
                               state = AudioState.Stopped;
                               _c.update();
@@ -161,7 +173,7 @@ class AudioCardWidget extends StatelessWidget {
                           _formatTime(maxDuration.inMilliseconds),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: AppStyle.txtSFProDisplayMedium9,
+                          style: AppStyle.txtSFProDisplayMedium9.copyWith(color: ColorConstant.cyan700),
                         ),
                       ],
                     ),

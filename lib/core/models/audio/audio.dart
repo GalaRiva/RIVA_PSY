@@ -6,10 +6,9 @@ class Audio {
   final String name;
   final String format;
   final String tab;
-  final String? url;
   final List<String>? emotions;
 
-  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.url, this.emotions);
+  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.emotions);
 
   factory Audio.fromJson(Map<String, dynamic> json) {
     return Audio(
@@ -18,7 +17,6 @@ class Audio {
         json.toString().contains('name') ?json['name'] : '',
         json.toString().contains('format') ?json['format'] : 'mp3',
         json.toString().contains('tab') ? json['tab'] : '',
-        json.toString().contains('url') ?json['url'] : null,
         json.toString().contains('emotions') ? (json['emotions'] as String? ?? '').split(', ') : []
 
     );
@@ -31,7 +29,6 @@ class Audio {
     json['name'] = this.name;
     json['format'] = this.format;
     json['tab'] = this.tab;
-    json['url'] = this.url;
     json['emotions'] = this.emotions;
     return json;
   }

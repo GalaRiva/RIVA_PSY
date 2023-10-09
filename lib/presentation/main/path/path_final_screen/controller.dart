@@ -64,7 +64,6 @@ class K39Controller extends GetxController {
   }
   final record = Record();
   void initRecorder() async {
-    _recordingSession = FlutterSoundRecorder();
     await _recordingSession.openAudioSession(
         focus: AudioFocus.requestFocusAndStopOthers,
         category: SessionCategory.playAndRecord,
