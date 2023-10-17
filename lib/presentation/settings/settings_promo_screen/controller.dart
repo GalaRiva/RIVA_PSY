@@ -21,11 +21,11 @@ class K16Controller {
     if (data.isNotEmpty) {
       final promoModel = PromoModel.fromType(data);
       final tariff = TariffModel(
-          name: TariffModel.STANDARD_TARIFF.name,
-          endDate: TariffModel.STANDARD_TARIFF.endDate,
-          description: TariffModel.STANDARD_TARIFF.description,
-          cost: TariffModel.STANDARD_TARIFF.cost,
-          advantages: TariffModel.STANDARD_TARIFF.advantages);
+          name: TariffModel.ORION_TARIFF.name,
+          endDate: TariffModel.ORION_TARIFF.endDate,
+          description: TariffModel.ORION_TARIFF.description,
+          cost: TariffModel.ORION_TARIFF.cost,
+          advantages: TariffModel.ORION_TARIFF.advantages);
       if (await _fireStoreRepo.canActivatePromo(promo: promoModel)) {
         if (promoModel.discount == 100) {
           tariff.cost = 0;

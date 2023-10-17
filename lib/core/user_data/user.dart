@@ -27,8 +27,6 @@ class CurrentUser extends UserModel {
   static final repo = UserRepo();
 
   static Future init() async {
-
-
     if(Platform.isIOS) {
       var status = await Permission.storage.status;
       if (status.isDenied) {
@@ -58,7 +56,7 @@ class CurrentUser extends UserModel {
   }
 
   static bool tariffIsStandard() {
-    if (user.currentTariff!.name == TariffModel.STANDARD_TARIFF.name)
+    if (user.currentTariff!.name == TariffModel.ORION_TARIFF.name)
       return true;
     return false;
   }

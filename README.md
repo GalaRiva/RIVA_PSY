@@ -1,15 +1,12 @@
 
-# listenmebaby71_s_application17
+# Rigel PSY
 
 <div>
-  <h1 align="center">Getting Started with Flutter 🚀 </h1>
-  <strong>
-    Generated with ❤️ from DhiWise
-  </strong>
+  <h1 align="center">Getting Started with Flutter 🚀</h1>
   <p>
-    This is the documentation of Flutter Applications.
-    It contains all the information you need to get started with
-    and make changes to your App
+    A completely practical application for you to cope with panic attacks and a state of affect at the moment,
+    work out heavy emotions and feelings, find hidden connections that worsen your well-being.
+    Filling in the SMER is as simple as possible, and you can send it to your psychologist from the application.
   </p>
 </div>
 

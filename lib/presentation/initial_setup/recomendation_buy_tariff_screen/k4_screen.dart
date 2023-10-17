@@ -66,7 +66,7 @@ class K4Screen extends StatelessWidget {
                                               onTap: () {
                                                 Navigator.pushNamed(context,
                                                     AppRoutes.buySubscription,
-                                                    arguments: TariffModel.STANDARD_TARIFF);
+                                                    arguments: TariffModel.ORION_TARIFF);
                                               },margin: getMargin(
                                                   left: 18, top: 19, right: 18),
                                               variant: ButtonVariant

@@ -218,7 +218,7 @@ class K13Screen extends GetWidget {
     }
     else {
       Navigator.pushNamed(context, AppRoutes.buySubscription,
-          arguments: TariffModel.STANDARD_TARIFF);
+          arguments: TariffModel.ORION_TARIFF);
     }
   }
 

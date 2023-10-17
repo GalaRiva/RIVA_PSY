@@ -8,6 +8,22 @@ class TariffModel {
   TariffModel(
       {required this.name, required this.endDate, required this.description, required this.cost, required this.advantages});
 
+  TariffModel copyWith({
+    String? name,
+    DateTime? endDate,
+    String? description,
+    double? cost,
+    List<String>? advantages,
+  }) {
+    return TariffModel(
+      name: name ?? this.name,
+      endDate: endDate ?? this.endDate,
+      description: description ?? this.description,
+      cost: cost ?? this.cost,
+      advantages: advantages ?? this.advantages,
+    );
+  }
+
   factory TariffModel.fromJson(Map<String, dynamic> json) =>
       TariffModel(name: json['name'],
           endDate: DateTime.parse(json['endDate']),
@@ -31,11 +47,11 @@ class TariffModel {
   advantages: [],
   );
 
-  static TariffModel STANDARD_TARIFF = TariffModel(
-      name: 'Стандарт',
+  static TariffModel ORION_TARIFF = TariffModel(
+      name: 'Орион',
       endDate: DateTime(DateTime.now().year + 1, DateTime.now().month,DateTime.now().day,),
       description: '',
-      cost: 990,
+      cost: 2990,
       advantages: [
         'Доступ ко всем текстовым рекомендациям',
         'Доступ ко всем аудио рекомендациям',

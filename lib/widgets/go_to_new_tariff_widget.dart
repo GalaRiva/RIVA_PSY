@@ -49,7 +49,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
               text: "Перейти на тариф стандарт".toUpperCase(),
               onTap: () async {
                 Navigator.pushNamed(context, AppRoutes.buySubscription,
-                    arguments: TariffModel.STANDARD_TARIFF);
+                    arguments: TariffModel.ORION_TARIFF);
               },
               fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
               alignment: Alignment.center,
