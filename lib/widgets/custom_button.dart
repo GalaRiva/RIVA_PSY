@@ -144,6 +144,8 @@ class CustomButton extends StatelessWidget {
         return ColorConstant.gray50;
       case ButtonVariant.Base:
         return ColorConstant.fromHex('#e0e8e8');
+      case ButtonVariant.Cyan:
+        return ColorConstant.cyan700;
       case ButtonVariant.White:
         return Colors.white;
       case ButtonVariant.White24:
@@ -305,6 +307,7 @@ enum ButtonVariant {
   OutlineBluegray60014,
   OutlineBluegray70038,
   Almost,
+  Cyan,
   Base,
   White,
   White24

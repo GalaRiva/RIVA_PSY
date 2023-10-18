@@ -206,7 +206,7 @@ class K13Screen extends GetWidget {
 
   onTapRowcart(BuildContext context) async {
 
-    if(CurrentUser.tariffIsStandard()){
+    if(CurrentUser.tariffIsOrion()){
       showDialog(
         context: context, builder: (BuildContext context) =>
           CustomMessageBox(
@@ -223,7 +223,7 @@ class K13Screen extends GetWidget {
   }
 
   onTapRowgrid(BuildContext context) {
-    if(CurrentUser.tariffIsStandard()){
+    if(CurrentUser.tariffIsOrion()){
       showDialog(
         context: context, builder: (BuildContext context) =>
           CustomMessageBox(

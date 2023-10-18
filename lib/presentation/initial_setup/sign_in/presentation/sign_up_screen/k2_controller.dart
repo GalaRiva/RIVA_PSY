@@ -129,6 +129,8 @@ class K2Controller extends GetxController {
         final dataSetResult = await GetAndSetRemoteDataLocally()
             .getAndSetRemoteDataLocally(
             result.userId!, email: result.email, login: result.login);
+        print(dataSetResult.firebaseResultStatus.toString());
+
         if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
           showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
         }

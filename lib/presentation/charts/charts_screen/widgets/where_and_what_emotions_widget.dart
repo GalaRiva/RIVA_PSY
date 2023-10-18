@@ -21,7 +21,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
       return _s;
     }
 
-    return !CurrentUser.tariffIsStandard() ? _emptyTab() : Container(
+    return !CurrentUser.tariffIsOrion() ? _emptyTab() : Container(
       width: size.width,
       height: size.height - 214,
       decoration: AppDecoration.fillGray200,

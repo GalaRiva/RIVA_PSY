@@ -18,6 +18,9 @@ class ImageConstant {
   static String googleSVG =
       'assets/images/googleSVG.svg';
 
+  static String tariffImage =
+      'assets/images/tariff_image.svg';
+
   static String appleSVG =
       'assets/images/appleSVG.svg';
 

@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "408583851820-dn0j9nd876oipg7cq4rp0qp4kobf1349.apps.googleusercontent.com",
+          "client_id": "408583851820-907u0t0fdoel90pcilp23ot9ogt8e7dj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rigel_psy.app",
-            "certificate_hash": "4ce7651ef56a9844dbe9f186c101b4b5b61a3ef5"
+            "certificate_hash": "8d1cba54d3ac1e524e4a1e5a0901ba97c4447561"
           }
         },
         {

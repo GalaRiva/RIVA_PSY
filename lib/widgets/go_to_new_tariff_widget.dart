@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
 import '../core/models/tariff_model.dart';
@@ -7,7 +8,8 @@ import 'custom_button.dart';
 class GoToNewTariffWidget extends StatelessWidget {
   final VoidCallback? onSecondButtonTap;
   final double? height;
-  const GoToNewTariffWidget({Key? key, this.height, this.onSecondButtonTap}) : super(key: key);
+  final bool goToFreeRecommendation;
+  const GoToNewTariffWidget({Key? key, this.height, this.onSecondButtonTap, this.goToFreeRecommendation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +35,22 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 288,
               ),
               child: Text(
-                'Для полного доступа к рекомендациям, статистике и аудио переходите на тариф Стандарт',
+                'Получите полный доступ к рекомендациям, статистике,  аудио и упражнениям: переходите на тариф “Орион”',
                 textAlign: TextAlign.center,
                 style: AppStyle.txtSFProDisplayLight10Gray800,
               ),
             ),
-            SizedBox(height: 4,),
-            CustomButton(
+            SizedBox(height: 20,),
+            SvgPicture.asset(ImageConstant.tariffImage, width: 140,),
+    SizedBox(height: 20,),
+    CustomButton(
               height: getVerticalSize(
                 54,
               ),
               width: getHorizontalSize(
                 288,
               ),
-              text: "Перейти на тариф стандарт".toUpperCase(),
+              text: "Перейти на тариф \"ОРИОН\"".toUpperCase(),
               onTap: () async {
                 Navigator.pushNamed(context, AppRoutes.buySubscription,
                     arguments: TariffModel.ORION_TARIFF);
@@ -54,6 +58,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
               fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
               alignment: Alignment.center,
             ),
+            if(goToFreeRecommendation)
             CustomButton(
               height: getVerticalSize(
                 54,
@@ -75,7 +80,9 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
               },
               alignment: Alignment.center,
             ),
-            SizedBox(height: 40,)
+            SizedBox(height: 13,),
+            Text('В бесплатной версии резервные копии будут храниться в вашем облачном хранилище.', style: AppStyle.txtSFProDisplayLight12Gray800,),
+            SizedBox(height: 27,)
           ],
         ),
 ),

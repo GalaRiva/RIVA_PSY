@@ -251,7 +251,7 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подклюбчение к интернету',
+              'Произошла непредвиденная ошибка, проверьте подключение к интернету',
         );
       }
       } on FirebaseAuthException catch (e) {
@@ -296,7 +296,7 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подклюбчение к интернету',
+              'Произошла непредвиденная ошибка, проверьте подключение к интернету',
         );
       } catch (_) {
         return FirebaseSignInResult(

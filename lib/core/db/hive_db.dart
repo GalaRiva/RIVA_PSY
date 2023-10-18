@@ -89,7 +89,8 @@ class HiveDBTags {
     emotions4,
     bodyParts,
     dayEvents,
-    pills
+    pills,
+    spentRecords,
   ];
   static const events = 'events';
   static const place = 'place';
@@ -104,4 +105,5 @@ class HiveDBTags {
   static const emotionalState = 'emotionalState';
   static const audio = 'audio';
   static const pills = 'pills';
+  static const spentRecords = 'spentRecords';
 }

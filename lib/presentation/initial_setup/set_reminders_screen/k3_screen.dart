@@ -268,7 +268,7 @@ class K3Screen extends GetWidget<K3Controller> {
     CurrentUser.user.reminderTime = quantity;
     await _generateReminderTime();
     await CurrentUser.repo.setLocalUserData(reminderTime: quantity);
-    if (CurrentUser.tariffIsStandard())
+    if (CurrentUser.tariffIsOrion())
       Navigator.pushNamed(context, AppRoutes.send_pushes);
     else
       Navigator.pushNamed(context, AppRoutes.recommendationBuyTariff);

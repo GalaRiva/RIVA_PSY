@@ -55,7 +55,7 @@ class CurrentUser extends UserModel {
     }
   }
 
-  static bool tariffIsStandard() {
+  static bool tariffIsOrion() {
     if (user.currentTariff!.name == TariffModel.ORION_TARIFF.name)
       return true;
     return false;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/exercises_tab_body.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/custom_tab_bar.dart';
 
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/image_constant.dart';
@@ -8,6 +10,7 @@ import '../../../../theme/app_decoration.dart';
 import '../../../../theme/app_style.dart';
 import '../../../../widgets/custom_bottom_bar.dart';
 import '../../../../widgets/custom_image_view.dart';
+import '../../../widgets/custom_button.dart';
 import 'controller.dart';
 import 'widgets/tab_widget.dart';
 
@@ -76,52 +79,24 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                 style: AppStyle.txtH1,
               ),
             ),
-            InkWell(
-              onTap: () {
-                controller.tabController!.animateTo(2);
-                controller.currentTab = 2;
-                controller.tabControllerSecond!.animateTo(controller.panicTab);
-                controller.currentTabSecond = controller.panicTab;
-              },
-              child: Padding(
-                padding: getPadding(top: 23, left: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      "Паника. Аффект",
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtSFProDisplayLight14Cyan700.copyWith(
-                        fontStyle: FontStyle.normal,
-                        letterSpacing: getHorizontalSize(
-                          0.56,
-                        ),
-                      ),
-                    ),
-                    CustomImageView(
-                      svgPath: ImageConstant.imgVector46,
-                      color: ColorConstant.cyan700,
-                      height: getVerticalSize(
-                        8,
-                      ),
-                      width: getHorizontalSize(
-                        4,
-                      ),
-                      radius: BorderRadius.circular(
-                        getHorizontalSize(
-                          1,
-                        ),
-                      ),
-                      margin: getMargin(
-                        left: 7,
-                        top: 4,
-                        bottom: 4,
-                      ),
-                    ),
-                  ],
-                ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: CustomButton(
+                variant: ButtonVariant.Cyan,
+                fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                text: 'Помощь при панике и аффекте',
+                width: size.width - 32,
+                onTap: () {
+                  controller.tabController!.animateTo(2);
+                  controller.currentTab = 2;
+                  controller.tabControllerSecond!.animateTo(controller.panicTab);
+                  controller.currentTabSecond = controller.panicTab;
+                },
+                height: getVerticalSize(37),
               ),
             ),
+            CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
+            tabs: [ExercisesTabBody(controller: controller), Container( width: size.width, height: 100, color: Colors.redAccent,)],)
 
           ],
         ),
