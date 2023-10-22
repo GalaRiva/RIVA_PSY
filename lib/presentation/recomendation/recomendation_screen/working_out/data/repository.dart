@@ -12,19 +12,33 @@ class WorkingOutRepo {
     var listToReturn = (await HiveDB.getBox(_eventTag))
         .map((e) => SpentRecordModel.fromJson(jsonDecode(e)))
         .toList();
-    if(listToReturn.isEmpty) {
-      listToReturn = [];
-    }
     return listToReturn;
   }
 
-  Future<void> updateEvent(List<DayEventModel> events) async {
+  Future<void> updateEvent(List<SpentRecordModel> events) async {
     // TODO: implement updateTasks
     await HiveDB.openBox(_eventTag);
     await HiveDB.deleteBox(_eventTag);
     events.sort((d1,d2) => d1.compareTo(d2));
     for (var item in events) {
       HiveDB.setBox(item.toJson(), _eventTag);
+    }
+  }
+
+  Future<List<DayEventModel>> getDayEvent() async {
+    var listToReturn = (await HiveDB.getBox(HiveDBTags.dayEvents))
+        .map((e) => DayEventModel.fromJson(jsonDecode(e)))
+        .toList();
+    return listToReturn;
+  }
+
+  Future<void> updateDayEventEvent(List<DayEventModel> events) async {
+    // TODO: implement updateTasks
+    await HiveDB.openBox(HiveDBTags.dayEvents);
+    await HiveDB.deleteBox(HiveDBTags.dayEvents);
+    events.sort((d1,d2) => d1.compareTo(d2));
+    for (var item in events) {
+      HiveDB.setBox(item.toJson(), HiveDBTags.dayEvents);
     }
   }
 }

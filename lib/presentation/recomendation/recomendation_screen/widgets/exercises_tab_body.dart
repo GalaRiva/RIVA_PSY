@@ -62,7 +62,7 @@ class ExercisesTabBody extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: size.height - getVerticalSize(332),
+          height: size.height - getVerticalSize(419),
           width: size.width,
           child: TabBarView(
             controller:  controller.tabController,

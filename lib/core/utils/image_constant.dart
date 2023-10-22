@@ -7,47 +7,35 @@ class ImageConstant {
   static String imgGroupCyan70021x18 =
       'assets/images/img_group_cyan_700_21x18.svg';
 
-  static String k20Image =
-      'assets/images/k20.png';
+  static String k20Image = 'assets/images/k20.png';
 
   static String imgGroup74 = 'assets/images/img_group74.svg';
 
   static String imgLocationGray80063x81 =
       'assets/images/img_location_gray_800_63x81.svg';
 
-  static String googleSVG =
-      'assets/images/googleSVG.svg';
+  static String googleSVG = 'assets/images/googleSVG.svg';
 
-  static String tariffImage =
-      'assets/images/tariff_image.svg';
+  static String tariffImage = 'assets/images/tariff_image.svg';
 
-  static String appleSVG =
-      'assets/images/appleSVG.svg';
+  static String appleSVG = 'assets/images/appleSVG.svg';
 
-  static String imageCalendar =
-      'assets/images/calendar.svg';
+  static String imageCalendar = 'assets/images/calendar.svg';
 
-  static String imgHandWithPill =
-      'assets/images/hand_with_pill.svg';
+  static String imgHandWithPill = 'assets/images/hand_with_pill.svg';
 
   static String imgCalendarHand =
       'assets/images/hand_with_pill_from_calendar.svg';
 
-  static String imgAdd =
-      'assets/images/add.svg';
+  static String imgAdd = 'assets/images/add.svg';
 
-  static String imageClock =
-      'assets/images/clock.svg';
+  static String imageClock = 'assets/images/clock.svg';
 
-  static String imgPill =
-      'assets/images/pill.svg';
+  static String imgPill = 'assets/images/pill.svg';
 
+  static String imgSmallLogo = 'assets/images/rigel_small_logo.svg';
 
-  static String imgSmallLogo =
-      'assets/images/rigel_small_logo.svg';
-
-  static String imgClip =
-      'assets/images/clip.svg';
+  static String imgClip = 'assets/images/clip.svg';
 
   static String imgCarCyan70030x28 = 'assets/images/img_car_cyan_700_30x28.svg';
 
@@ -831,15 +819,18 @@ class ImageConstant {
 
   static const eventTest = 'assets/images/event_images/Group 63_test.svg';
 
-  static const eventUpcoming = 'assets/images/event_images/Group 82предстоящий.svg';
+  static const eventUpcoming =
+      'assets/images/event_images/Group 82предстоящий.svg';
 
   static const eventQuarrel = 'assets/images/event_images/Group 84ссора.svg';
 
-  static const eventBusinessMeet = 'assets/images/event_images/Group_busines_meet.svg';
+  static const eventBusinessMeet =
+      'assets/images/event_images/Group_busines_meet.svg';
 
   static const eventCard = 'assets/images/event_images/Group_card.svg';
 
-  static const eventComputerGame = 'assets/images/event_images/Group_computer_game.svg';
+  static const eventComputerGame =
+      'assets/images/event_images/Group_computer_game.svg';
 
   static const eventFilms = 'assets/images/event_images/Group_film.svg';
 
@@ -855,13 +846,17 @@ class ImageConstant {
 
   static const eventInsomnia = 'assets/images/event_images/Group_бессоница.svg';
 
-  static const eventPerformance = 'assets/images/event_images/Group_выступление.svg';
+  static const eventPerformance =
+      'assets/images/event_images/Group_выступление.svg';
 
-  static const eventFallingAsleep = 'assets/images/event_images/Group_засыпание.svg';
+  static const eventFallingAsleep =
+      'assets/images/event_images/Group_засыпание.svg';
 
-  static const eventNightmarish = 'assets/images/event_images/Group_кошмарный.svg';
+  static const eventNightmarish =
+      'assets/images/event_images/Group_кошмарный.svg';
 
-  static const eventCollection = 'assets/images/event_images/Group_собрание.svg';
+  static const eventCollection =
+      'assets/images/event_images/Group_собрание.svg';
 
   static const eventCleaning = 'assets/images/event_images/Groupcleaning.svg';
 
@@ -875,25 +870,31 @@ class ImageConstant {
 
   static const eventDisease = 'assets/images/event_images/Groupболезнь.svg';
 
-  static const eventInInternet = 'assets/images/event_images/Groupв_интернете.svg';
+  static const eventInInternet =
+      'assets/images/event_images/Groupв_интернете.svg';
 
   static const eventInSchool = 'assets/images/event_images/Groupв_школу.svg';
 
-  static const eventPerformance2 = 'assets/images/event_images/Groupвыступление.svg';
+  static const eventPerformance2 =
+      'assets/images/event_images/Groupвыступление.svg';
 
   static const eventMusic = 'assets/images/event_images/Groupмузыка.svg';
 
   static const eventLackOfSleep = 'assets/images/event_images/Groupнедосып.svg';
 
-  static const eventWaitingCollection = 'assets/images/event_images/Groupожидание_встречи.svg';
+  static const eventWaitingCollection =
+      'assets/images/event_images/Groupожидание_встречи.svg';
 
   static const eventDelay = 'assets/images/event_images/Groupопоздание.svg';
 
-  static const eventIntoxication = 'assets/images/event_images/Groupопьянение.svg';
+  static const eventIntoxication =
+      'assets/images/event_images/Groupопьянение.svg';
 
-  static const eventRescheduled = 'assets/images/event_images/Groupперенесли.svg';
+  static const eventRescheduled =
+      'assets/images/event_images/Groupперенесли.svg';
 
-  static const eventPreparation = 'assets/images/event_images/Groupподготовка.svg';
+  static const eventPreparation =
+      'assets/images/event_images/Groupподготовка.svg';
 
   static const eventTrip = 'assets/images/event_images/Groupпоездка.svg';
 
@@ -903,7 +904,8 @@ class ImageConstant {
 
   static const eventComing = 'assets/images/event_images/Groupприход.svg';
 
-  static const eventAwakening = 'assets/images/event_images/Groupпробуждения.svg';
+  static const eventAwakening =
+      'assets/images/event_images/Groupпробуждения.svg';
 
   static const eventViewing = 'assets/images/event_images/Groupпросмотр.svg';
 
@@ -999,9 +1001,11 @@ class ImageConstant {
 
   static const eventWho14 = 'assets/images/event_images/Groupwho14.svg';
 
-  static const eventEmotion1_1 = 'assets/images/event_images/Groupemotion1_1.svg';
+  static const eventEmotion1_1 =
+      'assets/images/event_images/Groupemotion1_1.svg';
 
-  static const eventEmotion2_11 = 'assets/images/event_images/Groupemotion2_11.svg';
+  static const eventEmotion2_11 =
+      'assets/images/event_images/Groupemotion2_11.svg';
 
   static const eventWoman = 'assets/images/event_images/Groupwoman.svg';
 
@@ -1019,15 +1023,18 @@ class ImageConstant {
 
   static const eventClassmate = 'assets/images/event_images/Groupclassmate.svg';
 
-  static const eventFamiliar = 'assets/images/event_images/Group 88familiar.svg';
-  static const eventInternetFriend = 'assets/images/event_images/Groupinternet_friend.svg';
-  static const eventInternetHuman = 'assets/images/event_images/Groupinternet_human.svg';
+  static const eventFamiliar =
+      'assets/images/event_images/Group 88familiar.svg';
+  static const eventInternetFriend =
+      'assets/images/event_images/Groupinternet_friend.svg';
+  static const eventInternetHuman =
+      'assets/images/event_images/Groupinternet_human.svg';
   static const eventEmployee = 'assets/images/event_images/Groupemployee.svg';
   static const eventDirector = 'assets/images/event_images/Groupdirector.svg';
-  static const eventSubordinate = 'assets/images/event_images/Groupsubordinate.svg';
+  static const eventSubordinate =
+      'assets/images/event_images/Groupsubordinate.svg';
   static const eventPet = 'assets/images/event_images/Grouppet.svg';
   static const eventFamily = 'assets/images/event_images/Groupfamily.svg';
-
 
   static const imageGrid = 'assets/images/Framegrid.svg';
 
@@ -1035,31 +1042,53 @@ class ImageConstant {
 
   static const depressionImage = 'assets/images/Groupdepression_image.svg';
 
-  static const recommendationsLaziness = 'assets/images/recomendations/Framelen.svg';
+  static const recommendationsLaziness =
+      'assets/images/recomendations/Framelen.svg';
 
-  static const recommendationsFault = 'assets/images/recomendations/Framevina.svg';
+  static const recommendationsFault =
+      'assets/images/recomendations/Framevina.svg';
 
-  static const recommendationsPanic = 'assets/images/recomendations/Group 1panic.svg';
+  static const recommendationsPanic =
+      'assets/images/recomendations/Group 1panic.svg';
 
-  static const recommendationsLoneless = 'assets/images/recomendations/Group 34loneless.svg';
+  static const recommendationsLoneless =
+      'assets/images/recomendations/Group 34loneless.svg';
 
-  static const recommendationsUncertainty = 'assets/images/recomendations/Group 54neuverennost.svg';
+  static const recommendationsUncertainty =
+      'assets/images/recomendations/Group 54neuverennost.svg';
 
-  static const recommendationsDisgust = 'assets/images/recomendations/Group 65otvrashenie.svg';
+  static const recommendationsDisgust =
+      'assets/images/recomendations/Group 65otvrashenie.svg';
+  static const bubbleImg = 'assets/images/bubble_img.png';
 
-  static const recommendationsLost = 'assets/images/recomendations/Group 66poteryanost.svg';
+  static const recommendationsLost =
+      'assets/images/recomendations/Group 66poteryanost.svg';
 
-  static const recommendationsScare = 'assets/images/recomendations/Group 67strah.svg';
+  static const recommendationsScare =
+      'assets/images/recomendations/Group 67strah.svg';
 
-  static const recommendationsLogo = 'assets/images/recomendations/Framerecomendations.svg';
+  static const recommendationsLogo =
+      'assets/images/recomendations/Framerecomendations.svg';
 
+  static const workingOutImg = 'assets/images/workingOutImg.png';
+
+  static const handImg = 'assets/images/hand_img.png';
+
+  static const ellipseImg = 'assets/images/ellipse_img.svg';
+
+  static const humanDoImg = 'assets/images/human_do_img.png';
+
+  static const humanThoughtImg = 'assets/images/human_thought_img.png';
+
+  static const humanAlternativeImg = 'assets/images/human_alternative_img.png';
+
+  static const humanAlternativeDoImg = 'assets/images/human_alternative_do.png';
 
   static const pdfLogo = 'assets/images/pdf/Framelogo.png';
 
   static const pdfText = 'assets/images/pdf/Group 35rigel_text.png';
 
   static const pdfQR = 'assets/images/pdf/image 16_qr.jpg';
-
 
   static String imageNotFound = 'assets/images/image_not_found.png';
 }

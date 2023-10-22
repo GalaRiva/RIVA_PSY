@@ -17,11 +17,14 @@ extension DateInString on int {
         return 'Воскресение';
     }
   }
+
   String timeFormatted() {
-    if(this < 10) {
+    if (this < 10) {
       return '0$this';
-    } else return this.toString();
+    } else
+      return this.toString();
   }
+
   String monthInText() {
     switch (this) {
       case 1:
@@ -50,7 +53,6 @@ extension DateInString on int {
         return 'Декабря';
     }
   }
-
 }
 
 extension DateTimeInString on DateTime {
@@ -58,4 +60,3 @@ extension DateTimeInString on DateTime {
     return '''${this.day} ${this.month.monthInText()} ${this.year}''';
   }
 }
-

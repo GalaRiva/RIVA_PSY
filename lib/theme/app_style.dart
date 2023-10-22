@@ -74,6 +74,16 @@ class AppStyle {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle txtSFProDisplayLight16Gray = TextStyle(
+    color: ColorConstant.grayTextColor,
+    fontSize: getFontSize(
+      16,
+    ),
+    fontFamily: 'SF Pro Display',
+    fontWeight: FontWeight.w400,
+  );
+
+
   static TextStyle txtSFProDisplayLight16DeepPurple = TextStyle(
     color: ColorConstant.deepPurple600,
     fontSize: getFontSize(

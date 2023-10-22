@@ -12,4 +12,10 @@ extension DateTimeExtension on DateTime {
     return DateFormat(pattern, locale).format(this);
   }
 
+  String formatForRecord([String pattern = DD_MM_YYYY, String? locale]) {
+    if (locale != null && locale.isNotEmpty) {
+      initializeDateFormatting(locale);
+    }
+    return DateFormat(pattern, locale).format(this);
+  }
 }

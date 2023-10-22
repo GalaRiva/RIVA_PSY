@@ -22,6 +22,7 @@ class DayEventModel implements Comparable<DayEventModel>{
   String? whatIDo;
   String? firstThoughts;
   String? pathToAudio;
+  bool workingOut;
   EmotionInDayEvent? emotionInDayEvent = EmotionInDayEvent.NEGATIVE;
   DayEventModel(
       {this.howDoYouFeel,
@@ -34,7 +35,40 @@ class DayEventModel implements Comparable<DayEventModel>{
       this.whatBodyParts,
       this.firstThoughts,
       this.date,
-      this.pathToAudio});
+      this.pathToAudio,
+      this.workingOut = false
+      });
+
+  DayEventModel copyWith({
+    int? howDoYouFeel,
+    EventModel? whatHappened,
+    EventModel? whereHappened,
+    EventModel? whoDidItHappen,
+    List<EventModel>? whatEmotion,
+    List<K32Model>? whatBodyParts,
+    int? emotionIntensity,
+    String? whatIDo,
+    String? firstThoughts,
+    DateTime? date,
+    String? pathToAudio,
+    bool? workingOut,
+    EmotionInDayEvent? emotionInDayEvent,
+  }) {
+    return DayEventModel(
+      howDoYouFeel: howDoYouFeel ?? this.howDoYouFeel,
+      whatHappened: whatHappened ?? this.whatHappened,
+      whereHappened: whereHappened ?? this.whereHappened,
+      whoDidItHappen: whoDidItHappen ?? this.whoDidItHappen,
+      whatEmotion: whatEmotion ?? this.whatEmotion,
+      whatBodyParts: whatBodyParts ?? this.whatBodyParts,
+      emotionIntensity: emotionIntensity ?? this.emotionIntensity,
+      whatIDo: whatIDo ?? this.whatIDo,
+      firstThoughts: firstThoughts ?? this.firstThoughts,
+      date: date ?? this.date,
+      pathToAudio: pathToAudio ?? this.pathToAudio,
+      workingOut: workingOut ?? this.workingOut,
+    )..emotionInDayEvent = emotionInDayEvent ?? this.emotionInDayEvent;
+  }
 
   factory DayEventModel.fromJson(Map<String, dynamic> json) =>
       _$DayEventModelFromJson(json);

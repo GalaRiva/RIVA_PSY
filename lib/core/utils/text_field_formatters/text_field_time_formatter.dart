@@ -28,9 +28,8 @@ class TextFieldTimeFormatter extends TextInputFormatter {
 
       String newString = '';
       for (int i = 0; i < chars.length; i++) {
-        newString +=chars[i];
-        if (i == 1)
-        newString +=separator;
+        newString += chars[i];
+        if (i == 1) newString += separator;
       }
 
       return TextEditingValue(

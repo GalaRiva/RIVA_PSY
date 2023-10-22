@@ -13,7 +13,7 @@ class SendPushesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConstant.fromHex('#D7E1E1').withOpacity(0.44),
+        backgroundColor: ColorConstant.darkBg,
         body: Center(
           child: CustomMessageBox(
             canPop: false,

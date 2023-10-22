@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/exercises_tab_body.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/custom_tab_bar.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/ui/working_out_screen.dart';
 
 import '../../../../core/utils/color_constant.dart';
-import '../../../../core/utils/image_constant.dart';
 import '../../../../core/utils/size_utils.dart';
-import '../../../../theme/app_decoration.dart';
 import '../../../../theme/app_style.dart';
 import '../../../../widgets/custom_bottom_bar.dart';
-import '../../../../widgets/custom_image_view.dart';
 import '../../../widgets/custom_button.dart';
 import 'controller.dart';
-import 'widgets/tab_widget.dart';
+import 'working_out/working_out_irrational/bloc/cubit.dart';
 
 class K70Screen extends StatefulWidget {
   const K70Screen({Key? key}) : super(key: key);
@@ -42,67 +42,74 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
 
       controller.update();
     });
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: getPadding(top: 39, left: 16),
-              child: Text(
-                "Рекомендации и упражнения",
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: AppStyle.txtSFProDisplayLight10Gray800,
-              ),
-            ),
-            Padding(
-              padding: getPadding(
-                top: 12,
-              ),
-              child: Divider(
-                height: getVerticalSize(
-                  1,
+    return MultiBlocProvider(providers: [
+      BlocProvider<WorkingOutCubit>(
+    create:(_) => WorkingOutCubit(this),),
+      BlocProvider<WorkingOutIrrationalCubit>(
+        create:(_) => WorkingOutIrrationalCubit()..init(),),
+    ],
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: getPadding(top: 39, left: 16),
+                child: Text(
+                  "Рекомендации и упражнения",
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: AppStyle.txtSFProDisplayLight10Gray800,
                 ),
-                thickness: getVerticalSize(
-                  1,
+              ),
+              Padding(
+                padding: getPadding(
+                  top: 12,
                 ),
-                indent: getVerticalSize(16),
-                endIndent: getVerticalSize(16),
-                color: ColorConstant.gray50,
+                child: Divider(
+                  height: getVerticalSize(
+                    1,
+                  ),
+                  thickness: getVerticalSize(
+                    1,
+                  ),
+                  indent: getVerticalSize(16),
+                  endIndent: getVerticalSize(16),
+                  color: ColorConstant.gray50,
+                ),
               ),
-            ),
-            Padding(
-              padding: getPadding(top: 14, left: 16),
-              child: Text(
-                'Справится с эмоциями',
-                style: AppStyle.txtH1,
+              Padding(
+                padding: getPadding(top: 14, left: 16),
+                child: Text(
+                  'Справится с эмоциями',
+                  style: AppStyle.txtH1,
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: CustomButton(
-                variant: ButtonVariant.Cyan,
-                fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
-                text: 'Помощь при панике и аффекте',
-                width: size.width - 32,
-                onTap: () {
-                  controller.tabController!.animateTo(2);
-                  controller.currentTab = 2;
-                  controller.tabControllerSecond!.animateTo(controller.panicTab);
-                  controller.currentTabSecond = controller.panicTab;
-                },
-                height: getVerticalSize(37),
+              Align(
+                alignment: Alignment.topCenter,
+                child: CustomButton(
+                  variant: ButtonVariant.Cyan,
+                  fontStyle: ButtonFontStyle.White16,
+                  text: 'Помощь при панике и аффекте',
+                  width: size.width - 32,
+                  onTap: () {
+                    controller.tabController!.animateTo(2);
+                    controller.currentTab = 2;
+                    controller.tabControllerSecond!.animateTo(controller.panicTab);
+                    controller.currentTabSecond = controller.panicTab;
+                  },
+                  height: getVerticalSize(37),
+                ),
               ),
-            ),
-            CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
-            tabs: [ExercisesTabBody(controller: controller), Container( width: size.width, height: 100, color: Colors.redAccent,)],)
+              CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
+              tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],)
 
-          ],
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: CustomBottomBar(
-        onChanged: (BottomBarEnum type) {},
+        bottomNavigationBar: CustomBottomBar(
+          onChanged: (BottomBarEnum type) {},
+        ),
       ),
     );
   }

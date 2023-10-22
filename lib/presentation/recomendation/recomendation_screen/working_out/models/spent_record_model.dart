@@ -23,4 +23,20 @@ class SpentRecordModel {
   int compareTo(SpentRecordModel other) {
     return dayEventModel.date!.compareTo(other.dayEventModel.date!);
   }
+
+  SpentRecordModel copyWith({
+    DayEventModel? dayEventModel,
+    String? whyThisThoughts,
+    String? alternativeThoughts,
+    String? whyThisDo,
+    String? alternativeDo,
+  }) {
+    return SpentRecordModel(
+      dayEventModel: dayEventModel ?? this.dayEventModel,
+      whyThisThoughts: whyThisThoughts ?? this.whyThisThoughts,
+      alternativeThoughts: alternativeThoughts ?? this.alternativeThoughts,
+      whyThisDo: whyThisDo ?? this.whyThisDo,
+      alternativeDo: alternativeDo ?? this.alternativeDo,
+    );
+  }
 }

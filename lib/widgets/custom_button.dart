@@ -144,6 +144,8 @@ class CustomButton extends StatelessWidget {
         return ColorConstant.gray50;
       case ButtonVariant.Base:
         return ColorConstant.fromHex('#e0e8e8');
+      case ButtonVariant.OutlineGray:
+        return Colors.transparent;
       case ButtonVariant.Cyan:
         return ColorConstant.cyan700;
       case ButtonVariant.White:
@@ -160,6 +162,13 @@ class CustomButton extends StatelessWidget {
       case ButtonVariant.OutlineBluegray70038:
         return BorderSide(
           color: ColorConstant.blueGray70038,
+          width: getHorizontalSize(
+            1.00,
+          ),
+        );
+      case ButtonVariant.OutlineGray:
+        return BorderSide(
+          color: ColorConstant.blueGray400,
           width: getHorizontalSize(
             1.00,
           ),
@@ -208,6 +217,30 @@ class CustomButton extends StatelessWidget {
           color: ColorConstant.cyan700,
           fontSize: getFontSize(
             12,
+          ),
+          fontFamily: 'SF Pro Display',
+          fontWeight: FontWeight.w400,
+          height: getVerticalSize(
+            1.25,
+          ),
+        );
+      case ButtonFontStyle.White16:
+        return TextStyle(
+          color: Colors.white,
+          fontSize: getFontSize(
+            16,
+          ),
+          fontFamily: 'SF Pro Display',
+          fontWeight: FontWeight.w400,
+          height: getVerticalSize(
+            1.25,
+          ),
+        );
+      case ButtonFontStyle.Gray16:
+        return TextStyle(
+          color: ColorConstant.blueGray400,
+          fontSize: getFontSize(
+            16,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w400,
@@ -306,6 +339,7 @@ enum ButtonVariant {
   OutlineBluegray60014_1,
   OutlineBluegray60014,
   OutlineBluegray70038,
+  OutlineGray,
   Almost,
   Cyan,
   Base,
@@ -317,6 +351,8 @@ enum ButtonFontStyle {
   SFProDisplayRegular12,
   SFProDisplayRegular12Gray,
   SFProDisplayRegular12Cyan700,
+  White16,
+  Gray16,
   SFProDisplayLight14,
   SFProDisplayRegular10,
   SFProDisplayLight10,

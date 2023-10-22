@@ -12,6 +12,8 @@ class ColorConstant {
 
   static Color cyan700A0 = fromHex('#a01499a1');
 
+  static Color darkBg = fromHex('#D7E1E1').withOpacity(0.44);
+
   static Color whiteA70099 = fromHex('#99ffffff');
 
   static Color cyan70078 = fromHex('#781499a1');
@@ -81,7 +83,13 @@ class ColorConstant {
   static Color gray700 = fromHex('#585151');
 
   static Color grayLight = fromHex('#E7EAEA');
-  
+
+  static Color darkWhite = fromHex('#E5EFED');
+
+  static Color blueGreen = fromHex('#6D908F');
+
+  static Color grayTextColor = fromHex('#7C8B88');
+
   static Color blueGray200 = fromHex('#bbbed1');
 
   static Color gray500 = fromHex('#a4a4ae');
@@ -111,6 +119,8 @@ class ColorConstant {
   static Color gray800A0 = fromHex('#a03b3a4a');
 
   static Color gray8006e = fromHex('#6e3b3a4a');
+  
+  static Color cardShadow = fromHex('#C5D2D2');
 
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();

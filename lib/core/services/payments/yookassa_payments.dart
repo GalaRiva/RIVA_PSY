@@ -62,6 +62,7 @@ class YookassaPayments {
 
           final _confirmationUrl = paymentRequest['confirmation_url'];
           final _paymentId = paymentRequest['payment_id'];
+
           if (_confirmationUrl.isEmpty || _paymentId.isEmpty) {
             _onPaymentError(context);
           } else {

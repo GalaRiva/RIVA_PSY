@@ -9,6 +9,7 @@ part of '../day_event_model.dart';
 DayEventModel _$DayEventModelFromJson(Map<String, dynamic> json) =>
     DayEventModel(
       howDoYouFeel: json['howDoYouFeel'],
+      workingOut: json['workingOut'] ?? false,
       whatHappened: json['whatHappened'] == null
           ? null
           : EventModel.fromJson(json['whatHappened'] as Map<String, dynamic>),
@@ -34,6 +35,7 @@ Map<String, dynamic> _$DayEventModelToJson(DayEventModel instance) =>
     <String, dynamic>{
       'howDoYouFeel' : instance.howDoYouFeel,
       'whatHappened': instance.whatHappened,
+      'workingOut': instance.workingOut,
       'whereHappened': instance.whereHappened,
       'whoDidItHappen': instance.whoDidItHappen,
       'whatEmotion': instance.whatEmotion,
