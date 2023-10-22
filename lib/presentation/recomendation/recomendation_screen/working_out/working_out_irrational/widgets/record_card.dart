@@ -14,6 +14,7 @@ class RecordCard extends StatelessWidget {
   final VoidCallback? onButtonTap;
   final RecordCardMode mode;
   final bool showShadow;
+  final Widget? image;
   final RecordCardDataType dataType;
 
   const RecordCard(
@@ -21,7 +22,7 @@ class RecordCard extends StatelessWidget {
       this.onButtonTap,
       required this.mode,
       required this.dataType,
-      this.showShadow = true})
+      this.showShadow = true, this.image})
       : super(key: key);
 
   @override
@@ -89,7 +90,7 @@ class RecordCard extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            AspectRatio(
+            image ?? AspectRatio(
               aspectRatio: 320 / 200,
               child: Container(
                 decoration: BoxDecoration(

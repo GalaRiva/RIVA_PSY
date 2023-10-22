@@ -1,4 +1,3 @@
-import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
@@ -55,6 +54,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
               children: [
                 Text(widget.text, style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray,),
                 SizedBox(height: 10,),
+                if(textPainter.didExceedMaxLines)
                 Align(
                   alignment: Alignment.topCenter,
                   child: TextButton(onPressed: (){

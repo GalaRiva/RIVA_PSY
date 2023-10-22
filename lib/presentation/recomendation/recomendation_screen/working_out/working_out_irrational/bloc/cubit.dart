@@ -60,11 +60,13 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
         stage: WorkingOutIrrationalStage.initialStage, loading: false));
   }
 
-  void updateDayEvents() {
+  Future updateDayEvents() async {
     _dayEvents
         .where((element) => element == selectedDayEventModel)
         .toList().last = selectedDayEventModel!.copyWith(workingOut: true);
     _repo.updateDayEventEvent(_dayEvents);
+    final spendRecordModels = await _repo.getEvent()..add(_currentSpentRecordModel!);
+    _repo.updateEvent(spendRecordModels);
     _dontWorkingOutEvents.removeLast();
     selectedDayEventModel =
         existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;

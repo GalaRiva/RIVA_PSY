@@ -1084,6 +1084,8 @@ class ImageConstant {
 
   static const humanAlternativeDoImg = 'assets/images/human_alternative_do.png';
 
+  static const alternativeWorkingOutImg = 'assets/images/alternative_working_out_img.png';
+
   static const pdfLogo = 'assets/images/pdf/Framelogo.png';
 
   static const pdfText = 'assets/images/pdf/Group 35rigel_text.png';
