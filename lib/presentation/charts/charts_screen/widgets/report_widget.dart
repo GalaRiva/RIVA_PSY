@@ -6,7 +6,7 @@ import '../../../../core/utils/size_utils.dart';
 import '../../../../theme/app_decoration.dart';
 import '../../../../theme/app_style.dart';
 import '../controller.dart';
-import 'pdf_viewer_widget.dart';
+import '../../../../widgets/pdf_viewer_widget.dart';
 
 class ReportWidget extends StatelessWidget {
   final DateTime start;
@@ -44,7 +44,7 @@ class ReportWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: InkWell(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPreviewWidget(controller: controller))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPreviewWidget(pdf: (context) async => controller.reportModel.makePdf(await controller.getDayEventModel())))),
                 child: Text(
                     'Отправить Сводный отчет ${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}. pdf',
                     overflow: TextOverflow.ellipsis,

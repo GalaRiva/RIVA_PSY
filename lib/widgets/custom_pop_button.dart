@@ -26,7 +26,7 @@ class CustomPopButton extends StatelessWidget {
           children: [
             CustomImageView(
                 svgPath: ImageConstant
-                    .imgVector45,
+                    .leftArrow,
                 height:
                 getVerticalSize(
                     8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/charts/concrete_pill/concrete_pill_screen.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/calendar/calendar_page.dart';
 
 import '../presentation/charts/charts_calendar/k62_screen.dart';
 import '../presentation/charts/charts_screen/k61_screen.dart';
@@ -138,6 +139,8 @@ static const String enterPasswordScreen = '/enter_password_screen';
 
   static const pills_calendar = '/pills_calendar';
 
+  static const working_out_calendar = '/working_out_calendar';
+
   static const pills = '/pills';
 
   static const concrete_pill = '/concrete_pill';
@@ -192,6 +195,7 @@ static const String enterPasswordScreen = '/enter_password_screen';
     withWhoHappened: (context) => K26Screen(),
     // recommendations
     recommendations: (context) => K70Screen(),
+    working_out_calendar: (context) => WorkingOutCalendarPage(),
     // records
     calendar_add: (context) => K51Screen(),
     calendar_search: (context) => K50Screen(),

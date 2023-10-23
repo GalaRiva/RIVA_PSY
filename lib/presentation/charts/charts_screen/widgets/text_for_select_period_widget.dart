@@ -48,7 +48,7 @@ class TextForSelectPeriodWidget extends StatelessWidget {
             style: AppStyle.txtSFProDisplayLight10,
           ),
           CustomImageView(
-            svgPath: ImageConstant.imgVector74,
+            svgPath: ImageConstant.rightArrow,
             height: getVerticalSize(
               6,
             ),

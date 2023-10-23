@@ -82,7 +82,7 @@ class OneScreen extends GetWidget<OneScreenController> {
                                   padding: ButtonPadding.PaddingT8,
                                   prefixWidget: CustomImageView(
                                     margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.imgVector45,
+                                    svgPath: ImageConstant.leftArrow,
                                   ),
                                   onTap: () => onTaptf(context),
                                   alignment: Alignment.center)

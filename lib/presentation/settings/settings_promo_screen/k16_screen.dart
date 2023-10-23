@@ -82,7 +82,7 @@ class K16Screen extends StatelessWidget {
                                   padding: ButtonPadding.PaddingT8,
                                   prefixWidget: CustomImageView(
                                     margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.imgVector45,
+                                    svgPath: ImageConstant.leftArrow,
                                   ),
                                   onTap: () => onTaptf1(context),
                                   alignment: Alignment.center)

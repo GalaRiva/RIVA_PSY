@@ -562,7 +562,7 @@ class ImageConstant {
   static String imgAlarmBlueGray700 =
       'assets/images/img_alarm_blue_gray_700.svg';
 
-  static String imgVector74 = 'assets/images/img_vector74.svg';
+  static String rightArrow = 'assets/images/img_vector74.svg';
 
   static String imgMapCyan70063x25 = 'assets/images/img_map_cyan_700_63x25.svg';
 
@@ -630,7 +630,7 @@ class ImageConstant {
 
   static String imgCheckmark = 'assets/images/img_checkmark.svg';
 
-  static String imgVector45 = 'assets/images/img_vector_45.svg';
+  static String leftArrow = 'assets/images/img_vector_45.svg';
 
   static String imgTwitter = 'assets/images/img_twitter.svg';
 

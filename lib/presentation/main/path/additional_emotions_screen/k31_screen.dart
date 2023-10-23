@@ -215,7 +215,7 @@ class K31Screen extends GetWidget {
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(
                                   margin: getMargin(right: 12),
-                                  svgPath: ImageConstant.imgVector45,
+                                  svgPath: ImageConstant.leftArrow,
                                 ),
                               ),
                               CustomButton(

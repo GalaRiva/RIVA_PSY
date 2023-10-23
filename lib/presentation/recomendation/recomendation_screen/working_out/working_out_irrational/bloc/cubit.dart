@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 
@@ -17,12 +18,20 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
   bool get showContent => CurrentUser.tariffIsOrion();
 
   bool existMoreDontWorkingOutEvents() => _dontWorkingOutEvents.isNotEmpty;
+  int workingOutEventsLength() => _spentRecordModels.length;
+  int dontWorkingOutEventsLength() => _dontWorkingOutEvents.length;
+
+  var dateStart =
+  DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+
+  var dateEnd = DateTime.now().add(Duration(days: 7 - DateTime.now().weekday));
+
   TabController? tabController;
   int currentTab = 0;
 
   late final List<DayEventModel> _dayEvents;
   late final List<DayEventModel> _dontWorkingOutEvents;
-
+  late final List<SpentRecordModel> _spentRecordModels;
   DayEventModel? selectedDayEventModel;
 
   final _repo = WorkingOutRepo();
@@ -54,6 +63,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
             !element.workingOut &&
             element.emotionInDayEvent! == EmotionInDayEvent.NEGATIVE)
         .toList();
+    _spentRecordModels = await _repo.getEvent();
     if (existMoreDontWorkingOutEvents())
       selectedDayEventModel = _dontWorkingOutEvents.last;
     emit(WorkingOutIrrationalState(
@@ -70,8 +80,18 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
     _dontWorkingOutEvents.removeLast();
     selectedDayEventModel =
         existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
+    _spentRecordModels.add(_currentSpentRecordModel!);
     _currentSpentRecordModel = null;
     goToNextState(WorkingOutIrrationalStage.alternative);
+  }
+
+  Future<List<SpentRecordModel>> getSpentRecordModels() async {
+    final listForReturn = <SpentRecordModel>[];
+    for (var event in _spentRecordModels) {
+      if (event.dayEventModel.date!.dateInRange(dateStart, dateEnd)) listForReturn.add(event);
+    }
+    print(listForReturn.length);
+    return listForReturn;
   }
 
   void goToPrevState(BuildContext context) {

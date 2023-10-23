@@ -18,4 +18,14 @@ extension DateTimeExtension on DateTime {
     }
     return DateFormat(pattern, locale).format(this);
   }
+
+  bool dateInRange(DateTime dateStart, DateTime dateEnd) {
+    var start = DateTime(dateStart.year, dateStart.month, dateStart.day -1 );
+    var end = DateTime(dateEnd.year, dateEnd.month, dateEnd.day +1 );
+
+    if (start.isBefore(this) && end.isAfter(this)) {
+      return true;
+    }
+    return false;
+  }
 }

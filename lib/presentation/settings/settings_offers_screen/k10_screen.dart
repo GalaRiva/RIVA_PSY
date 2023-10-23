@@ -139,7 +139,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                   padding: ButtonPadding.PaddingT8,
                                   prefixWidget: CustomImageView(
                                     margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.imgVector45,
+                                    svgPath: ImageConstant.leftArrow,
                                   ),
                                   onTap: () => onTapOne(context),
                                   alignment: Alignment.center)

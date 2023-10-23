@@ -333,7 +333,7 @@ class K18Screen extends GetWidget {
                                   padding: ButtonPadding.PaddingT8,
                                   prefixWidget: CustomImageView(
                                     margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.imgVector45,
+                                    svgPath: ImageConstant.leftArrow,
                                   ),
                                   onTap: () => onTaptf(context),
                                   alignment: Alignment.center),
@@ -356,7 +356,7 @@ class K18Screen extends GetWidget {
                               padding: ButtonPadding.PaddingT8,
                               prefixWidget: CustomImageView(
                                 margin: getMargin(right: 12),
-                                svgPath: ImageConstant.imgVector45,
+                                svgPath: ImageConstant.leftArrow,
                               ),
                               onTap: ()async  =>await  controller.signOut(context),
                               alignment: Alignment.center),

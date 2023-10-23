@@ -151,7 +151,7 @@ class PillsScreen extends StatelessWidget {
                     padding: ButtonPadding.PaddingT8,
                     prefixWidget: CustomImageView(
                       margin: getMargin(right: 12),
-                      svgPath: ImageConstant.imgVector45,
+                      svgPath: ImageConstant.leftArrow,
                     ),
                     onTap: () => Navigator.pop(context),
                     alignment: Alignment.center),
