@@ -16,11 +16,15 @@ import 'pages/initial_working_out/initial_working_out_page.dart';
 class WorkingOutIrrationalTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstant.gray200,
-      body: BlocProvider<WorkingOutIrrationalCubit>(
-          create:(_) => WorkingOutIrrationalCubit()..init(),
-          child: BlocBuilder<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(builder: (_, state) => body(state, context))),
+    return  WillPopScope(
+      onWillPop: () async {
+        context.read<WorkingOutIrrationalCubit>().goToPrevState(context);
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: ColorConstant.gray200,
+        body: BlocBuilder<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(builder: (_, state) => body(state, context)),
+      ),
     );
   }
 
@@ -31,7 +35,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         goToFreeRecommendation: false,
       );
     state as WorkingOutIrrationalState;
-    if (state.loading)
+    if (state.loading) {
       return Scaffold(
         body: Center(
           child: SizedBox(
@@ -43,6 +47,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
           ),
         ),
       );
+    }
 
     switch (state.stage) {
       case WorkingOutIrrationalStage.initialStage:

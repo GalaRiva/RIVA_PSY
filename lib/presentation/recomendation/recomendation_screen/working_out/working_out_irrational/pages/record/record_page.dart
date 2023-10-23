@@ -24,13 +24,18 @@ class RecordPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          RecordCard(
-            mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
-            dataType:
-                cubit.state.stage == WorkingOutIrrationalStage.challengeThought
-                    ? RecordCardDataType.Thought
-                    : RecordCardDataType.Do,
-            showShadow: false,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: RecordCard(
+                mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
+                dataType:
+                    cubit.state.stage != WorkingOutIrrationalStage.challengeThought
+                        ? RecordCardDataType.Thought
+                        : RecordCardDataType.Do,
+                showShadow: false,
+              ),
+            ),
           ),
           Positioned(
               top: -10,
@@ -103,7 +108,7 @@ class RecordPage extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(3),
-                              child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg),
+                              child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg, ),
                             ),
                           ),
                         ),

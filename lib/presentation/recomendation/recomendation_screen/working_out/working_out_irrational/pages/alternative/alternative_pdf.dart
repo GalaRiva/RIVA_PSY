@@ -153,6 +153,7 @@ class AlternativePdf {
                         child: Text(_columnTags[index], style: _headerStyle.copyWith())
                     )
                 )))),
+            SizedBox(height: 5),
             Row(children: List<Widget>.generate(_secondColumnTags.length, (index) => Padding(padding: EdgeInsets.only(right: 5),
                 child:
                 Container(
@@ -162,7 +163,7 @@ class AlternativePdf {
                         border: Border.all(color: index == 0 ? PdfColors.white : _borderColor)
                     ),
                     child: Center(
-                        child: Text(_columnTags[index], style: _headerStyle.copyWith())
+                        child: Text(_secondColumnTags[index], style: _headerStyle.copyWith())
                     )
                 )))),
             SizedBox(height: 5),

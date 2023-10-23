@@ -28,63 +28,69 @@ decoration: BoxDecoration(
 
 ),      child: Container(
   margin: getMargin(bottom: 40),
-  child: Column(
+  child: SingleChildScrollView(
+    child: Column(
 mainAxisAlignment: MainAxisAlignment.end,          children: [
-            SizedBox(
-              width: getHorizontalSize(
-                288,
+              SizedBox(
+                width: getHorizontalSize(
+                  size.width - 34,
+                ),
+                child: Text(
+                  'Получите полный доступ к рекомендациям, статистике,  аудио и упражнениям: переходите на тариф “Орион”',
+                  textAlign: TextAlign.center,
+                  style: AppStyle.txtSFProDisplayLight16,
+                ),
               ),
-              child: Text(
-                'Получите полный доступ к рекомендациям, статистике,  аудио и упражнениям: переходите на тариф “Орион”',
-                textAlign: TextAlign.center,
-                style: AppStyle.txtSFProDisplayLight10Gray800,
+              SizedBox(height: 20,),
+              SvgPicture.asset(ImageConstant.tariffImage, width: 140,),
+      SizedBox(height: 20,),
+      CustomButton(
+                height: getVerticalSize(
+                  54,
+                ),
+                width: getHorizontalSize(
+                  288,
+                ),
+                text: "Перейти на тариф \"ОРИОН\"".toUpperCase(),
+                onTap: () async {
+                  Navigator.pushNamed(context, AppRoutes.buySubscription,
+                      arguments: TariffModel.ORION_TARIFF);
+                },
+                fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                alignment: Alignment.center,
               ),
-            ),
-            SizedBox(height: 20,),
-            SvgPicture.asset(ImageConstant.tariffImage, width: 140,),
-    SizedBox(height: 20,),
-    CustomButton(
-              height: getVerticalSize(
-                54,
+              if(goToFreeRecommendation)
+              CustomButton(
+                height: getVerticalSize(
+                  54,
+                ),
+                width: getHorizontalSize(
+                  288,
+                ),
+                margin: getMargin(top: 40),
+                suffixWidget: Padding(
+                  padding: getPadding(left: 10),
+                  child: Icon(Icons.arrow_forward_ios_sharp, size: getSize(10), color: ColorConstant.deepPurple600,),
+                ),
+                text: "к  бесплатным рекомендациям".toUpperCase(),
+                onTap: () async {
+                  if (onSecondButtonTap == null) {
+                    Navigator.pushNamed(context, AppRoutes.recommendations);
+                    AppRoutes.currentRoute = AppRoutes.recommendations;
+                  } else onSecondButtonTap!();
+                },
+                alignment: Alignment.center,
               ),
-              width: getHorizontalSize(
-                288,
-              ),
-              text: "Перейти на тариф \"ОРИОН\"".toUpperCase(),
-              onTap: () async {
-                Navigator.pushNamed(context, AppRoutes.buySubscription,
-                    arguments: TariffModel.ORION_TARIFF);
-              },
-              fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
-              alignment: Alignment.center,
-            ),
-            if(goToFreeRecommendation)
-            CustomButton(
-              height: getVerticalSize(
-                54,
-              ),
-              width: getHorizontalSize(
-                288,
-              ),
-              margin: getMargin(top: 40),
-              suffixWidget: Padding(
-                padding: getPadding(left: 10),
-                child: Icon(Icons.arrow_forward_ios_sharp, size: getSize(10), color: ColorConstant.deepPurple600,),
-              ),
-              text: "к  бесплатным рекомендациям".toUpperCase(),
-              onTap: () async {
-                if (onSecondButtonTap == null) {
-                  Navigator.pushNamed(context, AppRoutes.recommendations);
-                  AppRoutes.currentRoute = AppRoutes.recommendations;
-                } else onSecondButtonTap!();
-              },
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: 13,),
-            Text('В бесплатной версии резервные копии будут храниться в вашем облачном хранилище.', style: AppStyle.txtSFProDisplayLight12Gray800,),
-            SizedBox(height: 27,)
-          ],
-        ),
+              SizedBox(height: 13,),
+              SizedBox(
+                width: getHorizontalSize(
+    280,
+    ),
+                  child: Text('В бесплатной версии резервные копии будут храниться в вашем облачном хранилище.', style: AppStyle.txtSFProDisplayLight12Gray800,)),
+              SizedBox(height: 27,)
+            ],
+          ),
+  ),
 ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
+import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../../../widgets/second_variant_event_card.dart';
@@ -30,7 +31,7 @@ class RecordTextButton extends StatelessWidget {
                     fontFamily: 'SF Pro Display',
                     fontWeight: FontWeight.w400,
                   );
-                  return Card(
+                  return Center(
                     child: Container(
                       width: size.width - 30,
                       decoration: BoxDecoration(
@@ -44,10 +45,12 @@ class RecordTextButton extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(15),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Text('Запись ${dayEventModel.date!.format(
                                 'dd.MM.yy  hh:mm',
-                              )}'),
+                              )}', style: AppStyle.txtSFProDisplayLight16Cyan700,),
                               SizedBox(
                                 height: 30,
                               ),
@@ -69,7 +72,6 @@ class RecordTextButton extends StatelessWidget {
                                   style: _style,
                                 ),
                                 IgnorePointer(
-
                                   child: SleekCircularSlider(
                                     appearance: CircularSliderAppearance(
                                         animationEnabled: false,
@@ -111,12 +113,14 @@ class RecordTextButton extends StatelessWidget {
                                 child: Text('Что я делал', style: AppStyle.txtSFProDisplayLight14Gray800,),
                               ),
                               Text('"${dayEventModel.whatIDo ?? ''}"', style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(color: ColorConstant.fromHex('#7C8B88')), maxLines: 3, overflow: TextOverflow.ellipsis,),
+                              _divider(),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text('Первые мысли в ситуации', style: AppStyle.txtSFProDisplayLight14Gray800,),
                               ),
                               Text('"${dayEventModel.firstThoughts ?? ''}"', style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(color: ColorConstant.fromHex('#7C8B88')), maxLines: 3, overflow: TextOverflow.ellipsis,),
-
+                              SizedBox(height: 33,),
+                              CustomButton(text: 'ОК', onTap: () => Navigator.pop(context), height: 47, bgColor: Colors.white.withOpacity(0.44), fontStyle: ButtonFontStyle.DeepPurple16,)
                             ],
                           ),
                         ),
@@ -127,7 +131,18 @@ class RecordTextButton extends StatelessWidget {
           }
         },
         child: Row(
-          children: [Text('Запись ${dayEventModel.date!.format('dd.MM.yy')}')],
+          children: [Text('Запись ${dayEventModel.date!.format('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Cyan700,), SizedBox(width: 5,) ,CustomImageView(
+              svgPath: ImageConstant
+                  .rightArrow,
+              color: ColorConstant.cyan700,
+              height:
+              getVerticalSize(
+                  8),
+              width:
+              getHorizontalSize(
+                  4),
+              margin: getMargin(
+                  bottom: 3)),],
         ));
   }
 
@@ -138,14 +153,22 @@ class RecordTextButton extends StatelessWidget {
         Row(
           children: [
             Expanded(
-                flex: 3,
+                flex: 4,
                 child: Text(
                   title,
                   style: AppStyle.txtSFProDisplayLight14Gray800,
                 )),
             Expanded(
-              child: SecondVariantEventCard(
-                content: dayEventVariable,
+              flex: 2,
+              child: Row(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SecondVariantEventCard(
+                      content: dayEventVariable,
+                    ),
+                  ),
+                ],
               ),
             )
           ],
