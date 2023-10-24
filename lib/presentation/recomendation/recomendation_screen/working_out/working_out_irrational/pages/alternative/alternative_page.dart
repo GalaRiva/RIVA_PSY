@@ -7,6 +7,7 @@ import 'package:listenmebaby71_s_application17/presentation/recomendation/recome
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
+import 'package:listenmebaby71_s_application17/widgets/expandeble_text_widget.dart';
 import 'package:listenmebaby71_s_application17/widgets/pdf_viewer_widget.dart';
 
 import '../../../bloc/cubit.dart';
@@ -165,6 +166,47 @@ class AlternativePage extends StatelessWidget {
                               color: Colors.white,
                               width: 45, height: 30,),)
                   ),
+                  if(cubit.workingOutEventsLength() > 0)
+                  Padding(padding: EdgeInsets.symmetric(vertical: 35),
+                  child: Container(
+                    width: size.width - 30,
+                    color: Colors.white.withOpacity(0.48),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Альтернатива ${cubit.lastSpentRecordModel().dayEventModel.date!.formatForRecord('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Gray,),
+                              InkWell(
+                                  onTap: cubit.redoSpentRecordModel,
+                                  child: Text('редактировать', style: AppStyle.txtSFProDisplayLight16Gray,)),
+
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 6, bottom: 10),
+                          child: Divider(
+                            indent: 0, endIndent: 0,
+                            color: ColorConstant.grayTextColor,thickness: 1,
+                          ),
+                          ),
+                          Text('Альтернативная мысль', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
+                          Padding(padding: EdgeInsets.symmetric(vertical: 15),
+                          child: ExpandableTextWidget(text: '"${cubit.lastSpentRecordModel().alternativeThoughts}"', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
+
+                          ),
+                          Text('Альтернативное действие', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
+                          Padding(padding: EdgeInsets.only(top: 15),
+                            child: ExpandableTextWidget(text: '"${cubit.lastSpentRecordModel().alternativeDo}"', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
+
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  )
                 ],
               ),
             )

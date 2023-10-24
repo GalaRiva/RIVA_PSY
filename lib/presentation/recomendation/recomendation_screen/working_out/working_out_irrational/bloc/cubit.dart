@@ -18,11 +18,15 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
   bool get showContent => CurrentUser.tariffIsOrion();
 
   bool existMoreDontWorkingOutEvents() => _dontWorkingOutEvents.isNotEmpty;
+
   int workingOutEventsLength() => _spentRecordModels.length;
+
   int dontWorkingOutEventsLength() => _dontWorkingOutEvents.length;
 
+  SpentRecordModel lastSpentRecordModel() => _spentRecordModels.last;
+
   var dateStart =
-  DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+      DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
 
   var dateEnd = DateTime.now().add(Duration(days: 7 - DateTime.now().weekday));
 
@@ -71,38 +75,63 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
   }
 
   Future updateDayEvents() async {
-    _dayEvents
-        .where((element) => element == selectedDayEventModel)
-        .toList().last = selectedDayEventModel!.copyWith(workingOut: true);
-    _repo.updateDayEventEvent(_dayEvents);
-    final spendRecordModels = await _repo.getEvent()..add(_currentSpentRecordModel!);
-    _repo.updateEvent(spendRecordModels);
-    _dontWorkingOutEvents.removeLast();
+    late final List<SpentRecordModel> list;
+    if(_currentSpentRecordModel == lastSpentRecordModel()) {
+      list = await _repo.getEvent();
+      list.where((element) => element.dayEventModel == _currentSpentRecordModel?.dayEventModel).toList().first = _currentSpentRecordModel!;
+    } else {
+      _dayEvents
+          .where((element) => element == selectedDayEventModel)
+          .toList()
+          .last = selectedDayEventModel!.copyWith(workingOut: true);
+      _repo.updateDayEventEvent(_dayEvents);
+      list = await _repo.getEvent()
+        ..add(_currentSpentRecordModel!);
+      _dontWorkingOutEvents.removeLast();
+    }
+    _repo.updateEvent(list);
     selectedDayEventModel =
-        existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
-    _spentRecordModels.add(_currentSpentRecordModel!);
-    _currentSpentRecordModel = null;
+      existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
+      _spentRecordModels.add(_currentSpentRecordModel!);
+      _currentSpentRecordModel = null;
+
     goToNextState(WorkingOutIrrationalStage.alternative);
   }
 
   Future<List<SpentRecordModel>> getSpentRecordModels() async {
     final listForReturn = <SpentRecordModel>[];
     for (var event in _spentRecordModels) {
-      if (event.dayEventModel.date!.dateInRange(dateStart, dateEnd)) listForReturn.add(event);
+      if (event.dayEventModel.date!.dateInRange(dateStart, dateEnd))
+        listForReturn.add(event);
     }
     print(listForReturn.length);
     return listForReturn;
+  }
+
+  void redoSpentRecordModel () {
+    _currentSpentRecordModel = lastSpentRecordModel();
+    selectedDayEventModel = _currentSpentRecordModel!.dayEventModel;
+    goToNextState(WorkingOutIrrationalStage.recordThought);
+
   }
 
   void goToPrevState(BuildContext context) {
     if (state.prevState == null) {
       Navigator.pop(context);
     } else {
+      if (state.spendRecordModel != state.prevState?.spendRecordModel &&
+          state.spendRecordModel == lastSpentRecordModel()) {
+        _currentSpentRecordModel = state.prevState?.spendRecordModel;
+      }
       emit(state.prevState!);
     }
   }
 
   void goToNextState(WorkingOutIrrationalStage stage) {
-    emit(WorkingOutIrrationalState(stage: stage, prevState: state, dayEventModel: selectedDayEventModel, spendRecordModel: _currentSpentRecordModel));
+    emit(WorkingOutIrrationalState(
+        stage: stage,
+        prevState: state,
+        dayEventModel: selectedDayEventModel,
+        spendRecordModel: _currentSpentRecordModel));
   }
 }

@@ -118,6 +118,12 @@ class DayEventModel implements Comparable<DayEventModel>{
   int compareTo(DayEventModel other) {
     return date!.compareTo(other.date!);
   }
+
+  @override
+  bool operator ==(Object other) {
+    // TODO: implement ==
+    return super == other && date != null && (other as DayEventModel).date == date;
+  }
 }
 
 enum EmotionInDayEvent {

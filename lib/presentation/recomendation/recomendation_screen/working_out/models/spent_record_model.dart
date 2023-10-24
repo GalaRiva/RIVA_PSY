@@ -39,4 +39,10 @@ class SpentRecordModel {
       alternativeDo: alternativeDo ?? this.alternativeDo,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    // TODO: implement ==
+    return other is SpentRecordModel && dayEventModel == other.dayEventModel;
+  }
 }
