@@ -22,7 +22,8 @@ class RecordCard extends StatelessWidget {
       this.onButtonTap,
       required this.mode,
       required this.dataType,
-      this.showShadow = true, this.image})
+      this.showShadow = true,
+      this.image})
       : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class RecordCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-          color: ColorConstant.gray300,
+          color: ColorConstant.gray200,
           border: Border.all(color: Colors.white, width: 1),
           boxShadow: showShadow
               ? [
@@ -84,26 +85,28 @@ class RecordCard extends StatelessWidget {
               height: 10,
             ),
             ExpandableTextWidget(
-              text:  '"${ dataType == RecordCardDataType.Thought
-                  ?  dayEventModel.firstThoughts! : dayEventModel.whatIDo!}"',
+              text:
+                  '${dataType == RecordCardDataType.Thought ? dayEventModel.firstThoughts! : dayEventModel.whatIDo!}',
               maxLines: 3,
             ),
             SizedBox(
               height: 15,
             ),
-            image ?? AspectRatio(
-              aspectRatio: 320 / 200,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: ColorConstant.darkWhite,
-                    borderRadius: BorderRadius.circular(3)),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(3),
-                    child: Image.asset(dataType == RecordCardDataType.Thought
-                        ? ImageConstant.humanThoughtImg
-                        : ImageConstant.humanDoImg)),
-              ),
-            ),
+            image ??
+                AspectRatio(
+                  aspectRatio: 320 / 200,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: ColorConstant.darkWhite,
+                        borderRadius: BorderRadius.circular(3)),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: Image.asset(
+                            dataType == RecordCardDataType.Thought
+                                ? ImageConstant.humanThoughtImg
+                                : ImageConstant.humanDoImg)),
+                  ),
+                ),
             SizedBox(
               height: 15,
             ),
@@ -111,8 +114,12 @@ class RecordCard extends StatelessWidget {
               text: dataType == RecordCardDataType.Thought
                   ? 'ОСПОРИТЬ МЫСЛЬ'
                   : 'ОСПОРИТЬ ДЕЙСТВИЕ',
-              variant: onButtonTap != null ? ButtonVariant.Cyan : ButtonVariant.OutlineGray,
-              fontStyle: onButtonTap != null ? ButtonFontStyle.White16 : ButtonFontStyle.Gray16,
+              variant: onButtonTap != null
+                  ? ButtonVariant.Cyan
+                  : ButtonVariant.OutlineGray,
+              fontStyle: onButtonTap != null
+                  ? ButtonFontStyle.White16
+                  : ButtonFontStyle.Gray16,
               onTap: onButtonTap,
             )
           ],
@@ -184,10 +191,11 @@ class RecordCard extends StatelessWidget {
                   height: 10,
                 ),
                 ExpandableTextWidget(
-                  text: dataType == RecordCardDataType.Thought
-                      ? spentRecordModel.alternativeThoughts
-                      : spentRecordModel.alternativeDo,
+                  text:
+                      '${dataType == RecordCardDataType.Thought ? spentRecordModel.alternativeThoughts : spentRecordModel.alternativeDo}',
                   maxLines: 3,
+                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                  textButtonStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                 ),
                 SizedBox(
                   height: 15,

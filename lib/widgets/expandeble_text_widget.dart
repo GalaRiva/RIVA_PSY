@@ -21,21 +21,21 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     Widget build(BuildContext context) {
       return LayoutBuilder(
         builder: (context, constraints) {
-          final textSpan = TextSpan(text: widget.text);
+          final textSpan = TextSpan(text: '${widget.text}');
           final textPainter = TextPainter(
             text: textSpan,
             maxLines: widget.maxLines,
             textDirection: TextDirection.ltr,
           );
 
-
           textPainter.layout(maxWidth: constraints.maxWidth);
+          final list = textPainter.text!.toPlainText().split('\n');
 
           if (textPainter.didExceedMaxLines && hidden) {
             return Container(
               child: Column(
                 children: [
-                  Text(widget.text, maxLines: widget.maxLines, style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray),
+                  Text('"' + List.generate(widget.maxLines - 1, (index) =>'${list[index].toString()}\n').join() + list[widget.maxLines - 1].toString().substring(0, list[widget.maxLines - 1].toString().length - 4) + '..."', maxLines: widget.maxLines, style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray,),
                   SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.topCenter,
@@ -52,7 +52,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
           return Container(
             child: Column(
               children: [
-                Text(widget.text, style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray,),
+                Text('"${widget.text}"', style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray,),
                 SizedBox(height: 10,),
                 if(textPainter.didExceedMaxLines)
                 Align(
@@ -70,3 +70,5 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
       );
   }
 }
+
+

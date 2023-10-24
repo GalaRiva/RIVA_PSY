@@ -19,9 +19,9 @@ class AlternativeRecordPage extends WorkingOutWidget {
               cubit.goToNextState(WorkingOutIrrationalStage.challengeDo);
               else cubit.updateDayEvents();
               },
-            mode: AlternativeRecordCardMode(dayEventModel: cubit.state.dayEventModel!, spentRecordModel: cubit.state.spendRecordModel!, onRedoTap: () => cubit.state.stage == WorkingOutIrrationalStage.alternativeThought
+            mode: AlternativeRecordCardMode(dayEventModel: cubit.state.dayEventModel!, spentRecordModel: cubit.state.spendRecordModel!, onRedoTap: () => cubit.goToNextState( cubit.state.stage == WorkingOutIrrationalStage.alternativeThought
                 ? WorkingOutIrrationalStage.recordThought
-                : WorkingOutIrrationalStage.recordDo),
+                : WorkingOutIrrationalStage.recordDo)),
             dataType: cubit.state.stage == WorkingOutIrrationalStage.alternativeThought
                 ? RecordCardDataType.Thought
                 : RecordCardDataType.Do,

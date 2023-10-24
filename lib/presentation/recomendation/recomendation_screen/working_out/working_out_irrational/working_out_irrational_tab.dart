@@ -12,18 +12,40 @@ import 'bloc/state.dart';
 import 'pages/challenge/challenge_page.dart';
 import 'pages/initial_working_out/empty_initial_working_out_page.dart';
 import 'pages/initial_working_out/initial_working_out_page.dart';
+import 'widgets/dialog_records_not_enough.dart';
 
 class WorkingOutIrrationalTab extends StatelessWidget {
+
+  bool dayEventsIsEmpty = false;
+  bool dialogOpened = false;
   @override
   Widget build(BuildContext context) {
     return  WillPopScope(
       onWillPop: () async {
+        if(!dialogOpened)
         context.read<WorkingOutIrrationalCubit>().goToPrevState(context);
-        return false;
+        return dialogOpened;
       },
       child: Scaffold(
         backgroundColor: ColorConstant.gray200,
-        body: BlocBuilder<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(builder: (_, state) => body(state, context)),
+        body: BlocConsumer<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(
+          listenWhen: (prev, cur) {
+            dayEventsIsEmpty = false;
+            if(prev.stage == WorkingOutIrrationalStage.alternativeDo && cur.stage == WorkingOutIrrationalStage.alternative && !context.read<WorkingOutIrrationalCubit>().existMoreDontWorkingOutEvents()){
+              Navigator.of(context).popUntil(ModalRoute.withName(AppRoutes.recommendations));
+              dayEventsIsEmpty = true;
+              return true;
+            }
+            return false;
+          },
+          builder: (_, state) => body(state, context), listener: (BuildContext context, WorkingOutIrrationalState state) {
+            if(dayEventsIsEmpty && !dialogOpened) {
+              dialogOpened = true;
+
+              showDialog(context: context, builder: (_) => Center(child: DialogRecordsNotEnough())).then((value) => dialogOpened = false);
+            }
+
+        },),
       ),
     );
   }

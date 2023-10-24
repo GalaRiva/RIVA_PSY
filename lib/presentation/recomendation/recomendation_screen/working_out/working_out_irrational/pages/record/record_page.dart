@@ -30,7 +30,7 @@ class RecordPage extends StatelessWidget {
               child: RecordCard(
                 mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
                 dataType:
-                    cubit.state.stage != WorkingOutIrrationalStage.challengeThought
+                isThought
                         ? RecordCardDataType.Thought
                         : RecordCardDataType.Do,
                 showShadow: false,
@@ -108,7 +108,7 @@ class RecordPage extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(3),
-                              child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg, ),
+                              child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg, fit: BoxFit.fill,),
                             ),
                           ),
                         ),

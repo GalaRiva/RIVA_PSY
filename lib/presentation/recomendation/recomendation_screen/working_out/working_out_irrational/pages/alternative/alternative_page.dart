@@ -51,7 +51,7 @@ class AlternativePage extends StatelessWidget {
               ),
             CounterOfSpentRecordsWidget(
                 workingOutQuantity: cubit.workingOutEventsLength(),
-                notWorkingOutQuantity: cubit.dontWorkingOutEventsLength()),
+                notWorkingOutQuantity: cubit.allNegativeDayEventsLength()),
             SizedBox(
               height: 40,
             ),
@@ -205,12 +205,12 @@ class AlternativePage extends StatelessWidget {
                           ),
                           Text('Альтернативная мысль', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
                           Padding(padding: EdgeInsets.symmetric(vertical: 15),
-                          child: ExpandableTextWidget(text: '"${cubit.lastSpentRecordModel().alternativeThoughts}"', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
+                          child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeThoughts}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
 
                           ),
                           Text('Альтернативное действие', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
                           Padding(padding: EdgeInsets.only(top: 15),
-                            child: ExpandableTextWidget(text: '"${cubit.lastSpentRecordModel().alternativeDo}"', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
+                            child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeDo}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
 
                           ),
 

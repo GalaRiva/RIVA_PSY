@@ -86,7 +86,7 @@ class AlternativePdf {
         build: (context) {
 
           return Column(children: [
-            SizedBox(
+            Container(
               height: getVerticalSize(100),
               child: Row(
                 children: [
@@ -125,14 +125,19 @@ class AlternativePdf {
                       ])),
 
                   Container(
-                      margin: EdgeInsets.only(left: 426),
+                      margin: EdgeInsets.only(left: 234),
                       height: getVerticalSize(65),
-                      width: getHorizontalSize(300),
-                      child: Row(children: [
-                        Text('АЛЬТЕРНАТИВНЫЕ МЫСЛИ И ДЕЙСТВИЯ',
-                          style: _textStyle.copyWith(
-                              fontSize: 18, color: PdfColor.fromHex('#7f7f90'), fontWeight: FontWeight.bold
-                          )),
+                      child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(width: 230,
+                            child: Text('АЛЬТЕРНАТИВНЫЕ МЫСЛИ И ДЕЙСТВИЯ',
+                              textAlign: TextAlign.right,
+                              style: _textStyle.copyWith(
+                                  fontSize: 18, color: PdfColor.fromHex('#7f7f90'), fontWeight: FontWeight.bold
+                              ), maxLines: 2, ),),
+
+
                         Image(imageQr,
                           height: getVerticalSize(65),
                           width: getVerticalSize(65),),
@@ -185,7 +190,7 @@ class AlternativePdf {
     return SizedBox(
         height: (100 * events.length.toDouble()),
         child : ListView.builder(itemBuilder: (context, index) {
-          return Row(children: List<Widget>.generate(_secondColumnTags.length, (_index) => Padding(padding: EdgeInsets.only(right: 3, bottom: 2),
+          return Row(children: List<Widget>.generate(_secondColumnTags.length, (_index) => Padding(padding: EdgeInsets.only(right: 5, bottom: 5),
               child:
               Container(
                   height: (82),

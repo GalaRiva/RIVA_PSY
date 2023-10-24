@@ -1,36 +1,32 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 
-import '../../../../../../../../core/models/day_event_model.dart';
-import '../../bloc/cubit.dart';
-import '../../bloc/state.dart';
-import '../working_out_widget.dart';
+import '../../../../../../core/models/day_event_model.dart';
+import '../../../../../../core/utils/color_constant.dart';
+import '../../../../../../core/utils/image_constant.dart';
+import '../../../../../../routes/app_routes.dart';
+import '../../../../../../theme/app_style.dart';
+import '../../../../../../widgets/custom_button.dart';
 
-class EmptyInitialWorkingOutPage extends WorkingOutWidget {
+class DialogRecordsNotEnough extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<WorkingOutIrrationalCubit>();
-    return SingleChildScrollView(
+    return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Container(
           padding: EdgeInsets.all(15),
           decoration:
-          BoxDecoration(border: Border.all(color: Colors.white, width: 1)),
+          BoxDecoration(border: Border.all(color: Colors.white, width: 1), color: ColorConstant.gray200),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               AspectRatio(
                   aspectRatio: 300 / 200,
                   child: Container(
                     color: ColorConstant.gray300,
                     child:
-                        Image.asset(ImageConstant.handImg,),
+                    Image.asset(ImageConstant.handImg,),
                   )),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 15),
@@ -52,7 +48,4 @@ class EmptyInitialWorkingOutPage extends WorkingOutWidget {
       ),
     );
   }
-
-  @override
-  WorkingOutIrrationalStage stage() => WorkingOutIrrationalStage.initialStage;
 }
