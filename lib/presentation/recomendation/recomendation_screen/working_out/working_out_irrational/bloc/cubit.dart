@@ -127,6 +127,11 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
     }
   }
 
+  void updatePage() {
+    emit(state);
+
+  }
+
   void goToNextState(WorkingOutIrrationalStage stage) {
     emit(WorkingOutIrrationalState(
         stage: stage,

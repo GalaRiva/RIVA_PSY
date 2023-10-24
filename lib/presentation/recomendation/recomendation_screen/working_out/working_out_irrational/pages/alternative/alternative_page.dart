@@ -32,10 +32,15 @@ class AlternativePage extends StatelessWidget {
                   dataType: RecordCardDataType.Thought,
                   image: AspectRatio(
                     aspectRatio: 300 / 72,
-                    child: Image.asset(
-                      ImageConstant.alternativeWorkingOutImg,
-                      fit: BoxFit.fill,
-                      color: ColorConstant.cyan700.withOpacity(0.35),
+                    child: Stack(
+                      children: [
+                        Image.asset(
+                          ImageConstant.alternativeWorkingOutImg,
+                          fit: BoxFit.fill,
+                          //color: ColorConstant.cyan700.withOpacity(0.35),
+                        ),
+                        Container(decoration: BoxDecoration(color: ColorConstant.cyan700.withOpacity(0.35), borderRadius: BorderRadius.circular(3)),)
+                      ],
                     ),
                   ),
                   onButtonTap: () =>
@@ -72,10 +77,11 @@ class AlternativePage extends StatelessWidget {
                       DateTime end = result['end'];
                       cubit.dateStart = start;
                       cubit.dateEnd = end;
-                      cubit.emit(cubit.state);
                     }
+                    cubit.updatePage();
                   },
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'Изменить период времени',
@@ -85,11 +91,17 @@ class AlternativePage extends StatelessWidget {
                       SizedBox(
                         width: 6,
                       ),
-                      Image.asset(
-                        ImageConstant.rightArrow,
-                        width: 3,
-                        height: 6,
-                      )
+                      CustomImageView(
+                          svgPath: ImageConstant
+                              .rightArrow,
+                          height:
+                          getVerticalSize(
+                              10),
+                          width:
+                          getHorizontalSize(
+                              5),
+                          margin: getMargin(
+                              bottom: 3))
                     ],
                   ),
                 )
@@ -139,7 +151,7 @@ class AlternativePage extends StatelessWidget {
                         width: 45, height: 30,
                         child: Center(
                           child: Text('Дата', style: AppStyle
-                              .txtSFProDisplayLight11, overflow: TextOverflow
+                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
                       Container(
@@ -147,7 +159,7 @@ class AlternativePage extends StatelessWidget {
                         width: 145, height: 30,
                         child: Center(
                           child: Text('Альтернативные мысли', style: AppStyle
-                              .txtSFProDisplayLight11, overflow: TextOverflow
+                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
                       Container(
@@ -155,7 +167,7 @@ class AlternativePage extends StatelessWidget {
                         width: 145, height: 30,
                         child: Center(
                           child: Text('Альтернативные действия', style: AppStyle
-                              .txtSFProDisplayLight11, overflow: TextOverflow
+                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
                     ],),

@@ -84,7 +84,8 @@ class RecordCard extends StatelessWidget {
               height: 10,
             ),
             ExpandableTextWidget(
-              text: dayEventModel.firstThoughts!,
+              text:  '"${ dataType == RecordCardDataType.Thought
+                  ?  dayEventModel.firstThoughts! : dayEventModel.whatIDo!}"',
               maxLines: 3,
             ),
             SizedBox(

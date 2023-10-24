@@ -15,13 +15,14 @@ class CustomButton extends StatelessWidget {
       this.text,
       this.prefixWidget,
       this.suffixWidget,
+        this.bgColor,
         this.centralWidget,
       this.standardPadding});
 
   ButtonShape? shape;
 
   final Widget? centralWidget;
-
+  final Color? bgColor;
   ButtonPadding? padding;
 
   EdgeInsetsGeometry? standardPadding;
@@ -135,6 +136,7 @@ class CustomButton extends StatelessWidget {
   }
 
   _setColor() {
+    if(bgColor!= null) return bgColor!;
     switch (variant) {
       case ButtonVariant.OutlineBluegray60014:
         return ColorConstant.whiteA70070;
@@ -308,6 +310,18 @@ class CustomButton extends StatelessWidget {
             1.25,
           ),
         );
+      case ButtonFontStyle.DeepPurple16:
+        return TextStyle(
+          color: ColorConstant.deepPurple600,
+          fontSize: getFontSize(
+            16,
+          ),
+          fontFamily: 'SF Pro Display',
+          fontWeight: FontWeight.w400,
+          height: getVerticalSize(
+            1.25,
+          ),
+        );
       default:
         return TextStyle(
           color: ColorConstant.deepPurple600,
@@ -353,6 +367,7 @@ enum ButtonFontStyle {
   SFProDisplayRegular12Cyan700,
   White16,
   Gray16,
+  DeepPurple16,
   SFProDisplayLight14,
   SFProDisplayRegular10,
   SFProDisplayLight10,

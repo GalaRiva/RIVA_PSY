@@ -49,62 +49,65 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
         create:(_) => WorkingOutIrrationalCubit()..init(),),
     ],
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: getPadding(top: 39, left: 16),
-                child: Text(
-                  "Рекомендации и упражнения",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: AppStyle.txtSFProDisplayLight10Gray800,
-                ),
-              ),
-              Padding(
-                padding: getPadding(
-                  top: 12,
-                ),
-                child: Divider(
-                  height: getVerticalSize(
-                    1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: getPadding(top: 39, left: 16),
+                  child: Text(
+                    "Рекомендации и упражнения",
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: AppStyle.txtSFProDisplayLight10Gray800,
                   ),
-                  thickness: getVerticalSize(
-                    1,
+                ),
+                Padding(
+                  padding: getPadding(
+                    top: 12,
                   ),
-                  indent: getVerticalSize(16),
-                  endIndent: getVerticalSize(16),
-                  color: ColorConstant.gray50,
+                  child: Divider(
+                    height: getVerticalSize(
+                      1,
+                    ),
+                    thickness: getVerticalSize(
+                      1,
+                    ),
+                    indent: getVerticalSize(16),
+                    endIndent: getVerticalSize(16),
+                    color: ColorConstant.gray50,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: getPadding(top: 14, left: 16),
-                child: Text(
-                  'Справится с эмоциями',
-                  style: AppStyle.txtH1,
+                Padding(
+                  padding: getPadding(top: 14, left: 16),
+                  child: Text(
+                    'Справится с эмоциями',
+                    style: AppStyle.txtH1,
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: CustomButton(
-                  variant: ButtonVariant.Cyan,
-                  fontStyle: ButtonFontStyle.White16,
-                  text: 'Помощь при панике и аффекте',
-                  width: size.width - 32,
-                  onTap: () {
-                    controller.tabController!.animateTo(2);
-                    controller.currentTab = 2;
-                    controller.tabControllerSecond!.animateTo(controller.panicTab);
-                    controller.currentTabSecond = controller.panicTab;
-                  },
-                  height: getVerticalSize(37),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: CustomButton(
+                    variant: ButtonVariant.Cyan,
+                    fontStyle: ButtonFontStyle.White16,
+                    text: 'Помощь при панике и аффекте',
+                    width: size.width - 32,
+                    onTap: () {
+                      controller.tabController!.animateTo(2);
+                      controller.currentTab = 2;
+                      controller.tabControllerSecond!.animateTo(controller.panicTab);
+                      controller.currentTabSecond = controller.panicTab;
+                    },
+                    height: getVerticalSize(37),
+                  ),
                 ),
-              ),
-              CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
-              tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],)
+                CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
+                tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],)
 
-            ],
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: CustomBottomBar(

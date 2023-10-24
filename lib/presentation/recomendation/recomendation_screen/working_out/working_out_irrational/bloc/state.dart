@@ -21,6 +21,12 @@ class WorkingOutIrrationalState {
         prevState: prevState ?? this.prevState,
         dayEventModel: dayEventModel ?? this.dayEventModel);
   }
+
+  @override
+  bool operator ==(Object other) {
+    // TODO: implement ==
+    return false;
+  }
 }
 
 enum WorkingOutIrrationalStage {
