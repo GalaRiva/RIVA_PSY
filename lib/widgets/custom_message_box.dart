@@ -22,7 +22,7 @@ class CustomMessageBox extends StatelessWidget {
         color: Colors.transparent,
         elevation: 0,
         child: SizedBox(
-          height: getVerticalSize(30 + height!),
+          height: getVerticalSize(30 + height),
           width: getHorizontalSize(340),
           child: Column(
             children: [

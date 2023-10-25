@@ -89,7 +89,7 @@ print('h - $height');
             stopFun: () async {
               await controller.audioInstance.pause();
             },
-            loadFun: () async {}, audioInstance: controller.audioInstance, currentAudioIndex: controller.currentAudioIndex ?? 0,
+            loadFun: () async {}, audioInstance: controller.audioInstance, currentAudioIndex: () => controller.currentAudioIndex ?? 0, changeCurrentAudioIndex: (int index) { controller.currentAudioIndex = index; },
             ));
 
         }

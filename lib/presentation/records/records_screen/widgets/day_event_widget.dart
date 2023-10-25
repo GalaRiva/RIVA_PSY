@@ -20,7 +20,7 @@ class DayEventWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getVerticalSize(30 + (155 * dayEventModels.length.toDouble())),
+      height: getVerticalSize(30 + (204 * dayEventModels.length.toDouble())),
       margin: getMargin(left: 10, right: 10),
       decoration: BoxDecoration(
           color: ColorConstant.fromHex('#F9F9F9'),
@@ -100,7 +100,7 @@ class DayEventWidget extends StatelessWidget {
           GetBuilder(
             builder: (K49Controller _c) =>
                 SizedBox(
-                  height: getVerticalSize(155 * dayEventModels.length.toDouble()),
+                  height: getVerticalSize(204 * dayEventModels.length.toDouble()),
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                   itemCount: dayEventModels.length,

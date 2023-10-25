@@ -17,6 +17,7 @@ import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/inner_shadow.dart';
 import 'controller.dart';
 import 'repository.dart';
+import 'widgets/try_irrational_dialog.dart';
 
 class K20Screen extends GetWidget<K20Controller> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -301,9 +302,7 @@ class K20Screen extends GetWidget<K20Controller> {
                       32,
                     ),
                       onTap: (){
-
                       Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel()..howDoYouFeel = value);
-
                       },
                     text: "Пройти путь".toUpperCase(),
                     margin: getMargin(

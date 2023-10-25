@@ -11,7 +11,7 @@ import '../../../../widgets/body_widget.dart';
 import '../../../../widgets/custom_image_view.dart';
 import '../../../../widgets/second_variant_event_card.dart';
 
-Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
+Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
   final _color = ColorConstant.fromHex('#5B4FA9');
   final _style = TextStyle(
     color: ColorConstant.deepPurple600,
@@ -22,33 +22,33 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
     fontWeight: FontWeight.w400,
   );
   return SizedBox(
-    height: getVerticalSize(155),
+    height: getVerticalSize(204),
     child: Stack(
       children: [
         Padding(
           padding: getPadding(left: 43),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
+          child: Padding(
+            padding: getPadding(left: 6, top: 1, right: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Padding(
-                    padding: getPadding(left: 6, top: 1, right: 6),
-                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      Padding(
-                        padding: getPadding(top: 15),
-                        child: SizedBox(
-                          height: getVerticalSize(17),
+                Padding(
+                  padding: getPadding(top: 15, bottom: 14),
+                  child: SizedBox(
+                    height: getVerticalSize(17),
+                    child: Wrap(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               SecondVariantEventCard(
                                 content: [
                                   CustomImageView(
                                     alignment: Alignment.center,
-                                    svgPath: dayEventModel.whatHappened!.svgPath,
+                                    svgPath:
+                                        dayEventModel.whatHappened!.svgPath,
                                     color: _color,
                                     fit: BoxFit.scaleDown,
                                     height: getVerticalSize(
@@ -67,9 +67,17 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                                   )
                                 ],
                               ),
-                              SizedBox(
-                                width: getHorizontalSize(10),
-                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: getHorizontalSize(10),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: Row(                          mainAxisSize: MainAxisSize.min,
+
+                            children: [
                               SecondVariantEventCard(
                                 content: [
                                   Text(
@@ -78,9 +86,17 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                                   )
                                 ],
                               ),
-                              SizedBox(
-                                width: getHorizontalSize(10),
-                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: getHorizontalSize(10),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: Row(                          mainAxisSize: MainAxisSize.min,
+
+                            children: [
                               SecondVariantEventCard(
                                 content: [
                                   Text(
@@ -89,9 +105,17 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                                   )
                                 ],
                               ),
-                              SizedBox(
-                                width: getHorizontalSize(10),
-                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: getHorizontalSize(10),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: Row(                          mainAxisSize: MainAxisSize.min,
+
+                            children: [
                               SecondVariantEventCard(
                                 content: [
                                   Text(
@@ -99,37 +123,40 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                                     style: _style,
                                   ),
                                   IgnorePointer(
-
                                     child: SleekCircularSlider(
                                       appearance: CircularSliderAppearance(
                                           animationEnabled: false,
                                           infoProperties: InfoProperties(
                                               topLabelText: '',
                                               mainLabelStyle: TextStyle(
-                                                fontSize: 1,
+                                                  fontSize: 1,
                                                   color: Colors.transparent)),
                                           startAngle: 105,
                                           angleRange: 330,
-                                        size: 11,
+                                          size: 11,
                                           customColors: CustomSliderColors(
                                             trackColor: Colors.transparent,
-                                            dotColor:
-                                            Colors.transparent,
+                                            dotColor: Colors.transparent,
                                             progressBarColors: [
                                               ColorConstant.fromHex('#403875'),
                                               ColorConstant.fromHex('#7FBDBA'),
                                             ],
                                           ),
                                           customWidths: CustomSliderWidths(
-                                              progressBarWidth: 2, trackWidth: 2)),
+                                              progressBarWidth: 2,
+                                              trackWidth: 2)),
                                       min: 0,
                                       max: 10,
-                                      initialValue:
-                                      dayEventModel.emotionIntensity.toDouble(),
+                                      initialValue: dayEventModel
+                                          .emotionIntensity
+                                          .toDouble(),
                                     ),
                                   ),
                                   Text(
-                                    '(' + dayEventModel.emotionIntensity.toString() + ')',
+                                    '(' +
+                                        dayEventModel.emotionIntensity
+                                            .toString() +
+                                        ')',
                                     style: _style,
                                   ),
                                 ],
@@ -137,72 +164,128 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                             ],
                           ),
                         ),
-                      ),Padding(padding: getPadding(top: 14), child: SizedBox(
-                          height: getVerticalSize(17),
-                          width: getHorizontalSize(250),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: dayEventModel.whatBodyParts!.length,
-                              itemBuilder: (context, index) =>
-                                  Padding(padding: getPadding(right: 10),
-                                    child: SecondVariantEventCard(
-                                      content: [
-                                        Text(dayEventModel.whatBodyParts![index].bodyPartsModel.bodyPart ?? '',
-                                          style: _style,)
-                                      ],
-                                    ),
-                                  ))
-                      ),),
-                      Padding(
-                        padding: getPadding(
-                          top: 14,
-                        ),
-                        child: Text(
-                          "Действие:  ${dayEventModel.whatIDo ?? ''}",
-                          maxLines: 1,
-                          overflow:
-                          TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle
-                              .txtSFProDisplayLight11Gray8001,
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 14,
-                        ),
-                        child: Text(
-                          "Мысли:  ${dayEventModel.firstThoughts ?? ''}",
-                          maxLines: 1,
-                          overflow:
-                          TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle
-                              .txtSFProDisplayLight11Gray8001,
-                        ),
-                      ),
-                      Padding(padding: getPadding(top: 11),
-                        child: Visibility(
-                          visible: dayEventModel.pathToAudio != null,
-                          child: SecondVariantEventCard(
-                            content: [
-                              Container(
-                                margin: getMargin(
-                                  right: 4,
-                                ),
-                                child: CustomImageView(
-                                  svgPath: ImageConstant
-                                      .imgMicrophone,
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    height: getVerticalSize(17),
+                    width: getHorizontalSize(250),
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dayEventModel.whatBodyParts!.length,
+                        itemBuilder: (context, index) => Padding(
+                              padding: getPadding(right: 10),
+                              child: SecondVariantEventCard(
+                                content: [
+                                  Text(
+                                    dayEventModel.whatBodyParts![index]
+                                            .bodyPartsModel.bodyPart ??
+                                        '',
+                                    style: _style,
+                                  )
+                                ],
+                              ),
+                            ))),
+                Padding(
+                  padding: getPadding(
+                    top: 14,
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        color: ColorConstant.gray200),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: ColorConstant.fromHex('#F9F9F9')),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Действие:  ${dayEventModel.whatIDo ?? ''}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style:
+                                    AppStyle.txtSFProDisplayLight11Gray8001,
+                              ),
+                              Padding(
+                                padding: getPadding(top: 14, bottom: 6),
+                                child: Text(
+                                  "Мысли:  ${dayEventModel.firstThoughts ?? ''}",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style:
+                                      AppStyle.txtSFProDisplayLight11Gray8001,
                                 ),
                               ),
-                              Text('Голосовая запись', style: _style,)
+                              Opacity  (
+                                  opacity: dayEventModel.workingOut ?  1 : 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(3),
+                                              color: ColorConstant.gray200),
+                                          child:Container(
+                                                margin: const EdgeInsets.all(0.5),
+
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(3),
+                                                    color: ColorConstant.fromHex('#F9F9F9')),
+                                                child: Center(
+                                                  child: Icon(Icons.check, color: ColorConstant.cyan700, size: 10,),
+                                                ),
+                                              ))
+                                    ],
+                                  ))
                             ],
                           ),
-                        ),)
-                    ],
+                        ),
+                      ),
                     ),
+                  ),
                 ),
-
+                Padding(
+                  padding: getPadding(top: 11),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Visibility(
+                        visible: dayEventModel.pathToAudio != null,
+                        child: SecondVariantEventCard(
+                          content: [
+                            Container(
+                              margin: getMargin(
+                                right: 4,
+                              ),
+                              child: CustomImageView(
+                                svgPath: ImageConstant.imgMicrophone,
+                              ),
+                            ),
+                            Text(
+                              'Голосовая запись',
+                              style: _style,
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 4, height: 8,
+                          child: Icon(Icons.chevron_right_sharp, size: 8, color: ColorConstant.gray200,))
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -219,11 +302,10 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
         Container(
           alignment: Alignment.topLeft,
           width: getHorizontalSize(43),
-          height: getVerticalSize(155),
+          height: getVerticalSize(204),
           decoration: BoxDecoration(
               color: ColorConstant.fromHex('#E7EAEA'),
-              borderRadius:
-              BorderRadius.only(bottomLeft: Radius.circular(3))),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(3))),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -237,8 +319,7 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                         dayEventModel.date!.minute.timeFormatted(),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
-                    style:
-                    AppStyle.txtSFProDisplayLight11Gray8001.copyWith(
+                    style: AppStyle.txtSFProDisplayLight11Gray8001.copyWith(
                       letterSpacing: getHorizontalSize(
                         0.44,
                       ),
@@ -246,47 +327,45 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                 SizedBox(
                   height: getVerticalSize(8),
                 ),
-                Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      IgnorePointer(
-                        child: SleekCircularSlider(
-                          appearance: CircularSliderAppearance(
-                              animationEnabled: false,
-                              infoProperties: InfoProperties(
-                                  topLabelText: '',
-                                  mainLabelStyle:
+                Stack(alignment: Alignment.center, children: [
+                  IgnorePointer(
+                    child: SleekCircularSlider(
+                      appearance: CircularSliderAppearance(
+                          animationEnabled: false,
+                          infoProperties: InfoProperties(
+                              topLabelText: '',
+                              mainLabelStyle:
                                   TextStyle(color: Colors.transparent)),
-                              startAngle: 105,
-                              angleRange: 330,
-                              size: getSize(28),
-                              customColors: CustomSliderColors(
-                                trackColor: Colors.transparent,
-                                dotColor: Colors.transparent,
-                                progressBarColors: [
-                                  ColorConstant.fromHex('#403875'),
-                                  ColorConstant.fromHex('#7FBDBA'),
-                                ],
-                              ),
-                              customWidths: CustomSliderWidths(
-                                  progressBarWidth: 2, trackWidth: 2)),
-                          min: 0,
-                          max: 10,
-                          initialValue:
-                          dayEventModel.howDoYouFeel?.toDouble() ?? 10,
-                        ),
-                      ),
-                      Text(
-                        dayEventModel.howDoYouFeel.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: AppStyle.txtSFProDisplayLight14.copyWith(
-                          letterSpacing: getHorizontalSize(
-                            0.56,
+                          startAngle: 105,
+                          angleRange: 330,
+                          size: getSize(28),
+                          customColors: CustomSliderColors(
+                            trackColor: Colors.transparent,
+                            dotColor: Colors.transparent,
+                            progressBarColors: [
+                              ColorConstant.fromHex('#403875'),
+                              ColorConstant.fromHex('#7FBDBA'),
+                            ],
                           ),
-                        ),
+                          customWidths: CustomSliderWidths(
+                              progressBarWidth: 2, trackWidth: 2)),
+                      min: 0,
+                      max: 10,
+                      initialValue:
+                          dayEventModel.howDoYouFeel?.toDouble() ?? 10,
+                    ),
+                  ),
+                  Text(
+                    dayEventModel.howDoYouFeel.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: AppStyle.txtSFProDisplayLight14.copyWith(
+                      letterSpacing: getHorizontalSize(
+                        0.56,
                       ),
-                    ]),
+                    ),
+                  ),
+                ]),
                 SizedBox(
                   height: getVerticalSize(11),
                 ),
@@ -295,7 +374,10 @@ Widget dayEventBodyWidget (DayEventModel dayEventModel, bool isNotFirst) {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: BodyWidget(
-                        list: dayEventModel.whatBodyParts!.map((e) => e.bodyPartsModel).toList() ?? [],
+                        list: dayEventModel.whatBodyParts!
+                                .map((e) => e.bodyPartsModel)
+                                .toList() ??
+                            [],
                       ),
                     )),
               ],

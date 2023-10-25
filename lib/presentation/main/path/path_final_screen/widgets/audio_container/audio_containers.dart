@@ -57,7 +57,7 @@ class AudioContainers extends StatelessWidget {
           return Padding(
             padding: getPadding( left: 10, right: 10),
             child: Wrap(
-              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(audioCardModel: audios[index], index: startIndex + index, audioPlayer: controller.audioInstance, maxDuration: (snapshot.data)?[index] ?? Duration.zero, currentAudioIndex: controller.currentAudioIndex, update: () => controller.update())),
+              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(audioCardModel: audios[index], index: startIndex + index, audioPlayer: controller.audioInstance, maxDuration: (snapshot.data)?[index] ?? Duration.zero, currentAudioIndex: () => controller.currentAudioIndex, update: () => controller.update(), changeAudioIndex: (int index) { controller.currentAudioIndex = index; },)),
             ),
           );
         },

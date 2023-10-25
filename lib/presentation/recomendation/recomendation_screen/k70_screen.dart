@@ -28,9 +28,11 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final data = ModalRoute.of(context)?.settings.arguments as Map?;
+    int initialTab = 0;
     if(data != null){
-      controller.currentTab = data['first'];
-      controller.currentTabSecond = data['second'];
+      controller.currentTab = data['first'] ?? 0;
+      controller.currentTabSecond = data['second'] ?? 0;
+      initialTab = data['initialTab'] ?? 0;
     }
     if(data == null){
       controller.currentTab = 0;
@@ -103,7 +105,9 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                     height: getVerticalSize(37),
                   ),
                 ),
-                CustomTabBar(labels: ['Справиться с эмоцией', 'Обретение'],
+                CustomTabBar(
+                  initialPos: initialTab,
+                  labels: ['Справиться с эмоцией', 'Обретение'],
                 tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],)
 
               ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../../core/models/day_event_model.dart';
 import '../../../../../../../core/user_data/user.dart';
@@ -94,10 +95,21 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
     if(_spentRecordModels.isEmpty || _spentRecordModels.isNotEmpty && _currentSpentRecordModel != lastSpentRecordModel())
       _spentRecordModels.add(_currentSpentRecordModel!);
       _repo.updateEvent(_spentRecordModels);
-
     _currentSpentRecordModel = null;
+    SharedPreferences.getInstance().then((prefs) async {
+      var dateInStr = prefs.getString('firstSpendRecord');
+      if(dateInStr == null) {
+        dateInStr = DateTime.now().toIso8601String();
+        await prefs.setString('firstSpendRecord', dateInStr);
+      }
+      if(DateTime.parse(dateInStr).difference(DateTime.now()).inDays > 7){
+        goToNextState(WorkingOutIrrationalStage.alternative);
+      } else {
+        goToNextState(WorkingOutIrrationalStage.gratitude);
 
-    goToNextState(WorkingOutIrrationalStage.alternative);
+      }
+    }
+      );
   }
 
   Future<List<SpentRecordModel>> getSpentRecordModels() async {

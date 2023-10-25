@@ -94,7 +94,8 @@ class RecordCard extends StatelessWidget {
             ),
             image ??
                 AspectRatio(
-                  aspectRatio: 320 / 200,
+                  aspectRatio: dataType == RecordCardDataType.Thought
+                      ? 320 / 200 : 300 / 220.7,
                   child: Container(
                     decoration: BoxDecoration(
                         color: ColorConstant.darkWhite,

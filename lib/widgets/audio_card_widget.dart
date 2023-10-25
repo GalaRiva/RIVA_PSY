@@ -14,7 +14,8 @@ class AudioCardWidget extends StatelessWidget {
   final Function(Duration) onChange;
   final Function? loadFun;
   final AudioPlayer audioInstance;
-  int currentAudioIndex;
+  final int Function() currentAudioIndex;
+  final Function(int index) changeCurrentAudioIndex;
   final Function(Duration duration)? playFun;
   final Function()? stopFun;
   final int index;
@@ -26,7 +27,7 @@ class AudioCardWidget extends StatelessWidget {
       required this.maxDuration,
       this.playFun,
       this.stopFun,
-      this.loadFun, required this.index, required this.audioInstance, required this.currentAudioIndex})
+      this.loadFun, required this.index, required this.audioInstance, required this.currentAudioIndex, required this.changeCurrentAudioIndex})
       : super(key: key);
 
   AudioState state = AudioState.Stopped;
@@ -49,7 +50,7 @@ class AudioCardWidget extends StatelessWidget {
     audioInstance.playerStateStream.listen((playerState) {
       final processingState = playerState.processingState;
 
-      if(audioInstance.playing && currentAudioIndex != index){
+      if(audioInstance.playing && currentAudioIndex() != index){
         state = AudioState.Stopped;
         try {
           if(_timer != null)
@@ -110,17 +111,18 @@ class AudioCardWidget extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: (){
-                            if(currentAudioIndex != index && state == AudioState.Playing) {
+
+                            if(currentAudioIndex() != index && state == AudioState.Playing) {
                               state = AudioState.Stopped;
                             }
-                            currentAudioIndex = index;
+                            changeCurrentAudioIndex(index);
                             if(state == AudioState.Stopped){
                               state = AudioState.Playing;
                               playFun!(duration);
                               _timer = Timer.periodic(Duration(seconds: 1), (timer) {
                                 duration = Duration(seconds: duration.inSeconds + 1);
                                 if(duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble()){
-                                  currentAudioIndex = index;
+                                  changeCurrentAudioIndex(index);
                                   if(_timer != null)
                                     _timer!.cancel();
                                   stopFun!();
@@ -131,7 +133,7 @@ class AudioCardWidget extends StatelessWidget {
                               });
 
                             } else {
-                              currentAudioIndex = index;
+                              changeCurrentAudioIndex(index);
                               if(_timer != null)
                                 _timer!.cancel();
                               stopFun!();
@@ -143,7 +145,7 @@ class AudioCardWidget extends StatelessWidget {
                           child: CustomImageView(
                             height: getSize(30),
                             width: getSize(30),
-                            svgPath: (state == AudioState.Stopped || currentAudioIndex != index) ? ImageConstant.buttonStart : ImageConstant.imgVolume,
+                            svgPath: (state == AudioState.Stopped || currentAudioIndex() != index) ? ImageConstant.buttonStart : ImageConstant.imgVolume,
                           ),
                         ),
                         SizedBox(

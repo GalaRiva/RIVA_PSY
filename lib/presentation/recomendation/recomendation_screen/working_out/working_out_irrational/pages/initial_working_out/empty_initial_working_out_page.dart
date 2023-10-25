@@ -9,6 +9,7 @@ import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 import '../../../../../../../../core/models/day_event_model.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
+import '../../widgets/relax_dialog/relax_dialog.dart';
 import '../working_out_widget.dart';
 
 class EmptyInitialWorkingOutPage extends WorkingOutWidget {

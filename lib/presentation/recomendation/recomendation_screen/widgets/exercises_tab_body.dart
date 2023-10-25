@@ -81,7 +81,7 @@ class ExercisesTabBody extends StatelessWidget {
                   height: getVerticalSize(523)
               ),
               Container(
-                decoration: AppDecoration.fillGray200,
+                color: ColorConstant.grayLight,
                 child: Column(
                   children: [
                     Padding(

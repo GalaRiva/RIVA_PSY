@@ -30,8 +30,7 @@ class K20Controller extends GetxController {
 
     const FIRST_MONTH_KEY = 'MONTH_PASSED';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(CurrentUser.user.registrationDate.month != DateTime.now().month || CurrentUser.user.registrationDate.year != DateTime.now().year){
-      if(prefs.getBool(FIRST_MONTH_KEY)??true == true)
+    if((CurrentUser.user.registrationDate.month != DateTime.now().month || CurrentUser.user.registrationDate.year != DateTime.now().year) && ((prefs.getBool(FIRST_MONTH_KEY) ?? true) == true)){
       showDialog(
             context: context, builder: (BuildContext context) => CustomMessageBox(
           title: 'RIGEL Psy',

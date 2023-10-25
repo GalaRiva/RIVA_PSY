@@ -11,17 +11,18 @@ import '../exercise_content/controller.dart';
 class AudioContainerWidget extends StatelessWidget {
   final AudioCardModel audioCardModel;
   final int index;
-  final int currentAudioIndex;
+  final int Function() currentAudioIndex;
   final AudioPlayer audioPlayer;
   final Duration maxDuration;
   final Function? update;
+  final Function(int index) changeAudioIndex;
 
-  const AudioContainerWidget(
+   AudioContainerWidget(
       {Key? key,
       required this.audioCardModel,
       required this.index,
       required this.audioPlayer,
-      required this.maxDuration, required this.currentAudioIndex, required this.update})
+      required this.maxDuration, required this.currentAudioIndex, required this.update, required this.changeAudioIndex})
       : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class AudioContainerWidget extends StatelessWidget {
           maxDuration: maxDuration,
           currentAudioIndex: currentAudioIndex,
           playFun: (val) async {
-
+            changeAudioIndex(index);
             if(DataSourceService.dataSourceIsRemote()) {
               await audioPlayer.setUrl(audioCardModel.audioAsset, initialPosition: val);
             } else
@@ -52,7 +53,7 @@ class AudioContainerWidget extends StatelessWidget {
           onChange: (Duration duration) async {
             await audioPlayer.seek(duration);
             update!();
-          },
+          }, changeCurrentAudioIndex: (int index) { changeAudioIndex(index); },
         ),
       ),
     );
