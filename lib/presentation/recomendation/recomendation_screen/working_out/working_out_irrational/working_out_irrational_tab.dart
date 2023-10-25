@@ -5,11 +5,13 @@ import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_record_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/record/record_page.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog.dart';
 import 'package:listenmebaby71_s_application17/widgets/go_to_new_tariff_widget.dart';
 
 import 'bloc/cubit.dart';
 import 'bloc/state.dart';
 import 'pages/challenge/challenge_page.dart';
+import 'pages/gratitude/gratitude_page.dart';
 import 'pages/initial_working_out/empty_initial_working_out_page.dart';
 import 'pages/initial_working_out/initial_working_out_page.dart';
 import 'widgets/dialog_records_not_enough.dart';
@@ -31,8 +33,9 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         body: BlocConsumer<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(
           listenWhen: (prev, cur) {
             dayEventsIsEmpty = false;
-            if(prev.stage == WorkingOutIrrationalStage.alternativeDo && cur.stage == WorkingOutIrrationalStage.alternative && !context.read<WorkingOutIrrationalCubit>().existMoreDontWorkingOutEvents()){
+            if(prev.stage == WorkingOutIrrationalStage.alternativeDo && cur.stage == WorkingOutIrrationalStage.alternative){
               Navigator.of(context).popUntil(ModalRoute.withName(AppRoutes.recommendations));
+              if(!context.read<WorkingOutIrrationalCubit>().existMoreDontWorkingOutEvents())
               dayEventsIsEmpty = true;
               return true;
             }
@@ -43,6 +46,11 @@ class WorkingOutIrrationalTab extends StatelessWidget {
               dialogOpened = true;
 
               showDialog(context: context, builder: (_) => Center(child: DialogRecordsNotEnough())).then((value) => dialogOpened = false);
+            } else if(context.read<WorkingOutIrrationalCubit>().spentRecordsToday >= 3) {
+              dialogOpened = true;
+
+              showDialog(context: context, builder: (_) => Center(child: RelaxDialog())).then((value) => dialogOpened = false);
+
             }
 
         },),
@@ -91,11 +99,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
       case WorkingOutIrrationalStage.recordThought:
         return RecordPage();
       case WorkingOutIrrationalStage.gratitude:
-        // TODO: Handle this case.
-        break;
-      case WorkingOutIrrationalStage.relax:
-        // TODO: Handle this case.
-        break;
+        return GratitudePage();
       default:
         return Scaffold(
           body: Center(

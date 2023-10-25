@@ -27,6 +27,8 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
 
   SpentRecordModel lastSpentRecordModel() => _spentRecordModels.last;
 
+  int spentRecordsToday = 0;
+
   var dateStart =
       DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
 
@@ -85,6 +87,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
           ..last = selectedDayEventModel!.copyWith(workingOut: true);
       _repo.updateDayEventEvent(_dayEvents);
       _dontWorkingOutEvents.removeLast();
+      spentRecordsToday++;
     }
     selectedDayEventModel =
       existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;

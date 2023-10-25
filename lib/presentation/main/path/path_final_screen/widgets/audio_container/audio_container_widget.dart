@@ -14,14 +14,14 @@ class AudioContainerWidget extends StatelessWidget {
   final int currentAudioIndex;
   final AudioPlayer audioPlayer;
   final Duration maxDuration;
-  final ExerciseContentController controller;
+  final Function? update;
 
   const AudioContainerWidget(
       {Key? key,
       required this.audioCardModel,
       required this.index,
       required this.audioPlayer,
-      required this.maxDuration, required this.currentAudioIndex, required this.controller})
+      required this.maxDuration, required this.currentAudioIndex, required this.update})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class AudioContainerWidget extends StatelessWidget {
           loadFun: () async {},
           onChange: (Duration duration) async {
             await audioPlayer.seek(duration);
-            controller.update();
+            update!();
           },
         ),
       ),

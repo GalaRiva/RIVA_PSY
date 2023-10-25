@@ -1084,7 +1084,15 @@ class ImageConstant {
 
   static const humanAlternativeDoImg = 'assets/images/human_alternative_do.png';
 
+  static const humanRelaxImg = 'assets/images/human_relax_img.png';
+
+  static const humanGratitudeImg = 'assets/images/human_gratitude_img.png';
+
   static const alternativeWorkingOutImg = 'assets/images/alternative_working_out_img.png';
+
+  static const lineImg = 'assets/images/line_img.png';
+
+  static const gratitudeLineImg = 'assets/images/gratitude_line_img.png';
 
   static const pdfLogo = 'assets/images/pdf/Framelogo.png';
 
