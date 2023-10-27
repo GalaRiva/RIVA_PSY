@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="android.app" target="11" />
+      <module name="android.cloud_firestore" target="11" />
+      <module name="android.file_picker" target="11" />
+      <module name="android.firebase_analytics" target="11" />
+      <module name="android.firebase_auth" target="11" />
+      <module name="android.firebase_core" target="11" />
+      <module name="android.firebase_messaging" target="11" />
+      <module name="android.firebase_storage" target="11" />
+      <module name="android.flutter_plugin_android_lifecycle" target="11" />
+      <module name="android.flutter_sound" target="11" />
+      <module name="android.google_api_availability_android" target="11" />
+      <module name="android.google_sign_in_android" target="11" />
+      <module name="android.image_picker_android" target="11" />
+      <module name="android.just_audio" target="11" />
+      <module name="android.path_provider_android" target="11" />
+      <module name="android.permission_handler_android" target="11" />
+      <module name="android.record" target="11" />
+      <module name="android.shared_preferences_android" target="11" />
+      <module name="android.sign_in_with_apple" target="11" />
+      <module name="android.url_launcher_android" target="11" />
+      <module name="android.yookassa_payments_flutter" target="11" />
+      <module name="com.dexterous.flutterlocalnotifications.android.flutter_local_notifications" target="11" />
+      <module name="com.ryanheise.audio_session.android.audio_session" target="11" />
+      <module name="com.tekartik.sqflite.android.sqflite" target="11" />
+      <module name="dev.fluttercommunity.workmanager.android.workmanager" target="11" />
+      <module name="me.carda.awesome_notifications.android.awesome_notifications" target="11" />
+      <module name="net.nfet.flutter.printing.android.printing" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

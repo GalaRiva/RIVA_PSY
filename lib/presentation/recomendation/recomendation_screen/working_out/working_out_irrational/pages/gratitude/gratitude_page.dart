@@ -52,6 +52,7 @@ class GratitudePage extends StatelessWidget {
                     child: CustomButton(text:'ещё мысль'.toUpperCase(), fontStyle: ButtonFontStyle.DeepPurple16, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.challengeThought),),
                   ),
                   CustomButton(text:'продолжить позже'.toUpperCase(), fontStyle: ButtonFontStyle.White16, variant: ButtonVariant.Cyan, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.alternative),),
+                  SizedBox(height: 50,)
                 ],
               ),
 

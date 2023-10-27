@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/31a5787d1a5d6b192ec158393128b444/transformed/jetified-exoplayer-smoothstreaming-2.18.7/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/31a5787d1a5d6b192ec158393128b444/transformed/jetified-exoplayer-smoothstreaming-2.18.7/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/31a5787d1a5d6b192ec158393128b444/transformed/jetified-exoplayer-smoothstreaming-2.18.7/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -6,6 +6,7 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/35e86c9ebd51cd8669e1a8f66f8c086f/transformed/jetified-exoplayer-extractor-2.18.7/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/35e86c9ebd51cd8669e1a8f66f8c086f/transformed/jetified-exoplayer-extractor-2.18.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/35e86c9ebd51cd8669e1a8f66f8c086f/transformed/jetified-exoplayer-extractor-2.18.7/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -109,7 +109,7 @@ class K37Screen extends StatelessWidget {
                                     borderRadius: BorderRadius.zero,
                                     borderSide: BorderSide.none
                                 ),
-                                fillColor: ColorConstant.gray200,
+                                fillColor: ColorConstant.grayLight,
                                 filled: true,
                                 hintText: 'Ваши действия',
 

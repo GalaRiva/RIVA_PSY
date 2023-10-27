@@ -89,6 +89,8 @@ class InitialWorkingOutPage extends WorkingOutWidget {
                   cubit.goToNextState(WorkingOutIrrationalStage.challengeThought);
                 },
               ),
+              SizedBox(height: 50,)
+
             ],
           ),
         ),

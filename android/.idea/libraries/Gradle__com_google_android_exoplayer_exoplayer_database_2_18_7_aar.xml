@@ -6,6 +6,7 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/33bad892c80520c162d1aa54d3f1d641/transformed/jetified-exoplayer-database-2.18.7/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/33bad892c80520c162d1aa54d3f1d641/transformed/jetified-exoplayer-database-2.18.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/33bad892c80520c162d1aa54d3f1d641/transformed/jetified-exoplayer-database-2.18.7/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

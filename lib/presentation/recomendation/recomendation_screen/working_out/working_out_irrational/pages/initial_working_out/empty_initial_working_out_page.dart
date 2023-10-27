@@ -47,6 +47,8 @@ class EmptyInitialWorkingOutPage extends WorkingOutWidget {
                   Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel()..howDoYouFeel = 5);
                 },
               ),
+              SizedBox(height: 50,)
+
             ],
           ),
         ),

@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f1b3867dc4a9ec832385f6bb569923f1/transformed/jetified-firebase-installations-interop-17.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f1b3867dc4a9ec832385f6bb569923f1/transformed/jetified-firebase-installations-interop-17.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f1b3867dc4a9ec832385f6bb569923f1/transformed/jetified-firebase-installations-interop-17.1.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-installations-interop/17.1.0/4fd04ebe2d8d8f9bf658db62a507d7a0161c362a/firebase-installations-interop-17.1.0-javadoc.jar!/" />

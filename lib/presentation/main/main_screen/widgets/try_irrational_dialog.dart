@@ -88,6 +88,7 @@ class TryIrrationalDialog extends StatelessWidget {
                               fontStyle: ButtonFontStyle.DeepPurple16,
                               onTap: () {
                                 AppRoutes.currentRoute = AppRoutes.recommendations;
+                                Navigator.pop(context);
                                 Navigator.pushNamed(
                                     context,
                                     AppRoutes.recommendations,

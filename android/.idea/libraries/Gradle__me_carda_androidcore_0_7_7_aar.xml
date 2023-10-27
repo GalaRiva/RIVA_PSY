@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: me.carda:androidcore:0.7.7@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d99db52fd63f2e3e5d89900cda978666/transformed/jetified-androidcore-0.7.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d99db52fd63f2e3e5d89900cda978666/transformed/jetified-androidcore-0.7.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d99db52fd63f2e3e5d89900cda978666/transformed/jetified-androidcore-0.7.7/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

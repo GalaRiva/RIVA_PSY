@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1a8e8cc6fa4e4a47527c31b2acf9e59a/transformed/jetified-decoro-1.5.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1a8e8cc6fa4e4a47527c31b2acf9e59a/transformed/jetified-decoro-1.5.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1a8e8cc6fa4e4a47527c31b2acf9e59a/transformed/jetified-decoro-1.5.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.tinkoff.decoro/decoro/1.5.0/35a11f147e376679be59fe5f52687cc8052d426/decoro-1.5.0-javadoc.jar!/" />
