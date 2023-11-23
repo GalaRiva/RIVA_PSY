@@ -15,8 +15,8 @@
         android:label="Rigel PSY психология"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
-        android:versionCode="5"
-        android:versionName="1.0.4">
+        android:versionCode="7"
+        android:versionName="1.0.6">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
