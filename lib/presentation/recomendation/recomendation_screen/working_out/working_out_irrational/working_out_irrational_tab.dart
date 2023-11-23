@@ -5,6 +5,7 @@ import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_record_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/record/record_page.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/relax_dialog.dart';
 import 'package:listenmebaby71_s_application17/widgets/go_to_new_tariff_widget.dart';
 
@@ -33,7 +34,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         body: BlocConsumer<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(
           listenWhen: (prev, cur) {
             dayEventsIsEmpty = false;
-            if(prev.stage == WorkingOutIrrationalStage.alternativeDo && cur.stage == WorkingOutIrrationalStage.alternative){
+            if((prev.stage == WorkingOutIrrationalStage.alternativeDo || prev.stage == WorkingOutIrrationalStage.gratitude)  && (cur.stage == WorkingOutIrrationalStage.alternative || cur.stage == WorkingOutIrrationalStage.challengeThought)){
               Navigator.of(context).popUntil(ModalRoute.withName(AppRoutes.recommendations));
               if(!context.read<WorkingOutIrrationalCubit>().existMoreDontWorkingOutEvents())
               dayEventsIsEmpty = true;
@@ -60,10 +61,20 @@ class WorkingOutIrrationalTab extends StatelessWidget {
 
   Widget body(Object? state, BuildContext context) {
     final cubit = context.read<WorkingOutIrrationalCubit>();
-    if (!CurrentUser.tariffIsOrion())
-      return GoToNewTariffWidget(
-        goToFreeRecommendation: false,
+    if (!CurrentUser.tariffIsOrion()) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            GoToNewTariffWidget(
+              goToFreeRecommendation: false,
+            ),
+            Center(child: SizedBox(
+                width: size.width - 30,
+                child: CounterOfSpentRecordsWidget(workingOutQuantity: 0, notWorkingOutQuantity: 0)))
+          ],
+        ),
       );
+    }
     state as WorkingOutIrrationalState;
     if (state.loading) {
       return Scaffold(
@@ -95,9 +106,9 @@ class WorkingOutIrrationalTab extends StatelessWidget {
       case WorkingOutIrrationalStage.alternativeThought:
         return AlternativeRecordPage();
       case WorkingOutIrrationalStage.recordDo:
-        return RecordPage();
-      case WorkingOutIrrationalStage.recordThought:
-        return RecordPage();
+        return RecordPage(initWhyThisText: state.spendRecordModel?.whyThisDo ?? '', initAlternativeText: state.spendRecordModel?.alternativeDo ?? '',);
+        case WorkingOutIrrationalStage.recordThought:
+        return RecordPage(initWhyThisText: state.spendRecordModel?.whyThisThoughts ?? '', initAlternativeText: state.spendRecordModel?.alternativeThoughts ?? '',);
       case WorkingOutIrrationalStage.gratitude:
         return GratitudePage();
       default:

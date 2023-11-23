@@ -24,15 +24,16 @@ class K11Controller extends GetxController {
   Future createOffer () async {
     final _service = CloudStorageService();
     final collection = FirebaseFirestore.instance.collection('Errors');
-    CloudStorageResult storageResult;
+    CloudStorageResult? storageResult;
+    if(model.value.file != null)
     storageResult = await _service.uploadImage(
         imageToUpload: model.value.file!, title: '${CurrentUser.repo.userId()} ${model.value.fileName}');
 
 
     await collection.doc('${CurrentUser.repo.userId()} ${DateTime.now().toIso8601String()}').set({
       "text": model.value.controller.text,
-      "image_source": storageResult.imageUrl,
-      "image_name": storageResult.imageFileName
+      "image_source": storageResult?.imageUrl ?? '',
+      "image_name": storageResult?.imageFileName ?? ''
     });
   }
 

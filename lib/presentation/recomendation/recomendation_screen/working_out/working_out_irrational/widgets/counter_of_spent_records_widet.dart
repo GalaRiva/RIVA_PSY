@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/utils/color_constant.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/count_bar.dart';
+import 'package:listenmebaby71_s_application17/theme/app_style.dart';
 
 import '../../../../../../core/utils/size_utils.dart';
 
@@ -26,15 +27,16 @@ class CounterOfSpentRecordsWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 130, child: Text('Альтернативные мысли')),
+                  SizedBox(width: 130, child: Text('Альтернативные мысли', style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
                   CountBar(
                       currentCount: workingOutQuantity,
                       inTotalCount: notWorkingOutQuantity),
-                  Text('($workingOutQuantity/$notWorkingOutQuantity)')
+                  Text('($workingOutQuantity/$notWorkingOutQuantity)',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)
                 ],
               ),
               SizedBox(
@@ -43,11 +45,11 @@ class CounterOfSpentRecordsWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 130, child: Text('Альтернативные действия')),
+                  SizedBox(width: 130, child: Text('Альтернативные действия',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
                   CountBar(
                       currentCount: workingOutQuantity,
                       inTotalCount: notWorkingOutQuantity),
-                  Text('($workingOutQuantity/$notWorkingOutQuantity)')
+                  Text('($workingOutQuantity/$notWorkingOutQuantity)',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)
                 ],
               ),
             ],

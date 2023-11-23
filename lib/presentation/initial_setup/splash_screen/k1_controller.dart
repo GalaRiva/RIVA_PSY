@@ -55,7 +55,6 @@ class K1Controller extends GetxController {
 
         final controller = Get.put(K70Controller());
         await controller.initNegativeEmotions();
-        print(DataSourceService.dataSourceIsRemote());
         if (!DataSourceService.dataSourceIsRemote()) {
           var collectionAudio =
               await FirebaseFirestore.instance.collection('Audio').get();

@@ -29,7 +29,9 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
             textDirection: TextDirection.ltr,
           );
 
-          textPainter.layout(maxWidth: size.width - 60);
+          textPainter.layout(
+              minWidth: 0,
+              maxWidth: size.width,);
           //final list = textPainter.computeLineMetrics().first.descent
           print(textSpan.text!);
 

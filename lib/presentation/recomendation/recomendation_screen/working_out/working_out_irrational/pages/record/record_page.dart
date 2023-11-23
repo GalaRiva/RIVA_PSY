@@ -10,10 +10,18 @@ import '../../../../../../../core/utils/size_utils.dart';
 import '../../widgets/record_card.dart';
 
 class RecordPage extends StatelessWidget {
+  final String initWhyThisText;
+  final String initAlternativeText;
+
   final whyThis = TextEditingController();
   final alternative = TextEditingController();
 
   String savedText = '';
+
+  RecordPage({Key? key, required this.initWhyThisText, required this.initAlternativeText}) : super(key: key){
+    whyThis.text = initWhyThisText;
+    alternative.text = initAlternativeText;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +98,8 @@ class RecordPage extends StatelessWidget {
                       } else {
                           cubit.fillSpendRecordModel(whyThisDo: savedText);
                       }
-                        },
+                      cubit.updateDayEvents(nextState: false);
+                      },
                       height: 47,
                       width: size.width - 60,
                     ),
@@ -101,12 +110,12 @@ class RecordPage extends StatelessWidget {
                       aspectRatio: 300/220,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: ColorConstant.darkWhite,
+                          //color: ColorConstant.darkWhite,
                           borderRadius: BorderRadius.circular(3)
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(3),
-                          child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg, fit: BoxFit.fill,),
+                          child: Image.asset(isThought ? ImageConstant.humanAlternativeImg : ImageConstant.humanAlternativeDoImg,),
                         ),
                       ),
                     ),
@@ -152,6 +161,8 @@ class RecordPage extends StatelessWidget {
                         cubit.fillSpendRecordModel(whyThisDo: savedText, alternativeDo: alternative.text);
                         cubit.goToNextState(WorkingOutIrrationalStage.alternativeDo);
                       }
+                      cubit.updateDayEvents(nextState: false);
+
                       },
                     )
                   ],

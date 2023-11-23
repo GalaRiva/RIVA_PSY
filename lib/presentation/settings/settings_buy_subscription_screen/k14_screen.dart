@@ -119,7 +119,7 @@ class K14Screen extends StatelessWidget {
                               CustomButton(
                                   height: getVerticalSize(54),
                                   text:
-                                      "Перейти на тариф стандарт".toUpperCase(),
+                                      "Перейти на тариф \"Орион\"".toUpperCase(),
                                   margin:
                                       getMargin(left: 20, top: 19, right: 19),
                                   variant: ButtonVariant.OutlineBluegray60014,

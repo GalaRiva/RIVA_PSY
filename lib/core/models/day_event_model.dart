@@ -122,7 +122,7 @@ class DayEventModel implements Comparable<DayEventModel>{
   @override
   bool operator ==(Object other) {
     // TODO: implement ==
-    return super == other && date != null && (other as DayEventModel).date == date;
+    return other is DayEventModel && other.date == date && whatIDo == other.whatIDo && firstThoughts == other.firstThoughts;
   }
 }
 

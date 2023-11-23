@@ -213,7 +213,7 @@ class AlternativePage extends StatelessWidget {
                             child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeDo}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
 
                           ),
-                          SizedBox(height: 50,)
+
 
                         ],
                       ),
@@ -222,7 +222,8 @@ class AlternativePage extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(height: 20,)
           ],
         ),
       ),

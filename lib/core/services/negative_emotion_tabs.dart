@@ -19,39 +19,45 @@ class NegativeEmotionTabs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String appDocPath = (await getApplicationDocumentsDirectory()).path;
     try {
-      final _tabs = await FirebaseFirestore.instance.collection('Tabs').get();
-      final _tabsImages = await FirebaseFirestore.instance.collection(
-          'Tabs_Images').get();
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+
+        final _tabs = await FirebaseFirestore.instance.collection('Tabs').get();
+        final _tabsImages = await FirebaseFirestore.instance.collection(
+            'Tabs_Images').get();
 
 
 
-      await prefs.setString(TABS_KEY,
-          '{${_tabs.docs.map((e) => e.data().toString()).toString()}}'
-              .replaceAll('(', '')
-              .replaceAll(')', ''));
-      await prefs.setString(TABS_IMAGES_KEY,
-          '{${_tabsImages.docs.map((e) => e.data().toString()).toString()}}'
-              .replaceAll('(', '')
-              .replaceAll(')', ''));
+        await prefs.setString(TABS_KEY,
+            '{${_tabs.docs.map((e) => e.data().toString()).toString()}}'
+                .replaceAll('(', '')
+                .replaceAll(')', ''));
+        await prefs.setString(TABS_IMAGES_KEY,
+            '{${_tabsImages.docs.map((e) => e.data().toString()).toString()}}'
+                .replaceAll('(', '')
+                .replaceAll(')', ''));
 
-      for (int i = 0; i < _tabs.docs.length; i++) {
-        final data = _tabs.docs[i].data();
+        for (int i = 0; i < _tabs.docs.length; i++) {
+          final data = _tabs.docs[i].data();
 
-        var imagePath = appDocPath + '/' + 'tabs_images/${data['tag']}.svg';
+          var imagePath = appDocPath + '/' + 'tabs_images/${data['tag']}.svg';
 
-        if (DataSourceService.dataSourceIsRemote()) {
-          imagePath = _tabsImages.docs[i].data()['url'];
+          if (DataSourceService.dataSourceIsRemote()) {
+            imagePath = _tabsImages.docs[i].data()['url'];
+          }
+
+          tabs.add(NegativeEmotionTab(i, data['name'], imagePath, data['tag']));
         }
+      }, timeout: Duration(seconds: 2));
 
-        tabs.add(NegativeEmotionTab(i, data['name'], imagePath, data['tag']));
-      }
+
     }catch(_) {
+      debugPrint(_.toString());
       final String? tabsStr = prefs.getString(NegativeEmotionTabs.TABS_KEY);
       final String? tabsImagesStr = prefs.getString(NegativeEmotionTabs.TABS_IMAGES_KEY);
       if(tabsStr != null && tabsImagesStr != null){
         Map tabsDocs = json.decode(tabsStr);
         Map imagesDocs = json.decode(tabsImagesStr);
-        ;
+
         for (int i = 0; i < tabsDocs.length; i++) {
           final data = tabsDocs[i].data();
 

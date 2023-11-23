@@ -62,14 +62,15 @@ class K27Controller extends GetxController {
   double getTabHeight () {
     final double minimumHeight = currentTab == 3 ? 350 : 100;
     final list = getCurrentListByNumber(currentTab);
-    final listLength = currentTab == 3 ? (list.length / 4) * 2 : (list.length / 4);
+    final listLength = currentTab == 3 ? (list.length / 4) * 2 : (list.length / 3);
     if (list.length > 4) {
-      if (list.length < 8) return getVerticalSize(listLength * 120 + minimumHeight + 80);
-      return getVerticalSize(listLength * 120 + minimumHeight);
+      if (list.length < 8) return ((listLength * 80) + minimumHeight + 80);
+      print(listLength);
+      return ((listLength * 80) + minimumHeight);
     } else if (list.length > 1){
-      return getVerticalSize(400);
+      return (400);
     } else {
-      return getVerticalSize(400);
+      return (400);
     }
   }
 
@@ -213,9 +214,9 @@ class K27Controller extends GetxController {
                               child: CustomImageView(
                                 svgPath: ImageConstant.imgFrame185,
                                 fit: BoxFit.fill,
-                                height: getVerticalSize(
-                                  145,
-                                ),
+                                height:
+                                  145
+                                ,
                                 width: getHorizontalSize(
                                   120,
                                 ),

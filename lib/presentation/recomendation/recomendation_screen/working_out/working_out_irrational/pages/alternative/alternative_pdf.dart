@@ -75,7 +75,7 @@ class AlternativePdf {
       if(i != 0) {
         if (i % 4 == 0 && eventsInMatrix.length > 2)
           eventsInMatrix.add([]);
-        else if (i % 3 == 0 && eventsInMatrix.length < 2)
+        else if (i % 2 == 0 && eventsInMatrix.length < 2)
           eventsInMatrix.add([]);
       }
       eventsInMatrix[eventsInMatrix.length - 1].add(events[i]);

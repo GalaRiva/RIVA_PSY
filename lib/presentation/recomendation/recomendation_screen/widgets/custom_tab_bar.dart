@@ -9,9 +9,8 @@ import '../../../../widgets/custom_button.dart';
 class CustomTabBar extends StatefulWidget {
   final List<String> labels;
   final List<Widget> tabs;
-  final int initialPos;
-
-  const CustomTabBar({Key? key, this.labels = const [], this.tabs = const [], this.initialPos = 0})
+  final PageController controller;
+  const CustomTabBar({Key? key, this.labels = const [], this.tabs = const [], required this.controller})
       : super(key: key);
 
   @override
@@ -20,57 +19,27 @@ class CustomTabBar extends StatefulWidget {
 
 class _CustomTabBarState extends State<CustomTabBar>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
-  late Animation<Offset> _animationLabel;
 
-  late Animation<Offset> _animationTab1;
-  late Animation<Offset> _animationTab2;
 
   int currentPos = 0;
-
-  Widget? currentWidget;
-  Widget? otherWidget;
+  late Animation<Offset> _animationLabel;
+  late final AnimationController _animationController;
 
   void animate(int pos) {
     print('new pos = $pos');
-    if (!_animationController.isAnimating && pos != currentPos) {
-      _animationController.reset();
-      otherWidget = widget.tabs[pos];
-      setState(() {});
-      _animationLabel = Tween<Offset>(
-              begin: Offset(currentPos * 1, 0),
-              end: Offset((pos * 1).toDouble(), 0.0))
-          .animate(_animationController);
-      _animationTab1 = Tween<Offset>(
-              begin: Offset(0, 0), end: Offset(currentPos > pos ? 1 : -1, 0.0))
-          .animate(_animationController);
-      _animationTab2 = Tween<Offset>(
-              begin: Offset(currentPos > pos ? -1 : 1, 0), end: Offset(0, 0.0))
-          .animate(_animationController);
-      currentPos = pos;
-      _animationController.forward().then((value) => setState(() {
-        currentWidget = widget.tabs[currentPos];
-      }));
-    }
+    widget.controller.animateToPage(pos, duration: Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentPos = widget.initialPos;
-    currentWidget = widget.tabs[widget.initialPos];
+
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _animationLabel = Tween<Offset>(
-            begin: Offset(currentPos * 1, 0), end: Offset(1 * 1, 0.0))
+        begin: Offset(currentPos * 1, 0), end: Offset(0 * 1, 0.0))
         .animate(_animationController);
-    _animationTab1 =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(currentPos * 1, 0.0))
-            .animate(_animationController);
-    _animationTab2 =
-        Tween<Offset>(begin: Offset(currentPos * 1, 0), end: Offset(0, 0.0))
-            .animate(_animationController);
   }
 
   @override
@@ -179,22 +148,34 @@ class _CustomTabBarState extends State<CustomTabBar>
                 ),
               ),
             ),
-            Stack(
-              children: [
-                if(otherWidget != null)
-                  Container(
-                    child: SlideTransition(position: _animationTab2,
-                    child: otherWidget!,
+
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.all(0),
+                      width: size.width,
+                      height: size.height - 303,
+                      child: Center(
+                        child: PageView(
+                          physics: NeverScrollableScrollPhysics(),
+                          controller: widget.controller,
+                          onPageChanged: (pos) {
+                                  print(pos);
+                            _animationController.reset();
+                            _animationLabel = Tween<Offset>(
+                                begin: Offset(currentPos.toDouble() , 0),
+                                end: Offset(pos.toDouble(), 0.0))
+                                .animate(_animationController);
+                            setState(() {
+                              currentPos = pos;
+                            });
+                            _animationController.forward();
+                          },
+                          children: widget.tabs,
+                        ),
+                      ),
                     ),
                   ),
-                if(currentWidget != null)
-                  Container(
-                    child: SlideTransition(position: _animationTab1,
-                      child: currentWidget!,
-                    ),
-                  ),
-              ],
-            )
+
 
           ],
       ),

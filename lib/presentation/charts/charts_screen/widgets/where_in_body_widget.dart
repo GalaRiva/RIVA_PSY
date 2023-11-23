@@ -39,7 +39,7 @@ class WhereInBodyWidget extends StatelessWidget {
     };
     return GetBuilder(
       builder: (K61Controller _c) =>
-      !CurrentUser.tariffIsOrion() ? _whereInBodyEmpty() :  Container(
+      Container(
         width: size.width,
         height: size.height - 214,
         decoration: AppDecoration.fillGray200,

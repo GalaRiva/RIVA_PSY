@@ -100,14 +100,6 @@ class K61Screen extends GetWidget{
                                   labelColor: ColorConstant.cyan700,
                                   tabs: [
                                     SizedBox(
-                                    width: getHorizontalSize(120),
-                                height: getVerticalSize(70),
-                                child: Tab(
-                                  text: '''График приема\nи пропуска\nпрепаратов''',
-                                  height: getVerticalSize(70),
-                                ),
-                              ),
-                                    SizedBox(
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
@@ -147,6 +139,14 @@ class K61Screen extends GetWidget{
                                         text: 'Где и какие\nиспытываю\nэмоции',
                                       ),
                                     ),
+                                    SizedBox(
+                                      width: getHorizontalSize(120),
+                                      height: getVerticalSize(70),
+                                      child: Tab(
+                                        text: '''График приема\nи пропуска\nпрепаратов''',
+                                        height: getVerticalSize(70),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -166,7 +166,6 @@ class K61Screen extends GetWidget{
                                       width: size.width,
                                       child: TabBarView(
                                         children: [
-                                          AdmissionScheduleWidget(),
                                           DiagnosticOfTheConditionWidget(
                                             start: controller.dateStart,
                                             end: controller.dateEnd,
@@ -191,7 +190,8 @@ class K61Screen extends GetWidget{
                                           WhereInBodyWidget(start: controller.dateStart,
                                               controller: controller,
                                               end: controller.dateEnd, neutralType: controller.neutralType, emotionsInBody: controller.emotionsInBody, positiveType: controller.positiveType, negativeType: controller.negativeType, )
-                                        ,WhereAndWhatEmotionsWidget(controller: controller,)
+                                        ,WhereAndWhatEmotionsWidget(controller: controller,),
+                                          AdmissionScheduleWidget(),
                                         ],
                                       ),
                                     ),

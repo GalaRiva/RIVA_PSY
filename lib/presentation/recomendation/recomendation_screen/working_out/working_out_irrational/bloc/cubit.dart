@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
@@ -72,20 +73,35 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
             !element.workingOut)
         .toList();
     _spentRecordModels = await _repo.getEvent();
-    if (existMoreDontWorkingOutEvents())
+    if (existMoreDontWorkingOutEvents()) {
       selectedDayEventModel = _dontWorkingOutEvents.last;
+      if (_spentRecordModels.isNotEmpty &&
+          _spentRecordModels.map((e) => e.dayEventModel).toList().contains(
+              selectedDayEventModel)) {
+        _currentSpentRecordModel = _spentRecordModels
+            .where((element) => element.dayEventModel == selectedDayEventModel)
+            .first;
+      }
+    }
     emit(WorkingOutIrrationalState(
         stage: WorkingOutIrrationalStage.initialStage, loading: false));
   }
 
-  Future updateDayEvents() async {
-    if(_spentRecordModels.isNotEmpty && _currentSpentRecordModel == lastSpentRecordModel()) {
-      _spentRecordModels = _spentRecordModels.where((element) => element.dayEventModel == _currentSpentRecordModel!.dayEventModel).toList()..last = _currentSpentRecordModel!;
-    } else {
-      _dayEvents = _dayEvents
-          .where((element) => element == selectedDayEventModel)
-          .toList()
-          ..last = selectedDayEventModel!.copyWith(workingOut: true);
+  Future updateDayEvents({nextState  = true}) async {
+    if(_spentRecordModels.isNotEmpty && _spentRecordModels.map((e) => e.dayEventModel).toList().contains(_currentSpentRecordModel!.dayEventModel)) {
+
+      final index = _spentRecordModels.map((e) => e.dayEventModel).toList().indexOf(_currentSpentRecordModel!.dayEventModel);
+      print('spendModelIndex - $index');
+
+      _spentRecordModels.removeAt(index);
+      _spentRecordModels.insert(index, _currentSpentRecordModel!);
+    } else if(nextState) {
+      _dayEvents = await _repo.getDayEvent();
+
+      final index = _dayEvents.indexOf(selectedDayEventModel!);
+      print('dayEventIndex - $index');
+      _dayEvents.removeAt(index);
+      _dayEvents.insert(index, selectedDayEventModel!.copyWith(workingOut: true));
       _repo.updateDayEventEvent(_dayEvents);
       _dontWorkingOutEvents.removeLast();
       spentRecordsToday++;
@@ -95,6 +111,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
     if(_spentRecordModels.isEmpty || _spentRecordModels.isNotEmpty && _currentSpentRecordModel != lastSpentRecordModel())
       _spentRecordModels.add(_currentSpentRecordModel!);
       _repo.updateEvent(_spentRecordModels);
+      if(nextState)
     _currentSpentRecordModel = null;
     SharedPreferences.getInstance().then((prefs) async {
       var dateInStr = prefs.getString('firstSpendRecord');
@@ -102,11 +119,15 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
         dateInStr = DateTime.now().toIso8601String();
         await prefs.setString('firstSpendRecord', dateInStr);
       }
-      if(DateTime.parse(dateInStr).difference(DateTime.now()).inDays > 7){
-        goToNextState(WorkingOutIrrationalStage.alternative);
-      } else {
-        goToNextState(WorkingOutIrrationalStage.gratitude);
-
+      if(nextState) {
+        if (DateTime
+            .parse(dateInStr)
+            .difference(DateTime.now())
+            .inDays > 7) {
+          goToNextState(WorkingOutIrrationalStage.alternative);
+        } else {
+          goToNextState(WorkingOutIrrationalStage.gratitude);
+        }
       }
     }
       );
