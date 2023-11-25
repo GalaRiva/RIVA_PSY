@@ -8,6 +8,7 @@ import '../../../../core/models/day_event_model.dart';
 import 'controller.dart';
 
 class K38Screen extends GetWidget {
+
   final fieldController = TextEditingController();
 
   @override

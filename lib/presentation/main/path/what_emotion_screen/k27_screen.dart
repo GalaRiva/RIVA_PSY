@@ -15,10 +15,14 @@ import 'controller.dart';
 import 'widgets/neutral_tab.dart';
 
 class K27Screen extends GetWidget {
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent, List<EventModel> events, String emotionCategory)? onSave;
+
+  K27Screen({  this.dayEvent,  this.onSave});
   @override
   Widget build(BuildContext context) {
     DayEventModel? dayEventModel =
-        (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
+       dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
             as DayEventModel;
 
     final controller = Get.put(K27Controller());
@@ -348,8 +352,12 @@ variant: ButtonVariant.Base,
                                       break;
                                     }
                                   }
+                                  final category = controller.currentTab == 1 ? 'Негативные' : controller.currentTab == 2 ? 'Позитивные' : 'Нейтральные';
+                                  if(onSave != null)
+                                    onSave!(dayEventModel..whatEmotion = [controller.emotion!], list, category);
+                                    else
                                   Navigator.pushNamed(context, AppRoutes.additionalEmotions, arguments: {
-                                    'emotionCategory' : controller.currentTab == 1 ? 'Негативные' : controller.currentTab == 2 ? 'Позитивные' : 'Нейтральные',
+                                    'emotionCategory' : category,
                                     'dayEventModel' : dayEventModel..whatEmotion = [controller.emotion!],
                                     'someEmotions' : list
                                   });

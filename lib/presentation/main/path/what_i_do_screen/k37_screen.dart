@@ -7,12 +7,16 @@ import '../../../../core/models/day_event_model.dart';
 
 
 class K37Screen extends StatelessWidget {
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent)? onSave;
   final fieldController = TextEditingController();
+
+  K37Screen({Key? key, this.dayEvent, this.onSave}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     DayEventModel? dayEventModel =
-    (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
+    dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
     as DayEventModel;
     return SafeArea(
       child: Scaffold(
@@ -156,6 +160,9 @@ class K37Screen extends StatelessWidget {
                         variant: ButtonVariant.Base,
                         text: "далее".toUpperCase(),
                         onTap: () async {
+                          if(onSave != null)
+                            onSave!(dayEventModel..whatIDo = fieldController.text);
+                            else
                           Navigator.pushNamed(context, AppRoutes.first_thougths, arguments: dayEventModel..whatIDo = fieldController.text);
                         },
                       ),

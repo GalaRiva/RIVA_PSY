@@ -10,9 +10,13 @@ import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K22Screen extends GetWidget {
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent)? onSave;
+  K22Screen({this.onSave,  this.dayEvent});
+
   @override
   Widget build(BuildContext context) {
-    final dayEventModel = (ModalRoute.of(context)?.settings.arguments ?? DayEventModel()) as DayEventModel;
+    final dayEventModel = dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel()) as DayEventModel;
     final controller = Get.put(K22Controller());
     if( controller.currentEventList != controller.eventListAfterInit)
     controller.initCurrentEventList().then((value) {
@@ -257,9 +261,17 @@ class K22Screen extends GetWidget {
                           ? () {
                         if(controller.whatHappened == null) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете событие или создайте новое')));
-                        } else
-                          Navigator.pushNamed(context, AppRoutes.whereHappened, arguments: dayEventModel..whatHappened = controller.whatHappened);
-                      }
+                        } else {
+                          if(onSave != null)
+                            onSave!(dayEventModel
+                              ..whatHappened = controller.whatHappened);
+                            else
+                                Navigator.pushNamed(
+                                    context, AppRoutes.whereHappened,
+                                    arguments: dayEventModel
+                                      ..whatHappened = controller.whatHappened);
+                              }
+                            }
                           : () {
                         controller.searchController.text = '';
                         controller.changeCurrentEventList(

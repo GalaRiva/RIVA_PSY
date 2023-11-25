@@ -15,6 +15,12 @@ import 'controller.dart';
 import 'widgets/body_parts_widget.dart';
 
 class K32Screen extends GetWidget {
+
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent)? onSave;
+
+  K32Screen({  this.dayEvent,  this.onSave});
+
   @override
   Widget build(BuildContext context) {
     DayEventModel? dayEventModel =
@@ -321,6 +327,12 @@ class K32Screen extends GetWidget {
                                     content: Text(
                                         'Выберете часть тела или создайте новую')));
                               } else {
+                                if(onSave != null)
+                                  onSave!(dayEventModel
+                                    ..whatBodyParts = controller
+                                        .selectedEventList);
+                                  else
+
                                 Navigator.pushNamed(
                                     context, AppRoutes.what_i_do,
                                     arguments: dayEventModel

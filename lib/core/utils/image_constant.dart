@@ -1100,5 +1100,17 @@ class ImageConstant {
 
   static const pdfQR = 'assets/images/pdf/image 16_qr.jpg';
 
+  static const happinessInFocusInitial = 'assets/images/pdf/happiness_in_focus_initial.png';
+  static const happinessInFocusThoughts = 'assets/images/pdf/happiness_in_focus_thoughts.png';
+  static const happinessInFocusStart = 'assets/images/pdf/happiness_in_focus_start.png';
+  static const happinessInFocusSuperQuest = 'assets/images/pdf/happiness_in_focus_super_quest.png';
+  static const happinessInFocusMessage = 'assets/images/pdf/happiness_in_focus_message.png';
+  static const happinessInFocusAfter1 = 'assets/images/pdf/happiness_in_focus_after_1.png';
+  static const happinessInFocusAfter2 = 'assets/images/pdf/happiness_in_focus_after_2.png';
+  static const happinessInFocusAfter3 = 'assets/images/pdf/happiness_in_focus_after_3.png';
+  static const happinessInFocusAfter4 = 'assets/images/pdf/happiness_in_focus_after_4.png';
+  static const happinessInFocusAfter5 = 'assets/images/pdf/happiness_in_focus_after_5.png';
+
+
   static String imageNotFound = 'assets/images/image_not_found.png';
 }

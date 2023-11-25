@@ -11,10 +11,14 @@ import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K26Screen extends GetWidget {
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent)? onSave;
+
+  K26Screen({  this.dayEvent, this.onSave});
 
   @override
   Widget build(BuildContext context) {
-    DayEventModel? dayEventModel = (ModalRoute.of(context)?.settings.arguments ?? DayEventModel()) as DayEventModel;
+    DayEventModel? dayEventModel = dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel()) as DayEventModel;
 
     final controller = Get.put(K26Controller());
     if(controller.currentEventList != controller.eventListAfterInit)
@@ -299,9 +303,19 @@ class K26Screen extends GetWidget {
                                   ? () {
                                 if(controller.whoDidHappen == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете персону или создайте новое')));
-                                } else
-                                  Navigator.pushNamed(context, AppRoutes.whatEmotion, arguments: dayEventModel..whoDidItHappen = controller.whoDidHappen);
-                              }
+                                } else {
+                                  if(onSave!=null)
+                                    onSave!(dayEventModel
+                                      ..whoDidItHappen =
+                                          controller.whoDidHappen);
+                                    else
+                                        Navigator.pushNamed(
+                                            context, AppRoutes.whatEmotion,
+                                            arguments: dayEventModel
+                                              ..whoDidItHappen =
+                                                  controller.whoDidHappen);
+                                      }
+                                    }
                                   : () {
                                 controller.searchController.text = '';
                                 controller.changeCurrentEventList(

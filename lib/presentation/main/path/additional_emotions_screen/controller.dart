@@ -27,7 +27,9 @@ class K31Controller extends GetxController {
           BuildContext context,
           K31Controller controller,
           String emotion,
-          DayEventModel dayEventModel) =>
+          DayEventModel dayEventModel,
+  {Function(DayEventModel dayEventModel)? onSave}
+      ) =>
       showDialog<int>(
           context: context,
           builder: (BuildContext context) {
@@ -170,6 +172,10 @@ class K31Controller extends GetxController {
                           140,
                         ),
                         onTap: () {
+                          if(onSave!=null)
+                           onSave(dayEventModel
+                             ..emotionIntensity = emotionIntensity);
+                            else
                           Navigator.pushNamed(context, AppRoutes.what_body_parts,
                               arguments: dayEventModel
                                 ..emotionIntensity = emotionIntensity);

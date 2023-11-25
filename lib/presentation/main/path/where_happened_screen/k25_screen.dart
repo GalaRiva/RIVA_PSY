@@ -11,9 +11,15 @@ import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K25Screen extends GetWidget {
+
+  final DayEventModel? dayEvent;
+  final Function(DayEventModel dayEvent)? onSave;
+
+  K25Screen({ this.dayEvent,  this.onSave});
+
   @override
   Widget build(BuildContext context) {
-    DayEventModel? dayEventModel =
+    DayEventModel? dayEventModel = dayEvent ??
         (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
             as DayEventModel;
     final controller = Get.put(K25Controller());
@@ -301,13 +307,20 @@ class K25Screen extends GetWidget {
                                   .showSnackBar(SnackBar(
                                   content: Text(
                                       'Выберете место или создайте новое')));
-                            } else
-                              Navigator.pushNamed(
-                                  context, AppRoutes.withWhoHappened,
-                                  arguments: dayEventModel
-                                    ..whereHappened = controller
-                                        .whereHappened);
-                          }
+                            } else {
+                              if(onSave != null)
+                                onSave!(dayEventModel
+                                  ..whereHappened =
+                                      controller.whereHappened);
+                                else
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.withWhoHappened,
+                                        arguments: dayEventModel
+                                          ..whereHappened =
+                                              controller.whereHappened);
+                                  }
+
+                                }
                               : () {
                             controller.searchController.text =
                             '';

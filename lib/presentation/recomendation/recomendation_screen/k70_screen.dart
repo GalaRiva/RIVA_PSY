@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/exercises_tab_body.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/custom_tab_bar.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_state.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/ui/working_out_screen.dart';
 
 import '../../../../core/utils/color_constant.dart';
@@ -35,12 +37,12 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
     final data = ModalRoute.of(context)?.settings.arguments as Map?;
     int initialTab = 0;
 
-    if(data != null){
+    if (data != null) {
       controller.currentTab = data['first'] ?? 0;
       controller.currentTabSecond = data['second'] ?? 0;
       initialTab = data['initialTab'] ?? 0;
     }
-    if(data == null){
+    if (data == null) {
       controller.currentTab = 0;
       controller.currentTabSecond = 0;
     }
@@ -52,15 +54,19 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       controller.update();
     });
 
-    PageController pageController = PageController(initialPage: initialTab );
+    PageController pageController = PageController(initialPage: initialTab);
 
-
-    return MultiBlocProvider(providers: [
-      BlocProvider<WorkingOutCubit>(
-    create:(_) => WorkingOutCubit(this),),
-      BlocProvider<WorkingOutIrrationalCubit>(
-        create:(_) => WorkingOutIrrationalCubit()..init(),),
-    ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<WorkingOutCubit>(
+          create: (_) => WorkingOutCubit(this),
+        ),
+        BlocProvider<WorkingOutIrrationalCubit>(
+          create: (_) => WorkingOutIrrationalCubit()..init(),
+        ),
+        BlocProvider<HappinessInFocusCubit>(
+            create: (_) => HappinessInFocusCubit()),
+      ],
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
@@ -81,10 +87,8 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                   top: 12,
                 ),
                 child: Divider(
-                  height:
-                    1,
-                  thickness:
-                    1,
+                  height: 1,
+                  thickness: 1,
                   indent: 16,
                   endIndent: 16,
                   color: ColorConstant.gray50,
@@ -105,18 +109,26 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                   text: 'Помощь при панике и аффекте',
                   width: size.width - 32,
                   onTap: () {
-                    pageController.animateToPage(0, duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+                    pageController.animateToPage(0,
+                        duration: Duration(milliseconds: 400),
+                        curve: Curves.easeIn);
                     controller.tabController!.animateTo(2);
                     controller.currentTab = 2;
-                    controller.tabControllerSecond!.animateTo(controller.panicTab);
+                    controller.tabControllerSecond!
+                        .animateTo(controller.panicTab);
                     controller.currentTabSecond = controller.panicTab;
                   },
                   height: 37,
                 ),
               ),
-              CustomTabBar(tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],
-                labels: ['Справиться с эмоцией', 'Обретение'],controller: pageController,)
-
+              CustomTabBar(
+                tabs: [
+                  ExercisesTabBody(controller: controller),
+                  WorkingOutScreen()
+                ],
+                labels: ['Справиться с эмоцией', 'Обретение'],
+                controller: pageController,
+              )
             ],
           ),
         ),
@@ -127,4 +139,3 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
     );
   }
 }
-

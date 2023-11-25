@@ -10,15 +10,20 @@ import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K31Screen extends GetWidget {
+  final DayEventModel? dayEvent;
+  final String? category;
+  final List<EventModel>? someEmotions;
+  final Function(DayEventModel dayEvent)? onSave;
 
+  K31Screen( {this.category, this.someEmotions, this.dayEvent,  this.onSave});
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(K31Controller());
       final data =
       (ModalRoute.of(context)?.settings.arguments ?? {
-      'emotionCategory' : 'Нейтральные',
-      'dayEventModel' : [],
-      'someEmotions' : []
+      'emotionCategory' : category ?? 'Нейтральные',
+      'dayEventModel' : dayEvent ?? [],
+      'someEmotions' : someEmotions ?? []
       }) as Map<String, dynamic>;
     final dayEventModel = (data['dayEventModel'] as DayEventModel);
     controller.emotions = dayEventModel.whatEmotion!;
@@ -229,7 +234,7 @@ class K31Screen extends GetWidget {
                                   controller.showEmotionIntensityDialog(
                                       context, controller,
                                       controller.emotions.first.name,
-                                      data['dayEventModel']);
+                                      data['dayEventModel'], onSave: onSave);
                                 },
                                 text: "далее".toUpperCase(),
                                 margin: getMargin(
