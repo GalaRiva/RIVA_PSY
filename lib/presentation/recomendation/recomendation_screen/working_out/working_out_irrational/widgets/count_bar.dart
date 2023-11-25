@@ -12,21 +12,19 @@ class CountBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      child: Row(children: [
-        Stack(
-          children:[
-            RatingBar.builder(
-              itemSize: 9,
-                glow: false,
-                itemPadding: EdgeInsets.only(right: 5),
-                itemCount: 5,
-                initialRating: _calculate().toDouble(),
-                unratedColor: ColorConstant.grayTextColor,
-                itemBuilder: (_, __) {
-                  return Container(width: 9,height: 9, decoration: BoxDecoration(color: ColorConstant.cyan700, shape: BoxShape.circle),);
-                }, onRatingUpdate: (_){}),
-          ]
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+        RatingBar.builder(
+          itemSize: 9,
+            glow: false,
+            itemPadding: EdgeInsets.only(right: 5),
+            itemCount: 5,
+            initialRating: _calculate().toDouble(),
+            unratedColor: ColorConstant.grayTextColor,
+            itemBuilder: (_, __) {
+              return Container(width: 9,height: 9, decoration: BoxDecoration(color: ColorConstant.cyan700, shape: BoxShape.circle),);
+            }, onRatingUpdate: (_){}),
         Container(width: 9, height: 9,
         child: CustomPaint(
           painter: OpenPainter(),
@@ -38,9 +36,13 @@ class CountBar extends StatelessWidget {
   }
 
   int _calculate () {
-    final percent =  (currentCount / inTotalCount) * 100;
-    print(percent);
-    return percent ~/ 20;
+    try {
+      final percent = (currentCount / inTotalCount) * 100;
+      print(percent);
+      return percent ~/ 20;
+    } catch(_) {
+      return 0;
+    }
   }
 }
 

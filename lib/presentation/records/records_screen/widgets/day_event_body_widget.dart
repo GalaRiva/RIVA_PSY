@@ -33,139 +33,136 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: getPadding(top: 15, bottom: 14),
-                  child: SizedBox(
-                    height: getVerticalSize(17),
-                    child: Wrap(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SecondVariantEventCard(
-                                content: [
-                                  CustomImageView(
-                                    alignment: Alignment.center,
-                                    svgPath:
-                                        dayEventModel.whatHappened!.svgPath,
-                                    color: _color,
-                                    fit: BoxFit.scaleDown,
-                                    height: getVerticalSize(
-                                      18,
-                                    ),
-                                    width: getHorizontalSize(18),
-                                    radius: BorderRadius.circular(
-                                      getHorizontalSize(
-                                        3,
-                                      ),
+                  padding: getPadding(top: 15),
+                  child: Wrap(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SecondVariantEventCard(
+                              content: [
+                                CustomImageView(
+                                  alignment: Alignment.center,
+                                  svgPath:
+                                      dayEventModel.whatHappened!.svgPath,
+                                  color: _color,
+                                  fit: BoxFit.scaleDown,
+                                  height: getVerticalSize(
+                                    18,
+                                  ),
+                                  width: getHorizontalSize(18),
+                                  radius: BorderRadius.circular(
+                                    getHorizontalSize(
+                                      3,
                                     ),
                                   ),
-                                  Text(
-                                    dayEventModel.whatHappened!.name,
-                                    style: _style,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                Text(
+                                  dayEventModel.whatHappened!.name,
+                                  style: _style,
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: getHorizontalSize(10),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: Row(                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      SizedBox(
+                        width: getHorizontalSize(10),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Row(                          mainAxisSize: MainAxisSize.min,
 
-                            children: [
-                              SecondVariantEventCard(
-                                content: [
-                                  Text(
-                                    dayEventModel.whereHappened!.name,
-                                    style: _style,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                          children: [
+                            SecondVariantEventCard(
+                              content: [
+                                Text(
+                                  dayEventModel.whereHappened!.name,
+                                  style: _style,
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: getHorizontalSize(10),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: Row(                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      SizedBox(
+                        width: getHorizontalSize(10),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Row(                          mainAxisSize: MainAxisSize.min,
 
-                            children: [
-                              SecondVariantEventCard(
-                                content: [
-                                  Text(
-                                    dayEventModel.whoDidItHappen!.name,
-                                    style: _style,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                          children: [
+                            SecondVariantEventCard(
+                              content: [
+                                Text(
+                                  dayEventModel.whoDidItHappen!.name,
+                                  style: _style,
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: getHorizontalSize(10),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: Row(                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      SizedBox(
+                        width: getHorizontalSize(10),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Row(                          mainAxisSize: MainAxisSize.min,
 
-                            children: [
-                              SecondVariantEventCard(
-                                content: [
-                                  Text(
-                                    dayEventModel.whatEmotion!.first.name,
-                                    style: _style,
+                          children: [
+                            SecondVariantEventCard(
+                              content: [
+                                Text(
+                                  dayEventModel.whatEmotion!.first.name,
+                                  style: _style,
+                                ),
+                                IgnorePointer(
+                                  child: SleekCircularSlider(
+                                    appearance: CircularSliderAppearance(
+                                        animationEnabled: false,
+                                        infoProperties: InfoProperties(
+                                            topLabelText: '',
+                                            mainLabelStyle: TextStyle(
+                                                fontSize: 1,
+                                                color: Colors.transparent)),
+                                        startAngle: 105,
+                                        angleRange: 330,
+                                        size: 11,
+                                        customColors: CustomSliderColors(
+                                          trackColor: Colors.transparent,
+                                          dotColor: Colors.transparent,
+                                          progressBarColors: [
+                                            ColorConstant.fromHex('#403875'),
+                                            ColorConstant.fromHex('#7FBDBA'),
+                                          ],
+                                        ),
+                                        customWidths: CustomSliderWidths(
+                                            progressBarWidth: 2,
+                                            trackWidth: 2)),
+                                    min: 0,
+                                    max: 10,
+                                    initialValue: dayEventModel
+                                        .emotionIntensity
+                                        .toDouble(),
                                   ),
-                                  IgnorePointer(
-                                    child: SleekCircularSlider(
-                                      appearance: CircularSliderAppearance(
-                                          animationEnabled: false,
-                                          infoProperties: InfoProperties(
-                                              topLabelText: '',
-                                              mainLabelStyle: TextStyle(
-                                                  fontSize: 1,
-                                                  color: Colors.transparent)),
-                                          startAngle: 105,
-                                          angleRange: 330,
-                                          size: 11,
-                                          customColors: CustomSliderColors(
-                                            trackColor: Colors.transparent,
-                                            dotColor: Colors.transparent,
-                                            progressBarColors: [
-                                              ColorConstant.fromHex('#403875'),
-                                              ColorConstant.fromHex('#7FBDBA'),
-                                            ],
-                                          ),
-                                          customWidths: CustomSliderWidths(
-                                              progressBarWidth: 2,
-                                              trackWidth: 2)),
-                                      min: 0,
-                                      max: 10,
-                                      initialValue: dayEventModel
-                                          .emotionIntensity
-                                          .toDouble(),
-                                    ),
-                                  ),
-                                  Text(
-                                    '(' +
-                                        dayEventModel.emotionIntensity
-                                            .toString() +
-                                        ')',
-                                    style: _style,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                Text(
+                                  '(' +
+                                      dayEventModel.emotionIntensity
+                                          .toString() +
+                                      ')',
+                                  style: _style,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

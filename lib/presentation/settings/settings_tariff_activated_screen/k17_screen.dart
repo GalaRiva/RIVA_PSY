@@ -49,7 +49,7 @@ class K17Screen extends StatelessWidget {
                             top: 90,
                           ),
                           child: Text(
-                            "Поздравляем!\n\nТариф “Стандарт”\nактивирован",
+                            "Поздравляем!\n\nТариф “Орион”\nактивирован",
                             maxLines: null,
                             textAlign: TextAlign.center,
                             style: AppStyle.txtH1WhiteA700,

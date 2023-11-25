@@ -21,7 +21,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
       return _s;
     }
 
-    return !CurrentUser.tariffIsOrion() ? _emptyTab() : Container(
+    return Container(
       width: size.width,
       height: size.height - 214,
       decoration: AppDecoration.fillGray200,
@@ -146,7 +146,8 @@ direction: Axis.vertical,
                 ],
               )).toList(),
             ),
-            )
+            ),
+            SizedBox(height: 20,)
           ],
         ),
       ),

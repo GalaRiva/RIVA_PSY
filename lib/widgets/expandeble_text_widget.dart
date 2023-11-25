@@ -21,21 +21,28 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     Widget build(BuildContext context) {
       return LayoutBuilder(
         builder: (context, constraints) {
-          final textSpan = TextSpan(text: '${widget.text}');
+          final textSpan = TextSpan(text: widget.text);
           final textPainter = TextPainter(
+            ellipsis: '..."',
             text: textSpan,
             maxLines: widget.maxLines,
             textDirection: TextDirection.ltr,
           );
 
-          textPainter.layout(maxWidth: constraints.maxWidth);
-          final list = textPainter.text!.toPlainText().split('\n');
+          textPainter.layout(
+              minWidth: 0,
+              maxWidth: size.width,);
+          //final list = textPainter.computeLineMetrics().first.descent
+          print(textSpan.text!);
 
           if (textPainter.didExceedMaxLines && hidden) {
             return Container(
               child: Column(
                 children: [
-                  Text('"' + List.generate(widget.maxLines - 1, (index) =>'${list[index].toString()}\n').join() + list[widget.maxLines - 1].toString().substring(0, list[widget.maxLines - 1].toString().length - 4) + '..."', maxLines: widget.maxLines, style: widget.textStyle ?? AppStyle.txtSFProDisplayLight16Gray,),
+
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 1),
+                      child: CustomPaint(painter: MyPainter(text: widget.text, maxLines: widget.maxLines, textStyle: widget.textStyle, ), size: Size(size.width - 60, 50),)),
                   SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.topCenter,
@@ -72,3 +79,35 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
 }
 
 
+
+class MyPainter extends CustomPainter {
+final String text;
+final int maxLines;
+final TextStyle? textStyle;
+
+  MyPainter({required this.text, required this.maxLines, this.textStyle});
+@override
+  void paint(Canvas canvas, Size size) {
+    final textSpan = TextSpan(text: '"${text}', style: textStyle?? AppStyle.txtSFProDisplayLight16Gray);
+    final textPainter = TextPainter(
+      ellipsis: '..."',
+      text: textSpan,
+      maxLines: maxLines,
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: size.width,
+    );
+    final xCenter = (size.width - textPainter.width) / 2;
+    final yCenter = (size.height - textPainter.height) / 2;
+    final offset = Offset(xCenter, yCenter);
+    textPainter.paint(canvas, offset);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
+  }
+}

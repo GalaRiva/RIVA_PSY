@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: ru.yoomoney.sdk.auth:auth:1.8.11@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/503ab6fbec62190b88f2b4ac07ed15e8/transformed/jetified-auth-1.8.11/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/503ab6fbec62190b88f2b4ac07ed15e8/transformed/jetified-auth-1.8.11/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/503ab6fbec62190b88f2b4ac07ed15e8/transformed/jetified-auth-1.8.11/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8c5a4dd52d325f95d2f268b592507edd/transformed/jetified-auth-1.8.11/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8c5a4dd52d325f95d2f268b592507edd/transformed/jetified-auth-1.8.11/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8c5a4dd52d325f95d2f268b592507edd/transformed/jetified-auth-1.8.11/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.auth/auth/1.8.11/2324d93d5efa37be3f96e192050d8df589158d4e/auth-1.8.11-javadoc.jar!/" />

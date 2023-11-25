@@ -50,6 +50,7 @@ class GoogleDriveService {
 
     final response = await driveApi.files.get(
         fileId, downloadOptions: ga.DownloadOptions.fullMedia) as ga.Media?;
+    print('respoinse == $response');
     if (response != null) {
       final output = File(savePath);
       if (await output.exists()) {
@@ -62,6 +63,7 @@ class GoogleDriveService {
         await output.create(recursive: true);
         output.writeAsBytes(dataStore);
       });
+      return response;
     }
   }
 

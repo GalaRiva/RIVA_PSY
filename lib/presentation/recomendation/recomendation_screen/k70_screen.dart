@@ -25,10 +25,16 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
   final controller = Get.put(K70Controller());
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final data = ModalRoute.of(context)?.settings.arguments as Map?;
     int initialTab = 0;
+
     if(data != null){
       controller.currentTab = data['first'] ?? 0;
       controller.currentTabSecond = data['second'] ?? 0;
@@ -39,11 +45,16 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       controller.currentTabSecond = 0;
     }
     controller.init(this);
+
     controller.tabControllerSecond!.addListener(() {
       controller.currentTabSecond = controller.tabControllerSecond!.index;
 
       controller.update();
     });
+
+    PageController pageController = PageController(initialPage: initialTab );
+
+
     return MultiBlocProvider(providers: [
       BlocProvider<WorkingOutCubit>(
     create:(_) => WorkingOutCubit(this),),
@@ -53,65 +64,60 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: getPadding(top: 39, left: 16),
-                  child: Text(
-                    "Рекомендации и упражнения",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtSFProDisplayLight10Gray800,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 39, left: 16),
+                child: Text(
+                  "Рекомендации и упражнения",
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: AppStyle.txtSFProDisplayLight10Gray800,
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 12,
-                  ),
-                  child: Divider(
-                    height: getVerticalSize(
-                      1,
-                    ),
-                    thickness: getVerticalSize(
-                      1,
-                    ),
-                    indent: getVerticalSize(16),
-                    endIndent: getVerticalSize(16),
-                    color: ColorConstant.gray50,
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 12,
                 ),
-                Padding(
-                  padding: getPadding(top: 14, left: 16),
-                  child: Text(
-                    'Справится с эмоциями',
-                    style: AppStyle.txtH1,
-                  ),
+                child: Divider(
+                  height:
+                    1,
+                  thickness:
+                    1,
+                  indent: 16,
+                  endIndent: 16,
+                  color: ColorConstant.gray50,
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: CustomButton(
-                    variant: ButtonVariant.Cyan,
-                    fontStyle: ButtonFontStyle.White16,
-                    text: 'Помощь при панике и аффекте',
-                    width: size.width - 32,
-                    onTap: () {
-                      controller.tabController!.animateTo(2);
-                      controller.currentTab = 2;
-                      controller.tabControllerSecond!.animateTo(controller.panicTab);
-                      controller.currentTabSecond = controller.panicTab;
-                    },
-                    height: getVerticalSize(37),
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 14, left: 16),
+                child: Text(
+                  'Справится с эмоциями',
+                  style: AppStyle.txtH1,
                 ),
-                CustomTabBar(
-                  initialPos: initialTab,
-                  labels: ['Справиться с эмоцией', 'Обретение'],
-                tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],)
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: CustomButton(
+                  variant: ButtonVariant.Cyan,
+                  fontStyle: ButtonFontStyle.White16,
+                  text: 'Помощь при панике и аффекте',
+                  width: size.width - 32,
+                  onTap: () {
+                    pageController.animateToPage(0, duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+                    controller.tabController!.animateTo(2);
+                    controller.currentTab = 2;
+                    controller.tabControllerSecond!.animateTo(controller.panicTab);
+                    controller.currentTabSecond = controller.panicTab;
+                  },
+                  height: 37,
+                ),
+              ),
+              CustomTabBar(tabs: [ExercisesTabBody(controller: controller), WorkingOutScreen()],
+                labels: ['Справиться с эмоцией', 'Обретение'],controller: pageController,)
 
-              ],
-            ),
+            ],
           ),
         ),
         bottomNavigationBar: CustomBottomBar(

@@ -17,19 +17,25 @@ class ChallengePage extends WorkingOutWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<WorkingOutIrrationalCubit>();
     return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: RecordCard(
-            onButtonTap: () => cubit.goToNextState(
-                cubit.state.stage == WorkingOutIrrationalStage.challengeThought
-                    ? WorkingOutIrrationalStage.recordThought
-                    : WorkingOutIrrationalStage.recordDo),
-            mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
-            dataType:
-                cubit.state.stage == WorkingOutIrrationalStage.challengeThought
-                    ? RecordCardDataType.Thought
-                    : RecordCardDataType.Do,
-          )),
+      child: Column(
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: RecordCard(
+                onButtonTap: () => cubit.goToNextState(
+                    cubit.state.stage == WorkingOutIrrationalStage.challengeThought
+                        ? WorkingOutIrrationalStage.recordThought
+                        : WorkingOutIrrationalStage.recordDo),
+                mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
+                dataType:
+                    cubit.state.stage == WorkingOutIrrationalStage.challengeThought
+                        ? RecordCardDataType.Thought
+                        : RecordCardDataType.Do,
+              )),
+          SizedBox(height: 50,)
+
+        ],
+      ),
     );
   }
 

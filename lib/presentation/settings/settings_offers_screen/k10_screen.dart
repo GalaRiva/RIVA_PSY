@@ -110,18 +110,9 @@ class K10Screen extends GetWidget<K10Controller> {
                                     if(controller
                                             .model.value.controller.text.isEmpty) return null;
                                     else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              CustomMessageBox(
-                                                title:
-                                                'Предложение по улучшению',
-                                                content:
-                                                'Предложение успешно отправлено',
-                                              ));
                                       try {
-                                        await controller.createOffer();
-                                        showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Предложение по улучшению', content: 'Предложение было отправлено'));
+                                        await controller.createOffer().then((value) => showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Предложение по улучшению', content: 'Предложение было отправлено'))
+                                        );
                                       } catch(_) {
                                         print(_);
 

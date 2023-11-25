@@ -97,7 +97,7 @@ class K38Screen extends GetWidget {
                                     borderRadius: BorderRadius.zero,
                                     borderSide: BorderSide.none
                                 ),
-                                fillColor: ColorConstant.gray200,
+                                fillColor: ColorConstant.grayLight,
                                 filled: true,
                                 hintText: 'Ваши мысли',
 

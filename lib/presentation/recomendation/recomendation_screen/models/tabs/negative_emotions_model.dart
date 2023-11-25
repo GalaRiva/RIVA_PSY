@@ -83,10 +83,39 @@ class NegativeEmotionsModel {
           print (_);
         }
       }
-      return audios;
+      return sortRussianAlphabetically(audios);
     } catch (_) {
       return [];
     }
+  }
+
+  List<AudioCardModel> sortRussianAlphabetically(List<AudioCardModel> strings) {
+    final russianAlphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+
+    // Создаем функцию-ключ для сортировки: индекс буквы в русском алфавите
+    List<int> sortKey(String string) {
+      return string.toLowerCase().split('').map((char) {
+        return russianAlphabet.indexOf(char);
+      }).toList();
+    }
+
+    // Сортируем список строк
+    strings.sort((a, b) => compareLists(sortKey(a.title), sortKey(b.title)));
+
+    return strings;
+  }
+
+// Функция для сравнения двух списков
+  int compareLists(List<int> list1, List<int> list2) {
+    for (int i = 0; i < list1.length && i < list2.length; i++) {
+      if (list1[i] < list2[i]) {
+        return -1;
+      } else if (list1[i] > list2[i]) {
+        return 1;
+      }
+    }
+
+    return list1.length.compareTo(list2.length);
   }
 
   Future<List<SelectButtonWidget>?> _funButtons(String tab) async {

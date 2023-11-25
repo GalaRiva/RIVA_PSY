@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           thumbColor: MaterialStatePropertyAll<Color>(ColorConstant.fromHex('#7F7F90')),
           trackBorderColor: MaterialStatePropertyAll<Color>(Colors.transparent),
         ),
-        scaffoldBackgroundColor:  ColorConstant.gray300,
+        scaffoldBackgroundColor:  ColorConstant.gray200,
         visualDensity: VisualDensity.standard,
       ),
       title: 'Rigel PSY',

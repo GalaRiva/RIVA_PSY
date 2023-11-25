@@ -66,8 +66,8 @@ class RecoveryController extends GetxController {
           (value) async {
             if(value == null) {
 
-              await fireStoreRepo.deleteBackupFromFireStore(data);
-              showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Восстановление резервной копии', content: 'Данной резервной копии нету на диске'));
+              //await fireStoreRepo.deleteBackupFromFireStore(data);
+              showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Восстановление резервной копии', content: 'Данной резервной копии нет на диске'));
 
             }
             else

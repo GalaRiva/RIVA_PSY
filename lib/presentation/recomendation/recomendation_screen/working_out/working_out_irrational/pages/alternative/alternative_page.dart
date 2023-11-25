@@ -214,6 +214,7 @@ class AlternativePage extends StatelessWidget {
 
                           ),
 
+
                         ],
                       ),
                     ),
@@ -221,7 +222,8 @@ class AlternativePage extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(height: 20,)
           ],
         ),
       ),

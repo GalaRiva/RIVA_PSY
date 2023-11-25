@@ -21,9 +21,9 @@ decoration: BoxDecoration(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
-    ColorConstant.fromHex('#E7EAEA').withOpacity(0.5),
-    ColorConstant.fromHex('#E7EAEA'),
-    ColorConstant.fromHex('#E7EAEA'),
+    ColorConstant.gray200.withOpacity(0.5),
+    ColorConstant.gray200,
+    ColorConstant.gray200,
   ])
 
 ),      child: Container(
