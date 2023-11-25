@@ -49,7 +49,7 @@ dependencies:
   googleapis_auth:
 
   #sign in
-  google_sign_in: ^6.1.4
+  google_sign_in: ^6.1.5
   sign_in_with_apple: ^5.0.0
   firebase_auth: ^4.11.1
 
