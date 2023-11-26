@@ -16,9 +16,10 @@ import 'widgets/neutral_tab.dart';
 
 class K27Screen extends GetWidget {
   final DayEventModel? dayEvent;
+  final List<EmotionInDayEvent>? emotionsTypes;
   final Function(DayEventModel dayEvent, List<EventModel> events, String emotionCategory)? onSave;
 
-  K27Screen({  this.dayEvent,  this.onSave});
+  K27Screen({ this.emotionsTypes,  this.dayEvent,  this.onSave});
   @override
   Widget build(BuildContext context) {
     DayEventModel? dayEventModel =
@@ -215,7 +216,7 @@ class K27Screen extends GetWidget {
                               ),
                             ),
                             DefaultTabController(
-                              length: 3,
+                              length: emotionsTypes == null ? 3 : emotionsTypes!.length,
                               child: Column(
                                 children: [
                                   Padding(
@@ -257,7 +258,19 @@ class K27Screen extends GetWidget {
                                     builder: (K27Controller _c) => SizedBox(
                                       height: controller.getTabHeight(),
                                       child: TabBarView(
-                                        children: [
+                                        children: emotionsTypes != null ? List.generate(emotionsTypes!.length, (index) => emotionsTypes![index] == EmotionInDayEvent.NEGATIVE ? NegativePositiveTab(
+                                          dayEventModel: dayEventModel,
+                                          number: 1,
+                                          list: controller.currentEventListOne, controller: controller,
+                                        ) : emotionsTypes![index] == EmotionInDayEvent.POSITIVE ? NegativePositiveTab(
+                                          dayEventModel: dayEventModel,
+                                          number: 2,
+                                          controller: controller, list: controller.currentEventListTwo,
+                                        ) : NegativePositiveTab(
+                                          dayEventModel: dayEventModel,
+                                          number: 3,
+                                          controller: controller, list: controller.currentEventListThree.where((element) => element.name.contains(' +')).toList(),
+                                        )) : [
                                           NegativePositiveTab(
                                             dayEventModel: dayEventModel,
                                             number: 1,

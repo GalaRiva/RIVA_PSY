@@ -43,7 +43,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
                         Text(
                           'СЧАСТЬЕ В ФОКУСЕ',
                           style: AppStyle.txtSFProDisplayLight16
-                              .copyWith(color: Colors.white),
+                              .copyWith(color: ColorConstant.gray8008c),
                         ),
                         Container(
                           height: 1,
@@ -57,7 +57,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
                     ),
                     Text(
                       '''Сейчас последовательно, одно за другим, посмотрим на 1-3-5 моментов сегодняшнего дня, в которых Вам было хорошо… или... более-менее хорошо''',
-                      style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                      style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray8008c),
                     ),
                     SizedBox(
                       height: 15,

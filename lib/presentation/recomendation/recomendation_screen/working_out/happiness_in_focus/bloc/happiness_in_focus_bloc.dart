@@ -10,7 +10,7 @@ class HappinessInFocusCubit extends Cubit< HappinessInFocusState>{
    _repo.getEvent().then((value) {
      return positiveDayEventModels = value
          .where((element) =>
-     element.emotionInDayEvent == EmotionInDayEvent.POSITIVE)
+     element.emotionInDayEvent == EmotionInDayEvent.POSITIVE || element.whatEmotion!.first.name.contains(' +'))
          .toList()
          .length;
    });
@@ -28,13 +28,13 @@ class HappinessInFocusCubit extends Cubit< HappinessInFocusState>{
   int _todayWorkingOut = 0;
   int get todayWorkingOut => _todayWorkingOut;
 
-  Future saveDayEventModel () async {
+  Future saveDayEventModel ({Function? whenSave}) async {
       final events = await _repo.getEvent();
       events.add(_dayEventModel!..firstThoughts = thought);
       await _repo.updateEvent(events);
       positiveDayEventModels++;
       _todayWorkingOut++;
-      emit(state.copyWith(prevState: null, stage: HappinessInFocusStage.AfterWorkingOutHappinessInFocusState));
+      emit(state.copyWith(prevState: null, stage: HappinessInFocusStage.StartHappinessInFocusState));
   }
 
   void goToPrevState(BuildContext context) {
