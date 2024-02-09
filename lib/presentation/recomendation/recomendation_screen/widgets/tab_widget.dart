@@ -41,21 +41,29 @@ class TabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-print('h - $height');
     Future<List<Duration?>> _durations () async {
       final List<Duration?> list = [];
       for (var item in (await tab.audioAssets())!) {
         try {
           if (DataSourceService.dataSourceIsRemote()) {
-            list.add(await controller.audioInstance.setUrl(
-                item.audioAsset, initialPosition: Duration.zero));
+            await Future.delayed(Duration(milliseconds: 50), () async {
+              list.add(await controller.audioInstance.setUrl(
+                  item.audioAsset, initialPosition: Duration.zero));
+            });
           } else
             list.add(await controller.audioInstance.setAudioSource(
                 AudioSource.file(item.audioAsset),
                 initialPosition: Duration.zero));
         } catch (_) {
-          print('error load - ${item.audioAsset}');
-          list.add(Duration.zero );
+          try {
+            await Future.delayed(Duration(milliseconds: 200), () async {
+              list.add(await controller.audioInstance.setUrl(
+                  item.audioAsset, initialPosition: Duration.zero));
+            });
+          } catch (_) {
+            print('error load - ${item.audioAsset}');
+            list.add(Duration.zero);
+          }
         }
       }
       return list;

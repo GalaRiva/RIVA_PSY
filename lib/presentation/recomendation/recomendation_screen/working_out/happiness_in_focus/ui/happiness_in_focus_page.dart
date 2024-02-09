@@ -20,25 +20,27 @@ class HappinessInFocusPage extends StatelessWidget {
       context.read<HappinessInFocusCubit>().goToPrevState(context);
       return false;
     },
-    child:Scaffold(
-      backgroundColor: ColorConstant.gray200,
-      body:   BlocBuilder<HappinessInFocusCubit, HappinessInFocusState >(
-          builder: (context,state) {
-            if (!CurrentUser.tariffIsOrion()) {
-              return SingleChildScrollView(
-                child: GoToNewTariffWidget(
+    child:Container(
+      color: ColorConstant.gray200,
+      child:   SingleChildScrollView(
+        child: BlocBuilder<HappinessInFocusCubit, HappinessInFocusState >(
+            builder: (context,state) {
+              if (!CurrentUser.tariffIsOrion()) {
+                return GoToNewTariffWidget(
                   goToFreeRecommendation: false,
-                ),
-              );
-            }
-            if(state.stage == HappinessInFocusStage.StartHappinessInFocusState)
-              return HappinessInFocusStartPage();
-            if(state.stage == HappinessInFocusStage.ThoughtsHappinessInFocusState)
-              return HappinessInFocusThoughtsPage();
-            return HappinessInFocusInitialPage();
+                );
+              }
+              if(state.stage == HappinessInFocusStage.StartHappinessInFocusState)
+                return HappinessInFocusStartPage();
+              if(state.stage == HappinessInFocusStage.ThoughtsHappinessInFocusState)
+                return HappinessInFocusThoughtsPage();
+              if(state.stage == HappinessInFocusStage.AfterWorkingOutHappinessInFocusState)
+                return HappinessInFocusAfterWorkingOutPage(cubit: context.read<HappinessInFocusCubit>());
+              return HappinessInFocusInitialPage();
 
-          },
-        ),
+            },
+          ),
+      ),
       ),
     );
   }

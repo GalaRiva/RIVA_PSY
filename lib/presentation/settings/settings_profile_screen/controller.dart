@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
 import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
+import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 
 import '../../../core/services/datasource_service.dart';
 import '../../../core/user_data/user.dart';
@@ -112,6 +113,7 @@ class K18Controller extends GetxController {
             Color lineColor = ColorConstant.fromHex('#3B3B4A');
             return GetBuilder(
               builder: (K18Controller _c) => CustomMessageBox(
+                height: 200,
                 title: 'Профиль',
                 content: Center(
                   child: Column(
@@ -167,6 +169,20 @@ class K18Controller extends GetxController {
                           width: getHorizontalSize(102),
                           height: 1,
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CustomButton(
+                          text: 'Сохранить',
+                          onTap: () {
+                            if (loginController.text.isEmpty)
+                              lineColor = Colors.red;
+                            else {
+                              lineColor = ColorConstant.fromHex('#3B3B4A');
+                              Navigator.pop(context, loginController.text);
+                            }
+                            controller.update();
+                          },),
                       )
                     ],
                   ),
@@ -182,6 +198,7 @@ class K18Controller extends GetxController {
             Color lineColor = ColorConstant.fromHex('#3B3B4A');
             return GetBuilder(
               builder: (K18Controller _c) => CustomMessageBox(
+                height: 200,
                 title: 'Профиль',
                 content: Center(
                   child: Column(
@@ -231,13 +248,25 @@ class K18Controller extends GetxController {
                         ),
                       ),
                       Padding(
-                        padding: getPadding(top: 6),
+                        padding: getPadding(top: 6, bottom: 20),
                         child: Container(
                           color: lineColor,
                           width: getHorizontalSize(102),
                           height: 1,
                         ),
-                      )
+                      ),
+
+                      CustomButton(
+                        text: 'Сохранить',
+                        onTap: () {
+                          if (controller.oldController.text.isEmpty)
+                            lineColor = Colors.red;
+                          else {
+                            lineColor = ColorConstant.fromHex('#3B3B4A');
+                            Navigator.pop(context, int.parse(controller.oldController.text));
+                          }
+                          controller.update();
+                      },)
                     ],
                   ),
                 ),

@@ -20,10 +20,10 @@ class K17Screen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка, проверьте подключение к интернету или попробуйте позднее')));
       }
     });
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.teal200,
-        body: Container(
+    return Scaffold(
+      backgroundColor: ColorConstant.teal200,
+      body: SafeArea(
+        child: Container(
           width: double.maxFinite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

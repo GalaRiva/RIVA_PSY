@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
@@ -9,18 +10,20 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class ServicesAuthService {
   GoogleSignInAccount? _googleUser;
   GoogleSignInAccount get googleUser => _googleUser!;
-
   User? _appleUser;
   User get appleUser => _appleUser!;
 
   Future<bool> authWithGoogle () async {
     try {
-    final googleSignIn = GoogleSignIn();
+    final googleSignIn = GoogleSignIn(
+      clientId: '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com'
+    );
 
 
     final googleUser = await googleSignIn.signIn();
     if(googleUser == null) return false;
     _googleUser = googleUser;
+
     final googleAuth = await googleUser.authentication;
 
     final credential = GoogleAuthProvider.credential(
@@ -65,11 +68,13 @@ class ServicesAuthService {
     try {
       // Request credential for the currently signed in Apple account.
       final appleCredential = await SignInWithApple.getAppleIDCredential(
+        webAuthenticationOptions: Platform.isIOS ? null :  WebAuthenticationOptions(clientId: 'com.rigel.app', redirectUri: Uri.parse('https://living-beryl-class.glitch.me/callbacks/sign_in_with_apple')),
         scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
-        nonce: nonce,
+
+        nonce: Platform.isIOS ? nonce : null,
       );
 
       print(appleCredential.authorizationCode);
@@ -78,6 +83,8 @@ class ServicesAuthService {
       final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
+        accessToken: Platform.isIOS ? null : appleCredential.authorizationCode,
+
       );
 
       // Sign in the user with Firebase. If the nonce we generated earlier does

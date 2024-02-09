@@ -35,10 +35,10 @@ class K31Screen extends GetWidget {
       dayEventModel.emotionInDayEvent = EmotionInDayEvent.NEUTRAL;
     }
     controller.additionalEmotions = (data['someEmotions'] as List<EventModel>);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: SingleChildScrollView(
             child: Padding(
@@ -253,9 +253,9 @@ class K31Screen extends GetWidget {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -22,22 +25,28 @@ void main() async {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    await EasyLocalization.ensureInitialized();
+
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(_messageHandler);
+    HttpOverrides.global = MyHttpOverrides();
     await HiveDB.initDB();
     WorkManagerService().initService();
     await CurrentUser.init();
     final notificationService = AwesomeNotificationService();
     notificationService.setListeners();
-    FirebaseAuth.instance.authStateChanges().listen((event) {
+    final event = await FirebaseAuth.instance.userChanges().first;
       if (event == null)
         AppRoutes.initialRoute = AppRoutes.signUp;
       else {
         AppRoutes.initialRoute = AppRoutes.splashScreen;
       }
 
-      runApp(MyApp());
-    });
+      runApp(EasyLocalization(
+          supportedLocales: [Locale('ru'), Locale('en'),],
+          path: 'assets/translations', // <-- change the path of the translation files
+          fallbackLocale: Locale('ru'),
+          child: MyApp()));
 
 
 }
@@ -49,6 +58,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: ThemeData(
         primaryColor: MaterialColor(ColorConstant.cyan700.value, color),
         scrollbarTheme: ScrollbarThemeData(
@@ -80,3 +92,13 @@ Map<int, Color> color = {
   800: Color.fromRGBO(255, 92, 87, .9),
   900: Color.fromRGBO(255, 92, 87, 1),
 };
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..maxConnectionsPerHost = 300
+      ..connectionTimeout = const Duration(minutes: 6)
+      ..idleTimeout = const Duration(minutes: 6);
+  }
+}

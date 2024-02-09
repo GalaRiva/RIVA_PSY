@@ -25,10 +25,10 @@ class K39Screen extends GetWidget {
         Navigator.pushNamedAndRemoveUntil(context, AppRoutes.main, (route) => false);
         return false;
       },
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: ColorConstant.gray300,
-          body: SizedBox(
+      child: Scaffold(
+        backgroundColor: ColorConstant.gray300,
+        body: SafeArea(
+          child: SizedBox(
             width: size.width,
             child: Stack(            alignment: Alignment.bottomCenter,
 
@@ -127,14 +127,14 @@ class K39Screen extends GetWidget {
               alignment: Alignment.bottomCenter,
             ),
           ),
-        )
+      )
           )
               ],
             ),
           ),
-          bottomNavigationBar: CustomBottomBar(
-            onChanged: (BottomBarEnum type) {},
-          ),
+        ),
+        bottomNavigationBar: CustomBottomBar(
+          onChanged: (BottomBarEnum type) {},
         ),
       ),
     );

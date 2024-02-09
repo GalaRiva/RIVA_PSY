@@ -20,11 +20,11 @@ class K61Screen extends GetWidget{
   Widget build(BuildContext context) {
     final controller = Get.put(K61Controller());
     controller.init();
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: false,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: SingleChildScrollView(
             child: Padding(
@@ -206,9 +206,9 @@ class K61Screen extends GetWidget{
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

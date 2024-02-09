@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: ru.yoomoney.sdk.gui:ui-lib:2.25.1@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/487e5717542529ee7b26d848dd15c652/transformed/jetified-ui-lib-2.25.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/487e5717542529ee7b26d848dd15c652/transformed/jetified-ui-lib-2.25.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/487e5717542529ee7b26d848dd15c652/transformed/jetified-ui-lib-2.25.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3f4ea1c97d00254bca6e9cffd02b36e4/transformed/jetified-ui-lib-2.25.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f4ea1c97d00254bca6e9cffd02b36e4/transformed/jetified-ui-lib-2.25.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3f4ea1c97d00254bca6e9cffd02b36e4/transformed/jetified-ui-lib-2.25.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.gui/ui-lib/2.25.1/3878946c92fd25e07526136e475f3d25c917f439/ui-lib-2.25.1-javadoc.jar!/" />

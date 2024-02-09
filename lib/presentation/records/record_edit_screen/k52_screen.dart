@@ -40,11 +40,11 @@ class K52Screen extends GetWidget {
     final controller = Get.put(K52Controller(dayEventModel));
     controller.selectedBodyParts = dayEventModel.whatBodyParts ?? [];
     controller.initDate(dayEventModel.date!);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: true,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: SingleChildScrollView(
             child: Padding(
@@ -748,9 +748,9 @@ class K52Screen extends GetWidget {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

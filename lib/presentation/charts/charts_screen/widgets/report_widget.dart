@@ -50,7 +50,7 @@ class ReportWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle.txtSFProDisplayLight10
-                        .copyWith(color: ColorConstant.cyan700, fontSize: 14, decoration: TextDecoration.underline)),
+                        .copyWith(color: ColorConstant.cyan700, fontSize: 14, decoration: TextDecoration.underline, decorationColor: ColorConstant.cyan700,)),
               ),
             ),
           )),

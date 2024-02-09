@@ -31,10 +31,10 @@ class K20Screen extends GetWidget<K20Controller> {
     Timer(Duration(seconds: 2), () async{
       await controller.openMessages(context);
     });
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: SingleChildScrollView(
             child: Padding(
@@ -191,20 +191,18 @@ class K20Screen extends GetWidget<K20Controller> {
                                 ),
                               ),
                             ),
-                            InnerShadow(
-                              blur: 5,
-                              color: const Color(0xFF2A456F).withOpacity(0.08),
-                              offset: const Offset(5, 5),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
                               child: Container(
                                 width: getSize(95),
                                 height: getSize(95),
 
                                 decoration: BoxDecoration(
-
-                                    color: ColorConstant.fromHex('#D7E1E1'),
-                                    borderRadius: BorderRadius.circular(getHorizontalSize(
-                                      60,
-                                    ),)
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(color: const Color(0xFF2A456F).withOpacity(0.6), blurRadius: 1, spreadRadius: 0),
+                                      BoxShadow(color:ColorConstant.fromHex('#D7E1E1'), blurRadius: 10, spreadRadius: 5),
+                                    ],
                                 ),
                               ),
                             ),
@@ -318,9 +316,9 @@ class K20Screen extends GetWidget<K20Controller> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

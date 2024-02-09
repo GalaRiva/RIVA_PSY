@@ -15,7 +15,6 @@ class ExercisesTabBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    height: size.height - 271,
       child: Column(
         children: [
           Padding(
@@ -27,7 +26,7 @@ class ExercisesTabBody extends StatelessWidget {
                 width: size.width,
                 child: TabBar(
                   controller:  controller.tabController,
-                  isScrollable: true,
+                  isScrollable: false,
                   onTap: (val) async {
                     controller.currentAudioIndex = null;
                     controller.currentTab = val;
@@ -63,95 +62,91 @@ class ExercisesTabBody extends StatelessWidget {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: SizedBox(
-              height: size.height - (373),
-              width: size.width,
-              child: TabBarView(
-                controller:  controller.tabController,
-                children: [
-                  TabWidget(
-                      isStandardCheck: false,
-                      enableScroll: false,
-                      tab: controller.introductionModel,
-                      controller: controller,
-                      height: (675 + 115)),
-                  TabWidget(
-                      enableScroll: false,
+          Expanded(
+            child: TabBarView(
+              controller:  controller.tabController,
+              children: [
+                TabWidget(
+                    isStandardCheck: false,
+                    enableScroll: false,
+                    tab: controller.introductionModel,
+                    controller: controller,
+                    height: (675 + 115)),
+                TabWidget(
+                    enableScroll: false,
 
-                      tab: controller.meditationModel,
-                      controller: controller,
-                      height: (523)
-                  ),
-                  Container(
-                    color: ColorConstant.grayLight,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 30),
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              height: (50),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width,
-                              child: TabBar(
-                                  controller:  controller.tabControllerSecond,
-                                  isScrollable: true,
-                                  onTap: (val) async {
-                                    controller.currentAudioIndex = null;
-                                    controller.currentTabSecond =
-                                        val;
-                                    if(controller.audioInstance.playing) await controller.audioInstance.pause();
-
-                                    controller.update();
-                                  },
-                                  indicatorColor:
-                                  ColorConstant.fromHex(
-                                      '#1499A1'),
-                                  unselectedLabelColor:
-                                  ColorConstant.gray800,
-                                  labelStyle: TextStyle(
-                                    color:
-                                    ColorConstant.gray800,
-                                    fontSize: getFontSize(
-                                      14,
-                                    ),
-                                    fontFamily:
-                                    'SF Pro Display',
-                                    fontWeight:
-                                    FontWeight.w300,
-                                  ),
-                                  labelColor:
-                                  ColorConstant.cyan700,
-                                  tabs: controller
-                                      .negativeEmotionsModel!
-                                      .tabs),
-                            ),
-                          ),
-                        ),
-
-                        GetBuilder(
-                          builder: (K70Controller _c) => Expanded(
-                            child: TabBarView(
-                                clipBehavior: Clip.none,
+                    tab: controller.meditationModel,
+                    controller: controller,
+                    height: (523)
+                ),
+                Container(
+                  color: ColorConstant.grayLight,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 30),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: (50),
+                            width: MediaQuery.of(context)
+                                .size
+                                .width,
+                            child: TabBar(
                                 controller:  controller.tabControllerSecond,
-                                children: controller
+                                isScrollable: true,
+                                onTap: (val) async {
+                                  controller.currentAudioIndex = null;
+                                  controller.currentTabSecond =
+                                      val;
+                                  if(controller.audioInstance.playing) await controller.audioInstance.pause();
+
+                                  controller.update();
+                                },
+                                indicatorColor:
+                                ColorConstant.fromHex(
+                                    '#1499A1'),
+                                unselectedLabelColor:
+                                ColorConstant.gray800,
+                                labelStyle: TextStyle(
+                                  color:
+                                  ColorConstant.gray800,
+                                  fontSize: getFontSize(
+                                    14,
+                                  ),
+                                  fontFamily:
+                                  'SF Pro Display',
+                                  fontWeight:
+                                  FontWeight.w300,
+                                ),
+                                labelColor:
+                                ColorConstant.cyan700,
+                                tabs: controller
                                     .negativeEmotionsModel!
-                                    .tabBodies),
+                                    .tabs),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  TabWidget(
+                      ),
 
-                      tab: controller.depressionModel,
-                      controller: controller,
-                      height: (2515)),
-                ],
-              ),
+                      GetBuilder(
+                        builder: (K70Controller _c) => Expanded(
+                          child: TabBarView(
+                              clipBehavior: Clip.none,
+                              controller:  controller.tabControllerSecond,
+                              children: controller
+                                  .negativeEmotionsModel!
+                                  .tabBodies),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                TabWidget(
+
+                    tab: controller.depressionModel,
+                    controller: controller,
+                    height: (2515)),
+              ],
             ),
           ),
 

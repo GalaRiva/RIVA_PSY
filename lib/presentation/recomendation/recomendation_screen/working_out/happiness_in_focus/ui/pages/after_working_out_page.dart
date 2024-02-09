@@ -51,68 +51,66 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Container(
-            padding: EdgeInsets.all(12),
-          decoration:
-          BoxDecoration(
-              color: ColorConstant.gray200,
-              border: Border.all(color: Colors.white, width: 1)),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Center(child: _title (cubit.todayWorkingOut > 4 ? 5 : cubit.todayWorkingOut)),
+    return Padding(
+        padding: const EdgeInsets.all(15),
+        child: Container(
+          padding: EdgeInsets.all(12),
+        decoration:
+        BoxDecoration(
+            color: ColorConstant.gray200,
+            border: Border.all(color: Colors.white, width: 1)),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Center(child: _title (cubit.todayWorkingOut > 4 ? 5 : cubit.todayWorkingOut)),
+        ),
+        Container(
+          padding: EdgeInsets.all(35),
+          child: AspectRatio(
+          aspectRatio: 300/260,
+          child: _image(cubit.todayWorkingOut),
           ),
-          Container(
-            padding: EdgeInsets.all(35),
-            child: AspectRatio(
-            aspectRatio: 300/260,
-            child: _image(cubit.todayWorkingOut),
-            ),
-          ),
-          CustomButton(
-          text: 'Далее'.toUpperCase(),
+        ),
+        CustomButton(
+        text: 'Далее'.toUpperCase(),
+        variant: ButtonVariant.Cyan,
+        fontStyle: ButtonFontStyle.White16,
+          onTap: (){
+          Navigator.pop(context);
+          cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
+          },
+        ),
+        CustomButton(
+          text: 'Продолжу позже'.toUpperCase(),
           variant: ButtonVariant.Cyan,
           fontStyle: ButtonFontStyle.White16,
-            onTap: (){
+          onTap: (){
             Navigator.pop(context);
-            cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
-            },
-          ),
-          CustomButton(
-            text: 'Продолжу позже'.toUpperCase(),
-            variant: ButtonVariant.Cyan,
-            fontStyle: ButtonFontStyle.White16,
-            onTap: (){
-              Navigator.pop(context);
-              cubit.goToNextState(HappinessInFocusStage.InitialHappinessInFocusState);
-            },
-          ),
-          Container(
-            padding: EdgeInsets.all(35),
+            cubit.goToNextState(HappinessInFocusStage.InitialHappinessInFocusState);
+          },
+        ),
+        Container(
+          padding: EdgeInsets.all(35),
+          child: AspectRatio(
+            aspectRatio: 300/260,
             child: AspectRatio(
-              aspectRatio: 300/260,
-              child: AspectRatio(
-                aspectRatio: 230/190,
-                child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
-              ),
+              aspectRatio: 230/190,
+              child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
             ),
           ),
-          CustomButton(
-            text: 'Супер задание'.toUpperCase(),
-            variant: ButtonVariant.Cyan,
-            fontStyle: ButtonFontStyle.White16,
-            onTap: (){
-              showDialog(context: context, builder: (_) => SuperQuestMessage(positiveRecords: cubit.positiveDayEventModels)).then((value) {
-                cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
-              });
-            },
-          ),
-        ].map((e) => Padding(padding: EdgeInsets.only(bottom: 15))).toList(),
-      ))),
-    );
+        ),
+        CustomButton(
+          text: 'Супер задание'.toUpperCase(),
+          variant: ButtonVariant.Cyan,
+          fontStyle: ButtonFontStyle.White16,
+          onTap: (){
+            showDialog(context: context, builder: (_) => SuperQuestMessage(positiveRecords: cubit.positiveDayEventModels)).then((value) {
+              cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
+            });
+          },
+        ),
+      ].map((e) => Padding(padding: EdgeInsets.only(bottom: 15))).toList(),
+    )));
   }
 }

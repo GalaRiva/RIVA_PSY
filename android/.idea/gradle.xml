@@ -10,37 +10,36 @@
         <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/audio_session-0.1.17/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/awesome_notifications-0.7.4+1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_firestore-4.13.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-6.1.1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_analytics-10.6.4/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.13.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.22.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging-14.7.4/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage-11.5.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_local_notifications-14.1.4/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_sound-8.5.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/google_api_availability_android-1.0.1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_android-6.1.20/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.8+2/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/just_audio-0.9.35/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_android-10.3.6/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/printing-5.11.1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/record-4.4.4/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.2.1/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/sign_in_with_apple-5.0.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite-2.3.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.2.0/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/workmanager-0.5.2/android" />
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/yookassa_payments_flutter-1.0.6/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/audio_session-0.1.17/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/awesome_notifications-0.7.4+1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/cloud_firestore-4.13.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/file_picker-6.1.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_analytics-10.6.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth-4.13.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-2.22.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging-14.7.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_storage-11.5.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications-14.1.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_sound-8.5.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/google_api_availability_android-1.0.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/google_sign_in_android-6.1.20/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker_android-0.8.8+2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/just_audio-0.9.36/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-10.3.6/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/printing-5.11.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/record-4.4.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/sign_in_with_apple-5.0.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/sqflite-2.3.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/workmanager-0.5.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/yookassa_payments_flutter-1.0.6/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

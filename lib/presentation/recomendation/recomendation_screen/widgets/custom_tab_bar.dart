@@ -48,112 +48,111 @@ class _CustomTabBarState extends State<CustomTabBar>
         (size.width / widget.labels.length) - (52 / widget.labels.length);
     final labelWidthWithoutPadding = (size.width / widget.labels.length);
 
-    return SingleChildScrollView(
-      child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 11),
-              child: SizedBox(
-                height: 46,
-                width: size.width,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Wrap(
-                      children: List.generate(
-                          widget.labels.length,
-                          (index) => SizedBox(
-                              height: 46,
-                              width: labelWidthWithoutPadding,
-                              child: Center(
-                                  child: InkWell(
-                                onTap: () => animate(index),
-                                child: Container(
-                                  height: 46,
-                                  width: labelWidth,
-                                  decoration: BoxDecoration(
-                                    color: ColorConstant.fromHex('#C5D2D2'),
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        topLeft: Radius.circular(10)),
-                                  ),
-                                ),
-                              )))).toList(),
-                    ),
-                    Container(
-                      height: 1,
-                      width: size.width,
-                      color: ColorConstant.cyan700,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IgnorePointer(
-                        child: SlideTransition(
-                          position: _animationLabel,
-                          child: SizedBox(
+    return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 11),
+            child: SizedBox(
+              height: 46,
+              width: size.width,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Wrap(
+                    children: List.generate(
+                        widget.labels.length,
+                        (index) => SizedBox(
                             height: 46,
                             width: labelWidthWithoutPadding,
                             child: Center(
+                                child: InkWell(
+                              onTap: () => animate(index),
                               child: Container(
                                 height: 46,
                                 width: labelWidth,
                                 decoration: BoxDecoration(
-                                    color: ColorConstant.cyan700,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        topLeft: Radius.circular(10)),
+                                  color: ColorConstant.fromHex('#C5D2D2'),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10)),
                                 ),
-                                child:Container(
-                                  margin: const EdgeInsetsDirectional.only(start: 1, end: 1, top: 1),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: const Radius.circular(10),
-                                      topRight: const Radius.circular(10),
-                                    ),// BorderRadius
-
-                                  ),// BoxDecoration
-                                )
                               ),
+                            )))).toList(),
+                  ),
+                  Container(
+                    height: 1,
+                    width: size.width,
+                    color: ColorConstant.cyan700,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IgnorePointer(
+                      child: SlideTransition(
+                        position: _animationLabel,
+                        child: SizedBox(
+                          height: 46,
+                          width: labelWidthWithoutPadding,
+                          child: Center(
+                            child: Container(
+                              height: 46,
+                              width: labelWidth,
+                              decoration: BoxDecoration(
+                                  color: ColorConstant.cyan700,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10)),
+                              ),
+                              child:Container(
+                                margin: const EdgeInsetsDirectional.only(start: 1, end: 1, top: 1),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(10),
+                                    topRight: const Radius.circular(10),
+                                  ),// BorderRadius
+
+                                ),// BoxDecoration
+                              )
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Wrap(
-                      children: List.generate(
-                          widget.labels.length,
-                          (index) => SizedBox(
-                              height: 46,
-                              width: labelWidthWithoutPadding,
-                              child: Center(
-                                  child: IgnorePointer(
-                                child: Container(
-                                  height: 46,
-                                  width: labelWidth,
-                                  child: Center(
-                                    child: Text(
-                                      widget.labels[index],
-                                      style: AppStyle.txtSFProDisplayLight14
-                                          .copyWith(
-                                              color: currentPos == index
-                                                  ? ColorConstant.cyan700
-                                                  : Colors.white),
-                                    ),
+                  ),
+                  Wrap(
+                    children: List.generate(
+                        widget.labels.length,
+                        (index) => SizedBox(
+                            height: 46,
+                            width: labelWidthWithoutPadding,
+                            child: Center(
+                                child: IgnorePointer(
+                              child: Container(
+                                height: 46,
+                                width: labelWidth,
+                                child: Center(
+                                  child: Text(
+                                    widget.labels[index],
+                                    style: AppStyle.txtSFProDisplayLight14
+                                        .copyWith(
+                                            color: currentPos == index
+                                                ? ColorConstant.cyan700
+                                                : Colors.white),
                                   ),
                                 ),
-                              )))).toList(),
-                    ),
-                  ],
-                ),
+                              ),
+                            )))).toList(),
+                  ),
+                ],
               ),
             ),
+          ),
 
-                  Center(
+                Expanded(
+                  child: Center(
                     child: Container(
                       margin: EdgeInsets.all(0),
                       width: size.width,
-                      height: size.height - 303,
                       child: Center(
                         child: PageView(
                           physics: NeverScrollableScrollPhysics(),
@@ -175,10 +174,10 @@ class _CustomTabBarState extends State<CustomTabBar>
                       ),
                     ),
                   ),
+                ),
 
 
-          ],
-      ),
+        ],
     );
   }
 }

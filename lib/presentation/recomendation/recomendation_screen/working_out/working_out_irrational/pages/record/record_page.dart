@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
@@ -22,6 +23,7 @@ class RecordPage extends StatelessWidget {
     whyThis.text = initWhyThisText;
     alternative.text = initAlternativeText;
   }
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class RecordPage extends StatelessWidget {
         cubit.state.stage == WorkingOutIrrationalStage.recordThought;
 
     return SingleChildScrollView(
+      controller: scrollController,
       child: Column(
         children: [
           Center(
@@ -68,6 +71,7 @@ class RecordPage extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 60,
                       child: TextFormField(
+                        onTap: () => scrollController.animateTo(scrollController.offset + MediaQuery.of(context).viewInsets.bottom, duration: Duration(milliseconds: 500), curve: Curves.easeIn),
                         controller: whyThis,
                         maxLines: 10,
                         minLines: 4,

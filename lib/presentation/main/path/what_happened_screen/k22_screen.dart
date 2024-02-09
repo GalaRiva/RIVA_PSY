@@ -27,10 +27,10 @@ class K22Screen extends GetWidget {
     final _focus = FocusNode();
     final _focus2 = FocusNode();
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: SizedBox(
           height: size.height,
           width: size.width,
           child: Stack(
@@ -293,9 +293,9 @@ class K22Screen extends GetWidget {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

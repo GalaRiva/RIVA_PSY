@@ -21,11 +21,11 @@ class K49Screen extends GetWidget {
         controller.update();
     });
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: false,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: SingleChildScrollView(
             child: Padding(
@@ -161,9 +161,9 @@ class K49Screen extends GetWidget {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

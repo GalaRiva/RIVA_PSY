@@ -22,73 +22,74 @@ class OneScreen extends GetWidget<OneScreenController> {
       Navigator.pushNamed(context, AppRoutes.repeatPassword, arguments: text);
 
     }).obs);
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorConstant.gray300,
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
-                width: size.width,
-                child: SingleChildScrollView(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    child: Padding(
-                        padding: getPadding(left: 16, right: 16, bottom: 5),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+    return Scaffold(
+        backgroundColor: ColorConstant.gray300,
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: SizedBox(
+              width: size.width,
+              child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: Padding(
+                      padding: getPadding(left: 16, right: 16, bottom: 5),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
 
-                              Padding(
-                                  padding: getPadding(top: 26),
-                                  child: Text("Пароль",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtH1)),
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                      padding: getPadding(top: 111),
-                                      child: Text("Введите пароль",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style:
-                                              AppStyle.txtSFProDisplayLight16))),
-                              Container(
-                                margin: getMargin(top: 58),
-                                child: GetBuilder(
-                                    builder: (OneScreenController _c) => Center(
-                                      child: controller.passField.value
-                                          .widget(context, Colors.black),
-                                    )),
+                            Padding(
+                                padding: getPadding(top: 26),
+                                child: Text("Пароль",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1)),
+                            Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: getPadding(top: 111),
+                                    child: Text("Введите пароль",
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style:
+                                            AppStyle.txtSFProDisplayLight16))),
+                            Container(
+                              margin: getMargin(top: 58),
+                              child: GetBuilder(
+                                  builder: (OneScreenController _c) => Center(
+                                    child: controller.passField.value
+                                        .widget(context, Colors.black),
+                                  )),
+                            ),
+                            SizedBox(height: getVerticalSize(60),),
+                            SelectableText.rich(
+                              TextSpan(
+                                text: 'Восстановление пароля не предполагается системой, ', // default text style
+                                children: <TextSpan>[
+                                  TextSpan(text: 'так как ', style: AppStyle.txtSFProDisplayLight16),
+                                  TextSpan(text: 'мы не собираем Ваши данные '),
+                                  TextSpan(text: 'и не отправляем Вам сообщения на email и по СМС. Вводите тот пароль, что легко запомните или запишите его', style: AppStyle.txtSFProDisplayLight16),
+
+                                ],
                               ),
-                              SizedBox(height: getVerticalSize(60),),
-                              SelectableText.rich(
-                                TextSpan(
-                                  text: 'Восстановление пароля не предполагается системой, ', // default text style
-                                  children: <TextSpan>[
-                                    TextSpan(text: 'так как ', style: AppStyle.txtSFProDisplayLight16),
-                                    TextSpan(text: 'мы не собираем Ваши данные '),
-                                    TextSpan(text: 'и не отправляем Вам сообщения на email и по СМС. Вводите тот пароль, что легко запомните или запишите его', style: AppStyle.txtSFProDisplayLight16),
-
-                                  ],
+                              style: AppStyle.txtSFProDisplayLight16.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            CustomButton(
+                                height: getVerticalSize(32),
+                                width: getHorizontalSize(146),
+                                text: "настройки".toUpperCase(),
+                                margin: getMargin(top: 44),
+                                padding: ButtonPadding.PaddingT8,
+                                prefixWidget: CustomImageView(
+                                  margin: getMargin(right: 12),
+                                  svgPath: ImageConstant.leftArrow,
                                 ),
-                                style: AppStyle.txtSFProDisplayLight16.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              CustomButton(
-                                  height: getVerticalSize(32),
-                                  width: getHorizontalSize(146),
-                                  text: "настройки".toUpperCase(),
-                                  margin: getMargin(top: 44),
-                                  padding: ButtonPadding.PaddingT8,
-                                  prefixWidget: CustomImageView(
-                                    margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.leftArrow,
-                                  ),
-                                  onTap: () => onTaptf(context),
-                                  alignment: Alignment.center)
-                            ])))),
-            bottomNavigationBar:
-                CustomBottomBar(onChanged: (BottomBarEnum type) {})));
+                                onTap: () => onTaptf(context),
+                                alignment: Alignment.center)
+                          ])))),
+        ),
+        bottomNavigationBar:
+            CustomBottomBar(onChanged: (BottomBarEnum type) {}));
   }
 
   onTaptf(BuildContext context) {

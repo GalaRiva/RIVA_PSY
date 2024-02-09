@@ -31,11 +31,11 @@ class K32Screen extends GetWidget {
     final _focus = FocusNode();
     final _focus2 = FocusNode();
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: false,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: Stack(            alignment: Alignment.bottomCenter,
 
@@ -269,7 +269,7 @@ class K32Screen extends GetWidget {
                 ),
               ),
 
-      Container(
+    Container(
         width: size.width,
         height: getVerticalSize(60),
         margin: getMargin(
@@ -361,13 +361,13 @@ class K32Screen extends GetWidget {
                   ),
                 ),
               ),
-      )
+    )
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

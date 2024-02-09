@@ -39,60 +39,61 @@ class K9Screen extends GetWidget<K9Controller> {
 
       }
     }).obs;
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorConstant.gray300,
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
-                width: size.width,
-                child: SingleChildScrollView(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    child: Padding(
-                        padding: getPadding(left: 16, right: 16, bottom: 5),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+    return Scaffold(
+        backgroundColor: ColorConstant.gray300,
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: SizedBox(
+              width: size.width,
+              child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: Padding(
+                      padding: getPadding(left: 16, right: 16, bottom: 5),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
 
-                              Padding(
-                                  padding: getPadding(top: 26),
-                                  child: Text("Пароль",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtH1)),
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                      padding: getPadding(top: 111),
-                                      child: Text("Подтвердите пароль",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: AppStyle
-                                              .txtSFProDisplayLight16))),
-                              Container(
-                                margin: getMargin(top: 58),
-                                child: GetBuilder(
-                                    builder: (K9Controller _c) => Center(
-                                      child: controller.passField!.value
-                                          .widget(context, Colors.black),
-                                    )),
-                              ),
-                              CustomButton(
-                                  height: getVerticalSize(32),
-                                  width: getHorizontalSize(146),
-                                  text: "настройки".toUpperCase(),
-                                  margin: getMargin(top: 154),
-                                  padding: ButtonPadding.PaddingT8,
-                                  prefixWidget: CustomImageView(
-                                    margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.leftArrow,
-                                  ),
-                                  onTap: () => onTaptf(context),
-                                  alignment: Alignment.center)
-                            ])))),
-            bottomNavigationBar:
-                CustomBottomBar(onChanged: (BottomBarEnum type) {})));
+                            Padding(
+                                padding: getPadding(top: 26),
+                                child: Text("Пароль",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1)),
+                            Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: getPadding(top: 111),
+                                    child: Text("Подтвердите пароль",
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyle
+                                            .txtSFProDisplayLight16))),
+                            Container(
+                              margin: getMargin(top: 58),
+                              child: GetBuilder(
+                                  builder: (K9Controller _c) => Center(
+                                    child: controller.passField!.value
+                                        .widget(context, Colors.black),
+                                  )),
+                            ),
+                            CustomButton(
+                                height: getVerticalSize(32),
+                                width: getHorizontalSize(146),
+                                text: "настройки".toUpperCase(),
+                                margin: getMargin(top: 154),
+                                padding: ButtonPadding.PaddingT8,
+                                prefixWidget: CustomImageView(
+                                  margin: getMargin(right: 12),
+                                  svgPath: ImageConstant.leftArrow,
+                                ),
+                                onTap: () => onTaptf(context),
+                                alignment: Alignment.center)
+                          ])))),
+        ),
+        bottomNavigationBar:
+            CustomBottomBar(onChanged: (BottomBarEnum type) {}));
   }
 
   onTaptf(BuildContext context) {

@@ -24,7 +24,7 @@ class YookassaPayments {
     final _paymentMethodTypes = PaymentMethodTypes([PaymentMethod.bankCard]);
     final _clientApplicationKey =
         "live_MjI0MzQ0QbhxKs1fv9QJbgcRxPRkeZ4Rs3FWJmqo-TM";
-    final _amount = Amount(value: amountInRub ?? 990, currency: Currency.rub);
+    final _amount = Amount(value:'${amountInRub ?? 990}', currency: Currency.rub);
     final _shopId = "224344";
     final _clientId = 'td00l1l9g7g7i80jbu9l62g5ia4b82lv';
     final _description =
@@ -37,7 +37,7 @@ class YookassaPayments {
       shopId: _shopId,
       testModeSettings: testMode
           ? TestModeSettings(
-              false, 1, Amount(value: 990, currency: Currency.rub), false)
+              false, 1, Amount(value: '990', currency: Currency.rub), false)
           : null,
       moneyAuthClientId: _clientId,
       tokenizationSettings: TokenizationSettings(_paymentMethodTypes),
@@ -67,7 +67,7 @@ class YookassaPayments {
             _onPaymentError(context);
           } else {
             YookassaPaymentsFlutter.confirmation(
-                    _confirmationUrl, _paymentMethodType)
+                    _confirmationUrl, _paymentMethodType,_clientApplicationKey,_shopId)
                 .then((value) async {
               print('payment succes');
               if (await yookassaPaymentRequest.checkPaymentStatus(

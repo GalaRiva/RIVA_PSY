@@ -18,7 +18,7 @@ class K6Controller extends GetxController {
     if ((await pillRepo.getEvent()).isNotEmpty)
       Navigator.pushNamed(context, AppRoutes.pills);
     else
-      showModalBottomSheet(
+      showBottomSheet(
           context: context, builder: (context) => PillsAddBottomSheet(),
       backgroundColor: ColorConstant.gray300,);
   }

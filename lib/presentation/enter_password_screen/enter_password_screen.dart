@@ -15,27 +15,28 @@ class EnterPasswordScreen extends GetWidget<EnterPasswordController> {
   Widget build(BuildContext context) {
     final controller = Get.put(EnterPasswordController());
     if(controller.passField == null) controller.passField = controller.createCustomField(context);
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorConstant.gray300,
-            body: SingleChildScrollView(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                child: Column(
-                    children: [
-                      SizedBox(height: size.height / 2 - 60,),
-                      Text("Введите пароль",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle
-                              .txtSFProDisplayLight16),
-                      SizedBox(height: getVerticalSize(58),),
-                      GetBuilder(
-                          builder: (EnterPasswordController _c) => Center(
-                            child: controller.passField!
-                                .widget(context, controller.passFieldColor),
-                          )),
-                    ])),
-        ));
+    return Scaffold(
+        backgroundColor: ColorConstant.gray300,
+        body: SafeArea(
+          child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                  children: [
+                    SizedBox(height: size.height / 2 - 60,),
+                    Text("Введите пароль",
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle
+                            .txtSFProDisplayLight16),
+                    SizedBox(height: getVerticalSize(58),),
+                    GetBuilder(
+                        builder: (EnterPasswordController _c) => Center(
+                          child: controller.passField!
+                              .widget(context, controller.passFieldColor),
+                        )),
+                  ])),
+        ),
+    );
   }
 
   onTaptf(BuildContext context) {

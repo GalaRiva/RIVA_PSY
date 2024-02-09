@@ -24,10 +24,10 @@ class K62Screen extends GetWidget {
     controller.getDaysForRows = [];
     controller.getDaysForRows = controller.initializeDaysList();
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray30002,
-        body: Container(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray30002,
+      body: SafeArea(
+        child: Container(
           width: double.maxFinite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

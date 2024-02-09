@@ -17,10 +17,10 @@ class K38Screen extends GetWidget {
     DayEventModel? dayEventModel =
     ((ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
     as DayEventModel);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: Stack(
             children: [
@@ -154,9 +154,9 @@ class K38Screen extends GetWidget {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

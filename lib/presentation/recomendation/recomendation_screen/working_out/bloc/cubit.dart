@@ -11,7 +11,7 @@ class WorkingOutCubit extends Cubit<WorkingOutState> {
 
   WorkingOutCubit(this.tickerProvider)
       : super(WorkingOutState()) {
-    tabController = TabController(length: 1, vsync: tickerProvider);
+    tabController = TabController(length: 2, vsync: tickerProvider);
   }
 
   bool get showContent => CurrentUser.tariffIsOrion();

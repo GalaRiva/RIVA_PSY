@@ -13,10 +13,10 @@ class ConcretePillScreen extends StatelessWidget {
     final _pillName = data['pill'] ?? '';
     final _date = data['date'] ?? DateTime.now();
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.fromHex('#D7E1E1').withOpacity(0.44),
-        body: Center(
+    return Scaffold(
+      backgroundColor: ColorConstant.fromHex('#D7E1E1').withOpacity(0.44),
+      body: SafeArea(
+        child: Center(
           child: MessageBoxWithCentralIcon(_pillName, _time, context, _date).widget()
         ),
       ),

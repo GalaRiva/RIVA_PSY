@@ -18,10 +18,10 @@ class K37Screen extends StatelessWidget {
     DayEventModel? dayEventModel =
     dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
     as DayEventModel;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: SizedBox(
           height: size.height,
           width: size.width,
           child: Stack(
@@ -174,9 +174,9 @@ class K37Screen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

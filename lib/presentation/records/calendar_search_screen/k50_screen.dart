@@ -29,10 +29,10 @@ class K50Screen extends GetWidget {
         await Get.delete<K50Controller>();
         return true;
       },
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: ColorConstant.gray30002,
-          body: Container(
+      child: Scaffold(
+        backgroundColor: ColorConstant.gray30002,
+        body: SafeArea(
+          child: Container(
             width: double.maxFinite,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

@@ -16,10 +16,10 @@ class K1Screen extends GetWidget {
 
     final controller = Get.put(K1Controller());
     controller.initialization(context);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        body: Stack(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      body: SafeArea(
+        child: Stack(
             alignment: Alignment.center,
             children:[ Column(
               mainAxisAlignment: MainAxisAlignment.center,

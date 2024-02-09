@@ -18,11 +18,11 @@ class K24Page extends GetWidget {
     if(controller.eventNameController.text.isEmpty)
     content['initialValue'] == null ? null : controller.eventNameController.text = content['initialValue'];
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: true,
-        body: Container(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Container(
           width: double.maxFinite,
           decoration: AppDecoration.back,
           child: GetBuilder(

@@ -17,15 +17,11 @@ class PillsAddBottomSheet extends StatelessWidget {
 
     final controller = Get.put(PillsBottomSheetController(context));
     return Padding(
-        padding: getPadding(left: 16, right: 16, top: 35),
+        padding: getPadding(left: 16, right: 16, top: 35, bottom: MediaQuery.of(context).viewInsets.bottom
+        ),
         child: SizedBox(
             height: size.height - (size.height / 4),
-            child: Card(
-              color: ColorConstant.gray300,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
+            child: Container(
               child: Stack(
                 children: [
                   SingleChildScrollView(

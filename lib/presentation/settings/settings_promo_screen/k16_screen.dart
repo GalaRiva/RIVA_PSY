@@ -22,73 +22,74 @@ class K16Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorConstant.gray300,
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
-                width: size.width,
-                child: SingleChildScrollView(
-                    child: Padding(
-                        padding: getPadding(left: 16, right: 16, bottom: 5),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomAppBar(widget: Row(
-                                children: [
-                                  CustomPopButton(text: 'Настройки'),
-                                  Text(' | Подписка | Подарочный код', style: AppStyle.txtSFProDisplayLight10Gray800,)
-                                ],
-                              ),),
-                              Padding(
-                                  padding: getPadding(top: 26),
-                                  child: Text("Промокод",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtH1)),
-                              Padding(
-                                  padding: getPadding(top: 27),
-                                  child: Text("Введите подарочный код",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtSFProDisplayLight16)),
-                              CustomTextFormField(
-                                  focusNode: FocusNode(),
-                                  controller: passwordController,
-                                  hintText: "*******",
-                                  margin: getMargin(left: 1, top: 56),
-                                  variant:
-                                      TextFormFieldVariant.UnderLineGray8008c,
-                                  fontStyle: TextFormFieldFontStyle
-                                      .SFProDisplayLight12,
-                                  textInputAction: TextInputAction.done),
-                              CustomButton(
-                                  height: getVerticalSize(54),
-                                  width: getHorizontalSize(201),
-                                  text: "отправить код".toUpperCase(),
-                                  margin: getMargin(top: 61),
-                                  variant: ButtonVariant.OutlineBluegray60014,
-                                  padding: ButtonPadding.PaddingAll19,
-                                  fontStyle: ButtonFontStyle
-                                      .SFProDisplayRegular12Cyan700,
-                                  onTap: () => onTaptf(context),
-                                  alignment: Alignment.center),
-                              CustomButton(
-                                  height: getVerticalSize(32),
-                                  width: getHorizontalSize(146),
-                                  text: "подписка".toUpperCase(),
-                                  margin: getMargin(top: 61),
-                                  padding: ButtonPadding.PaddingT8,
-                                  prefixWidget: CustomImageView(
-                                    margin: getMargin(right: 12),
-                                    svgPath: ImageConstant.leftArrow,
-                                  ),
-                                  onTap: () => onTaptf1(context),
-                                  alignment: Alignment.center)
-                            ])))),
-            bottomNavigationBar:
-                CustomBottomBar(onChanged: (BottomBarEnum type) {})));
+    return Scaffold(
+        backgroundColor: ColorConstant.gray300,
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: SizedBox(
+              width: size.width,
+              child: SingleChildScrollView(
+                  child: Padding(
+                      padding: getPadding(left: 16, right: 16, bottom: 5),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomAppBar(widget: Row(
+                              children: [
+                                CustomPopButton(text: 'Настройки'),
+                                Text(' | Подписка | Подарочный код', style: AppStyle.txtSFProDisplayLight10Gray800,)
+                              ],
+                            ),),
+                            Padding(
+                                padding: getPadding(top: 26),
+                                child: Text("Промокод",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1)),
+                            Padding(
+                                padding: getPadding(top: 27),
+                                child: Text("Введите подарочный код",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtSFProDisplayLight16)),
+                            CustomTextFormField(
+                                focusNode: FocusNode(),
+                                controller: passwordController,
+                                hintText: "*******",
+                                margin: getMargin(left: 1, top: 56),
+                                variant:
+                                    TextFormFieldVariant.UnderLineGray8008c,
+                                fontStyle: TextFormFieldFontStyle
+                                    .SFProDisplayLight12,
+                                textInputAction: TextInputAction.done),
+                            CustomButton(
+                                height: getVerticalSize(54),
+                                width: getHorizontalSize(201),
+                                text: "отправить код".toUpperCase(),
+                                margin: getMargin(top: 61),
+                                variant: ButtonVariant.OutlineBluegray60014,
+                                padding: ButtonPadding.PaddingAll19,
+                                fontStyle: ButtonFontStyle
+                                    .SFProDisplayRegular12Cyan700,
+                                onTap: () => onTaptf(context),
+                                alignment: Alignment.center),
+                            CustomButton(
+                                height: getVerticalSize(32),
+                                width: getHorizontalSize(146),
+                                text: "подписка".toUpperCase(),
+                                margin: getMargin(top: 61),
+                                padding: ButtonPadding.PaddingT8,
+                                prefixWidget: CustomImageView(
+                                  margin: getMargin(right: 12),
+                                  svgPath: ImageConstant.leftArrow,
+                                ),
+                                onTap: () => onTaptf1(context),
+                                alignment: Alignment.center)
+                          ])))),
+        ),
+        bottomNavigationBar:
+            CustomBottomBar(onChanged: (BottomBarEnum type) {}));
   }
 
   onTaptf(BuildContext context) async {

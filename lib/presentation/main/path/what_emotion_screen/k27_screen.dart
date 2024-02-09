@@ -50,11 +50,11 @@ class K27Screen extends GetWidget {
     final _focus2 = FocusNode();
     final _focus = FocusNode();
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: false,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -302,7 +302,7 @@ class K27Screen extends GetWidget {
                 ),
               ),
 
-      Container(
+    Container(
         width: size.width,
         height: getVerticalSize(60),
         margin: getMargin(
@@ -396,13 +396,13 @@ variant: ButtonVariant.Base,
                   ),
                 ),
               ),
-      )
+    )
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }

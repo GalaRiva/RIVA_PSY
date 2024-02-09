@@ -11,10 +11,10 @@ class SendPushesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.darkBg,
-        body: Center(
+    return Scaffold(
+      backgroundColor: ColorConstant.darkBg,
+      body: SafeArea(
+        child: Center(
           child: CustomMessageBox(
             canPop: false,
             title: 'Уведомления', content: Column(

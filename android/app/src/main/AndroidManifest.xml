@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
     <application
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="Rigel PSY психология"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
@@ -44,6 +44,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
+            </intent-filter>
+        </activity>
+        <!-- Set up the Sign in with Apple activity, such that it's callable from the browser-redirect -->
+        <activity
+            android:name="com.aboutyou.dart_packages.sign_in_with_apple.SignInWithAppleCallback"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="signinwithapple" />
+                <data android:path="callback" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

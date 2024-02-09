@@ -38,12 +38,12 @@ class K54Screen extends GetWidget {
     dayEventModel.date = date;
     var controller = Get.put(K54Controller(dayEventModel));
     controller.initDate(date);
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
 
-        backgroundColor: ColorConstant.gray300,
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
+      backgroundColor: ColorConstant.gray300,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
             padding: getPadding(
               left: 10,
@@ -510,9 +510,9 @@ class K54Screen extends GetWidget {
                   ]),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        onChanged: (BottomBarEnum type) {},
       ),
     );
   }
