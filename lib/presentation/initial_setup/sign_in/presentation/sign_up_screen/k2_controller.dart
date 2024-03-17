@@ -48,6 +48,7 @@ class K2Controller extends GetxController {
 
             if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
             await CurrentUser.repo.setService('');
+            await CurrentUser.repo.setLocalUserData(email: email);
 
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
@@ -86,6 +87,7 @@ class K2Controller extends GetxController {
           showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
         } else {
           await CurrentUser.repo.setService('apple');
+          await CurrentUser.repo.setLocalUserData(email: result.email);
 
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.splashScreen, (route) => false);
@@ -101,6 +103,7 @@ class K2Controller extends GetxController {
               result.userId!, email: result.email, login: result.login);
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Success) {
             await CurrentUser.repo.setService('apple');
+            await CurrentUser.repo.setLocalUserData(email: result.email);
 
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
@@ -136,6 +139,7 @@ class K2Controller extends GetxController {
         }
         else {
           await CurrentUser.repo.setService('google');
+          await CurrentUser.repo.setLocalUserData(email: result.email);
 
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.splashScreen, (route) => false);
@@ -152,6 +156,8 @@ class K2Controller extends GetxController {
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Success) {
 
             await CurrentUser.repo.setService('google');
+            await CurrentUser.repo.setLocalUserData(email: result.email);
+
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
           } else {

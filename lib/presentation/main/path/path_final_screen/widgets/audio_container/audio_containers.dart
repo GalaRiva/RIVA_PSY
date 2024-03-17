@@ -17,11 +17,11 @@ class AudioContainers extends StatelessWidget {
   Future<List<Duration?>> _durations () async {
     final List<Duration?> list = [];
     for (var item in audios) {
-      print(item.audioAsset.replaceAll(' ', '%20'));
+      print(item.audioAsset);
       try {
         if (DataSourceService.dataSourceIsRemote()) {
           list.add(await controller.audioInstance.setUrl(
-              item.audioAsset.replaceAll(' ', '%20'), initialPosition: Duration.zero, preload: true));
+              item.audioAsset, initialPosition: Duration.zero, preload: true));
         } else
           list.add(await controller.audioInstance.setAudioSource(
               AudioSource.file(item.audioAsset),

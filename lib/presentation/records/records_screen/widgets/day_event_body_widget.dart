@@ -21,6 +21,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
     fontFamily: 'SF Pro Display',
     fontWeight: FontWeight.w400,
   );
+  debugPrint(dayEventModel.toJson().toString());
   return SizedBox(
     height: getVerticalSize(204),
     child: Stack(

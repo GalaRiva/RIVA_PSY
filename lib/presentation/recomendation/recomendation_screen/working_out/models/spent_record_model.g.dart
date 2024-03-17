@@ -14,6 +14,7 @@ SpentRecordModel _$SpentRecordModelFromJson(Map<String, dynamic> json) =>
       alternativeThoughts: json['alternativeThoughts'] as String,
       whyThisDo: json['whyThisDo'] as String,
       alternativeDo: json['alternativeDo'] as String,
+      date: json['date'] == null ? DateTime.now() : DateTime.parse(json['date'] as String),
     );
 
 Map<String, dynamic> _$SpentRecordModelToJson(SpentRecordModel instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$SpentRecordModelToJson(SpentRecordModel instance) =>
       'alternativeThoughts': instance.alternativeThoughts,
       'whyThisDo': instance.whyThisDo,
       'alternativeDo': instance.alternativeDo,
+      'date': instance.date.toIso8601String(),
     };

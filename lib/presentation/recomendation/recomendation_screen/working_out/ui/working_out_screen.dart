@@ -33,6 +33,7 @@ class WorkingOutScreen extends StatelessWidget {
                           .size
                           .width,
                       child: TabBar(
+                        dividerHeight: 0,
                         controller: cubit.tabController,
                         isScrollable: false,
                         onTap: (val) async {

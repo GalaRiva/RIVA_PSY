@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/models/backup_model.dart';
 import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
 import 'package:listenmebaby71_s_application17/core/models/user_data_model.dart';
@@ -17,6 +18,8 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   final String _userBackupsCollection = 'Backups';
   final String _promoCollection = 'Promo';
   final String _promoActivatedUsersCollection = 'ActivatedUsers';
+  final String _trialsCollection = 'Trials';
+
 
   String _userId() => CurrentUser.repo.userId();
 
@@ -86,19 +89,14 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
 
   @override
   Future<bool> canActivatePromo({required PromoModel promo}) async {
-    final doc = instance.collection(_promoCollection).doc(promo.promo);
-    final activatedUsersCollection =
-        doc.collection(_promoActivatedUsersCollection);
-    final activatedUsersDocs =
-        (await doc.collection(_promoActivatedUsersCollection).get()).docs;
     if (promo is DisposablePromo) {
       if (!promo.activatedUsers.contains(_userId()) &&
-          promo.maxActivated > activatedUsersDocs.length) {
+          promo.maxActivated > promo.activatedUsers.length) {
         return true;
+      }
       } else if (promo is ReusablePromo) {
-        if (!promo.activatedUsers.contains(_userId())) {
-          return true;
-        }
+      if (!promo.activatedUsers.contains(_userId())) {
+        return true;
       }
     }
     return false;
@@ -194,6 +192,29 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
     } catch (_) {
       return false;
       print(_);
+    }
+  }
+
+  @override
+  Future<bool> canUseTrial({required String trialName}) async {
+    try {
+      final doc = instance.collection(_trialsCollection).doc(trialName).collection('users').doc(_userId());
+      debugPrint('ebat 2 ${!((await doc.get()).exists)}');
+      return !((await doc.get()).exists);
+    }catch (_) {
+      debugPrint("EBAT $_");
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> useTrial({required String trialName}) async {
+    try {
+      final doc = instance.collection(_trialsCollection).doc(trialName).collection('users');
+      await doc.doc(_userId()).set({'use' : true});
+      return true;
+    }catch (_) {
+      return false;
     }
   }
 }

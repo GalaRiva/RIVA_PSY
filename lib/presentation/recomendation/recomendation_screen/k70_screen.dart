@@ -36,10 +36,10 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if(MediaQuery.of(context).viewInsets.bottom > 0) {
+    if(MediaQuery.of(context).viewInsets.bottom > 1) {
+      debugPrint('animate');
       scroll.animateTo(scroll.offset+ MediaQuery.of(context).viewInsets.bottom, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
     }
-    print('MediaQuery' + MediaQuery.of(context).viewInsets.bottom.toString());
 
     final data = ModalRoute.of(context)?.settings.arguments as Map?;
     int initialTab = 0;
@@ -77,82 +77,78 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       child: Scaffold(
         body: SingleChildScrollView(
           controller: scroll,
+          //physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height - 60,
-                width: size.width,
+                height: size.height - (MediaQuery.of(context).padding.bottom + MediaQuery.of(context).padding.top),
                 child: SafeArea(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min  ,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 39, left: 16),
-                        child: Text(
-                          "Рекомендации и упражнения",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtSFProDisplayLight10Gray800,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 12,
-                        ),
-                        child: Divider(
-                          height: 1,
-                          thickness: 1,
-                          indent: 16,
-                          endIndent: 16,
-                          color: ColorConstant.gray50,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 14, left: 16),
-                        child: Text(
-                          'Справится с эмоциями',
-                          style: AppStyle.txtH1,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: CustomButton(
-                          variant: ButtonVariant.Cyan,
-                          fontStyle: ButtonFontStyle.White16,
-                          text: 'Помощь при панике и аффекте',
-                          width: size.width - 32,
-                          onTap: () {
-                            pageController.animateToPage(0,
-                                duration: Duration(milliseconds: 400),
-                                curve: Curves.easeIn);
-                            controller.tabController!.animateTo(2);
-                            controller.currentTab = 2;
-                            controller.tabControllerSecond!
-                                .animateTo(controller.panicTab);
-                            controller.currentTabSecond = controller.panicTab;
-                          },
-                          height: 37,
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomCenter ,
-                          child: CustomTabBar(
-                            tabs: [
-                              ExercisesTabBody(controller: controller),
-                              WorkingOutScreen()
-                            ],
-                            labels: ['Справиться с эмоцией', 'Обретение'],
-                            controller: pageController,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Padding(
+                               padding: EdgeInsets.only(top: 10, left: 16),
+                               child: Text(
+                                 "Рекомендации и упражнения",
+                                 overflow: TextOverflow.ellipsis,
+                                 textAlign: TextAlign.left,
+                                 style: AppStyle.txtSFProDisplayLight10Gray800,
+                               ),
+                             ),
+                             Padding(
+                               padding: EdgeInsets.only(
+                                 top: 12,
+                               ),
+                               child: Divider(
+                                 height: 1,
+                                 thickness: 1,
+                                 indent: 16,
+                                 endIndent: 16,
+                                 color: ColorConstant.gray50,
+                               ),
+                             ),
+                             Padding(
+                               padding: EdgeInsets.only(top: 14, left: 16),
+                               child: Text(
+                                 'Справится с эмоциями',
+                                 style: AppStyle.txtH1,
+                               ),
+                             ),
+                             Align(
+                               alignment: Alignment.topCenter,
+                               child: CustomButton(
+                                 variant: ButtonVariant.Cyan,
+                                 fontStyle: ButtonFontStyle.White16,
+                                 text: 'Помощь при панике и аффекте',
+                                 width: size.width - 32,
+                                 onTap: () {
+                                   pageController.animateToPage(0,
+                                       duration: Duration(milliseconds: 400),
+                                       curve: Curves.easeIn);
+                                   controller.tabController!.animateTo(2);
+                                   controller.currentTab = 2;
+                                   controller.tabControllerSecond!
+                                       .animateTo(controller.panicTab);
+                                   controller.currentTabSecond = controller.panicTab;
+                                 },
+                                 height: 37,
+                               ),
+                             ),
+                             Expanded(
+                               child: CustomTabBar(
+                                 tabs: [
+                                   ExercisesTabBody(controller: controller),
+                                   WorkingOutScreen()
+                                 ],
+                                 labels: ['Справиться с эмоцией', 'Обретение'],
+                                 controller: pageController,
+                               ),
+                             )
+                           ],
+                         ),
                 ),
               ),
-              SizedBox(height:                         MediaQuery.of(context).viewInsets.bottom),
+              SizedBox(height: MediaQuery.of(context).viewInsets.bottom,)
             ],
           ),
         ),

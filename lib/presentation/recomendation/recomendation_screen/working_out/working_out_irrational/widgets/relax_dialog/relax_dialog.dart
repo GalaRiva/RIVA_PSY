@@ -21,17 +21,20 @@ class RelaxDialog extends StatelessWidget {
     return Center(
       child:  Card(
         elevation: 0, color: Colors.transparent,
-        child: Container(
-          width: size.width - 30,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(3)),
-          child:Container(
-            margin: EdgeInsets.all(1),
-            decoration: BoxDecoration(color: ColorConstant.gray200,
-                borderRadius: BorderRadius.circular(3)),
-            child: Stack(
-              children: [
-                Padding(
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              width: size.width - 30,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(3)),
+              child:Container(
+                width: size.width,
+
+                margin: EdgeInsets.all(1),
+                decoration: BoxDecoration(color: ColorConstant.gray200,
+                    borderRadius: BorderRadius.circular(3)),
+                child: Padding(
                   padding: EdgeInsets.all(12),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -123,13 +126,22 @@ class RelaxDialog extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: SizedBox(child: Image.asset(ImageConstant.humanRelaxImg,)),
-                )
-              ],
+              ),
             ),
-          ),
+            Positioned(
+              right: -75,
+              left: -25,
+
+              child: Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: SizedBox(
+                    width: size.width + 60,
+                    child: AspectRatio(
+                        aspectRatio: 400/240,
+                        child: Image.asset(ImageConstant.humanRelaxImg,fit: BoxFit.contain,))),
+              ),
+            )
+          ],
         ),
       ),
     );

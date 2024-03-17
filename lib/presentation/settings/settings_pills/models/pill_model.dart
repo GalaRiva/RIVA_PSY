@@ -12,12 +12,15 @@ class PillModel {
   final DateTime endDate;
   final DateTime createDate;
   final List<AdoptionModel> adoptions;
-  bool actual;
 
   factory PillModel.fromJson(Map<String,dynamic> json) => _$PillModelFromJson(json);
   Map<String,dynamic> toJson()=> _$PillModelToJson(this);
 
-  PillModel(   {required this.adoptions,required this.endDate,required this.name, required this.startDate, required this.hoursOfTakingPills, required this.createDate, required this.actual});
+  PillModel(   {required this.adoptions,required this.endDate,required this.name, required this.startDate, required this.hoursOfTakingPills, required this.createDate,});
+
+  bool actual () {
+    return DateTime.now().isBefore(endDate) && DateTime.now().isAfter(startDate);
+  }
 
   @override
   int compareTo(PillModel other) {

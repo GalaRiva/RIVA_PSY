@@ -95,8 +95,8 @@ class DataAndRecoveryController extends GetxController {
     if (date == null) {
       return 'Никогда';
     }
-    final days = DateTime.now().difference(date).inDays;
-
+    final days = DateTime.now().difference(date).inDays.abs();
+    debugPrint('days $days');
     if (days > 365) {
       return 'Больше года назад';
     }

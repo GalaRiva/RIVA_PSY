@@ -263,13 +263,11 @@ class K22Screen extends GetWidget {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете событие или создайте новое')));
                         } else {
                           if(onSave != null)
-                            onSave!(dayEventModel
-                              ..whatHappened = controller.whatHappened);
+                            onSave!(dayEventModel.copyWith(whatHappened: controller.whatHappened));
                             else
                                 Navigator.pushNamed(
                                     context, AppRoutes.whereHappened,
-                                    arguments: dayEventModel
-                                      ..whatHappened = controller.whatHappened);
+                                    arguments: dayEventModel.copyWith(whatHappened: controller.whatHappened));
                               }
                             }
                           : () {

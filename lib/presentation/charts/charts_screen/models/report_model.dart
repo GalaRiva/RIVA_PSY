@@ -10,13 +10,15 @@ import '../../../../core/models/day_event_model.dart';
 class ReportModel {
   List<String> _columnTags = ['Дата', 'Ситуация', 'Эмоции', 'Тело', 'Действия', 'Мысли'];
   List<double> _columnWeight = [79, 130, 130, 130, 130, 130];
+  final String? text = null;
 
   String _getTextFromEvent (int index, DayEventModel event){
+
     switch (index) {
       case 0:
         return event.date!.day.toString() + ' ' + event.date!.month.monthInText() + ' ' + event.date!.year.toString();
       case 1:
-        return '${event.whatHappened!.name}\n${event.whereHappened!.name}\n${event.whoDidItHappen!.name}';
+        return  '${event.whatHappened!.name}\n${event.whereHappened!.name}\n${event.whoDidItHappen!.name}';
       case 2:
         String emotion = '';
         for(var item in  event.whatEmotion!) {
@@ -55,7 +57,7 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
     final imageText = MemoryImage(
         (await rootBundle.load(ImageConstant.pdfText)).buffer.asUint8List());
     final _textStyle = TextStyle(
-      color: PdfColor.fromHex('#3B3B4A'),
+      color: PdfColor.fromHex(text ?? '#3B3B4A'),
       fontSize: getFontSize(
         10,
       ),
@@ -69,7 +71,6 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
     );
 
     List<List<DayEventModel>> eventsInMatrix = [[]];
-    print(events.length);
     for(int i = 0; i < events.length; i++) {
       if(i != 0) {
         if (i % 4 == 0 && eventsInMatrix.length > 2)

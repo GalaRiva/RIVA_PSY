@@ -39,6 +39,7 @@ class K70Controller extends GetxController {
 
   Future init (TickerProvider ticker) async {
    tabController = TabController(length: 4, vsync: ticker, initialIndex: currentTab);
+   negativeEmotionsModel ??= NegativeEmotionsModel(this);
    tabControllerSecond = TabController(length: negativeEmotionsModel!.tabs.length, vsync: ticker, initialIndex: currentTabSecond);
 
    update();

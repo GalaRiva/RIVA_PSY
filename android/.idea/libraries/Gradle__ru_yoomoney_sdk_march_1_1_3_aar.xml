@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: ru.yoomoney.sdk:march:1.1.3@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f2e356272b24e748ecf80310473a9fe4/transformed/jetified-march-1.1.3/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f2e356272b24e748ecf80310473a9fe4/transformed/jetified-march-1.1.3/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ac191598c039d18ae2b0966b53a95cfa/transformed/jetified-march-1.1.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ac191598c039d18ae2b0966b53a95cfa/transformed/jetified-march-1.1.3/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk/march/1.1.3/abbe200215eff2d943cacf469b1dd682ad1dc4f5/march-1.1.3-javadoc.jar!/" />

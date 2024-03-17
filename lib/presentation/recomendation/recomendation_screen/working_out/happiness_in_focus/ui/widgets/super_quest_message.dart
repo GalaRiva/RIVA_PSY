@@ -14,119 +14,125 @@ class SuperQuestMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (positiveRecords < 100)
-      return Container(
-        width: 270,
-        padding: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-            color: ColorConstant.gray200,
-            border: Border.all(color: Colors.white, width: 1)),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: SvgPicture.asset(
-                  ImageConstant.imgCloseGray200,
-                  width: 10,
-                  height: 10,
-                  color: ColorConstant.blueGray400,
+    if (positiveRecords < 0)
+      return Material(
+        child: Container(
+          width: 270,
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+              color: ColorConstant.gray200,
+              border: Border.all(color: Colors.white, width: 1)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset(
+                    ImageConstant.imgCloseGray200,
+                    width: 10,
+                    height: 10,
+                    color: ColorConstant.blueGray400,
+                  ),
                 ),
               ),
-            ),
-            Text(
-              'Сделай 100 осознанных записей, и тебе откроется супер задание'
-                  .toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight16
-                  .copyWith(color: ColorConstant.gray80038),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 26,
-            ),
-            SelectableText.rich(
-              TextSpan(children: [
-                TextSpan(text: 'Осталось внести'),
-                TextSpan(
-                    text: '${100 - positiveRecords}',
-                    style: AppStyle.txtSFProDisplayLight16
-                        .copyWith(color: ColorConstant.cyan700)),
-                TextSpan(text: 'записей'),
-              ], style: AppStyle.txtSFProDisplayLight16),
-            )
-          ],
+              Text(
+                'Сделай 100 осознанных записей, и тебе откроется супер задание'
+                    .toUpperCase(),
+                style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.black900),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 26,
+              ),
+              SelectableText.rich(
+                TextSpan(children: [
+                  TextSpan(text: 'Осталось внести '),
+                  TextSpan(
+                      text: '${100 - positiveRecords}',
+                      style: AppStyle.txtSFProDisplayLight16Gray
+                          .copyWith(color: ColorConstant.cyan700)),
+                  TextSpan(text: ' записей'),
+                ], style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.black900)),
+              )
+            ],
+          ),
         ),
       );
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Container(
-        width: 270,
-        padding: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-            color: ColorConstant.gray200,
-            border: Border.all(color: Colors.white, width: 1)),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: SvgPicture.asset(
-                  ImageConstant.imgCloseGray200,
-                  width: 10,
-                  height: 10,
-                  color: ColorConstant.blueGray400,
+      child: Material(
+        child: Container(
+          width: 270,
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+              color: ColorConstant.gray200,
+              border: Border.all(color: Colors.white, width: 1)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset(
+                    ImageConstant.imgCloseGray200,
+                    width: 10,
+                    height: 10,
+                    color: ColorConstant.blueGray400,
+                  ),
                 ),
               ),
-            ),
-            Text(
-              'Приступай только когда готов к нему...'.toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight16
-                  .copyWith(color: ColorConstant.gray80038),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            AspectRatio(aspectRatio:300/260,child: Container(
-              color: ColorConstant.darkWhite,
-              padding: EdgeInsets.all(35),
-
-              child: AspectRatio(
-                aspectRatio: 230/190,
-                child: Image.asset(ImageConstant.happinessInFocusMessage, fit: BoxFit.cover,),
+              Text(
+                'Приступай только когда готов к нему...'.toUpperCase(),
+                style: AppStyle.txtSFProDisplayLight16Gray
+                    .copyWith(color: ColorConstant.gray80038),
+                textAlign: TextAlign.center,
               ),
-            ),),
-            SizedBox(
-              height: 15,
-            ),
-            CustomButton(
-              text: 'Понятно'.toUpperCase(),
-              variant: ButtonVariant.Cyan,
-              fontStyle: ButtonFontStyle.White16,
-              onTap: (){
-                Navigator.pop(context);
-              },
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomButton(
-              text: 'Супер задание'.toUpperCase(),
-              variant: ButtonVariant.Cyan,
-              fontStyle: ButtonFontStyle.White16,
-              onTap: (){
-                Navigator.pop(context);
-                Navigator.pop(context);
-                showDialog(context: context, builder: (_) => SuperQuestPage());
-              },
-            ),
-          ],
+              SizedBox(
+                height: 15,
+              ),
+              AspectRatio(aspectRatio:300/260,child: Container(
+                color: ColorConstant.darkWhite,
+                padding: EdgeInsets.all(35),
+
+                child: AspectRatio(
+                  aspectRatio: 230/190,
+                  child: Image.asset(ImageConstant.happinessInFocusMessage, fit: BoxFit.cover,),
+                ),
+              ),),
+              SizedBox(
+                height: 15,
+              ),
+              CustomButton(
+                text: 'Понятно'.toUpperCase(),
+                variant: ButtonVariant.Cyan,
+                fontStyle: ButtonFontStyle.White16,
+                onTap: (){
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomButton(
+                text: 'Супер задание'.toUpperCase(),
+                variant: ButtonVariant.Cyan,
+                fontStyle: ButtonFontStyle.White16,
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  showDialog(context: context, builder: (_) => SuperQuestPage());
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

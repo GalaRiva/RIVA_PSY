@@ -28,12 +28,7 @@ class K31Screen extends GetWidget {
     final dayEventModel = (data['dayEventModel'] as DayEventModel);
     controller.emotions = dayEventModel.whatEmotion!;
     controller.title = (data['emotionCategory'] as String);
-    if(controller.title == 'Позитивные'){
-      dayEventModel.emotionInDayEvent = EmotionInDayEvent.POSITIVE;
-    }
-    if(controller.title == 'Нейтральные'){
-      dayEventModel.emotionInDayEvent = EmotionInDayEvent.NEUTRAL;
-    }
+
     controller.additionalEmotions = (data['someEmotions'] as List<EventModel>);
     return Scaffold(
       backgroundColor: ColorConstant.gray300,

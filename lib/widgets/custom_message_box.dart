@@ -37,9 +37,11 @@ class CustomMessageBox extends StatelessWidget {
                       padding: getPadding(left: 6),
                       child: Text(
                         title,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                             color: ColorConstant.gray200,
                             fontSize: 13,
+
                             fontWeight: FontWeight.w300,
                             fontFamily: 'SF Pro Display'),
                       ),

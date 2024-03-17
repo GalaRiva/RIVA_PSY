@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
 import '../core/models/tariff_model.dart';
+import '../core/user_data/user.dart';
 import 'custom_button.dart';
 
 class GoToNewTariffWidget extends StatelessWidget {
@@ -54,7 +55,12 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 text: "Перейти на тариф \"ОРИОН\"".toUpperCase(),
                 onTap: () async {
                   Navigator.pushNamed(context, AppRoutes.buySubscription,
-                      arguments: TariffModel.ORION_TARIFF);
+                      arguments: [
+                        if(!CurrentUser.usedOreonTrials)
+                          TariffModel.ORION_TARIFF_14_DAYS,
+                        TariffModel.ORION_TARIFF_MONTH,
+                        TariffModel.ORION_TARIFF_YEAR
+                      ]);
                 },
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
                 alignment: Alignment.center,

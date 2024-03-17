@@ -19,8 +19,11 @@ class NegativeEmotionTabs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String appDocPath = (await getApplicationDocumentsDirectory()).path;
     try {
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-
+      try {
+        await FirebaseFirestore.instance.runTransaction((transaction) {
+          return Future(() {});
+        });
+      }catch (_) {}
         final _tabs = await FirebaseFirestore.instance.collection('Tabs').get();
         final _tabsImages = await FirebaseFirestore.instance.collection(
             'Tabs_Images').get();
@@ -47,11 +50,10 @@ class NegativeEmotionTabs {
 
           tabs.add(NegativeEmotionTab(i, data['name'], imagePath, data['tag']));
         }
-      }, timeout: Duration(seconds: 2));
 
 
     }catch(_) {
-      debugPrint(_.toString());
+      debugPrint('get tabs error ' + _.toString());
       final String? tabsStr = prefs.getString(NegativeEmotionTabs.TABS_KEY);
       final String? tabsImagesStr = prefs.getString(NegativeEmotionTabs.TABS_IMAGES_KEY);
       if(tabsStr != null && tabsImagesStr != null){

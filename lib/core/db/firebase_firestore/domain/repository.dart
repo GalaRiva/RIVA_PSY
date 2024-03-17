@@ -32,6 +32,9 @@ abstract class FireStoreRepository {
 
   Future<bool> canActivatePromo ({required PromoModel promo});
 
+  Future<bool> canUseTrial ({required String trialName});
+
+
   Future<bool> createPostInFirestoreDatabase ({required String selectedCollection,
     required String docPath, required Map<String, dynamic> content});
 }

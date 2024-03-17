@@ -7,27 +7,28 @@ Widget ServicesButton(
     required String serviceName,
     required VoidCallback onTap}) {
   return SizedBox(
-    height: getVerticalSize(48),
+    height: (75),
     child: OutlinedButton(
+      
       style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
         side: BorderSide(width: 1, color: ColorConstant.cyan700)
       ),
         onPressed: onTap,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               'Продолжить с $serviceName',
-              style: AppStyle.txtSFProDisplayLight12,
+              style: AppStyle.txtSFProDisplayLight16.copyWith(fontSize: 20),
             ),
-            SizedBox(width: 6,),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: CustomImageView(
-                svgPath: svgIcon,
-                height: getSize(25),
-                width: getSize(25),
-              ),
+            SizedBox(width: 30,),
+            CustomImageView(
+              svgPath: svgIcon,
+              height: getSize(50),
+
+              fit: BoxFit.contain,
             )
           ],
         )),

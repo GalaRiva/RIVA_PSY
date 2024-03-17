@@ -1,6 +1,8 @@
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/models/event_model.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:listenmebaby71_s_application17/core/utils/emotion_in_day_event_extension.dart';
+import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
@@ -13,6 +15,7 @@ part 'generated/day_event_model.g.dart';
 class DayEventModel implements Comparable<DayEventModel>{
   int? howDoYouFeel;
   DateTime? date;
+  final bool showInCharts;
   EventModel? whatHappened;
   EventModel? whereHappened;
   EventModel? whoDidItHappen;
@@ -23,11 +26,12 @@ class DayEventModel implements Comparable<DayEventModel>{
   String? firstThoughts;
   String? pathToAudio;
   bool workingOut;
-  EmotionInDayEvent? emotionInDayEvent = EmotionInDayEvent.NEGATIVE;
+  EmotionInDayEvent? emotionInDayEvent;
   DayEventModel(
       {this.howDoYouFeel,
       this.whatHappened,
-      this.whereHappened,
+        this.showInCharts = false,
+        this.whereHappened,
       this.whoDidItHappen,
       this.whatEmotion,
       this.emotionIntensity = 10,
@@ -36,7 +40,8 @@ class DayEventModel implements Comparable<DayEventModel>{
       this.firstThoughts,
       this.date,
       this.pathToAudio,
-      this.workingOut = false
+      this.workingOut = false,
+        this.emotionInDayEvent,
       });
 
   DayEventModel copyWith({
@@ -53,8 +58,10 @@ class DayEventModel implements Comparable<DayEventModel>{
     String? pathToAudio,
     bool? workingOut,
     EmotionInDayEvent? emotionInDayEvent,
+    bool? showInCharts,
   }) {
     return DayEventModel(
+      showInCharts: showInCharts ?? this.showInCharts,
       howDoYouFeel: howDoYouFeel ?? this.howDoYouFeel,
       whatHappened: whatHappened ?? this.whatHappened,
       whereHappened: whereHappened ?? this.whereHappened,
@@ -63,11 +70,12 @@ class DayEventModel implements Comparable<DayEventModel>{
       whatBodyParts: whatBodyParts ?? this.whatBodyParts,
       emotionIntensity: emotionIntensity ?? this.emotionIntensity,
       whatIDo: whatIDo ?? this.whatIDo,
+      emotionInDayEvent: emotionInDayEvent ?? this.emotionInDayEvent,
       firstThoughts: firstThoughts ?? this.firstThoughts,
       date: date ?? this.date,
       pathToAudio: pathToAudio ?? this.pathToAudio,
       workingOut: workingOut ?? this.workingOut,
-    )..emotionInDayEvent = emotionInDayEvent ?? this.emotionInDayEvent;
+    );
   }
 
   factory DayEventModel.fromJson(Map<String, dynamic> json) =>
@@ -75,16 +83,6 @@ class DayEventModel implements Comparable<DayEventModel>{
 
   Map<String, dynamic> toJson() => _$DayEventModelToJson(this);
 
-  String getEmotionType () {
-    switch (emotionInDayEvent) {
-      case EmotionInDayEvent.NEGATIVE:
-        return 'Негативные';
-      case EmotionInDayEvent.POSITIVE:
-        return 'Позитивные';
-      default:
-        return 'Нейтральны';
-    }
-  }
 
   static DayEventModel defaultModel = DayEventModel(
       howDoYouFeel: 6,
@@ -116,7 +114,7 @@ class DayEventModel implements Comparable<DayEventModel>{
 
   @override
   int compareTo(DayEventModel other) {
-    return date!.compareTo(other.date!);
+    return (date ?? DateTime.now()).compareTo(other.date ?? DateTime.now());
   }
 
   @override
@@ -131,3 +129,4 @@ enum EmotionInDayEvent {
   NEGATIVE,
   NEUTRAL
 }
+

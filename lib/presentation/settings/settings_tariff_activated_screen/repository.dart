@@ -17,8 +17,8 @@ class K17Repo {
     }
     else {
       value = TariffModel.fromJson(jsonDecode(e.first));
-      if(value.name != TariffModel.ORION_TARIFF.name && value.name != TariffModel.BASE_TARIFF.name) {
-        value = value.copyWith(name: TariffModel.ORION_TARIFF.name, cost: TariffModel.ORION_TARIFF.cost);
+      if(value.name != TariffModel.ORION_TARIFF_YEAR.name && value.name != TariffModel.BASE_TARIFF.name) {
+        value = value.copyWith(name: TariffModel.ORION_TARIFF_YEAR.name, cost: TariffModel.ORION_TARIFF_YEAR.cost, endDate: value.endDate);
         updateTariff(value);
       }
     }

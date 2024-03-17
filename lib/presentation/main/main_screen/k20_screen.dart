@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:listenmebaby71_s_application17/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
+import 'package:listenmebaby71_s_application17/presentation/main/path/first_thougths_screen/repository.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -26,7 +28,8 @@ class K20Screen extends GetWidget<K20Controller> {
   Widget build(BuildContext context) {
 
     final _repo = K20Repo();
-    int value = 5;
+    final _repok38 = K38Repo();
+    int value = 10;
     final controller = Get.put(K20Controller());
     Timer(Duration(seconds: 2), () async{
       await controller.openMessages(context);
@@ -300,7 +303,7 @@ class K20Screen extends GetWidget<K20Controller> {
                       32,
                     ),
                       onTap: (){
-                      Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel()..howDoYouFeel = value);
+                      Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel().copyWith(howDoYouFeel: value, showInCharts: true));
                       },
                     text: "Пройти путь".toUpperCase(),
                     margin: getMargin(

@@ -35,7 +35,7 @@ class UserModel {
       login: json['login'],
       currentTariff: json['tariff'].toString().toLowerCase() == 'стандарт' ||
               json['tariff'].toString().toLowerCase() == 'орион'
-          ? TariffModel.ORION_TARIFF
+          ? TariffModel.ORION_TARIFF_YEAR
               .copyWith(endDate: DateTime.parse(json['tariff_is_end']))
           : TariffModel.BASE_TARIFF,
       email: json['email'],

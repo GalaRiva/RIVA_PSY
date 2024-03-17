@@ -22,7 +22,7 @@ class PillsEditBottomSheetController extends GetxController {
     nameController.text = pillModel.name;
     _startDate = pillModel.startDate;
     _endDate = pillModel.endDate;
-    actual = pillModel.actual;
+    actual = pillModel.actual();
     time = pillModel.hoursOfTakingPills.getRange(0, pillModel.hoursOfTakingPills.length).toList();
   }
 
@@ -153,8 +153,7 @@ class PillsEditBottomSheetController extends GetxController {
         name: nameController.text,
         hoursOfTakingPills: time,
         createDate: pillModel.createDate,
-        startDate: _startDate!,
-        actual: actual, endDate: _endDate!, adoptions: pillModel.adoptions);
+        startDate: _startDate!, endDate: !actual && _endDate!.isAfter(DateTime.now()) ? DateTime.now().add(Duration(seconds: -1)) : _endDate!, adoptions: pillModel.adoptions);
     final list = await _repo.getEvent();
     for (int i = 0; i < list.length; i++) {
 

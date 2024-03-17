@@ -7,6 +7,7 @@ import 'package:listenmebaby71_s_application17/presentation/recomendation/recome
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
+import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 import 'package:listenmebaby71_s_application17/widgets/expandeble_text_widget.dart';
 import 'package:listenmebaby71_s_application17/widgets/pdf_viewer_widget.dart';
 
@@ -26,21 +27,17 @@ class AlternativePage extends StatelessWidget {
           children: [
             if (cubit.state.dayEventModel != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: RecordCard(
                   mode: StandardRecordCardMode(cubit.state.dayEventModel!),
                   dataType: RecordCardDataType.Thought,
                   image: AspectRatio(
                     aspectRatio: 300 / 72,
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          ImageConstant.alternativeWorkingOutImg,
-                          fit: BoxFit.fill,
-                          //color: ColorConstant.cyan700.withOpacity(0.35),
-                        ),
-                        Container(decoration: BoxDecoration(color: ColorConstant.cyan700.withOpacity(0.35), borderRadius: BorderRadius.circular(3)),)
-                      ],
+                    child: Image.asset(
+                      ImageConstant.alternativeWorkingOutImg,
+                      fit: BoxFit.fill,
+                      color: ColorConstant.cyan700.withOpacity(0.35),
+                      colorBlendMode: BlendMode.overlay,
                     ),
                   ),
                   onButtonTap: () =>
@@ -49,6 +46,15 @@ class AlternativePage extends StatelessWidget {
                           WorkingOutIrrationalStage.challengeThought),
                 ),
               ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: CustomButton(
+                width: size.width > 320 ? 295 : size.width - 60,
+                text: 'НАЗАД',
+                variant: ButtonVariant.White24,
+                onTap: () => context.read<WorkingOutIrrationalCubit>().goToNextState(WorkingOutIrrationalStage.initialStage),
+              ),
+            ),
             CounterOfSpentRecordsWidget(
                 workingOutQuantity: cubit.workingOutEventsLength(),
                 notWorkingOutQuantity: cubit.allNegativeDayEventsLength()),
@@ -132,6 +138,7 @@ class AlternativePage extends StatelessWidget {
                             style: AppStyle.txtSFProDisplayLight10
                                 .copyWith(color: ColorConstant.cyan700,
                                 fontSize: 14,
+                                decorationColor:  ColorConstant.cyan700,
                                 decoration: TextDecoration.underline)),
                       ),
                     ),

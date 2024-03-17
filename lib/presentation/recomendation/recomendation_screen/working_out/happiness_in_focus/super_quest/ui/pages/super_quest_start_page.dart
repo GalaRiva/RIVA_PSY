@@ -46,14 +46,12 @@ class SuperQuestStartPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Center(child: Text('Три дня без единой жалобы. Ни на погоду, ни на здоровье, политику, работу, близкого человека, транспорт, ни тем более на себя- ни о чем!)',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
-                  AspectRatio(aspectRatio:300/260,child: Container(
-                    color: ColorConstant.darkWhite,
-                    padding: EdgeInsets.all(35),
+                  Container(
                     child: AspectRatio(
                       aspectRatio: 230/190,
                       child: Image.asset(ImageConstant.happinessInFocusMessage, fit: BoxFit.cover,),
                     ),
-                  ),),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Center(child: Text('Во время первых попыток могут всплывать подавленные негативные эмоции, обиды- фиксируй их в приложении и проходи аудио сессии.)',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),

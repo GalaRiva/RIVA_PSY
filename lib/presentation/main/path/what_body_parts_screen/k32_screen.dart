@@ -24,7 +24,7 @@ class K32Screen extends GetWidget {
   @override
   Widget build(BuildContext context) {
     DayEventModel? dayEventModel =
-        (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
+        (ModalRoute.of(context)?.settings.arguments ?? this.dayEvent ?? DayEventModel())
             as DayEventModel;
 
     final controller = Get.put(K32Controller());
@@ -328,16 +328,12 @@ class K32Screen extends GetWidget {
                                         'Выберете часть тела или создайте новую')));
                               } else {
                                 if(onSave != null)
-                                  onSave!(dayEventModel
-                                    ..whatBodyParts = controller
-                                        .selectedEventList);
+                                  onSave!(dayEventModel.copyWith(whatBodyParts: controller.selectedEventList));
                                   else
 
                                 Navigator.pushNamed(
                                     context, AppRoutes.what_i_do,
-                                    arguments: dayEventModel
-                                      ..whatBodyParts = controller
-                                          .selectedEventList);
+                                    arguments: dayEventModel.copyWith(whatBodyParts: controller.selectedEventList));
                               }
                             }
                                 : () {

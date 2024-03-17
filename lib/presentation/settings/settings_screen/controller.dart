@@ -18,9 +18,11 @@ class K6Controller extends GetxController {
     if ((await pillRepo.getEvent()).isNotEmpty)
       Navigator.pushNamed(context, AppRoutes.pills);
     else
-      showBottomSheet(
+      showModalBottomSheet(
           context: context, builder: (context) => PillsAddBottomSheet(),
-      backgroundColor: ColorConstant.gray300,);
+      backgroundColor: ColorConstant.gray300.withOpacity(1),
+      elevation: 0
+    );
   }
 
   void changePasswordState(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
 import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user_repo.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,6 +25,8 @@ class CurrentUser extends UserModel {
             old: user.old,
             male: user.male,
   registrationDate: user.registrationDate);
+
+  static bool usedOreonTrials = false;
   static final repo = UserRepo();
 
   static Future init() async {
@@ -49,6 +52,7 @@ class CurrentUser extends UserModel {
     user.currentTariff = await repo.getTariff();
     user.reminderTimeInStr = await repo.getReminderTimeInStr();
     user.registrationDate = await repo.getRegistrationDate();
+    usedOreonTrials = !(await FireStoreRepositoryImpl().canUseTrial(trialName: 'Oreon'));
     if (!repo.checkActualTariff(user.currentTariff!)) {
       user.currentTariff = TariffModel.BASE_TARIFF;
       await repo.setLocalUserData(currentTariff: user.currentTariff);
@@ -56,7 +60,7 @@ class CurrentUser extends UserModel {
   }
 
   static bool tariffIsOrion() {
-    if (user.currentTariff!.name == TariffModel.ORION_TARIFF.name)
+    if (user.currentTariff!.name == TariffModel.ORION_TARIFF_YEAR.name)
       return true;
     return false;
   }

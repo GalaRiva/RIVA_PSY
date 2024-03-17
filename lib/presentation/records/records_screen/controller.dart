@@ -23,7 +23,7 @@ class K49Controller extends GetxController {
     events = [];
     list = [];
     try {
-      list = await initializeList();
+      list = (await initializeList());
       for (int i = 0; i < list.length; i++) {
         if (events.isEmpty) {
           events.add([list[i]]);

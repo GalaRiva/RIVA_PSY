@@ -305,15 +305,11 @@ class K26Screen extends GetWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете персону или создайте новое')));
                                 } else {
                                   if(onSave!=null)
-                                    onSave!(dayEventModel
-                                      ..whoDidItHappen =
-                                          controller.whoDidHappen);
+                                    onSave!(dayEventModel.copyWith(whoDidItHappen: controller.whoDidHappen));
                                     else
                                         Navigator.pushNamed(
                                             context, AppRoutes.whatEmotion,
-                                            arguments: dayEventModel
-                                              ..whoDidItHappen =
-                                                  controller.whoDidHappen);
+                                            arguments: dayEventModel.copyWith(whoDidItHappen: controller.whoDidHappen));
                                       }
                                     }
                                   : () {

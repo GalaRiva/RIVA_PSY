@@ -21,15 +21,10 @@ class PillsEditBottomSheet extends StatelessWidget {
     final controller = Get.put(PillsEditBottomSheetController());
     controller.init(pill);
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 40),
       child: SizedBox(
         height: size.height - (size.height / 3),
-        child: Card(
-          color: ColorConstant.gray300,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
+        child: Container(
           child: Padding(
             padding: getPadding(left: 16, right: 16, top: 35),
             child: Stack(
@@ -51,7 +46,7 @@ class PillsEditBottomSheet extends StatelessWidget {
           ),
           Text(
             'Редактировать название лекарства или витамина',
-            style: AppStyle.txtSFProDisplayLight11
+            style: AppStyle.txtSFProDisplayLight14
                 .copyWith(color: ColorConstant.gray800)
                 .copyWith(fontWeight: FontWeight.w300),
           ),
@@ -170,7 +165,7 @@ class PillsEditBottomSheet extends StatelessWidget {
           Padding(
             padding: getPadding(top: 21),
             child: GetBuilder(
-              builder: (PillsEditBottomSheetController _c) => Text(pill.actual
+              builder: (PillsEditBottomSheetController _c) => Text(pill.actual()
                   ?
               'Убрать напоминание из актуальных препаратов для приема'
                   : 'Добавить напоминание в список актуальных препаратов для приема',

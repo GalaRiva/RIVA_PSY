@@ -25,10 +25,12 @@ DayEventModel _$DayEventModelFromJson(Map<String, dynamic> json) =>
       emotionIntensity: json['emotionIntensity'] as int? ?? 10,
       whatIDo: json['whatIDo'] as String?,
 whatBodyParts: (json['whatBodyParts'] as List<dynamic>).map((e) => K32Model.fromJson(e)).toList(),
-      firstThoughts: json['firstThoughts'] as String?,
+      firstThoughts: (json['firstThoughts'] as String?),
         pathToAudio: json['pathToAudio'] as String?,
 
-        date: json['date'] == null ? null : DateTime.parse(json['date'])
+        date: json['date'] == null ? null : DateTime.parse(json['date']),
+      showInCharts: json['showInCharts'] ?? true,
+        emotionInDayEvent: ((json['emotionInDayEvent'] as String?) ?? EmotionInDayEvent.NEGATIVE.getEmotionType()).getEmotionTypeFromString()
     );
 
 Map<String, dynamic> _$DayEventModelToJson(DayEventModel instance) =>
@@ -44,5 +46,7 @@ Map<String, dynamic> _$DayEventModelToJson(DayEventModel instance) =>
       'whatIDo': instance.whatIDo,
       'firstThoughts': instance.firstThoughts,
           'date': instance.date == null ? null : instance.date!.toIso8601String(),
-      'pathToAudio': instance.pathToAudio
+      'pathToAudio': instance.pathToAudio,
+      'showInCharts': instance.showInCharts,
+      'emotionInDayEvent': instance.emotionInDayEvent != null ? (instance.emotionInDayEvent ?? EmotionInDayEvent.NEGATIVE).getEmotionType() : null
     };

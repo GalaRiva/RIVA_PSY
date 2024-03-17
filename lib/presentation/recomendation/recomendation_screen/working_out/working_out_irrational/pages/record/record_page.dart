@@ -158,7 +158,8 @@ class RecordPage extends StatelessWidget {
                       text: 'ГОТОВО',
                       width: size.width - 60,
                       height: 47,
-                      onTap: () { if(isThought) {
+                      onTap: () {
+                        if(isThought) {
                           cubit.fillSpendRecordModel(whyThisThoughts: savedText, alternativeThoughts: alternative.text);
                           cubit.goToNextState(WorkingOutIrrationalStage.alternativeThought);
                       } else {

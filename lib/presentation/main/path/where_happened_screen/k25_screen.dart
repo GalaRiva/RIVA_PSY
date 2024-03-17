@@ -309,15 +309,11 @@ class K25Screen extends GetWidget {
                                       'Выберете место или создайте новое')));
                             } else {
                               if(onSave != null)
-                                onSave!(dayEventModel
-                                  ..whereHappened =
-                                      controller.whereHappened);
+                                onSave!(dayEventModel.copyWith(whereHappened: controller.whereHappened));
                                 else
                                     Navigator.pushNamed(
                                         context, AppRoutes.withWhoHappened,
-                                        arguments: dayEventModel
-                                          ..whereHappened =
-                                              controller.whereHappened);
+                                        arguments: dayEventModel.copyWith(whereHappened: controller.whereHappened));
                                   }
 
                                 }

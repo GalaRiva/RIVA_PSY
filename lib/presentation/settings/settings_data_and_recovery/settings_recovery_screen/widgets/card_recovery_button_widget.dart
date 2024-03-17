@@ -17,13 +17,12 @@ Widget CardRecoveryButtonWidget(BuildContext context,
   return InkWell(
       onTap: onTap,
       child: Container(
-        height: getVerticalSize(48),
           width: size.width - 32,
           margin: getMargin(top: 1),
           padding: getPadding(left: 7, top: 5, right: 7, bottom: 5),
           decoration: AppDecoration.outlineBluegray80014
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder3),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Padding(
                 padding: getPadding(left: 5, top: 5, bottom: 2),
                 child: Column(

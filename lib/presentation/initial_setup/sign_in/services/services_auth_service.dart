@@ -16,7 +16,7 @@ class ServicesAuthService {
   Future<bool> authWithGoogle () async {
     try {
     final googleSignIn = GoogleSignIn(
-      clientId: '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com'
+      clientId: Platform.isAndroid ? null  : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com'
     );
 
 

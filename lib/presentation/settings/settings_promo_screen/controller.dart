@@ -20,27 +20,33 @@ class K16Controller {
     print('promo: ' + data.toString());
     if (data.isNotEmpty) {
       final promoModel = PromoModel.fromType(data);
-      final tariff = TariffModel(
-          name: TariffModel.ORION_TARIFF.name,
-          endDate: TariffModel.ORION_TARIFF.endDate,
-          description: TariffModel.ORION_TARIFF.description,
-          cost: TariffModel.ORION_TARIFF.cost,
-          advantages: TariffModel.ORION_TARIFF.advantages);
+      final tariffs = [TariffModel.ORION_TARIFF_MONTH, TariffModel.ORION_TARIFF_YEAR].map((e) => TariffModel(
+          name: e.name,
+          endDate: e.endDate,
+          description: e.description,
+          cost: e.cost,
+          nameInEn: e.nameInEn,
+          trial: e.trial,
+          advantages: e.advantages)).toList();
       if (await _fireStoreRepo.canActivatePromo(promo: promoModel)) {
-        if (promoModel.discount == 100) {
-          tariff.cost = 0;
-          if (await _fireStoreRepo.activatePromo(promo: promo)) {
-            _fireStoreRepo.updateUser(userId: CurrentUser.repo.userId(), currentTariff: tariff);
-            Navigator.pushNamed(context, AppRoutes.tariffActivated);
-            await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
+        for(var tariff in tariffs) {
+          if (promoModel.discount == 100) {
+            tariff.cost = 0;
+            if (await _fireStoreRepo.activatePromo(promo: promo)) {
+              _fireStoreRepo.updateUser(
+                  userId: CurrentUser.repo.userId(), currentTariff: tariff);
+              Navigator.pushNamed(context, AppRoutes.tariffActivated);
+              await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
+            }
+          } else {
+            final costWithDiscount =
+                ((tariff.cost / 100) * promoModel.discount);
+            final updated =
+                tariff.copyWith(cost: tariff.cost -= costWithDiscount);
+            Navigator.pushNamed(context, AppRoutes.buySubscription,
+                arguments: {'tariff': updated.toJson(), 'promo': promo});
           }
-        } else {
-          final costWithDiscount = ((tariff.cost / 100) * promoModel.discount);
-          tariff.cost -= costWithDiscount;
-          Navigator.pushNamed(context, AppRoutes.buySubscription,
-              arguments: {'tariff': tariff.toJson(), 'promo': promo});
         }
-
       } else {
         _showMessage(context, 'Данный промокод уже был активирован');
       }

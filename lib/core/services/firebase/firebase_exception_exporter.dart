@@ -27,7 +27,7 @@ class FirebaseExceptionExporter {
               'time_utc': now.toIso8601String()
             });
         _canSendError = false;
-        Timer(Duration(seconds: _delayBetweenReportsInSec), () async {
+        Future.delayed(Duration(seconds: _delayBetweenReportsInSec), () async {
           _canSendError = true;
         });
       }

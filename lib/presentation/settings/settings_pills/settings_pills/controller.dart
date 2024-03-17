@@ -24,6 +24,7 @@ class PillsController extends GetxController {
     showModalBottomSheet(
       backgroundColor: ColorConstant.gray300,
         context: context,
+        elevation: 0,
         builder: (context) => PillsAddBottomSheet()).then((value) {
 
           update();});
@@ -67,18 +68,8 @@ class PillsController extends GetxController {
     final onData = <PillModel>[];
     for (int i = 0; i < pills.length; i++) {
       final item = pills[i];
-      if (item.actual) {
-        if (checkDateInRange(DateTime.now(), item.startDate!, item.endDate)) {
+      if (item.actual()) {
           actual.add(item);
-        } else {
-          item.actual = false;
-        }
-      }
-      else {
-        if (checkDateInRange(DateTime.now(), item.startDate!, item.endDate)) {
-          item.actual = true;
-          actual.add(item);
-        }
       }
         onData.add(item);
 

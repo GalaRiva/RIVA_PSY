@@ -16,6 +16,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
   _onTap () {
     showModalBottomSheet (
         backgroundColor: ColorConstant.gray300,
+        elevation: 0,
         context: context, builder: (context) => PillsEditBottomSheet(pill: pillModel)).then((value) {
           update();});
   }

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
+//import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,15 +9,14 @@ import 'package:flutter/services.dart';
 import 'package:listenmebaby71_s_application17/core/db/hive_db.dart';
 import 'package:listenmebaby71_s_application17/core/services/workmanager/workmanager_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:listenmebaby71_s_application17/core/utils/shared_prefs.dart';
 import 'package:listenmebaby71_s_application17/routes/app_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/services/notifications/awesome_notification_service.dart';
+import 'core/services/notifications/flutter_local_notification_service.dart';
 import 'core/utils/color_constant.dart';
 
-Future<void> _messageHandler(RemoteMessage message) async {
-  //message.notification!.android.smallIcon =
-  print('background message ${message.notification!.body}');
-}
 
 void main() async {
 
@@ -25,11 +24,10 @@ void main() async {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    await EasyLocalization.ensureInitialized();
-
+    //await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp();
-    FirebaseMessaging.onBackgroundMessage(_messageHandler);
     HttpOverrides.global = MyHttpOverrides();
+    SharedPreferences.getInstance().then((value) => SharedPrefs.setSharedPreferences = value);
     await HiveDB.initDB();
     WorkManagerService().initService();
     await CurrentUser.init();
@@ -39,16 +37,21 @@ void main() async {
       if (event == null)
         AppRoutes.initialRoute = AppRoutes.signUp;
       else {
+        if( (CurrentUser.user.email??'').isEmpty) {
+          FirebaseAuth.instance.signOut();
+          AppRoutes.initialRoute = AppRoutes.signUp;
+
+        }
         AppRoutes.initialRoute = AppRoutes.splashScreen;
       }
 
-      runApp(EasyLocalization(
+     /* runApp(EasyLocalization(
           supportedLocales: [Locale('ru'), Locale('en'),],
           path: 'assets/translations', // <-- change the path of the translation files
           fallbackLocale: Locale('ru'),
-          child: MyApp()));
+          child: MyApp()));*/
 
-
+    runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -58,9 +61,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      //localizationsDelegates: context.localizationDelegates,
+      //supportedLocales: context.supportedLocales,
+      //locale: context.locale,
       theme: ThemeData(
         primaryColor: MaterialColor(ColorConstant.cyan700.value, color),
         scrollbarTheme: ScrollbarThemeData(

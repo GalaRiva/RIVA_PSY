@@ -144,7 +144,7 @@ class PillsBottomSheetController extends GetxController {
     else {
       final list = await _repo.getEvent();
       final actual = checkDateInRange(DateTime.now(), _startDate!, _endDate!);
-      list.add(PillModel(name: nameController.text, hoursOfTakingPills: time, startDate: _startDate!, createDate: DateTime.now(), actual: actual, endDate: _endDate!, adoptions: []));
+      list.add(PillModel(name: nameController.text, hoursOfTakingPills: time, startDate: _startDate!, createDate: DateTime.now(), endDate: _endDate!, adoptions: []));
       await _repo.updateEvent(list);
       nameController.text = '';
       _duration = null;

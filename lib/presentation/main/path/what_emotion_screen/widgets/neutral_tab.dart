@@ -21,81 +21,113 @@ class NeutralTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.currentTab = 3;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: getPadding(left: 38, right: 38, top: 44),
-            child: GetBuilder(
-                builder: (K27Controller _c) => Visibility(
-                  visible: controller.currentEventList.isNotEmpty,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        width: getHorizontalSize(109),
-                        child: Text("Нейтральные \n(скорее позитивные)",
-                            maxLines: null,
-                            textAlign: TextAlign.center,
-                            style: AppStyle.txtSFProDisplayLight12Gray800a0)),
-                    Container(
-                        width: getHorizontalSize(108),
-                        child: Text("Нейтральные \n(скорее негативные)",
-                            maxLines: null,
-                            textAlign: TextAlign.center,
-                            style: AppStyle.txtSFProDisplayLight12Gray800a0))
-                  ])),
-            )),
-        Padding(
-          padding: getPadding(top: 18),
-          child: Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width - 32,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: getPadding(left: 38, right: 38, top: 44),
               child: GetBuilder(
-                builder: (K27Controller _c) => Wrap(
-                  spacing: 12,
-                  children: list
-                      .map((el) => EventCard(
-                    textIsFitted: true,
-                    cardWidth: MediaQuery.of(context).size.width / 2.4,
-                    isSelect: controller.contain(el.name),
-                    cardHeight: 44 ,
-                    model: el, onTap: () {
-                    controller.emotion = el;
-                    controller.update();
-                  },))
-                      .toList(),
-                ),
-              ),
-            ),
-          ),
-        ),
-        GetBuilder(
-          builder: (K27Controller _c) => Visibility(
-            visible: list.isEmpty,
+                  builder: (K27Controller _c) => Visibility(
+                    visible: controller.currentEventList.isNotEmpty,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: getHorizontalSize(109),
+                          child: Text("Нейтральные \n(скорее позитивные)",
+                              maxLines: null,
+                              textAlign: TextAlign.center,
+                              style: AppStyle.txtSFProDisplayLight12Gray800a0)),
+                      Container(
+                          width: getHorizontalSize(108),
+                          child: Text("Нейтральные \n(скорее негативные)",
+                              maxLines: null,
+                              textAlign: TextAlign.center,
+                              style: AppStyle.txtSFProDisplayLight12Gray800a0))
+                    ])),
+              )),
+          Padding(
+            padding: getPadding(top: 18),
             child: Center(
-              child: Container(
-                width: getHorizontalSize(
-                  144,
-                ),
-                margin: getMargin(
-                  top: 37,
-                ),
-                child: Text(
-                  "Эмоция не найдена\nДобавьте свою эмоцию",
-                  maxLines: null,
-                  textAlign: TextAlign.center,
-                  style: AppStyle.txtSFProDisplayLight14Gray800a01,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - 32,
+                child: GetBuilder(
+                  builder: (K27Controller _c) => Row(
+                    children: [
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width - 32) / 2,
+
+                        child: Wrap(
+                          spacing: 12,
+                          children: List.generate(list.where((element) => element.name.contains('+')).toList().length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.name.contains('+')).toList().length - 1 ? 20 : 0),
+                            child: EventCard(
+                              textIsFitted: true,
+                              cardWidth: size.width / 2.4,
+                              isSelect: controller.contain(list.where((element) => element.name.contains('+')).toList()[index].name),
+                              cardHeight: 44 ,
+                              model: list.where((element) => element.name.contains('+')).toList()[index], onTap: () {
+                              controller.emotion = list.where((element) => element.name.contains('+')).toList()[index];
+                              controller.update();
+                            },),
+                          ))
+                              .toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width - 32) / 2,
+
+                        child: Wrap(
+                          spacing: 12,
+                          children: List.generate(list.where((element) => element.name.contains('-')).length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.name.contains('-')).length - 1 ? 20 : 0),
+                            child: EventCard(
+                              textIsFitted: true,
+                              isSelect: controller.contain(list.where((element) => element.name.contains('-')).toList()[index].name),
+                              cardHeight: 44 ,
+                              cardWidth: size.width / 2.4,
+                              model: list.where((element) => element.name.contains('-')).toList()[index], onTap: () {
+                              controller.emotion =list.where((element) => element.name.contains('-')).toList()[index];
+                              controller.update();
+                            },),
+                          ))
+                              .toList(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+          GetBuilder(
+            builder: (K27Controller _c) => Visibility(
+              visible: list.isEmpty,
+              child: Center(
+                child: Container(
+                  width: getHorizontalSize(
+                    144,
+                  ),
+                  margin: getMargin(
+                    top: 37,
+                  ),
+                  child: Text(
+                    "Эмоция не найдена\nДобавьте свою эмоцию",
+                    maxLines: null,
+                    textAlign: TextAlign.center,
+                    style: AppStyle.txtSFProDisplayLight14Gray800a01,
+                  ),
+                ),
+              ),
+            ),
+          ),
 
-        SizedBox(
-          height: getVerticalSize(26),
-        )
-      ],
+          SizedBox(
+            height: getVerticalSize(40),
+          )
+        ],
+      ),
     );
   }
 }

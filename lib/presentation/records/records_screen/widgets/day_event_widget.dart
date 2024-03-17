@@ -43,13 +43,13 @@ class DayEventWidget extends StatelessWidget {
                   Padding(
                     padding: getPadding(left: 6),
                     child: Text(
-                      dayEventModels.first.date!.weekday.dayInText() +
+                      (dayEventModels.first.date ?? DateTime.now())!.weekday.dayInText() +
                           ' ' +
-                          dayEventModels.first.date!.day.toString() +
+                          (dayEventModels.first.date ?? DateTime.now())!.day.toString() +
                           ' ' +
-                          dayEventModels.first.date!.month.monthInText() +
+                          (dayEventModels.first.date ?? DateTime.now())!.month.monthInText() +
                           ' ' +
-                          dayEventModels.first.date!.year.toString(),
+                          (dayEventModels.first.date ?? DateTime.now())!.year.toString(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight11.copyWith(

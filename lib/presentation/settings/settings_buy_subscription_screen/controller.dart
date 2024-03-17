@@ -17,7 +17,7 @@ class BuySubscriptionController extends GetxController {
   late final YookassaPayments _yookassa;
 
   Future onTapGoToTariff(TariffModel tariff, BuildContext context) async {
-      _pay(tariff, context);
+      _pay(tariff, context, );
   }
 
   Future _pay(TariffModel tariff, BuildContext context) async {
@@ -25,6 +25,7 @@ class BuySubscriptionController extends GetxController {
       _yookassa.pay(
         context,
           amountInRub: tariff.cost,
+
           onComplete: () async {
           if(promo != null) {
             await FireStoreRepositoryImpl().activatePromo(promo: promo!);
@@ -40,6 +41,11 @@ class BuySubscriptionController extends GetxController {
   }
 
   Future _updateTariff(TariffModel tariff) async {
+    if(tariff.trial) {
+      await FireStoreRepositoryImpl().useTrial(trialName: tariff.nameInEn);
+
+    }
+
     await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
     FireStoreRepositoryImpl().updateUser(userId: CurrentUser.repo.userId(), currentTariff: tariff);
     update();

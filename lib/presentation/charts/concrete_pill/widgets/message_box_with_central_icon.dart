@@ -76,13 +76,13 @@ class MessageBoxWithCentralIcon {
         ? getHorizontalSize(290)
         : size.width - 40;
     return SizedBox(
-      height: getVerticalSize(290),
       width: _width,
       child: Card(
         color: ColorConstant.gray200,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(3))),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Stack(
               alignment: Alignment.topCenter,
@@ -138,7 +138,8 @@ class MessageBoxWithCentralIcon {
                           width: getHorizontalSize(127),
                           height: getVerticalSize(32)),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 10,)
                 ],
               ),
             ),

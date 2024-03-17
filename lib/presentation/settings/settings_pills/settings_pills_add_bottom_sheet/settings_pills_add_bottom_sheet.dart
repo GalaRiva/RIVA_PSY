@@ -16,12 +16,15 @@ class PillsAddBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final controller = Get.put(PillsBottomSheetController(context));
-    return Padding(
-        padding: getPadding(left: 16, right: 16, top: 35, bottom: MediaQuery.of(context).viewInsets.bottom
-        ),
-        child: SizedBox(
-            height: size.height - (size.height / 4),
-            child: Container(
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+          padding: getPadding(left: 16, right: 16, top: 35,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 40
+          ),
+          child: Container(
+            color: ColorConstant.gray300.withOpacity(1),
+              height: (size.height - (size.height / 4)) + MediaQuery.of(context).viewInsets.bottom,
               child: Stack(
                 children: [
                   SingleChildScrollView(
@@ -42,7 +45,7 @@ class PillsAddBottomSheet extends StatelessWidget {
                         ),
                         Text(
                           'Введите название лекарства или витамина',
-                          style: AppStyle.txtSFProDisplayLight11.copyWith(
+                          style: AppStyle.txtSFProDisplayLight14.copyWith(
                               fontWeight: FontWeight.w300,
                               color: ColorConstant.gray800),
                         ),
@@ -192,7 +195,7 @@ class PillsAddBottomSheet extends StatelessWidget {
                     ),
                   )
                 ],
-              ),
-            )));
+              ))),
+    );
   }
 }

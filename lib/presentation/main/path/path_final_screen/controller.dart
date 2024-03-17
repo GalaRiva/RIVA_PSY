@@ -31,7 +31,6 @@ class K39Controller extends GetxController {
 
   bool _canPop = false;
   final _repo = K39Repo();
-  FlutterSoundRecorder _recordingSession = FlutterSoundRecorder();
   late String timerText = _formatTime(_stopwatch.elapsedMilliseconds);
   ButtonState currentState = ButtonState.BeforeRecording;
   late OverlayEntry _overlay;
@@ -62,17 +61,22 @@ class K39Controller extends GetxController {
         break;
     }
   }
-  final record = Record();
+  final record = AudioRecorder();
   void initRecorder() async {
-    await _recordingSession.openAudioSession(
-        focus: AudioFocus.requestFocusAndStopOthers,
-        category: SessionCategory.playAndRecord,
-        mode: SessionMode.modeDefault,
-        device: AudioDevice.speaker);
-    await _recordingSession.setSubscriptionDuration(Duration(milliseconds: 10));
-    await Permission.microphone.request();
-    await Permission.storage.request();
-    await Permission.manageExternalStorage.request();
+    try {
+
+      await Permission.microphone.request();
+      await Permission.storage.request();
+      await Permission.manageExternalStorage.request();
+    } catch (_) {
+
+    }
+  }
+
+  @override
+  void dispose() async {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   void _startRecording(K39Controller controller, BuildContext context) async {
@@ -83,10 +87,12 @@ class K39Controller extends GetxController {
     }
 
     if (await record.hasPermission()) {
-      await record.start(
-        path: path + '.m4a',
+      await record.start(const RecordConfig(
         encoder: AudioEncoder.aacLc, // by default
-        bitRate: 128000, // by default
+        bitRate: 128000,
+      ),
+        path: path + '.m4a',
+        // by default
       );
     }
     _stopwatch.start();
@@ -112,7 +118,6 @@ class K39Controller extends GetxController {
     events.add(dayEventModel);
     await _repo.updateEvent(events);
     controller.update();
-    return await _recordingSession.stopRecorder();
   }
 
   void deleteAllController() {

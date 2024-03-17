@@ -5,17 +5,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/awesome_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/flutter_local_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/splash_screen/repository.dart';
 import '../../../core/models/audio/audio.dart';
 import '../../../core/services/datasource_service.dart';
+import '../../../core/services/workmanager/workmanager_service.dart';
 import '../../recomendation/recomendation_screen/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/services/negative_emotion_tabs.dart';
 import '../../../core/services/firebase/firebase_cloud_storage.dart';
+import '../sign_in/domain/usecases/get_and_set_remote_data_locally.dart';
 
 class K1Controller extends GetxController {
   bool loading = false;
@@ -26,10 +29,7 @@ class K1Controller extends GetxController {
 
   Timer timer(BuildContext context) =>
       Timer(Duration(seconds: secondsToNewPage), () async {
-          if (await _repo.needInitialSettings()) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.setRemindersScreen, (route) => false);
-          } else {
+
             if (CurrentUser.user.passwordEnable &&
                 CurrentUser.user.password!.isNotEmpty) {
               Navigator.pushNamedAndRemoveUntil(
@@ -39,21 +39,30 @@ class K1Controller extends GetxController {
                   context, AppRoutes.main, (route) => false);
             }
 
-        }
+
       });
 
   void initialization(BuildContext context) async {
     AppRoutes.notificationScreenIsInitial = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    WorkManagerService().initService();
 
     try {
+
       if (wasInit != true) {
+        try {
+          if(CurrentUser.repo.userId().isNotEmpty)
+          GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
+
+        } catch (_) {
+
+        }
         wasInit = true;
         await someProcess();
         DataSourceService.getDataSourceType();
-        await NegativeEmotionTabs.getTabs(context);
 
         final controller = Get.put(K70Controller());
+        await NegativeEmotionTabs.getTabs(context);
         await controller.initNegativeEmotions();
         if (!DataSourceService.dataSourceIsRemote()) {
           var collectionAudio =

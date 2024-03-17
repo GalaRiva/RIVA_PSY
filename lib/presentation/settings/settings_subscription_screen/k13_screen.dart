@@ -219,7 +219,12 @@ class K13Screen extends GetWidget {
     }
     else {
       Navigator.pushNamed(context, AppRoutes.buySubscription,
-          arguments: TariffModel.ORION_TARIFF);
+          arguments: [
+            if(!CurrentUser.usedOreonTrials)
+              TariffModel.ORION_TARIFF_14_DAYS,
+            TariffModel.ORION_TARIFF_MONTH,
+            TariffModel.ORION_TARIFF_YEAR
+          ]);
     }
   }
 

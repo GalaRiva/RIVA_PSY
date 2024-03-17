@@ -22,11 +22,13 @@ import 'repository.dart';
 class K38Controller extends GetxController {
 
   final _repo = K38Repo();
-  final _K27repo = K27Repo();
   void createNewDayEvent (DayEventModel dayEventModel, BuildContext context) async {
-    final events = await _repo.getEvent();
-    events.add(dayEventModel);
-    await _repo.updateEvent(events);
+    try {
+      final events = await _repo.getEvent();
+      events.add(dayEventModel);
+      await _repo.updateEvent(events);
+    } catch (_) {}
+
     showDialog(context: context, builder: (BuildContext context) =>
       CustomMessageBox(
         onPop: () {

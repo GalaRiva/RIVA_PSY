@@ -8,13 +8,15 @@ class SpentRecordModel {
   final String alternativeThoughts;
   final String whyThisDo;
   final String alternativeDo;
+  final DateTime date;
 
   SpentRecordModel(
       {required this.dayEventModel,
       required this.whyThisThoughts,
       required this.alternativeThoughts,
       required this.whyThisDo,
-      required this.alternativeDo});
+      required this.alternativeDo,
+        required this.date, });
 
   factory SpentRecordModel.fromJson (Map<String, dynamic> json) => _$SpentRecordModelFromJson(json);
   Map<String,dynamic> toJson() => _$SpentRecordModelToJson(this);
@@ -36,7 +38,7 @@ class SpentRecordModel {
       whyThisThoughts: whyThisThoughts ?? this.whyThisThoughts,
       alternativeThoughts: alternativeThoughts ?? this.alternativeThoughts,
       whyThisDo: whyThisDo ?? this.whyThisDo,
-      alternativeDo: alternativeDo ?? this.alternativeDo,
+      alternativeDo: alternativeDo ?? this.alternativeDo, date: this.date,
     );
   }
 

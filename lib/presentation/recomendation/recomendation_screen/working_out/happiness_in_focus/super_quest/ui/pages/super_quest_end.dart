@@ -53,17 +53,10 @@ class _SuperQuestEndPageState extends State<SuperQuestEndPage> {
                     )),
                   ),
                   AspectRatio(
-                    aspectRatio: 300 / 300,
-                    child: Container(
-                      color: ColorConstant.darkWhite,
-                      padding: EdgeInsets.all(35),
-                      child: AspectRatio(
-                        aspectRatio: 230 / 230,
-                        child: Image.asset(
-                          ImageConstant.superQuestComplete,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                    aspectRatio: 230 / 230,
+                    child: Image.asset(
+                      ImageConstant.superQuestComplete,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Padding(

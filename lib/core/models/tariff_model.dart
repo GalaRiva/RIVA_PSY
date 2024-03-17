@@ -1,15 +1,18 @@
 class TariffModel {
   final String name;
+  final String nameInEn;
   DateTime endDate;
   final String description;
    double cost;
   final List<String> advantages;
+  final bool trial;
 
   TariffModel(
-      {required this.name, required this.endDate, required this.description, required this.cost, required this.advantages});
+      {required this.name, required this.nameInEn, required this.endDate, required this.description, required this.cost, required this.advantages, this.trial = false, });
 
   TariffModel copyWith({
     String? name,
+    String? nameInEn,
     DateTime? endDate,
     String? description,
     double? cost,
@@ -20,7 +23,7 @@ class TariffModel {
       endDate: endDate ?? this.endDate,
       description: description ?? this.description,
       cost: cost ?? this.cost,
-      advantages: advantages ?? this.advantages,
+      advantages: advantages ?? this.advantages, nameInEn: nameInEn ?? this.nameInEn,
     );
   }
 
@@ -28,15 +31,18 @@ class TariffModel {
       TariffModel(name: json['name'],
           endDate: DateTime.parse(json['endDate']),
           description: json['description'],
+          trial: json['trial'] == null ? false : json['trial'],
           cost: json['cost'],
-          advantages: json['advantages'] == null ? <String>[] : (json['advantages']as List<dynamic>).map((e)=> e.toString()).toList());
+          nameInEn: json['nameInEn'] == null ? (json['name'] == 'Базовый' ? 'Base' : 'Oreon') : json['nameInEn'],
+          advantages: json['advantages'] == null ? <String>[] : (json['advantages']as List<dynamic>).map((e)=> e.toString()).toList(), );
 
   Map<String, dynamic> toJson () => {
     'name': name,
     'endDate': endDate.toIso8601String(),
     'description': description,
     'cost':cost,
-    'advantages': advantages
+    'advantages': advantages,
+    'trial': trial
   };
 
   static TariffModel BASE_TARIFF = TariffModel(
@@ -44,14 +50,42 @@ class TariffModel {
   endDate: DateTime(9999, 12, 24),
   description: 'Ограниченный доступ к рекомендациям, статистике и аудио',
   cost: 0,
-  advantages: [],
+  advantages: [], nameInEn: 'Base',
   );
 
-  static TariffModel ORION_TARIFF = TariffModel(
+  static TariffModel ORION_TARIFF_14_DAYS = TariffModel(
       name: 'Орион',
+      trial:  true,
+      endDate: DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day + 14,),
+      description: '',
+      cost: 0,
+      advantages: [
+        'Доступ ко всем текстовым рекомендациям',
+        'Доступ ко всем аудио рекомендациям',
+        'Доступ к медитациям',
+        'Доступ ко всей аналитике состояний',
+        'Хранение всех данных на вашем телефоне'
+      ], nameInEn: 'Oreon');
+
+  static TariffModel ORION_TARIFF_MONTH = TariffModel(
+      name: 'Орион', nameInEn: 'Oreon',
+      endDate: DateTime(DateTime.now().year, DateTime.now().month + 1,DateTime.now().day,),
+      description: '',
+      cost: 9.9,
+      advantages: [
+        'Доступ ко всем текстовым рекомендациям',
+        'Доступ ко всем аудио рекомендациям',
+        'Доступ к медитациям',
+        'Доступ ко всей аналитике состояний',
+        'Хранение всех данных на вашем телефоне'
+      ]);
+
+  static TariffModel ORION_TARIFF_YEAR = TariffModel(
+      name: 'Орион',
+      nameInEn: 'Oreon',
       endDate: DateTime(DateTime.now().year + 1, DateTime.now().month,DateTime.now().day,),
       description: '',
-      cost: 2990,
+      cost: 4140 ?? 36,
       advantages: [
         'Доступ ко всем текстовым рекомендациям',
         'Доступ ко всем аудио рекомендациям',

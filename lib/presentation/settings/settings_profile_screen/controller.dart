@@ -172,17 +172,35 @@ class K18Controller extends GetxController {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: CustomButton(
-                          text: 'Сохранить',
-                          onTap: () {
-                            if (loginController.text.isEmpty)
-                              lineColor = Colors.red;
-                            else {
-                              lineColor = ColorConstant.fromHex('#3B3B4A');
-                              Navigator.pop(context, loginController.text);
-                            }
-                            controller.update();
-                          },),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomButton(
+                                text: 'Отменить',
+                                variant: ButtonVariant.White,
+
+                                onTap: () {
+                                 Navigator.pop(context);
+                                },),
+                            ),
+                            SizedBox(width: 20,),
+                            Expanded(
+                              child: CustomButton(
+                                text: 'Сохранить',
+                                variant: ButtonVariant.White,
+                                onTap: () {
+                                  if (loginController.text.isEmpty)
+                                    lineColor = Colors.red;
+                                  else {
+                                    lineColor = ColorConstant.fromHex('#3B3B4A');
+                                    Navigator.pop(context, loginController.text);
+                                  }
+                                  controller.update();
+                                },),
+                            ),
+
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -256,17 +274,38 @@ class K18Controller extends GetxController {
                         ),
                       ),
 
-                      CustomButton(
-                        text: 'Сохранить',
-                        onTap: () {
-                          if (controller.oldController.text.isEmpty)
-                            lineColor = Colors.red;
-                          else {
-                            lineColor = ColorConstant.fromHex('#3B3B4A');
-                            Navigator.pop(context, int.parse(controller.oldController.text));
-                          }
-                          controller.update();
-                      },)
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomButton(
+                                text: 'Отменить',
+                                variant: ButtonVariant.White,
+
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },),
+                            ),
+                            SizedBox(width: 20,),
+                            Expanded(
+                              child: CustomButton(
+                                text: 'Сохранить',
+                                variant: ButtonVariant.White,
+
+                                onTap: () {
+                                  if (controller.oldController.text.isEmpty)
+                                    lineColor = Colors.red;
+                                  else {
+                                    lineColor = ColorConstant.fromHex('#3B3B4A');
+                                    Navigator.pop(context, int.parse(controller.oldController.text));
+                                  }
+                                  controller.update();
+                              },),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

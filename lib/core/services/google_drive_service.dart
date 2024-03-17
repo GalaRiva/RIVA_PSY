@@ -20,7 +20,9 @@ class GoogleDriveService {
   //Get Authenticated Http Client
 
   Future<ga.DriveApi> _getClient() async {
-    final googleSignIn = GoogleSignIn.standard(scopes: [
+    final googleSignIn = GoogleSignIn(
+        clientId: Platform.isAndroid ? null : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com',
+        scopes: [
       ga.DriveApi.driveAppdataScope,
       ga.DriveApi.driveFileScope
     ]);

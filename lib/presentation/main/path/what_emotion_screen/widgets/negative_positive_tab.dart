@@ -17,60 +17,63 @@ class NegativePositiveTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.currentTab = number;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: getPadding(
-              top: 11,
-              bottom: 50
-            ),
-            child: Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 32,
-                child:  Wrap(
-                  spacing: 12,
-                    children: List.generate(list.length, (index)=> Padding(
-                      padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 20 : 0),
-                      child: EventCard(
-                        textIsFitted: true,
-                            isSelect: controller.contain(list[index].name),
-                            cardHeight: 44 ,
-                            model: list[index], onTap: () {
-                            controller.emotion = list[index];
-                            controller.update();
-                          },),
-                    ))
-                        .toList(),
+    return SingleChildScrollView(
+      child: Column(
+
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: getPadding(
+                top: 11,
+                bottom: 50
+              ),
+              child: Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 32,
+                  child:  Wrap(
+                    spacing: 12,
+                      children: List.generate(list.length, (index)=> Padding(
+                        padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 20 : 0),
+                        child: EventCard(
+                          textIsFitted: true,
+                              isSelect: controller.contain(list[index].name),
+                              cardHeight: 44 ,
+                              model: list[index], onTap: () {
+                              controller.emotion = list[index];
+                              controller.update();
+                            },),
+                      ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
+          Visibility(
+              visible: list.isEmpty,
+              child: Center(
+                child: Container(
+                  width: getHorizontalSize(
+                    144,
+                  ),
+                  margin: getMargin(
+                    top: 37,
+                  ),
+                  child: Text(
+                    "Эмоция не найдена\nДобавьте свою эмоцию",
+                    maxLines: null,
+                    textAlign: TextAlign.center,
+                    style:
+                    AppStyle.txtSFProDisplayLight14Gray800a01,
                   ),
                 ),
               ),
             ),
-        Visibility(
-            visible: list.isEmpty,
-            child: Center(
-              child: Container(
-                width: getHorizontalSize(
-                  144,
-                ),
-                margin: getMargin(
-                  top: 37,
-                ),
-                child: Text(
-                  "Эмоция не найдена\nДобавьте свою эмоцию",
-                  maxLines: null,
-                  textAlign: TextAlign.center,
-                  style:
-                  AppStyle.txtSFProDisplayLight14Gray800a01,
-                ),
-              ),
-            ),
-          ),
 
-        SizedBox(
-          height: getVerticalSize(40),
-        )
-      ],
+          SizedBox(
+            height: getVerticalSize(40),
+          )
+        ],
+      ),
     );
   }
 }

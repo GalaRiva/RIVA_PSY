@@ -12,7 +12,7 @@ class ColorConstant {
 
   static Color cyan700A0 = fromHex('#a01499a1');
 
-  static Color darkBg = fromHex('#D7E1E1').withOpacity(0.44);
+  static Color darkBg = fromHex('#D7E1E1');
 
   static Color whiteA70099 = fromHex('#99ffffff');
 

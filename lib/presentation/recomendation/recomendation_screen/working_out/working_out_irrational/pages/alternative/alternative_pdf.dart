@@ -72,14 +72,16 @@ class AlternativePdf {
     List<List<SpentRecordModel>> eventsInMatrix = [[]];
     print(events.length);
     for(int i = 0; i < events.length; i++) {
-      if(i != 0) {
-        if (i % 4 == 0 && eventsInMatrix.length > 2)
+      if(i > 1) {
+        if ((i + 3) % 5 == 0)
           eventsInMatrix.add([]);
-        else if (i % 2 == 0 && eventsInMatrix.length < 2)
-          eventsInMatrix.add([]);
+
       }
       eventsInMatrix[eventsInMatrix.length - 1].add(events[i]);
+
     }
+    print(eventsInMatrix.length);
+
 
     pdf.addPage(Page(
         pageFormat: PdfPageFormat.a4.landscape,
@@ -203,7 +205,7 @@ class AlternativePdf {
                       child: Text(_getTextFromEvent(_index, events[index]), style: _headerStyle.copyWith(), maxLines: 8)
                   )
               ))));
-        }, itemCount: events.length > 3 ? 3 : events.length));
+        }, itemCount: events.length > 5 ? 5 : events.length));
   }
 
 

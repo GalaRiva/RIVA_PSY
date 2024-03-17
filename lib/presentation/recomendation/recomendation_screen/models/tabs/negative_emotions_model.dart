@@ -141,6 +141,7 @@ class NegativeEmotionsModel {
   Future<List<Widget>> getTabBodies() async {
     final list = <Widget>[];
     tabHeights = [];
+
     tabs = NegativeEmotionTabs.tabs.map((e) => Tab(text: e.title)).toList();
     for (var item in NegativeEmotionTabs.tabs) {
       final audios =  await _audioAssets(item.tag);

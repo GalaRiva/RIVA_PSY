@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:listenmebaby71_s_application17/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/charts/concrete_pill/concrete_pill_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/calendar/calendar_page.dart';
@@ -160,7 +161,7 @@ static const String enterPasswordScreen = '/enter_password_screen';
     verify: (context) => VerificationScreen(),
     resetPassword: (context) => ResetPasswordScreen(),
     setRemindersScreen: (context) => K3Screen(),
-    recommendationBuyTariff: (context) => K4Screen(),
+    recommendationBuyTariff: (context) => RecommendationBuyTariffScreen(),
     send_pushes: (context) => SendPushesScreen(),
     // settings
     settings: (context) => K6Screen(),

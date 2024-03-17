@@ -75,10 +75,10 @@ class K61Controller extends GetxController {
   }
 
   Future<List<DayEventModel>> getDayEventModel() async {
-    final dayEvents = await _k49Repo.getEvent();
+    final dayEvents = (await _k49Repo.getEvent()).where((element) => element.showInCharts).toList();
     final listForReturn = <DayEventModel>[];
     for (var event in dayEvents) {
-      if (_dateInRange(event.date!)) listForReturn.add(event);
+      if (_dateInRange(event.date ?? DateTime.now())) listForReturn.add(event);
     }
     print(listForReturn.length);
     return listForReturn;
@@ -86,7 +86,8 @@ class K61Controller extends GetxController {
 
   Future<List<int>> getIntensity() async {
     final List<EmotionalStateModel> list = [];
-    for (var event in await getDayEventModel()) list.add(EmotionalStateModel(event.howDoYouFeel!, event.date!));
+    // попадают только с кнопки сохранить
+    //for (var event in await getDayEventModel()) list.add(EmotionalStateModel(event.howDoYouFeel!, event.date!));
     for (var event in await _k20Repo.getEvent()) {
       if (_dateInRange(event.date)) list.add(event);
     }

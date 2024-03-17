@@ -17,7 +17,6 @@ PillModel _$PillModelFromJson(Map<String, dynamic> json) => PillModel(
           .map((e) => e as String)
           .toList(),
       createDate: DateTime.parse(json['createDate'] as String),
-      actual: json['actual'] as bool,
     );
 
 Map<String, dynamic> _$PillModelToJson(PillModel instance) => <String, dynamic>{
@@ -27,5 +26,4 @@ Map<String, dynamic> _$PillModelToJson(PillModel instance) => <String, dynamic>{
       'endDate': instance.endDate.toIso8601String(),
       'createDate': instance.createDate.toIso8601String(),
       'adoptions': instance.adoptions,
-      'actual': instance.actual,
     };

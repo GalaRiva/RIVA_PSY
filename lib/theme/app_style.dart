@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
@@ -168,7 +170,7 @@ class AppStyle {
   static TextStyle txtSFProDisplayLight10Gray800 = TextStyle(
     color: ColorConstant.gray800,
     fontSize: getFontSize(
-      10,
+      Platform.isIOS ? 12 : 10,
     ),
     fontFamily: 'SF Pro Display',
     fontWeight: FontWeight.w400,

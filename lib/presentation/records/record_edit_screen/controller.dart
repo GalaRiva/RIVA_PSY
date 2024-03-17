@@ -260,7 +260,6 @@ class K52Controller extends GetxController {
         );
       });
 
-  FlutterSoundRecorder _recordingSession = FlutterSoundRecorder();
   late String timerText = _formatTime(_stopwatch.elapsedMilliseconds);
   ButtonState currentState = ButtonState.BeforeRecording;
 
@@ -289,18 +288,18 @@ class K52Controller extends GetxController {
     }
   }
 
-  final record = Record();
+  final record = AudioRecorder();
   void initRecorder() async {
-    _recordingSession = FlutterSoundRecorder();
-    await _recordingSession.openAudioSession(
-        focus: AudioFocus.requestFocusAndStopOthers,
-        category: SessionCategory.playAndRecord,
-        mode: SessionMode.modeDefault,
-        device: AudioDevice.speaker);
-    await _recordingSession.setSubscriptionDuration(Duration(milliseconds: 10));
     await Permission.microphone.request();
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
+  }
+
+  @override
+  void dispose()  async {
+    // TODO: implement dispose
+    super.dispose();
+
   }
 
   void _startRecording(BuildContext context) async {
@@ -312,9 +311,10 @@ class K52Controller extends GetxController {
 
     if (await record.hasPermission()) {
       await record.start(
-        path: path + '.m4a',
-        encoder: AudioEncoder.aacLc, // by default
-        bitRate: 128000, // by default
+        RecordConfig(
+          encoder: AudioEncoder.aacLc, // by default
+          bitRate: 128000,),
+        path: path + '.m4a', // by default
       );
     }
     _stopwatch.start();
@@ -332,6 +332,5 @@ class K52Controller extends GetxController {
     final directory = await getApplicationDocumentsDirectory();
     dayEventModel.pathToAudio = directory.path + dayEventModel.date!.toIso8601String()+ '.m4a';
     update();
-    return await _recordingSession.stopRecorder();
   }
 }

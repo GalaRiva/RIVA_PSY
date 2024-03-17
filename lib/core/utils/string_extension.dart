@@ -1,10 +1,24 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
+import '../models/day_event_model.dart';
+
 extension StringExtension on String {
   String md5() {
     return generateMd5(this);
   }
+
+  EmotionInDayEvent getEmotionTypeFromString () {
+    switch (this) {
+      case 'Негативные':
+        return EmotionInDayEvent.NEGATIVE;
+      case 'Позитивные':
+        return EmotionInDayEvent.POSITIVE;
+      default:
+        return EmotionInDayEvent.NEUTRAL;
+    }
+  }
+
 }
 
 String generateMd5(String input) {

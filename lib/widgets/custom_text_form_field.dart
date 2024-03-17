@@ -82,12 +82,12 @@ class CustomTextFormField extends StatelessWidget {
     return alignment != null
         ? Align(
             alignment: alignment ?? Alignment.center,
-            child: _buildTextFormFieldWidget(),
+            child: _buildTextFormFieldWidget(context),
           )
-        : _buildTextFormFieldWidget();
+        : _buildTextFormFieldWidget(context);
   }
 
-  _buildTextFormFieldWidget() {
+  _buildTextFormFieldWidget(context) {
     return Container(
       width: width ?? double.maxFinite,
       margin: margin,
@@ -96,6 +96,10 @@ class CustomTextFormField extends StatelessWidget {
         focusNode: focusNode,
         style: _setFontStyle(),
         obscureText: isObscureText!,
+        onTapOutside: (_) {
+          FocusScope.of(context).unfocus();
+
+        },
         textInputAction: textInputAction,
         keyboardType: textInputType,
         maxLines: maxLines ?? 1,
@@ -254,7 +258,7 @@ class CustomTextFormField extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.deepPurple600,
           fontSize: getFontSize(
-            10,
+            13,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w300,
@@ -403,7 +407,7 @@ class CustomTextFormField extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.deepPurple600,
           fontSize: getFontSize(
-            10,
+            14,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w300,

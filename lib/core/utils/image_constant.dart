@@ -11,6 +11,9 @@ class ImageConstant {
 
   static String imgGroup74 = 'assets/images/img_group74.svg';
 
+
+  static String imgOreon = 'assets/images/oreon.png';
+
   static String imgLocationGray80063x81 =
       'assets/images/img_location_gray_800_63x81.svg';
 
@@ -1118,6 +1121,8 @@ class ImageConstant {
 
 
   static const okeyIcon = 'assets/images/okay_icon.svg';
+
+  static const pillReminders = 'assets/images/pill_reminders.svg';
 
 
   static String imageNotFound = 'assets/images/image_not_found.png';

@@ -16,6 +16,7 @@ class CustomButton extends StatelessWidget {
       this.prefixWidget,
       this.suffixWidget,
         this.bgColor,
+        this.textStyle,
         this.centralWidget,
       this.standardPadding});
 
@@ -30,6 +31,7 @@ class CustomButton extends StatelessWidget {
   ButtonVariant? variant;
 
   ButtonFontStyle? fontStyle;
+  TextStyle? textStyle;
 
   Alignment? alignment;
 
@@ -88,7 +90,7 @@ class CustomButton extends StatelessWidget {
       child: centralWidget ?? Text(
         text ?? "",
         textAlign: TextAlign.center,
-        style: _setFontStyle(),
+        style: textStyle ?? _setFontStyle(),
       ),
     );
   }
@@ -326,7 +328,7 @@ class CustomButton extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.deepPurple600,
           fontSize: getFontSize(
-            12,
+            18,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w400,

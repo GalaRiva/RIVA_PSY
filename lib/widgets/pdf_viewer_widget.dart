@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
@@ -15,10 +16,30 @@ class PdfPreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PdfPreview(
-        canChangeOrientation: false,
-        canChangePageFormat: false,
-        build: pdf
+      body: Stack(
+        children: [PdfPreview(
+          canChangeOrientation: false,
+          canChangePageFormat: false,
+          build: pdf
+        ),
+        Align(alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 150),
+          child: CustomButton(
+            width: 120,
+            text: 'Назад'.toUpperCase(),
+            bgColor: ColorConstant.whiteA700.withOpacity(0.4),
+
+            onTap: () => Navigator.pop(context),
+            padding: ButtonPadding.PaddingT8,
+            prefixWidget: CustomImageView(
+              margin: getMargin(right: 12),
+              svgPath: ImageConstant.leftArrow,
+            ),
+          ),
+        ),
+        )
+        ]
       ),
     );
   }

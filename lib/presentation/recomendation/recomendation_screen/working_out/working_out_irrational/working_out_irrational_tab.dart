@@ -42,12 +42,12 @@ class WorkingOutIrrationalTab extends StatelessWidget {
             }
             return false;
           },
-          builder: (_, state) => body(state, context), listener: (BuildContext context, WorkingOutIrrationalState state) {
+          builder: (_, state) => body(state, context), listener: ( context, state) {
             if(dayEventsIsEmpty && !dialogOpened) {
               dialogOpened = true;
 
               showDialog(context: context, builder: (_) => Center(child: DialogRecordsNotEnough())).then((value) => dialogOpened = false);
-            } else if(context.read<WorkingOutIrrationalCubit>().spentRecordsToday >= 3) {
+            } else if(false ?? context.read<WorkingOutIrrationalCubit>().spentRecordsToday >= 3) {
               dialogOpened = true;
 
               showDialog(context: context, builder: (_) => Center(child: RelaxDialog())).then((value) => dialogOpened = false);

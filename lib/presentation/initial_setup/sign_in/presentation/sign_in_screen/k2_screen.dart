@@ -54,6 +54,24 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtH1)),
+                  Padding(padding: getPadding(top: 26, bottom: 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: ServicesButton(svgIcon: ImageConstant.appleSVG, serviceName: 'Apple', onTap: () async => await controller.authWithApple(context))),
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(child: ServicesButton(svgIcon: ImageConstant.googleSVG, serviceName: 'Google', onTap: () async => await controller.authWithGoogle(context))),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -175,18 +193,10 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
             ],
           ),
       ),
-    ),
-                  Padding(padding: getPadding(top: 26, bottom: 26),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ServicesButton(svgIcon: ImageConstant.appleSVG, serviceName: 'Apple', onTap: () async => await controller.authWithApple(context)),
-                        SizedBox(width: 10,),
-                        ServicesButton(svgIcon: ImageConstant.googleSVG, serviceName: 'Google', onTap: () async => await controller.authWithGoogle(context)),
-                      ],
-                    ),
-                  ),
-    CustomButton(
+    ),                        SizedBox(height: 26,),
+
+
+                  CustomButton(
           height: getVerticalSize(32),
           width: getHorizontalSize(178),
           text: "Далее".toUpperCase(),

@@ -29,7 +29,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
 
   SpentRecordModel lastSpentRecordModel() => _spentRecordModels.last;
 
-  int spentRecordsToday = 0;
+  int get spentRecordsToday => _spentRecordModels.where((element) => element.date.difference(DateTime.now()).inHours.abs() < 24).length;
 
   var dateStart =
       DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
@@ -57,7 +57,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
             whyThisThoughts: whyThisThoughts ?? '',
             alternativeThoughts: alternativeThoughts ?? '',
             whyThisDo: whyThisDo ?? '',
-            alternativeDo: alternativeDo ?? '')
+            alternativeDo: alternativeDo ?? '', date: DateTime.now())
         : _currentSpentRecordModel!.copyWith(
             whyThisDo: whyThisDo,
             whyThisThoughts: whyThisThoughts,
@@ -67,6 +67,7 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
 
   void init() async {
     _dayEvents = (await _repo.getDayEvent()).where((element) => element.emotionInDayEvent! == EmotionInDayEvent.NEGATIVE).toList();
+    debugPrint('${_dayEvents.map((e) => e.whatIDo).toList()}');
     print('dayEvents' + _dayEvents.length.toString());
     _dontWorkingOutEvents = _dayEvents
         .where((element) =>
@@ -88,49 +89,67 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
   }
 
   Future updateDayEvents({nextState  = true}) async {
-    if(_spentRecordModels.isNotEmpty && _spentRecordModels.map((e) => e.dayEventModel).toList().contains(_currentSpentRecordModel!.dayEventModel)) {
+    if(selectedDayEventModel == null) {
+      await SharedPreferences.getInstance().then((prefs) async {
+        var dateInStr = prefs.getString('firstSpendRecord');
+        if (dateInStr == null) {
+          dateInStr = DateTime.now().toIso8601String();
+          await prefs.setString('firstSpendRecord', dateInStr);
+        }
+        if (nextState) {
+          if (DateTime.parse(dateInStr).difference(DateTime.now()).inDays > 7) {
+            goToNextState(WorkingOutIrrationalStage.alternative);
+          } else {
+            goToNextState(WorkingOutIrrationalStage.gratitude);
+          }
+        }
+      });
+      return;
+    }
 
-      final index = _spentRecordModels.map((e) => e.dayEventModel).toList().indexOf(_currentSpentRecordModel!.dayEventModel);
-      print('spendModelIndex - $index');
-
-      _spentRecordModels.removeAt(index);
-      _spentRecordModels.insert(index, _currentSpentRecordModel!);
-    } else if(nextState) {
+    if(nextState) {
       _dayEvents = await _repo.getDayEvent();
-
       final index = _dayEvents.indexOf(selectedDayEventModel!);
       print('dayEventIndex - $index');
-      _dayEvents.removeAt(index);
-      _dayEvents.insert(index, selectedDayEventModel!.copyWith(workingOut: true));
-      _repo.updateDayEventEvent(_dayEvents);
-      _dontWorkingOutEvents.removeLast();
-      spentRecordsToday++;
+      if(index >= 0) {
+        _dayEvents.removeAt(index);
+        _dayEvents.insert(
+            index, selectedDayEventModel!.copyWith(workingOut: true));
+        _repo.updateDayEventEvent(_dayEvents);
+        _dontWorkingOutEvents.removeLast();
+      }
     }
     selectedDayEventModel =
       existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
-    if(_spentRecordModels.isEmpty || _spentRecordModels.isNotEmpty && _currentSpentRecordModel != lastSpentRecordModel())
-      _spentRecordModels.add(_currentSpentRecordModel!);
+    if(selectedDayEventModel !=null) {
+      final index = _spentRecordModels
+          .map((e) => e.dayEventModel)
+          .toList()
+          .indexOf(selectedDayEventModel!);
+      print('spendModelIndex - $index');
+      if (index >= 0) {
+        _spentRecordModels.removeAt(index);
+        _spentRecordModels.insert(index, _currentSpentRecordModel!);
+      } else {
+        _spentRecordModels.add(_currentSpentRecordModel!);
+      }
       _repo.updateEvent(_spentRecordModels);
-      if(nextState)
-    _currentSpentRecordModel = null;
-    SharedPreferences.getInstance().then((prefs) async {
-      var dateInStr = prefs.getString('firstSpendRecord');
-      if(dateInStr == null) {
-        dateInStr = DateTime.now().toIso8601String();
-        await prefs.setString('firstSpendRecord', dateInStr);
-      }
-      if(nextState) {
-        if (DateTime
-            .parse(dateInStr)
-            .difference(DateTime.now())
-            .inDays > 7) {
-          goToNextState(WorkingOutIrrationalStage.alternative);
-        } else {
-          goToNextState(WorkingOutIrrationalStage.gratitude);
+      if (nextState) _currentSpentRecordModel = null;
+      await SharedPreferences.getInstance().then((prefs) async {
+        var dateInStr = prefs.getString('firstSpendRecord');
+        if (dateInStr == null) {
+          dateInStr = DateTime.now().toIso8601String();
+          await prefs.setString('firstSpendRecord', dateInStr);
         }
-      }
+        if (nextState) {
+          if (DateTime.parse(dateInStr).difference(DateTime.now()).inDays > 7) {
+            goToNextState(WorkingOutIrrationalStage.alternative);
+          } else {
+            goToNextState(WorkingOutIrrationalStage.gratitude);
+          }
+        }
+      });
     }
-      );
   }
 
   Future<List<SpentRecordModel>> getSpentRecordModels() async {

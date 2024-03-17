@@ -29,8 +29,7 @@ class SecondVariantEventCard extends StatelessWidget {
                   )
               ),
       child: Row(
-        children: content == null ? [SizedBox()] : content!.map((e) => FittedBox(
-          fit: BoxFit.scaleDown,child: Padding(padding: getPadding(left: 4, right: 4), child: e,))).toList(),
+        children: content == null ? [SizedBox()] : content!.map((e) => Padding(padding: getPadding(left: 4, right: 4), child: e,)).toList(),
       ),
     );
   }

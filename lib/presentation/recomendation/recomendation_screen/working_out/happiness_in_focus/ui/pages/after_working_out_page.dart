@@ -19,11 +19,11 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
         text = 'ЗДОРОВО!';
         break;
       case 2:
-    text = 'Ты имеешь право чувствовать счастье.';
-            break;
-    case 3:
-    text = 'Ты имеешь право на мысли и эмоции.';
-    break;
+        text = 'Ты имеешь право чувствовать счастье.';
+        break;
+      case 3:
+        text = 'Ты имеешь право на мысли и эмоции.';
+        break;
       case 4:
         text = 'Вселенная сегодня такая, благодаря тому, что ты есть';
         break;
@@ -31,7 +31,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
         text = 'Спасибо тебе, что ты есть!';
         break;
     }
-    return Text(text.toUpperCase(), style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray8008c), textAlign: TextAlign.center,);
+    return Text(text.toUpperCase(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c), textAlign: TextAlign.center,);
   }
 
   Widget _image (int progress) {
@@ -45,7 +45,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
     ];
     final String image = images[progress > 4 ? 5 : progress];
     return AspectRatio(aspectRatio: 230/190,
-    child: Image.asset(image, fit: BoxFit.cover,),
+      child: Image.asset(image, fit: BoxFit.cover,),
     );
   }
 
@@ -53,64 +53,69 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(15),
-        child: Container(
-          padding: EdgeInsets.all(12),
-        decoration:
-        BoxDecoration(
-            color: ColorConstant.gray200,
-            border: Border.all(color: Colors.white, width: 1)),
-    child: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Center(child: _title (cubit.todayWorkingOut > 4 ? 5 : cubit.todayWorkingOut)),
-        ),
-        Container(
-          padding: EdgeInsets.all(35),
-          child: AspectRatio(
-          aspectRatio: 300/260,
-          child: _image(cubit.todayWorkingOut),
-          ),
-        ),
-        CustomButton(
-        text: 'Далее'.toUpperCase(),
-        variant: ButtonVariant.Cyan,
-        fontStyle: ButtonFontStyle.White16,
-          onTap: (){
-          Navigator.pop(context);
-          cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
-          },
-        ),
-        CustomButton(
-          text: 'Продолжу позже'.toUpperCase(),
-          variant: ButtonVariant.Cyan,
-          fontStyle: ButtonFontStyle.White16,
-          onTap: (){
-            Navigator.pop(context);
-            cubit.goToNextState(HappinessInFocusStage.InitialHappinessInFocusState);
-          },
-        ),
-        Container(
-          padding: EdgeInsets.all(35),
-          child: AspectRatio(
-            aspectRatio: 300/260,
-            child: AspectRatio(
-              aspectRatio: 230/190,
-              child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
-            ),
-          ),
-        ),
-        CustomButton(
-          text: 'Супер задание'.toUpperCase(),
-          variant: ButtonVariant.Cyan,
-          fontStyle: ButtonFontStyle.White16,
-          onTap: (){
-            showDialog(context: context, builder: (_) => SuperQuestMessage(positiveRecords: cubit.positiveDayEventModels)).then((value) {
-              cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
-            });
-          },
-        ),
-      ].map((e) => Padding(padding: EdgeInsets.only(bottom: 15))).toList(),
-    )));
+        child: Material(
+          child: Container(
+              padding: EdgeInsets.all(12),
+              decoration:
+              BoxDecoration(
+                  color: ColorConstant.gray200,
+                  border: Border.all(color: Colors.white, width: 1)),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Center(child: _title(cubit.todayWorkingOut > 4 ? 5 : cubit.todayWorkingOut)),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(35),
+                      child: AspectRatio(
+                        aspectRatio: 300/260,
+                        child: _image(cubit.todayWorkingOut),
+                      ),
+                    ),
+                    CustomButton(
+                      text: 'Далее'.toUpperCase(),
+                      variant: ButtonVariant.Cyan,
+                      fontStyle: ButtonFontStyle.White16,
+                      onTap: (){
+                        Navigator.pop(context);
+                        cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
+                      },
+                    ),
+                    CustomButton(
+                      text: 'Продолжу позже'.toUpperCase(),
+                      variant: ButtonVariant.Cyan,
+                      fontStyle: ButtonFontStyle.White16,
+                      onTap: (){
+                        Navigator.pop(context);
+                        cubit.goToNextState(HappinessInFocusStage.InitialHappinessInFocusState);
+                      },
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(35),
+                      child: AspectRatio(
+                        aspectRatio: 300/260,
+                        child: AspectRatio(
+                          aspectRatio: 230/190,
+                          child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
+                        ),
+                      ),
+                    ),
+                    CustomButton(
+                      text: 'Супер задание'.toUpperCase(),
+                      variant: ButtonVariant.Cyan,
+                      fontStyle: ButtonFontStyle.White16,
+                      onTap: (){
+                        showDialog(context: context, builder: (_) => Center(child: SuperQuestMessage(positiveRecords: cubit.positiveDayEventModels))).then((value) {
+                          cubit.goToNextState(HappinessInFocusStage.StartHappinessInFocusState);
+                        });
+                      },
+                    ),
+                  ].map((e) => Padding(padding: EdgeInsets.only(bottom: 15), child: e,)).toList(),
+                ),
+              )),
+        ));
   }
 }

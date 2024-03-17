@@ -160,10 +160,10 @@ class K37Screen extends StatelessWidget {
                         variant: ButtonVariant.Base,
                         text: "далее".toUpperCase(),
                         onTap: () async {
-                          if(onSave != null)
-                            onSave!(dayEventModel..whatIDo = fieldController.text);
-                            else
-                          Navigator.pushNamed(context, AppRoutes.first_thougths, arguments: dayEventModel..whatIDo = fieldController.text);
+
+                            onSave?.call(dayEventModel.copyWith(whatIDo: fieldController.text));
+                            if(onSave == null)
+                          Navigator.pushNamed(context, AppRoutes.first_thougths, arguments: dayEventModel.copyWith(whatIDo: fieldController.text));
                         },
                       ),
                     ],

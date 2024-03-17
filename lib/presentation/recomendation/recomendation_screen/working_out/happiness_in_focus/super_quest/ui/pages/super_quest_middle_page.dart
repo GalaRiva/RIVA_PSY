@@ -65,14 +65,10 @@ class SuperQuestMiddlePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Center(child: Text('без жалоб. Ни в словах, ни в мыслях',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
-                  AspectRatio(aspectRatio:300/175,child: Container(
-                    color: ColorConstant.darkWhite,
-                    padding: EdgeInsets.all(35),
-                    child: AspectRatio(
-                      aspectRatio: 230/105,
-                      child: Image.asset(_image(cubit.state.dayQuantityAfterStart == 0 ? 1 : cubit.state.dayQuantityAfterStart), fit: BoxFit.cover,),
-                    ),
-                  ),),
+                  AspectRatio(
+                    aspectRatio: 230/105,
+                    child: Image.asset(_image(cubit.state.dayQuantityAfterStart == 0 ? 1 : cubit.state.dayQuantityAfterStart), fit: BoxFit.cover,),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Center(child: Text(_text(cubit.state.dayQuantityAfterStart == 0 ? 1 : cubit.state.dayQuantityAfterStart),style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),

@@ -23,17 +23,19 @@ class WorkManagerService {
     _time += await _getRemindersAboutPills();
 
     final _now = DateTime.now();
-
     for(int i = 0; i < _time.length; i++) {
       final workmanagerModel = WorkManagerModel.fromJson(_time[i]);
       final date = DateTime(_now.year, _now.month, _now.day, workmanagerModel.hour, workmanagerModel.minute);
       print(workmanagerModel.hour.toString() + ' ' + workmanagerModel.minute.toString());
       final dur = _getTimeRemaining(date);
       workmanagerModel.duration = dur;
-      print(dur);
+      print('dur $dur');
       await notificationService.init(workmanagerModel);
-      await notificationService.showNotification(workmanagerModel, dur);
+      try {
+        await notificationService.showNotification(workmanagerModel, dur);
+      } catch (_) {
 
+      }
       /*await workmanager.registerPeriodicTask(
           i.toString(),
           "simplePeriodicTask $i",
@@ -49,7 +51,7 @@ class WorkManagerService {
     List<Map<String, dynamic>> time = list.map((e) => {
       'hour': int.parse(e[0]+e[1]),
       'minute': int.parse(e[3]+e[4]),
-      'end': DateTime(DateTime.now().month + 1)
+      'end': DateTime.now().add(Duration(days: 30))
     }).toList();
     return time;
   }
@@ -58,13 +60,14 @@ class WorkManagerService {
     final list = await PillsRepo().getEvent();
     List<Map<String, dynamic>> time = [];
     for (final item in list) {
-      if(item.actual) {
+      if(item.actual()) {
+
         time += item.hoursOfTakingPills
             .map((e) => {
                   'hour': int.parse(e[0] + e[1]),
                   'minute': int.parse(e[3] + e[4]),
                   'pillName': item.name,
-          'end': item.endDate
+                  'end': item.endDate
                 })
             .toList();
       }

@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
 
 import '../../../../widgets/custom_message_box.dart';
 import '../controller.dart';
@@ -97,6 +98,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                   builder: (BuildContext context) {
                     return CustomMessageBox(
                       title: model.title,
+                      height: 200,
                       content: Center(
                         child: Column(
                           children: [
@@ -114,7 +116,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                             Padding(
                               padding: getPadding(top: 20),
                               child: SizedBox(
-                                height: getVerticalSize(17),
+                                height: getVerticalSize(25),
                                 child: Form(
                                   key: _formKey,
                                   child: TextFormField(
@@ -160,6 +162,27 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                                 width: getHorizontalSize(102),
                                 height: 1,
                               ),
+                            ),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            child: CustomButton(
+                              text: 'Сохранить'.toUpperCase(),
+                              onTap: () {
+                                final text = _controller.text;
+                                if (!currentState(text))
+                                  lineColor = Colors.red;
+                                if (currentState(text)) {
+                                  model.hour =
+                                      int.parse('${text[0]}${text[1]}');
+                                  model.minutes =
+                                      int.parse('${text[3]}${text[4]}');
+                                  Navigator.pop(context, model);
+                                  lineColor =
+                                      ColorConstant.fromHex('#3B3B4A');
+                                  _controller.text = '';
+                                }
+                                setState(() {});
+                              },
+                            ),
                             )
                           ],
                         ),

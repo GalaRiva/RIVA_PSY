@@ -46,9 +46,9 @@ class TabWidget extends StatelessWidget {
       for (var item in (await tab.audioAssets())!) {
         try {
           if (DataSourceService.dataSourceIsRemote()) {
-            await Future.delayed(Duration(milliseconds: 50), () async {
+            await Future.delayed(Duration(milliseconds: 300), () async {
               list.add(await controller.audioInstance.setUrl(
-                  item.audioAsset, initialPosition: Duration.zero));
+                  item.audioAsset, initialPosition: Duration.zero, preload: true));
             });
           } else
             list.add(await controller.audioInstance.setAudioSource(
@@ -84,7 +84,7 @@ class TabWidget extends StatelessWidget {
                   controller.audioInstance.seek(duration);
                   controller.update();
                 },
-                maxDuration: dur[i]!,
+                maxDuration: dur[i] ?? Duration(seconds: 0),
             playFun: (val) async {
 
               if(DataSourceService.dataSourceIsRemote()) {
@@ -106,16 +106,19 @@ class TabWidget extends StatelessWidget {
     }
 
     if(audioLength != _audios.length) {
-      if (tab.audioAssets() != null)
-        _audiosFun().then((value) {
-          _audios = value;
-          controller.update();
-        });
+      tab.audioAssets().then((value) {
+        if (value != null)
+          _audiosFun().then((value) {
+            _audios = value;
+            controller.update();
+          });
+      });
+
     }
 
     return GetBuilder(
       builder: (K70Controller _c) => Container(
-            height: getVerticalSize(height),
+           // height: getVerticalSize(height),
             width: size.width,
             color: ColorConstant.grayLight,
             child: Stack(
@@ -192,8 +195,9 @@ class TabWidget extends StatelessWidget {
                                 child: SizedBox(
                                   width: size.width - 32,
                                   child: Wrap(
+                                    spacing: 8,
                                     alignment: WrapAlignment.spaceAround,
-                            children: (tab.buttons() ?? []).map((e) => e).toList(),
+                            children: (tab.buttons() ?? []).map((e) => Padding(padding: EdgeInsets.only(bottom: 8), child: e,)).toList(),
                           ),
                                 ),
                               )),
