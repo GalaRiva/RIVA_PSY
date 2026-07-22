@@ -14,6 +14,7 @@ class BodyPartWidget extends StatelessWidget {
   final K52Controller controller;
   final bool? visible;
   final Color? color;
+  final double? cwidth;
 
   BodyPartWidget({
     Key? key,
@@ -21,7 +22,7 @@ class BodyPartWidget extends StatelessWidget {
     required this.model,
     required this.title,
     required this.controller,
-    this.color,
+    this.color, this.cwidth,
   }) : super(key: key);
 
   bool isContain() {
@@ -87,33 +88,27 @@ class BodyPartWidget extends StatelessWidget {
               Navigator.pop(context);
               controller.update();
             },
-            child: Container(
-              height: getVerticalSize(30),
-              decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(3),
-                  boxShadow: [
-                    BoxShadow(
-                        color:
-                        ColorConstant.fromHex('#5F6B80').withOpacity(0.08),
-                        offset: Offset(0, 6),
-                        blurRadius: 5)
-                  ]),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: getHorizontalSize(20),),
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: AppStyle.txtSFProDisplayLight10w400,
-                  ),
-                  SizedBox(width: getHorizontalSize(20),),
-
-                ],
-              ),
-            ),
-          ),
+            child: Container (
+    height: getVerticalSize(50),
+    width: cwidth ?? size.width / 2 - 60,
+    decoration: BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(3),
+    boxShadow: [
+    BoxShadow(
+    color:
+    ColorConstant.fromHex('#5F6B80').withOpacity(0.2),
+    offset: Offset(0, 6),
+    blurRadius: 5)
+    ]),
+    child: Center(
+    child: Text(
+    title,
+    textAlign: TextAlign.center,
+    style: AppStyle.txtSFProDisplayLight16,
+    ),
+    ),
+    ))
         ),
       ],
     );

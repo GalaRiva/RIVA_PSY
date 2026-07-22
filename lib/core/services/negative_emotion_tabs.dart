@@ -24,9 +24,11 @@ class NegativeEmotionTabs {
           return Future(() {});
         });
       }catch (_) {}
-        final _tabs = await FirebaseFirestore.instance.collection('Tabs').get();
-        final _tabsImages = await FirebaseFirestore.instance.collection(
-            'Tabs_Images').get();
+      final tabsImagesColl =  FirebaseFirestore.instance.collection(
+          'Tabs_Images');
+      final tabsColl = FirebaseFirestore.instance.collection('Tabs');
+        final _tabs = await tabsColl.get();
+        final _tabsImages = await tabsImagesColl.get();
 
 
 

@@ -79,7 +79,7 @@ class K2Screen extends GetWidget<K2Controller> {
                         Padding(
                             padding: getPadding(top: 10, right: 29),
                             child: Text(
-                                "Мы используем ващу почту только для безопасности ваших записей,  данные не передаются третьим лицам и обезличены",
+                                "Мы используем вашу почту только для безопасности ваших записей,  данные не передаются третьим лицам и обезличены",
                                 maxLines: null,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH2)),

@@ -11,11 +11,10 @@ import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K25Screen extends GetWidget {
-
   final DayEventModel? dayEvent;
   final Function(DayEventModel dayEvent)? onSave;
 
-  K25Screen({ this.dayEvent,  this.onSave});
+  K25Screen({this.dayEvent, this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class K25Screen extends GetWidget {
         (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
             as DayEventModel;
     final controller = Get.put(K25Controller());
-    if(controller.currentEventList != controller.eventListAfterInit)
+    if (controller.currentEventList != controller.eventListAfterInit)
       controller.initCurrentEventList().then((value) {
         controller.currentEventList = value;
         controller.eventListAfterInit = value;
@@ -40,7 +39,6 @@ class K25Screen extends GetWidget {
           width: size.width,
           child: Stack(
             alignment: Alignment.bottomCenter,
-
             children: [
               SingleChildScrollView(
                 child: Padding(
@@ -137,21 +135,21 @@ class K25Screen extends GetWidget {
                                   top: 25,
                                   right: 16,
                                 ),
-                                onSubmit: (t) async{
+                                onSubmit: (t) async {
                                   var result = (await Navigator.pushNamed(
-                                  context, AppRoutes.addEmotion,
-                                  arguments: {
-                                  'initialValue':
-                                  controller.addEventController.text,
-                                  'title': 'Добавить Место'
-                                  })) as EventModel;
+                                      context, AppRoutes.addEmotion,
+                                      arguments: {
+                                        'initialValue':
+                                            controller.addEventController.text,
+                                        'title': 'Добавить Место'
+                                      })) as EventModel;
                                   if (result != null) {
-                                  controller.currentEventList =
-                                  await controller
-                                      .updateCurrentEventList(result);
-                                  controller.changeCurrentEventList(
-                                  controller.searchController.text);
-                                  controller.update();
+                                    controller.currentEventList =
+                                        await controller
+                                            .updateCurrentEventList(result);
+                                    controller.changeCurrentEventList(
+                                        controller.searchController.text);
+                                    controller.update();
                                   }
                                 },
                                 suffix: Container(
@@ -171,19 +169,22 @@ class K25Screen extends GetWidget {
                                           size: getSize(20),
                                         ),
                                         onPressed: () async {
-                                          var result = (await Navigator.pushNamed(
-                                              context, AppRoutes.addEmotion,
-                                              arguments: {
-                                                'initialValue':
-                                                    controller.addEventController.text,
+                                          var result =
+                                              (await Navigator.pushNamed(
+                                                  context, AppRoutes.addEmotion,
+                                                  arguments: {
+                                                'initialValue': controller
+                                                    .addEventController.text,
                                                 'title': 'Добавить Место'
                                               })) as EventModel;
                                           if (result != null) {
                                             controller.currentEventList =
                                                 await controller
-                                                    .updateCurrentEventList(result);
+                                                    .updateCurrentEventList(
+                                                        result);
                                             controller.changeCurrentEventList(
-                                                controller.searchController.text);
+                                                controller
+                                                    .searchController.text);
                                             controller.update();
                                           }
                                         },
@@ -202,20 +203,29 @@ class K25Screen extends GetWidget {
                                 ),
                                 child: Center(
                                   child: SizedBox(
-                                    width: MediaQuery.of(context).size.width - 32,
+                                    width:
+                                        MediaQuery.of(context).size.width - 32,
                                     child: GetBuilder(
-                                      builder: (K25Controller _c) => Wrap(                                        spacing: 12,
-
+                                      builder: (K25Controller _c) => Wrap(
+                                        spacing: 12,
+                                        runAlignment: WrapAlignment.center,
                                         children: controller.currentEventList
-                                            .map((el) => EventCard(
-                                              isSelect: controller.contain(el),
-                                              model: el,
-                                              onTap: () {
-                                                controller.whereHappened = el;
-                                                controller.update();
-
-                                              }
-                                            ))
+                                            .map((el) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 10),
+                                                  child: EventCard(
+                                                      cardWidth:
+                                                          size.width / 2 - 30,
+                                                      isSelect: controller
+                                                          .contain(el),
+                                                      model: el,
+                                                      onTap: () {
+                                                        controller
+                                                            .whereHappened = el;
+                                                        controller.update();
+                                                      }),
+                                                ))
                                             .toList(),
                                       ),
                                     ),
@@ -236,8 +246,8 @@ class K25Screen extends GetWidget {
                                       "Событие не найдено\nДобавьте свое событие",
                                       maxLines: null,
                                       textAlign: TextAlign.center,
-                                      style:
-                                          AppStyle.txtSFProDisplayLight14Gray800a01,
+                                      style: AppStyle
+                                          .txtSFProDisplayLight14Gray800a01,
                                     ),
                                   ),
                                 ),
@@ -253,7 +263,6 @@ class K25Screen extends GetWidget {
                   ),
                 ),
               ),
-
               Container(
                 width: size.width,
                 height: getVerticalSize(60),
@@ -266,8 +275,7 @@ class K25Screen extends GetWidget {
                   alignment: Alignment.center,
                   child: GetBuilder(
                     builder: (K25Controller _c) => Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomButton(
@@ -298,33 +306,32 @@ class K25Screen extends GetWidget {
                             140,
                           ),
                           variant: ButtonVariant.Base,
-                          onTap: controller
-                              .currentEventList.isNotEmpty
+                          onTap: controller.currentEventList.isNotEmpty
                               ? () {
-                            if (controller.whereHappened ==
-                                null) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                  content: Text(
-                                      'Выберете место или создайте новое')));
-                            } else {
-                              if(onSave != null)
-                                onSave!(dayEventModel.copyWith(whereHappened: controller.whereHappened));
-                                else
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.withWhoHappened,
-                                        arguments: dayEventModel.copyWith(whereHappened: controller.whereHappened));
+                                  if (controller.whereHappened == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Выберете место или создайте новое')));
+                                  } else {
+                                    if (onSave != null)
+                                      onSave!(dayEventModel.copyWith(
+                                          whereHappened:
+                                              controller.whereHappened));
+                                    else
+                                      Navigator.pushNamed(
+                                          context, AppRoutes.withWhoHappened,
+                                          arguments: dayEventModel.copyWith(
+                                              whereHappened:
+                                                  controller.whereHappened));
                                   }
-
                                 }
                               : () {
-                            controller.searchController.text =
-                            '';
-                            controller.changeCurrentEventList(
-                                controller
-                                    .searchController.text);
-                            controller.update();
-                          },
+                                  controller.searchController.text = '';
+                                  controller.changeCurrentEventList(
+                                      controller.searchController.text);
+                                  controller.update();
+                                },
                           text: controller.currentEventList.isNotEmpty
                               ? "далее".toUpperCase()
                               : 'ОТМЕНА',

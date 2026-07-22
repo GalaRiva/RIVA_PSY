@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 import 'package:listenmebaby71_s_application17/core/utils/size_utils.dart';
@@ -63,32 +65,40 @@ class PillsScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomButton(
-                                  height: getVerticalSize(42),
-                                  width: (size.width - 64 - 5) / 2,
-                                  padding: ButtonPadding.PaddingT8,
-                                  text: 'Актуальные назначения',
-                                  onTap: () =>
-                                      controller.changePillsListState(
-                                          PillsList.actual),
-
-                                  variant: controller.currentPillsList ==
-                                      PillsList.actual
-                                      ? ButtonVariant.White
-                                      : ButtonVariant.OutlineBluegray60014_1,
+                                Expanded(
+                                  child: CustomButton(
+                                    padding: ButtonPadding.PaddingT8,
+                                    text: 'Актуальные назначения',
+                                    onTap: () =>
+                                        controller.changePillsListState(
+                                            PillsList.actual),
+                                    textStyle: controller.currentPillsList ==
+                                        PillsList.actual
+                                        ?  AppStyle.txtSFProDisplayLight16 : AppStyle.txtSFProDisplayLight16Gray ,
+                                    bgColor: controller.currentPillsList ==
+                                        PillsList.actual
+                                        ? Colors.white
+                                        : ColorConstant.blueGray100,
+                                    showBorder: false,
+                                  ),
                                 ),
-                                CustomButton(
-                                  height: getVerticalSize(42),
-                                  width: (size.width - 64 - 5) / 2,
-                                  padding: ButtonPadding.PaddingT8,
-                                  text: 'По дате внесения',
-                                  onTap: () =>
-                                      controller.changePillsListState(
-                                          PillsList.onData),
-                                  variant: controller.currentPillsList ==
-                                      PillsList.onData
-                                      ? ButtonVariant.White
-                                      : ButtonVariant.OutlineBluegray60014_1,
+                                SizedBox(width: 10,),
+                                Expanded(
+                                  child: CustomButton(
+                                    showBorder: false,
+                                    padding: ButtonPadding.PaddingT8,
+                                    text: 'По дате внесения',
+                                    onTap: () =>
+                                        controller.changePillsListState(
+                                            PillsList.onData),
+                                    textStyle: controller.currentPillsList ==
+                                        PillsList.onData
+                                        ?  AppStyle.txtSFProDisplayLight16 : AppStyle.txtSFProDisplayLight16Gray ,
+                                    bgColor: controller.currentPillsList ==
+                                        PillsList.onData
+                                        ? Colors.white
+                                        : ColorConstant.blueGray100,
+                                  ),
                                 ),
                               ],
                             ),

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: me.carda:AndroidAwnCore:0.8.3@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5a2cee406c2af23681adb0ae75874d2b/transformed/jetified-AndroidAwnCore-0.8.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5a2cee406c2af23681adb0ae75874d2b/transformed/jetified-AndroidAwnCore-0.8.3/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.carda/AndroidAwnCore/0.8.3/8c7c6aa737e91da41860c91e0531be825f2c4eee/AndroidAwnCore-0.8.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -25,10 +25,11 @@ class SelectedBodyPartsWidget extends StatelessWidget {
         children: [
           Container(
             height: getVerticalSize(
-              30,
+              50,
             ),
+          width: size.width / 2 - 30,
           decoration: BoxDecoration(
-            color: ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),
+            color: ColorConstant.whiteA700,
             borderRadius: BorderRadius.circular(3),
             border: Border.all(
               color: ColorConstant.fromHex('#403875').withOpacity(0.22),
@@ -37,17 +38,18 @@ class SelectedBodyPartsWidget extends StatelessWidget {
           ),
             child: Container(
                 margin: getMargin(left: 20, right: 20),
-                child: Center(child: Text(model.bodyPartsModel.bodyPart, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400,))),
+                child: Center(child: Text(model.bodyPartsModel.bodyPart, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
           ),
           SizedBox(width: getHorizontalSize(12),),
           Visibility(
             visible: model.bodyPartsModel.whatHurts.isNotEmpty,
             child: Container(
               height: getVerticalSize(
-                30,
+                50,
               ),
+              width: size.width / 2 - 30,
               decoration: BoxDecoration(
-                color: ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),
+                color: ColorConstant.whiteA700,
                 borderRadius: BorderRadius.circular(3),
                 border: Border.all(
                     color: ColorConstant.fromHex('#403875').withOpacity(0.22),
@@ -56,7 +58,7 @@ class SelectedBodyPartsWidget extends StatelessWidget {
               ),
               child: Container(
                   margin: getMargin(left: 20, right: 20),
-                  child: Center(child: Text(model.subtitle, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400,))),
+                  child: Center(child: Text(model.subtitle, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
             ),
           ),
           SizedBox(width: getHorizontalSize(12),),

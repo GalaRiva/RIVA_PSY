@@ -120,6 +120,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                                  variant: ButtonVariant.Cyan,
                                  fontStyle: ButtonFontStyle.White16,
                                  text: 'Помощь при панике и аффекте',
+                                 bgColor: ColorConstant.cyan700,
                                  width: size.width - 32,
                                  onTap: () {
                                    pageController.animateToPage(0,

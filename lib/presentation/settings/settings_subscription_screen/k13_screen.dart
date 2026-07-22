@@ -86,6 +86,7 @@ class K13Screen extends GetWidget {
                                   padding: getPadding(all: 4),
                                   decoration: AppDecoration.outlineBluegray80014
                                       .copyWith(
+                                    color: ColorConstant.grayLight,
                                           borderRadius:
                                               BorderRadiusStyle.roundedBorder3),
                                   child: Row(
@@ -127,7 +128,9 @@ class K13Screen extends GetWidget {
                                       decoration: AppDecoration
                                           .outlineBluegray80014
                                           .copyWith(
-                                              borderRadius: BorderRadiusStyle
+                                          color: ColorConstant.grayLight,
+
+                                          borderRadius: BorderRadiusStyle
                                                   .roundedBorder3),
                                       child: Row(children: [
                                         CustomImageView(
@@ -163,7 +166,9 @@ class K13Screen extends GetWidget {
                                       decoration: AppDecoration
                                           .outlineBluegray80014
                                           .copyWith(
-                                              borderRadius: BorderRadiusStyle
+                                          color: ColorConstant.grayLight,
+
+                                          borderRadius: BorderRadiusStyle
                                                   .roundedBorder3),
                                       child: Row(children: [
                                         CustomImageView(
@@ -187,7 +192,6 @@ class K13Screen extends GetWidget {
                                                 top: 6, right: 7, bottom: 6))
                                       ]))),
                               CustomButton(
-                                  height: getVerticalSize(32),
                                   width: getHorizontalSize(146),
                                   text: "настройки".toUpperCase(),
                                   margin: getMargin(top: 150),

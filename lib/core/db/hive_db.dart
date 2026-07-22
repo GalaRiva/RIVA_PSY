@@ -102,8 +102,10 @@ class HiveDBTags {
     dayEvents,
     pills,
     spentRecords,
+    desires
   ];
   static const events = 'events';
+  static const desires = 'desires';
   static const place = 'place';
   static const persona = 'persona';
   static const emotions1 = 'emotions1';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/image_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_decoration.dart';
@@ -16,6 +17,8 @@ Widget afterRecording (BuildContext context) {
       all: 10,
     ),
     decoration: AppDecoration.outlineBluegray600143.copyWith(
+      color: ColorConstant.grayLight,
+
       borderRadius: BorderRadiusStyle.roundedBorder3,
     ),
     child: Row(

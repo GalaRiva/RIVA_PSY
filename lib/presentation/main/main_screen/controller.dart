@@ -43,11 +43,11 @@ class K20Controller extends GetxController {
           useSafeArea: false,
 
           context: context, builder: (_) => K3Screen());
-   else if (CurrentUser.tariffIsOrion() && SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
+   else if (SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
       showDialog(        useSafeArea: false,
 
           context: context, builder: (_) => SendPushesScreen());
-    else if(SharedPrefs.sharedPreferences.getBool('recommendation_buy_tariff' ) == null) {
+    else if(!CurrentUser.tariffIsOrion() && SharedPrefs.sharedPreferences.getBool('recommendation_buy_tariff' ) == null) {
       showDialog(
         useSafeArea: false,
           context: context, builder: (_) => RecommendationBuyTariffScreen());

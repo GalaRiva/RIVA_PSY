@@ -106,7 +106,7 @@ class DataAndRecoveryController extends GetxController {
     if (days > 30) {
       return 'Больше месяца назад';
     }
-    if (days == 0) return '$days дней назад';
+    if (days == 0) return 'Сегодня';
 
     return days < 2
         ? '$days день назад'

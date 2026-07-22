@@ -35,9 +35,9 @@ class CustomSwitch extends StatelessWidget {
           14.00,
         ),
         activeColor: ColorConstant.cyan700,
-        activeToggleColor: ColorConstant.gray200,
+        activeToggleColor: ColorConstant.whiteA700,
         inactiveColor: ColorConstant.blueGray100,
-        inactiveToggleColor: ColorConstant.gray200,
+        inactiveToggleColor: ColorConstant.whiteA700,
         onToggle: (value) {onChanged!(value);},
       ),
     );

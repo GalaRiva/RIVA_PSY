@@ -75,7 +75,6 @@ class K16Screen extends StatelessWidget {
                                 onTap: () => onTaptf(context),
                                 alignment: Alignment.center),
                             CustomButton(
-                                height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
                                 text: "подписка".toUpperCase(),
                                 margin: getMargin(top: 61),

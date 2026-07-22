@@ -9,6 +9,7 @@ import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/awesome_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/services/notifications/flutter_local_notification_service.dart';
 import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:listenmebaby71_s_application17/core/utils/shared_prefs.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/splash_screen/repository.dart';
 import '../../../core/models/audio/audio.dart';
 import '../../../core/services/datasource_service.dart';
@@ -44,19 +45,22 @@ class K1Controller extends GetxController {
 
   void initialization(BuildContext context) async {
     AppRoutes.notificationScreenIsInitial = false;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    WorkManagerService().initService();
-
     try {
+      WorkManagerService().initService();
 
-      if (wasInit != true) {
+      if(FirebaseAuth.instance.currentUser != null) {
+        await CurrentUser.init();
         try {
           if(CurrentUser.repo.userId().isNotEmpty)
-          GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
+            GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
 
         } catch (_) {
 
         }
+      }
+
+      if (wasInit != true) {
+
         wasInit = true;
         await someProcess();
         DataSourceService.getDataSourceType();
@@ -75,7 +79,7 @@ class K1Controller extends GetxController {
 
           loading = true;
           update();
-          _downloadingFiles([collectionAudio, collectionImages], prefs,
+          _downloadingFiles([collectionAudio, collectionImages], SharedPrefs.sharedPreferences,
               [AUDIO_KEY, IMAGE_KEY], onError: () {
             loading = false;
             secondsToNewPage = 0;

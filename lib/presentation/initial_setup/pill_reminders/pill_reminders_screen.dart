@@ -72,7 +72,12 @@ class PillRemindersScreen extends StatelessWidget {
                                       top: 14, bottom: 6),
                                   variant: ButtonVariant
                                       .OutlineBluegray60014,
-                                  onTap: () =>       Navigator.pop(context)),
+                                  onTap: () {
+                                    SharedPrefs.sharedPreferences.setBool('pill_reminders', true);
+
+                                    Navigator.pop(context);
+
+                                  }),
                               CustomButton(
                                   height: getVerticalSize(32),
                                   width: size.width / 2 - 60,

@@ -130,6 +130,8 @@ class K31Screen extends GetWidget {
                                   padding: getPadding(right: 12),
                                   child: EventCard(
                                     iconColor: ColorConstant.fromHex('#5B4FA9'),
+                                    cardWidth: size.width / 2 - 30,
+
                                     onTap: () {
                                       if(index != 0 || index != controller.emotions.length) {
                                         controller.additionalEmotions.add(
@@ -138,8 +140,7 @@ class K31Screen extends GetWidget {
                                         controller.update();
                                       }
                                     },
-                                    model: controller.emotions[index],
-                                    cardHeight: 44, isSelect: false,
+                                    model: controller.emotions[index], isSelect: false,
                                   ),
                                 );
 
@@ -185,7 +186,9 @@ class K31Screen extends GetWidget {
                                               controller.update();
                                             } else null;
                                           },
-                                      cardHeight: 44, isSelect: false,
+                                      cardWidth: size.width / 2 - 30,
+
+                                      isSelect: false,
                                     ),
                                   );
 

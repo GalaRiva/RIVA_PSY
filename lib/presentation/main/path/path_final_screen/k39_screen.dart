@@ -109,16 +109,10 @@ class K39Screen extends GetWidget {
           child: Padding(
             padding: getPadding(left: 26, bottom: 10, right: 26),
             child: CustomButton(
-              height: getVerticalSize(
-                32,
-              ),
               width: getHorizontalSize(
                 148,
               ),
               text: "гОТОВО".toUpperCase(),
-              margin: getMargin(
-                bottom: 20,
-              ),
               onTap: () async {
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.main, (route) => false);

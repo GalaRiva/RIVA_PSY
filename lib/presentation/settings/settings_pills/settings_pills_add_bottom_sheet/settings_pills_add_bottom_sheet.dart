@@ -8,6 +8,7 @@ import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../initial_setup/sign_in/presentation/sign_in_screen/text_input_login_formatter.dart';
+import '../widget/top_icon_button.dart';
 import 'controller.dart';
 
 class PillsAddBottomSheet extends StatelessWidget {
@@ -49,10 +50,13 @@ class PillsAddBottomSheet extends StatelessWidget {
                               fontWeight: FontWeight.w300,
                               color: ColorConstant.gray800),
                         ),
+                        SizedBox(
+                          height: getVerticalSize(10),
+                        ),
                         CustomTextFormField(
+                          height: 70,
                           controller: controller.nameController,
                           counterText: '',
-                          margin: getMargin(top: 11, bottom: 21),
                           variant: TextFormFieldVariant.FillGray200,
                           formatter: [TextInputLoginFormatter()],
                           hintText: 'Название',
@@ -62,22 +66,18 @@ class PillsAddBottomSheet extends StatelessWidget {
                           },
                         ),
                         GetBuilder(
-                          builder: (PillsBottomSheetController _c) => CustomButton(
-                              height: getVerticalSize(32),
-                              width: getHorizontalSize(size.width - 32),
-                              suffixWidget: CustomImageView(
-                                svgPath: ImageConstant.imgCalendar,
-                                color: Colors.black54,
-                                height: getVerticalSize(23),
-                                width: getVerticalSize(23),
-                                margin: getMargin(left: 10),
-                              ),
-                              text: controller.getDurationText(),
-                            fontStyle: ButtonFontStyle.SFProDisplayRegular12Gray,
-                              padding: ButtonPadding.PaddingT8,
+                          builder: (PillsBottomSheetController _c) => TopIconButton(
+                            icon: CustomImageView(
                               onTap: () =>
                                   controller.setDurationOfReception(context),
-                              alignment: Alignment.center,
+                              svgPath: ImageConstant.imgCalendar,
+                              color: Colors.black,
+                              height: getVerticalSize(23),
+                              width: getVerticalSize(23),
+                              margin: getMargin(left: 10),
+                            ),
+                              title: controller.getDurationText(),
+
                           ),
                         ),
                         SizedBox(
@@ -93,19 +93,22 @@ class PillsAddBottomSheet extends StatelessWidget {
                               children: List<Widget>.generate(controller.time.length, (index) {
                                 final e = controller.time[index];
                                 return CustomButton(
-                                    height: getVerticalSize(32),
-                                    width: getHorizontalSize(100),
-                                    centralWidget: CustomImageView(
+                                    height: getVerticalSize(50),
+                                    width: getHorizontalSize(160),
+                                    centralWidget: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text(e,
+                                          style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800)),
+                                    ),
+                                    prefixWidget: CustomImageView(
                                       svgPath: ImageConstant.imageClock,
                                       height: getVerticalSize(23),
                                       width: getVerticalSize(23),
                                     ),
-                                    prefixWidget: Text(e,
-                                        style: AppStyle.txtSFProDisplayLight11.copyWith(color: ColorConstant.gray800)),
                                     suffixWidget: Text(
                                       'ред',
                                       style: AppStyle
-                                          .txtSFProDisplayLight11Deeppurple600,
+                                          .txtSFProDisplayLight16DeepPurple,
                                     ),
                                     padding: ButtonPadding.PaddingT8,
                                     onTap: () => controller.addTime(
@@ -118,37 +121,28 @@ class PillsAddBottomSheet extends StatelessWidget {
                           builder: (PillsBottomSheetController _c) => controller
                                   .time.isNotEmpty
                               ? CustomButton(
-                                  height: getVerticalSize(32),
-                                  width: getHorizontalSize(180),
+                            margin: EdgeInsets.only(top: 20),
+                                  height: getVerticalSize(50),
+                                  width: double.infinity,
                                   onTap: () =>
                                       controller.addTime(context: context),
-                                  suffixWidget: CustomImageView(
-                                    margin: getMargin(left: 5),
-                                    svgPath: ImageConstant.imgAdd,
-                                    height: getVerticalSize(14),
-                                    width: getVerticalSize(14),
+                                  suffixWidget: Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Icon(Icons.add, color: ColorConstant.deepPurple600, size: 20,),
                                   ),
                                   text: "Добавить время приёма".toUpperCase(),
-
+                            textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
                             fontStyle: ButtonFontStyle.SFProDisplayRegular12Gray,
                                   padding: ButtonPadding.PaddingT8,
                                   )
-                              : CustomButton(
-                                  height: getVerticalSize(32),
-                                  width: getHorizontalSize(size.width - 32),
-                                  suffixWidget: CustomImageView(
-                                    margin: getMargin(left: 10),
-                                    svgPath: ImageConstant.imageClock,
-                                    height: getVerticalSize(23),
-                                    width: getVerticalSize(23),
-                                  ),
-                                  onTap: () =>
-                                      controller.addTime(context: context),
-                                  text: "Установить время приёма".toUpperCase(),
-                                  fontStyle: ButtonFontStyle.SFProDisplayRegular12Gray,
-                                  padding: ButtonPadding.PaddingT8,
-                            alignment: Alignment.center,
-                                  ),
+                              : TopIconButton(title: "Установить\nвремя приёма".toUpperCase(),
+                          onTap: () =>  controller.addTime(context: context), icon: CustomImageView(
+                                margin: getMargin(left: 10),
+                                svgPath: ImageConstant.imageClock,
+                                color: Colors.black,
+                                height: getVerticalSize(23),
+                                width: getVerticalSize(23),
+                              ),)
                         ),
                         Container(
                           margin: getMargin(bottom: 61),
@@ -157,7 +151,6 @@ class PillsAddBottomSheet extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomButton(
-                                  height: getVerticalSize(32),
                                   width: getHorizontalSize(186),
                                   onTap: () async {
                                       await controller.addPill(context);
@@ -165,8 +158,8 @@ class PillsAddBottomSheet extends StatelessWidget {
                                   text: "сохранить".toUpperCase(),
                                   padding: ButtonPadding.PaddingT8,
                                   alignment: Alignment.center),
+                              SizedBox(height: 20,),
                               CustomButton(
-                                  height: getVerticalSize(32),
                                   width: getHorizontalSize(186),
                                   onTap: () => Navigator.pop(context),
                                   text: "отмена".toUpperCase(),

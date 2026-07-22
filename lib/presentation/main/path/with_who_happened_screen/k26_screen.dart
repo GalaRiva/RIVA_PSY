@@ -206,11 +206,19 @@ class K26Screen extends GetWidget {
                                     child: GetBuilder(
                                       builder: (K26Controller _c) => Wrap(
                                         spacing: 12,
+                                        runAlignment: WrapAlignment.center,
                                         children: controller.currentEventList
-                                            .map((el) => EventCard(model: el, onTap: () {
-                                              controller.whoDidHappen = el;
-                                              controller.update();
-                                            }, isSelect: controller.contain(el),))
+                                            .map((el) => Padding(
+                                          padding:
+                                          const EdgeInsets.only(
+                                              bottom: 10),
+                                          child: EventCard(
+                                            cardWidth:
+                                            size.width / 2 - 30,model: el, onTap: () {
+                                                controller.whoDidHappen = el;
+                                                controller.update();
+                                              }, isSelect: controller.contain(el),),
+                                            ))
                                             .toList(),
                                       ),
                                     ),

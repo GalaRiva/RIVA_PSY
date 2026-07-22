@@ -63,7 +63,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.pushNamed(context,
                                     AppRoutes.buySubscription,
-                                    arguments: TariffModel.ORION_TARIFF_YEAR);
+                                    arguments: [TariffModel.ORION_TARIFF_YEAR]);
                               },margin: getMargin(
                               left: 18, top: 19, right: 18),
                               variant: ButtonVariant
@@ -108,16 +108,21 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
   }
 
   onTapOne(BuildContext context, [bool continu = false]) {
-    if(continu)
     SharedPrefs.sharedPreferences.setBool('recommendation_buy_tariff', true);
     Navigator.pop(context);
-    if(SharedPrefs.sharedPreferences.getBool('send_pushes') == null) {
-      showDialog(        useSafeArea: false,
-          context: context, builder: (_) => SendPushesScreen());
-    } else if(SharedPrefs.sharedPreferences.getBool('pill_reminders') == null) {
-      showDialog(        useSafeArea: false,
-          context: context, builder: (_) => PillRemindersScreen());
-
+    if(continu) {
+      if (SharedPrefs.sharedPreferences.getBool('send_pushes') == null) {
+        showDialog(
+            useSafeArea: false,
+            context: context,
+            builder: (_) => SendPushesScreen());
+      } else if (SharedPrefs.sharedPreferences.getBool('pill_reminders') ==
+          null) {
+        showDialog(
+            useSafeArea: false,
+            context: context,
+            builder: (_) => PillRemindersScreen());
+      }
     }
   }
 }

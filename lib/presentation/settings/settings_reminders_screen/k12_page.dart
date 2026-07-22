@@ -178,7 +178,6 @@ class K12Page extends GetWidget<K12Controller> {
                                 builder: (K12Controller _c) => Padding(
                                     padding: getPadding(top: 48),
                                     child: CustomButton(
-                                        height: getVerticalSize(32),
                                         width: getHorizontalSize(146),
                                         text: "настройки".toUpperCase(),
                                         margin: getMargin(top: 154),

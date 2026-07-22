@@ -38,13 +38,8 @@ class SendPushesScreen extends StatelessWidget {
                       137,
                     ),
                     onTap: () async {
-
+                      SharedPrefs.sharedPreferences.setBool('send_pushes', true);
                       Navigator.pop(context);
-                      if(SharedPrefs.sharedPreferences.getBool('pill_reminders') == null) {
-                        showDialog(
-                            context: context,
-                            builder: (_) => PillRemindersScreen());
-                      }
                     },
                     text: "нет".toUpperCase(),
                   ),

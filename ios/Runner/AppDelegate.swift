@@ -3,6 +3,7 @@ import Flutter
 import awesome_notifications
 import shared_preferences_foundation
 
+import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -12,6 +13,9 @@ import shared_preferences_foundation
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
       
+      if FirebaseApp.app() == nil {
+          FirebaseApp.configure()
+      }
       SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in
                 SwiftAwesomeNotificationsPlugin.register(
                   with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
@@ -22,4 +26,11 @@ import shared_preferences_foundation
       
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+    
+    override init() {
+       // Firebase Init
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+    }
 }

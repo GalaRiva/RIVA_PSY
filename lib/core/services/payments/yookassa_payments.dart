@@ -1,12 +1,16 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:listenmebaby71_s_application17/core/services/payments/yookassa_payment_request.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
 import 'package:pay/pay.dart';
-import 'package:pay/pay.dart' as py;
+
 
 import 'package:yookassa_payments_flutter/yookassa_payments_flutter.dart';
 import '../../user_data/user.dart';
@@ -51,18 +55,74 @@ class YookassaPayments {
 
   }
 
+  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList, BuildContext context, Function? onComplete) {
+    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+      if (purchaseDetails.status == PurchaseStatus.pending) {
+        //_showPendingUI();
+      } else {
+        if (purchaseDetails.status == PurchaseStatus.error) {
+          _onPaymentError(context);
+        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+            purchaseDetails.status == PurchaseStatus.restored) {
+          bool valid = true;// await _verifyPurchase(purchaseDetails);
+         // await InAppPurchase.instance.
+
+          if (valid) {
+            onComplete?.call();
+          } else {
+          }
+        }
+        if (purchaseDetails.pendingCompletePurchase) {
+          await InAppPurchase.instance
+              .completePurchase(purchaseDetails);
+        }
+      }
+    });
+  }
+
   _servicePay(BuildContext context,
       {String? title,
         String? subtitle,
         double? amountInRub,
         Function? onComplete,
         required bool testMode}) async {
+    /*if (Platform.isIOS) {
+      final iosPlatformAddition =
+      InAppPurchase.instance
+          .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+      await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
+    }
+    const Set<String> _kIds = <String>{'orion',};
+
+    final ProductDetailsResponse productDetailResponse =
+    await InAppPurchase.instance.queryProductDetails(_kIds);
+    StreamSubscription<List<PurchaseDetails>>? _subscription;
+    final bool available = await InAppPurchase.instance.isAvailable();
+    debugPrint('av $available');
+    final Stream<List<PurchaseDetails>> purchaseUpdated =
+        InAppPurchase.instance.purchaseStream;
+    _subscription = purchaseUpdated.listen((purchaseDetailsList) {
+      _listenToPurchaseUpdated(purchaseDetailsList, context, onComplete);
+    }, onDone: () {
+      _subscription?.cancel();
+    }, onError: (error) {
+      // handle error here.
+    });
+
+    List<ProductDetails> products = productDetailResponse.productDetails;
+    final purchaseParam = PurchaseParam(
+      productDetails: products.first,
+    );
+    InAppPurchase.instance.buyConsumable(
+        purchaseParam: purchaseParam,
+        autoConsume: true);*/
+
 
     final _google = PaymentConfiguration.fromJsonString(
         payment_configurations.defaultGooglePay);
     final _apple = PaymentConfiguration.fromJsonString(
         payment_configurations.defaultApplePay);
-    final _items = [PaymentItem(amount: '0', label: 'Oreon', status: PaymentItemStatus.final_price),
+    final _items = [PaymentItem(amount: amountInRub.toString(), label: title ?? 'Oreon', status: PaymentItemStatus.final_price),
     ];
 
 
@@ -74,39 +134,8 @@ class YookassaPayments {
 
     final answer = await _payClient.showPaymentSelector(Platform.isIOS ? PayProvider.apple_pay : PayProvider.google_pay, _items);
     log(answer.toString());
-    final _amount = Amount(value:'${0 ?? 990}', currency: Currency.eur);
-    final _shopId = "224344";
-    final _clientApplicationKey =
-        "live_MjI0MzQ0QbhxKs1fv9QJbgcRxPRkeZ4Rs3FWJmqo-TM";
-    final yookassaPaymentRequest = YookassaPaymentRequest(_amount);
-    final _paymentMethodType = Platform.isIOS ? PaymentMethod.applePay : PaymentMethod.googlePay;
-    final _description =
-        subtitle ?? "Ограниченный доступ к рекомендациям, статистике и аудио";
-    final paymentRequest =
-    await yookassaPaymentRequest.makePaymentRequest(
-        token: answer['token'],
-        paymentMethod: _paymentMethodType,
-        description: _description,
-        idempotenceKey: _idempotenceKey);
+    _onPaymentSucceed(onComplete?.call());
 
-    final _confirmationUrl = paymentRequest['confirmation_url'];
-    final _paymentId = paymentRequest['payment_id'];
-
-    if (_confirmationUrl.isEmpty || _paymentId.isEmpty) {
-      _onPaymentError(context);
-    } else {
-      YookassaPaymentsFlutter.confirmation(
-          _confirmationUrl, _paymentMethodType,_clientApplicationKey,_shopId)
-          .then((value) async {
-        print('payment succes');
-        if (await yookassaPaymentRequest.checkPaymentStatus(
-            _paymentId, _idempotenceKeyForCheckStatus)) {
-          _onPaymentSucceed(onComplete!());
-        } else {
-          _onPaymentCancel(context);
-        }
-      });
-    }
   }
 
   _yookassaPay (BuildContext context,
@@ -124,7 +153,6 @@ class YookassaPayments {
     final _description =
         subtitle ?? "Ограниченный доступ к рекомендациям, статистике и аудио";
     final _tokenizationModuleInputData = TokenizationModuleInputData(
-      applePayMerchantIdentifier: 'merchant.oreon',
       clientApplicationKey: _clientApplicationKey,
       title: title ?? "Rigel PSY",
       subtitle: _description,
@@ -218,5 +246,19 @@ class YookassaPayments {
         context: context,
         builder: (c) =>
             CustomMessageBox(title: 'Подписка', content: 'Произошла ошибка, повторите попытку или попробуйте позднее'));
+  }
+}
+
+
+class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
+  @override
+  bool shouldContinueTransaction(
+      SKPaymentTransactionWrapper transaction, SKStorefrontWrapper storefront) {
+    return true;
+  }
+
+  @override
+  bool shouldShowPriceConsent() {
+    return false;
   }
 }

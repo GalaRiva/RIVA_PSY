@@ -28,7 +28,7 @@ class PillsBottomSheetController extends GetxController {
   Duration? _duration;
 
   String getDurationText () {
-    if(_startDate == null || _endDate == null) return 'установить длительность приема'.toUpperCase();
+    if(_startDate == null || _endDate == null) return 'установить\nдлительность приема'.toUpperCase();
     return '${(_startDate!).dateInText()} - ${_endDate!.dateInText()}'.toUpperCase();
   }
 

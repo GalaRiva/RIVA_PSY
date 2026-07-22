@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
+import 'custom_text.dart';
+
 class CustomButton extends StatelessWidget {
   CustomButton(
       {this.shape,
@@ -15,10 +17,10 @@ class CustomButton extends StatelessWidget {
       this.text,
       this.prefixWidget,
       this.suffixWidget,
-        this.bgColor,
-        this.textStyle,
-        this.centralWidget,
-      this.standardPadding});
+      this.bgColor,
+      this.textStyle,
+      this.centralWidget,
+      this.standardPadding, this.showBorder = true});
 
   ButtonShape? shape;
 
@@ -29,6 +31,8 @@ class CustomButton extends StatelessWidget {
   EdgeInsetsGeometry? standardPadding;
 
   ButtonVariant? variant;
+
+  final bool showBorder;
 
   ButtonFontStyle? fontStyle;
   TextStyle? textStyle;
@@ -60,11 +64,13 @@ class CustomButton extends StatelessWidget {
   }
 
   _buildButtonWidget() {
-    return Padding(
-      padding: margin ?? EdgeInsets.zero,
-      child: TextButton(
-        onPressed: onTap,
-        style: _buildTextButtonStyle(),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: margin ?? EdgeInsets.zero,
+        width: width ?? double.maxFinite,
+        height: height ?? 50,
+        decoration: _buildTextButtonStyle(),
         child: _buildButtonWithOrWithoutIcon(),
       ),
     );
@@ -76,39 +82,37 @@ class CustomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           prefixWidget ?? SizedBox(),
-          _getCentralWidget (),
+          _getCentralWidget(),
           suffixWidget ?? SizedBox(),
         ],
       );
     } else {
-      return _getCentralWidget ();
+      return _getCentralWidget();
     }
   }
 
-  _getCentralWidget () {
+  _getCentralWidget() {
     return Center(
-      child: centralWidget ?? Text(
-        text ?? "",
-        textAlign: TextAlign.center,
-        style: textStyle ?? _setFontStyle(),
-      ),
+      child: centralWidget ??
+          CustomText(
+            text ?? "",
+            textAlign: TextAlign.center,
+            style: textStyle ?? _setFontStyle(),
+          ),
     );
   }
 
   _buildTextButtonStyle() {
-    return ElevatedButton.styleFrom(
-      fixedSize: Size(
-        width ?? double.maxFinite,
-        height ?? getVerticalSize(40),
-      ),
-      elevation: 10,
-      padding: standardPadding == null ? _setPadding() : standardPadding,
-      backgroundColor: _setColor(),
-      side: _setTextButtonBorder(),
-      shadowColor: _setTextButtonShadowColor(),
-      shape: RoundedRectangleBorder(
-        borderRadius: _setBorderRadius(),
-      ),
+    return BoxDecoration(
+      borderRadius: _setBorderRadius(),
+      color: bgColor ?? Colors.white.withOpacity(0.7) ?? _setColor(),
+      border: !showBorder ?   null  :    Border.all(color: Colors.white, width: 1),
+      boxShadow: [
+        BoxShadow(
+            color: ColorConstant.fromHex('#5F6B80').withOpacity(0.2),
+            offset: Offset(0, 6),
+            blurRadius: 5)
+      ],
     );
   }
 
@@ -138,7 +142,7 @@ class CustomButton extends StatelessWidget {
   }
 
   _setColor() {
-    if(bgColor!= null) return bgColor!;
+    if (bgColor != null) return bgColor!;
     switch (variant) {
       case ButtonVariant.OutlineBluegray60014:
         return ColorConstant.whiteA70070;
@@ -157,7 +161,7 @@ class CustomButton extends StatelessWidget {
       case ButtonVariant.White24:
         return Colors.white.withOpacity(0.44);
       default:
-        return ColorConstant.whiteA70038;
+        return Colors.white.withOpacity(0.7);
     }
   }
 
@@ -185,7 +189,7 @@ class CustomButton extends StatelessWidget {
           ),
         );
       default:
-        return null;
+        Border.all(color: Colors.white, width: 1);
     }
   }
 
@@ -220,7 +224,7 @@ class CustomButton extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.cyan700,
           fontSize: getFontSize(
-            12,
+            16,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w400,
@@ -268,7 +272,7 @@ class CustomButton extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.deepPurple600,
           fontSize: getFontSize(
-            10,
+            17,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w400,
@@ -328,7 +332,7 @@ class CustomButton extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.deepPurple600,
           fontSize: getFontSize(
-            18,
+            16,
           ),
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w400,
@@ -344,6 +348,7 @@ enum ButtonShape {
   Square,
   RoundedBorder3,
 }
+
 enum ButtonPadding {
   PaddingT8,
   PaddingAll8,
@@ -351,6 +356,7 @@ enum ButtonPadding {
   PaddingT3,
   PaddingBottom20
 }
+
 enum ButtonVariant {
   OutlineBluegray60014_1,
   OutlineBluegray60014,
@@ -361,8 +367,8 @@ enum ButtonVariant {
   Base,
   White,
   White24
-
 }
+
 enum ButtonFontStyle {
   SFProDisplayRegular12,
   SFProDisplayRegular12Gray,

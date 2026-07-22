@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
+import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/desires_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/happiness_in_focus_page.dart';
 
 import '../../../../../core/utils/color_constant.dart';
@@ -35,7 +36,8 @@ class WorkingOutScreen extends StatelessWidget {
                       child: TabBar(
                         dividerHeight: 0,
                         controller: cubit.tabController,
-                        isScrollable: false,
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.center,
                         onTap: (val) async {
                           cubit.currentTab = val;
                         },
@@ -53,11 +55,14 @@ class WorkingOutScreen extends StatelessWidget {
                         labelColor: ColorConstant.cyan700,
                         tabs: [
                           Tab(
-                            text: 'Отработать иррациональное',
+                            text: 'Отработать\nиррациональное',
                           ),
                           Tab(
-                          text: 'Престиж в фокусе- счастье',
+                          text: 'Престиж\nв фокусе- счастье',
                         ),
+                          Tab(
+                            text: 'Желания',
+                          ),
                         ],
                       ),
                     ),
@@ -73,7 +78,11 @@ class WorkingOutScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: HappinessInFocusPage(),
-                          )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 18),
+                            child: DesiresPage(),
+                          ),
                     ]),
                   )
                 ],

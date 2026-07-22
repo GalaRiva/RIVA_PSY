@@ -26,6 +26,8 @@ class ListglobeItemWidget extends StatelessWidget {
           bottom: 23,
         ),
         decoration: AppDecoration.outlineBluegray600143.copyWith(
+          color: ColorConstant.grayLight,
+
           borderRadius: BorderRadiusStyle.roundedBorder3,
         ),
         child: InkWell(

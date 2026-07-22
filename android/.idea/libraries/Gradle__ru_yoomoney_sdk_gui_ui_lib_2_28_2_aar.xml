@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.yoomoney.sdk.gui:ui-lib:2.28.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9aa42025edf0965735b14af7e30dc1ce/transformed/jetified-ui-lib-2.28.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9aa42025edf0965735b14af7e30dc1ce/transformed/jetified-ui-lib-2.28.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9aa42025edf0965735b14af7e30dc1ce/transformed/jetified-ui-lib-2.28.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.gui/ui-lib/2.28.2/b368be0b2b09a3a0214d64b7fa066e5db8115390/ui-lib-2.28.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.gui/ui-lib/2.28.2/a0f66af44babe532bab951682c4b45d79df2461/ui-lib-2.28.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

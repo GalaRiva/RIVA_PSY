@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class ColorConstant {
+class  ColorConstant {
   static Color gray2007c = fromHex('#7ce6e9e9');
 
   static Color blueA200 = fromHex('#4289fa');
@@ -11,6 +11,10 @@ class ColorConstant {
   static Color blueGray60014 = fromHex('#145f6b80');
 
   static Color cyan700A0 = fromHex('#a01499a1');
+
+  static Color lightGreen = fromHex('#66C1BD');
+
+  static Color lightText = fromHex('#838687');
 
   static Color darkBg = fromHex('#D7E1E1');
 
@@ -74,7 +78,7 @@ class ColorConstant {
 
   static Color blueGray70038 = fromHex('#38403774');
 
-  static Color whiteA70038 = fromHex('#38ffffff');
+  static Color whiteA70038 = fromHex('#ffffff').withOpacity(0.44);
 
   static Color deepPurple7000c = fromHex('#0c594691');
 

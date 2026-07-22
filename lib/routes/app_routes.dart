@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
 import 'package:listenmebaby71_s_application17/presentation/charts/concrete_pill/concrete_pill_screen.dart';
+import 'package:listenmebaby71_s_application17/presentation/languages/languages_page.dart';
 import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/calendar/calendar_page.dart';
 
 import '../presentation/charts/charts_calendar/k62_screen.dart';
@@ -65,6 +66,9 @@ class AppRoutes {
   static const String settings = '/settings_screen';
 
   static const String aboutApp = '/about_app_screen';
+
+  static const String selectLanguage = '/select_language';
+
 
   static const String setPassword = '/settings_set_password';
 
@@ -198,7 +202,7 @@ static const String enterPasswordScreen = '/enter_password_screen';
     recommendations: (context) => K70Screen(),
     working_out_calendar: (context) => WorkingOutCalendarPage(),
     // records
-    calendar_add: (context) => K51Screen(),
+    calendar_add: (context) => K51Screen(title: null, widget: null,),
     calendar_search: (context) => K50Screen(),
     record_add: (context) => K54Screen(),
     record_edit: (context) => K52Screen(),
@@ -206,6 +210,8 @@ static const String enterPasswordScreen = '/enter_password_screen';
     // charts
     charts_calendar: (context) => K62Screen(),
     charts: (context) => K61Screen(),
+    // select language
+    selectLanguage: (context) => LanguagesPage(),
 
 
   };

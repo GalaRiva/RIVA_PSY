@@ -53,12 +53,13 @@ class K11Screen extends GetWidget {
                                   controller: controller.model.value.controller,
                                   maxLines: 30,
                                   decoration: InputDecoration(
+
                                       contentPadding: EdgeInsets.fromLTRB(4, 8, 4, 8),
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide.none
                                       ),
-                                      fillColor: ColorConstant.gray200,
+                                      fillColor: ColorConstant.grayLight,
                                       filled: true,
                                       hintText: 'Ваши предложения',
 
@@ -92,7 +93,6 @@ class K11Screen extends GetWidget {
                               ),
                             ),
                             CustomButton(
-                                height: getVerticalSize(32),
                                 width: getHorizontalSize(172),
                                 text: "отправить".toUpperCase(),
                                 onTap: () async {
@@ -111,7 +111,6 @@ class K11Screen extends GetWidget {
                                     margin: getMargin(top: 83),
                                 alignment: Alignment.center),
                             CustomButton(
-                                height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
                                 text: "настройки".toUpperCase(),
                                 margin: getMargin(top: 29),

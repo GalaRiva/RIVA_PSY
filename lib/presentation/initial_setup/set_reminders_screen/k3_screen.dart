@@ -270,21 +270,29 @@ class K3Screen extends GetWidget<K3Controller> {
     CurrentUser.user.reminderTime = quantity;
     await _generateReminderTime();
     await CurrentUser.repo.setLocalUserData(reminderTime: quantity);
-    if(continu)
     SharedPrefs.sharedPreferences.setBool('set_reminders', true);
     Navigator.pop(context);
-    if (CurrentUser.tariffIsOrion() && SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
-      showDialog(        useSafeArea: false,
-
-          context: context, builder: (_) => SendPushesScreen());
-    else if(SharedPrefs.sharedPreferences.getBool('recommendation_buy_tariff' ) == null) {
-      showDialog(        useSafeArea: false,
-
-          context: context, builder: (_) => RecommendationBuyTariffScreen());
-    } else if(SharedPrefs.sharedPreferences.getBool('pill_reminders' ) == null) {
-      showDialog(        useSafeArea: false,
-
-          context: context, builder: (_) => PillRemindersScreen());
+    if(continu) {
+      if (
+          SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
+        showDialog(
+            useSafeArea: false,
+            context: context,
+            builder: (_) => SendPushesScreen());
+      else if (SharedPrefs.sharedPreferences
+              .getBool('recommendation_buy_tariff') ==
+          null) {
+        showDialog(
+            useSafeArea: false,
+            context: context,
+            builder: (_) => RecommendationBuyTariffScreen());
+      } else if (SharedPrefs.sharedPreferences.getBool('pill_reminders') ==
+          null) {
+        showDialog(
+            useSafeArea: false,
+            context: context,
+            builder: (_) => PillRemindersScreen());
+      }
     }
   }
 

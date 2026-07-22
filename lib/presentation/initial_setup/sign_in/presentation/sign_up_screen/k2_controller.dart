@@ -87,7 +87,7 @@ class K2Controller extends GetxController {
           showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
         } else {
           await CurrentUser.repo.setService('apple');
-          await CurrentUser.repo.setLocalUserData(email: result.email);
+          await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.splashScreen, (route) => false);
@@ -103,7 +103,7 @@ class K2Controller extends GetxController {
               result.userId!, email: result.email, login: result.login);
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Success) {
             await CurrentUser.repo.setService('apple');
-            await CurrentUser.repo.setLocalUserData(email: result.email);
+            await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
@@ -156,7 +156,7 @@ class K2Controller extends GetxController {
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Success) {
 
             await CurrentUser.repo.setService('google');
-            await CurrentUser.repo.setLocalUserData(email: result.email);
+            await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);

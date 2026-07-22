@@ -1125,5 +1125,31 @@ class ImageConstant {
   static const pillReminders = 'assets/images/pill_reminders.svg';
 
 
+  static const desireAddButtonSVG = 'assets/images/desires/add_desire_button.svg';
+  static const desireHeartSVG = 'assets/images/desires/desire_heart.svg';
+  static const desirePath1SVG = 'assets/images/desires/desire_path_1.svg';
+  static const desirePath2SVG = 'assets/images/desires/desire_path_2.svg';
+  static const desirePathStartSVG = 'assets/images/desires/desire_path_start.svg';
+  static const desireCheckSVG = 'assets/images/desires/check.svg';
+  static const desireInProcess2SVG = 'assets/images/desires/in_process.svg';
+
+  static const desireCreateCompletePNG = 'assets/images/desires/desire_create_complete.png';
+  static const desireIconPNG = 'assets/images/desires/desire_icon.png';
+  static const desireExpiredIconPNG = 'assets/images/desires/expired_icon.png';
+  static const desireItemPNG = 'assets/images/desires/desire_item.png';
+  static const desires1PNG = 'assets/images/desires/desires.png';
+  static const desires2PNG = 'assets/images/desires/desires_2.png';
+  static const desires3PNG = 'assets/images/desires/desires_3.png';
+  static const desireReportPNG = 'assets/images/desires/desire_report.png';
+
+  static const desiresDetail1PNG = 'assets/images/desires/desires_details_1.png';
+  static const desiresDetail2PNG = 'assets/images/desires/desires_details_2.png';
+  static const desiresDetail3PNG = 'assets/images/desires/desires_details_3.png';
+  static const desiresDetail4PNG = 'assets/images/desires/desires_details_4.png';
+  static const desiresDetail5PNG = 'assets/images/desires/desires_details_5.png';
+  static const desiresStartPNG = 'assets/images/desires/desires_start.png';
+  static const desireDetailsPNG = 'assets/images/desires/details.png';
+
+
   static String imageNotFound = 'assets/images/image_not_found.png';
 }

@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
 
@@ -14,12 +15,18 @@ import '../calendar_add_screen/controller.dart';
 
 class K51Screen extends GetWidget {
 
+  final String? title;
+  final Function(DateTime val)? onTap;
+  final Widget? widget;
+
+   K51Screen({ required this.title, required this.widget,this.onTap, });
+
   @override
   Widget build(BuildContext context) {
     List<DayEventModel>? list = (ModalRoute.of(context)?.settings.arguments ?? <DayEventModel>[]) as List<DayEventModel>;
     final controller = Get.put(K51Controller(list,context));
     try {
-      controller.getDaysForRows = controller.initializeDaysList();
+      controller.getDaysForRows = controller.initializeDaysList(onTap);
 
     } catch (_) {
       print(_);
@@ -32,65 +39,64 @@ class K51Screen extends GetWidget {
       child: Scaffold(
         backgroundColor: ColorConstant.gray30002,
         body: SafeArea(
-          child: Container(
-            width: double.maxFinite,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: getPadding(
-                        left: 16,
-                        right: 16,
-                      ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: getPadding(
+                left: 16,
+                right: 16,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: getPadding(
+                      top: 39,
+                    ),
+                    child: CustomPopButton(text: 'Записи',)
+                  ),
+                  Row(children: [
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: getPadding(
-                              top: 39,
-                            ),
-                            child: CustomPopButton(text: 'Записи',)
+                        Padding(
+                          padding: getPadding(
+                            top: 20,
                           ),
-                          Padding(
-                            padding: getPadding(
-                              top: 20,
-                            ),
-                            child: Text(
-                              "Календарь",
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtH1,
-                            ),
+                          child: Text(
+                            title ?? "Календарь",
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: AppStyle.txtH1,
                           ),
-                          Padding(
-                            padding: getPadding(
-                              left: 31,
-                              top: 26,
-                            ),
-                            child: Text(
-                              "Добавить запись",
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style:
-                                  AppStyle.txtSFProDisplayLight14Gray800.copyWith(
+                        ),
+                        Padding(
+                          padding: getPadding(
+                            left: 31,
+                            top: 26,
+                          ),
+                          child: Text(
+                            title == null ? "Добавить запись" : '',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style:
+                            AppStyle.txtSFProDisplayLight14Gray800.copyWith(
 
-                                letterSpacing: getHorizontalSize(
-                                  0.56,
-                                ),
+                              letterSpacing: getHorizontalSize(
+                                0.56,
                               ),
                             ),
                           ),
+                        ),
                           Padding(
                             padding: getPadding(
                               left: 14,
                               top: 26,
-                              right: 231,
                             ),
                             child: GetBuilder(
                               builder: (K51Controller _c) => ListView.separated(
+
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 separatorBuilder: (context, index) {
@@ -107,11 +113,11 @@ class K51Screen extends GetWidget {
                               ),
                             ),
                           ),
+
                           Padding(
                             padding: getPadding(
                               left: 14,
                               top: 26,
-                              right: 231,
                             ),
                             child: GetBuilder(
                               builder: (K51Controller _c) => ListView.separated(
@@ -131,64 +137,65 @@ class K51Screen extends GetWidget {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: getPadding(
-                                left: 29,
-                                top: 33,
-                                right: 29,
-                              ),
-                              child: ListView.separated(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: getVerticalSize(
-                                      21,
-                                    ),
-                                  );
-                                },
-                                itemCount: 1,
-                                itemBuilder: (context, index) {
-                                  return CalendarDaysRowWidget();
-                                },
-                              ),
+                      ],),
+                    ),
+                    if(widget != null)
+                    widget!
+                  ],),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: getPadding(
+                        left: 29,
+                        top: 33,
+                        right: 29,
+                      ),
+                      child: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            height: getVerticalSize(
+                              21,
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: getPadding(
-                                left: 29,
-                                top: 33,
-                                right: 29,
-                              ),
-                              child: GetBuilder(
-                                builder: (K51Controller _c) => ListView.separated(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      height: getVerticalSize(
-                                        21,
-                                      ),
-                                    );
-                                  },
-                                  itemCount: controller.getDaysForRows.length,
-                                  itemBuilder: (context, index) {
-                                    return CalendarWidget(controller.getDaysForRows[index]);
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return CalendarDaysRowWidget();
+                        },
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: getPadding(
+                        left: 29,
+                        top: 33,
+                        right: 29,
+                      ),
+                      child: GetBuilder(
+                        builder: (K51Controller _c) => ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: getVerticalSize(
+                                21,
+                              ),
+                            );
+                          },
+                          itemCount: controller.getDaysForRows.length,
+                          itemBuilder: (context, index) {
+                            return CalendarWidget(controller.getDaysForRows[index]);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

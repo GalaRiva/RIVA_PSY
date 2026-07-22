@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' ;
 import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
 import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
+import 'package:easy_localization/easy_localization.dart' ;
 
 import 'controller.dart';
 import 'widgets/card_settings_button_widget.dart';
@@ -41,7 +43,7 @@ class K6Screen extends GetWidget {
                             ),
                             CardSettingsButtonWidget(context,
                                 onTap: () => onTapRowrefresh(context),
-                                title: 'О приложении',
+                                title: 'about_app',
                                 svgIcon: ImageConstant.imgRefresh,
                                 controller: controller,
                                 svgSize: 24),
@@ -50,7 +52,7 @@ class K6Screen extends GetWidget {
                                   onTap: () => controller.password
                                       ? onTapRowlock(context)
                                       : null,
-                                  title: 'Пароль',
+                                  title: 'passwprd',
                                   svgIcon: ImageConstant.imgLock,
                                   controller: controller,
                                   svgSize: 20,
@@ -64,7 +66,7 @@ class K6Screen extends GetWidget {
                               context,
                               onTap: () =>
                                   controller.onTapDataAndRecovery(context),
-                              title: 'Данные и востановление',
+                              title: 'data_and_recovery',
                               svgIcon: ImageConstant.imgClip,
                               controller: controller,
                               svgSize: 20,
@@ -79,7 +81,7 @@ class K6Screen extends GetWidget {
                                             context,
                                             GlobalKey<
                                                 ScaffoldMessengerState>()),
-                                    title: 'Напоминания о приеме',
+                                    title: 'apoinment_reminders',
                                     svgIcon: ImageConstant.imgPill,
                                     controller: controller,
                                     svgSize: 24,
@@ -90,7 +92,7 @@ class K6Screen extends GetWidget {
                             CardSettingsButtonWidget(
                               context,
                               onTap: () => onTapRowcheckmark(context),
-                              title: 'Предложение по улучшению',
+                              title: 'suggestions',
                               svgIcon: ImageConstant.imgCheckmarkGray800,
                               controller: controller,
                               svgSize: 24,
@@ -98,7 +100,7 @@ class K6Screen extends GetWidget {
                             CardSettingsButtonWidget(
                               context,
                               onTap: () => onTapRowcheckmarkone(context),
-                              title: 'Сообщить об ошибке',
+                              title: 'report_an_error',
                               svgIcon: ImageConstant.imgCheckmarkGray80024x24,
                               controller: controller,
                               svgSize: 24,
@@ -107,7 +109,7 @@ class K6Screen extends GetWidget {
                               context,
                               onTap: () => Navigator.pushNamed(
                                   context, AppRoutes.reminders),
-                              title: 'Напоминания',
+                              title: 'reminders',
                               svgIcon: ImageConstant.imgClockGray800,
                               controller: controller,
                               svgSize: 24,
@@ -115,7 +117,7 @@ class K6Screen extends GetWidget {
                             CardSettingsButtonWidget(
                               context,
                               onTap: () => onTapRowclose(context),
-                              title: 'Подписка',
+                              title: 'subscription',
                               svgIcon: ImageConstant.imgClose,
                               controller: controller,
                               svgSize: 24,
@@ -127,7 +129,17 @@ class K6Screen extends GetWidget {
                               context,
                               onTap: () => Navigator.pushNamed(
                                   context, AppRoutes.profile),
-                              title: 'Ваш профиль',
+                              title: 'your_profile',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            if(false)
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => Navigator.pushNamed(
+                                  context, AppRoutes.selectLanguage),
+                              title: 'language',
                               svgIcon: ImageConstant.imgUser,
                               controller: controller,
                               svgSize: 24,

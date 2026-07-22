@@ -195,16 +195,24 @@ class K22Screen extends GetWidget {
                                 ),
                                 child: Center(
                                   child: SizedBox(
-                                    width: MediaQuery.of(context).size.width - 32,
+                                    width: MediaQuery.of(context).size.width - 20,
                                     child: GetBuilder(
                                       builder: (K22Controller _c) => Wrap(
+                                        runAlignment: WrapAlignment.center,
                                         spacing: 12,
 
                                         children: controller.currentEventList
-                                            .map((el) => EventCard(model: el, onTap: () {
-                                              controller.whatHappened = el;
-                                              controller.update();
-                                            }, isSelect: controller.contain(el),))
+                                            .map((el) => Padding(
+                                              padding: const EdgeInsets.only(bottom: 10),
+                                              child: EventCard(model: el,
+                                                                                        onTap: () {
+                                                controller.whatHappened = el;
+
+                                                controller.update();
+                                              }, isSelect: controller.contain(el),
+                                                                                      cardWidth: size.width / 2 -30,
+                                                                                      ),
+                                            ))
                                             .toList(),
                                       ),
                                     ),

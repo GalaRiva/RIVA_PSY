@@ -32,12 +32,14 @@ class NegativePositiveTab extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 32,
                   child:  Wrap(
                     spacing: 12,
+                      runAlignment: WrapAlignment.center,
                       children: List.generate(list.length, (index)=> Padding(
-                        padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 20 : 0),
+                        padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 40 : 20),
                         child: EventCard(
+                          cardWidth: size.width / 2 - 30,
+
                           textIsFitted: true,
                               isSelect: controller.contain(list[index].name),
-                              cardHeight: 44 ,
                               model: list[index], onTap: () {
                               controller.emotion = list[index];
                               controller.update();

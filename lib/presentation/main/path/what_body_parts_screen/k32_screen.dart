@@ -199,7 +199,7 @@ class K32Screen extends GetWidget {
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: getVerticalSize(30),
+                                          height: getVerticalSize(50),
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             shrinkWrap: false,
@@ -236,10 +236,12 @@ class K32Screen extends GetWidget {
                                                 padding: getPadding(
                                                     right: 12, bottom: 18),
                                                 child: BodyPartWidget(
+                                                  cwidth: size.width / 2 - 30,
                                                   model: e,
                                                   title: e.bodyPart,
+
                                                   controller: controller,
-                                                  color: ColorConstant.gray300,
+                                                  color: ColorConstant.whiteA700,
                                                 ),
                                               ))
                                           .toList(),

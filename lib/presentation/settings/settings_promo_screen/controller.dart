@@ -16,6 +16,7 @@ class K16Controller {
   Future submitPromo(String promo, BuildContext context) async {
     //try {
 
+
     final data = await _fireStoreRepo.getPromoModel(promo: promo);
     print('promo: ' + data.toString());
     if (data.isNotEmpty) {

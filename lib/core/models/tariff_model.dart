@@ -71,7 +71,7 @@ class TariffModel {
       name: 'Орион', nameInEn: 'Oreon',
       endDate: DateTime(DateTime.now().year, DateTime.now().month + 1,DateTime.now().day,),
       description: '',
-      cost: 9.9,
+      cost: 0.01,
       advantages: [
         'Доступ ко всем текстовым рекомендациям',
         'Доступ ко всем аудио рекомендациям',
@@ -85,7 +85,7 @@ class TariffModel {
       nameInEn: 'Oreon',
       endDate: DateTime(DateTime.now().year + 1, DateTime.now().month,DateTime.now().day,),
       description: '',
-      cost: 4140 ?? 36,
+      cost:  2990,
       advantages: [
         'Доступ ко всем текстовым рекомендациям',
         'Доступ ко всем аудио рекомендациям',

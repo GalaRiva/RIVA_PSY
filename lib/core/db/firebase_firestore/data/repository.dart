@@ -90,6 +90,7 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   @override
   Future<bool> canActivatePromo({required PromoModel promo}) async {
     if (promo is DisposablePromo) {
+      debugPrint('promo request on ${_userId()}');
       if (!promo.activatedUsers.contains(_userId()) &&
           promo.maxActivated > promo.activatedUsers.length) {
         return true;
@@ -166,16 +167,18 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
             registrationDate.toIso8601String();
     }
     try {
-      if (!create)
-        await instance
+      if (!create) {
+        final doc = await instance
             .collection(_userCollection)
-            .doc(userId)
-            .update(userDataForUpdate);
-      else
-        await instance
+            .doc(userId);
+        doc.update(userDataForUpdate);
+      } else {
+        final doc = await instance
             .collection(_userCollection)
-            .doc(userId)
+            .doc(userId);
+        doc
             .set(userDataForUpdate);
+      }
     } catch (_) {
       if (onError != null) onError();
     }
@@ -187,7 +190,8 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
       required String docPath,
       required Map<String, dynamic> content}) async {
     try {
-      instance.collection(selectedCollection).doc(docPath).set(content);
+      final doc = instance.collection(selectedCollection).doc(docPath);
+     await doc.set(content);
       return true;
     } catch (_) {
       return false;
@@ -198,11 +202,12 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   @override
   Future<bool> canUseTrial({required String trialName}) async {
     try {
+      if(_userId().isEmpty) return false;
       final doc = instance.collection(_trialsCollection).doc(trialName).collection('users').doc(_userId());
-      debugPrint('ebat 2 ${!((await doc.get()).exists)}');
-      return !((await doc.get()).exists);
+      final docref = await doc.get();
+      return docref.data() == null;
     }catch (_) {
-      debugPrint("EBAT $_");
+      debugPrint(" $_");
       return false;
     }
   }
@@ -210,8 +215,9 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   @override
   Future<bool> useTrial({required String trialName}) async {
     try {
-      final doc = instance.collection(_trialsCollection).doc(trialName).collection('users');
-      await doc.doc(_userId()).set({'use' : true});
+      final doc = instance.collection(_trialsCollection).doc(trialName);
+      final coll = doc.collection('users');
+      await coll.doc(_userId()).set({'use' : true});
       return true;
     }catch (_) {
       return false;

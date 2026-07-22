@@ -52,6 +52,7 @@ class CurrentUser extends UserModel {
     user.currentTariff = await repo.getTariff();
     user.reminderTimeInStr = await repo.getReminderTimeInStr();
     user.registrationDate = await repo.getRegistrationDate();
+    if((user.email ?? '').isNotEmpty)
     usedOreonTrials = !(await FireStoreRepositoryImpl().canUseTrial(trialName: 'Oreon'));
     if (!repo.checkActualTariff(user.currentTariff!)) {
       user.currentTariff = TariffModel.BASE_TARIFF;

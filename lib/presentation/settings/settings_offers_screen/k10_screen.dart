@@ -55,6 +55,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                 child: TextFormField(
                                   controller:
                                       controller.model.value.controller,
+
                                   maxLines: 30,
                                   decoration: InputDecoration(
                                       contentPadding:
@@ -62,7 +63,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide.none),
-                                      fillColor: ColorConstant.gray200,
+                                      fillColor: ColorConstant.grayLight,
                                       filled: true,
                                       hintText: 'Ваши предложения',
                                       hintStyle: TextStyle(
@@ -103,7 +104,6 @@ class K10Screen extends GetWidget<K10Controller> {
                                   )),
                             ),
                             CustomButton(
-                                height: getVerticalSize(32),
                                 width: getHorizontalSize(172),
                                 text: "отправить".toUpperCase(),
                                 onTap: () async {
@@ -123,7 +123,6 @@ class K10Screen extends GetWidget<K10Controller> {
                                 },
                                 margin: getMargin(top: 83)),
                             CustomButton(
-                                height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
                                 text: "настройки".toUpperCase(),
                                 margin: getMargin(top: 29),

@@ -23,6 +23,7 @@ class CustomPopButton extends StatelessWidget {
         onTap: () => Navigator.pop(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomImageView(
                 svgPath: ImageConstant

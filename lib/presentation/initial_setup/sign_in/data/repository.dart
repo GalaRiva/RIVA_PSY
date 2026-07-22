@@ -313,11 +313,18 @@ class SignInDataRepository extends SignInDomainRepository {
     String? login,
     String? email,
   }) async {
+    try {
+      if(userId.isEmpty) {
+        return FirebaseDataResult(
+            firebaseResultStatus: FirebaseResultStatus.Error,
+            exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');
 
+      }
+    final doc = FirebaseFirestore.instance.collection('Users').doc(userId);
     final userData =
-        await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+        await doc.get();
     late final UserModel user;
-    if (userData.data() != null) {
+    if (userData.exists) {
       user = UserModel.userFromFirebase(userData.data() ?? {});
     } else {
       user = UserModel(
@@ -344,7 +351,7 @@ class SignInDataRepository extends SignInDomainRepository {
         old: user.old);
     return FirebaseDataResult(
         firebaseResultStatus: FirebaseResultStatus.Success);
-    try {} catch (_) {
+    } catch (_) {
       return FirebaseDataResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');

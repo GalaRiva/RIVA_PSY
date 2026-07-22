@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:listenmebaby71_s_application17/core/app_export.dart';
 
 import '../../../../core/utils/image_constant.dart';
 import '../../../../core/utils/size_utils.dart';
@@ -7,6 +8,7 @@ import '../../../../theme/app_decoration.dart';
 import '../../../../theme/app_style.dart';
 import '../../../../widgets/custom_image_view.dart';
 import '../../../../widgets/custom_switch.dart';
+import '../../../../widgets/custom_text.dart';
 import '../controller.dart';
 
 Widget CardSettingsButtonWidget(BuildContext context,
@@ -22,7 +24,9 @@ Widget CardSettingsButtonWidget(BuildContext context,
         height: getVerticalSize(height),
           padding: getPadding(left: 7, top: 5, right: 7, bottom: 5),
           decoration: AppDecoration.outlineBluegray80014
-              .copyWith(borderRadius: BorderRadiusStyle.roundedBorder3),
+              .copyWith(borderRadius: BorderRadiusStyle.roundedBorder3,
+          color: ColorConstant.grayLight
+          ),
           child: Center(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +38,7 @@ Widget CardSettingsButtonWidget(BuildContext context,
                   margin: getMargin(top: 3, bottom: 5)),
               Padding(
                   padding: getPadding(left: 21, top: 5, bottom: 2),
-                  child: Text(title,
+                  child: CustomText(title,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight16)),

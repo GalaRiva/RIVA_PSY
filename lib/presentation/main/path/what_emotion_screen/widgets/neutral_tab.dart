@@ -60,11 +60,13 @@ class NeutralTab extends StatelessWidget {
 
                         child: Wrap(
                           spacing: 12,
-                          children: List.generate(list.where((element) => element.name.contains('+')).toList().length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.name.contains('+')).toList().length - 1 ? 20 : 0),
+                          runAlignment: WrapAlignment.center,
+                          children: List.generate(list.length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 40 : 20),
                             child: EventCard(
+                              cardWidth: size.width / 2 - 30,
+
                               textIsFitted: true,
-                              cardWidth: size.width / 2.4,
                               isSelect: controller.contain(list.where((element) => element.name.contains('+')).toList()[index].name),
                               cardHeight: 44 ,
                               model: list.where((element) => element.name.contains('+')).toList()[index], onTap: () {

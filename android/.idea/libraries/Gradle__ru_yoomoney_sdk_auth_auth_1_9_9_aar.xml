@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.yoomoney.sdk.auth:auth:1.9.9@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3c56de9fc0e8a6945d84eb54a137a322/transformed/jetified-auth-1.9.9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3c56de9fc0e8a6945d84eb54a137a322/transformed/jetified-auth-1.9.9/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3c56de9fc0e8a6945d84eb54a137a322/transformed/jetified-auth-1.9.9/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.auth/auth/1.9.9/200a16487a828f17c35fd2e100fe41dbacf75c8a/auth-1.9.9-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.yoomoney.sdk.auth/auth/1.9.9/585ed52e86854999741a5554d587d83eced5f39a/auth-1.9.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

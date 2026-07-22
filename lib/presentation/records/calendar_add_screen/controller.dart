@@ -18,12 +18,12 @@ class K51Controller extends GetxController {
   late int month;
 
 
-  List<List<DayModel>> initializeDaysList () {
+  List<List<DayModel>> initializeDaysList ([Function(DateTime)? onTap]) {
     getDaysForRows=[];
     year = currentDate.year;
     month = currentDate.month;
     final monthModel = MonthModel(DayType.dayEvents, currentMonth: currentDate, dayEvents: dayEvents ?? []);
-    final listForReturn = monthModel.initializeMonth(context, CalendarType.Add);
+    final listForReturn = monthModel.initializeMonth(context, CalendarType.Add, onTap);
     for(int i = 0; i < listForReturn.length / 7; i++) {
       final ind = i * 7;
       final list = listForReturn.getRange(ind, ind + 7).toList();

@@ -16,33 +16,40 @@ class WorkManagerService {
     );
     // Periodic task registration
     await workmanager.cancelAll();*/
-    final AwesomeNotificationService notificationService = AwesomeNotificationService();
-    notificationService.canselAllSchedules();
-    List<Map<String, dynamic>> _time = [];
-    _time += await _getReminders();
-    _time += await _getRemindersAboutPills();
+    try {
+      final AwesomeNotificationService notificationService = AwesomeNotificationService();
+      notificationService.canselAllSchedules();
+      List<Map<String, dynamic>> _time = [];
+      _time += await _getReminders();
+      _time += await _getRemindersAboutPills();
 
-    final _now = DateTime.now();
-    for(int i = 0; i < _time.length; i++) {
-      final workmanagerModel = WorkManagerModel.fromJson(_time[i]);
-      final date = DateTime(_now.year, _now.month, _now.day, workmanagerModel.hour, workmanagerModel.minute);
-      print(workmanagerModel.hour.toString() + ' ' + workmanagerModel.minute.toString());
-      final dur = _getTimeRemaining(date);
-      workmanagerModel.duration = dur;
-      print('dur $dur');
-      await notificationService.init(workmanagerModel);
-      try {
-        await notificationService.showNotification(workmanagerModel, dur);
-      } catch (_) {
+      final _now = DateTime.now();
+      for (int i = 0; i < _time.length; i++) {
+        final workmanagerModel = WorkManagerModel.fromJson(_time[i]);
+        final date = DateTime(
+            _now.year, _now.month, _now.day, workmanagerModel.hour,
+            workmanagerModel.minute);
+        print(workmanagerModel.hour.toString() + ' ' +
+            workmanagerModel.minute.toString());
+        final dur = _getTimeRemaining(date);
+        workmanagerModel.duration = dur;
+        print('dur $dur');
+        await notificationService.init(workmanagerModel);
+        try {
+          await notificationService.showNotification(workmanagerModel, dur);
+        } catch (_) {
 
-      }
-      /*await workmanager.registerPeriodicTask(
+        }
+        /*await workmanager.registerPeriodicTask(
           i.toString(),
           "simplePeriodicTask $i",
           frequency: Duration(hours: 24),
           initialDelay: dur,
         inputData: workmanagerModel.toJson()
       );*/
+      }
+    } catch (_) {
+
     }
   }
 

@@ -4,6 +4,8 @@ import 'package:listenmebaby71_s_application17/core/app_export.dart';
 class CustomMessageBox extends StatelessWidget {
   final String title;
   final dynamic content;
+  final double width;
+  final Color? bgColor;
   final double height;
   final VoidCallback? onPop;
   final bool canPop;
@@ -12,7 +14,7 @@ class CustomMessageBox extends StatelessWidget {
       required this.title,
       required this.content,
       this.height = 150,
-      this.onPop, this.canPop = true})
+      this.onPop, this.canPop = true, this.width = 340, this.bgColor})
       : super(key: key);
 
   @override
@@ -61,9 +63,9 @@ class CustomMessageBox extends StatelessWidget {
                 ),
               ),
                Container(
-                  width: getHorizontalSize(340),
-                  height: getVerticalSize(height!),
-                  color: Colors.white,
+                  width: getHorizontalSize(width),
+                  height: getVerticalSize(height),
+                  color: bgColor?? Colors.white,
                   child: Center(
                     child: SingleChildScrollView(
                       physics: BouncingScrollPhysics(),

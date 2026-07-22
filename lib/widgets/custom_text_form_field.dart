@@ -27,7 +27,7 @@ class CustomTextFormField extends StatelessWidget {
       this.maxLength,
       this.counterText,
       this.minLength,
-      this.hintStyle});
+      this.hintStyle, this.color, this.height});
 
   List<TextInputFormatter>? formatter;
 
@@ -50,6 +50,10 @@ class CustomTextFormField extends StatelessWidget {
   Alignment? alignment;
 
   double? width;
+
+  final double? height;
+
+  final Color? color;
 
   EdgeInsetsGeometry? margin;
 
@@ -90,6 +94,7 @@ class CustomTextFormField extends StatelessWidget {
   _buildTextFormFieldWidget(context) {
     return Container(
       width: width ?? double.maxFinite,
+      height: height,
       margin: margin,
       child: TextFormField(
         controller: controller,
@@ -124,7 +129,7 @@ class CustomTextFormField extends StatelessWidget {
       prefixIconConstraints: prefixConstraints,
       suffixIcon: suffix,
       suffixIconConstraints: suffixConstraints,
-      fillColor: _setFillColor(),
+      fillColor: color ?? _setFillColor(),
       filled: _setFilled(),
       counterText: counterText,
       isDense: true,
@@ -256,7 +261,7 @@ class CustomTextFormField extends StatelessWidget {
         );
       default:
         return TextStyle(
-          color: ColorConstant.deepPurple600,
+          color: ColorConstant.gray900,
           fontSize: getFontSize(
             13,
           ),
@@ -405,7 +410,7 @@ class CustomTextFormField extends StatelessWidget {
         );
       default:
         return TextStyle(
-          color: ColorConstant.deepPurple600,
+          color: ColorConstant.gray900,
           fontSize: getFontSize(
             14,
           ),
@@ -543,7 +548,7 @@ class CustomTextFormField extends StatelessWidget {
       case TextFormFieldVariant.Almost:
         return ColorConstant.gray50;
       case TextFormFieldVariant.FillGray200:
-        return ColorConstant.gray200;
+        return ColorConstant.grayLight;
       case TextFormFieldVariant.OutlineBluegray60014:
         return ColorConstant.gray50;
       default:
@@ -628,6 +633,7 @@ enum TextFormFieldVariant {
   Almost,
   Accent,
   FillGray200,
+
   UnderLineCyan7008c,
   UnderLineCyan700,
   OutlineBluegray60014,

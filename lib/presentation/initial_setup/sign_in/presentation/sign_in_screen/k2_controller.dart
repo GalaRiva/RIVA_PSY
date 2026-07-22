@@ -144,7 +144,7 @@ class K2AuthController extends GetxController {
         }
         else {
           await CurrentUser.repo.setService('google');
-          await CurrentUser.repo.setLocalUserData(email: result.email);
+          await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.splashScreen, (route) => false);
@@ -160,7 +160,7 @@ class K2AuthController extends GetxController {
               result.userId!, email: result.email, login: result.login);
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Success) {
             await CurrentUser.repo.setService('google');
-            await CurrentUser.repo.setLocalUserData(email: result.email);
+            await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);

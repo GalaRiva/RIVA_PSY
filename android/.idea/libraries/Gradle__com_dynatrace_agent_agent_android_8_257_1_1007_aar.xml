@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: com.dynatrace.agent:agent-android:8.257.1.1007@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/jars/libs/instrumentorAPI-apache.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/jars/libs/instrumentorAPI-compose.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/jars/libs/instrumentorAPI-okhttp3.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/jars/libs/instrumentorAPI.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/918fe1544986426fbac0fc41d3f03fbc/transformed/jetified-agent-android-8.257.1.1007/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dynatrace.agent/agent-android/8.257.1.1007/9890fc89a143815f5b4ae86031298acce14dc4ff/agent-android-8.257.1.1007-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

@@ -85,7 +85,7 @@ class BottomSheetWidget extends StatelessWidget {
                           builder: (K54Controller _c) => Column(
                             children: [
                               SizedBox(
-                                height: getVerticalSize(30),
+                                height: getVerticalSize(50),
                                 child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: false,
@@ -128,15 +128,20 @@ class BottomSheetWidget extends StatelessWidget {
                     child: Wrap(
                       spacing: 12,
                         children: list is List<EventModel>
-                            ? list!.map((el) => EventCard(
-                              model: el as EventModel,
-                              onTap: () => onChangeEventModel!(el), isSelect: false,
+                            ? list!.map((el) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: EventCard(
+                                                        cardWidth: size.width / 2 - 30,
+                                model: el as EventModel,
+                                onTap: () => onChangeEventModel!(el), isSelect: false,
+                              ),
                             ))
                                 .toList()
                             : list is List<K32Model> ? list!.map((e) => Padding(
                                         padding:
                                             getPadding(right: 12, bottom: 18),
                                         child: BodyPartWidget(
+                                          cwidth: size.width / 2 - 50,
                                           model: (e as K32Model).bodyPartsModel,
                                           controller: controller,
                                           title: (e.bodyPartsModel).bodyPart,

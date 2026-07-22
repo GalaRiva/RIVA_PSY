@@ -101,10 +101,16 @@ class K24Page extends GetWidget {
                 child: Wrap(
                   children: controller.characterList.map((el) => Padding(
                       padding: getPadding(right:  MediaQuery.of(context).size.width / 30),
-                      child: EventCard(model: el, onTap: () {
-                                        controller.customEvent.svgPath = el.svgPath;
-                                        controller.update();
-                                      }, isSelect: controller.contain(el)))).toList(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: EventCard(model: el, onTap: () {
+                                          controller.customEvent.svgPath = el.svgPath;
+                                          controller.update();
+                                        },
+                            cardWidth:  size.width / 2 - 30,
+
+                            isSelect: controller.contain(el)),
+                      ))).toList(),
                                 ),
 
 
@@ -128,13 +134,16 @@ class K24Page extends GetWidget {
                             child: Wrap(
                               children: controller.animalList.map((el) => Padding(
                                   padding: getPadding(right:  MediaQuery.of(context).size.width / 30),
-                                  child: InkWell(
-                                      onTap: () {
-                                        controller.customEvent.svgPath = el.svgPath;
-                                        controller.update();
-                                      },
-                                      child: EventCard(model: el, isSelect: controller.contain(el)
-                                      )))).toList(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: EventCard(model: el, onTap: () {
+                                      controller.customEvent.svgPath = el.svgPath;
+                                      controller.update();
+                                    },
+                                        cardWidth:  size.width / 2 - 30,
+                                        isSelect: controller.contain(el)
+                                    ),
+                                  ))).toList(),
                             ),
                           ),
 
@@ -156,11 +165,14 @@ class K24Page extends GetWidget {
                             child: Wrap(
                               children: controller.placeList.map((el) => Padding(
                                   padding: getPadding(right:  MediaQuery.of(context).size.width / 30),
-                                  child: EventCard(onTap: () {
-                                    controller.customEvent.svgPath = el.svgPath;
-                                    controller.update();
-                                  }
-                                      ,model: el, isSelect: controller.contain(el),))).toList(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: EventCard(model: el, onTap: () {
+                                      controller.customEvent.svgPath = el.svgPath;
+                                      controller.update();
+                                    },
+                                      cardWidth:  size.width / 2 - 30, isSelect: controller.contain(el),),
+                                  ))).toList(),
                             ),
                           ),
                           Padding(
@@ -187,9 +199,7 @@ class K24Page extends GetWidget {
                           Padding(
                             padding: getPadding(right: 16),
                             child: CustomButton(
-                              height: getVerticalSize(
-                                32,
-                              ),
+
                               width: getHorizontalSize(
                                 204,
                               ),

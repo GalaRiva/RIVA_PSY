@@ -59,6 +59,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
       alignment: Alignment.center,
       decoration: AppDecoration.outlineBluegray80014.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder3,
+        color: ColorConstant.grayLight
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

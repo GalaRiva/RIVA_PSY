@@ -28,7 +28,7 @@ class MonthModel {
   final List<Map> _dayEventsInCurrentMonth = [];
   List<int> _indexes = [];
 
-  List<DayModel> initializeMonth(BuildContext context, CalendarType type) {
+  List<DayModel> initializeMonth(BuildContext context, CalendarType type, [Function(DateTime)? onTap]) {
     final DateTime previousMonth =
         DateTime(currentMonth.year, currentMonth.month - 1);
     final DateTime nextMonth =
@@ -44,7 +44,10 @@ class MonthModel {
         }
       }
       void _onTap() {
-        if (dayEventModel != null && type == CalendarType.Change) {
+        if(onTap != null) {
+          onTap(DateTime(currentMonth.year, currentMonth.month, i + 1));
+        }
+       else if (dayEventModel != null && type == CalendarType.Change) {
           Navigator.pushNamed(context, AppRoutes.record_edit,
               arguments: dayEventModel);
         } else if (type == CalendarType.Add) {

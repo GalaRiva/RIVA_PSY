@@ -22,7 +22,7 @@ class UserRepo {
   String userId()
       {
         final id = (CurrentUser.user.email! + ' ' + authService).trim();
-        return id == '' ? CurrentUser.user.email! : id;
+        return id.trim() == '' ? CurrentUser.user.email! : id.trim();
       }
   var authService = '';
 

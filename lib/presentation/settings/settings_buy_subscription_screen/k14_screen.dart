@@ -149,7 +149,7 @@ class K14Screen extends StatelessWidget {
                                   CustomButton(
                                     height: getVerticalSize(80),
                                     text:
-                                    "подписка 1 год ${TariffModel.ORION_TARIFF_YEAR.cost / 12} ЕВРО/мес\n${TariffModel.ORION_TARIFF_YEAR.cost} евро (вместо 119)".toUpperCase(),
+                                    "подписка 1 год ${(TariffModel.ORION_TARIFF_YEAR.cost / 12).round()} ЕВРО/мес\n${(TariffModel.ORION_TARIFF_YEAR.cost).round()} евро (вместо 119)".toUpperCase(),
                                     margin:
                                     getMargin(left: 20, top: 19, right: 19),
                                     variant: ButtonVariant.OutlineBluegray60014,
@@ -159,7 +159,7 @@ class K14Screen extends StatelessWidget {
                                     onTap: () async => await controller.onTapGoToTariff(TariffModel.ORION_TARIFF_YEAR!, context)),
 
                                 CustomButton(
-                                    height: getVerticalSize(32),
+
                                     width: getHorizontalSize(146),
                                     text: "подписка".toUpperCase(),
                                     margin: getMargin(top: 42),
@@ -299,13 +299,13 @@ class K14Screen extends StatelessWidget {
                                     onTap: () async => await controller.onTapGoToTariff(tariff!, context)),
                                 Padding(
                                     padding: getPadding(top: 14),
-                                    child: Text("за  ${(tariff.cost / 12).toInt()} ₽/месяц",
+                                    child: Text("за  ${(tariff.cost).toInt()} ₽/год",
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
                                             .txtSFProDisplayLight16Cyan700)),
                                 CustomButton(
-                                    height: getVerticalSize(32),
+
                                     width: getHorizontalSize(146),
                                     text: "подписка".toUpperCase(),
                                     margin: getMargin(top: 42),
