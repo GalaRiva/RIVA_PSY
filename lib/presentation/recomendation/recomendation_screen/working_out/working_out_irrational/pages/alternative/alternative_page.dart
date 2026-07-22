@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/cubit.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/state.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/expandeble_text_widget.dart';
-import 'package:listenmebaby71_s_application17/widgets/pdf_viewer_widget.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/cubit.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/state.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/expandeble_text_widget.dart';
+import 'package:riva_psy/widgets/pdf_viewer_widget.dart';
 
 import '../../../bloc/cubit.dart';
 

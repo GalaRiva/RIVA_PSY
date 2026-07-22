@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../theme/app_style.dart';

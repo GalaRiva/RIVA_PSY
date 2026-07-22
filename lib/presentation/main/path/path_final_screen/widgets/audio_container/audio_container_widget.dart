@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../../core/services/datasource_service.dart';

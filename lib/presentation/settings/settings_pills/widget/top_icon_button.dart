@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/theme/app_style.dart';
+import 'package:riva_psy/theme/app_style.dart';
 
 import '../../../../core/utils/color_constant.dart';
 

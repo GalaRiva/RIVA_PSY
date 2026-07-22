@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/desire/desire.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/desire/desire.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_message_box.dart';
 
 import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/size_utils.dart';

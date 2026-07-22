@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/super_quest/ui/super_quest_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/super_quest/ui/super_quest_page.dart';
 
 import '../../../../../../../core/utils/color_constant.dart';
 import '../../../../../../../core/utils/image_constant.dart';

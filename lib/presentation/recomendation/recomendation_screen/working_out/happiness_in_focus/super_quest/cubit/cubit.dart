@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/super_quest/cubit/state.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/super_quest/cubit/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SuperQuestCubit extends Cubit<SuperQuestState> {

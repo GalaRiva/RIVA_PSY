@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/db/hive_db.dart';
-import 'package:listenmebaby71_s_application17/core/models/event_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/db/hive_db.dart';
+import 'package:riva_psy/core/models/event_model.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
 import '../../main/main_screen/repository.dart';
 import '../../main/path/what_emotion_screen/repository.dart';
 import '../../records/records_screen/repository.dart';

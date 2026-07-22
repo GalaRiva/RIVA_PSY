@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/services/firebase/http_downloader.dart';
+import 'package:riva_psy/core/services/firebase/http_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CloudStorageService {

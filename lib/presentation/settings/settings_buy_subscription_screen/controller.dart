@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
+import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../core/services/payments/yookassa_payments.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_image_view.dart';
+import 'package:riva_psy/widgets/custom_image_view.dart';
 
 import '../core/utils/image_constant.dart';
 import '../core/utils/size_utils.dart';

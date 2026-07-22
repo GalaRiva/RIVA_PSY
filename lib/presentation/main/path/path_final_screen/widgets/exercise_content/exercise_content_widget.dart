@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/utils/emotion_in_day_event_extension.dart';
+import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
 
 import '../../../../../../core/models/day_event_model.dart';
 import '../../../../../../core/utils/color_constant.dart';

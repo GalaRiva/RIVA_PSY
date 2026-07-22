@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 class AppStyle {
   static TextStyle txtSFProDisplayLight12Deeppurple600 = TextStyle(

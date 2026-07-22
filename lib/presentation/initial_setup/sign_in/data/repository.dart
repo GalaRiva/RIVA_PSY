@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
-import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
-import 'package:listenmebaby71_s_application17/core/models/user_data_model.dart';
-import 'package:listenmebaby71_s_application17/core/services/firebase/firebase_auth_exception_handler.dart';
-import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/models/firebase_sign_in_result.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/repository.dart';
+import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
+import 'package:riva_psy/core/models/tariff_model.dart';
+import 'package:riva_psy/core/models/user_data_model.dart';
+import 'package:riva_psy/core/services/firebase/firebase_auth_exception_handler.dart';
+import 'package:riva_psy/core/utils/string_extension.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/models/firebase_sign_in_result.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/models/user_model.dart';

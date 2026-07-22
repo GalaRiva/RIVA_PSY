@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/controller.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/controller.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../../core/models/audio/audio.dart';

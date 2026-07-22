@@ -1,9 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
+import 'package:riva_psy/widgets/custom_message_box.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/services/notifications/flutter_local_notification_service.dart';
@@ -25,7 +25,7 @@ class SendPushesScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(width: getHorizontalSize(305),
-              child: Text('Разрешить приложению Rigel Psy  отправлять push-уведомления', style: AppStyle.txtSFProDisplayLight16,),)
+              child: Text('Разрешить приложению RIVA PSY  отправлять push-уведомления', style: AppStyle.txtSFProDisplayLight16,),)
 
               ,Row(
                 mainAxisAlignment: MainAxisAlignment.center,

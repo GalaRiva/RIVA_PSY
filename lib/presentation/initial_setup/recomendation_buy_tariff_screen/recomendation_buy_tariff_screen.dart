@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/shared_prefs.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_text_form_field.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/shared_prefs.dart';
+import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
+import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../core/models/tariff_model.dart';
 // ignore_for_file: must_be_immutable

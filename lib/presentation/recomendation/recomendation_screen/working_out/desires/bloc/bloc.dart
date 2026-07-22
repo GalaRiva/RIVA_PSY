@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/wishes_detail_dialog.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/wishes_detail_dialog.dart';
 
 import '../../../../../../core/db/hive_db.dart';
 import '../../../../../../core/models/desire/desire.dart';

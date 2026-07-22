@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../../../core/models/desire/desire.dart';
 

@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/size_utils.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills/controller.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_app_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_pop_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/size_utils.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/settings_pills/controller.dart';
+import 'package:riva_psy/widgets/custom_app_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_pop_button.dart';
 
 import '../../../../widgets/custom_bottom_bar.dart';
 import '../settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
-import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
+import 'package:riva_psy/core/utils/string_extension.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../core/services/datasource_service.dart';
 import '../../../core/user_data/user.dart';

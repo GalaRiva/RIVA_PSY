@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/theme/app_style.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_text_form_field.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/theme/app_style.dart';
+import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/charts/concrete_pill/concrete_pill_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/languages/languages_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/calendar/calendar_page.dart';
+import 'package:riva_psy/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/presentation/verification_screen/verification_screen.dart';
+import 'package:riva_psy/presentation/charts/concrete_pill/concrete_pill_screen.dart';
+import 'package:riva_psy/presentation/languages/languages_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/calendar/calendar_page.dart';
 
 import '../presentation/charts/charts_calendar/k62_screen.dart';
 import '../presentation/charts/charts_screen/k61_screen.dart';

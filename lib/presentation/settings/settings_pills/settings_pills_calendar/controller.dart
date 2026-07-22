@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/models/calendar/calendar_controller.dart';
+import 'package:riva_psy/core/models/calendar/calendar_controller.dart';
 
 import '../../../../core/models/calendar/day_model.dart';
 import '../../../../core/models/calendar/month_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/models/calendar/calendar_controller.dart';
+import 'package:riva_psy/core/models/calendar/calendar_controller.dart';
 
 import '../../../presentation/charts/charts_calendar/controller.dart';
 import '../../../routes/app_routes.dart';

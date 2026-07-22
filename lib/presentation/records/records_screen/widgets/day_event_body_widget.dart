@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/models/day_event_model.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../../core/utils/color_constant.dart';

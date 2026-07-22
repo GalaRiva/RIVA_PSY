@@ -1,5 +1,5 @@
 
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 
 import '../../../../../../../core/models/day_event_model.dart';
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/services/payments/yookassa_payments.dart';
+import 'package:riva_psy/core/services/payments/yookassa_payments.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';

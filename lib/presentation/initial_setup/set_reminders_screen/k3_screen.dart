@@ -3,16 +3,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
-import 'package:listenmebaby71_s_application17/core/utils/shared_prefs.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
+import 'package:riva_psy/core/utils/shared_prefs.dart';
+import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
+import 'package:riva_psy/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
+import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
 import 'controller.dart';
 import '../../../core/services/workmanager/workmanager_service.dart';
 import '../../../core/user_data/user.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../widgets/custom_checkbox_notification.dart';
 // ignore_for_file: must_be_immutable

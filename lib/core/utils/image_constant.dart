@@ -298,7 +298,7 @@ class ImageConstant {
 
   static String imgUser = 'assets/images/img_user.svg';
 
-  static String imgRigelCyan700 = 'assets/images/img_rigel_cyan_700.svg';
+  static String imgRivaCyan700 = 'assets/images/img_rigel_cyan_700.svg';
 
   static String imgMegaphone = 'assets/images/img_megaphone.svg';
 
@@ -774,7 +774,7 @@ class ImageConstant {
   static String imgSignalBlueGray400 =
       'assets/images/img_signal_blue_gray_400.svg';
 
-  static String imgRigel = 'assets/images/img_rigel.svg';
+  static String imgRiva = 'assets/images/img_rigel.svg';
 
   static String imgFrame203 = 'assets/images/img_frame203.svg';
 

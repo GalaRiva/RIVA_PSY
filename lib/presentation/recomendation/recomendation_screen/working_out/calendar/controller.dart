@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
 
 import '../../../../../core/models/calendar/calendar_controller.dart';
 import '../../../../../core/models/calendar/day_model.dart';

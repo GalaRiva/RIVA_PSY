@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../../core/models/day_event_model.dart';
 import '../../../../../core/services/datasource_service.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/emotion_in_day_event_extension.dart';
-import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
+import 'package:riva_psy/core/utils/string_extension.dart';
 import 'widgets/negative_positive_tab.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_search_view.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_search_view.dart';
 import '../../../../../core/utils/size_utils.dart';
 
 import '../../../../core/models/day_event_model.dart';

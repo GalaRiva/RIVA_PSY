@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_text_form_field.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../widgets/custom_app_bar.dart';

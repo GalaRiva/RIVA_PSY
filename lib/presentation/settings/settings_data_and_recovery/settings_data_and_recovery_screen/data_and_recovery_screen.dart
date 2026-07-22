@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../core/utils/image_constant.dart';
 import '../../../../core/utils/size_utils.dart';

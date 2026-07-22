@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/adoption_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/pill_model.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/models/adoption_model.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 
 import '../../../../../widgets/custom_button.dart';
 import '../../../settings/settings_pills/repository.dart';

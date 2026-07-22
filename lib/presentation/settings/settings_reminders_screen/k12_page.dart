@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../core/user_data/user.dart';
 import '../../../widgets/custom_app_bar.dart';
@@ -8,8 +8,8 @@ import '../../../widgets/custom_bottom_bar.dart';
 import '../../../widgets/custom_checkbox_notification.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'controller.dart';
 import 'widgets/listtime_item_widget.dart';

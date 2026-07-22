@@ -4,13 +4,13 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 import '../../../../settings/settings_profile_screen/text_field_formatter.dart';
 import '../widgets/services_button.dart';
 import 'k2_controller.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_checkbox.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_text_form_field.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_checkbox.dart';
+import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 class K2Screen extends GetWidget<K2Controller> {
   TextEditingController group887Controller = TextEditingController();

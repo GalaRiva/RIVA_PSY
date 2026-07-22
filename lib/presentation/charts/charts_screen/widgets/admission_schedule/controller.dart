@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/pill_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
 
 import '../../../../settings/settings_pills/repository.dart';
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
+import 'package:riva_psy/core/user_data/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../presentation/settings/settings_tariff_activated_screen/repository.dart';

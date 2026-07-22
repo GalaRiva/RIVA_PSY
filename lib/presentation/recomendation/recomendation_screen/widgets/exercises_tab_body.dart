@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/widgets/tab_widget.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/widgets/tab_widget.dart';
 
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_radio_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/user_data/user.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_radio_button.dart';
 
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_pop_button.dart';

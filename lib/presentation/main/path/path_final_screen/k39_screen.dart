@@ -4,9 +4,9 @@ import 'widgets/screen_body_widget.dart';
 import '../../../../core/models/day_event_model.dart';
 
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'widgets/voice_button.dart';
 import 'controller.dart';

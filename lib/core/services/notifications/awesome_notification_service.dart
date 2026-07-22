@@ -5,8 +5,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:googleapis/gkebackup/v1.dart';
-import 'package:listenmebaby71_s_application17/core/services/notifications/notification_service.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/services/notifications/notification_service.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../presentation/charts/concrete_pill/concrete_pill_screen.dart';
 import '../../../routes/app_routes.dart';
@@ -20,7 +20,7 @@ class AwesomeNotificationService extends NotificationService {
         workManagerModel.pillName.isNotEmpty ? 'open' : 'scheduled';
 
     final Map<String, String>? _payload = {
-      "name": "Rigel PSY",
+      "name": "RIVA PSY",
       "pill": workManagerModel.pillName ?? '',
       "time":
           '${workManagerModel.hour}:${workManagerModel.minute.timeFormatted()}'
@@ -45,7 +45,7 @@ class AwesomeNotificationService extends NotificationService {
               id: Random().nextInt(100),
               channelKey: _channelKey,
               //set configuration wuth key "basic"
-              title: 'Rigel PSY',
+              title: 'RIVA PSY',
               body: workManagerModel.pillName != ''
                   ? 'Приём'
                   : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
@@ -96,8 +96,8 @@ class AwesomeNotificationService extends NotificationService {
       NotificationChannel(
         channelGroupKey: 'reminders',
         channelKey: _channelKey,
-        channelName: 'Rigel PSY',
-        channelDescription: 'Notification channel for Rigel PSY',
+        channelName: 'RIVA PSY',
+        channelDescription: 'Notification channel for RIVA PSY',
         channelShowBadge: true,
         importance: NotificationImportance.High,
         enableVibration: true,

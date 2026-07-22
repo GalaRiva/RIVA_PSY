@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
 
 import '../../../../../core/models/day_event_model.dart';
 import '../../../../../core/user_data/user.dart';

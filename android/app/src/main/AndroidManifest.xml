@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rigel_psy.app">
+    package="com.riva_psy.app">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -15,7 +15,7 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="Rigel PSY психология"
+        android:label="RIVA PSY психология"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:versionCode="9"

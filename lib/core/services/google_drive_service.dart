@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:googleapis/drive/v3.dart' as ga;
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
-import 'package:listenmebaby71_s_application17/core/services/security_storage_service.dart';
+import 'package:riva_psy/core/services/security_storage_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 const _scopes = [ga.DriveApi.driveFileScope];
@@ -38,7 +38,7 @@ class GoogleDriveService {
   Future<String> upload(File file) async {
     final drive = await _getClient();
     final driveFile = ga.File(
-        name: 'rigel_psy_backup_from_' + DateTime.now().toIso8601String() +
+        name: 'riva_psy_backup_from_' + DateTime.now().toIso8601String() +
             '.json', mimeType: 'application/json');
     final response = await drive.files.create(driveFile,
         uploadMedia: ga.Media(file.openRead(), file.lengthSync())

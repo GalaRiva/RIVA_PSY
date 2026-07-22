@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:printing/printing.dart';
@@ -115,7 +115,7 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                               Text('Мобильное приложение',
                                   style: _textStyle, textAlign: TextAlign.left),
                           SizedBox(height: getVerticalSize(2)),
-                          Text('rigelpsy.ru', style: _textStyle, textAlign: TextAlign.left),
+                          Text('rivapsy.com', style: _textStyle, textAlign: TextAlign.left),
                           SizedBox(height: getVerticalSize(23)),
                           Text(
                                   'Удобное и бесплатное ведение\nи отправка СМЭР психологу',

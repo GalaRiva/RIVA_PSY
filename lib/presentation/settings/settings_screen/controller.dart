@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/user_data/user.dart';
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
 
 class K6Controller extends GetxController {
   bool password = CurrentUser.user.passwordEnable;

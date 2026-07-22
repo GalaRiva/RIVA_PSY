@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/day_event_model.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 
 import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/image_constant.dart';

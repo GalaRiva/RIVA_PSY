@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:listenmebaby71_s_application17/core/utils/color_constant.dart';
+import 'package:riva_psy/core/utils/color_constant.dart';
 
 class CountBar extends StatelessWidget {
   final int currentCount;

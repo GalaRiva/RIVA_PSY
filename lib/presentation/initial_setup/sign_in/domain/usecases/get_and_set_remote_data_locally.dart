@@ -1,4 +1,4 @@
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/data/repository.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/data/repository.dart';
 
 import '../models/firebase_result.dart';
 

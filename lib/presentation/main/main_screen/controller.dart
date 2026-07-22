@@ -5,11 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/set_reminders_screen/k3_screen.dart';
-import 'package:listenmebaby71_s_application17/presentation/main/main_screen/widgets/try_irrational_dialog.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_data_and_recovery/settings_data_and_recovery_screen/controller.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/user_data/user.dart';
+import 'package:riva_psy/presentation/initial_setup/set_reminders_screen/k3_screen.dart';
+import 'package:riva_psy/presentation/main/main_screen/widgets/try_irrational_dialog.dart';
+import 'package:riva_psy/presentation/settings/settings_data_and_recovery/settings_data_and_recovery_screen/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/shared_prefs.dart';
@@ -61,7 +61,7 @@ class K20Controller extends GetxController {
     else if((CurrentUser.user.registrationDate.month != DateTime.now().month || CurrentUser.user.registrationDate.year != DateTime.now().year) && ((prefs.getBool(FIRST_MONTH_KEY) ?? true) == true)){
       showDialog(
             context: context, builder: (BuildContext context) => CustomMessageBox(
-          title: 'RIGEL Psy',
+          title: 'RIVA PSY',
           content: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

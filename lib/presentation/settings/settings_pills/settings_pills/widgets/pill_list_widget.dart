@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills/widgets/pill_card_widget.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/settings_pills/widgets/pill_card_widget.dart';
 
 import '../../models/pill_model.dart';
 

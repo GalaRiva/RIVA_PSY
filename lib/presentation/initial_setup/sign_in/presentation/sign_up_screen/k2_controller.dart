@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
-import 'package:listenmebaby71_s_application17/core/models/user_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/data/repository.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/repository.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/usecases/create_user.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/usecases/sign_up_with_email.dart';
+import 'package:riva_psy/core/models/tariff_model.dart';
+import 'package:riva_psy/core/models/user_model.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/data/repository.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/repository.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/create_user.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/sign_up_with_email.dart';
 
 import '../../../../../core/db/firebase_firestore/data/repository.dart';
 import '../../../../../core/user_data/user.dart';

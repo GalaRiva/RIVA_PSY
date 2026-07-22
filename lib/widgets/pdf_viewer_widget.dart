@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 

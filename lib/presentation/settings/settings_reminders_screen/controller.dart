@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 import '../../../core/services/workmanager/workmanager_service.dart';
 import '../../../core/user_data/user.dart';
 import 'models/model.dart';

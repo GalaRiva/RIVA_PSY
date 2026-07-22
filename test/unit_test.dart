@@ -7,9 +7,9 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:listenmebaby71_s_application17/core/models/calendar/month_model.dart';
-import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:riva_psy/core/models/calendar/month_model.dart';
+import 'package:riva_psy/core/models/tariff_model.dart';
+import 'package:riva_psy/core/user_data/user.dart';
 
 void main() {
   group('Testing unit cases', (){

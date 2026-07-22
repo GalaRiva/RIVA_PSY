@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/presentation/reset_password_screen/controller.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/presentation/reset_password_screen/controller.dart';
 
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';

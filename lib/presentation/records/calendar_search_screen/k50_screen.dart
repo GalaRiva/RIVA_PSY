@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../core/models/day_event_model.dart';
 import '../../../widgets/custom_pop_button.dart';
@@ -7,7 +7,7 @@ import '../../../widgets/calendar/calendar_days_row_widget.dart';
 import '../../../widgets/calendar/calendar_text_button_widget.dart';
 import '../../../widgets/calendar/calendar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 import '../calendar_search_screen/controller.dart';
 

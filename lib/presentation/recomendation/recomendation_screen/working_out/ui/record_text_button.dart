@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/day_event_model.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../../../widgets/second_variant_event_card.dart';

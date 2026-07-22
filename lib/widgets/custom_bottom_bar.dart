@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 
 class CustomBottomBar extends StatelessWidget {
   CustomBottomBar({this.onChanged});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/utils/size_utils.dart';
+import 'package:riva_psy/core/utils/size_utils.dart';
 
 import '../../../../../core/db/firebase_firestore/models/backup_model.dart';
 import '../../../../../theme/app_style.dart';

@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
+import 'package:riva_psy/core/models/day_event_model.dart';
 
 import 'repository.dart';
 import 'package:path_provider/path_provider.dart';

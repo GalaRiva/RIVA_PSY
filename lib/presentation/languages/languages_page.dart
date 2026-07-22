@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/languages/bloc/bloc.dart';
-import 'package:listenmebaby71_s_application17/theme/app_style.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/presentation/languages/bloc/bloc.dart';
+import 'package:riva_psy/theme/app_style.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 class LanguagesPage extends StatelessWidget {
 

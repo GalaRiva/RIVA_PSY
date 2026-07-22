@@ -1,4 +1,4 @@
-package com.rigel_psy.app
+package com.riva_psy.app
 
 import io.flutter.embedding.android.FlutterActivity
 

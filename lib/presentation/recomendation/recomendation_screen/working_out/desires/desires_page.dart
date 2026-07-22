@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/bloc/bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_report_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_first_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_second_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_third_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/desires/widgets/initial_desire_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/bloc/bloc.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_report_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_first_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_second_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/desire_stage_third_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/widgets/initial_desire_page.dart';
 
 class DesiresPage extends StatelessWidget {
 

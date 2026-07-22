@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/data/repository.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../../core/models/day_event_model.dart';

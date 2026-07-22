@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/models/firebase_result.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/models/firebase_result.dart';
 
 abstract class SignInDomainRepository {
 

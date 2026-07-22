@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import 'package:listenmebaby71_s_application17/core/services/payments/yookassa_payment_request.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
+import 'package:riva_psy/core/services/payments/yookassa_payment_request.dart';
+import 'package:riva_psy/widgets/custom_message_box.dart';
 import 'package:pay/pay.dart';
 
 
@@ -154,7 +154,7 @@ class YookassaPayments {
         subtitle ?? "Ограниченный доступ к рекомендациям, статистике и аудио";
     final _tokenizationModuleInputData = TokenizationModuleInputData(
       clientApplicationKey: _clientApplicationKey,
-      title: title ?? "Rigel PSY",
+      title: title ?? "RIVA PSY",
       subtitle: _description,
       amount: _amount,
       shopId: _shopId,

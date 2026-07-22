@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/user_data/user.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/language_provider.dart';
@@ -120,7 +120,7 @@ class K1Screen extends GetWidget {
                       alignment: Alignment.topRight,
                       children: [
                         CustomImageView(
-                          svgPath: ImageConstant.imgRigelCyan700,
+                          svgPath: ImageConstant.imgRivaCyan700,
                           height: getVerticalSize(
                             38,
                           ),

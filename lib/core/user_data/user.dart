@@ -1,6 +1,6 @@
-import 'package:listenmebaby71_s_application17/core/db/firebase_firestore/data/repository.dart';
-import 'package:listenmebaby71_s_application17/core/models/tariff_model.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user_repo.dart';
+import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
+import 'package:riva_psy/core/models/tariff_model.dart';
+import 'package:riva_psy/core/user_data/user_repo.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 

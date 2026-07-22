@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/text_field_formatters/text_field_time_formatter.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/text_field_formatters/text_field_time_formatter.dart';
 
 import '../../../../core/services/workmanager/workmanager_service.dart';
 import '../../../../core/utils/color_constant.dart';

@@ -27,7 +27,7 @@
 const String defaultApplePay = '''{
   "provider": "apple_pay",
   "data": {
-    "merchantIdentifier": "merchant.com.rigel.psy",
+    "merchantIdentifier": "merchant.com.riva.psy",
     "displayName": "Oreon",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],

@@ -5,15 +5,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/show_custom_message.dart';
-import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/data/repository.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/models/firebase_result.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/usecases/confirm_reset_email_password.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/usecases/send_reset_code_to_email.dart';
-import 'package:listenmebaby71_s_application17/presentation/initial_setup/sign_in/domain/usecases/verefy_reset_code.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_message_box.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/show_custom_message.dart';
+import 'package:riva_psy/core/utils/string_extension.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/data/repository.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/models/firebase_result.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/confirm_reset_email_password.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/send_reset_code_to_email.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/verefy_reset_code.dart';
+import 'package:riva_psy/widgets/custom_message_box.dart';
 import '../widgets/sms_code_message.dart';
 
 

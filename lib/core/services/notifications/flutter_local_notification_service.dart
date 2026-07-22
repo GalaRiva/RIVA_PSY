@@ -5,8 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:listenmebaby71_s_application17/core/services/notifications/notification_service.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/pill_model.dart';
+import 'package:riva_psy/core/services/notifications/notification_service.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 
 import '../workmanager/workmanager_model.dart';
 
@@ -38,7 +38,7 @@ class FlutterLocalNotificationService extends NotificationService{
       var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         '1',
        'notification',
-        channelDescription: 'Rigel PSY notification',
+        channelDescription: 'RIVA PSY notification',
         playSound: true,
         importance: Importance.max,
         priority: Priority.high,
@@ -93,7 +93,7 @@ class FlutterLocalNotificationService extends NotificationService{
         iOS: iOSPlatformChannelSpecifics
     );
 
-    await flip.show(0, 'Rigel Psy',
+    await flip.show(0, 'RIVA PSY',
       workManagerModel.pillName != '' ? 'Приём' : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
       platformChannelSpecifics, payload: 'Default_Sound',
     );

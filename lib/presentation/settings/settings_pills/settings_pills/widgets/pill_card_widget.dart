@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/models/pill_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/settings_pills_edit_bottom_sheet/settings_pills_edit_bottom_sheet.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_edit_bottom_sheet/settings_pills_edit_bottom_sheet.dart';
 
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/image_constant.dart';

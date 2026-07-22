@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/desire/desire.dart';
-import 'package:listenmebaby71_s_application17/core/utils/color_constant.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/desire/desire.dart';
+import 'package:riva_psy/core/utils/color_constant.dart';
 
 import '../../../../../../core/utils/image_constant.dart';
 

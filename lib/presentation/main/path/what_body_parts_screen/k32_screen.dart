@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 import 'widgets/selected_body_parts_widget.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_search_view.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_search_view.dart';
 import '../../../../../core/utils/size_utils.dart';
 
 import '../../../../core/models/body_parts_model.dart';

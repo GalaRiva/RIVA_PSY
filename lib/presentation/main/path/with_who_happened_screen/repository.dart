@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:listenmebaby71_s_application17/core/models/event_model.dart';
+import 'package:riva_psy/core/models/event_model.dart';
 
 import '../../../../core/db/hive_db.dart';
 import '../../../../core/utils/image_constant.dart';

@@ -1,8 +1,8 @@
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/event_model.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/event_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:listenmebaby71_s_application17/core/utils/emotion_in_day_event_extension.dart';
-import 'package:listenmebaby71_s_application17/core/utils/string_extension.dart';
+import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
+import 'package:riva_psy/core/utils/string_extension.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 

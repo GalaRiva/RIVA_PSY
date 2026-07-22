@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/models/calendar/month_model.dart';
-import 'package:listenmebaby71_s_application17/presentation/charts/charts_screen/controller.dart';
-import 'package:listenmebaby71_s_application17/presentation/charts/charts_screen/widgets/admission_schedule/controller.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/calendar/month_model.dart';
+import 'package:riva_psy/presentation/charts/charts_screen/controller.dart';
+import 'package:riva_psy/presentation/charts/charts_screen/widgets/admission_schedule/controller.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../settings/settings_pills/models/pill_model.dart';
 import 'widgets/schedule.dart';

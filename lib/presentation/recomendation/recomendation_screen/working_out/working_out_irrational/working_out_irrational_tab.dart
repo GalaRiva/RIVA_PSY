@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_record_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/record/record_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/relax_dialog.dart';
-import 'package:listenmebaby71_s_application17/widgets/go_to_new_tariff_widget.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/user_data/user.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_record_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/record/record_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/relax_dialog.dart';
+import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 
 import 'bloc/cubit.dart';
 import 'bloc/state.dart';

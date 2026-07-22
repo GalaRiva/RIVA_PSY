@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/gratitude/gratitude_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/gratitude/gratitude_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
 
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';

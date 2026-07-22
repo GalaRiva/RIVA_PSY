@@ -5,10 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/core/db/hive_db.dart';
-import 'package:listenmebaby71_s_application17/core/utils/shared_prefs.dart';
-import 'package:listenmebaby71_s_application17/providers/language_provider.dart';
-import 'package:listenmebaby71_s_application17/routes/app_routes.dart';
+import 'package:riva_psy/core/db/hive_db.dart';
+import 'package:riva_psy/core/utils/shared_prefs.dart';
+import 'package:riva_psy/providers/language_provider.dart';
+import 'package:riva_psy/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor:  ColorConstant.gray200,
           visualDensity: VisualDensity.standard,
         ),
-        title: 'Rigel PSY',
+        title: 'RIVA PSY',
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.initialRoute ,
         routes: AppRoutes.routes,

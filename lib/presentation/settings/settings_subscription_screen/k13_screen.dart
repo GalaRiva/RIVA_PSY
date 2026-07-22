@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
-import 'package:listenmebaby71_s_application17/core/utils/date_extension.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_bottom_bar.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_switch.dart';
+import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_switch.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
@@ -215,7 +215,7 @@ class K13Screen extends GetWidget {
       showDialog(
         context: context, builder: (BuildContext context) =>
           CustomMessageBox(
-            title: 'Rigel PSY',
+            title: 'RIVA PSY',
             content:
             'Вы уже подписаны до ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month
                 .monthInText()} ${CurrentUser.user.currentTariff!.endDate.year} г.',
@@ -237,7 +237,7 @@ class K13Screen extends GetWidget {
       showDialog(
         context: context, builder: (BuildContext context) =>
           CustomMessageBox(
-            title: 'Rigel PSY',
+            title: 'RIVA PSY',
             content:
             'Вы уже подписаны до ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month
                 .monthInText()} ${CurrentUser.user.currentTariff!.endDate.year} г.',

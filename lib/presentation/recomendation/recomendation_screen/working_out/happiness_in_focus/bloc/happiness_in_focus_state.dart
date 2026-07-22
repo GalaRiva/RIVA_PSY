@@ -1,4 +1,4 @@
-import 'package:listenmebaby71_s_application17/core/models/day_event_model.dart';
+import 'package:riva_psy/core/models/day_event_model.dart';
 
 class HappinessInFocusState {
   final HappinessInFocusState? prevState;

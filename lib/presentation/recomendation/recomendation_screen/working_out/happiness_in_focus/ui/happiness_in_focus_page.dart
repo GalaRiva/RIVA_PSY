@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_state.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/after_working_out_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/initial_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/start_page.dart';
-import 'package:listenmebaby71_s_application17/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/thoughts_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_state.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/after_working_out_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/initial_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/start_page.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/pages/thoughts_page.dart';
 
 import '../../../../../../core/user_data/user.dart';
 import '../../../../../../core/utils/color_constant.dart';

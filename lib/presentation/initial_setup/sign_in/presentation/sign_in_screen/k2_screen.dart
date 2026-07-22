@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:listenmebaby71_s_application17/core/app_export.dart';
+import 'package:riva_psy/core/app_export.dart';
 import '../../../../../widgets/custom_app_bar.dart';
 import '../../../../../widgets/custom_pop_button.dart';
 import '../../../../settings/settings_profile_screen/text_field_formatter.dart';
 import '../widgets/services_button.dart';
 import 'k2_controller.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_button.dart';
-import 'package:listenmebaby71_s_application17/widgets/custom_text_form_field.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 class K2AuthScreen extends GetWidget<K2AuthController> {
   final number = TextEditingController();

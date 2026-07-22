@@ -1,8 +1,8 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:listenmebaby71_s_application17/core/services/notifications/flutter_local_notification_service.dart';
-import 'package:listenmebaby71_s_application17/core/services/notifications/notification_service.dart';
-import 'package:listenmebaby71_s_application17/core/user_data/user.dart';
-import 'package:listenmebaby71_s_application17/presentation/settings/settings_pills/repository.dart';
+import 'package:riva_psy/core/services/notifications/flutter_local_notification_service.dart';
+import 'package:riva_psy/core/services/notifications/notification_service.dart';
+import 'package:riva_psy/core/user_data/user.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../notifications/awesome_notification_service.dart';
