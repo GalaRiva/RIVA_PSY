@@ -4,7 +4,6 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import 'package:printing/printing.dart';
 
 
 class AlternativePdf {
@@ -64,8 +63,8 @@ class AlternativePdf {
 
     final pdf = Document(
         theme: ThemeData.withFont(
-          base: await PdfGoogleFonts.rubikRegular(),
-          bold: await PdfGoogleFonts.rubikBold(),
+          base: Font.ttf(await rootBundle.load('assets/fonts/RubikRegular.ttf')),
+          bold: Font.ttf(await rootBundle.load('assets/fonts/RubikBold.ttf')),
         )
     );
 

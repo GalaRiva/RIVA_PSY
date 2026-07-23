@@ -40,10 +40,10 @@ dependencies:
   record: ^5.0.4
 
   #firebase
-  firebase_messaging: ^14.8.0
-  firebase_core: ^2.28.0
-  cloud_firestore: ^4.16.0
-  firebase_storage: ^11.7.0
+  firebase_messaging: ^15.2.0
+  firebase_core: ^3.5.0
+  cloud_firestore: ^5.5.0
+  firebase_storage: ^12.4.0
 
   #google
   google_api_availability: ^5.0.0
@@ -53,7 +53,7 @@ dependencies:
   #sign in
   google_sign_in: ^6.1.5
   sign_in_with_apple: ^6.1.1
-  firebase_auth: ^4.19.0
+  firebase_auth: ^5.3.0
 
   #payment
   yookassa_payments_flutter: ^1.4.0
@@ -85,7 +85,7 @@ dependencies:
   crypto: ^3.0.3
   permission_handler: ^11.3.0
   pdf: ^3.13.0
-  printing: 5.13.1
+  printing: ^5.15.0
 
 
 

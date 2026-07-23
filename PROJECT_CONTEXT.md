@@ -364,8 +364,50 @@ Execution failed for task ':file_picker:checkReleaseAarMetadata'.
 
 Результат: конфликт `file_picker`/`flutter_plugin_android_lifecycle` полностью устранён — сборка прошла этот этап впервые. `flutter build apk --release` продвинулась дальше и упёрлась в **последний оставшийся блокер — сам `printing`** (compileSdk 30, эпизод 28), который структурно привязан к тому же самому конфликту с `web`/Firebase-web, что и был описан выше. Firebase-web не сдвинулся с `web ^0.5.1` даже после апгрейда самого Firebase (проверено только что), так что деблокировка `printing` по-прежнему невозможна без отдельного решения (замена пакета, либо override только Android-части без общего web-констрейнта, либо ожидание, когда Firebase-web сам перейдёт на `web ^1.x`).
 
+### 32. `printing` — разведка замены на `syncfusion_flutter_pdfviewer`, тупик, и корневое решение (2026-07-23)
+
+**Разведка federated-архитектуры `printing`:** проверено напрямую в `pubspec.yaml` последней версии (`5.15.0`) — `printing` монолитный (endorsed) плагин, `printing_android` как отдельного пакета не существует. Путь через точечный override Android-части (как с `record_android`) недоступен.
+
+**Глубокая разведка использования** (по факту, чтением каждого места вызова, не по названиям методов):
+- [pdf_viewer_widget.dart](lib/widgets/pdf_viewer_widget.dart) — `PdfPreview(build: pdf, canChangeOrientation: false, canChangePageFormat: false)`. Источник байт — не файл/network, а callback `FutureOr<Uint8List> Function(PdfPageFormat)`. `allowPrinting`/`allowSharing` не переопределены — оба `true` по умолчанию (проверено в исходниках `pdf_preview.dart`), обе кнопки в toolbar активны.
+- [report_model.dart](lib/presentation/charts/charts_screen/models/report_model.dart) и [alternative_pdf.dart](lib/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart) — вызовов `Printing.*` НЕТ вообще; единственное использование пакета — `PdfGoogleFonts.rubikRegular()`/`rubikBold()` (шрифты, физически живут в `printing/lib/src/fonts/gfonts.dart`, не в `pdf`).
+- `path_final_screen/controller.dart` — **исправлена ошибка более раннего отчёта в этой же сессии**: файл вообще не использует `printing`, был ошибочно включён в список раньше.
+- Граница "генерация через `pdf:`, показ/печать через `printing`" подтвердилась **частично**: генерация PDF (`Document`/`Page`/`pdf.save()`) — целиком `pdf:`, но `printing` также используется на этапе генерации как источник шрифтов (`PdfGoogleFonts`), не только для показа.
+
+**Попытка замены (Часть 1 — шрифты, применена):** скачаны статичные `.ttf` Rubik Regular/Bold напрямую с `fonts.gstatic.com` (Open Font License) → `assets/fonts/RubikRegular.ttf`, `assets/fonts/RubikBold.ttf`. `PdfGoogleFonts.rubikRegular()/rubikBold()` заменены на `Font.ttf(await rootBundle.load('assets/fonts/Rubik{Regular,Bold}.ttf'))` (API сверен в исходниках `pdf-3.13.0/lib/src/widgets/font.dart`) в обоих генераторах. `import 'package:printing/printing.dart'` убран из обоих файлов — оба больше не используют пакет `printing`.
+
+**Попытка замены (Часть 2 — viewer, ЗАБЛОКИРОВАНА, не применена):** при проверке версии `syncfusion_flutter_pdfviewer`, совместимой с зафиксированным `syncfusion_flutter_charts: ^28.2.12` — обнаружено, что **вся линейка `28.x`** (`28.1.33`…`28.2.12`, без исключений) требует `web: ^1.0.0` напрямую. `share_plus` (latest `13.2.1`) и `open_file_web` — та же стена, `web: ^1.1.1`/`^1.1.0`. План замены упёрся бы в точно тот же конфликт, от которого пытались уйти.
+
+**Разведка корня, а не симптома:** найдена точка перехода Firebase-web-семейства на `web ^1.x` бинарным поиском по каждому из 5 пакетов (не по `latest`, а именно по первой версии, где транзиция происходит):
+```
+firebase_core:      2.32.0 → 3.5.0   (firebase_core_web впервые web^1.x на 2.18.0)
+cloud_firestore:    4.17.5 → 5.5.0
+firebase_auth:      4.20.0 → 5.3.0
+firebase_messaging: 14.9.4 → 15.2.0
+firebase_storage:   11.7.7 → 12.4.0
+```
+Ровно 1 мажорная версия у каждого пакета. BREAKING-записи именно в этом диапазоне (не по всей истории пакета) — только синхронизированные инфраструктурные строки (`minSdk 21/23`, iOS deployment target 13 — оба требования уже выполнены нашим текущим конфигом) плюс по одной строке "remove deprecated API" у `firebase_auth`/`firebase_storage`. Расшифрованы через GitHub PR (`gh` CLI недоступен в этом окружении, использован WebFetch):
+- `firebase_auth 5.0.0` (PR #12859): удалены `useEmulator()`, `signInWithAuthProvider()`, `User.updateProfile()`.
+- `firebase_storage 12.0.0` (PR #12863): удалён `useEmulator()`.
+
+Сверено по всему `lib/` (`grep`, не только Auth/Storage-группы) — **пересечений с нашим кодом нет ни одного**.
+
+**Применено:** апгрейд всех 5 Firebase-пакетов до версий перехода (резолвнулось выше: `firebase_core 3.15.2`, `cloud_firestore 5.6.12`, `firebase_auth 5.7.0`, `firebase_messaging 15.2.10`, `firebase_storage 12.4.10`), следом `printing: 5.13.1 → ^5.15.0` (потолок снят — причина его существования, конфликт с Firebase-web, только что устранена). `flutter pub get` резолвил всё разом на единой `web: 1.1.1` — Firebase-web-сиблинги и `printing` больше не конфликтуют. Проверено: `printing 5.15.0` — `compileSdk 34` (в реально скачанном архиве) — сам `printing` больше не блокер вообще, план замены на `syncfusion_flutter_pdfviewer` стал ненужным.
+
+### 33. ФИНАЛ МИГРАЦИИ — первый реально собранный и подписанный релизный APK (2026-07-23)
+
+`flutter build apk --release` **прошёл полностью, впервые за всю миграцию**: `✓ Built build/app/outputs/flutter-apk/app-release.apk (95.5MB)`.
+
+`apksigner verify --print-certs`:
+```
+Signer #1 certificate DN: CN=RIVA PSY, OU=RIVA PSY, O=RIVA PSY, L=Kemerovo, ST=Kemerovo, C=RU
+Signer #1 certificate SHA-256 digest: 43fd3f8ae581c06577a81c9fbb9af15e9ab8508107568f4e65d7b93389bafacb
+```
+Подпись подтверждена, ключ `android/key_riva_psy.jks` (alias `riva_psy`) работает корректно.
+
+**Все блокеры за всю миграцию устранены.** Полный список: 23 эпизода первичной цепочки build-fix (Gradle-миграция, JDK 17, 14 dependency_overrides, мажорные апгрейды permission_handler/sign_in_with_apple/workmanager/just_audio/audio_session, удаление in_app_purchase, новый keystore) + Firebase-семейство (сначала compileSdk-фикс минорными версиями, затем полный переход на `web ^1.x` мажорными версиями) + `file_picker`/`flutter_plugin_android_lifecycle` + `printing` (сначала обходили конфликт с web, в итоге он снялся сам после Firebase-апгрейда) + локализация EN/ES.
+
 **Текущее состояние на конец сессии:**
-- `flutter build apk --release` — **всё ещё падает**, единственный оставшийся блокер — `:printing:checkReleaseAarMetadata` (21 issue, всё про `compileSdk 30` у `printing`). Подписанного APK всё ещё не существует, `apksigner verify` не выполнялся.
-- Все остальные блокеры за всю миграцию (23 эпизода build-fix + Firebase-апгрейд + file_picker/lifecycle) — устранены и подтверждены рабочими.
-- `.bak-pre-migration` файлы — всё ещё на диске, не закоммичены, ждут первой реально подписанной сборки.
-- **Следующий шаг:** отдельное решение по `printing` (замена пакета / частичный override / дождаться апгрейда Firebase-web) — вне этой сессии.
+- Релизная сборка **проходит полностью и подписывается корректно**. Первый работающий release APK за всю миграцию.
+- `.bak-pre-migration` файлы (`android/{build,app/build,settings}.gradle.bak-pre-migration`) — условие для удаления, поставленное в начале сессии ("удалить после подтверждения, что всё собралось и подписано верно"), теперь выполнено — можно удалять по вашему подтверждению.
+- Следующий разумный шаг вне этой сессии — вернуться к PWA-миграции (основная цель ветки `pre-pwa-migration-snapshot`), либо продолжить полировку (Kotlin Built-in migration warning, targetSdk, локализация юридического текста, дедлайн Firebase — все зафиксированы как известные, не блокирующие пункты).
