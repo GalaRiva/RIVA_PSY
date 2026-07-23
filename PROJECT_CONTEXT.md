@@ -407,7 +407,40 @@ Signer #1 certificate SHA-256 digest: 43fd3f8ae581c06577a81c9fbb9af15e9ab8508107
 
 **Все блокеры за всю миграцию устранены.** Полный список: 23 эпизода первичной цепочки build-fix (Gradle-миграция, JDK 17, 14 dependency_overrides, мажорные апгрейды permission_handler/sign_in_with_apple/workmanager/just_audio/audio_session, удаление in_app_purchase, новый keystore) + Firebase-семейство (сначала compileSdk-фикс минорными версиями, затем полный переход на `web ^1.x` мажорными версиями) + `file_picker`/`flutter_plugin_android_lifecycle` + `printing` (сначала обходили конфликт с web, в итоге он снялся сам после Firebase-апгрейда) + локализация EN/ES.
 
+### 34. Release-краш на реальных устройствах — отсутствующие R8/ProGuard keep-правила (2026-07-24)
+
+Собранный в эпизоде 33 APK успешно ставился и подписывался, но **крашился при запуске на реальных устройствах** (debug не пробовали — сразу release):
+```
+java.lang.RuntimeException: Unable to get provider androidx.startup.InitializationProvider
+Caused by: java.lang.NoSuchMethodException: androidx.work.impl.WorkDatabase_Impl.<init> []
+```
+
+**Диагностика (до применения фикса):** дерево зависимостей `androidx.work` резолвится в единую версию `2.10.4` без конфликта (`workmanager: ^0.6.0` просит `2.9.0`, `app` просит `work-runtime-ktx:2.8.1`, `yookassa_payments_flutter` тянет `2.10.4` — Gradle берёт максимум для всех). Реальная причина — системный пробел: `workmanager 0.6.0` не поставляет ни `consumer-rules.pro`, ни каких-либо ProGuard-файлов вообще, а `android/app/build.gradle` (проверено через `git log` — было так и **до** всех сегодняшних миграций, не регрессия) никогда не объявлял `proguardFiles` при `minifyEnabled true`. Разбор `mapping.txt` подтвердил: класс `WorkDatabase_Impl` сохранён (имя не переименовано), но его конструктор без аргументов вырезан R8 — Room создаёт `_Impl`-классы способом, который R8 без явного keep-правила не распознаёт как точку входа. Крашится через `androidx.startup.InitializationProvider` — WorkManager инициализируется автоматически при старте процесса на Android-уровне, независимо от того, что вызов `Workmanager().initialize()` в Dart-коде давно закомментирован (эпизод 24).
+
+**Фикс, часть 1 — `android/app/proguard-rules.pro` создан:**
+```proguard
+-keep class androidx.work.impl.** { *; }
+-keep class * extends androidx.work.Worker
+-keep class * extends androidx.work.InputMerger
+-keep public class * extends androidx.work.ListenableWorker
+```
+`android/app/build.gradle`, `release`-блок: добавлена строка `proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'`.
+
+После пересборки `WorkDatabase_Impl` краш исчез (проверено установкой на эмулятор + `flutter run`/скриншот — приложение открывается на экране регистрации). Но в логе всплыла **та же корневая причина** для другого механизма: `ComponentDiscovery` (Firebase) не мог инстанцировать через рефлексию 5 классов `*Registrar` (`FirebaseAnalyticsLegacyRegistrar`, `FirebaseAppCheckKtxRegistrar`, `FirebaseAppCheckRegistrar`, `FirebaseInstallationsKtxRegistrar`, `FirebaseMessagingKtxRegistrar`) — конструкторы тоже вырезаны, что подтвердил `mapping.txt`. В отличие от WorkManager, Firebase's `ComponentDiscovery` оборачивает каждую попытку в try-catch — приложение **не падает**, просто теряет эти опциональные компоненты.
+
+**Фикс, часть 2 — правило добавлено, но с первой попытки НЕ сработало.** Официальное Firebase-правило `-keep public class * implements com.google.firebase.components.ComponentRegistrar` (без блока `{ ... }`) защитило только сами классы от удаления/переименования (подтверждено в `seeds.txt`), но не защитило их члены — конструктор всё ещё вырезался (стандартная семантика ProGuard/R8: `-keep class X` без явного блока не форсирует сохранение членов, не вызываемых из видимого графа статических вызовов). Уточнено до:
+```proguard
+-keep public class * implements com.google.firebase.components.ComponentRegistrar {
+    public <init>();
+}
+```
+После этого конструкторы у всех пяти классов подтверждены в `mapping.txt` (`void <init>():X:X -> <init>`), `ComponentDiscovery`-предупреждения полностью исчезли из логов (было 5 записей `NoSuchMethodException`, стало 0).
+
+**Отдельно всплывшая, не связанная с ProGuard проблема:** в логе оставалась `FirebaseMessaging: Firebase Installations Service is unavailable / SERVICE_NOT_AVAILABLE`. Доказано A/B-сравнением (ошибка идентична и до, и после полного исчезновения `ComponentDiscovery`-предупреждений), что она **не связана с ProGuard** — вероятная причина: на использованном эмуляторе не был добавлен Google-аккаунт (`dumpsys account` → `Accounts: 0`). Добавление аккаунта не выполнялось намеренно — ввод учётных данных в форму входа Google является действием, которое не выполняется автономно ни при каких условиях. Требует проверки на реальном устройстве с уже настроенным Google-аккаунтом.
+
 **Текущее состояние на конец сессии:**
-- Релизная сборка **проходит полностью и подписывается корректно**. Первый работающий release APK за всю миграцию.
-- `.bak-pre-migration` файлы (`android/{build,app/build,settings}.gradle.bak-pre-migration`) — условие для удаления, поставленное в начале сессии ("удалить после подтверждения, что всё собралось и подписано верно"), теперь выполнено — можно удалять по вашему подтверждению.
-- Следующий разумный шаг вне этой сессии — вернуться к PWA-миграции (основная цель ветки `pre-pwa-migration-snapshot`), либо продолжить полировку (Kotlin Built-in migration warning, targetSdk, локализация юридического текста, дедлайн Firebase — все зафиксированы как известные, не блокирующие пункты).
+- Релизная сборка **проходит полностью, подписывается корректно, устанавливается и запускается без крашей** (проверено на эмуляторе; ожидает подтверждения на реальных устройствах пользователем).
+- `SERVICE_NOT_AVAILABLE` у `FirebaseMessaging` — открытый вопрос, не блокирующий, требует теста на реальном телефоне с Google-аккаунтом, не относится к коду/сборке.
+- **Важный урок на будущее:** до сегодняшнего дня минификация R8 (`minifyEnabled true`) работала в проекте вообще без единого явного keep-правила — потому что это первая когда-либо запущенная и успешно собранная release-сборка за всю историю проекта. Подобные пропуски могут всплывать и у других библиотек по мере дальнейшего реального тестирования (не только WorkManager/Firebase-ComponentDiscovery) — стоит держать это в уме при следующих найденных рантайм-проблемах на release-сборке.
+- `.bak-pre-migration` файлы — удалены (эпизод завершён отдельно, до этого краша).
+- Следующий разумный шаг вне этой сессии — тестирование на реальных устройствах (подтвердить исчезновение краша + разобраться с `SERVICE_NOT_AVAILABLE` при наличии Google-аккаунта), затем возврат к PWA-миграции (основная цель ветки `pre-pwa-migration-snapshot`).
