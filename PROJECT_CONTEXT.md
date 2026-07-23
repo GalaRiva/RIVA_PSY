@@ -355,7 +355,17 @@ Execution failed for task ':file_picker:checkReleaseAarMetadata'.
   2. `Add English/Spanish localization, fix duplicate key, fix locale country code mismatch`
   3. (этот) `Firebase upgrade: bump 5 packages to compileSdk-34 minimums, remove unused firebase_analytics`
 - `flutter pub get` и `flutter analyze` — 0 ошибок.
-- `flutter build apk --release` — **всё ещё падает**, но уже НЕ на Firebase, а на `file_picker`/`flutter_plugin_android_lifecycle` compileSdk 36 (эпизод 31, в разведке). Подписанного APK всё ещё не существует, `apksigner verify` не выполнялся.
-- `printing` (эпизод 28) — всё ещё осознанно не тронут; теперь, когда Firebase проверен, можно будет вернуться к нему отдельно (апгрейд стал теоретически возможен, но не проверялся в этом заходе).
+
+### 31. `file_picker` vs `flutter_plugin_android_lifecycle` — разведка и фикс (2026-07-23)
+
+`file_picker` апгрейд оказался заблокирован тем же структурным конфликтом, что и `printing`: начиная с версии `8.1.0` пакет требует `web: ^1.0.0`/`^1.1.0`, что конфликтует с Firebase-web-семейством (`web: ^0.5.1`). Проверено «вариант 1»: даже после Firebase-апгрейда (эпизод 30) реально резолвнутые Firebase-web-пакеты (`firebase_core_web 2.17.1`, `firebase_auth_web 5.12.0`, `firebase_messaging_web 3.8.7`, `firebase_storage_web 3.9.7`) всё ещё требуют `web: ^0.5.1` — не сдвинулось. Значит `file_picker` **тоже остаётся** на `^8.0.7` (подтверждено: нигде не используется в `lib/`, `pub get` резолвится чисто).
+
+Реальный фикс лежал не в `file_picker`, а в override `flutter_plugin_android_lifecycle`: открытый `^2.0.20` резолвился в самую свежую (`2.0.35`), которая с версии `2.0.25` перестала хардкодить `compileSdk` и стала наследовать его динамически из `flutter.compileSdkVersion` (=36 у нас) — из-за этого требовала от соседей (`file_picker`, всё ещё на compileSdk 34) тоже быть на 36. Нашёл окно `2.0.20–2.0.24`, где фикс v1-embedding уже есть, а `compileSdk` ещё хардкожен на `34` (совместимо с `file_picker`). Зафиксировано точно: **`flutter_plugin_android_lifecycle: 2.0.24`** (без каретки).
+
+Результат: конфликт `file_picker`/`flutter_plugin_android_lifecycle` полностью устранён — сборка прошла этот этап впервые. `flutter build apk --release` продвинулась дальше и упёрлась в **последний оставшийся блокер — сам `printing`** (compileSdk 30, эпизод 28), который структурно привязан к тому же самому конфликту с `web`/Firebase-web, что и был описан выше. Firebase-web не сдвинулся с `web ^0.5.1` даже после апгрейда самого Firebase (проверено только что), так что деблокировка `printing` по-прежнему невозможна без отдельного решения (замена пакета, либо override только Android-части без общего web-констрейнта, либо ожидание, когда Firebase-web сам перейдёт на `web ^1.x`).
+
+**Текущее состояние на конец сессии:**
+- `flutter build apk --release` — **всё ещё падает**, единственный оставшийся блокер — `:printing:checkReleaseAarMetadata` (21 issue, всё про `compileSdk 30` у `printing`). Подписанного APK всё ещё не существует, `apksigner verify` не выполнялся.
+- Все остальные блокеры за всю миграцию (23 эпизода build-fix + Firebase-апгрейд + file_picker/lifecycle) — устранены и подтверждены рабочими.
 - `.bak-pre-migration` файлы — всё ещё на диске, не закоммичены, ждут первой реально подписанной сборки.
-- **Следующий шаг:** разведка+фикс `file_picker` (эпизод 31), затем повторная попытка `flutter build apk --release` до конца, затем (если чисто) `apksigner verify` и первая реально подписанная сборка за всю миграцию.
+- **Следующий шаг:** отдельное решение по `printing` (замена пакета / частичный override / дождаться апгрейда Firebase-web) — вне этой сессии.
