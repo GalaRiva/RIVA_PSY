@@ -320,9 +320,42 @@
 28. **`printing` (compileSdk 30) — НЕ трогать до Firebase-апгрейда.** Проверено бинарным поиском: уже самая первая следующая версия (`5.13.2`) требует `web: ^1.0.0`, а все текущие Firebase-web-пакеты (`firebase_core_web 2.13.0`, `firebase_auth_web 5.10.1`, `firebase_storage_web 3.8.1`, `firebase_messaging_web 3.7.1`) жёстко требуют `web: ^0.5.1`. Это структурный конфликт, не версионный зазор — безопасной промежуточной версии `printing` не существует. Апгрейд возможен только вместе с Firebase-семейством.
 29. **Firebase-семейство (6 пакетов) — следующая большая задача, отдельная сессия.** `cloud_firestore 4.15.10`, `firebase_analytics 10.9.0`, `firebase_auth 4.18.0`, `firebase_core 2.27.2`, `firebase_messaging 14.7.21`, `firebase_storage 11.6.11` — все со старым `compileSdk 33` (нужно ≥34). Это граница, на которой сборка сейчас **фактически падает** (`:cloud_firestore is currently compiled against android-33` — 15 issues в `checkReleaseAarMetadata`, тот же паттерн, что был у `just_audio`/`audio_session`/`record_android`, но здесь фикс структурно требует полного скоординированного апгрейда всей связки, а не точечного override). Именно из-за этой связки `printing` (эпизод 28) тоже пока не трогаем — апгрейды придётся делать вместе.
 
+### 30. Firebase-апгрейд — барьер снят (2026-07-23, отдельная сессия)
+
+Апгрейд всей связки разом, одним согласованным набором версий (методология — та же: минимально достаточная версия с `compileSdk` ≥ 34, проверено по реально скачанным архивам, не по памяти):
+
+```
+firebase_core:      2.27.2  → 2.28.0
+cloud_firestore:    4.15.10 → 4.16.0
+firebase_auth:      4.18.0  → 4.19.0
+firebase_messaging: 14.7.21 → 14.8.0
+firebase_storage:   11.6.11 → 11.7.0
+firebase_analytics: 10.9.0  → удалён из pubspec.yaml полностью
+```
+
+Ключевая находка: FlutterFire выпускает **синхронизированные релизы** — один и тот же PR ([#12566](https://github.com/firebase/flutterfire/issues/12566), "Bump compileSdk version of Android plugins to latest stable (34)") вышел одновременно во всех 6 пакетах, каждый раз минорным шагом +1 от версии, которая была у нас. Ни одной **BREAKING**-записи в CHANGELOG между текущими и целевыми версиями ни у одного из пяти апгрейженных пакетов. Проверка конфликта с `web` (та же история, что была с `printing`/`pdf`/`flutter_svg`) — **не подтвердилась**: все Firebase-web-сиблинги на этих минимальных версиях всё ещё требуют `web: ^0.5.1`, бамп до `web: ^1.0.0` происходит у Firebase позже, не на этом шаге.
+
+`firebase_analytics` — подтверждено `grep`, что нигде не используется в `lib/` (ни прямых вызовов, ни `NavigatorObserver`, ни инициализации в `main.dart`) — удалён из `pubspec.yaml` целиком, а не апгрейднут.
+
+**Результат:** `flutter build apk --release` **прошёл всю Firebase-связку впервые за всю миграцию** (5м12с чистого прогресса, ни одной ошибки, связанной с Firebase/compileSdk 33). Firebase-барьер как таковой закрыт.
+
+Сборка упала на **новом, не связанном с Firebase блокере** — том же паттерне, что раньше был у `just_audio`/`audio_session`/`record_android` (модуль с собственным захардкоженным `compileSdk`, теперь ниже требования от обновлённой транзитивной зависимости):
+
+```
+Execution failed for task ':file_picker:checkReleaseAarMetadata'.
+> Dependency ':flutter_plugin_android_lifecycle' requires compileSdk ≥ 36.
+  ':file_picker' is currently compiled against android-34.
+```
+
+Разведка по `file_picker` — следующий эпизод (31).
+
 **Текущее состояние на конец сессии:**
-- Один коммит `Fix release build: dependency overrides, JDK 17, major package upgrades, remove dead in_app_purchase code, new release keystore, updated google-services.json for renamed package` на ветке `pre-pwa-migration-snapshot`, запушен в `origin` (GalaRiva/RIVA_PSY).
+- Два коммита на ветке `pre-pwa-migration-snapshot`, запушены в `origin` (GalaRiva/RIVA_PSY):
+  1. `Fix release build: dependency overrides, JDK 17, major package upgrades, remove dead in_app_purchase code, new release keystore, updated google-services.json for renamed package`
+  2. `Add English/Spanish localization, fix duplicate key, fix locale country code mismatch`
+  3. (этот) `Firebase upgrade: bump 5 packages to compileSdk-34 minimums, remove unused firebase_analytics`
 - `flutter pub get` и `flutter analyze` — 0 ошибок.
-- `flutter build apk --release` — **падает** на Firebase-барьере (эпизод 29). Подписанного APK не существует, `apksigner verify` не выполнялся.
-- `.bak-pre-migration` файлы (`android/{build,app/build,settings}.gradle.bak-pre-migration`) оставлены на диске, не закоммичены — удалить после того, как будет получена первая реально подписанная сборка (после Firebase-апгрейда).
-- **Следующий шаг новой сессии:** разведка и апгрейд Firebase-семейства (6 пакетов) той же методологией (минимально достаточные версии, usage в коде, CHANGELOG breaking changes, проверка конфликтов по архивам), затем `printing`, затем — первая реально собранная и подписанная релизная сборка.
+- `flutter build apk --release` — **всё ещё падает**, но уже НЕ на Firebase, а на `file_picker`/`flutter_plugin_android_lifecycle` compileSdk 36 (эпизод 31, в разведке). Подписанного APK всё ещё не существует, `apksigner verify` не выполнялся.
+- `printing` (эпизод 28) — всё ещё осознанно не тронут; теперь, когда Firebase проверен, можно будет вернуться к нему отдельно (апгрейд стал теоретически возможен, но не проверялся в этом заходе).
+- `.bak-pre-migration` файлы — всё ещё на диске, не закоммичены, ждут первой реально подписанной сборки.
+- **Следующий шаг:** разведка+фикс `file_picker` (эпизод 31), затем повторная попытка `flutter build apk --release` до конца, затем (если чисто) `apksigner verify` и первая реально подписанная сборка за всю миграцию.
