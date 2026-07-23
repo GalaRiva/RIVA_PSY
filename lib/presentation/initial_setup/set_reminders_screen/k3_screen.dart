@@ -1,7 +1,8 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -63,7 +64,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                     padding:
                                         getPadding(top: 10, right: 22),
                                     child: Text(
-                                        "Выберите время напоминания о внесении записи. Напомним, что пора прислушаться к себе",
+                                        'select_reminder_time'.tr(),
                                         maxLines: null,
                                         textAlign: TextAlign.left,
                                         style: AppStyle.txtH2)),

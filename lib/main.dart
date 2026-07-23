@@ -44,7 +44,7 @@ void main() async {
     }
 
       runApp(EasyLocalization(
-          supportedLocales: [Locale('ru', 'RU'),/* Locale('es', 'ES'),*/],
+          supportedLocales: [Locale('ru', 'RU'), Locale('en', 'US'), Locale('es', 'ES')],
           path: 'assets/translations', // <-- change the path of the translation files
           fallbackLocale: Locale('ru', 'RU'),
           child: MyApp()));

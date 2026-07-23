@@ -43,9 +43,11 @@ class LanguagesBloc extends Bloc<LanguagesEvent, LanguagesState> {
 
   }
 
+  static const _countryCodes = {'ru': 'RU', 'en': 'US', 'es': 'ES'};
+
   _select (_Select value) async {
     _selected = _languages.firstWhere((element) => element.code == value.languageModel.code);
-    final locale = Locale(_selected!.code, _selected!.code.toUpperCase());
+    final locale = Locale(_selected!.code, _countryCodes[_selected!.code] ?? _selected!.code.toUpperCase());
     EasyLocalization.of(value.context)?.setLocale(locale);
     value.context.read<LanguageProvider>().changeLocale(locale);
 
