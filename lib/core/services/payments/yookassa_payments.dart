@@ -4,12 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
-import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:riva_psy/core/services/payments/yookassa_payment_request.dart';
 import 'package:riva_psy/widgets/custom_message_box.dart';
-import 'package:pay/pay.dart';
 
 
 import 'package:yookassa_payments_flutter/yookassa_payments_flutter.dart';
@@ -28,114 +24,18 @@ class YookassaPayments {
   late  String _idempotenceKey;
   late  String _idempotenceKeyForCheckStatus;
 
-  bool _yookassa = true;
-
   Future pay(BuildContext context,
       {String? title,
       String? subtitle,
       double? amountInRub,
       Function? onComplete,
       required bool testMode}) async {
-    if(_yookassa) {
-      _yookassaPay(context, testMode: testMode,
+    _yookassaPay(context, testMode: testMode,
       title: title,
         subtitle: subtitle,
         onComplete: onComplete,
         amountInRub: amountInRub
       );
-    } else {
-      _servicePay(context, testMode: testMode,
-          title: title,
-          subtitle: subtitle,
-          onComplete: onComplete,
-          amountInRub: amountInRub
-      );
-
-    }
-
-  }
-
-  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList, BuildContext context, Function? onComplete) {
-    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        //_showPendingUI();
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          _onPaymentError(context);
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          bool valid = true;// await _verifyPurchase(purchaseDetails);
-         // await InAppPurchase.instance.
-
-          if (valid) {
-            onComplete?.call();
-          } else {
-          }
-        }
-        if (purchaseDetails.pendingCompletePurchase) {
-          await InAppPurchase.instance
-              .completePurchase(purchaseDetails);
-        }
-      }
-    });
-  }
-
-  _servicePay(BuildContext context,
-      {String? title,
-        String? subtitle,
-        double? amountInRub,
-        Function? onComplete,
-        required bool testMode}) async {
-    /*if (Platform.isIOS) {
-      final iosPlatformAddition =
-      InAppPurchase.instance
-          .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
-      await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
-    }
-    const Set<String> _kIds = <String>{'orion',};
-
-    final ProductDetailsResponse productDetailResponse =
-    await InAppPurchase.instance.queryProductDetails(_kIds);
-    StreamSubscription<List<PurchaseDetails>>? _subscription;
-    final bool available = await InAppPurchase.instance.isAvailable();
-    debugPrint('av $available');
-    final Stream<List<PurchaseDetails>> purchaseUpdated =
-        InAppPurchase.instance.purchaseStream;
-    _subscription = purchaseUpdated.listen((purchaseDetailsList) {
-      _listenToPurchaseUpdated(purchaseDetailsList, context, onComplete);
-    }, onDone: () {
-      _subscription?.cancel();
-    }, onError: (error) {
-      // handle error here.
-    });
-
-    List<ProductDetails> products = productDetailResponse.productDetails;
-    final purchaseParam = PurchaseParam(
-      productDetails: products.first,
-    );
-    InAppPurchase.instance.buyConsumable(
-        purchaseParam: purchaseParam,
-        autoConsume: true);*/
-
-
-    final _google = PaymentConfiguration.fromJsonString(
-        payment_configurations.defaultGooglePay);
-    final _apple = PaymentConfiguration.fromJsonString(
-        payment_configurations.defaultApplePay);
-    final _items = [PaymentItem(amount: amountInRub.toString(), label: title ?? 'Oreon', status: PaymentItemStatus.final_price),
-    ];
-
-
-    final _payClient = Pay({
-      PayProvider.google_pay: _google,
-      PayProvider.apple_pay: _apple,
-    });
-
-
-    final answer = await _payClient.showPaymentSelector(Platform.isIOS ? PayProvider.apple_pay : PayProvider.google_pay, _items);
-    log(answer.toString());
-    _onPaymentSucceed(onComplete?.call());
-
   }
 
   _yookassaPay (BuildContext context,
@@ -246,19 +146,5 @@ class YookassaPayments {
         context: context,
         builder: (c) =>
             CustomMessageBox(title: 'Подписка', content: 'Произошла ошибка, повторите попытку или попробуйте позднее'));
-  }
-}
-
-
-class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
-  @override
-  bool shouldContinueTransaction(
-      SKPaymentTransactionWrapper transaction, SKStorefrontWrapper storefront) {
-    return true;
-  }
-
-  @override
-  bool shouldShowPriceConsent() {
-    return false;
   }
 }

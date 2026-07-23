@@ -100,7 +100,7 @@ direction: Axis.vertical,
                                   isVisible: false,
                                   minimum: 0, maximum: e.emotionMax.toDouble(), interval: 1),
                               tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <ChartSeries<EmotionModel, String>>[
+                              series: <CartesianSeries<EmotionModel, String>>[
                                 ColumnSeries<EmotionModel, String>(
                                   dataSource: e.emotions,
                                   xValueMapper: (EmotionModel data, _) => data.name,

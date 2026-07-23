@@ -1,51 +1,26 @@
 {
   "project_info": {
-    "project_number": "408583851820",
-    "project_id": "rigel-psy",
-    "storage_bucket": "rigel-psy.appspot.com"
+    "project_number": "7653326357",
+    "project_id": "rigel-psy-9361c",
+    "storage_bucket": "rigel-psy-9361c.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:408583851820:android:ee1aca216e6a55c1f8e689",
+        "mobilesdk_app_id": "1:7653326357:android:bb8b072b0525b89f20581c",
         "android_client_info": {
-          "package_name": "com.rigel_psy.app"
+          "package_name": "com.riva_psy.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "408583851820-907u0t0fdoel90pcilp23ot9ogt8e7dj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.rigel_psy.app",
-            "certificate_hash": "8d1cba54d3ac1e524e4a1e5a0901ba97c4447561"
-          }
-        },
-        {
-          "client_id": "408583851820-koct3sn1t83i0va28krd9j26ktljgjpt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDprVPSCYx63aN6SdnSz2XeqRUrYd6TNV0"
+          "current_key": "AIzaSyA_t0goB_ClKhnJOZDX14mgBlNdbj2zN-Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "408583851820-a6k8gsg8e83ord8d3orcu2gm4nhms5c2.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "408583851820-6lodf34gi09t60jqm3vcfi5l8c80itpk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.listenmebabysapplication.app"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
