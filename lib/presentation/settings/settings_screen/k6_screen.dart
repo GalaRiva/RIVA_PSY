@@ -134,7 +134,6 @@ class K6Screen extends GetWidget {
                               controller: controller,
                               svgSize: 24,
                             ),
-                            if(false)
                             CardSettingsButtonWidget(
                               context,
                               onTap: () => Navigator.pushNamed(

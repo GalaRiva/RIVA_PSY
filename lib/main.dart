@@ -22,6 +22,28 @@ void main() async {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+
+    // First-run language auto-detection. easy_localization persists the
+    // active locale under the SharedPreferences key 'locale' and, once
+    // present, always uses it instead of re-deriving from the device
+    // locale (see EasyLocalizationController.initEasyLocation). Writing
+    // the detected locale under that same key before ensureInitialized()
+    // makes this decision permanent after the first launch, same as a
+    // manual choice via LanguagesPage/setLocale().
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('locale') == null) {
+      const supportedLocalesByLanguageCode = {
+        'ru': Locale('ru', 'RU'),
+        'en': Locale('en', 'US'),
+        'es': Locale('es', 'ES'),
+      };
+      final deviceLanguageCode =
+          WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+      final detectedLocale = supportedLocalesByLanguageCode[deviceLanguageCode] ??
+          const Locale('en', 'US');
+      await prefs.setString('locale', detectedLocale.toString());
+    }
+
     await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp();
     try {
