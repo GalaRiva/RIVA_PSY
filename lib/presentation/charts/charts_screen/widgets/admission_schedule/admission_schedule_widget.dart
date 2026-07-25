@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/calendar/month_model.dart';
@@ -53,7 +54,7 @@ class AdmissionScheduleWidget extends StatelessWidget {
         variant: ButtonVariant.Base,
         onTap: () => controller.createSchedule(context),
         padding: ButtonPadding.PaddingAll8,
-        text: 'Добавить график приема препарата'.toUpperCase(),
+        text: 'add_medication_intake_schedule'.tr().toUpperCase(),
         width: getHorizontalSize(315),
         alignment: Alignment.center,
         height: getVerticalSize(32),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -32,7 +33,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
             Padding(
               padding: getPadding(left: 20, top: 21, right: 20),
               child: Text(
-                "Где и какие эмоции",
+                'where_and_what_emotions'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle.txtSFProDisplayLight14Gray800,
@@ -46,7 +47,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
                   controller.update();
                 },
                 focusNode: FocusNode(),
-                hintText: "Найти  место",
+                hintText: 'find_a_place'.tr(),
                 margin: getMargin(
                   left: 2,
                   top: 23,
@@ -168,7 +169,7 @@ direction: Axis.vertical,
                 Padding(
                   padding: getPadding(left: 20, top: 21, right: 20),
                   child: Text(
-                    "Где и какие эмоции",
+                    'where_and_what_emotions'.tr(),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle.txtSFProDisplayLight14Gray800,
@@ -182,7 +183,7 @@ direction: Axis.vertical,
                       controller.update();
                     },
                     focusNode: FocusNode(),
-                    hintText: "Найти  место",
+                    hintText: 'find_a_place'.tr(),
                     margin: getMargin(
                       left: 2,
                       top: 23,

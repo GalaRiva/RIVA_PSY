@@ -294,6 +294,7 @@
   "what_emotions_am_I_feeling": "Which emotions am I feeling",
   "where_do_my_emotions_live_in_the_body": "Where my emotions live in the body",
   "where_and_what_emotions_am_I_experiencing": "Where and what emotions I'm experiencing",
+  "where_and_what_emotions": "Where and what emotions",
   "send_summary_report": "Send summary report",
   "change_time_period": "Change time period",
 
@@ -306,6 +307,8 @@
   "positive_and_negative_emotions": "Positive and negative emotions",
   "where_positive_emotions_reside_in_the_body": "Where positive emotions live in the body",
   "where_negative_emotions_reside_in_the_body": "Where negative emotions live in the body",
+  "where_body_emotions_prefix": "Where ",
+  "where_body_emotions_suffix": " emotions live in the body",
   "where_and_what_emotions_i_experience": "Where and what emotions I experience",
   "find_a_place": "Find a place",
   "calendar": "Calendar",

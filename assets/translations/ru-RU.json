@@ -294,6 +294,7 @@
   "what_emotions_am_I_feeling": "Какие эмоции я испытываю",
   "where_do_my_emotions_live_in_the_body": "Где в теле живут мои эмоции",
   "where_and_what_emotions_am_I_experiencing": "Где и какие испытываю эмоции",
+  "where_and_what_emotions": "Где и какие эмоции",
   "send_summary_report": "Отправить Сводный отчет",
   "change_time_period": "Изменить период времени",
 
@@ -306,6 +307,8 @@
   "positive_and_negative_emotions": "Позитивные и негативные эмоции",
   "where_positive_emotions_reside_in_the_body": "Где в теле живут позитивные эмоции",
   "where_negative_emotions_reside_in_the_body": "Где в теле живут негативные эмоции",
+  "where_body_emotions_prefix": "Где в теле живут ",
+  "where_body_emotions_suffix": " эмоции",
   "where_and_what_emotions_i_experience": "Где и какие испытываю эмоции",
   "find_a_place": "Найти место",
   "calendar": "Календарь",

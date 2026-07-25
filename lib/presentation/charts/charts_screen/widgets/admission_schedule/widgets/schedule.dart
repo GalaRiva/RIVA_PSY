@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../../../core/utils/size_utils.dart';
@@ -19,9 +20,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
         Padding(
           padding: getPadding(top: 31, right: 32),
           child: Text(
-            '''Если приняли чуть позже, ничего страшного. 
-Примите и поменяйте статус приема в течении дня, 
-нажав на соответствующую ячейку в графике''',
+            'if_taken_slightly_later_no_problem'.tr(),
             style: AppStyle.txtSFProDisplayLight12,
           ),
         ),
@@ -37,7 +36,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
                 centralWidget: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    'Показать 5 дней',
+                    'show_x_days'.tr(args: ['5']),
                     style: TextStyle(
                       color: ColorConstant.deepPurple600,
                       fontSize: getFontSize(
@@ -64,7 +63,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
                 centralWidget: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    'Показать месяц',
+                    'show_month'.tr(),
                     style: TextStyle(
                       color: ColorConstant.deepPurple600,
                       fontSize: getFontSize(
@@ -125,7 +124,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
             showText: controller.schedulePeriod == SchedulePeriod.FiveDays),
         SizedBox(height: getVerticalSize(33)),
         CustomButton(
-          text: 'изменить график приема препарата'.toUpperCase(),
+          text: 'change_medication_intake_schedule'.tr().toUpperCase(),
           padding: ButtonPadding.PaddingAll8,
           onTap: () => Navigator.pushNamed(context, AppRoutes.pills)
               .then((value) => controller.update()),

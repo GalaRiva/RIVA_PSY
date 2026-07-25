@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'text_for_select_period_widget.dart';
@@ -46,7 +47,7 @@ class ReportWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPreviewWidget(pdf: (context) async => controller.reportModel.makePdf(await controller.getDayEventModel())))),
                 child: Text(
-                    'Отправить Сводный отчет ${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}. pdf',
+                    '${'send_summary_report'.tr()} ${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}. pdf',
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle.txtSFProDisplayLight10
@@ -56,7 +57,7 @@ class ReportWidget extends StatelessWidget {
           )),
           Padding(
             padding: getPadding(top: 30, left: 16),
-            child: TextForSelectPeriodWidget(text: 'Изменить период времени' , start: controller.dateStart, end: controller.dateEnd, controller: controller,)
+            child: TextForSelectPeriodWidget(text: 'change_time_period'.tr() , start: controller.dateStart, end: controller.dateEnd, controller: controller,)
 
           ),
           Container(
@@ -68,7 +69,7 @@ class ReportWidget extends StatelessWidget {
                 height: getVerticalSize(29),
                 child: Container(
                   margin: getMargin(left: 10, right: 10, top: 8),
-                  child: Text(e,
+                  child: Text(e.tr(),
                     textAlign: TextAlign.center,
                     style: AppStyle.txtSFProDisplayLight10.copyWith(
                       fontStyle: FontStyle.normal,

@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../core/models/calendar/month_model.dart';
@@ -47,14 +48,14 @@ class K62Screen extends GetWidget {
                             padding: getPadding(
                               top: 39,
                             ),
-                            child: CustomPopButton(text: 'Графики',)
+                            child: CustomPopButton(text: 'charts'.tr(),)
                         ),
                         Padding(
                           padding: getPadding(
                             top: 20,
                           ),
                           child: Text(
-                            "Календарь",
+                            'calendar'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtH1,
@@ -67,7 +68,7 @@ class K62Screen extends GetWidget {
                           ),
                           child: GetBuilder(
                             builder: (K62Controller _c) => Text(
-                              controller.periodStart == null ? 'Выберите начало периода' : 'Выберите конец периода',
+                              controller.periodStart == null ? 'select_start_period'.tr() : 'select_end_period'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style:
@@ -184,7 +185,7 @@ class K62Screen extends GetWidget {
                             onTap: () async {
                               controller.popWithData(context);
                             },
-                            text: "сохранить".toUpperCase(),
+                            text: 'save'.tr().toUpperCase(),
                             padding: ButtonPadding.PaddingT8,
                             margin: getMargin(top: 90),
                             alignment: Alignment.center),
@@ -192,7 +193,7 @@ class K62Screen extends GetWidget {
                             height: getVerticalSize(32),
                             width: getHorizontalSize(186),
                             onTap: () => Navigator.pop(context),
-                            text: "отмена".toUpperCase(),
+                            text: 'cancel'.tr().toUpperCase(),
                             padding: ButtonPadding.PaddingT8,
                             alignment: Alignment.center),
                       ],

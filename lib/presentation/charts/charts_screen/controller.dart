@@ -37,12 +37,12 @@ class K61Controller extends GetxController {
 
   var dateEnd = DateTime.now().add(Duration(days: 7 - DateTime.now().weekday));
   final List<String> fields = [
-    'Дата',
-    'Ситуация',
-    'Эмоции',
-    'Тело',
-    'Действия',
-    'Мысли'
+    'date',
+    'situation',
+    'emotions',
+    'body',
+    'actions',
+    'thoughts'
   ];
   List<int> dataForChart = [];
   final _k27Repo = K27Repo();

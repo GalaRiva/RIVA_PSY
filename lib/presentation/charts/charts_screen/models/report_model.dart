@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -7,7 +8,7 @@ import 'package:pdf/widgets.dart';
 import '../../../../core/models/day_event_model.dart';
 
 class ReportModel {
-  List<String> _columnTags = ['Дата', 'Ситуация', 'Эмоции', 'Тело', 'Действия', 'Мысли'];
+  List<String> _columnTags = ['date', 'situation', 'emotions', 'body', 'actions', 'thoughts'];
   List<double> _columnWeight = [79, 130, 130, 130, 130, 130];
   final String? text = null;
 
@@ -111,13 +112,13 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Мобильное приложение',
+                              Text('mobile_application'.tr(),
                                   style: _textStyle, textAlign: TextAlign.left),
                           SizedBox(height: getVerticalSize(2)),
                           Text('rivapsy.com', style: _textStyle, textAlign: TextAlign.left),
                           SizedBox(height: getVerticalSize(23)),
                           Text(
-                                  'Удобное и бесплатное ведение\nи отправка СМЭР психологу',
+                                  'convenient_and_free_record_and_send_SMER_to_psychologist'.tr(),
                                   style: _textStyle, textAlign: TextAlign.left),
                         ]),
 
@@ -131,7 +132,7 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                     Image(imageQr,
                           height: getVerticalSize(65),
                           width: getVerticalSize(65),),
-                    Text('СМЭР',
+                    Text('SMER'.tr(),
                         style: _textStyle.copyWith(
                             fontSize: 18, color: PdfColor.fromHex('#7f7f90'), fontWeight: FontWeight.bold
                         ))
@@ -149,7 +150,7 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                     border: Border.all(color: _borderColor)
                 ),
                 child: Center(
-                    child: Text(_columnTags[index], style: _headerStyle.copyWith())
+                    child: Text(_columnTags[index].tr(), style: _headerStyle.copyWith())
                 )
             )))),
 

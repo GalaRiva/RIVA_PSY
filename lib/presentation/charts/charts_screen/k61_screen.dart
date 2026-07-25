@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'widgets/admission_schedule/admission_schedule_widget.dart';
 import 'widgets/diagnosis_of_the_condition_widget.dart';
 import 'widgets/report_widget.dart';
@@ -42,7 +43,7 @@ class K61Screen extends GetWidget{
                       right: 16,
                     ),
                     child: Text(
-                      "Графики",
+                      'charts'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -103,7 +104,7 @@ class K61Screen extends GetWidget{
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'Диагностика\nсостояния',
+                                        text: 'state_diagnosis'.tr(),
                                         height: getVerticalSize(70),
                                       ),
                                     ),
@@ -111,7 +112,7 @@ class K61Screen extends GetWidget{
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'Сводный отчет\nо состоянии',
+                                        text: 'summary_report'.tr(),
                                         height: getVerticalSize(70),
                                       ),
                                     ),
@@ -119,7 +120,7 @@ class K61Screen extends GetWidget{
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'Какие эмоции\nя испытываю',
+                                        text: 'what_emotions_am_I_feeling'.tr(),
                                         height: getVerticalSize(70),
                                       ),
                                     ),
@@ -127,7 +128,7 @@ class K61Screen extends GetWidget{
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'Где в теле живут\nмои эмоции',
+                                        text: 'where_do_my_emotions_live_in_the_body'.tr(),
                                         height: getVerticalSize(70),
                                       ),
                                     ),
@@ -136,14 +137,14 @@ class K61Screen extends GetWidget{
                                       height: getVerticalSize(70),
                                       child: Tab(
                                         height: getVerticalSize(70),
-                                        text: 'Где и какие\nиспытываю\nэмоции',
+                                        text: 'where_and_what_emotions_am_I_experiencing'.tr(),
                                       ),
                                     ),
                                     SizedBox(
                                       width: getHorizontalSize(120),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: '''График приема\nи пропуска\nпрепаратов''',
+                                        text: 'medication_intake_schedule_graph'.tr(),
                                         height: getVerticalSize(70),
                                       ),
                                     ),

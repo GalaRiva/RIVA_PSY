@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -46,7 +47,7 @@ class WhatEmotionWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Какие эмоции я испытываю",
+                'what_emotions_am_I_feeling'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle
@@ -119,7 +120,7 @@ class WhatEmotionWidget extends StatelessWidget {
                 CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "Позитивные и негативные эмоции",
+                    'positive_and_negative_emotions'.tr(),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle

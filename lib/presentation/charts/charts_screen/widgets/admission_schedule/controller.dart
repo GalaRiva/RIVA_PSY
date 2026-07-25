@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
@@ -45,7 +46,7 @@ class AdmissionScheduleController extends GetxController {
   }
 
   String showCustomPeriod() {
-    if(startDate == null || endDate == null || _schedulePeriod != SchedulePeriod.Custom) return 'Выбрать период';
+    if(startDate == null || endDate == null || _schedulePeriod != SchedulePeriod.Custom) return 'select_period'.tr();
     return '${startDate!.format('dd.MM.yyyy')}-${endDate!.format('dd.MM.yyyy')}';
   }
 

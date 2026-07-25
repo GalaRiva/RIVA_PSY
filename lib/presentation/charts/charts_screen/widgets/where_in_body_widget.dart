@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'text_for_select_period_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -57,7 +58,7 @@ class WhereInBodyWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Где в теле живут мои эмоции",
+                      'where_do_my_emotions_live_in_the_body'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -112,14 +113,14 @@ class WhereInBodyWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Где в теле живут ",
+                      'where_body_emotions_prefix'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
                           .txtSFProDisplayLight14Gray800,
                     ),
                     Text(
-                      "позитивные ",
+                      'positive'.tr().toLowerCase(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -128,7 +129,7 @@ class WhereInBodyWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "эмоции",
+                      'where_body_emotions_suffix'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -183,14 +184,14 @@ class WhereInBodyWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Где в теле живут ",
+                      'where_body_emotions_prefix'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
                           .txtSFProDisplayLight14Gray800,
                     ),
                     Text(
-                      "негативные ",
+                      'negative'.tr().toLowerCase(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -199,7 +200,7 @@ class WhereInBodyWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "эмоции",
+                      'where_body_emotions_suffix'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -338,7 +339,7 @@ class WhereInBodyWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Где в теле живут мои эмоции",
+                        'where_do_my_emotions_live_in_the_body'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
@@ -370,14 +371,14 @@ class WhereInBodyWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "Где в теле живут ",
+                        'where_body_emotions_prefix'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
                             .txtSFProDisplayLight14Gray800,
                       ),
                       Text(
-                        "позитивные ",
+                        'positive'.tr().toLowerCase(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
@@ -386,7 +387,7 @@ class WhereInBodyWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "эмоции",
+                        'where_body_emotions_suffix'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
@@ -416,14 +417,14 @@ class WhereInBodyWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "Где в теле живут ",
+                        'where_body_emotions_prefix'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
                             .txtSFProDisplayLight14Gray800,
                       ),
                       Text(
-                        "негативные ",
+                        'negative'.tr().toLowerCase(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
@@ -432,7 +433,7 @@ class WhereInBodyWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "эмоции",
+                        'where_body_emotions_suffix'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
