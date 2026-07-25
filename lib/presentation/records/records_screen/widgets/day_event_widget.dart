@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -66,7 +67,7 @@ class DayEventWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            'редактировать',
+                            'redo'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSFProDisplayLight9Gray50,

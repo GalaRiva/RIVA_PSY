@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -207,7 +208,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Действие:  ${dayEventModel.whatIDo ?? ''}",
+                                '${'do'.tr()}:  ${dayEventModel.whatIDo ?? ''}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
@@ -217,7 +218,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                               Padding(
                                 padding: getPadding(top: 14, bottom: 6),
                                 child: Text(
-                                  "Мысли:  ${dayEventModel.firstThoughts ?? ''}",
+                                  '${'thoughts'.tr()}:  ${dayEventModel.firstThoughts ?? ''}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
@@ -272,7 +273,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                               ),
                             ),
                             Text(
-                              'Голосовая запись',
+                              'voice_record'.tr(),
                               style: _style,
                             )
                           ],

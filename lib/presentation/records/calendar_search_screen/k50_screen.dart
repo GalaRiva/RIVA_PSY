@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../core/models/day_event_model.dart';
@@ -52,14 +53,14 @@ class K50Screen extends GetWidget {
                             padding: getPadding(
                               top: 39,
                             ),
-                            child: CustomPopButton(text: 'Записи',)
+                            child: CustomPopButton(text: 'records_title'.tr(),)
                           ),
                           Padding(
                             padding: getPadding(
                               top: 20,
                             ),
                             child: Text(
-                              "Календарь",
+                              "calendar".tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH1,
@@ -71,7 +72,7 @@ class K50Screen extends GetWidget {
                               top: 26,
                             ),
                             child: Text(
-                              "Архив записей",
+                              "archive_records".tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style:

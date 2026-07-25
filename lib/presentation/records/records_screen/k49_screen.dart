@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'widgets/day_event_widget.dart';
 
@@ -42,7 +43,7 @@ class K49Screen extends GetWidget {
                       top: 39,
                     ),
                     child: Text(
-                      "Записи",
+                      'records_title'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -85,7 +86,7 @@ class K49Screen extends GetWidget {
                     onTap: () {
                       Navigator.pushNamed(context, AppRoutes.calendar_search, arguments: controller.list);
                     },
-                    text: "Найти запись".toUpperCase(),
+                    text: 'find_record'.tr().toUpperCase(),
                     margin: getMargin(
                       left: 68,
                       top: 27,
@@ -114,7 +115,7 @@ class K49Screen extends GetWidget {
                       Navigator.pushNamed(context, AppRoutes.calendar_add, arguments: controller.list);
 
                     },
-                    text: "Добавить запись".toUpperCase(),
+                    text: 'add_record'.tr().toUpperCase(),
                     margin: getMargin(
                       left: 68,
                       top: 10,

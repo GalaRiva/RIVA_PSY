@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -14,7 +15,7 @@ class Chipviewframe144ItemWidget extends StatelessWidget {
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        "Отдых",
+        'rest'.tr(),
         textAlign: TextAlign.left,
         style: TextStyle(
           color: ColorConstant.deepPurple600,

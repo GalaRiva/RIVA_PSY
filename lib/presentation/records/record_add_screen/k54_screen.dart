@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import '../../charts/charts_screen/controller.dart';
@@ -63,9 +64,9 @@ class K54Screen extends GetWidget {
                               alignment: Alignment.centerLeft,
                               child: Row(
                                 children: [
-                                  CustomPopButton(text: 'Записи'),
+                                  CustomPopButton(text: 'records_title'.tr()),
                                   Text(
-                                    ' | Создание записи ',
+                                    ' | ${'record_creating'.tr()} ',
                                     style:
                                         AppStyle.txtSFProDisplayLight10Gray800,
                                   ),
@@ -118,7 +119,7 @@ class K54Screen extends GetWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            "Создание записи",
+                            'record_creating'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSFProDisplayLight11.copyWith(
@@ -158,7 +159,7 @@ class K54Screen extends GetWidget {
                         top: 23,
                       ),
                       child: Text(
-                        "Как ты себя чувствовал? ",
+                        'how_did_you_feel'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle.txtSFProDisplayLight11Gray800
@@ -176,13 +177,14 @@ class K54Screen extends GetWidget {
                     )),
                     GetBuilder(
                       builder: (K54Controller _c) => EventChangeWidget(
-                        event: 'событие',
-                        title: 'Что произошло',
+                        findHint: 'find_event'.tr(),
+                        addHint: 'add_event'.tr(),
+                        title: 'what_happened'.tr(),
                         onAdd: (text) async {
                           var result = (await Navigator.pushNamed(
                           context, AppRoutes.addEmotion,
                           arguments: {
-                          'title': 'Добавить Событие',
+                          'title': 'add_event'.tr(),
                           'initialValue': controller.eventAddController.text
                           }))
                           as EventModel;
@@ -202,7 +204,7 @@ class K54Screen extends GetWidget {
                               },
                               context: context,
                               initialText: text,
-                              hintText: 'Найти событие',
+                              hintText: 'find_event'.tr(),
                               events: controller.eventList,
                               onChangeEventModel: (model)
                               {
@@ -239,13 +241,14 @@ class K54Screen extends GetWidget {
                     ),
                     GetBuilder(
                       builder: (K54Controller _c) => EventChangeWidget(
-                        event: 'место',
-                        title: 'Где произошло',
+                        findHint: 'find_place'.tr(),
+                        addHint: 'add_place'.tr(),
+                        title: 'where_it_happened'.tr(),
                         onAdd: (text) async {
                           var result = (await Navigator.pushNamed(
                               context, AppRoutes.addEmotion,
                               arguments: {
-                                'title': 'Добавить Место',
+                                'title': 'add_place'.tr(),
                                 'initialValue': controller.placeAddController.text
                               }))
                           as EventModel;
@@ -265,7 +268,7 @@ class K54Screen extends GetWidget {
                               },
                               context: context,
                               initialText: text,
-                              hintText: 'Найти событие',
+                              hintText: 'find_place'.tr(),
                               events: controller.eventList,
                               onChangeEventModel: (model)
                               {
@@ -286,12 +289,13 @@ class K54Screen extends GetWidget {
                     ),
                     GetBuilder(
                       builder: (K54Controller _c) => EventChangeWidget(
-                        event: 'персону',
+                        findHint: 'find_person'.tr(),
+                        addHint: 'add_person'.tr(),
                         onAdd: (text) async {
                           var result = (await Navigator.pushNamed(
                               context, AppRoutes.addEmotion,
                               arguments: {
-                                'title': 'Добавить Персону',
+                                'title': 'add_person'.tr(),
                                 'initialValue': controller.personaAddController.text
                               }))
                           as EventModel;
@@ -301,7 +305,7 @@ class K54Screen extends GetWidget {
                             controller.update();
                           }
                         },
-                        title: 'С кем произошло',
+                        title: 'with_whom_it_happened'.tr(),
                         onSearch: (text, context) async {
                           await controller.personaSearch(text);
                           controller.update();
@@ -313,7 +317,7 @@ class K54Screen extends GetWidget {
                               context: context,
                               initialText: text,
 
-                              hintText: 'Найти Персону',
+                              hintText: 'find_person'.tr(),
                               events: controller.eventList,
                               onChangeEventModel: (model)
                               {
@@ -334,12 +338,13 @@ class K54Screen extends GetWidget {
                     ),
                     GetBuilder(
                       builder: (K54Controller _c) => EventChangeWidget(
-                        event: 'эмоцию',
+                        findHint: 'find_emotion'.tr(),
+                        addHint: 'add_emotion'.tr(),
                         onAdd: (text) async {
                           var result = (await Navigator.pushNamed(
                               context, AppRoutes.addEmotion,
                               arguments: {
-                                'title': 'Добавить Эмоцию',
+                                'title': 'add_emotion'.tr(),
                                 'initialValue': controller.emotionAddController.text
                               }))
                           as EventModel;
@@ -349,7 +354,7 @@ class K54Screen extends GetWidget {
                             controller.update();
                           }
                         },
-                        title: 'Какую эмоцию испытал?',
+                        title: 'which_emotion_felt'.tr(),
                         onSearch: (text, context) async {
                           await controller.emotionSearch(text);
                           controller.update();
@@ -361,7 +366,7 @@ class K54Screen extends GetWidget {
                               context: context,
                               initialText: text,
 
-                              hintText: 'Найти Эмоцию',
+                              hintText: 'find_emotion'.tr(),
                               events: controller.eventList,
                               onChangeEventModel: (model)
                               {
@@ -389,7 +394,7 @@ class K54Screen extends GetWidget {
                         height: getVerticalSize(17),
                         width: getHorizontalSize(size.width - 100),
                         child: Text(
-                          "Оцени интенсивность эмоции",
+                          'rate_emotion_intensity'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight11Gray800
@@ -409,7 +414,8 @@ class K54Screen extends GetWidget {
                         )),
                     GetBuilder(
                       builder: (K54Controller _c) => EventChangeWidget(
-                        event: 'часть тела',
+                        findHint: 'find_body_part'.tr(),
+                        addHint: 'add_body_part'.tr(),
                         onAdd: (text) async {
                           if(controller.bodyPartsAddController.text.isNotEmpty) {
                             await controller.bodyPartAdd(BodyPartsModel(
@@ -417,10 +423,10 @@ class K54Screen extends GetWidget {
                                 whatHurts: []));
                             controller.update();
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Введи название части тела')));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter_body_part_name'.tr())));
                           }
                         },
-                        title: 'Что происходило с телом?',
+                        title: 'what_was_happening_with_body'.tr(),
                         onSearch: (text, context) async {
                           await controller.bodyPartsSearch(text);
                           controller.update();
@@ -431,7 +437,7 @@ class K54Screen extends GetWidget {
                               },
                               context: context,
                               initialText: text,
-                              hintText: 'Найти часть тела',
+                              hintText: 'find_body_part'.tr(),
                               bodyParts: controller.bodyParts,
                               );
                         },
@@ -445,10 +451,10 @@ class K54Screen extends GetWidget {
                         ,fFocus: controller.bodyPartsSNode, sFocus: controller.bodyPartsANode,
                       ),
                     ),
-                    EventChangeTextFieldWidget(title: 'Что я делал?', hintText: 'Например: Ушел, хлопнул дверью', textEditingController: controller.whatIDoController, onChange: (text){
+                    EventChangeTextFieldWidget(title: 'what_did_I_do'.tr(), hintText: 'for_example_left_slammed_door'.tr(), textEditingController: controller.whatIDoController, onChange: (text){
                       dayEventModel.whatIDo = text;
                     },),
-                    EventChangeTextFieldWidget(title: 'Первые мысли в ситуации', hintText: 'Например: Я тоже так хочу', textEditingController: controller.firstThoughtsController, onChange: (text){
+                    EventChangeTextFieldWidget(title: 'first_thoughts_in_situation'.tr(), hintText: 'for_example_me_too'.tr(), textEditingController: controller.firstThoughtsController, onChange: (text){
                       dayEventModel.firstThoughts = text;
                     },),
                     GetBuilder(
@@ -463,19 +469,19 @@ class K54Screen extends GetWidget {
                       onTap: () async {
                         dayEventModel.whatBodyParts = controller.selectedBodyParts;
                         if(dayEventModel.whatBodyParts == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите часть тела')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('select_body_part'.tr())));
                         }
                         else if(dayEventModel.whatEmotion == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите эмоцию')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('select_emotion'.tr())));
                         }
                         else if(dayEventModel.whoDidItHappen == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите персону')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('select_person'.tr())));
                         }
                         else if(dayEventModel.whereHappened == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите место')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('select_place'.tr())));
                         }
                         else if(dayEventModel.whatHappened == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите событие')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('select_event'.tr())));
                         }
                         else {
                           controller.clear();
@@ -490,9 +496,10 @@ class K54Screen extends GetWidget {
                               onPop: () {
                                 Navigator.pushNamedAndRemoveUntil(context, AppRoutes.records, (route) => false);
                               },
-                              title: 'Запись создана',
-                              content:
-                              'Запись ${dayEventModel.date!.day} ${dayEventModel.date!.month.monthInText()} ${dayEventModel.date!.year} г ${dayEventModel.date!.hour.timeFormatted()}:${dayEventModel.date!.minute.timeFormatted()} сохранена',
+                              title: 'record_created'.tr(),
+                              content: 'save_record'.tr(args: [
+                                '${dayEventModel.date!.day} ${dayEventModel.date!.month.monthInText()} ${dayEventModel.date!.year} г ${dayEventModel.date!.hour.timeFormatted()}:${dayEventModel.date!.minute.timeFormatted()}'
+                              ]),
                             ),
                           ), );
                           Get.delete<K51Controller>();
@@ -500,7 +507,7 @@ class K54Screen extends GetWidget {
                           Get.delete<K61Controller>();
                         }
                       },
-                      text: "Сохранить".toUpperCase(),
+                      text: 'save'.tr().toUpperCase(),
                       margin: getMargin(
                         top: 27,
                       ),

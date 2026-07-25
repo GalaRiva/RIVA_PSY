@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -38,20 +39,20 @@ class TryIrrationalDialog extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Проработать иррациональное'.toUpperCase(),
+                              'work_out_irrational'.tr().toUpperCase(),
                               textAlign: TextAlign.center,
                               style: AppStyle.txtSFProDisplayLight16,
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               child: Text(
-                                'путь к здоровой жизни и отношениям)',
+                                'path_to_healthy_life'.tr(),
                                 textAlign: TextAlign.center,
                                 style: AppStyle.txtSFProDisplayLight16,
                               ),
                             ),
                             Text(
-                              'Проработать иррациональные мысли, изменить дисфункциональное на функциональное)',
+                              'work_out_irrational_thoughts'.tr(),
                               textAlign: TextAlign.center,
                               style: AppStyle.txtSFProDisplayLight12,
                             ),
@@ -84,7 +85,7 @@ class TryIrrationalDialog extends StatelessWidget {
                               ),
                             ),
                             CustomButton(
-                              text: 'Хочу попробовать'.toUpperCase(),
+                              text: 'want_try'.tr().toUpperCase(),
                               fontStyle: ButtonFontStyle.DeepPurple16,
                               onTap: () {
                                 AppRoutes.currentRoute = AppRoutes.recommendations;

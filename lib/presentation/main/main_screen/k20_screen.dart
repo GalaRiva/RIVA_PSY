@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -276,7 +276,7 @@ class K20Screen extends GetWidget<K20Controller> {
                           showDialog(
                             context: context, builder: (BuildContext context) =>
                               CustomMessageBox(
-                                title: 'Создана запись',
+                                title: 'create_record'.tr(),
                                 content:
                                 'Запись ${DateTime
                                     .now()
@@ -294,7 +294,7 @@ class K20Screen extends GetWidget<K20Controller> {
                                     .timeFormatted()} сохранена',
                               ),);
                         },
-                        text: "Сохранить".toUpperCase(),
+                        text: 'save'.tr().toUpperCase(),
                         margin: getMargin(
                           left: 74,
                           top: 38,
@@ -307,7 +307,7 @@ class K20Screen extends GetWidget<K20Controller> {
                           onTap: (){
                           Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel().copyWith(howDoYouFeel: value, showInCharts: true));
                           },
-                        text: "Пройти путь".toUpperCase(),
+                        text: 'complete_path'.tr().toUpperCase(),
                         margin: getMargin(
                           left: 68,
                           top: 27,

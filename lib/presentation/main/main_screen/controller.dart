@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -68,7 +69,7 @@ class K20Controller extends GetxController {
               children: [
                 Container(
                   margin: getMargin(top: 30,right: 84, left: 84),
-                    child: Text('Хотите изменить частоту и время напоминаний?', style: AppStyle.txtSFProDisplayLight14, textAlign: TextAlign.center,)),
+                    child: Text('change_frequency_reminders'.tr(), style: AppStyle.txtSFProDisplayLight14, textAlign: TextAlign.center,)),
                 SizedBox(height: getVerticalSize(26),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +77,7 @@ class K20Controller extends GetxController {
                     CustomButton(
                         height: getVerticalSize(32),
                         width: getHorizontalSize(136),
-                        text: "Нет".toUpperCase(),
+                        text: 'no'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         onTap: () => Navigator.pop(context),
                         alignment: Alignment.center),
@@ -84,7 +85,7 @@ class K20Controller extends GetxController {
                     CustomButton(
                         height: getVerticalSize(32),
                         width: getHorizontalSize(136),
-                        text: "Да".toUpperCase(),
+                        text: 'yes'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         onTap: () => Navigator.pushNamed(context, AppRoutes.reminders),
                         alignment: Alignment.center),

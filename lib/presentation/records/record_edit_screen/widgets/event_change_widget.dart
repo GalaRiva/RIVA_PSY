@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/image_constant.dart';
@@ -10,20 +11,24 @@ import '../../../../widgets/second_variant_event_card.dart';
 
 class EventChangeWidget extends StatelessWidget {
   final List<List<Widget>> contents;
-  final String event;
+  final String findHint;
+  final String addHint;
   final TextEditingController searchController;
   final TextEditingController addController;
   final Function(String text, BuildContext context)? onSearch;
   final Function(String text)? onAdd;
   final String title;
 
-   EventChangeWidget({Key? key, required this.event, this.onSearch, this.onAdd, required this.searchController, required this.addController, required this.contents, required this.title}) : super(key: key);
+   EventChangeWidget({Key? key, required this.findHint, required this.addHint, this.onSearch, this.onAdd, required this.searchController, required this.addController, required this.contents, required this.title}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     final _focus = FocusNode();
     final _sFocus = FocusNode();
+    final _changeToParts = 'change_to'.tr().split('{}');
+    final _changeToBefore = _changeToParts[0];
+    final _changeToAfter = _changeToParts.length > 1 ? _changeToParts[1].trimLeft() : '';
     return Container(
       margin: getMargin(
         top: 30,
@@ -65,7 +70,7 @@ class EventChangeWidget extends StatelessWidget {
                     top: 3,
                   ),
                   child: Text(
-                    "Заменить ",
+                    _changeToBefore,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle
@@ -94,7 +99,7 @@ class EventChangeWidget extends StatelessWidget {
                     top: 2,
                   ),
                   child: Text(
-                    "на ",
+                    _changeToAfter,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyle
@@ -112,7 +117,7 @@ class EventChangeWidget extends StatelessWidget {
           CustomSearchView(
             focusNode: _focus,
             controller: searchController,
-            hintText: "Найти $event",
+            hintText: findHint,
             margin: getMargin(
               top: 29,
             ),
@@ -140,7 +145,7 @@ class EventChangeWidget extends StatelessWidget {
           CustomSearchView(
             focusNode: _sFocus,
             controller: addController,
-            hintText: "Добавить $event",
+            hintText: addHint,
             margin: getMargin(
               top: 26,
             ),

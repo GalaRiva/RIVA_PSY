@@ -1,20 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
+
 extension DateInString on int {
   String dayInText() {
     switch (this) {
       case 1:
-        return 'Понедельник';
+        return 'monday'.tr();
       case 2:
-        return 'Вторник';
+        return 'tuesday'.tr();
       case 3:
-        return 'Среда';
+        return 'wednesday'.tr();
       case 4:
-        return 'Четверг';
+        return 'thursday'.tr();
       case 5:
-        return 'Пятница';
+        return 'friday'.tr();
       case 6:
-        return 'Суббота';
+        return 'saturday'.tr();
       default:
-        return 'Воскресение';
+        return 'sunday'.tr();
     }
   }
 
