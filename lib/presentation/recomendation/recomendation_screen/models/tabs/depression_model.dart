@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../../../core/models/audio/audio.dart';
@@ -13,7 +14,7 @@ import 'package:path_provider/path_provider.dart';
 class DepressionModel extends NegativeEmotionsModelTab{
    String imageTitle = ImageConstant.depressionImage;
 
-   String titleText () => 'Каждое упражнение заканчивайте глубоким вдохом и выдохом через рот 3 раза. Почувствуйте, как изменилось ощущение в руках, ногах, груди';
+   String titleText () => 'breathing_relaxation_instruction'.tr();
 
   DateTime? lastListen () =>null;
 

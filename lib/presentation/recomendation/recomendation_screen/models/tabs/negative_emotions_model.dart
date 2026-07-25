@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -22,37 +23,37 @@ class NegativeEmotionsModel {
 
   List<Widget> tabs = [
     Tab(
-      text: 'Злость',
+      text: 'wrath'.tr(),
     ),
     Tab(
-      text: 'Паника',
+      text: 'panic'.tr(),
     ),
     Tab(
-      text: 'Страх',
+      text: 'fear2'.tr(),
     ),
     Tab(
-      text: 'Грусть',
+      text: 'sorrow'.tr(),
     ),
     Tab(
-      text: 'Обида',
+      text: 'resentment'.tr(),
     ),
     Tab(
-      text: 'Неуверенность',
+      text: 'uncertainty'.tr(),
     ),
     Tab(
-      text: 'Отвращение',
+      text: 'disgust'.tr(),
     ),
     Tab(
-      text: 'Вина',
+      text: 'guilt'.tr(),
     ),
     Tab(
-      text: 'Лень',
+      text: 'laziness'.tr(),
     ),
     Tab(
-      text: 'Одиночество',
+      text: 'loneliness'.tr(),
     ),
     Tab(
-      text: 'Потерянность',
+      text: 'lostness'.tr(),
     ),
   ];
 
@@ -148,8 +149,7 @@ class NegativeEmotionsModel {
       if (item.tag == 'panic') controller.panicTab = item.tabIndex;
       final tab = NegativeTab(
           funAudioAssets: audios,
-          funTitleText:
-              'Каждое упражнение заканчивайте глубоким вдохом и выдохом через рот 3 раза. Почувствуйте, как изменилось ощущение в руках, ногах, груди',
+          funTitleText: 'breathing_relaxation_instruction'.tr(),
           funButtons: await _funButtons(item.tag),
           funTitleImage: item.imagePath);
       final tabHeight = ((audios?.length ?? 0) * (getVerticalSize(65) + 30)) + 200;

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:riva_psy/core/user_data/user.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,8 +76,7 @@ class NegativeEmotionTabs {
         }
       }
       else {
-        var errorMessage =
-            'Возникла непредвиденная ошибка, проверьте подключение к интернету или запустите приложение позднее.';
+        var errorMessage = 'unexpected_error_check_connection'.tr();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
           errorMessage,

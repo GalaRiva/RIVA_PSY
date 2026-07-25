@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/widgets/exercises_tab_body.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/widgets/custom_tab_bar.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
@@ -89,7 +90,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                              Padding(
                                padding: EdgeInsets.only(top: 10, left: 16),
                                child: Text(
-                                 "Рекомендации и упражнения",
+                                 'recommendations_and_exercises'.tr(),
                                  overflow: TextOverflow.ellipsis,
                                  textAlign: TextAlign.left,
                                  style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -110,7 +111,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                              Padding(
                                padding: EdgeInsets.only(top: 14, left: 16),
                                child: Text(
-                                 'Справится с эмоциями',
+                                 'cope_with_emotions_heading'.tr(),
                                  style: AppStyle.txtH1,
                                ),
                              ),
@@ -119,7 +120,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                                child: CustomButton(
                                  variant: ButtonVariant.Cyan,
                                  fontStyle: ButtonFontStyle.White16,
-                                 text: 'Помощь при панике и аффекте',
+                                 text: 'help_with_panic_and_affect'.tr(),
                                  bgColor: ColorConstant.cyan700,
                                  width: size.width - 32,
                                  onTap: () {
@@ -141,7 +142,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                                    ExercisesTabBody(controller: controller),
                                    WorkingOutScreen()
                                  ],
-                                 labels: ['Справиться с эмоцией', 'Обретение'],
+                                 labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr()],
                                  controller: pageController,
                                ),
                              )

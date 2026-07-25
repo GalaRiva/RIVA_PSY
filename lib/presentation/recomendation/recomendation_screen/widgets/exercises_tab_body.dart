@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/widgets/tab_widget.dart';
 
 import '../../../../core/utils/color_constant.dart';
@@ -47,16 +48,16 @@ class ExercisesTabBody extends StatelessWidget {
                   labelColor: ColorConstant.cyan700,
                   tabs: [
                     Tab(
-                      text: 'Введение',
+                      text: 'introduction'.tr(),
                     ),
                     Tab(
-                      text: 'Медитации',
+                      text: 'meditations'.tr(),
                     ),
                     Tab(
-                      text: 'Негативные эмоции',
+                      text: 'negative_emotions'.tr(),
                     ),
                     Tab(
-                      text: 'Депрессия',
+                      text: 'depression'.tr(),
                     ),
                   ],
                 ),
