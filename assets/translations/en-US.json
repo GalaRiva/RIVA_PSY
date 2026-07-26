@@ -217,6 +217,8 @@
   "choose_event_or_create_new": "Choose an event or create a new one",
   "choosing_place": "Choosing a place",
   "choose_place_or_create_new": "Choose a place or create a new one",
+  "choosing_event": "Choosing an event",
+  "choose_body_part_or_create_new": "Choose a body part or create a new one",
   "choose_emotion_or_create_new": "Choose an emotion or create a new one",
   "emotion_not_found_add_your_own": "Emotion not found\nAdd your own emotion",
   "choose_person_or_create_new": "Choose a person or create a new one",

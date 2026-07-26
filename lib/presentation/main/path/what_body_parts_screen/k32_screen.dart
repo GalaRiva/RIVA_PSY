@@ -328,7 +328,7 @@ class K32Screen extends GetWidget {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                     content: Text(
-                                        'Выберете часть тела или создайте новую'))); // TODO: no key confirmed yet — needs confirmation
+                                        'choose_body_part_or_create_new'.tr())));
                               } else {
                                 if(onSave != null)
                                   onSave!(dayEventModel.copyWith(whatBodyParts: controller.selectedEventList));

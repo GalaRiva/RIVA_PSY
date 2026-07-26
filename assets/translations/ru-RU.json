@@ -217,6 +217,8 @@
   "choose_event_or_create_new": "Выберете событие или создайте новое",
   "choosing_place": "Выбор места",
   "choose_place_or_create_new": "Выберете место или создайте новое",
+  "choosing_event": "Выбор события",
+  "choose_body_part_or_create_new": "Выберете часть тела или создайте новую",
   "choose_emotion_or_create_new": "Выберете эмоцию или создайте новую",
   "emotion_not_found_add_your_own": "Эмоция не найдена\nДобавьте свою эмоцию",
   "choose_person_or_create_new": "Выберете персону или создайте новое",

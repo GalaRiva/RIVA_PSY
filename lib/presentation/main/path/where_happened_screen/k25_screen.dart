@@ -288,7 +288,7 @@ class K25Screen extends GetWidget {
                             177,
                           ),
                           onTap: () => Navigator.pop(context),
-                          text: "выбор события".toUpperCase(), // TODO: no key confirmed yet — needs confirmation
+                          text: 'choosing_event'.tr().toUpperCase(),
                           margin: getMargin(
                             bottom: 10,
                           ),
