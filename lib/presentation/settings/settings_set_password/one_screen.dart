@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -36,11 +37,11 @@ class OneScreen extends GetWidget<OneScreenController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                            CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
 
                             Padding(
                                 padding: getPadding(top: 26),
-                                child: Text("Пароль",
+                                child: Text('passwprd'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
@@ -48,7 +49,7 @@ class OneScreen extends GetWidget<OneScreenController> {
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: getPadding(top: 111),
-                                    child: Text("Введите пароль",
+                                    child: Text('enter_password'.tr(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style:
@@ -64,11 +65,11 @@ class OneScreen extends GetWidget<OneScreenController> {
                             SizedBox(height: getVerticalSize(60),),
                             SelectableText.rich(
                               TextSpan(
-                                text: 'Восстановление пароля не предполагается системой, ', // default text style
+                                text: 'password_recovery_not_provided'.tr(), // default text style
                                 children: <TextSpan>[
-                                  TextSpan(text: 'так как ', style: AppStyle.txtSFProDisplayLight16),
-                                  TextSpan(text: 'мы не собираем Ваши данные '),
-                                  TextSpan(text: 'и не отправляем Вам сообщения на email и по СМС. Вводите тот пароль, что легко запомните или запишите его', style: AppStyle.txtSFProDisplayLight16),
+                                  TextSpan(text: 'password_recovery_reason1'.tr(), style: AppStyle.txtSFProDisplayLight16),
+                                  TextSpan(text: 'password_recovery_reason2'.tr()),
+                                  TextSpan(text: 'password_recovery_reason3'.tr(), style: AppStyle.txtSFProDisplayLight16),
 
                                 ],
                               ),
@@ -77,7 +78,7 @@ class OneScreen extends GetWidget<OneScreenController> {
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
-                                text: "настройки".toUpperCase(),
+                                text: 'settings'.tr().toUpperCase(),
                                 margin: getMargin(top: 44),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(

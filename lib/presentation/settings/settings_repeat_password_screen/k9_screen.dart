@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -24,17 +25,17 @@ class K9Screen extends GetWidget<K9Controller> {
     }, onSubmit: (text, password) async{
       if (text.length >= 4 && text == password) {
         showDialog(context: context, builder: (BuildContext context) => CustomMessageBox(
-          title: 'Пароль',
+          title: 'passwprd'.tr(),
           content:
-          'Пароль успешно сохранён',
+          'password_saved'.tr(),
         ), );
         CurrentUser.user.password = text;
         await CurrentUser.repo.setLocalUserData(password: text);
       } if (text.length >= 4 && text != password) {
         showDialog(context: context, builder: (BuildContext context) => CustomMessageBox(
-          title: 'Пароль',
+          title: 'passwprd'.tr(),
           content:
-          'Пароли не совпадают',
+          'passwords_do_not_match'.tr(),
         ), );
 
       }
@@ -53,11 +54,11 @@ class K9Screen extends GetWidget<K9Controller> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                            CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
 
                             Padding(
                                 padding: getPadding(top: 26),
-                                child: Text("Пароль",
+                                child: Text('passwprd'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
@@ -65,7 +66,7 @@ class K9Screen extends GetWidget<K9Controller> {
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: getPadding(top: 111),
-                                    child: Text("Подтвердите пароль",
+                                    child: Text('confirm_password'.tr(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -81,7 +82,7 @@ class K9Screen extends GetWidget<K9Controller> {
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
-                                text: "настройки".toUpperCase(),
+                                text: 'settings'.tr().toUpperCase(),
                                 margin: getMargin(top: 154),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(
