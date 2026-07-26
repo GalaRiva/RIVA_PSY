@@ -352,7 +352,7 @@ class K61Controller extends GetxController {
 
     PlaceModel? placeIsExist () {
       for (var item in _places) {
-        if (item.place == dayEventModel.whereHappened!.name) {
+        if (item.identity == dayEventModel.whereHappened!.identity) {
           return item;
         }
       }
@@ -376,7 +376,7 @@ class K61Controller extends GetxController {
         }
       }
     } else {
-      _places.add(PlaceModel(dayEventModel.whereHappened!.name, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].name, getColor(index)))));
+      _places.add(PlaceModel(dayEventModel.whereHappened!.name, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].name, getColor(index))), placeKey: dayEventModel.whereHappened!.key));
     }
   }
 

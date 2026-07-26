@@ -17,7 +17,7 @@ class K25Controller extends GetxController {
   EventModel? whereHappened;
 
   bool contain (EventModel _event) {
-    if(whereHappened!= null && whereHappened!.name == _event.name) {
+    if(whereHappened!= null && whereHappened!.identity == _event.identity) {
       return true;
     }
     return false;
