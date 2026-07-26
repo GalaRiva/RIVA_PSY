@@ -631,3 +631,19 @@ tail -f /tmp/flutter_run_input | flutter run -d emulator-5554 --debug > /tmp/flu
 **Попутная синхронизация формулировки**: ключ `can_set_reminders_time` в `ru-RU.json` обновлён — было "в Настройках... о приеме..." (без ё) через точку-пробел между предложениями, стало "в Настройках... о приёме..." (с ё) через перенос строки `\n` — приведено к более грамотному и визуально идентичному варианту из исходного кода `pill_reminders_screen.dart`. EN/ES-версии не трогались (там нет аналогичной проблемы).
 
 `flutter analyze` — 0 новых ошибок. Не проверено визуально — эмулятор не поднимался в этой сессии.
+
+### 45. Локализация модуля Pills (экраны препаратов), коммит ниже, 2026-07-26
+
+8 файлов из 16 в дереве `settings_pills/` содержали кириллицу: `settings_pills/controller.dart`, `settings_pills/settings_pills_screen.dart`, `settings_pills/widgets/pill_card_widget.dart`, `settings_pills_add_bottom_sheet/controller.dart` + `.dart`, `settings_pills_calendar/settings_pills_calendar_screen.dart`, `settings_pills_edit_bottom_sheet/controller.dart` + `.dart`. Остальные 8 (модели, `pill_model.g.dart`, `repository.dart` и др.) — чистая логика без UI-текста, проверены и не тронуты.
+
+**Comparison risk — не найдено.** Целенаправленно проверили `PillModel`/`AdoptionModel` на предмет русских enum-подобных полей (частота приёма, "до/после еды", единицы измерения) — в модуле их нет вообще: `name` — свободный пользовательский текст, `hoursOfTakingPills` — свободные строки времени в формате `HH:MM`, введённые через `TextFormField` с маской, не выбор из русского списка. Весь UI-текст переведён без архитектурных оговорок.
+
+**Починены 2 опечатки в существующих ключах** (во всех трёх языковых файлах, RU/EN/ES): `add_appointment` — добавлена пропущенная буква ё ("Добавить время прие**м**а" → "прие**ё**ма"); `delete_reminder` — убрано лишнее слово "и", не соответствовавшее реальному тексту в коде ("Убрать напоминание **и** из актуальных..." → "Убрать напоминание из актуальных..."). EN/ES-версии этих двух ключей тоже приведены в соответствие по смыслу.
+
+**Дублированная логика, сведена к одному ключу.** Функция `getDurationText()` (fallback-текст "установить длительность приема") была скопирована в 3 разных файлах (`pill_card_widget.dart`, `settings_pills_add_bottom_sheet/controller.dart`, `settings_pills_edit_bottom_sheet/controller.dart`) — все три теперь используют один ключ `set_reception_duration`.
+
+**15 новых ключей**: `add_pill`, `reminder_n` (шаблон с номером через `.tr(args:...)`), `add_pill_dialog_title`, `fill_all_fields`, `enter_medication_name`, `edit_medication_name`, `medication_name_hint`, `enter_medication_name_full`, `edit_abbrev`, `cancel_noun` (сознательно отдельно от уже существующего `cancel`="Отменить" — разные слова, "отмена" vs "отменить", не объединять), `appointment_reminder_singular` (отдельно от множественного `apoinment_reminders`), `edit_reminder_title`, `add_reminder_to_actual`, `cancel_intake`, `resume_intake`.
+
+**Переиспользовано** (~19 мест): `date_added`, `current_appointments`, `settings`, `apoinment_reminders`, `back`, `set_reception_duration`, `redo`, `set_reception_time`, `save`, `add_appointment` (после починки), `select_start_period`, `select_end_period`, `delete_reminder` (после починки), `cancel`.
+
+`flutter analyze` — 0 новых ошибок. Не проверено визуально — эмулятор не поднимался в этой сессии.
