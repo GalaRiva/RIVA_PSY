@@ -38,10 +38,10 @@ class DesirePathItem extends StatelessWidget {
                 children: [
                   Text(
                     desire.completed
-                        ? 'Исполнил'
+                        ? 'executed_1'.tr()
                         : desire.dateOfExecution.isAfter(DateTime.now())
-                            ? 'Исполняю'
-                            : 'Пропало',
+                            ? 'executing'.tr()
+                            : 'lost'.tr(),
                     style: AppStyle.txtSFProDisplayLight14.copyWith(
                         color: desire.completed
                             ? Colors.white

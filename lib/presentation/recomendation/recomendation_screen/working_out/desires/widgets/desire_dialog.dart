@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/desire/desire.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -76,19 +76,19 @@ class DesireDialog extends StatelessWidget {
               ),
               centralWidget: () {
                 if (desire.completed) {
-                  return Text('Исполнил ${DateFormat('dd.MM.yyyy').format(
+                  return Text('${'executed_1'.tr()} ${DateFormat('dd.MM.yyyy').format(
                       desire.dateOfExecution)}'.toUpperCase(),
                     style: AppStyle.txtSFProDisplayLight16Cyan700,);
                 } else if (DateTime.now().isBefore(desire.dateOfExecution)) {
                   return Row(children: [
-                      Text('исполню '.toUpperCase(),
+                      Text('${'will_execute'.tr()} '.toUpperCase(),
                 style: AppStyle.txtSFProDisplayLight16DeepPurple,),
                     Text('${DateFormat('dd.MM.yyyy').format(
                         desire.dateOfExecution)}'.toUpperCase(),
                       style: AppStyle.txtSFProDisplayLight16Cyan700,)
                   ],);
                 }
-                return Text('Желание пропало'.toUpperCase(),
+                return Text('lost_wish'.tr().toUpperCase(),
                   style: AppStyle.txtSFProDisplayLight16DeepPurple,);
               }())
     ],

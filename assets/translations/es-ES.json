@@ -712,6 +712,14 @@
   "will_execute": "Lo cumpliré",
 
   "lost_wish": "El deseo se ha esfumado",
+  "lost": "Se esfumó",
+
+  "report": "Informe",
+  "later": "Más tarde",
+  "save_desire": "guardar deseo",
+  "desires_stage": "Deseos {}/3",
+  "desires_past": "Deseos pasados",
+  "recommendation_for_efficiency": "Recomendación para la efectividad del ejercicio",
 
   "more_detailed": "más detalles",
 

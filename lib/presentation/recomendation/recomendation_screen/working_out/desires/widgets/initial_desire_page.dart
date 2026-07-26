@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/bloc/bloc.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
@@ -25,24 +26,15 @@ class InitialDesirePage extends StatelessWidget {
             AspectRatio(aspectRatio: 3/1.5,
             child: Image.asset(ImageConstant.desiresStartPNG, fit: BoxFit.fill ,)),
             SizedBox(height: 20,),
-            Text('желания'.toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
+            Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
             SizedBox(height: 20,),
-            Text('''Это не про великие мечты, цели и гонки, а самые простые желания.
-
-Желания касаются простых вещей. Упражнение для того, чтобы научиться слышать себя и свои истинные желания.
-
-Пишите то, что Вы любите или нравится и то, что Вы хотите.
-Какое именно?
-
-Что я хочу сейчас? Какую-нибудь мелочь здесь и сейчас.
-Я хочу пить/лечь/сесть/спать, рыбу, яблоко, фильм, книгу, - любое и какое именно.
-'''.toUpperCase(), style: AppStyle.txtSFProDisplayLight12,),
+            Text('its_not_about_great_dreams'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight12,),
 
             SizedBox(height: 20,),
             Row(children: [
               Expanded(
                 child: CustomButton(
-                  text: 'НАЧАТЬ',
+                  text: 'start'.tr().toUpperCase(),
                   onTap: () {
                     context.read<DesiresBloc>().add(DesiresEvent.start());
                   },
@@ -51,7 +43,7 @@ class InitialDesirePage extends StatelessWidget {
               SizedBox(width: 10,),
               Expanded(
                 child: CustomButton(
-                  text: 'ПОДРОБНЕЕ',
+                  text: 'more_detailed'.tr().toUpperCase(),
                   onTap: () {
                     context.read<DesiresBloc>().add(DesiresEvent.getDetails(context));
                   },
@@ -61,7 +53,7 @@ class InitialDesirePage extends StatelessWidget {
             SizedBox(height: 10,),
             CustomButton(
               width: size.width / 2 - 20,
-              text: 'ОТЧЁТ',
+              text: 'report'.tr().toUpperCase(),
               onTap: () {
                 context.read<DesiresBloc>().add(DesiresEvent.goToReport());
               },

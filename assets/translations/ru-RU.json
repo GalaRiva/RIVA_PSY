@@ -712,6 +712,14 @@
   "will_execute": "Исполню",
 
   "lost_wish": "Желание пропало",
+  "lost": "Пропало",
+
+  "report": "Отчёт",
+  "later": "Позже",
+  "save_desire": "сохранить желание",
+  "desires_stage": "Желания {}/3",
+  "desires_past": "Желания прошлого",
+  "recommendation_for_efficiency": "Рекомендация для эффективности упражнения",
 
   "more_detailed": "подробнее",
 

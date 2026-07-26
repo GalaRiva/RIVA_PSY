@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -72,7 +73,7 @@ scrollDirection: Axis.vertical,      children: [
                 context.read<DesiresBloc>().add(DesiresEvent.start());
 
               },
-              text: 'начать'.toUpperCase(),
+              text: 'start'.tr().toUpperCase(),
 
             ),
 
@@ -90,10 +91,10 @@ scrollDirection: Axis.vertical,      children: [
               indicatorColor: Colors.transparent,
                 controller: tabController,
                 tabs: [
-              _tab('Желания', 0),
-              _tab('Исполнил', 1),
-              _tab('Исполняю', 2),
-              _tab('Желания прошлого', 3),
+              _tab('desires'.tr(), 0),
+              _tab('executed_1'.tr(), 1),
+              _tab('executing'.tr(), 2),
+              _tab('desires_past'.tr(), 3),
 
             ]),
           ),

@@ -31,7 +31,7 @@ class DesireStageThirdPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Желания 3/3',
+                  'desires_stage'.tr(args: ['3']),
                   style: AppStyle.txtSFProDisplayLight16,
                 ),
                 Text(
@@ -62,8 +62,7 @@ class DesireStageThirdPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '''У меня есть возможность удовлетворить это желание сейчас или в течении 30 минут?'''
-                  .toUpperCase(),
+              'i_can_fulfill_this_desire'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
             ),
             SizedBox(
@@ -80,7 +79,7 @@ class DesireStageThirdPage extends StatelessWidget {
             ),
 
             Text(
-              '''Пример. Если любите яблоки, то какие именно, большие зеленые и кислосладкие у которых кожура гладкая, а при откусывании слышится хруст или маленькие красно-белые, сладкие и достаточно мягкие. Как именно Вы любите их есть: целиком, разрезая крупные или мелкие части, положив в тарелку или есть на ходу, смотря кино или после обеда?'''.toUpperCase(),
+              'if_love_apples'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
             ),
 
@@ -91,7 +90,7 @@ class DesireStageThirdPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButton(
-                    text: 'Исполнено'.toUpperCase(),
+                    text: 'executed'.tr().toUpperCase(),
                     onTap: () {
                       context.read<DesiresBloc>().add(DesiresEvent.executeNewDesire());
                     },
@@ -102,7 +101,7 @@ class DesireStageThirdPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomButton(
-                    text: 'Позже'.toUpperCase(),
+                    text: 'later'.tr().toUpperCase(),
                     onTap: () {
                     
                       showDialog(context: context, builder: (_) => SetDateDialog(
@@ -111,7 +110,7 @@ class DesireStageThirdPage extends StatelessWidget {
                           Navigator.pop(context);
 
                         }, setDate: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  K51Screen(title: 'Запланировать\nжелание', widget: SvgPicture.asset(ImageConstant.desireHeartSVG), onTap: (_) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  K51Screen(title: 'schedule_desire'.tr(), widget: SvgPicture.asset(ImageConstant.desireHeartSVG), onTap: (_) {
                           Navigator.pop(context, _);
                         },))).then((value){
                           if(value != null) {
@@ -129,7 +128,7 @@ class DesireStageThirdPage extends StatelessWidget {
             SizedBox(height: 10,),
             CustomButton(
               width: double.infinity,
-              text: 'сохранить желание'.toUpperCase(),
+              text: 'save_desire'.tr().toUpperCase(),
               onTap: () {
                 context.read<DesiresBloc>().add(DesiresEvent.executeNewDesire());
 

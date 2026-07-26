@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/desires_page.dart';
@@ -68,13 +69,13 @@ class WorkingOutScreen extends StatelessWidget {
                         labelColor: ColorConstant.cyan700,
                         tabs: [
                           Tab(
-                            text: 'Отработать\nиррациональное',
+                            text: 'work_out_irrational'.tr(),
                           ),
                           Tab(
-                          text: 'Престиж\nв фокусе- счастье',
+                          text: 'prestige_in_focus'.tr(),
                         ),
                           Tab(
-                            text: 'Желания',
+                            text: 'desires'.tr(),
                           ),
                         ],
                       ),

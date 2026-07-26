@@ -30,7 +30,7 @@ class DesireStageFirstPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Желания 1/3',
+                  'desires_stage'.tr(args: ['1']),
                   style: AppStyle.txtSFProDisplayLight16,
                 ),
                 Text(
@@ -61,9 +61,7 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '''Напиши, что ты хочешь сейчас? Здесь и сейчас.
-Пить, поспать, лечь, сесть, почесать руку, сходить в туалет или посмотреть фильм, чай, яблоко, книга с приглушенным уютным светом и т.д. )'''
-                  .toUpperCase(),
+              'write_what_you_wish'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
             ),
             AspectRatio(
@@ -76,7 +74,7 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Самые простые желания'.toUpperCase(),
+              'most_simple_desires'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight16,
               textAlign: TextAlign.center,
             ),
@@ -84,7 +82,7 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              '''“Что я хочу сейчас?” или Что я люблю?'''.toUpperCase(),
+              'what_i_wish'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
               textAlign: TextAlign.center,
             ),
@@ -104,7 +102,7 @@ class DesireStageFirstPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButton(
-                    text: 'ОТМЕНА',
+                    text: 'cancel'.tr().toUpperCase(),
                     onTap: () {
                       context.read<DesiresBloc>().add(DesiresEvent.cancel());
                     },
@@ -115,7 +113,7 @@ class DesireStageFirstPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomButton(
-                    text: 'СОХРАНИТЬ',
+                    text: 'save'.tr().toUpperCase(),
                     onTap: () {
                       context
                           .read<DesiresBloc>()

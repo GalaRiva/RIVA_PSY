@@ -712,6 +712,14 @@
   "will_execute": "Will fulfill",
 
   "lost_wish": "The desire is gone",
+  "lost": "Gone",
+
+  "report": "Report",
+  "later": "Later",
+  "save_desire": "save desire",
+  "desires_stage": "Desires {}/3",
+  "desires_past": "Past desires",
+  "recommendation_for_efficiency": "Recommendation for exercise effectiveness",
 
   "more_detailed": "more details",
 

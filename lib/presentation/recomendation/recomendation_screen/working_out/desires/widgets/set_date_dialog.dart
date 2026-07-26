@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -30,16 +31,16 @@ class SetDateDialog extends StatelessWidget {
                     onTap: () => Navigator.pop(context),
                     child: Icon(Icons.close, color: ColorConstant.blueGray400, size: 20,)),),
                 SizedBox(height: 10,),
-                Text('желания'.toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
+                Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
                 SizedBox(height: 10,),
-                 Text('Если желание касается того, что не можете позволить из-за финансовых или других ограничивающих причин сейчас- запланируйте\n“Сейчас нет возможности, когда хочу и смогу его исполнить?”', style: AppStyle.txtSFProDisplayLight12,),
+                 Text('if_desire_concerns'.tr(), style: AppStyle.txtSFProDisplayLight12,),
                 SizedBox(height: 10,),
 
                   AspectRatio(aspectRatio: 1/1, child: Image.asset(ImageConstant.desireCreateCompletePNG, fit: BoxFit.fill,),),
                 SizedBox(height: 20,),
-                CustomButton(text: 'готово'.toUpperCase(), onTap: confirm,),
+                CustomButton(text: 'done'.tr().toUpperCase(), onTap: confirm,),
                 SizedBox(width: 10,),
-                CustomButton(text: 'запланировать позже'.toUpperCase(), onTap: setDate,)
+                CustomButton(text: 'schedule_later'.tr().toUpperCase(), onTap: setDate,)
               ],
             ),
           ),

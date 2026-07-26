@@ -30,7 +30,7 @@ class DesireStageSecondPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Желания 2/3',
+                  'desires_stage'.tr(args: ['2']),
                   style: AppStyle.txtSFProDisplayLight16,
                 ),
                 Text(
@@ -61,9 +61,7 @@ class DesireStageSecondPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '''Какое именно и как именно? Опишите в деталях, если возможно, и максимально подробно.
-Вкус, цвет, внешний вид, жареное, вареное, свежее, консистенция, свет, атмосфера, последовательность, ощущения, есть руками или сервировано по этикету- чем больше деталей, тем лучше!'''
-                  .toUpperCase(),
+              'what_concrete_and_how'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
             ),
             SizedBox(
@@ -80,7 +78,7 @@ class DesireStageSecondPage extends StatelessWidget {
             ),
 
             Text(
-              '''Пример. Если любите яблоки, то какие именно, большие зеленые и кислосладкие у которых кожура гладкая, а при откусывании слышится хруст или маленькие красно-белые, сладкие и достаточно мягкие. Как именно Вы любите их есть: целиком, разрезая крупные или мелкие части, положив в тарелку или есть на ходу, смотря кино или после обеда?'''.toUpperCase(),
+              'if_love_apples'.tr().toUpperCase(),
               style: AppStyle.txtSFProDisplayLight12,
             ),
             SizedBox(
@@ -99,7 +97,7 @@ class DesireStageSecondPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButton(
-                    text: 'ОТМЕНА',
+                    text: 'cancel'.tr().toUpperCase(),
                     onTap: () {
                       context.read<DesiresBloc>().add(DesiresEvent.cancel());
                     },
@@ -110,7 +108,7 @@ class DesireStageSecondPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomButton(
-                    text: 'СОХРАНИТЬ',
+                    text: 'save'.tr().toUpperCase(),
                     onTap: () {
                       context
                           .read<DesiresBloc>()
