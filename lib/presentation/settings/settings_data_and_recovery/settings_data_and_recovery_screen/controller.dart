@@ -12,9 +12,7 @@ import '../../../../core/services/google_drive_service.dart';
 
 class DataAndRecoveryController extends GetxController {
   String service = 'Google Drive';
-  bool serviceEnable = false;
 
-  static const String servicePrefsKey = 'serviceEnable';
   static const String serviceCopyDataKey = 'serviceCopyData';
   static const String copyDataKey = 'copyData';
 
@@ -23,9 +21,6 @@ class DataAndRecoveryController extends GetxController {
 
   void init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if ((prefs.getBool(servicePrefsKey) ?? false) != false) {
-      serviceEnable = true;
-    }
     if ((prefs.getString(serviceCopyDataKey)) != null) {
       serviceCopyData = DateTime.tryParse(prefs.getString(serviceCopyDataKey)!);
     }
@@ -76,13 +71,6 @@ class DataAndRecoveryController extends GetxController {
               SnackBar(content: Text('Произошла непредвиденная ошибка\nОписание ошибки - $_')));
       }
     }
-  }
-
-  Future changeServiceEnable() async {
-    serviceEnable = !serviceEnable;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(servicePrefsKey, serviceEnable);
-    update();
   }
 
   Future setCopyData(String key, DateTime? data, DateTime dataForChange) async {

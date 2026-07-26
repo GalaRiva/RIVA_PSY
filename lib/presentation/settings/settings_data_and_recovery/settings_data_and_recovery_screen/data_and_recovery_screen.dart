@@ -52,20 +52,7 @@ class DataAndRecoveryScreen extends StatelessWidget {
                       child: GetBuilder(
                         builder: (DataAndRecoveryController _c) => CardDataAndRecoveryButtonWidget(context,
                             controller: controller,
-                            title: controller.service,
-                            suffixWidget: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                    controller.serviceEnable ? 'Вкл.' : 'Выкл.',
-                                    style: AppStyle.txtSFProDisplayLight16)),
-                            onTap: () async => await controller.changeServiceEnable()
-                        ),
-                      ),
-                    ),
-                    GetBuilder(
-                      builder: (DataAndRecoveryController _c) => CardDataAndRecoveryButtonWidget(context,
-                          controller: controller,
-                          title: 'Резервная копия',
+                            title: 'Резервная копия',
                           onTap: controller.service == '' ? null : () async => await controller.createServiceBackup(context),
                           suffixWidget: Column(
                             children: [
@@ -79,6 +66,7 @@ class DataAndRecoveryScreen extends StatelessWidget {
                               )
                             ],
                           )),
+                      ),
                     ),
                     CardDataAndRecoveryButtonWidget(context,
                         controller: controller,
@@ -92,7 +80,7 @@ class DataAndRecoveryScreen extends StatelessWidget {
                     Padding(
                       padding: getPadding(top: 7, left: 15, right: 35),
                       child: Text(
-                        'Ваши данные будут автоматически копироваться в ${controller.service} каждую неделю.',
+                        'Нажмите «Резервная копия», чтобы в любой момент сохранить копию своих данных в ${controller.service}.',
                         style: AppStyle.txtSFProDisplayLight11Gray800,
                       ),
                     ),

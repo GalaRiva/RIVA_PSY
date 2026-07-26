@@ -10,7 +10,6 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/user_data/user.dart';
 import 'package:riva_psy/presentation/initial_setup/set_reminders_screen/k3_screen.dart';
 import 'package:riva_psy/presentation/main/main_screen/widgets/try_irrational_dialog.dart';
-import 'package:riva_psy/presentation/settings/settings_data_and_recovery/settings_data_and_recovery_screen/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/shared_prefs.dart';
@@ -26,17 +25,6 @@ class K20Controller extends GetxController {
   Rx<bool> canView = false.obs;
 
   Future openMessages (BuildContext context) async {
-    try {
-      final dataAndRecoveryController = Get.put(DataAndRecoveryController());
-      dataAndRecoveryController.init();
-      if(dataAndRecoveryController.serviceEnable && DateTime.now().difference(dataAndRecoveryController.serviceCopyData ?? DateTime.now()).inDays > 6 || dataAndRecoveryController.serviceCopyData == null) {
-        await dataAndRecoveryController.setCopyData(DataAndRecoveryController.serviceCopyDataKey, dataAndRecoveryController.serviceCopyData, DateTime.now());
-      }
-    } catch (_) {
-      
-    }
-
-
     const FIRST_MONTH_KEY = 'MONTH_PASSED';
     SharedPreferences prefs = SharedPrefs.sharedPreferences;
     if (SharedPrefs.sharedPreferences.getBool('set_reminders') == null)
