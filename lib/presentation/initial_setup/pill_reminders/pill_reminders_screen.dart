@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
@@ -43,7 +44,7 @@ class PillRemindersScreen extends StatelessWidget {
                             .start,
                         children: [
                           Align(alignment: Alignment.centerLeft,
-                              child: Text("Напоминания",
+                              child: Text('reminders'.tr(),
                                   overflow: TextOverflow
                                       .ellipsis,
                                   textAlign: TextAlign.left,
@@ -51,7 +52,7 @@ class PillRemindersScreen extends StatelessWidget {
                           Padding(padding: getPadding(
                               top: 10, right: 5),
                               child: Text(
-                                  "Можете в настройках установить время напоминания о приёме лекарств или витамин.\nМы мягко напомним!",
+                                  'can_set_reminders_time'.tr(),
                                   maxLines: null,
                                   textAlign: TextAlign.left,
                                   style: AppStyle.txtH2)),
@@ -67,7 +68,7 @@ class PillRemindersScreen extends StatelessWidget {
                               CustomButton(
                                   height: getVerticalSize(32),
                                   width: size.width / 2 - 60,
-                                  text: "Позже".toUpperCase(),
+                                  text: 'later'.tr().toUpperCase(),
                                   margin: getMargin(
                                       top: 14, bottom: 6),
                                   variant: ButtonVariant
@@ -81,7 +82,7 @@ class PillRemindersScreen extends StatelessWidget {
                               CustomButton(
                                   height: getVerticalSize(32),
                                   width: size.width / 2 - 60,
-                                  text: "Установить".toUpperCase(),
+                                  text: 'setup'.tr().toUpperCase(),
                                   margin: getMargin(
                                       top: 14, bottom: 6),
                                   variant: ButtonVariant

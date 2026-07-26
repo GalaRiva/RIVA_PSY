@@ -56,7 +56,7 @@ class K3Screen extends GetWidget<K3Controller> {
                               mainAxisAlignment:
                                   MainAxisAlignment.start,
                               children: [
-                                Text("Уведомления",
+                                Text('notifications'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1),
@@ -126,7 +126,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                                                       child: CustomCheckboxNotification(controller.list[index].selected)),
                                                                   Padding(
                                                                       padding: getPadding(left: 18, top: 1),
-                                                                      child: Text(controller.list[index].quantity.toString() + " раза в день ", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: controller.list[index].selected ? AppStyle.txtSFProDisplayLight12 : AppStyle.txtSFProDisplayLight12Gray500))
+                                                                      child: Text("${controller.list[index].quantity} ${'times_per_day'.tr()}", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: controller.list[index].selected ? AppStyle.txtSFProDisplayLight12 : AppStyle.txtSFProDisplayLight12Gray500))
                                                                 ]),
                                                           );
                                                         },
@@ -215,7 +215,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                     padding: getPadding(top: 53),
                                     child: Row(children: [
                                       Text(
-                                          "Поменять время напоминаний можно в ",
+                                          'change_time'.tr(),
                                           style: TextStyle(
                                               color:
                                                   ColorConstant.gray800,
@@ -228,7 +228,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                         onTap: () =>
                                             Navigator.pushNamed(context,
                                                 AppRoutes.settings),
-                                        child: Text("Настройках",
+                                        child: Text('in_settings'.tr(),
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .cyan700,
@@ -246,7 +246,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                 Padding(
                                     padding: getPadding(top: 13),
                                     child: Text(
-                                        "Вы сможете отказаться от уведомлений  ${controller.date.day} ${controller.date.month.monthInText()} ${controller.date.year} ",
+                                        "${'you_can_refuse'.tr()} ${controller.date.day} ${controller.date.month.monthInText()} ${controller.date.year} ",
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -257,7 +257,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                       onTapColumnten(context, true);
                                     },
                                     width: getHorizontalSize(178),
-                                    text: "Далее".toUpperCase(),
+                                    text: 'continue'.tr().toUpperCase(),
                                     margin:
                                         getMargin(top: 19, bottom: 7),
                                     variant: ButtonVariant

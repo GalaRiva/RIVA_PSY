@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
@@ -39,7 +40,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                             .start,
                         children: [
                           Align(alignment: Alignment.centerLeft,
-                              child: Text("Тариф",
+                              child: Text('tariff_title'.tr(),
                                   overflow: TextOverflow
                                       .ellipsis,
                                   textAlign: TextAlign.left,
@@ -47,7 +48,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                           Padding(padding: getPadding(
                               top: 10, right: 5),
                               child: Text(
-                                  "Для хранения всех вводимых данных на вашем смартфоне и максимальной конфиденциальности переходите на тариф Орион. Получите полный доступ к рекомендациям, статистике и аудио",
+                                  'for_storing_data_go_to_orion'.tr(),
                                   maxLines: null,
                                   textAlign: TextAlign.left,
                                   style: AppStyle.txtH2)),
@@ -58,7 +59,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               margin: getMargin(top: 23)),
                           CustomButton(
                               height: getVerticalSize(54),
-                              text: "Перейти на тариф Орион"
+                              text: "${'go_to_tariff'.tr()}Орион"
                                   .toUpperCase(),
                               onTap: () {
                                 Navigator.pushNamed(context,
@@ -74,7 +75,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                                   .SFProDisplayRegular12Cyan700),
                           Padding(padding: getPadding(top: 64),
                               child: Text(
-                                  "В бесплатной версии резервные копии будут хранится в вашем облачном хранилище.",
+                                  'in_free_version'.tr(),
                                   maxLines: null,
                                   textAlign: TextAlign.left,
                                   style: AppStyle
@@ -85,7 +86,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               CustomButton(
                                   height: getVerticalSize(32),
                                   width: size.width / 2 - 60,
-                                  text: "Позже".toUpperCase(),
+                                  text: 'later'.tr().toUpperCase(),
                                   margin: getMargin(
                                       top: 14, bottom: 6),
                                   variant: ButtonVariant
@@ -94,7 +95,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               CustomButton(
                                   height: getVerticalSize(32),
                                   width: size.width / 2 - 60,
-                                  text: "Далее".toUpperCase(),
+                                  text: 'continue'.tr().toUpperCase(),
                                   margin: getMargin(
                                       top: 14, bottom: 6),
                                   variant: ButtonVariant

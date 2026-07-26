@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -21,11 +22,11 @@ class SendPushesScreen extends StatelessWidget {
         child: Center(
           child: CustomMessageBox(
             canPop: false,
-            title: 'Уведомления', content: Column(
+            title: 'notifications'.tr(), content: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(width: getHorizontalSize(305),
-              child: Text('Разрешить приложению RIVA PSY  отправлять push-уведомления', style: AppStyle.txtSFProDisplayLight16,),)
+              child: Text('allow_for_app'.tr(), style: AppStyle.txtSFProDisplayLight16,),)
 
               ,Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +42,7 @@ class SendPushesScreen extends StatelessWidget {
                       SharedPrefs.sharedPreferences.setBool('send_pushes', true);
                       Navigator.pop(context);
                     },
-                    text: "нет".toUpperCase(),
+                    text: 'no'.tr().toUpperCase(),
                   ),
                   SizedBox(
                     width: getVerticalSize(10),
@@ -81,7 +82,7 @@ class SendPushesScreen extends StatelessWidget {
                               builder: (_) => PillRemindersScreen());
                         }
                       },
-                    text: "да".toUpperCase(),
+                    text: 'yes'.tr().toUpperCase(),
                   ),
                 ],
               )
