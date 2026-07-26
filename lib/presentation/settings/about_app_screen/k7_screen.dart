@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -37,7 +38,7 @@ class K7Screen extends StatelessWidget {
                                     children: [
                                       Align(
                                           alignment: Alignment.centerLeft,
-                                          child:  CustomPopButton( text: 'Настройки',)),
+                                          child:  CustomPopButton( text: 'settings'.tr(),)),
                                       Align(
                                           alignment:
                                           Alignment.bottomCenter,
@@ -60,7 +61,7 @@ class K7Screen extends StatelessWidget {
                                     ])),
                             Padding(
                                 padding: getPadding(top: 25),
-                                child: Text("О приложении",
+                                child: Text('about_app'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
@@ -73,7 +74,7 @@ class K7Screen extends StatelessWidget {
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
-                                text: AppRoutes.currentRoute == AppRoutes.settings? "настройки".toUpperCase() : "назад".toUpperCase(),
+                                text: AppRoutes.currentRoute == AppRoutes.settings? 'settings'.tr().toUpperCase() : 'back'.tr().toUpperCase(),
                                 margin: getMargin(top: 154),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(
