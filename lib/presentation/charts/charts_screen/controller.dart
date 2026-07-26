@@ -284,8 +284,8 @@ class K61Controller extends GetxController {
         for (var item in emotionsInBody) {
           bool containBodyPart() {
             for (var _item in item.bodyParts) {
-              if (_item.bodyPart.bodyPartsModel.bodyPart ==
-                  bodyParts.bodyPartsModel.bodyPart) {
+              if (_item.bodyPart.bodyPartsModel.identity ==
+                  bodyParts.bodyPartsModel.identity) {
                 _item.quantity++;
                 return true;
               }
@@ -333,8 +333,8 @@ class K61Controller extends GetxController {
       int quantity = 1;
       bool createNew = true;
       for (var item in model.bodyParts) {
-        if (item.bodyPart.bodyPartsModel.bodyPart ==
-            bodyParts.bodyPartsModel.bodyPart) {
+        if (item.bodyPart.bodyPartsModel.identity ==
+            bodyParts.bodyPartsModel.identity) {
           item.quantity++;
           createNew = false;
         }
@@ -394,7 +394,7 @@ class K61Controller extends GetxController {
     final listToReturn = <BodyPartModel>[];
     bool contain(BodyPartModel second) {
       for(var item in listToReturn)
-     if (item.bodyPart.bodyPartsModel.bodyPart == second.bodyPart.bodyPartsModel.bodyPart){
+     if (item.bodyPart.bodyPartsModel.identity == second.bodyPart.bodyPartsModel.identity){
        item.quantity++;
        item.color = getColor(listToReturn.length);
        return true;

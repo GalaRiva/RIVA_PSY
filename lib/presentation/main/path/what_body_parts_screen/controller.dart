@@ -44,24 +44,7 @@ class K32Controller extends GetxController {
         return _repo.getEvent();
   }
 
-  double getMessageBoxHeight (BodyPartsModel model) {
-    switch(model.bodyPart.toLowerCase()) {
-      case 'голова и лицо':
-        return 266;
-      case 'горло':
-        return 266;
-      case 'грудная клетка':
-        return 314;
-      case 'плечи и руки':
-        return 350;
-      case 'ноги':
-        return 266;
-        case 'живот':
-      return 314;
-      default:
-      return 160;
-    }
-  }
+  double getMessageBoxHeight (BodyPartsModel model) => model.messageBoxHeight;
 
   Future showSelectWhatHartDialog(BuildContext context, K32Controller controller, BodyPartsModel model) => showDialog<String>(
       context: context,

@@ -27,7 +27,7 @@ class BodyPartWidget extends StatelessWidget {
   bool isContain() {
     bool result = false;
     for (var item in controller.selectedEventList) {
-      if (item.bodyPartsModel.bodyPart == model.bodyPart) {
+      if (item.bodyPartsModel.identity == model.identity) {
         result = true;
         break;
       }
