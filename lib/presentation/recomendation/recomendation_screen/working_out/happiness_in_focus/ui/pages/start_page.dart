@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
@@ -43,7 +44,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          'СЧАСТЬЕ В ФОКУСЕ',
+                          'happiness_in_focus'.tr().toUpperCase(),
                           style: AppStyle.txtSFProDisplayLight16
                               .copyWith(color: Colors.white),
                         ),
@@ -58,7 +59,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '''Сейчас последовательно, одно за другим, посмотрим на 1-3-5 моментов сегодняшнего дня, в которых Вам было хорошо… или... более-менее хорошо''',
+                      'now_lets_look_at_moments'.tr(),
                       style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                     ),
                     SizedBox(
@@ -84,7 +85,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: CustomButton(
-                  text: 'Далее'.toUpperCase(),
+                  text: 'continue'.tr().toUpperCase(),
                   bgColor: Color(0xff66C1BD),
                   fontStyle: ButtonFontStyle.White16,
                   onTap: () => context.read<HappinessInFocusCubit>().goToNextState(HappinessInFocusStage.ThoughtsHappinessInFocusState),
@@ -94,7 +95,7 @@ class HappinessInFocusStartPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 40),
               child: CustomButton(
-                text: 'Супер задание'.toUpperCase(),
+                text: 'super_quest'.tr().toUpperCase(),
                 //variant: ButtonVariant.Cyan,
                 //fontStyle: ButtonFontStyle.White16,
                 textStyle: TextStyle(fontSize: 20, color: ColorConstant.deepPurple500, fontWeight: FontWeight.w300),

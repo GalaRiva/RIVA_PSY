@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:intl/intl.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
@@ -42,7 +43,7 @@ class HappinessInFocusThoughtsPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Счастье в фокусе', style: AppStyle.txtSFProDisplayLight16,),
+                Text('happiness_in_focus'.tr(), style: AppStyle.txtSFProDisplayLight16,),
                 Text(DateFormat('dd.MM.yy').format(DateTime.now()), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),)
               ],
             ),
@@ -74,17 +75,9 @@ class HappinessInFocusThoughtsPage extends StatelessWidget {
                       child: Image.asset(ImageConstant.happinessInFocusThoughts, fit: BoxFit.cover,),
                     ),
                 )),
-            Text('Напишите, что сегодня доставило приятные эмоции, состояния, ощущения или что впервые за долгое время полезного для себя заметили, осознали', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),
+            Text('write_what_today_gave_pleasant_emotions'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),
       SizedBox(height: 20,),
-            Text('''Например,
-       • я понял…
-       • я наконец почувствовал..
-       • я впервые за долгое время увидел красоту..
-       • я впервые смог вдохнуть полной грудью..
-       • было приятно….
-       • здорово, что я сделал…
-       • сегодня я почувствовал…
-       • читаю интересную книгу..''', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),
+            Text('for_example'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),
 
             Padding(padding: EdgeInsets.symmetric(vertical: 15),
               child: SizedBox(
@@ -122,13 +115,13 @@ class HappinessInFocusThoughtsPage extends StatelessWidget {
                     CustomButton(
                       bgColor: Colors.white.withOpacity(0.6),
 
-                      text: 'НАЗАД'.toUpperCase(),
+                      text: 'back'.tr().toUpperCase(),
                       width: (size.width - 60 )/ 2,
                       onTap: () => cubit.goToPrevState(context),
                     ),
                     CustomButton(
                       bgColor: Colors.white.withOpacity(0.6),
-                      text: 'Далее'.toUpperCase(),
+                      text: 'continue'.tr().toUpperCase(),
                       width: (size.width - 60 )/ 2,
                       //variant: ButtonVariant.Almost,
                       onTap: () {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,9 +23,9 @@ class SuperQuestMiddlePage extends StatelessWidget {
 
   String _text (int progress) {
     final images = [
-      'Ты будешь гордиться собой, потому что выполнив, вероятно, поймешь насколько это сложно. То, что ты получишь будет ценнее любых звездочек на экране.\n\nКак выполнишь- поставь здесь галочку',
-      '“..в принципе нам следует подготовиться к потрясающим последствиям, которые наступят, если мы перестанем ссылаться на социальную несправедливость.\nА. Маслоу',
-      '“Я не в силах предвидеть, я в силах созидать. Будущее создают. Если у меня рука ваятеля, то прекрасным лицом станут дробные черты моего времени и то, чего я хочу, осуществится.\nЦитадель. Антуан де Сент-Экзюпери',
+      'you_will_pride'.tr(),
+      'in_principe_we_should'.tr(),
+      'i_cant_anticipate'.tr(),
     ];
     return progress > 3 ? images[2] : images[progress - 1 ];
   }
@@ -59,11 +60,11 @@ class SuperQuestMiddlePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: Center(child: Text('три дня без жалоб'.toUpperCase(),style: AppStyle.txtSFProDisplayLight16,)),
+                    child: Center(child: Text('three_days_without_complaints'.tr().toUpperCase(),style: AppStyle.txtSFProDisplayLight16,)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: Text('без жалоб. Ни в словах, ни в мыслях',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
+                    child: Center(child: Text('without_complaints'.tr(),style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
                   AspectRatio(
                     aspectRatio: 230/105,
@@ -90,7 +91,7 @@ class SuperQuestMiddlePage extends StatelessWidget {
                     )),
                   ),
                   CustomButton(
-                    text: 'cохранить'.toUpperCase(),
+                    text: 'save'.tr().toUpperCase(),
                     variant: ButtonVariant.Cyan,
                     fontStyle: ButtonFontStyle.White16,
                     onTap: (){
@@ -100,7 +101,7 @@ class SuperQuestMiddlePage extends StatelessWidget {
                   SizedBox(height: 10,),
 
                   CustomButton(
-                    text: 'отменить результат'.toUpperCase(),
+                    text: 'cancel_result'.tr().toUpperCase(),
                     variant: ButtonVariant.Cyan,
                     fontStyle: ButtonFontStyle.White16,
                     onTap: (){

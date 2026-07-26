@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/super_quest/ui/super_quest_page.dart';
@@ -14,6 +15,7 @@ class SuperQuestMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final remainedParts = 'remained_fill'.tr().split('{}');
     if (positiveRecords < 0)
       return Material(
         child: Container(
@@ -41,8 +43,7 @@ class SuperQuestMessage extends StatelessWidget {
                 ),
               ),
               Text(
-                'Сделай 100 осознанных записей, и тебе откроется супер задание'
-                    .toUpperCase(),
+                'do_x_records'.tr(args: ['100']).toUpperCase(),
                 style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.black900),
                 textAlign: TextAlign.center,
               ),
@@ -51,12 +52,12 @@ class SuperQuestMessage extends StatelessWidget {
               ),
               SelectableText.rich(
                 TextSpan(children: [
-                  TextSpan(text: 'Осталось внести '),
+                  TextSpan(text: remainedParts[0]),
                   TextSpan(
                       text: '${100 - positiveRecords}',
                       style: AppStyle.txtSFProDisplayLight16Gray
                           .copyWith(color: ColorConstant.cyan700)),
-                  TextSpan(text: ' записей'),
+                  TextSpan(text: remainedParts.length > 1 ? remainedParts[1] : ''),
                 ], style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.black900)),
               )
             ],
@@ -90,7 +91,7 @@ class SuperQuestMessage extends StatelessWidget {
                 ),
               ),
               Text(
-                'Приступай только когда готов к нему...'.toUpperCase(),
+                'get_started'.tr().toUpperCase(),
                 style: AppStyle.txtSFProDisplayLight16Gray
                     .copyWith(color: ColorConstant.gray80038),
                 textAlign: TextAlign.center,
@@ -111,7 +112,7 @@ class SuperQuestMessage extends StatelessWidget {
                 height: 15,
               ),
               CustomButton(
-                text: 'Понятно'.toUpperCase(),
+                text: 'understand'.tr().toUpperCase(),
                 variant: ButtonVariant.Cyan,
                 fontStyle: ButtonFontStyle.White16,
                 onTap: (){
@@ -122,7 +123,7 @@ class SuperQuestMessage extends StatelessWidget {
                 height: 15,
               ),
               CustomButton(
-                text: 'Супер задание'.toUpperCase(),
+                text: 'super_quest'.tr().toUpperCase(),
                 variant: ButtonVariant.Cyan,
                 fontStyle: ButtonFontStyle.White16,
                 onTap: (){

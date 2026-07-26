@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -16,19 +17,19 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
     late final String text;
     switch (progress) {
       case 1:
-        text = 'ЗДОРОВО!';
+        text = 'very_well'.tr();
         break;
       case 2:
-        text = 'Ты имеешь право чувствовать счастье.';
+        text = 'you_have_right_feel'.tr();
         break;
       case 3:
-        text = 'Ты имеешь право на мысли и эмоции.';
+        text = 'you_have_right_on_thoughts'.tr();
         break;
       case 4:
-        text = 'Вселенная сегодня такая, благодаря тому, что ты есть';
+        text = 'university_today'.tr();
         break;
       default:
-        text = 'Спасибо тебе, что ты есть!';
+        text = 'thank_you_for_being_there'.tr();
         break;
     }
     return Text(text.toUpperCase(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c), textAlign: TextAlign.center,);
@@ -76,7 +77,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
                       ),
                     ),
                     CustomButton(
-                      text: 'Далее'.toUpperCase(),
+                      text: 'continue'.tr().toUpperCase(),
                       variant: ButtonVariant.Cyan,
                       fontStyle: ButtonFontStyle.White16,
                       onTap: (){
@@ -85,7 +86,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
                       },
                     ),
                     CustomButton(
-                      text: 'Продолжу позже'.toUpperCase(),
+                      text: 'continue_later'.tr().toUpperCase(),
                       variant: ButtonVariant.Cyan,
                       fontStyle: ButtonFontStyle.White16,
                       onTap: (){
@@ -104,7 +105,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
                       ),
                     ),
                     CustomButton(
-                      text: 'Супер задание'.toUpperCase(),
+                      text: 'super_quest'.tr().toUpperCase(),
                       variant: ButtonVariant.Cyan,
                       fontStyle: ButtonFontStyle.White16,
                       onTap: (){

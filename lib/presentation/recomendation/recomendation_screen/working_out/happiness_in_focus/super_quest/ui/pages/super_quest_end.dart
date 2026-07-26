@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,8 +48,7 @@ class _SuperQuestEndPageState extends State<SuperQuestEndPage> {
                     padding: const EdgeInsets.only(top: 20, bottom: 20),
                     child: Center(
                         child: Text(
-                      'Лучшая похвала и награда то, что ты уже получил, сделав это'
-                          .toUpperCase(),
+                      'best_praise'.tr().toUpperCase(),
                       style: AppStyle.txtSFProDisplayLight16,
                     )),
                   ),
@@ -87,7 +87,7 @@ class _SuperQuestEndPageState extends State<SuperQuestEndPage> {
                     )),
                   ),
                   CustomButton(
-                    text: 'готово'.toUpperCase(),
+                    text: 'done'.tr().toUpperCase(),
                     variant: ButtonVariant.Cyan,
                     fontStyle: ButtonFontStyle.White16,
                     onTap: () {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,11 +41,11 @@ class SuperQuestStartPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: Center(child: Text('три дня без жалоб'.toUpperCase(),style: AppStyle.txtSFProDisplayLight16,)),
+                    child: Center(child: Text('three_days_without_complaints'.tr().toUpperCase(),style: AppStyle.txtSFProDisplayLight16,)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: Text('Три дня без единой жалобы. Ни на погоду, ни на здоровье, политику, работу, близкого человека, транспорт, ни тем более на себя- ни о чем!)',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
+                    child: Center(child: Text('three_days_without_one_complaints'.tr(),style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
                   Container(
                     child: AspectRatio(
@@ -54,15 +55,15 @@ class SuperQuestStartPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: Center(child: Text('Во время первых попыток могут всплывать подавленные негативные эмоции, обиды- фиксируй их в приложении и проходи аудио сессии.)',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
+                    child: Center(child: Text('${'during_the_first_attempts'.tr()})',style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: Text('Задание поистине сложное, будь снисходителен к себе. Ошибки- часть нашего пути.\n\nНе спеши.',
+                    child: Center(child: Text('quest_very_difficult'.tr(),
                     style: AppStyle.txtSFProDisplayLight16, textAlign: TextAlign.center,)),
                   ),
                   CustomButton(
-                    text: 'приступить'.toUpperCase(),
+                    text: 'start2'.tr().toUpperCase(),
                     variant: ButtonVariant.Cyan,
                     fontStyle: ButtonFontStyle.White16,
                     onTap: (){
