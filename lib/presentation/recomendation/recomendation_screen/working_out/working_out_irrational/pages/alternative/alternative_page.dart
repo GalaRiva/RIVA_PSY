@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -50,7 +51,7 @@ class AlternativePage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 10),
               child: CustomButton(
                 width: size.width > 320 ? 295 : size.width - 60,
-                text: 'НАЗАД',
+                text: 'back'.tr().toUpperCase(),
                 variant: ButtonVariant.White24,
                 onTap: () => context.read<WorkingOutIrrationalCubit>().goToNextState(WorkingOutIrrationalStage.initialStage),
               ),
@@ -90,7 +91,7 @@ class AlternativePage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Изменить период времени',
+                        'change_time_period'.tr(),
                         style: AppStyle.txtSFProDisplayLight11Deeppurple600
                             .copyWith(fontSize: 15),
                       ),
@@ -127,7 +128,7 @@ class AlternativePage extends StatelessWidget {
                                 context) =>
                                 PdfPreviewWidget(pdf: (format) async => AlternativePdf().makePdf(await cubit.getSpentRecordModels()),))),
                         child: Text(
-                            'Отправить Сводный отчет ${cubit.dateStart.day
+                            '${'send_summary_report'.tr()} ${cubit.dateStart.day
                                 .timeFormatted()}.${cubit.dateStart.month
                                 .timeFormatted()}.${cubit.dateStart
                                 .year}-${cubit.dateEnd.day
@@ -157,7 +158,7 @@ class AlternativePage extends StatelessWidget {
                         color: Colors.white,
                         width: 45, height: 30,
                         child: Center(
-                          child: Text('Дата', style: AppStyle
+                          child: Text('date'.tr(), style: AppStyle
                               .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
@@ -165,7 +166,7 @@ class AlternativePage extends StatelessWidget {
                         color: Colors.white,
                         width: 145, height: 30,
                         child: Center(
-                          child: Text('Альтернативные мысли', style: AppStyle
+                          child: Text('alternative_thoughts'.tr(), style: AppStyle
                               .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
@@ -173,7 +174,7 @@ class AlternativePage extends StatelessWidget {
                         color: Colors.white,
                         width: 145, height: 30,
                         child: Center(
-                          child: Text('Альтернативные действия', style: AppStyle
+                          child: Text('alternative_actions'.tr(), style: AppStyle
                               .txtSFProDisplayLight11Gray800, overflow: TextOverflow
                               .ellipsis,),
                         ),),
@@ -197,10 +198,10 @@ class AlternativePage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Альтернатива ${cubit.lastSpentRecordModel().dayEventModel.date!.formatForRecord('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Gray,),
+                              Text('${'alternative'.tr()} ${cubit.lastSpentRecordModel().dayEventModel.date!.formatForRecord('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Gray,),
                               InkWell(
                                   onTap: cubit.redoSpentRecordModel,
-                                  child: Text('редактировать', style: AppStyle.txtSFProDisplayLight16Gray,)),
+                                  child: Text('redo'.tr(), style: AppStyle.txtSFProDisplayLight16Gray,)),
 
                             ],
                           ),
@@ -210,12 +211,12 @@ class AlternativePage extends StatelessWidget {
                             color: ColorConstant.grayTextColor,thickness: 1,
                           ),
                           ),
-                          Text('Альтернативная мысль', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
+                          Text('alternative_thought'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
                           Padding(padding: EdgeInsets.symmetric(vertical: 15),
                           child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeThoughts}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
 
                           ),
-                          Text('Альтернативное действие', style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
+                          Text('alternative_do'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
                           Padding(padding: EdgeInsets.only(top: 15),
                             child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeDo}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
 

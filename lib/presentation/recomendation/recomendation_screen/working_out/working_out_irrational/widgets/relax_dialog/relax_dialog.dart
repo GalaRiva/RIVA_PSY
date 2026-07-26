@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/controller.dart';
@@ -47,12 +48,12 @@ class RelaxDialog extends StatelessWidget {
                             Icons.close, size: 9, color: ColorConstant.grayLight,),
                         ),
                       ),
-                      Text('Чемпион! Отдохни немного.'.toUpperCase(), textAlign: TextAlign.center,
+                      Text('champion'.tr().toUpperCase(), textAlign: TextAlign.center,
                         style: AppStyle.txtSFProDisplayLight16,),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Text(
-                          'Позволь мыслям уложиться и приняться в тебе и возвращайся завтра. Так полезнее)',
+                          'let_your_thoughts'.tr(),
                           textAlign: TextAlign.center,
                           style: AppStyle.txtSFProDisplayLight16,),
                       ),
@@ -62,7 +63,7 @@ class RelaxDialog extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Text(
-                          'Если в течении дня ты возвращаешься к определенным, конкретным негативным мыслям, зафиксируй их в Пути, а если нет возможности пройти здесь и сейчас:)',
+                          '${'if_during_the_day'.tr()})',
                           style: AppStyle.txtSFProDisplayLight16,),
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 15),

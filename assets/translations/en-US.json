@@ -644,6 +644,13 @@
   "let_your_thoughts": "Let your thoughts settle and take root, and come back tomorrow. It's better this way)",
   "if_during_the_day": "If during the day you keep coming back to certain, specific negative thoughts, note them in the Path, and if there's no chance to go through it here and now:",
 
+  "unknown_page": "Unknown page",
+  "back": "Back",
+  "initial_thought": "Initial thought",
+  "initial_action": "Initial action",
+  "alternative_thoughts_and_actions_title": "Alternative thoughts and actions",
+  "why_i_thought_so": "Why I thought that",
+
   "find_record": "Find an entry",
   "add_record": "Add an entry",
   "do": "Action",

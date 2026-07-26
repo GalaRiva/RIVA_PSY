@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/color_constant.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/count_bar.dart';
 import 'package:riva_psy/theme/app_style.dart';
@@ -32,7 +33,7 @@ class CounterOfSpentRecordsWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 130, child: Text('Альтернативные мысли', style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
+                  SizedBox(width: 130, child: Text('alternative_thoughts'.tr(), style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
                   CountBar(
                       currentCount: workingOutQuantity,
                       inTotalCount: notWorkingOutQuantity),
@@ -45,7 +46,7 @@ class CounterOfSpentRecordsWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 130, child: Text('Альтернативные действия',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
+                  SizedBox(width: 130, child: Text('alternative_actions'.tr(),style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
                   CountBar(
                       currentCount: workingOutQuantity,
                       inTotalCount: notWorkingOutQuantity),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -115,7 +116,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         return Scaffold(
           body: Center(
             child: Text(
-              'Неизвестная страница',
+              'unknown_page'.tr(),
               style: AppStyle.txtSFProDisplayLight14
                   .copyWith(color: ColorConstant.cyan700),
             ),

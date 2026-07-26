@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/models/day_event_model.dart';
@@ -31,13 +32,13 @@ class DialogRecordsNotEnough extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 15),
                 child: Text(
-                  'Проходи Путь, добавляй мысли, эмоции и пересоздавай неприятное в позитивное',
+                  'through_path'.tr(),
                   style: AppStyle.txtSFProDisplayLight16,
                   overflow: TextOverflow.visible,
                 ),
               ),
               CustomButton(
-                text: 'НАЧАТЬ',
+                text: 'start'.tr().toUpperCase(),
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel()..howDoYouFeel = 5);
                 },

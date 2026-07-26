@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
@@ -55,8 +56,8 @@ class RecordCard extends StatelessWidget {
               children: [
                 Text(
                   dataType == RecordCardDataType.Thought
-                      ? 'Автоматическая мысль'
-                      : 'Автоматическое действие',
+                      ? 'auto_thought'.tr()
+                      : 'auto_do'.tr(),
                   style: AppStyle.txtSFProDisplayLight16,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -113,8 +114,8 @@ class RecordCard extends StatelessWidget {
             ),
             CustomButton(
               text: dataType == RecordCardDataType.Thought
-                  ? 'ОСПОРИТЬ МЫСЛЬ'
-                  : 'ОСПОРИТЬ ДЕЙСТВИЕ',
+                  ? 'challenge_thought'.tr().toUpperCase()
+                  : 'challenge_do'.tr().toUpperCase(),
               variant: onButtonTap != null
                   ? ButtonVariant.Cyan
                   : ButtonVariant.OutlineGray,
@@ -154,8 +155,8 @@ class RecordCard extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Text(
                     dataType == RecordCardDataType.Thought
-                        ? 'АЛЬТЕРНАТИВНАЯ МЫСЛЬ'
-                        : 'АЛЬТЕРНАТИВНОЕ ДЕЙСТВИЕ',
+                        ? 'alternative_thought'.tr().toUpperCase()
+                        : 'alternative_do'.tr().toUpperCase(),
                     style: AppStyle.txtSFProDisplayLight16
                         .copyWith(color: Colors.white),
                   ),
@@ -178,7 +179,7 @@ class RecordCard extends StatelessWidget {
                     ),
                     TextButton(
                         onPressed: mode.onRedoTap,
-                        child: Text('редактировать >',
+                        child: Text('${'redo'.tr()} >',
                             style: AppStyle.txtSFProDisplayLight16
                                 .copyWith(color: Colors.white))),
                     Container(
@@ -221,7 +222,7 @@ class RecordCard extends StatelessWidget {
           child: Align(
             alignment: Alignment.topCenter,
             child: CustomButton(
-              text: 'Далее',
+              text: 'continue'.tr(),
               variant: ButtonVariant.Cyan,
               fontStyle: ButtonFontStyle.White16,
               onTap: onButtonTap,

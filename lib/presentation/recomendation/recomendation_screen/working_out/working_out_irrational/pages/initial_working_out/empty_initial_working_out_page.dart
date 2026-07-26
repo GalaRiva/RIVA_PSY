@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,13 +37,13 @@ class EmptyInitialWorkingOutPage extends WorkingOutWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 15),
                 child: Text(
-                  'Проходи Путь, добавляй мысли, эмоции и пересоздавай неприятное в позитивное',
+                  'through_path'.tr(),
                   style: AppStyle.txtSFProDisplayLight16,
                   overflow: TextOverflow.visible,
                 ),
               ),
               CustomButton(
-                text: 'НАЧАТЬ',
+                text: 'start'.tr().toUpperCase(),
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel()..howDoYouFeel = 5);
                 },

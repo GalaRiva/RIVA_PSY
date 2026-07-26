@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -7,8 +8,8 @@ import 'package:pdf/widgets.dart';
 
 
 class AlternativePdf {
-  List<String> _columnTags = ['Дата', 'Альтернативные мысли', 'Альтернативные действия'];
-  List<String> _secondColumnTags = [' ', 'Изначальная мысль', 'Почему я так подумал', 'Альтернативная мысль', 'Изначальное действие', 'Почему я так подумал', 'Альтернативное действие'];
+  List<String> _columnTags = ['date'.tr(), 'alternative_thoughts'.tr(), 'alternative_actions'.tr()];
+  List<String> _secondColumnTags = [' ', 'initial_thought'.tr(), 'why_i_thought_so'.tr(), 'alternative_thought'.tr(), 'initial_action'.tr(), 'why_i_thought_so'.tr(), 'alternative_do'.tr()];
 
   List<double> _columnWeight = [70, 340, 340];
   List<double> _secondColumnWeight = [70, 110, 110, 110, 110, 110, 110];
@@ -113,13 +114,13 @@ class AlternativePdf {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Мобильное приложение',
+                              Text('mobile_application'.tr(),
                                   style: _textStyle, textAlign: TextAlign.left),
                               SizedBox(height: getVerticalSize(2)),
                               Text('rivapsy.com', style: _textStyle, textAlign: TextAlign.left),
                               SizedBox(height: getVerticalSize(23)),
                               Text(
-                                  'Удобное и бесплатное ведение\nи отправка СМЭР психологу',
+                                  'convenient_and_free_record_and_send_SMER_to_psychologist'.tr(),
                                   style: _textStyle, textAlign: TextAlign.left),
                             ]),
 
@@ -132,7 +133,7 @@ class AlternativePdf {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(width: 230,
-                            child: Text('АЛЬТЕРНАТИВНЫЕ МЫСЛИ И ДЕЙСТВИЯ',
+                            child: Text('alternative_thoughts_and_actions_title'.tr().toUpperCase(),
                               textAlign: TextAlign.right,
                               style: _textStyle.copyWith(
                                   fontSize: 18, color: PdfColor.fromHex('#7f7f90'), fontWeight: FontWeight.bold

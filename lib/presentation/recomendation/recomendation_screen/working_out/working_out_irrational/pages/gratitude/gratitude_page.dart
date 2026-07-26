@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -22,12 +23,12 @@ class GratitudePage extends StatelessWidget {
               padding: EdgeInsets.all(15),
               child: Column(
                 children: [
-                  Text('спасибо тебе!'.toUpperCase(), textAlign: TextAlign.center,
+                  Text('thank_you'.tr().toUpperCase(), textAlign: TextAlign.center,
                     style: AppStyle.txtSFProDisplayLight16,),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      'Размышляя и записывая альтернативу ежедневно в течении 30 дней, ты заметишь разницу своего состояния.',
+                      'thinking_and_recording'.tr(),
                       textAlign: TextAlign.center,
                       style: AppStyle.txtSFProDisplayLight16,),
                   ),
@@ -42,16 +43,16 @@ class GratitudePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      'Однако, на останавливайся на этом. Чем дольше ведешь, тем шире и богаче становится твоя жизнь',
+                      'but_not_stopped'.tr(),
                       textAlign: TextAlign.center,
                       style: AppStyle.txtSFProDisplayLight16,),
                   ),
                   if(cubit.existMoreDontWorkingOutEvents() && cubit.state.dayEventModel != null)
                   Padding(
                     padding:  EdgeInsets.only(bottom: 15),
-                    child: CustomButton(text:'ещё мысль'.toUpperCase(), fontStyle: ButtonFontStyle.DeepPurple16, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.challengeThought),),
+                    child: CustomButton(text:'one_more_thought'.tr().toUpperCase(), fontStyle: ButtonFontStyle.DeepPurple16, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.challengeThought),),
                   ),
-                  CustomButton(text:'продолжить позже'.toUpperCase(), fontStyle: ButtonFontStyle.White16, variant: ButtonVariant.Cyan, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.alternative),),
+                  CustomButton(text:'continue_later'.tr().toUpperCase(), fontStyle: ButtonFontStyle.White16, variant: ButtonVariant.Cyan, onTap: () => cubit.goToNextState(WorkingOutIrrationalStage.alternative),),
                   SizedBox(height: 50,)
                 ],
               ),

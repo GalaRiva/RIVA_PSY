@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/cubit.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/state.dart';
@@ -63,8 +64,8 @@ class RecordPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 29, bottom: 15),
                       child: Text(
                         isThought
-                            ? 'Почему я так подумал? На основании чего я так решил? Где я слышал и/или от кого эти слова?'
-                            : 'ПОЧЕМУ я так сделал? Почему именно такая реакция? Возможно, перенял эту модель или ранее был негативный опыт?',
+                            ? 'why_i_think_that'.tr()
+                            : 'why_i_do_that'.tr(),
                         style: AppStyle.txtSFProDisplayLight16,
                       ),
                     ),
@@ -95,7 +96,7 @@ class RecordPage extends StatelessWidget {
                       height: 11,
                     ),
                     CustomButton(
-                      text: 'сохранить'.toUpperCase(),
+                      text: 'save'.tr().toUpperCase(),
                       onTap: () {savedText = whyThis.text;
                       if(isThought) {
                         cubit.fillSpendRecordModel(whyThisThoughts: savedText, );
@@ -108,7 +109,7 @@ class RecordPage extends StatelessWidget {
                       width: size.width - 60,
                     ),
                     SizedBox(height: 27,),
-                    Text(isThought ? 'Альтернативная мысль'.toUpperCase() : 'Альтернативное действие'.toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
+                    Text(isThought ? 'alternative_thought'.tr().toUpperCase() : 'alternative_do'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
                     Padding(padding: EdgeInsets.symmetric(vertical: 15),
                     child: AspectRatio(
                       aspectRatio: 300/220,
@@ -126,8 +127,8 @@ class RecordPage extends StatelessWidget {
                     ),
                     Text(
                       isThought
-                          ? 'Как бы я хотел подумать? Какая мысль более адекватная ситуации?Какие другие мысли могут быть в этой ситуации? Например, у авторитетного для Вас человека'
-                          : '''Какое мое поведение более адекватно в этой ситуации? Как я хочу поступать в подобных ситуациях в будущем? Как я буду стараться реагировать и действовать в такой ситуации?''',
+                          ? 'i_with_i_could_think_about_it'.tr()
+                          : 'which_my_behaviors'.tr(),
                       style: AppStyle.txtSFProDisplayLight16,
                     ),
                     Padding(padding: EdgeInsets.symmetric(vertical: 15),
@@ -155,7 +156,7 @@ class RecordPage extends StatelessWidget {
                     ),
                     ),
                     CustomButton(
-                      text: 'ГОТОВО',
+                      text: 'done'.tr().toUpperCase(),
                       width: size.width - 60,
                       height: 47,
                       onTap: () {

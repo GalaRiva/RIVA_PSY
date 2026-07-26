@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -61,32 +62,32 @@ class InitialWorkingOutPage extends WorkingOutWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      'Отработать иррациональное'.toUpperCase(),
+                      'work_out_irrational'.tr().toUpperCase(),
                       style: AppStyle.txtSFProDisplayLight16,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(
-                      'Пожалуйста, помни, что это видишь только ты  и выгода быть честным с собой- твоя. Наша поддержка и тепло с тобой!',
+                      'please_remember'.tr(),
                       style: AppStyle.txtSFProDisplayLight12,
                     ),
                   ),
                   Text(
-                    'Рекомендуется проходить в день 2- 3 записи. Не спеши. Мы за качество, а не количество. Пусть новое и прекрасное обживается и стабилизируется.',
+                    'recommended_to_take_per_day'.tr(),
                     style: AppStyle.txtSFProDisplayLight12,
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 10),
                     child: CustomButton(
-                      text: 'АЛЬТЕРНАТИВА',
+                      text: 'alternative'.tr().toUpperCase(),
                       onTap: () {
                         cubit.goToNextState(WorkingOutIrrationalStage.alternative);
                       },
                     ),
                   ),
                   CustomButton(
-                    text: 'НАЧАТЬ',
+                    text: 'start'.tr().toUpperCase(),
                     onTap: () {
                       cubit.goToNextState(WorkingOutIrrationalStage.challengeThought);
                     },

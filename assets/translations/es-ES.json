@@ -644,6 +644,13 @@
   "let_your_thoughts": "Deja que tus pensamientos se asienten y arraiguen, y vuelve mañana. Es mejor así)",
   "if_during_the_day": "Si durante el día vuelves a ciertos pensamientos negativos concretos, anótalos en el Camino, y si no tienes la posibilidad de hacerlo aquí y ahora:",
 
+  "unknown_page": "Página desconocida",
+  "back": "Atrás",
+  "initial_thought": "Pensamiento inicial",
+  "initial_action": "Acción inicial",
+  "alternative_thoughts_and_actions_title": "Pensamientos y acciones alternativos",
+  "why_i_thought_so": "Por qué pensé eso",
+
   "find_record": "Buscar un registro",
   "add_record": "Añadir un registro",
   "do": "Acción",
