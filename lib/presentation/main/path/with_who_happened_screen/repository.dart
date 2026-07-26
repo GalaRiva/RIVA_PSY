@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:riva_psy/core/models/event_model.dart';
 
 import '../../../../core/db/hive_db.dart';
@@ -23,41 +24,41 @@ class K26Repo {
   Future<void> updateEvent(List<EventModel> events) async {
     // TODO: implement updateTasks
     await HiveDB.deleteBox(_eventTag);
-    List<EventModel> list = events.map((e) => EventModel(e.name, e.svgPath)).toList();
+    List<EventModel> list = events.map((e) => EventModel(e.name, e.svgPath, e.key)).toList();
     for(var item in list) {
       HiveDB.setBox(item.toJson(), _eventTag);
     }
   }
 
   final standartEventList = <EventModel>[
-    EventModel('я', ImageConstant.imgHome),
-    EventModel('Мама', ImageConstant.imgMusicCyan70021x19),
-    EventModel('Папа', ImageConstant.imgUserCyan70021x19),
-    EventModel('Брат', ImageConstant.eventWho4),
-    EventModel('Сестра', ImageConstant.eventWho5),
-    EventModel('Друг', ImageConstant.imgTrash21x19),
-    EventModel('Подруга', ImageConstant.imgMusic21x19),
-    EventModel('Любимый человек', ImageConstant.imgGroupCyan70021x18),
-    EventModel('Муж', ImageConstant.imgUser21x19),
-    EventModel('Жена', ImageConstant.eventWho10),
-    EventModel('Сын', ImageConstant.eventWho11),
-    EventModel('Дочь', ImageConstant.imgUser1),
-    EventModel('Бабушка', ImageConstant.eventWho13),
-    EventModel('Дедушка', ImageConstant.eventWho14),
-    EventModel('Тётя', ImageConstant.imgGroupCyan70021x20),
-    EventModel('Дядя', ImageConstant.imgTrophyCyan700),
-    EventModel('Близкий родственник', ImageConstant.imgGroup86),
-    EventModel('Коллега', ImageConstant.eventColleague),
-    EventModel('Одноклассник', ImageConstant.eventClassmate),
-    EventModel('Знакомый', ImageConstant.eventFamiliar),
-    EventModel('Прохожий', ImageConstant.imgAirplaneCyan70021x12),
-    EventModel('Интернет друг', ImageConstant.eventInternetFriend),
-    EventModel('Интернет человек', ImageConstant.eventInternetHuman),
-    EventModel('Сотрудник организации', ImageConstant.eventEmployee),
-    EventModel('Директор', ImageConstant.eventDirector),
-    EventModel('Подчинёный', ImageConstant.eventSubordinate),
-    EventModel('Домашнее животное', ImageConstant.eventPet),
-    EventModel('Семья', ImageConstant.eventFamily),
+    EventModel('myself'.tr(), ImageConstant.imgHome, 'myself'),
+    EventModel('mom'.tr(), ImageConstant.imgMusicCyan70021x19, 'mom'),
+    EventModel('dad'.tr(), ImageConstant.imgUserCyan70021x19, 'dad'),
+    EventModel('brother'.tr(), ImageConstant.eventWho4, 'brother'),
+    EventModel('sister'.tr(), ImageConstant.eventWho5, 'sister'),
+    EventModel('friend'.tr(), ImageConstant.imgTrash21x19, 'friend'),
+    EventModel('girlfriend'.tr(), ImageConstant.imgMusic21x19, 'girlfriend'),
+    EventModel('significant_other'.tr(), ImageConstant.imgGroupCyan70021x18, 'significant_other'),
+    EventModel('husband'.tr(), ImageConstant.imgUser21x19, 'husband'),
+    EventModel('wife'.tr(), ImageConstant.eventWho10, 'wife'),
+    EventModel('son'.tr(), ImageConstant.eventWho11, 'son'),
+    EventModel('daughter'.tr(), ImageConstant.imgUser1, 'daughter'),
+    EventModel('grandma'.tr(), ImageConstant.eventWho13, 'grandma'),
+    EventModel('grandpa'.tr(), ImageConstant.eventWho14, 'grandpa'),
+    EventModel('aunt'.tr(), ImageConstant.imgGroupCyan70021x20, 'aunt'),
+    EventModel('uncle'.tr(), ImageConstant.imgTrophyCyan700, 'uncle'),
+    EventModel('close_relative'.tr(), ImageConstant.imgGroup86, 'close_relative'),
+    EventModel('colleague'.tr(), ImageConstant.eventColleague, 'colleague'),
+    EventModel('classmate'.tr(), ImageConstant.eventClassmate, 'classmate'),
+    EventModel('acquaintance'.tr(), ImageConstant.eventFamiliar, 'acquaintance'),
+    EventModel('passerby'.tr(), ImageConstant.imgAirplaneCyan70021x12, 'passerby'),
+    EventModel('online_friend'.tr(), ImageConstant.eventInternetFriend, 'online_friend'),
+    EventModel('online_person'.tr(), ImageConstant.eventInternetHuman, 'online_person'),
+    EventModel('organization_employee'.tr(), ImageConstant.eventEmployee, 'organization_employee'),
+    EventModel('director'.tr(), ImageConstant.eventDirector, 'director'),
+    EventModel('subordinate'.tr(), ImageConstant.eventSubordinate, 'subordinate'),
+    EventModel('pet'.tr(), ImageConstant.eventPet, 'pet'),
+    EventModel('family'.tr(), ImageConstant.eventFamily, 'family'),
   ];
 }
 

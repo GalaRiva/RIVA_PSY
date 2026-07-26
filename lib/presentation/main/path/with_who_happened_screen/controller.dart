@@ -17,7 +17,7 @@ class K26Controller extends GetxController {
   EventModel? whoDidHappen;
 
   bool contain (EventModel _event) {
-    if(whoDidHappen!= null && whoDidHappen!.name == _event.name) {
+    if(whoDidHappen!= null && whoDidHappen!.identity == _event.identity) {
       return true;
     }
     return false;
