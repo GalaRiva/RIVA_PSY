@@ -32,8 +32,8 @@ class K27Controller extends GetxController {
 
   int currentTab = 1;
 
-  bool contain (String _emotion) {
-    if(emotion != null && emotion!.name == _emotion) {
+  bool contain (EventModel _event) {
+    if(emotion != null && emotion!.identity == _event.identity) {
       return true;
     }
     return false;

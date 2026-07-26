@@ -3,8 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
-import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
-import 'package:riva_psy/core/utils/string_extension.dart';
 import 'widgets/negative_positive_tab.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -20,31 +18,31 @@ import 'widgets/neutral_tab.dart';
 class K27Screen extends GetWidget {
   final DayEventModel? dayEvent;
   final List<EmotionInDayEvent>? emotionsTypes;
-  final Function(DayEventModel dayEvent, List<EventModel> events, String emotionCategory)? onSave;
+  final Function(DayEventModel dayEvent, List<EventModel> events, EmotionInDayEvent emotionCategory)? onSave;
 
   List<Widget> _tabs (){
     final List<Widget> tabs = [];
     if(emotionsTypes != null) {
       for (var item in emotionsTypes!) {
-        late final text;
+        late final String text;
         switch (item) {
           case EmotionInDayEvent.NEGATIVE:
-            text = 'Негативные';
+            text = 'negative'.tr();
             break;
           case EmotionInDayEvent.POSITIVE:
-            text = 'Позитивные';
+            text = 'positive'.tr();
             break;
           default:
-            text = 'Нейтральные';
+            text = 'neutral'.tr();
             break;
         }
         tabs.add( Tab(text: text));
       }
     } else {
       return [
-        Tab(text: 'Негативные'),
-        Tab(text: 'Позитивные'),
-        Tab(text: 'Нейтральные'),];
+        Tab(text: 'negative'.tr()),
+        Tab(text: 'positive'.tr()),
+        Tab(text: 'neutral'.tr()),];
     }
     return tabs;
   }
@@ -288,7 +286,7 @@ class K27Screen extends GetWidget {
                                   ) : NegativePositiveTab(
                                     dayEventModel: dayEventModel,
                                     number: 3,
-                                    controller: controller, list: controller.currentEventListThree.where((element) => element.name.contains(' +')).toList(),
+                                    controller: controller, list: controller.currentEventListThree.where((element) => element.isNeutralPositive).toList(),
                                   )) : [
                                     NegativePositiveTab(
                                       dayEventModel: dayEventModel,
@@ -376,18 +374,17 @@ class K27Screen extends GetWidget {
                                 else if(controller.currentTab == 2) list = await controller.initCurrentEventList(2);
                                 else if(controller.currentTab == 3) list = await controller.initCurrentEventList(3);
                                 for (int i = 0; i < list.length; i++) {
-                                  if (controller.emotion!.name == list[i].name) {
+                                  if (controller.emotion!.identity == list[i].identity) {
                                     list.removeAt(i);
                                     break;
                                   }
                                 }
-                                final category = emotionsTypes != null ? emotionsTypes![(controller.currentTab - 2).abs()].getEmotionType() : (controller.currentTab == 1 ? 'Негативные' : controller.currentTab == 2 ? 'Позитивные' : 'Нейтральные');
+                                final EmotionInDayEvent category = emotionsTypes != null ? emotionsTypes![(controller.currentTab - 2).abs()] : (controller.currentTab == 1 ? EmotionInDayEvent.NEGATIVE : controller.currentTab == 2 ? EmotionInDayEvent.POSITIVE : EmotionInDayEvent.NEUTRAL);
                                 if(onSave != null)
                                   onSave!(dayEventModel.copyWith(whatEmotion: [controller.emotion!], date: DateTime.now(),
-                                      emotionInDayEvent: category
-                                          .getEmotionTypeFromString()), list, category);
+                                      emotionInDayEvent: category), list, category);
                                   else {
-                                    debugPrint(category);
+                                    debugPrint(category.toString());
                                           Navigator.pushNamed(context,
                                               AppRoutes.additionalEmotions,
                                               arguments: {
@@ -398,8 +395,7 @@ class K27Screen extends GetWidget {
                                                       controller.emotion!
                                                     ],
                                                         date: DateTime.now(),
-                                                        emotionInDayEvent: category
-                                                            .getEmotionTypeFromString()),
+                                                        emotionInDayEvent: category),
                                                 'someEmotions': list
                                               });
                                         }

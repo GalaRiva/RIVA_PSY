@@ -150,7 +150,7 @@ class WhatEmotionWidget extends StatelessWidget {
                             PieSeries(
                                 dataSource: emotionsTypes,
                                 pointColorMapper: (dynamic model, int _) => model.color,
-                                xValueMapper: (dynamic data, _) => data.name,
+                                xValueMapper: (dynamic data, _) => (data.name as String).tr(),
                                 yValueMapper: (dynamic data, _) => data.quantity
                             )
                           ],
@@ -173,7 +173,7 @@ class WhatEmotionWidget extends StatelessWidget {
                         height: getSize(14),
                       ),
                       Padding(padding: getPadding(left: 6),
-                        child: Text('${e.name} ${((e.quantity  / _sum(emotionsTypes)) * 100).toInt()}%',
+                        child: Text('${e.name.tr()} ${((e.quantity  / _sum(emotionsTypes)) * 100).toInt()}%',
                           overflow:
                           TextOverflow.ellipsis,
                           textAlign: TextAlign.left,

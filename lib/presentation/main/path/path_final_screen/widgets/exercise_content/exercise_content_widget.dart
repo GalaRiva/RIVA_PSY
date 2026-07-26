@@ -45,7 +45,7 @@ class ExerciseContentWidget extends StatelessWidget {
             right: 10,
           ),
           child: Text(
-            dayEvent.emotionInDayEvent!.getEmotionType(),
+            dayEvent.emotionInDayEvent!.getEmotionType().tr(),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: AppStyle

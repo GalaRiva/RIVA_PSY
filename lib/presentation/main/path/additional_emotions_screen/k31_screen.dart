@@ -7,12 +7,13 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../core/models/day_event_model.dart';
 import '../../../../core/models/event_model.dart';
+import '../../../../core/utils/emotion_in_day_event_extension.dart';
 import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 
 class K31Screen extends GetWidget {
   final DayEventModel? dayEvent;
-  final String? category;
+  final EmotionInDayEvent? category;
   final List<EventModel>? someEmotions;
   final Function(DayEventModel dayEvent)? onSave;
 
@@ -22,13 +23,13 @@ class K31Screen extends GetWidget {
     final controller = Get.put(K31Controller());
       final data =
       (ModalRoute.of(context)?.settings.arguments ?? {
-      'emotionCategory' : category ?? 'Нейтральные',
+      'emotionCategory' : category ?? EmotionInDayEvent.NEUTRAL,
       'dayEventModel' : dayEvent ?? [],
       'someEmotions' : someEmotions ?? []
       }) as Map<String, dynamic>;
     final dayEventModel = (data['dayEventModel'] as DayEventModel);
     controller.emotions = dayEventModel.whatEmotion!;
-    controller.title = (data['emotionCategory'] as String);
+    controller.title = (data['emotionCategory'] as EmotionInDayEvent).getEmotionType().tr();
 
     controller.additionalEmotions = (data['someEmotions'] as List<EventModel>);
     return Scaffold(

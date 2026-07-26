@@ -7,8 +7,14 @@ class EmotionInBodyModel {
   final String emotionModel;
   final List<BodyPartModel> bodyParts;
    int quantity;
+  // Stable, language-independent identifier mirroring EventModel.key —
+  // null for custom emotions, in which case identity falls back to the
+  // (already-translated) display name.
+  final String? emotionKey;
 
-  EmotionInBodyModel(this.emotionModel, this.quantity, this.bodyParts);
+  EmotionInBodyModel(this.emotionModel, this.quantity, this.bodyParts, {this.emotionKey});
+
+  String get identity => emotionKey ?? emotionModel;
 }
 
 class EmotionTypeInBodyModel {

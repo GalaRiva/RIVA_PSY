@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/db/hive_db.dart';
 import 'package:riva_psy/core/models/event_model.dart';
@@ -49,8 +50,8 @@ class K61Controller extends GetxController {
   final _k49Repo = K49Repo();
   final _k20Repo = K20Repo();
   List<EmotionModel> emotions = [
-    EmotionModel(3, 'Радость', ColorConstant.cyan700),
-    EmotionModel(2, 'Азарт', ColorConstant.gray100),
+    EmotionModel(3, 'joy'.tr(), ColorConstant.cyan700),
+    EmotionModel(2, 'Азарт', ColorConstant.gray100), // TODO: no bare (non-suffixed) key for this word — dead placeholder, overwritten by init(), left untranslated
   ];
   List<EmotionInBodyModel> emotionsInBody = [];
   List<EmotionTypeInBodyModel> emotionTypesInBody = [];
@@ -130,9 +131,14 @@ class K61Controller extends GetxController {
           emotionsTypes.add(emotionType);
         }
         final emotionTypeInStr = await getEmotionTypesInString(event, emotion);
-        if (emotionTypeInStr == 'Позитивные эмоции')
+        // NOTE: pre-existing bug, left as-is per explicit instruction — the
+        // `else` binds to the second `if`, so any non-negative (i.e. also
+        // positive) emotion falls into neutralType too, and the dedup check
+        // runs against negativeType!.bodyParts while appending to
+        // neutralType!.bodyParts. See PROJECT_CONTEXT.md.
+        if (emotionTypeInStr == 'positive_emotions')
           positiveType!.bodyParts += _getBodyPartsType(positiveType!, event);
-        if (emotionTypeInStr == 'Негативные эмоции')
+        if (emotionTypeInStr == 'negative_emotions')
           negativeType!.bodyParts += _getBodyPartsType(negativeType!, event);
         else
           neutralType!.bodyParts += _getBodyPartsType(negativeType!, event);
@@ -140,7 +146,7 @@ class K61Controller extends GetxController {
         _getBodyParts(emotion, event);
         bool listContainEmotion() {
           for (var item in listEventModels) {
-            if (emotion.name == item.name) {
+            if (emotion.identity == item.identity) {
               return true;
             }
           }
@@ -150,10 +156,10 @@ class K61Controller extends GetxController {
         if (!listContainEmotion()) {
           listEventModels.add(emotion);
           list.add(
-              EmotionModel(1, emotion.name, getColor(listEventModels.length)));
+              EmotionModel(1, emotion.name, getColor(listEventModels.length), key: emotion.key));
         } else {
           for (var _item in list) {
-            if (_item.name == emotion.name) {
+            if (_item.identity == emotion.identity) {
               _item.quantity++;
               break;
             }
@@ -188,23 +194,23 @@ class K61Controller extends GetxController {
     if (positive.isEmpty) {
       positive = await _k27Repo.getEvent(HiveDBTags.emotions2);
     }
-    if (emotion.name[emotion.name.length - 1] == '+') {
-      model = 'Нейтральные (позитивно окрашенные)';
+    if (emotion.isNeutralPositive) {
+      model = 'neutral_positive_emotions';
     }
-    if (emotion.name[emotion.name.length - 1] == '-') {
-      model = 'Нейтральные (негативно окрашенные)';
+    if (emotion.isNeutralNegative) {
+      model = 'neutral_negative_emotions';
     }
     bool positiveContains = false;
     for (var item in positive) {
-      if (item.name == emotion.name) {
+      if (item.identity == emotion.identity) {
         positiveContains = true;
         break;
       }
     }
     if (positiveContains) {
-      model = 'Позитивные эмоции';
+      model = 'positive_emotions';
     } else {
-      model = 'Негативные эмоции';
+      model = 'negative_emotions';
     }
     return model;
   }
@@ -216,35 +222,35 @@ class K61Controller extends GetxController {
     if (positive.isEmpty) {
       positive = await _k27Repo.getEvent(HiveDBTags.emotions2);
     }
-    if (emotion.name[emotion.name.length - 1] == '+') {
+    if (emotion.isNeutralPositive) {
       bool createNew = true;
       if (emotionsTypes.isNotEmpty)
         for (var item in emotionsTypes) {
-          if (item.name == 'Нейтральные (позитивно окрашенные)') {
+          if (item.name == 'neutral_positive_emotions') {
             createNew = false;
             item.quantity++;
           }
         }
       if (createNew)
-        model = (EmotionModel(1, 'Нейтральные (позитивно окрашенные)',
+        model = (EmotionModel(1, 'neutral_positive_emotions',
             getColor(emotionsTypes.length)));
     }
-    if (emotion.name[emotion.name.length - 1] == '-') {
+    if (emotion.isNeutralNegative) {
       bool createNew = true;
       if (emotionsTypes.isNotEmpty)
         for (var item in emotionsTypes) {
-          if (item.name == 'Нейтральные (негативно окрашенные)') {
+          if (item.name == 'neutral_negative_emotions') {
             createNew = false;
             item.quantity++;
           }
         }
       if (createNew)
-        model = (EmotionModel(1, 'Нейтральные (негативно окрашенные)',
+        model = (EmotionModel(1, 'neutral_negative_emotions',
             getColor(emotionsTypes.length)));
     }
     bool positiveContains = false;
     for (var item in positive) {
-      if (item.name == emotion.name) {
+      if (item.identity == emotion.identity) {
         positiveContains = true;
         break;
       }
@@ -253,26 +259,26 @@ class K61Controller extends GetxController {
       bool createNew = true;
       if (emotionsTypes.isNotEmpty)
         for (var item in emotionsTypes) {
-          if (item.name == 'Позитивные эмоции') {
+          if (item.name == 'positive_emotions') {
             createNew = false;
             item.quantity++;
           }
         }
       if (createNew)
         model = (EmotionModel(
-            1, 'Позитивные эмоции', getColor(emotionsTypes.length)));
+            1, 'positive_emotions', getColor(emotionsTypes.length)));
     } else {
       bool createNew = true;
       if (emotionsTypes.isNotEmpty)
         for (var item in emotionsTypes) {
-          if (item.name == 'Негативные эмоции') {
+          if (item.name == 'negative_emotions') {
             createNew = false;
             item.quantity++;
           }
         }
       if (createNew)
         model = (EmotionModel(
-            1, 'Негативные эмоции', getColor(emotionsTypes.length)));
+            1, 'negative_emotions', getColor(emotionsTypes.length)));
     }
     return model;
   }
@@ -293,7 +299,7 @@ class K61Controller extends GetxController {
             return false;
           }
 
-          if (item.emotionModel == emotion.name) {
+          if (item.identity == emotion.identity) {
             createNew = false;
             if (!containBodyPart())
               item.bodyParts.add(
@@ -309,7 +315,7 @@ class K61Controller extends GetxController {
               dayEventModel.whatBodyParts!.map((e) {
                 index++;
                 return BodyPartModel(e, 1, getColor(index - 1));
-              }).toList()));
+              }).toList(), emotionKey: emotion.key));
         }
       }
       if (emotionsInBody.isEmpty) {
@@ -321,7 +327,7 @@ class K61Controller extends GetxController {
             dayEventModel.whatBodyParts!.map((e) {
               index++;
               return BodyPartModel(e, 1, getColor(index - 1));
-            }).toList()));
+            }).toList(), emotionKey: emotion.key));
       }
     }
   }
@@ -360,7 +366,7 @@ class K61Controller extends GetxController {
     }
     bool listContainEmotion(List<EmotionModel> listEventModels, EmotionModel emotion) {
       for ( int i = 0; i < listEventModels.length; i++) {
-        if (emotion.name == listEventModels[i].name) {
+        if (emotion.identity == listEventModels[i].identity) {
           listEventModels[i].quantity++;
           return true;
         }
@@ -370,13 +376,13 @@ class K61Controller extends GetxController {
 
     if(placeIsExist() != null) {
       for(var item in dayEventModel.whatEmotion!){
-        var val = EmotionModel(1, item.name, getColor(placeIsExist()!.emotions.length));
+        var val = EmotionModel(1, item.name, getColor(placeIsExist()!.emotions.length), key: item.key);
         if(!listContainEmotion(placeIsExist()!.emotions, val)){
           placeIsExist()!.emotions.add(val);
         }
       }
     } else {
-      _places.add(PlaceModel(dayEventModel.whereHappened!.name, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].name, getColor(index))), placeKey: dayEventModel.whereHappened!.key));
+      _places.add(PlaceModel(dayEventModel.whereHappened!.name, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].name, getColor(index), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
     }
   }
 

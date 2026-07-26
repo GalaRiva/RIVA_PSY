@@ -40,7 +40,7 @@ class NegativePositiveTab extends StatelessWidget {
                           cardWidth: size.width / 2 - 30,
 
                           textIsFitted: true,
-                              isSelect: controller.contain(list[index].name),
+                              isSelect: controller.contain(list[index]),
                               model: list[index], onTap: () {
                               controller.emotion = list[index];
                               controller.update();

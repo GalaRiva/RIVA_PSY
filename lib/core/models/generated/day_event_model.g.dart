@@ -30,7 +30,10 @@ whatBodyParts: (json['whatBodyParts'] as List<dynamic>).map((e) => K32Model.from
 
         date: json['date'] == null ? null : DateTime.parse(json['date']),
       showInCharts: json['showInCharts'] ?? true,
-        emotionInDayEvent: ((json['emotionInDayEvent'] as String?) ?? EmotionInDayEvent.NEGATIVE.getEmotionType()).getEmotionTypeFromString()
+        emotionInDayEvent: EmotionInDayEvent.values.firstWhere(
+          (e) => e.name == json['emotionInDayEvent'],
+          orElse: () => EmotionInDayEvent.NEUTRAL,
+        )
     );
 
 Map<String, dynamic> _$DayEventModelToJson(DayEventModel instance) =>
@@ -48,5 +51,5 @@ Map<String, dynamic> _$DayEventModelToJson(DayEventModel instance) =>
           'date': instance.date == null ? null : instance.date!.toIso8601String(),
       'pathToAudio': instance.pathToAudio,
       'showInCharts': instance.showInCharts,
-      'emotionInDayEvent': instance.emotionInDayEvent != null ? (instance.emotionInDayEvent ?? EmotionInDayEvent.NEGATIVE).getEmotionType() : null
+      'emotionInDayEvent': instance.emotionInDayEvent?.name
     };

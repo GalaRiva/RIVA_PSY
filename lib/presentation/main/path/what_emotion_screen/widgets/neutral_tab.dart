@@ -68,10 +68,10 @@ class NeutralTab extends StatelessWidget {
                               cardWidth: size.width / 2 - 30,
 
                               textIsFitted: true,
-                              isSelect: controller.contain(list.where((element) => element.name.contains('+')).toList()[index].name),
+                              isSelect: controller.contain(list.where((element) => element.isNeutralPositive).toList()[index]),
                               cardHeight: 44 ,
-                              model: list.where((element) => element.name.contains('+')).toList()[index], onTap: () {
-                              controller.emotion = list.where((element) => element.name.contains('+')).toList()[index];
+                              model: list.where((element) => element.isNeutralPositive).toList()[index], onTap: () {
+                              controller.emotion = list.where((element) => element.isNeutralPositive).toList()[index];
                               controller.update();
                             },),
                           ))
@@ -83,15 +83,15 @@ class NeutralTab extends StatelessWidget {
 
                         child: Wrap(
                           spacing: 12,
-                          children: List.generate(list.where((element) => element.name.contains('-')).length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.name.contains('-')).length - 1 ? 20 : 0),
+                          children: List.generate(list.where((element) => element.isNeutralNegative).length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 20 : 0),
                             child: EventCard(
                               textIsFitted: true,
-                              isSelect: controller.contain(list.where((element) => element.name.contains('-')).toList()[index].name),
+                              isSelect: controller.contain(list.where((element) => element.isNeutralNegative).toList()[index]),
                               cardHeight: 44 ,
                               cardWidth: size.width / 2.4,
-                              model: list.where((element) => element.name.contains('-')).toList()[index], onTap: () {
-                              controller.emotion =list.where((element) => element.name.contains('-')).toList()[index];
+                              model: list.where((element) => element.isNeutralNegative).toList()[index], onTap: () {
+                              controller.emotion =list.where((element) => element.isNeutralNegative).toList()[index];
                               controller.update();
                             },),
                           ))
