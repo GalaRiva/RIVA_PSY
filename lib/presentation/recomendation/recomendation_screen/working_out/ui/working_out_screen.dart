@@ -5,6 +5,7 @@ import 'package:riva_psy/presentation/recomendation/recomendation_screen/working
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/desires_page.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/happiness_in_focus_page.dart';
+import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
@@ -19,6 +20,18 @@ class WorkingOutScreen extends StatelessWidget {
     return BlocBuilder<WorkingOutCubit, WorkingOutState>(
           builder: (BuildContext context, state) {
             final cubit = context.read<WorkingOutCubit>();
+
+            // Defense-in-depth: WorkingOutIrrationalTab, HappinessInFocusPage
+            // and DesiresPage each also gate themselves individually — this
+            // container-level check is a second layer so a future tab added
+            // here without its own gate still can't leak paid content (see
+            // PROJECT_CONTEXT.md for the bug this replaced: DesiresPage had
+            // no gate of its own and showContent was defined but unused).
+            if (!cubit.showContent) {
+              return GoToNewTariffWidget(
+                goToFreeRecommendation: false,
+              );
+            }
 
             return Container(
               decoration: AppDecoration.fillGray200,
