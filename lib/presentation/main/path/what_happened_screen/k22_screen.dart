@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_search_view.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import '../../../../core/models/day_event_model.dart';
 import '../../../../core/models/event_model.dart';
 import '../../../../widgets/event_card.dart';
@@ -52,7 +53,7 @@ class K22Screen extends GetWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -81,7 +82,7 @@ class K22Screen extends GetWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Что произошло?",
+                              'what_happened'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH1,
@@ -96,7 +97,7 @@ class K22Screen extends GetWidget {
                                 },
                                 onSubmit: (text) => _focus.unfocus(),
                                 controller: controller.searchController,
-                                hintText: "Найти событие",
+                                hintText: 'find_event'.tr(),
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -124,7 +125,7 @@ class K22Screen extends GetWidget {
                               child: CustomSearchView(
                                 focusNode: _focus2,
                                 controller: controller.addEventController,
-                                hintText: "Добавить Событие",
+                                hintText: 'add_event'.tr(),
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -134,7 +135,7 @@ class K22Screen extends GetWidget {
                                   var result = (await Navigator.pushNamed(
                                       context, AppRoutes.addEmotion,
                                       arguments: {
-                                        'title': 'Добавить Событие',
+                                        'title': 'add_event'.tr(),
                                         'initialValue': controller.addEventController.text
                                       }))
                                   as EventModel;
@@ -167,7 +168,7 @@ class K22Screen extends GetWidget {
                                           var result = (await Navigator.pushNamed(
                                                   context, AppRoutes.addEmotion,
                                                   arguments: {
-                                                    'title': 'Добавить Событие',
+                                                    'title': 'add_event'.tr(),
                                                     'initialValue': controller.addEventController.text
                                                   }))
                                               as EventModel;
@@ -230,7 +231,7 @@ class K22Screen extends GetWidget {
                                       top: 37,
                                     ),
                                     child: Text(
-                                      "Событие не найдено\nДобавьте свое событие",
+                                      'event_not_found_add_your_own'.tr(),
                                       maxLines: null,
                                       textAlign: TextAlign.center,
                                       style:
@@ -268,7 +269,7 @@ class K22Screen extends GetWidget {
                       onTap: controller.currentEventList.isNotEmpty
                           ? () {
                         if(controller.whatHappened == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете событие или создайте новое')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('choose_event_or_create_new'.tr())));
                         } else {
                           if(onSave != null)
                             onSave!(dayEventModel.copyWith(whatHappened: controller.whatHappened));
@@ -285,8 +286,8 @@ class K22Screen extends GetWidget {
                         controller.update();
                       },
                       text: controller.currentEventList.isNotEmpty
-                          ? "далее".toUpperCase()
-                          : "отмена".toUpperCase(),
+                          ? 'continue'.tr().toUpperCase()
+                          : 'cancel'.tr().toUpperCase(),
                       margin: getMargin(
                         bottom: 10,
                       ),

@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:record/record.dart';
@@ -24,9 +25,9 @@ class K39Controller extends GetxController {
     ImageConstant.eventFaceThree
   ];
   final List<String> titles = [
-    'Прожить злость',
-    'Прожить обиду',
-    'Прожить печаль'
+    'live_through_wrath'.tr(),
+    'live_through_resentment'.tr(),
+    'live_through_sorrow'.tr()
   ];
 
   bool _canPop = false;

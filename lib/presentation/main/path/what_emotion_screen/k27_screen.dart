@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
 import 'package:riva_psy/core/utils/string_extension.dart';
@@ -105,7 +106,7 @@ class K27Screen extends GetWidget {
                         top: 39,
                       ),
                       child: Text(
-                        "Эмоция сейчас",
+                        'current_emotion'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -127,7 +128,7 @@ class K27Screen extends GetWidget {
                     ),
                     Container(height: 14,),
                     Text(
-                      "Какую эмоцию испытал?",
+                      'which_emotion_felt'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtH1,
@@ -142,7 +143,7 @@ class K27Screen extends GetWidget {
                         },
                         onSubmit: (text) => _focus.unfocus(),
                         controller: controller.searchController,
-                        hintText: "Найти эмоцию",
+                        hintText: 'find_emotion'.tr(),
                         margin: getMargin(
                           top: 28,
                           right: 16,
@@ -170,7 +171,7 @@ class K27Screen extends GetWidget {
                       child: CustomSearchView(
                         focusNode: _focus2,
                         controller: controller.addEventController,
-                        hintText: "Добавить эмоцию",
+                        hintText: 'add_emotion'.tr(),
                         margin: getMargin(
                           top: 25,
                           right: 16,
@@ -182,7 +183,7 @@ class K27Screen extends GetWidget {
                               arguments: {
                                 'initialValue':
                                 controller.addEventController.text,
-                                'title': 'Добавить Эмоцию'
+                                'title': 'add_emotion'.tr()
                               }))
                           as EventModel;
                           if (result != null) {
@@ -216,7 +217,7 @@ class K27Screen extends GetWidget {
                                           arguments: {
                                             'initialValue':
                                             controller.addEventController.text,
-                                            'title': 'Добавить Эмоцию'
+                                            'title': 'add_emotion'.tr()
                                           }))
                                       as EventModel;
                                   if (result != null) {
@@ -344,7 +345,7 @@ class K27Screen extends GetWidget {
                             177,
                           ),
                           onTap: () => Navigator.pop(context),
-                          text: "выбор персоны".toUpperCase(),
+                          text: 'choosing_person'.tr().toUpperCase(),
                           margin: getMargin(
                             bottom: 10,
                           ),
@@ -368,7 +369,7 @@ class K27Screen extends GetWidget {
                             onTap: controller.getCurrentListByNumber(controller.currentTab).isNotEmpty
                                 ? () async {
                               if(controller.emotion == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете эмоцию или создайте новую')));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('choose_emotion_or_create_new'.tr())));
                               } else {
                                 List<EventModel> list = [];
                                 if(controller.currentTab == 1) list = await controller.initCurrentEventList(1);
@@ -412,7 +413,7 @@ class K27Screen extends GetWidget {
                               controller.update();
                             },
                             text: controller.getCurrentListByNumber(controller.currentTab).isNotEmpty
-                                ? "далее".toUpperCase() : 'ОТМЕНА',
+                                ? 'continue'.tr().toUpperCase() : 'cancel'.tr().toUpperCase(),
                             margin: getMargin(
                               bottom: 10,
                             ),

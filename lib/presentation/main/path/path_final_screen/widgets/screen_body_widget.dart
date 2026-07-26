@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -51,7 +52,7 @@ class ScreenBodyWidget extends StatelessWidget {
   }
 
   Widget ifNotNegative () {
-    return ListglobeItemWidget('Рекомендации', params: {
+    return ListglobeItemWidget('recommendations'.tr(), params: {
       'first': 0,
       'second':0
     }, svgPath: ImageConstant.recommendationsLogo,);

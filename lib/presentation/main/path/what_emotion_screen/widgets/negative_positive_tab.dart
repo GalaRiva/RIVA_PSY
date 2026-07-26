@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/models/day_event_model.dart';
@@ -61,7 +62,7 @@ class NegativePositiveTab extends StatelessWidget {
                     top: 37,
                   ),
                   child: Text(
-                    "Эмоция не найдена\nДобавьте свою эмоцию",
+                    'emotion_not_found_add_your_own'.tr(),
                     maxLines: null,
                     textAlign: TextAlign.center,
                     style:

@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -39,7 +40,7 @@ class K38Screen extends GetWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -65,7 +66,7 @@ class K38Screen extends GetWidget {
                           top: 15,
                         ),
                         child: Text(
-                          "Первые мысли в ситуации",
+                          'first_thoughts_in_situation'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtH1,
@@ -77,7 +78,7 @@ class K38Screen extends GetWidget {
                           top: 29,
                         ),
                         child: Text(
-                          "Например: Вот бы и мне так!",
+                          'for_example_wish_it_was_me'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight14Gray800,
@@ -100,7 +101,7 @@ class K38Screen extends GetWidget {
                                 ),
                                 fillColor: ColorConstant.grayLight,
                                 filled: true,
-                                hintText: 'Ваши мысли',
+                                hintText: 'your_thoughts'.tr(),
 
                                 hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                             ),
@@ -126,7 +127,7 @@ class K38Screen extends GetWidget {
                           159,
                         ),
                         onTap: ()=>Navigator.pop(context),
-                        text: "Что я сделал".toUpperCase(),
+                        text: 'what_did_I_do'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         prefixWidget: CustomImageView(
                           margin: getMargin(right: 12),
@@ -145,7 +146,7 @@ class K38Screen extends GetWidget {
                           dayEventModel.date = DateTime.now();
                           controller.createNewDayEvent(dayEventModel, context);
                         },
-                        text: "Сохранить".toUpperCase(),
+                        text: 'save'.tr().toUpperCase(),
                       ),
                     ],
                   ),

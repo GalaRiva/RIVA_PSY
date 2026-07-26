@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -51,7 +52,7 @@ class K31Screen extends GetWidget {
                       top: 39,
                     ),
                     child: Text(
-                      "Эмоция сейчас",
+                      'current_emotion'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -81,7 +82,7 @@ class K31Screen extends GetWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Какую эмоцию испытал?",
+                          'which_emotion_felt'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtH1,
@@ -117,7 +118,7 @@ class K31Screen extends GetWidget {
                                         bottom: 13,
                                       ),
                                       child: Text(
-                                        "Основная эмоция",
+                                        'main_emotion'.tr(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -154,7 +155,7 @@ class K31Screen extends GetWidget {
                             top: 10,
                           ),
                           child: Text(
-                            "Хотите добавить дополнительные эмоции?",
+                            'add_additional_emotions'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSFProDisplayLight14Gray800a0,
@@ -211,7 +212,7 @@ class K31Screen extends GetWidget {
                                   177,
                                 ),
                                 onTap: () => Navigator.pop(context),
-                                text: "выбор эмоции".toUpperCase(),
+                                text: 'choosing_emotion'.tr().toUpperCase(),
                                 margin: getMargin(
                                   bottom: 73,
                                 ),
@@ -234,7 +235,7 @@ class K31Screen extends GetWidget {
                                       controller.emotions.first.name,
                                       data['dayEventModel'], onSave: onSave);
                                 },
-                                text: "далее".toUpperCase(),
+                                text: 'continue'.tr().toUpperCase(),
                                 margin: getMargin(
                                   left: 13,
                                   bottom: 73,

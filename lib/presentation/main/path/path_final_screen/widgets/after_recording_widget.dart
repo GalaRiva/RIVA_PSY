@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/color_constant.dart';
@@ -43,7 +44,7 @@ Widget afterRecording (BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "Запись сохранена",
+                'record_save'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle.txtSFProDisplayLight14Gray800,
@@ -53,7 +54,7 @@ Widget afterRecording (BuildContext context) {
                   top: 1,
                 ),
                 child: Text(
-                  "Запись хранится на вашем устройстве",
+                  'record_keep'.tr(),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtSFProDisplayLight9Gray800,

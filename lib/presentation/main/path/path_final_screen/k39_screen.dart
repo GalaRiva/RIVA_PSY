@@ -1,4 +1,5 @@
-  import 'package:get/get.dart';
+  import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'widgets/screen_body_widget.dart';
 
 import '../../../../core/models/day_event_model.dart';
@@ -46,7 +47,7 @@ class K39Screen extends GetWidget {
                                  top: 39,
                                ),
                                child: Text(
-                                 "Эмоция сейчас",
+                                 'current_emotion'.tr(),
                                  overflow: TextOverflow.ellipsis,
                                  textAlign: TextAlign.left,
                                  style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -75,7 +76,7 @@ class K39Screen extends GetWidget {
                                  top: 15,
                                ),
                                child: Text(
-                                 "Как прожить эмоции",
+                                 'how_to_live_through_emotions'.tr(),
                                  overflow: TextOverflow.ellipsis,
                                  textAlign: TextAlign.left,
                                  style: AppStyle.txtH1,
@@ -112,7 +113,7 @@ class K39Screen extends GetWidget {
               width: getHorizontalSize(
                 148,
               ),
-              text: "гОТОВО".toUpperCase(),
+              text: 'done'.tr().toUpperCase(),
               onTap: () async {
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.main, (route) => false);

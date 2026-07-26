@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import '../../../../widgets/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -52,7 +53,7 @@ class K24Page extends GetWidget {
                                 right: 16
                               ),
                               child: Text(
-                                content['title'] ?? "Добавить событие",
+                                content['title'] ?? 'add_event'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtSFProDisplayLight14Gray800
@@ -88,7 +89,7 @@ class K24Page extends GetWidget {
                               top: 48,
                             ),
                             child: Text(
-                              "Люди",
+                              'people'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSFProDisplayLight14Gray800a0,
@@ -121,7 +122,7 @@ class K24Page extends GetWidget {
                               top: 40,
                             ),
                             child: Text(
-                              "Животные и природа",
+                              'animals_and_nature'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSFProDisplayLight14Gray800a0,
@@ -152,7 +153,7 @@ class K24Page extends GetWidget {
                               top: 39,
                             ),
                             child: Text(
-                              "Места и занятия",
+                              'places_and_activities'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSFProDisplayLight14Gray800a0,
@@ -182,7 +183,7 @@ class K24Page extends GetWidget {
                               focusNode: _focus,
 
                               controller: controller.eventNameController,
-                              hintText: "Введите название...",
+                              hintText: 'enter_name'.tr(),
                               margin: getMargin(
                                 left: 26,
                                 top: 40,
@@ -205,17 +206,17 @@ class K24Page extends GetWidget {
                               ),
                               onTap: () {
                                 if (controller.customEvent.svgPath.trim().isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите картинку для события')));
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('choose_picture_for_event'.tr())));
                                 }
                                 controller.customEvent.name = controller.eventNameController.text;
                                 if (controller.customEvent.name.trim().isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберите название для события')));
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('choose_name_for_event'.tr())));
                                 } else if(controller.customEvent.name.isNotEmpty && controller.customEvent.svgPath.isNotEmpty) {
                                   Navigator.pop(context, controller.customEvent);
                                   Get.delete<K24Controller>();
                                 }
                               },
-                              text: "добавить".toUpperCase(),
+                              text: 'add'.tr().toUpperCase(),
                               margin: getMargin(
                                 top: 24,
                                 bottom: 73,

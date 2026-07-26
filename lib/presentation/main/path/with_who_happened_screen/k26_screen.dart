@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -57,7 +58,7 @@ class K26Screen extends GetWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -86,7 +87,7 @@ class K26Screen extends GetWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "С кем произошло?",
+                              'with_whom_it_happened'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH1,
@@ -101,7 +102,7 @@ class K26Screen extends GetWidget {
                                 },
                                 onSubmit: (t) => _focus.unfocus(),
                                 controller: controller.searchController,
-                                hintText: "Найти персону",
+                                hintText: 'find_person'.tr(),
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -129,7 +130,7 @@ class K26Screen extends GetWidget {
                               child: CustomSearchView(
                                 focusNode: _focus2,
                                 controller: controller.addEventController,
-                                hintText: "Добавить персону",
+                                hintText: 'add_person'.tr(),
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -141,7 +142,7 @@ class K26Screen extends GetWidget {
                                       arguments: {
                                         'initialValue':
                                         controller.addEventController.text,
-                                        'title': 'Добавить персону'
+                                        'title': 'add_person'.tr()
                                       }))
                                   as EventModel;
                                   if (result != null) {
@@ -175,7 +176,7 @@ class K26Screen extends GetWidget {
                                               arguments: {
                                                 'initialValue':
                                                 controller.addEventController.text,
-                                                'title': 'Добавить персону'
+                                                'title': 'add_person'.tr()
                                               }))
                                           as EventModel;
                                           if (result != null) {
@@ -236,7 +237,7 @@ class K26Screen extends GetWidget {
                                       top: 37,
                                     ),
                                     child: Text(
-                                      "Событие не найдено\nДобавьте свое событие",
+                                      'person_not_found_add_your_own'.tr(),
                                       maxLines: null,
                                       textAlign: TextAlign.center,
                                       style:
@@ -286,7 +287,7 @@ class K26Screen extends GetWidget {
                                 177,
                               ),
                               onTap: () => Navigator.pop(context),
-                              text: "выбор места".toUpperCase(),
+                              text: 'choosing_place'.tr().toUpperCase(),
                               margin: getMargin(
                                 bottom: 10,
                               ),
@@ -310,7 +311,7 @@ class K26Screen extends GetWidget {
                               onTap: controller.currentEventList.isNotEmpty
                                   ? () {
                                 if(controller.whoDidHappen == null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Выберете персону или создайте новое')));
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('choose_person_or_create_new'.tr())));
                                 } else {
                                   if(onSave!=null)
                                     onSave!(dayEventModel.copyWith(whoDidItHappen: controller.whoDidHappen));
@@ -326,7 +327,7 @@ class K26Screen extends GetWidget {
                                     controller.searchController.text);
                                 controller.update();
                               },
-                              text: "далее".toUpperCase(),
+                              text: 'continue'.tr().toUpperCase(),
                               margin: getMargin(
                                 bottom: 10,
                               ),

@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -42,7 +43,7 @@ class K31Controller extends GetxController {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        'Оцени интенсивность эмоции',
+                        'rate_emotion_intensity'.tr(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -179,7 +180,7 @@ class K31Controller extends GetxController {
                                 ..emotionIntensity = emotionIntensity);
                           controller.update();
                         },
-                        text: "принять".toUpperCase(),
+                        text: 'accept'.tr().toUpperCase(),
                         margin: getMargin(top: 10),
                       ),
                     ],

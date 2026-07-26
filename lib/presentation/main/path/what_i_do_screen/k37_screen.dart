@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -54,7 +55,7 @@ class K37Screen extends StatelessWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -80,7 +81,7 @@ class K37Screen extends StatelessWidget {
                           top: 14,
                         ),
                         child: Text(
-                          "Что я делал?",
+                          'what_did_I_do'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtH1,
@@ -92,7 +93,7 @@ class K37Screen extends StatelessWidget {
                           top: 30,
                         ),
                         child: Text(
-                          "Например: Ушел, хлопнул дверью",
+                          'for_example_left_slammed_door'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight14Gray800,
@@ -115,7 +116,7 @@ class K37Screen extends StatelessWidget {
                                 ),
                                 fillColor: ColorConstant.grayLight,
                                 filled: true,
-                                hintText: 'Ваши действия',
+                                hintText: 'your_actions'.tr(),
 
                                 hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                             ),
@@ -143,7 +144,7 @@ class K37Screen extends StatelessWidget {
                         variant: ButtonVariant.Base,
 
                         onTap: ()=>Navigator.pop(context),
-                        text: "Эмоции в теле".toUpperCase(),
+                        text: 'emotions_in_body'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         prefixWidget: CustomImageView(
                           margin: getMargin(right: 12),
@@ -158,7 +159,7 @@ class K37Screen extends StatelessWidget {
                           140,
                         ),
                         variant: ButtonVariant.Base,
-                        text: "далее".toUpperCase(),
+                        text: 'continue'.tr().toUpperCase(),
                         onTap: () async {
 
                             onSave?.call(dayEventModel.copyWith(whatIDo: fieldController.text));

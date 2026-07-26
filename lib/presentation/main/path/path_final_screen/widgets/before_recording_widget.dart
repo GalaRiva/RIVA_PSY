@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/color_constant.dart';
@@ -40,7 +41,7 @@ Widget beforeRecording (BuildContext context) => Container(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "Выговориться",
+              'to_talk_it_out'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Cyan700,
@@ -50,14 +51,14 @@ Widget beforeRecording (BuildContext context) => Container(
                 top: 1,
               ),
               child: Text(
-                "Создать голосовую запись",
+                'create_voice_record'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle.txtSFProDisplayLight9,
               ),
             ),
             Text(
-              "Запись хранится на вашем устройстве",
+              'record_keep'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight9,

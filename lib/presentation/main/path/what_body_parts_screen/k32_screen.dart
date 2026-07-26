@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'widgets/selected_body_parts_widget.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -56,7 +57,7 @@ class K32Screen extends GetWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -85,7 +86,7 @@ class K32Screen extends GetWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Что происходило с телом?",
+                              'what_was_happening_with_body'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH1,
@@ -101,7 +102,7 @@ class K32Screen extends GetWidget {
                                 },
                                 onSubmit: (t) => _focus.unfocus(),
                                 controller: controller.searchController,
-                                hintText: "Найти часть тела",
+                                hintText: 'find_body_part'.tr(),
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -141,11 +142,11 @@ class K32Screen extends GetWidget {
                                         controller.searchController.text);
                                     controller.update();
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Введите название части тела')));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter_body_part_name'.tr())));
                                   }
                                 },
                                 controller: controller.addEventController,
-                                hintText: "Добавить часть тела",
+                                hintText: 'add_body_part'.tr(),
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -178,7 +179,7 @@ class K32Screen extends GetWidget {
                                                 controller.searchController.text);
                                             controller.update();
                                           } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Введите название части тела')));
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter_body_part_name'.tr())));
                                           }
                                         },
                                       ),
@@ -218,7 +219,7 @@ class K32Screen extends GetWidget {
                                           height: getVerticalSize(29),
                                         ),
                                         Text(
-                                          'Хотите добавить части тела?',
+                                          'want_add_body_parts'.tr(),
                                           style: AppStyle
                                               .txtSFProDisplayLight14Gray800a0,
                                         ),
@@ -301,7 +302,7 @@ class K32Screen extends GetWidget {
                               177,
                             ),
                             onTap: () => Navigator.pop(context),
-                            text: "выбор эмоции'".toUpperCase(),
+                            text: 'choosing_emotion'.tr().toUpperCase(),
                             margin: getMargin(
                               bottom: 10,
                             ),
@@ -327,7 +328,7 @@ class K32Screen extends GetWidget {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                     content: Text(
-                                        'Выберете часть тела или создайте новую')));
+                                        'Выберете часть тела или создайте новую'))); // TODO: no key confirmed yet — needs confirmation
                               } else {
                                 if(onSave != null)
                                   onSave!(dayEventModel.copyWith(whatBodyParts: controller.selectedEventList));
@@ -347,8 +348,8 @@ class K32Screen extends GetWidget {
                               controller.update();
                             },
                             text: controller.currentEventList.isNotEmpty
-                                ? "далее".toUpperCase()
-                                : 'ОТМЕНА',
+                                ? 'continue'.tr().toUpperCase()
+                                : 'cancel'.tr().toUpperCase(),
                             margin: getMargin(
                               bottom: 10,
                             ),

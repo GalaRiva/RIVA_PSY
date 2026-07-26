@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
 
 import '../../../../../../core/models/day_event_model.dart';
@@ -30,7 +31,7 @@ class ExerciseContentWidget extends StatelessWidget {
       right: 10,
     ),
     child: Text(
-    "Основная эмоция",
+    'main_emotion'.tr(),
     overflow: TextOverflow.ellipsis,
     textAlign: TextAlign.left,
     style: AppStyle
@@ -70,7 +71,7 @@ class ExerciseContentWidget extends StatelessWidget {
             child: SizedBox(
               width: getHorizontalSize(135),
               child: Text(
-                'Нажмите, чтобы увидеть связанные эмоции',
+                'clicking_to_see_related_emotions'.tr(),
                 textAlign: TextAlign.left,
                 style: AppStyle.txtSFProDisplayLight10Gray800,
               ),
@@ -84,7 +85,7 @@ class ExerciseContentWidget extends StatelessWidget {
             right: 10,
           ),
           child: Text(
-            "Как прожить " + dayEvent.whatEmotion![0].name.toLowerCase(),
+            'how_to_live_through'.tr(args: [dayEvent.whatEmotion![0].name.toLowerCase().tr()]),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: AppStyle
@@ -120,7 +121,7 @@ class ExerciseContentWidget extends StatelessWidget {
                       right: 10,
                     ),
                     child: Text(
-                      "Дополнительные эмоции",
+                      'additional_emotions_short'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle
@@ -160,7 +161,7 @@ class ExerciseContentWidget extends StatelessWidget {
                       right: 10,
                     ),
                     child: Text(
-                      "Как прожить дополнительные эмоции:",
+                      'how_to_live_through_additional_emotions'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle

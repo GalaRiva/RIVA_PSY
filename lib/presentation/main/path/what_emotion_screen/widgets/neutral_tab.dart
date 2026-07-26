@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
@@ -35,13 +36,13 @@ class NeutralTab extends StatelessWidget {
                     children: [
                       Container(
                           width: getHorizontalSize(109),
-                          child: Text("Нейтральные \n(скорее позитивные)",
+                          child: Text('neutral_positive'.tr(),
                               maxLines: null,
                               textAlign: TextAlign.center,
                               style: AppStyle.txtSFProDisplayLight12Gray800a0)),
                       Container(
                           width: getHorizontalSize(108),
-                          child: Text("Нейтральные \n(скорее негативные)",
+                          child: Text('neutral_negative'.tr(),
                               maxLines: null,
                               textAlign: TextAlign.center,
                               style: AppStyle.txtSFProDisplayLight12Gray800a0))
@@ -115,7 +116,7 @@ class NeutralTab extends StatelessWidget {
                     top: 37,
                   ),
                   child: Text(
-                    "Эмоция не найдена\nДобавьте свою эмоцию",
+                    'emotion_not_found_add_your_own'.tr(),
                     maxLines: null,
                     textAlign: TextAlign.center,
                     style: AppStyle.txtSFProDisplayLight14Gray800a01,

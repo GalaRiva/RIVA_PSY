@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -56,7 +57,7 @@ class K25Screen extends GetWidget {
                           top: 39,
                         ),
                         child: Text(
-                          "Эмоция сейчас",
+                          'current_emotion'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight10Gray800,
@@ -85,7 +86,7 @@ class K25Screen extends GetWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Где произошло?",
+                              'where_it_happened'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH1,
@@ -102,7 +103,7 @@ class K25Screen extends GetWidget {
                                   _focus.unfocus();
                                 },
                                 controller: controller.searchController,
-                                hintText: "Найти место",
+                                hintText: 'find_place'.tr(),
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -130,7 +131,7 @@ class K25Screen extends GetWidget {
                               child: CustomSearchView(
                                 focusNode: _focus2,
                                 controller: controller.addEventController,
-                                hintText: "Добавить место",
+                                hintText: 'add_place'.tr(),
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -141,7 +142,7 @@ class K25Screen extends GetWidget {
                                       arguments: {
                                         'initialValue':
                                             controller.addEventController.text,
-                                        'title': 'Добавить Место'
+                                        'title': 'add_place'.tr()
                                       })) as EventModel;
                                   if (result != null) {
                                     controller.currentEventList =
@@ -175,7 +176,7 @@ class K25Screen extends GetWidget {
                                                   arguments: {
                                                 'initialValue': controller
                                                     .addEventController.text,
-                                                'title': 'Добавить Место'
+                                                'title': 'add_place'.tr()
                                               })) as EventModel;
                                           if (result != null) {
                                             controller.currentEventList =
@@ -243,7 +244,7 @@ class K25Screen extends GetWidget {
                                       top: 37,
                                     ),
                                     child: Text(
-                                      "Событие не найдено\nДобавьте свое событие",
+                                      'place_not_found_add_your_own'.tr(),
                                       maxLines: null,
                                       textAlign: TextAlign.center,
                                       style: AppStyle
@@ -287,7 +288,7 @@ class K25Screen extends GetWidget {
                             177,
                           ),
                           onTap: () => Navigator.pop(context),
-                          text: "выбор события".toUpperCase(),
+                          text: "выбор события".toUpperCase(), // TODO: no key confirmed yet — needs confirmation
                           margin: getMargin(
                             bottom: 10,
                           ),
@@ -312,7 +313,7 @@ class K25Screen extends GetWidget {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             content: Text(
-                                                'Выберете место или создайте новое')));
+                                                'choose_place_or_create_new'.tr())));
                                   } else {
                                     if (onSave != null)
                                       onSave!(dayEventModel.copyWith(
@@ -333,8 +334,8 @@ class K25Screen extends GetWidget {
                                   controller.update();
                                 },
                           text: controller.currentEventList.isNotEmpty
-                              ? "далее".toUpperCase()
-                              : 'ОТМЕНА',
+                              ? 'continue'.tr().toUpperCase()
+                              : 'cancel'.tr().toUpperCase(),
                           margin: getMargin(
                             bottom: 10,
                           ),

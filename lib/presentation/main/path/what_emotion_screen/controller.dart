@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -103,7 +104,7 @@ class K27Controller extends GetxController {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    'Оцени интенсивность эмоции',
+                    'rate_emotion_intensity'.tr(),
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,

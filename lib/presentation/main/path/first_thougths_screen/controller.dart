@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 
@@ -37,9 +38,10 @@ class K38Controller extends GetxController {
           _deleteControllers();
 
         },
-        title: 'Создана запись',
-        content:
-        'Запись ${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} г ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()} сохранена',
+        title: 'record_created'.tr(),
+        content: 'record_saved'.tr(args: [
+          '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} г ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
+        ]),
       ),
     ).then((value) async {
 
