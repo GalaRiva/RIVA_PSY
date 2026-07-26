@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
@@ -23,7 +24,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
 
   final _bodyHeight = getVerticalSize(pillModel.hoursOfTakingPills.length > 2 ? 47  + ((pillModel.hoursOfTakingPills.length % 2) * 21) : 47);
   String getDurationText () {
-    if(pillModel.startDate == null || pillModel.endDate == null) return 'установить длительность приема'.toUpperCase();
+    if(pillModel.startDate == null || pillModel.endDate == null) return 'set_reception_duration'.tr().toUpperCase();
     return '${(pillModel.startDate!).dateInText()} - ${pillModel.endDate!.dateInText()}'.toUpperCase();
   }
   return Container(
@@ -65,7 +66,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
                     child: Row(
                       children: [
                         Text(
-                          'редактировать',
+                          'redo'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtSFProDisplayLight9Gray50,

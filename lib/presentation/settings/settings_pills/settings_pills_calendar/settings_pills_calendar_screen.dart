@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 
@@ -29,7 +30,7 @@ class PillsCalendarScreen extends StatelessWidget {
                     padding: getPadding(
                       top: 39,
                     ),
-                    child: CustomPopButton(text: 'Напоминание о приёме',)
+                    child: CustomPopButton(text: 'appointment_reminder_singular'.tr(),)
                 ),
                 Padding(
                   padding: getPadding(
@@ -43,7 +44,7 @@ class PillsCalendarScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Установить длительность приёма",
+                            'set_reception_duration'.tr(),
                             textAlign: TextAlign.left,
                             style: AppStyle.txtH1,
                           ),
@@ -55,7 +56,7 @@ class PillsCalendarScreen extends StatelessWidget {
                         ),
                         child: GetBuilder(
                           builder: (PillsCalendarController _c) => Text(
-                            controller.periodStart == null ? 'Выберите начало периода' : 'Выберите конец периода',
+                            controller.periodStart == null ? 'select_start_period'.tr() : 'select_end_period'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style:
@@ -163,7 +164,7 @@ class PillsCalendarScreen extends StatelessWidget {
                     onTap: () async {
                          controller.popWithData(context);
                     },
-                    text: "сохранить".toUpperCase(),
+                    text: 'save'.tr().toUpperCase(),
                     padding: ButtonPadding.PaddingT8,
                     margin: getMargin(top: 40),
                     alignment: Alignment.center),
@@ -172,7 +173,7 @@ class PillsCalendarScreen extends StatelessWidget {
                     width: getHorizontalSize(186),
                     onTap: () {
                       controller.cancel(context);},
-                    text: "отмена".toUpperCase(),
+                    text: 'cancel_noun'.tr().toUpperCase(),
                     margin: getMargin(top: 10, bottom: 40),
                     padding: ButtonPadding.PaddingT8,
                     alignment: Alignment.center),

@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/core/utils/text_field_formatters/text_field_time_formatter.dart';
@@ -28,7 +29,7 @@ class PillsBottomSheetController extends GetxController {
   Duration? _duration;
 
   String getDurationText () {
-    if(_startDate == null || _endDate == null) return 'установить\nдлительность приема'.toUpperCase();
+    if(_startDate == null || _endDate == null) return 'set_reception_duration'.tr().toUpperCase();
     return '${(_startDate!).dateInText()} - ${_endDate!.dateInText()}'.toUpperCase();
   }
 
@@ -41,7 +42,7 @@ class PillsBottomSheetController extends GetxController {
           return GetBuilder(
             builder: (PillsBottomSheetController _c) => CustomMessageBox(
               height: getVerticalSize(300),
-              title: 'Напоминание ${time.length + 1}',
+              title: 'reminder_n'.tr(args: ['${time.length + 1}']),
               content: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +52,7 @@ class PillsBottomSheetController extends GetxController {
                       height: getVerticalSize(44),
                     ),
                     Text(
-                      'Установить время приёма',
+                      'set_reception_time'.tr(),
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -108,7 +109,7 @@ class PillsBottomSheetController extends GetxController {
                         }
                         update();
                         },
-                        text: "сохранить".toUpperCase(),
+                        text: 'save'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         alignment: Alignment.center),
                   ],
@@ -139,7 +140,7 @@ class PillsBottomSheetController extends GetxController {
 
   Future addPill (BuildContext context) async {
     if(nameController.text.trim() == ''  || _startDate == null || time.isEmpty){
-      showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Добавление препарата', content: 'Заполните все поля'));
+      showDialog(context: context, builder: (context) => CustomMessageBox(title: 'add_pill_dialog_title'.tr(), content: 'fill_all_fields'.tr()));
     }
     else {
       final list = await _repo.getEvent();

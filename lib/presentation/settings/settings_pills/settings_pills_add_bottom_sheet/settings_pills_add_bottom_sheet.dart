@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/theme/app_style.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
@@ -38,14 +39,14 @@ class PillsAddBottomSheet extends StatelessWidget {
                       ),
 
                         Text(
-                          'Добавление препарата',
+                          'add_pill_dialog_title'.tr(),
                           style: AppStyle.txtSFProDisplayLight16,
                         ),
                         SizedBox(
                           height: getVerticalSize(30),
                         ),
                         Text(
-                          'Введите название лекарства или витамина',
+                          'enter_medication_name'.tr(),
                           style: AppStyle.txtSFProDisplayLight14.copyWith(
                               fontWeight: FontWeight.w300,
                               color: ColorConstant.gray800),
@@ -59,10 +60,10 @@ class PillsAddBottomSheet extends StatelessWidget {
                           counterText: '',
                           variant: TextFormFieldVariant.FillGray200,
                           formatter: [TextInputLoginFormatter()],
-                          hintText: 'Название',
+                          hintText: 'medication_name_hint'.tr(),
                           validator: (text) {
                             if (text!.isEmpty)
-                              return 'Введите название препарата';
+                              return 'enter_medication_name_full'.tr();
                           },
                         ),
                         GetBuilder(
@@ -106,7 +107,7 @@ class PillsAddBottomSheet extends StatelessWidget {
                                       width: getVerticalSize(23),
                                     ),
                                     suffixWidget: Text(
-                                      'ред',
+                                      'edit_abbrev'.tr(),
                                       style: AppStyle
                                           .txtSFProDisplayLight16DeepPurple,
                                     ),
@@ -130,12 +131,12 @@ class PillsAddBottomSheet extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 20),
                                     child: Icon(Icons.add, color: ColorConstant.deepPurple600, size: 20,),
                                   ),
-                                  text: "Добавить время приёма".toUpperCase(),
+                                  text: 'add_appointment'.tr().toUpperCase(),
                             textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
                             fontStyle: ButtonFontStyle.SFProDisplayRegular12Gray,
                                   padding: ButtonPadding.PaddingT8,
                                   )
-                              : TopIconButton(title: "Установить\nвремя приёма".toUpperCase(),
+                              : TopIconButton(title: 'set_reception_time'.tr().toUpperCase(),
                           onTap: () =>  controller.addTime(context: context), icon: CustomImageView(
                                 margin: getMargin(left: 10),
                                 svgPath: ImageConstant.imageClock,
@@ -155,14 +156,14 @@ class PillsAddBottomSheet extends StatelessWidget {
                                   onTap: () async {
                                       await controller.addPill(context);
                                   },
-                                  text: "сохранить".toUpperCase(),
+                                  text: 'save'.tr().toUpperCase(),
                                   padding: ButtonPadding.PaddingT8,
                                   alignment: Alignment.center),
                               SizedBox(height: 20,),
                               CustomButton(
                                   width: getHorizontalSize(186),
                                   onTap: () => Navigator.pop(context),
-                                  text: "отмена".toUpperCase(),
+                                  text: 'cancel_noun'.tr().toUpperCase(),
 
                                   padding: ButtonPadding.PaddingT8,
                                   alignment: Alignment.center),

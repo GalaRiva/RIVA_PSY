@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 import 'package:riva_psy/theme/app_style.dart';
@@ -38,7 +39,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                 height: getVerticalSize(20),
           ),
           Text(
-            'Редактирование напоминания',
+            'edit_reminder_title'.tr(),
             style: AppStyle.txtSFProDisplayLight16
                 .copyWith(color: ColorConstant.gray800),
           ),
@@ -46,7 +47,7 @@ class PillsEditBottomSheet extends StatelessWidget {
             height: getVerticalSize(30),
           ),
           Text(
-            'Редактировать название лекарства или витамина',
+            'edit_medication_name'.tr(),
             style: AppStyle.txtSFProDisplayLight14
                 .copyWith(color: ColorConstant.gray800)
                 .copyWith(fontWeight: FontWeight.w300),
@@ -62,7 +63,7 @@ class PillsEditBottomSheet extends StatelessWidget {
             formatter: [TextInputLoginFormatter()],
             validator: (text) {
               if (text!.isEmpty)
-                return 'Введите название препарата';
+                return 'enter_medication_name_full'.tr();
             },
           ),
           SizedBox(
@@ -108,7 +109,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                         width: getVerticalSize(23),
                       ),
                       suffixWidget: Text(
-                        'ред',
+                        'edit_abbrev'.tr(),
                         style: AppStyle
                             .txtSFProDisplayLight16DeepPurple,
                       ),
@@ -132,12 +133,12 @@ class PillsEditBottomSheet extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20),
                           child: Icon(Icons.add, color: ColorConstant.deepPurple600, size: 20,),
                         ),
-                        text: "Добавить время приёма".toUpperCase(),
+                        text: 'add_appointment'.tr().toUpperCase(),
                         textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
                         fontStyle: ButtonFontStyle.SFProDisplayRegular12Gray,
                         padding: ButtonPadding.PaddingT8,
                       )
-                          : TopIconButton(title: "Установить\nвремя приёма".toUpperCase(),
+                          : TopIconButton(title: 'set_reception_time'.tr().toUpperCase(),
                         onTap: () =>  controller.addTime(context: context), icon: CustomImageView(
                           margin: getMargin(left: 10),
                           svgPath: ImageConstant.imageClock,
@@ -151,8 +152,8 @@ class PillsEditBottomSheet extends StatelessWidget {
             child: GetBuilder(
               builder: (PillsEditBottomSheetController _c) => Text(pill.actual()
                   ?
-              'Убрать напоминание из актуальных препаратов для приема'
-                  : 'Добавить напоминание в список актуальных препаратов для приема',
+              'delete_reminder'.tr()
+                  : 'add_reminder_to_actual'.tr(),
                   style: AppStyle.txtSFProDisplayLight11
                       .copyWith(color: ColorConstant.gray800)
                   .copyWith(fontWeight: FontWeight.w300),
@@ -172,7 +173,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                 ),
                 textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
                 text:
-                "${controller.actual ? 'отменить приём' : 'возобновить приём'}"
+                "${controller.actual ? 'cancel_intake'.tr() : 'resume_intake'.tr()}"
                     .toUpperCase(),
                 padding: ButtonPadding.PaddingT8,
                 alignment: Alignment.center,
@@ -188,7 +189,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                   width: getHorizontalSize(186),
                   onTap: () async =>
                   await controller.editPill(context),
-                  text: "сохранить".toUpperCase(),
+                  text: 'save'.tr().toUpperCase(),
                   padding: ButtonPadding.PaddingT8,
                   variant: ButtonVariant.White24,
                   alignment: Alignment.center),
@@ -196,7 +197,7 @@ class PillsEditBottomSheet extends StatelessWidget {
               CustomButton(
                   width: getHorizontalSize(186),
                   onTap: () => Navigator.pop(context),
-                  text: "отменить".toUpperCase(),
+                  text: 'cancel'.tr().toUpperCase(),
                   padding: ButtonPadding.PaddingT8,
                   variant: ButtonVariant.White24,
                   alignment: Alignment.center),

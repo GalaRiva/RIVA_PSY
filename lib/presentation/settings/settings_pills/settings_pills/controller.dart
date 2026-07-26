@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/color_constant.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
@@ -33,9 +34,9 @@ class PillsController extends GetxController {
 
   PillListWidget getListOnListType(PillsList currentType) {
     if(currentType == PillsList.onData) {
-      return PillListWidget(pills: onDataPills, isSelected: _currentPillsList == currentType, update: update, title: 'По дате внесения');
+      return PillListWidget(pills: onDataPills, isSelected: _currentPillsList == currentType, update: update, title: 'date_added'.tr());
     } else {
-      return PillListWidget(pills: actualPills, isSelected: _currentPillsList == currentType, update: update, title: 'Актуальные назначения');
+      return PillListWidget(pills: actualPills, isSelected: _currentPillsList == currentType, update: update, title: 'current_appointments'.tr());
     }
   }
 

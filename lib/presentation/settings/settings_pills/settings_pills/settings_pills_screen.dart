@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/size_utils.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills/controller.dart';
@@ -29,11 +30,11 @@ class PillsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomAppBar(widget: CustomPopButton(text: 'Настройки')),
+                    CustomAppBar(widget: CustomPopButton(text: 'settings'.tr())),
                     Padding(
                       padding: getPadding(top: 25),
                       child: Text(
-                        'Напоминания о приёме',
+                        'apoinment_reminders'.tr(),
                         style: AppStyle.txtH1,
                       ),
                     ),
@@ -46,7 +47,7 @@ class PillsScreen extends StatelessWidget {
                         onTap: () {
                           controller.addPill(context);
                         },
-                        text: 'Добавить препарат'.toUpperCase(),
+                        text: 'add_pill'.tr().toUpperCase(),
                         prefixWidget: CustomImageView(
                             margin: getMargin(right: 10),
                             svgPath: ImageConstant.imgPill,
@@ -68,7 +69,7 @@ class PillsScreen extends StatelessWidget {
                                 Expanded(
                                   child: CustomButton(
                                     padding: ButtonPadding.PaddingT8,
-                                    text: 'Актуальные назначения',
+                                    text: 'current_appointments'.tr(),
                                     onTap: () =>
                                         controller.changePillsListState(
                                             PillsList.actual),
@@ -87,7 +88,7 @@ class PillsScreen extends StatelessWidget {
                                   child: CustomButton(
                                     showBorder: false,
                                     padding: ButtonPadding.PaddingT8,
-                                    text: 'По дате внесения',
+                                    text: 'date_added'.tr(),
                                     onTap: () =>
                                         controller.changePillsListState(
                                             PillsList.onData),
@@ -155,8 +156,8 @@ class PillsScreen extends StatelessWidget {
                   height: getVerticalSize(32),
                   width: getHorizontalSize(146),
                   text: AppRoutes.currentRoute == AppRoutes.settings
-                      ? "настройки".toUpperCase()
-                      : "назад".toUpperCase(),
+                      ? 'settings'.tr().toUpperCase()
+                      : 'back'.tr().toUpperCase(),
                   margin: getMargin(top: 154),
                   padding: ButtonPadding.PaddingT8,
                   prefixWidget: CustomImageView(
