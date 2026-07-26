@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/db/firebase_firestore/data/repository.dart';
@@ -49,10 +50,10 @@ class K16Controller {
           }
         }
       } else {
-        _showMessage(context, 'Данный промокод уже был активирован');
+        _showMessage(context, 'promo_already_activated'.tr());
       }
     } else
-      _showMessage(context, 'Данный промокод неактивен');
+      _showMessage(context, 'promo_inactive'.tr());
 
     /*} catch (_) {
       print(_);
@@ -66,7 +67,7 @@ class K16Controller {
     showDialog(
       context: context,
       builder: (BuildContext context) => CustomMessageBox(
-        title: 'Промокод',
+        title: 'promo_code'.tr(),
         content: message,
       ),
     );

@@ -145,9 +145,18 @@
   "buy_subscription": "Купить подписку",
   "enter_promo_code": "Ввести промокод",
 
+  "already_subscribed_until": "Вы уже подписаны до {} {} {} г.",
+  "buy_subscription_breadcrumb": " | Подписка ",
+  "buy_subscription_breadcrumb2": "| Купить подписку",
+  "for_price_per_year": "за {} ₽/год",
+  "promo_breadcrumb": " | Подписка | Подарочный код",
+
   "promo_code": "Промокод",
   "enter_gift_code": "Введите подарочный код",
   "send_code": "отправить код",
+  "promo_already_activated": "Данный промокод уже был активирован",
+  "promo_inactive": "Данный промокод неактивен",
+  "tariff_activated_congrats": "Поздравляем!\n\nТариф “Орион”\nактивирован",
   "passwords_do_not_match": "Пароли не совпадают",
   "age": "Возраст",
   "gender": "Пол",

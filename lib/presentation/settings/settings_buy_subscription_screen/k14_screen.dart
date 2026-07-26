@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -219,9 +220,9 @@ class K14Screen extends StatelessWidget {
                                               alignment: Alignment.centerLeft,
                                               child:  Row(
                                                 children: [
-                                                  CustomPopButton(text: 'Настройки'),
-                                                  Text(' | Подписка ', style: AppStyle.txtSFProDisplayLight10Gray800,),
-                                                  Text('| Купить подписку', style: AppStyle.txtSFProDisplayLight10,)
+                                                  CustomPopButton(text: 'settings'.tr()),
+                                                  Text('buy_subscription_breadcrumb'.tr(), style: AppStyle.txtSFProDisplayLight10Gray800,),
+                                                  Text('buy_subscription_breadcrumb2'.tr(), style: AppStyle.txtSFProDisplayLight10,)
                                                 ],
                                               )),
                                           Align(
@@ -248,7 +249,7 @@ class K14Screen extends StatelessWidget {
                                     alignment: Alignment.centerLeft,
                                     child: Padding(
                                         padding: getPadding(top: 26),
-                                        child: Text("Купить подписку",
+                                        child: Text('buy_subscription'.tr(),
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: AppStyle.txtH1))),
@@ -289,7 +290,7 @@ class K14Screen extends StatelessWidget {
                                 CustomButton(
                                     height: getVerticalSize(54),
                                     text:
-                                    "Перейти на тариф \"Орион\"".toUpperCase(),
+                                    "${'go_to_tariff'.tr()}\"${tariff.name}\"".toUpperCase(),
                                     margin:
                                     getMargin(left: 20, top: 19, right: 19),
                                     variant: ButtonVariant.OutlineBluegray60014,
@@ -299,7 +300,7 @@ class K14Screen extends StatelessWidget {
                                     onTap: () async => await controller.onTapGoToTariff(tariff!, context)),
                                 Padding(
                                     padding: getPadding(top: 14),
-                                    child: Text("за  ${(tariff.cost).toInt()} ₽/год",
+                                    child: Text('for_price_per_year'.tr(args: ['${(tariff.cost).toInt()}']),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -307,7 +308,7 @@ class K14Screen extends StatelessWidget {
                                 CustomButton(
 
                                     width: getHorizontalSize(146),
-                                    text: "подписка".toUpperCase(),
+                                    text: 'subscription'.tr().toUpperCase(),
                                     margin: getMargin(top: 42),
                                     padding: ButtonPadding.PaddingT8,
                                     prefixWidget: CustomImageView(

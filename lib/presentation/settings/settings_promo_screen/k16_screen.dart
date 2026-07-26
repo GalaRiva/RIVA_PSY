@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -37,19 +38,19 @@ class K16Screen extends StatelessWidget {
                           children: [
                             CustomAppBar(widget: Row(
                               children: [
-                                CustomPopButton(text: 'Настройки'),
-                                Text(' | Подписка | Подарочный код', style: AppStyle.txtSFProDisplayLight10Gray800,)
+                                CustomPopButton(text: 'settings'.tr()),
+                                Text('promo_breadcrumb'.tr(), style: AppStyle.txtSFProDisplayLight10Gray800,)
                               ],
                             ),),
                             Padding(
                                 padding: getPadding(top: 26),
-                                child: Text("Промокод",
+                                child: Text('promo_code'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
                             Padding(
                                 padding: getPadding(top: 27),
-                                child: Text("Введите подарочный код",
+                                child: Text('enter_gift_code'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight16)),
@@ -66,7 +67,7 @@ class K16Screen extends StatelessWidget {
                             CustomButton(
                                 height: getVerticalSize(54),
                                 width: getHorizontalSize(201),
-                                text: "отправить код".toUpperCase(),
+                                text: 'send_code'.tr().toUpperCase(),
                                 margin: getMargin(top: 61),
                                 variant: ButtonVariant.OutlineBluegray60014,
                                 padding: ButtonPadding.PaddingAll19,
@@ -76,7 +77,7 @@ class K16Screen extends StatelessWidget {
                                 alignment: Alignment.center),
                             CustomButton(
                                 width: getHorizontalSize(146),
-                                text: "подписка".toUpperCase(),
+                                text: 'subscription'.tr().toUpperCase(),
                                 margin: getMargin(top: 61),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(

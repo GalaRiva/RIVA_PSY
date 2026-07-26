@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
@@ -36,11 +37,11 @@ class K13Screen extends GetWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                              CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
 
                               Padding(
                                   padding: getPadding(top: 25),
-                                  child: Text("Подписка",
+                                  child: Text('subscription'.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtH1)),
@@ -49,7 +50,7 @@ class K13Screen extends GetWidget {
                                   child: Row(children: [
                                     Padding(
                                         padding: getPadding(top: 1),
-                                        child: Text("Актуальный тариф",
+                                        child: Text('current_tariff'.tr(),
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: AppStyle
@@ -75,7 +76,7 @@ class K13Screen extends GetWidget {
                                   padding: getPadding(top: 31),
                                   child: Visibility(
                                     visible: CurrentUser.user.currentTariff!.name != 'Базовый',
-                                    child: Text("Активна до ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month.monthInText().toLowerCase()} ${CurrentUser.user.currentTariff!.endDate.year}",
+                                    child: Text("${'active_until'.tr()} ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month.monthInText().toLowerCase()} ${CurrentUser.user.currentTariff!.endDate.year}",
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -102,7 +103,7 @@ class K13Screen extends GetWidget {
                                             padding: getPadding(
                                                 left: 15, top: 5, bottom: 4,),
                                             child: Text(
-                                                "Отключить автопродление",
+                                                'disable_autorenewal'.tr(),
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle
@@ -141,7 +142,7 @@ class K13Screen extends GetWidget {
                                                 getMargin(top: 1, bottom: 1)),
                                         Padding(
                                             padding: getPadding(left: 16),
-                                            child: Text("Купить подписку",
+                                            child: Text('buy_subscription'.tr(),
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle
@@ -177,7 +178,7 @@ class K13Screen extends GetWidget {
                                             width: getSize(20)),
                                         Padding(
                                             padding: getPadding(left: 17),
-                                            child: Text("Ввести  промокод",
+                                            child: Text('enter_promo_code'.tr(),
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle
@@ -193,7 +194,7 @@ class K13Screen extends GetWidget {
                                       ]))),
                               CustomButton(
                                   width: getHorizontalSize(146),
-                                  text: "настройки".toUpperCase(),
+                                  text: 'settings'.tr().toUpperCase(),
                                   margin: getMargin(top: 150),
                                   padding: ButtonPadding.PaddingT8,
                                   prefixWidget: CustomImageView(
@@ -217,8 +218,8 @@ class K13Screen extends GetWidget {
           CustomMessageBox(
             title: 'RIVA PSY',
             content:
-            'Вы уже подписаны до ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month
-                .monthInText()} ${CurrentUser.user.currentTariff!.endDate.year} г.',
+            'already_subscribed_until'.tr(args: ['${CurrentUser.user.currentTariff!.endDate.day}', CurrentUser.user.currentTariff!.endDate.month
+                .monthInText(), '${CurrentUser.user.currentTariff!.endDate.year}']),
           ),);
     }
     else {
@@ -239,8 +240,8 @@ class K13Screen extends GetWidget {
           CustomMessageBox(
             title: 'RIVA PSY',
             content:
-            'Вы уже подписаны до ${CurrentUser.user.currentTariff!.endDate.day} ${CurrentUser.user.currentTariff!.endDate.month
-                .monthInText()} ${CurrentUser.user.currentTariff!.endDate.year} г.',
+            'already_subscribed_until'.tr(args: ['${CurrentUser.user.currentTariff!.endDate.day}', CurrentUser.user.currentTariff!.endDate.month
+                .monthInText(), '${CurrentUser.user.currentTariff!.endDate.year}']),
           ),);
     } else
     Navigator.pushNamed(context, AppRoutes.promo);

@@ -145,9 +145,18 @@
   "buy_subscription": "Comprar suscripción",
   "enter_promo_code": "Introducir código promocional",
 
+  "already_subscribed_until": "Ya tienes una suscripción hasta el {} de {} de {}.",
+  "buy_subscription_breadcrumb": " | Suscripción ",
+  "buy_subscription_breadcrumb2": "| Comprar suscripción",
+  "for_price_per_year": "por {} ₽/año",
+  "promo_breadcrumb": " | Suscripción | Código de regalo",
+
   "promo_code": "Código promocional",
   "enter_gift_code": "Introduce el código de regalo",
   "send_code": "enviar código",
+  "promo_already_activated": "Este código promocional ya ha sido activado",
+  "promo_inactive": "Este código promocional está inactivo",
+  "tariff_activated_congrats": "¡Enhorabuena!\n\nEl plan “Orión”\nya está activo",
   "passwords_do_not_match": "Las contraseñas no coinciden",
   "age": "Edad",
   "gender": "Sexo",

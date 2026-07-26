@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -17,7 +18,7 @@ class K17Screen extends StatelessWidget {
       Navigator.pushReplacementNamed(context, AppRoutes.main);
       } catch(_) {
         print(_);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка, проверьте подключение к интернету или попробуйте позднее')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('network_error_try_later'.tr())));
       }
     });
     return Scaffold(
@@ -49,7 +50,7 @@ class K17Screen extends StatelessWidget {
                             top: 90,
                           ),
                           child: Text(
-                            "Поздравляем!\n\nТариф “Орион”\nактивирован",
+                            'tariff_activated_congrats'.tr(),
                             maxLines: null,
                             textAlign: TextAlign.center,
                             style: AppStyle.txtH1WhiteA700,

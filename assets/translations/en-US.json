@@ -145,9 +145,18 @@
   "buy_subscription": "Buy subscription",
   "enter_promo_code": "Enter promo code",
 
+  "already_subscribed_until": "You're already subscribed until {} {} {}.",
+  "buy_subscription_breadcrumb": " | Subscription ",
+  "buy_subscription_breadcrumb2": "| Buy subscription",
+  "for_price_per_year": "for {} ₽/year",
+  "promo_breadcrumb": " | Subscription | Gift code",
+
   "promo_code": "Promo code",
   "enter_gift_code": "Enter gift code",
   "send_code": "send code",
+  "promo_already_activated": "This promo code has already been activated",
+  "promo_inactive": "This promo code is inactive",
+  "tariff_activated_congrats": "Congratulations!\n\nThe “Orion” plan\nis now active",
   "passwords_do_not_match": "Passwords do not match",
   "age": "Age",
   "gender": "Gender",
