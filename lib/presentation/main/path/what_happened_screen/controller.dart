@@ -18,7 +18,7 @@ class K22Controller extends GetxController {
    List<EventModel> eventListAfterInit = [];
 
   bool contain (EventModel _event) {
-    if(whatHappened != null && whatHappened!.name == _event.name) {
+    if(whatHappened != null && whatHappened!.identity == _event.identity) {
       return true;
     }
     return false;
