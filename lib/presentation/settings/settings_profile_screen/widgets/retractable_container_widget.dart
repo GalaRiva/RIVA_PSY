@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../theme/app_style.dart';
@@ -104,11 +105,11 @@ class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
                     validator: (text) {
                       if (text!.trim() != "") {
                         if (text!.trim().length < 8) {
-                          return 'Длина пароля должна быть больше чем 8 символов';
+                          return 'password_length_min'.tr();
                         } else if (text!.trim().length > 26) {
-                          return 'Длина пароля должна быть меньше чем 26 символов';
+                          return 'password_length_max'.tr();
                         } else if (!_isPasswordCompliant(text)) {
-                          return 'Пароль должен содержать по крайней мере одну\nцифру, одну строчкую и заглавную букву\nи один уникальныйсимвол, такой как !#\$%&?';
+                          return 'password_complexity'.tr();
                         }
                       }
                     },
@@ -137,7 +138,7 @@ class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
                                 color: ColorConstant.deepPurple600,
                                 size: getVerticalSize(20),
                               )
-                            : Text("Изменить",
+                            : Text('change'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle

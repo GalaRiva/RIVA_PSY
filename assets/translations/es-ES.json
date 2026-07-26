@@ -154,6 +154,21 @@
   "male": "Masculino",
   "female": "Femenino",
 
+  "profile": "Perfil",
+  "old_password": "Contraseña anterior",
+  "new_password": "Nueva contraseña",
+  "fill_the_field": "Completa el campo",
+  "logout": "cerrar sesión de tu cuenta",
+  "couldnt_change_password": "No pudiste cambiar tu contraseña",
+  "profile_data_changed": "Los datos del perfil se han cambiado correctamente",
+  "network_error_try_later": "Se produjo un error, comprueba tu conexión a internet o inténtalo más tarde",
+  "wrong_old_password": "La contraseña anterior es incorrecta",
+  "change_login": "Cambiar el inicio de sesión",
+  "change_age": "Cambiar la edad",
+  "password_length_min": "La contraseña debe tener más de 8 caracteres",
+  "password_length_max": "La contraseña debe tener menos de 26 caracteres",
+  "password_complexity": "La contraseña debe contener al menos un dígito, una letra minúscula y una mayúscula, y un carácter único como !#$%&?",
+
   "send_path": "Completar el Camino",
 
   "current_emotion": "Emoción ahora",

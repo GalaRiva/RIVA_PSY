@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -35,18 +36,18 @@ class K18Screen extends GetWidget {
                       children: [
                         CustomAppBar(
                           widget: CustomPopButton(
-                            text: 'Настройки',
+                            text: 'settings'.tr(),
                           ),
                         ),
                         Padding(
                             padding: getPadding(top: 26),
-                            child: Text("Профиль",
+                            child: Text('profile'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH1)),
                         Padding(
                             padding: getPadding(top: 37),
-                            child: Text("Логин",
+                            child: Text('login'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtSFProDisplayLight16)),
@@ -72,7 +73,7 @@ class K18Screen extends GetWidget {
                                         controller.update();
                                       }
                                     },
-                                    child: Text("Изменить",
+                                    child: Text('change'.tr(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle
@@ -135,16 +136,16 @@ class K18Screen extends GetWidget {
                             builder: (K18Controller _c) => RetractableContainerWidget(
                               update: controller.update,
                               padding: getPadding(top: 39),
-                              title: 'Пароль',
+                              title: 'passwprd'.tr(),
                               subtitle:
-                                  'Пароль должен содержать 8 символов и по крайне мере, одну цифру и один символ, такой как !·\$%&?',
+                                  'password_should'.tr(),
                               hintText: '',
                               textController: controller.oldPasswordController,
                               child: (password) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Старый пароль',
+                                    'old_password'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight16,
@@ -167,14 +168,14 @@ class K18Screen extends GetWidget {
                                           if (text!.trim() != "")
 
                                           if(text.trim() != controller.newPasswordController.text) {
-                                            return 'Пароли не совпадают';
+                                            return 'passwords_do_not_match'.tr();
                                           }
                                         },
 
                                       )),
 
                                   Text(
-                                    'Новый пароль',
+                                    'new_password'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight16,
@@ -194,13 +195,13 @@ class K18Screen extends GetWidget {
                                         fontStyle: TextFormFieldFontStyle
                                             .SFProDisplayRegular14,
                                         validator: (text) {
-                                          if (controller.newPasswordController.text != '' || controller.passwordRepeatController.text.isNotEmpty || text!.trim() == "") return "Заполните поле";
+                                          if (controller.newPasswordController.text != '' || controller.passwordRepeatController.text.isNotEmpty || text!.trim() == "") return 'fill_the_field'.tr();
 
                                         },
 
                                       )),
                                   Text(
-                                    'Подтверждение нового пароля',
+                                    'password_confirmation'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight16,
@@ -217,13 +218,13 @@ class K18Screen extends GetWidget {
                             child: Row(children: [
                               Padding(
                                   padding: getPadding(top: 1),
-                                  child: Text("Возраст",
+                                  child: Text('age'.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayLight16)),
                               Padding(
                                   padding: getPadding(left: 110, bottom: 1),
-                                  child: Text("Пол",
+                                  child: Text('gender'.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayLight16))
@@ -257,7 +258,7 @@ class K18Screen extends GetWidget {
                                         Padding(
                                             padding:
                                                 getPadding(left: 34, bottom: 4),
-                                            child: Text("Изменить",
+                                            child: Text('change'.tr(),
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle
@@ -282,7 +283,7 @@ class K18Screen extends GetWidget {
                                         builder: (K18Controller _c) =>
                                             Row(children: [
                                           CustomRadioButton(
-                                              text: "Мужской",
+                                              text: 'male'.tr(),
                                               isTrue: CurrentUser.user.male,
                                               value: '',
                                               fontStyle: CurrentUser.user.male!
@@ -295,7 +296,7 @@ class K18Screen extends GetWidget {
                                                 controller.update();
                                               }),
                                           CustomRadioButton(
-                                              text: "Женский",
+                                              text: 'female'.tr(),
                                               value: '',
                                               isTrue: !CurrentUser.user.male!,
                                               iconSize: getHorizontalSize(15),
@@ -328,7 +329,7 @@ class K18Screen extends GetWidget {
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
-                                text: "отменить".toUpperCase(),
+                                text: 'cancel'.tr().toUpperCase(),
                                 margin: getMargin(top: 40),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(
@@ -340,7 +341,7 @@ class K18Screen extends GetWidget {
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),
-                                text: "сохранить".toUpperCase(),
+                                text: 'save'.tr().toUpperCase(),
                                 margin: getMargin(top: 40,left: 10),
                                 padding: ButtonPadding.PaddingT8,
                                 onTap: () async => key.currentState!.validate() ? await controller.saveData(context) : null,
@@ -351,7 +352,7 @@ class K18Screen extends GetWidget {
                         CustomButton(
                             height: getVerticalSize(32),
                             width: getHorizontalSize(250),
-                            text: "выйти из учётной записи".toUpperCase(),
+                            text: 'logout'.tr().toUpperCase(),
                             margin: getMargin(top: 40),
                             padding: ButtonPadding.PaddingT8,
                             prefixWidget: CustomImageView(

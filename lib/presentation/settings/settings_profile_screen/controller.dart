@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -47,8 +48,8 @@ class K18Controller extends GetxController {
             showDialog(
                 context: context,
                 builder: (context) => CustomMessageBox(
-                    title: 'Профиль',
-                    content: 'Вы не смогли изменить пароль'));
+                    title: 'profile'.tr(),
+                    content: 'couldnt_change_password'.tr()));
           }).then((value) async {
             await fireStoreRepo.updateUserDataPassword(
                 password: newPasswordController.text);
@@ -68,15 +69,15 @@ class K18Controller extends GetxController {
         showDialog(
                 context: context,
                 builder: (context) => CustomMessageBox(
-                    title: 'Профиль',
-                    content: 'Данные профиля были успешно изменены'))
+                    title: 'profile'.tr(),
+                    content: 'profile_data_changed'.tr()))
             .then((value) => Navigator.pop(context));
       }
     } catch (_) {
       print(_.toString());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Произошла ошибка, проверьте подключение к интрнету или попробуйте позже')));
+              'network_error_try_later'.tr())));
     }
   }
 
@@ -92,7 +93,7 @@ class K18Controller extends GetxController {
       showDialog(
           context: context,
           builder: (context) => CustomMessageBox(
-              title: 'Профиль', content: 'Неверно указан старый пароль'));
+              title: 'profile'.tr(), content: 'wrong_old_password'.tr()));
       return false;
     }
     return true;
@@ -114,7 +115,7 @@ class K18Controller extends GetxController {
             return GetBuilder(
               builder: (K18Controller _c) => CustomMessageBox(
                 height: 200,
-                title: 'Профиль',
+                title: 'profile'.tr(),
                 content: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +124,7 @@ class K18Controller extends GetxController {
                         height: getVerticalSize(44),
                       ),
                       Text(
-                        'Изменить логин',
+                        'change_login'.tr(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -176,7 +177,7 @@ class K18Controller extends GetxController {
                           children: [
                             Expanded(
                               child: CustomButton(
-                                text: 'Отменить',
+                                text: 'cancel'.tr(),
                                 variant: ButtonVariant.White,
 
                                 onTap: () {
@@ -186,7 +187,7 @@ class K18Controller extends GetxController {
                             SizedBox(width: 20,),
                             Expanded(
                               child: CustomButton(
-                                text: 'Сохранить',
+                                text: 'save'.tr(),
                                 variant: ButtonVariant.White,
                                 onTap: () {
                                   if (loginController.text.isEmpty)
@@ -217,7 +218,7 @@ class K18Controller extends GetxController {
             return GetBuilder(
               builder: (K18Controller _c) => CustomMessageBox(
                 height: 200,
-                title: 'Профиль',
+                title: 'profile'.tr(),
                 content: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -226,7 +227,7 @@ class K18Controller extends GetxController {
                         height: getVerticalSize(44),
                       ),
                       Text(
-                        'Изменить возраст',
+                        'change_age'.tr(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -280,7 +281,7 @@ class K18Controller extends GetxController {
                           children: [
                             Expanded(
                               child: CustomButton(
-                                text: 'Отменить',
+                                text: 'cancel'.tr(),
                                 variant: ButtonVariant.White,
 
                                 onTap: () {
@@ -290,7 +291,7 @@ class K18Controller extends GetxController {
                             SizedBox(width: 20,),
                             Expanded(
                               child: CustomButton(
-                                text: 'Сохранить',
+                                text: 'save'.tr(),
                                 variant: ButtonVariant.White,
 
                                 onTap: () {
