@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 
@@ -34,10 +35,10 @@ class K12Page extends GetWidget<K12Controller> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                              CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
                               Padding(
                                   padding: getPadding(top: 24),
-                                  child: Text("Напоминания",
+                                  child: Text('reminders'.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtH1)),
@@ -100,11 +101,9 @@ class K12Page extends GetWidget<K12Controller> {
                                                       padding: getPadding(
                                                           left: 18, top: 1),
                                                       child: Text(
-                                                          controller
+                                                          "${controller
                                                                   .list[index]
-                                                                  .quantity
-                                                                  .toString() +
-                                                              " раза в день ",
+                                                                  .quantity} ${'times_per_day'.tr()} ",
                                                           overflow:
                                                               TextOverflow
                                                                   .ellipsis,
@@ -136,7 +135,7 @@ class K12Page extends GetWidget<K12Controller> {
                                   child: Padding(
                                     padding: getPadding(top: 10),
                                     child: Text(
-                                        "Вы сможете отказаться от уведомлений  ${controller.date.day.toString()} ${(controller.date.month + 1).monthInText()} ${controller.date.year.toString()} ",
+                                        "${'you_can_refuse'.tr()} ${controller.date.day.toString()} ${(controller.date.month + 1).monthInText()} ${controller.date.year.toString()} ",
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style:
@@ -179,7 +178,7 @@ class K12Page extends GetWidget<K12Controller> {
                                     padding: getPadding(top: 48),
                                     child: CustomButton(
                                         width: getHorizontalSize(146),
-                                        text: "настройки".toUpperCase(),
+                                        text: 'settings'.tr().toUpperCase(),
                                         margin: getMargin(top: 154),
                                         padding: ButtonPadding.PaddingT8,
                                         prefixWidget: CustomImageView(

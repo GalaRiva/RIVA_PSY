@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -28,13 +29,13 @@ class K10Screen extends GetWidget<K10Controller> {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                            CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
 
                             Align(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
                                     padding: getPadding(left: 15, top: 39),
-                                    child: Text("Предложение по улучшению",
+                                    child: Text('suggestion_title'.tr(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: AppStyle.txtH1))),
@@ -42,7 +43,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                 padding:
                                     getPadding(left: 15, top: 18, right: 21),
                                 child: Text(
-                                    "Напишите, что хотели бы видеть и какое: графики, симптомы, эмоции, упражнения",
+                                    'write_your_wishes'.tr(),
                                     maxLines: null,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight14)),
@@ -65,7 +66,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                           borderSide: BorderSide.none),
                                       fillColor: ColorConstant.grayLight,
                                       filled: true,
-                                      hintText: 'Ваши предложения',
+                                      hintText: 'your_suggestions'.tr(),
                                       hintStyle: TextStyle(
                                         fontFamily: 'SF Pro Display',
                                         fontWeight: FontWeight.w300,
@@ -80,7 +81,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                 padding:
                                     getPadding(left: 15, top: 34, right: 13),
                                 child: Text(
-                                    "Приложите скриншот экрана приложения, который хотели бы улучшить",
+                                    'upload_screenshot'.tr(),
                                     maxLines: null,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight14)),
@@ -94,7 +95,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                     child: Text(
                                         controller.model.value.fileName ==
                                                 null
-                                            ? "Загрузить изображение"
+                                            ? 'upload_image'.tr()
                                             : controller
                                                 .model.value.fileName!,
                                         overflow: TextOverflow.ellipsis,
@@ -105,18 +106,18 @@ class K10Screen extends GetWidget<K10Controller> {
                             ),
                             CustomButton(
                                 width: getHorizontalSize(172),
-                                text: "отправить".toUpperCase(),
+                                text: 'send'.tr().toUpperCase(),
                                 onTap: () async {
                                   if(controller
                                           .model.value.controller.text.isEmpty) return null;
                                   else {
                                     try {
-                                      await controller.createOffer().then((value) => showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Предложение по улучшению', content: 'Предложение было отправлено'))
+                                      await controller.createOffer().then((value) => showDialog(context: context, builder: (context) => CustomMessageBox(title: 'suggestion_title'.tr(), content: 'suggestion_sent'.tr()))
                                       );
                                     } catch(_) {
                                       print(_);
 
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка, попробуйте позже или проверьте подключение к интернету')));
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('network_error_try_later'.tr())));
                                     }
                                   }
 
@@ -124,7 +125,7 @@ class K10Screen extends GetWidget<K10Controller> {
                                 margin: getMargin(top: 83)),
                             CustomButton(
                                 width: getHorizontalSize(146),
-                                text: "настройки".toUpperCase(),
+                                text: 'settings'.tr().toUpperCase(),
                                 margin: getMargin(top: 29),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(

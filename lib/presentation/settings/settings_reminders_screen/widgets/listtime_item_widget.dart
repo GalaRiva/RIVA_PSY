@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -107,7 +108,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                               height: getVerticalSize(44),
                             ),
                             Text(
-                              'Напомнить о создании записи в',
+                              'remind_to_make_entry'.tr(),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -166,7 +167,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                             ),
                             Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             child: CustomButton(
-                              text: 'Сохранить'.toUpperCase(),
+                              text: 'save'.tr().toUpperCase(),
                               onTap: () {
                                 final text = _controller.text;
                                 if (!currentState(text))
@@ -211,7 +212,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                       bottom: 3,
                     ),
                     child: Text(
-                      "Изменить",
+                      'change'.tr(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyle.txtSFProDisplayLight12Deeppurple600,

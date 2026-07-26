@@ -146,9 +146,13 @@
   "your_suggestions": "Your suggestions",
   "upload_screenshot": "Attach a screenshot of the app screen you'd like improved",
   "upload_image": "Upload image",
+  "suggestion_title": "Suggestion for improvement",
+  "suggestion_sent": "Your suggestion has been sent",
 
   "describe_issue": "Please describe what went wrong",
   "error_screenshot": "Attach a screenshot of the app screen where the error occurred",
+  "error_message_title": "Error report",
+  "reminder_no_n": "Reminder №{}",
   "times_per_day": "times a day",
   "cancel_notifications": "You'll be able to turn off notifications",
   "remind_to_make_entry": "Remind me to make an entry at",

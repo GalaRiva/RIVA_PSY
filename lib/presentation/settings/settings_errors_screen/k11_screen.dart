@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -28,17 +29,17 @@ class K11Screen extends GetWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomAppBar(widget: CustomPopButton(text: 'Настройки',),),
+                            CustomAppBar(widget: CustomPopButton(text: 'settings'.tr(),),),
                             Padding(
                                 padding: getPadding(top: 25),
-                                child: Text("Сообщить об ошибке",
+                                child: Text('report_an_error'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
                             Padding(
                                 padding: getPadding(top: 20),
                                 child: Text(
-                                    "Пожалуйста, опишите, что пошло не так",
+                                    'describe_issue'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle
@@ -61,7 +62,7 @@ class K11Screen extends GetWidget {
                                       ),
                                       fillColor: ColorConstant.grayLight,
                                       filled: true,
-                                      hintText: 'Ваши предложения',
+                                      hintText: 'your_suggestions'.tr(),
 
                                       hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                                   ),
@@ -71,7 +72,7 @@ class K11Screen extends GetWidget {
                             Padding(
                                 padding: getPadding(top: 34, right: 45),
                                 child: Text(
-                                    "Приложите скриншот экрана приложения, где возникла ошибка",
+                                    'error_screenshot'.tr(),
                                     maxLines: null,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFProDisplayLight14)),
@@ -84,7 +85,7 @@ class K11Screen extends GetWidget {
                                           onTap: () async {
                                             await controller.getImage();
                                           },
-                                          child: Text(controller.model.value.fileName == null ? "Загрузить изображение" : controller.model.value.fileName!,
+                                          child: Text(controller.model.value.fileName == null ? 'upload_image'.tr() : controller.model.value.fileName!,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: AppStyle
@@ -94,16 +95,16 @@ class K11Screen extends GetWidget {
                             ),
                             CustomButton(
                                 width: getHorizontalSize(172),
-                                text: "отправить".toUpperCase(),
+                                text: 'send'.tr().toUpperCase(),
                                 onTap: () async {
                                   if(controller
                                       .model.value.controller.text.isEmpty) return null;
                                   else {
                                     try {
-                                      await controller.createOffer().then((value) =>                                         showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Сообщение об ошибке', content: 'Предложение было отправлено')));
+                                      await controller.createOffer().then((value) =>                                         showDialog(context: context, builder: (context) => CustomMessageBox(title: 'error_message_title'.tr(), content: 'suggestion_sent'.tr())));
                                     } catch(_) {
                                       print(_);
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка, попробуйте позже или проверьте подключение к интернету')));
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('network_error_try_later'.tr())));
                                     }
                                   }
 
@@ -112,7 +113,7 @@ class K11Screen extends GetWidget {
                                 alignment: Alignment.center),
                             CustomButton(
                                 width: getHorizontalSize(146),
-                                text: "настройки".toUpperCase(),
+                                text: 'settings'.tr().toUpperCase(),
                                 margin: getMargin(top: 29),
                                 padding: ButtonPadding.PaddingT8,
                                 prefixWidget: CustomImageView(

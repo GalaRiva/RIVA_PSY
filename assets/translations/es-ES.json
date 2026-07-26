@@ -146,9 +146,13 @@
   "your_suggestions": "Tus sugerencias",
   "upload_screenshot": "Adjunta una captura de la pantalla que te gustaría mejorar",
   "upload_image": "Subir imagen",
+  "suggestion_title": "Sugerencia de mejora",
+  "suggestion_sent": "Tu sugerencia ha sido enviada",
 
   "describe_issue": "Describe qué salió mal, por favor",
   "error_screenshot": "Adjunta una captura de la pantalla donde ocurrió el error",
+  "error_message_title": "Informe de error",
+  "reminder_no_n": "Recordatorio №{}",
   "times_per_day": "veces al día",
   "cancel_notifications": "Podrás desactivar las notificaciones",
   "remind_to_make_entry": "Recordarme crear un registro a las",

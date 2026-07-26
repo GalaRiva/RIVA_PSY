@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import '../../../core/services/workmanager/workmanager_service.dart';
@@ -23,7 +24,7 @@ class K12Controller extends GetxController {
                 CurrentUser.user.reminderTimeInStr[i][1]),
             minutes: int.parse(CurrentUser.user.reminderTimeInStr[i][3] +
                 CurrentUser.user.reminderTimeInStr[i][4]),
-            title: 'Напоминание №${i + 1}'));
+            title: 'reminder_no_n'.tr(args: ['${i + 1}'])));
       }
       for (var value in list) {
         if (value.quantity == CurrentUser.user.reminderTime) {
@@ -68,7 +69,7 @@ class K12Controller extends GetxController {
         lastNotifications.add(K12NotificationModel(
             hour: hour,
             minutes: minutes,
-            title: 'Напоминание №${lastNotifications.length + 1}'));
+            title: 'reminder_no_n'.tr(args: ['${lastNotifications.length + 1}'])));
         CurrentUser.user.reminderTimeInStr.add(hour.timeFormatted() + ':' + minutes.timeFormatted());
       }
     }
