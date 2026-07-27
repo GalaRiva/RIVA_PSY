@@ -37,6 +37,14 @@
   "saturday": "Saturday",
   "monday": "Monday",
 
+  "monday_short": "Mon",
+  "tuesday_short": "Tue",
+  "wednesday_short": "Wed",
+  "thursday_short": "Thu",
+  "friday_short": "Fri",
+  "saturday_short": "Sat",
+  "sunday_short": "Sun",
+
   "never": "Never",
   "today": "Today",
   "yesterday": "Yesterday",
@@ -670,6 +678,8 @@
   "alternative": "Alternative",
 
   "go_to_tariff": "Switch to plan ",
+  "orion_tariff_name": "Orion",
+  "to_free_recommendations": "to free recommendations",
   "get_full_access": "Get full access to recommendations, statistics, audio, and exercises: switch to the \"Orion\" plan",
   "in_free_version": "In the free version, backups will be stored in your own cloud storage.",
   "tariff_title": "Plan",

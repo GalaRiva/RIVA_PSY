@@ -37,6 +37,14 @@
   "saturday": "Sábado",
   "monday": "Lunes",
 
+  "monday_short": "Lun",
+  "tuesday_short": "Mar",
+  "wednesday_short": "Mié",
+  "thursday_short": "Jue",
+  "friday_short": "Vie",
+  "saturday_short": "Sáb",
+  "sunday_short": "Dom",
+
   "never": "Nunca",
   "today": "Hoy",
   "yesterday": "Ayer",
@@ -670,6 +678,8 @@
   "alternative": "Alternativa",
 
   "go_to_tariff": "Cambiar al plan ",
+  "orion_tariff_name": "Orión",
+  "to_free_recommendations": "a recomendaciones gratuitas",
   "get_full_access": "Obtén acceso completo a recomendaciones, estadísticas, audio y ejercicios: pásate al plan \"Orión\"",
   "in_free_version": "En la versión gratuita, las copias de seguridad se guardarán en tu propio almacenamiento en la nube.",
   "tariff_title": "Plan",

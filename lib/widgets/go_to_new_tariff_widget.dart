@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -37,7 +38,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                   size.width - 34,
                 ),
                 child: Text(
-                  'Получите полный доступ к рекомендациям, статистике,  аудио и упражнениям: переходите на тариф “Орион”',
+                  'get_full_access'.tr(),
                   textAlign: TextAlign.center,
                   style: AppStyle.txtSFProDisplayLight16,
                 ),
@@ -52,7 +53,8 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 width: getHorizontalSize(
                   288,
                 ),
-                text: "Перейти на тариф \"ОРИОН\"".toUpperCase(),
+                text: "${'go_to_tariff'.tr()}\"${'orion_tariff_name'.tr()}\""
+                    .toUpperCase(),
                 onTap: () async {
                   Navigator.pushNamed(context, AppRoutes.buySubscription,
                       arguments: [
@@ -78,7 +80,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                   padding: getPadding(left: 10),
                   child: Icon(Icons.arrow_forward_ios_sharp, size: getSize(10), color: ColorConstant.deepPurple600,),
                 ),
-                text: "к  бесплатным рекомендациям".toUpperCase(),
+                text: 'to_free_recommendations'.tr().toUpperCase(),
                 onTap: () async {
                   if (onSecondButtonTap == null) {
                     Navigator.pushNamed(context, AppRoutes.recommendations);
@@ -92,7 +94,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 width: getHorizontalSize(
     280,
     ),
-                  child: Text('В бесплатной версии резервные копии будут храниться в вашем облачном хранилище.', style: AppStyle.txtSFProDisplayLight12Gray800,)),
+                  child: Text('in_free_version'.tr(), style: AppStyle.txtSFProDisplayLight12Gray800,)),
               SizedBox(height: 27,)
             ],
           ),

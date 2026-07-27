@@ -30,29 +30,29 @@ extension DateInString on int {
   String monthInText() {
     switch (this) {
       case 1:
-        return 'Января';
+        return 'january2'.tr();
       case 2:
-        return 'Февраля';
+        return 'february2'.tr();
       case 3:
-        return 'Марта';
+        return 'march2'.tr();
       case 4:
-        return 'Апреля';
+        return 'april2'.tr();
       case 5:
-        return 'Мая';
+        return 'may2'.tr();
       case 6:
-        return 'Июня';
+        return 'june2'.tr();
       case 7:
-        return 'Июля';
+        return 'july2'.tr();
       case 8:
-        return 'Августа';
+        return 'august2'.tr();
       case 9:
-        return 'Сентября';
+        return 'september2'.tr();
       case 10:
-        return 'Октября';
+        return 'october2'.tr();
       case 11:
-        return 'Ноября';
+        return 'november2'.tr();
       default:
-        return 'Декабря';
+        return 'december2'.tr();
     }
   }
 }

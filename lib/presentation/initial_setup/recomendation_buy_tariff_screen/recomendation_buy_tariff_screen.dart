@@ -59,7 +59,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               margin: getMargin(top: 23)),
                           CustomButton(
                               height: getVerticalSize(54),
-                              text: "${'go_to_tariff'.tr()}Орион"
+                              text: "${'go_to_tariff'.tr()}${'orion_tariff_name'.tr()}"
                                   .toUpperCase(),
                               onTap: () {
                                 Navigator.pushNamed(context,

@@ -37,6 +37,14 @@
   "saturday":"Суббота",
   "monday":"Понедельник",
 
+  "monday_short":"Пн",
+  "tuesday_short":"Вт",
+  "wednesday_short":"Ср",
+  "thursday_short":"Чт",
+  "friday_short":"Пт",
+  "saturday_short":"Сб",
+  "sunday_short":"Вс",
+
   "never": "Никогда",
   "today": "Сегодня",
   "yesterday": "Вчера",
@@ -670,6 +678,8 @@
   "alternative": "Альтернатива",
 
   "go_to_tariff": "Перейти на тариф ",
+  "orion_tariff_name": "Орион",
+  "to_free_recommendations": "к бесплатным рекомендациям",
   "get_full_access": "Получите полный доступ к рекомендациям, статистике,  аудио и упражнениям: переходите на тариф “Орион”",
   "in_free_version": "В бесплатной версии резервные копии будут храниться в вашем облачном хранилище.",
   "tariff_title": "Тариф",

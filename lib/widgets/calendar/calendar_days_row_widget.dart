@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -16,7 +17,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Пн ",
+              'monday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -31,7 +32,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Вт",
+              'tuesday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -46,7 +47,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               top: 1,
             ),
             child: Text(
-              "Ср",
+              'wednesday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -61,7 +62,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Чт",
+              'thursday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -76,7 +77,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Пт",
+              'friday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -91,7 +92,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Сб",
+              'saturday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
@@ -106,7 +107,7 @@ class CalendarDaysRowWidget extends StatelessWidget {
               bottom: 1,
             ),
             child: Text(
-              "Вс",
+              'sunday_short'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
