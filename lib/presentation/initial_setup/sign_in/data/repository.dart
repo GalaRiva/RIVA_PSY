@@ -145,6 +145,17 @@ class SignInDataRepository extends SignInDomainRepository {
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage: _message,
           userResultStatus: FirebaseUserResultStatus.Exception);
+    } on FirebaseException catch (e) {
+      // Firestore (cloud_firestore) throws plain FirebaseException, not
+      // FirebaseAuthException — must be caught separately or it escapes
+      // uncaught up to the calling controller (see authWithGoogle findings).
+      print(e);
+      final _message =
+          AuthExceptionHandler.generateErrorMessage(AuthStatus.unknown);
+      return FirebaseUserResult(
+          firebaseResultStatus: FirebaseResultStatus.Error,
+          exceptionMessage: _message,
+          userResultStatus: FirebaseUserResultStatus.Exception);
     }
   }
 
@@ -177,6 +188,17 @@ class SignInDataRepository extends SignInDomainRepository {
       } on FirebaseAuthException catch (e) {
       final _error = AuthExceptionHandler.handleAuthException(e);
       final _message = AuthExceptionHandler.generateErrorMessage(_error);
+      return FirebaseUserResult(
+          firebaseResultStatus: FirebaseResultStatus.Error,
+          exceptionMessage: _message,
+          userResultStatus: FirebaseUserResultStatus.Exception);
+    } on FirebaseException catch (e) {
+      // Firestore (cloud_firestore) throws plain FirebaseException, not
+      // FirebaseAuthException — must be caught separately or it escapes
+      // uncaught up to the calling controller (see authWithGoogle findings).
+      print(e);
+      final _message =
+          AuthExceptionHandler.generateErrorMessage(AuthStatus.unknown);
       return FirebaseUserResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage: _message,

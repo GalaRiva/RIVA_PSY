@@ -745,3 +745,28 @@ tail -f /tmp/flutter_run_input | flutter run -d emulator-5554 --debug > /tmp/flu
 **6. Overflow-баг на карточках событий с длинными двухсловными названиями** ("Компьютерная игра/видеоигра", "Просмотр фильма/сериала" — видно на скриншотах QA с "BOTTOM OVERFLOWED BY 8.5 PIXELS"). Причина — фиксированная `cardHeight` (78, дефолт в `EventCard`) недостаточна для двухстрочного текста при некоторых сочетаниях языка/длины строки. **Исправлено** добавлением `textIsFitted: true` в вызов `EventCard` внутри `what_happened_screen/k22_screen.dart` — включает `FittedBox`/`BoxFit.scaleDown` для текста подписи, сжимающий длинный текст вместо переполнения, без изменения размеров самой карточки (не затрагивает вёрстку карточек с короткими названиями).
 
 `flutter analyze` по всем фиксам §50 — 0 новых ошибок/предупреждений (только pre-existing warnings в затронутых файлах, не связанные с этими правками).
+
+### 51. Критический баг: Google-вход — "успешная авторизация в никуда", исправлено, 2026-07-27
+
+Обнаружено на реальном устройстве (Xiaomi Redmi 15C): `FirebaseAuth.instance.signInWithCredential(credential)` успешно создаёт пользователя (подтверждено в Firebase Console — новые записи в Authentication), но экран после выбора Google-аккаунта просто замирал — ни ошибки, ни перехода дальше. USB-отладка на устройстве не заработала (стандартные шаги — обычный переключатель, MIUI-специфичный "Отладка по USB (Настройки безопасности)", смена режима USB-подключения, отзыв разрешений, полная перезагрузка телефона — испробованы, диалог авторизации adb так и не появился), поэтому диагноз ставился чтением кода, без живого лога.
+
+**Корневая причина — несовпадение типов исключений.** В `lib/presentation/initial_setup/sign_in/data/repository.dart` методы `checkUserState()` и `createUser()` делают запросы к Firestore (`.get()`/`.set()` на коллекциях `Users`/`UsersData`), но оборачивали их в `try { ... } on FirebaseAuthException catch (e) { ... }`. `FirebaseAuthException` — тип из пакета `firebase_auth`; Firestore-операции бросают `FirebaseException` из `cloud_firestore` — при том что `FirebaseAuthException extends FirebaseException`, узкий `on FirebaseAuthException` не перехватывает обычный `FirebaseException`, только его подтип. Любая Firestore-ошибка (правила безопасности, сеть, права) пролетала мимо этого catch.
+
+**Усугубляющий фактор.** `k2_controller.dart:authWithGoogle(context)` — вызывающая цепочка (`SignInWithGoogle` → `CheckUserState`/`CreateUser` → `GetAndSetRemoteDataLocally`) — не была обёрнута вообще ни в какой try/catch. Долетевшее снизу необработанное исключение превращалось в silent uncaught Future error: Flutter логирует его в consle/zone-handler (недоступно без USB-лога), но никакого `showMessage()` или `Navigator.push...` не происходит — экран просто остаётся как есть. Это и есть механизм "успешной авторизации в никуда".
+
+**Исправлено:**
+- `repository.dart`: в `checkUserState()` и `createUser()` добавлен второй catch — `on FirebaseException catch (e) { print(e); ... }`, возвращающий явный `FirebaseUserResult` с `FirebaseResultStatus.Error` (используя `AuthExceptionHandler.generateErrorMessage(AuthStatus.unknown)` — тот же дефолтный текст, что и для прочих неопознанных ошибок в этом файле) вместо того, чтобы исключение улетало дальше необработанным.
+- `k2_controller.dart:authWithGoogle(context)`: вся цепочка обёрнута в try/catch; при любом непойманном исключении — `print(e)` + `showMessage(context, title: 'Регистрация', content: 'network_error_try_later'.tr())` (переиспользован существующий ключ, уже применявшийся сегодня в §46 для похожих сетевых ошибок). Добавлен импорт `easy_localization`.
+
+**Проверено на предмет того же паттерна в остальном коде (по прямому запросу) — найдено ещё 2 места, НЕ исправлены, требуют отдельного подтверждения:**
+- `repository.dart:resetUserPassword()` — Firestore `.update()` внутри `on FirebaseAuthException catch` — идентичная уязвимость, но в потоке сброса пароля, не входа.
+- `k2_controller.dart:authWithApple(context)` — структурно идентична `authWithGoogle` (тот же `CheckUserState`/`CreateUser`, теперь безопасные благодаря фиксу выше), но сама функция тоже не обёрнута в try/catch — остаточный риск от любых других исключений в цепочке (например из `CurrentUser.repo.setService()`/`setLocalUserData()`).
+
+**Проверено и признано безопасным, изменений не требует:**
+- `signUpWithEmail`, `signInWithEmail`, `confirmResetCodeForEmail`, `sendResetPasswordCodeEmail`, `verifyResetCodeForEmail` в `repository.dart` — узкий `on FirebaseAuthException` там корректен, эти методы делают только чистые `FirebaseAuth`-вызовы, Firestore не трогают.
+- `signInWithGoogle()`/`signInWithApple()` верхнеуровневые catch-блоки в том же файле — безопасны как обёртка теперь, когда `createUser()` внутри них больше не бросает Firestore-исключения наружу.
+- `getAndSetRemoteUserLocally()` (usecase `GetAndSetRemoteDataLocally`, вызывается из обоих flow) — уже использует широкий `catch (_)`, не источник тишины (это тот самый метод, что показывал диалог "Ошибка сохранения данных, попробуйте ещё раз" при более раннем в этой же сессии инциденте с отключённым Firestore API).
+
+Не регрессия от сегодняшних локализационных правок — подтверждено `git log` по `lib/presentation/initial_setup/sign_in/`: последнее изменение этой папки датируется старым коммитом переименования Rigel→RIVA, ничего из сегодняшней сессии её не касалось до этого фикса.
+
+`flutter analyze` — 0 ошибок (два новых `unused_catch_clause` warning на переменной `e` устранены добавлением `print(e)` в новые catch-блоки — заодно это первое место, где Firestore-ошибки при входе вообще попадают в консоль).
