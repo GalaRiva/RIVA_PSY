@@ -277,21 +277,9 @@ class K20Screen extends GetWidget<K20Controller> {
                             context: context, builder: (BuildContext context) =>
                               CustomMessageBox(
                                 title: 'create_record'.tr(),
-                                content:
-                                'Запись ${DateTime
-                                    .now()
-                                    .day} ${DateTime
-                                    .now()
-                                    .month
-                                    .monthInText()} ${DateTime
-                                    .now()
-                                    .year} г ${DateTime
-                                    .now()
-                                    .hour
-                                    .timeFormatted()}:${DateTime
-                                    .now()
-                                    .minute
-                                    .timeFormatted()} сохранена',
+                                content: 'save_record'.tr(args: [
+                                  '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
+                                ]),
                               ),);
                         },
                         text: 'save'.tr().toUpperCase(),
