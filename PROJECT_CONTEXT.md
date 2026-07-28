@@ -808,4 +808,15 @@ tail -f /tmp/flutter_run_input | flutter run -d emulator-5554 --debug > /tmp/flu
 1. Прочитан документ `Audio/wrath__zloy_lev` обратно через REST API, поля (`fileName='wrath/zloy_lev'`, `format='mp3'`) собраны в URL точно по формуле кода (`BASE_URL + fileName + '.' + format`) → `https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/wrath/zloy_lev.mp3` → `curl -I` вернул `HTTP 200`, реальный аудио-контент отдаётся.
 2. Составной индекс `Audio` (`tab` + `order`) — пользователь создала и подтвердила статус Enabled. Проверен вручную точный `DepressionModel`-запрос (`where tab==depression` + `orderBy order`) через `runQuery` REST API — отработал без `FAILED_PRECONDITION`, вернул все 26 документов строго в правильном порядке (`1,2,3,4,5,6,8,9...27`, пропуск 7 сохранён).
 
+### 54. Закрытие открытого пункта §53 + токен переиздан + release-сборка, 2026-07-28
+
+Открытый пункт из §53 закрыт: Security Rules для `Audio`/`Tabs`/`Tabs_Images`/`Text_Recommendation` возвращены на `allow write: if false` (подтверждено пользователем). Cloudflare R2 Account Token, использованный для загрузки 146 документов/файлов, перевыпущен после использования — старый токен более не действителен.
+
+Собрана новая release-сборка (1.0.9+16), включающая (помимо VPS→R2 и `.orderBy('order')` из §52/§53) фиксы, закоммиченные ниже (`5e2c19e`):
+- `AndroidManifest.xml`: `android:label` укорочен с «RIVA PSY психология» на «RIVA PSY» (обрезался на иконке приложения).
+- Баг кнопки календаря в Pills (add/edit bottom sheet): `onTap` висел на `CustomImageView` внутри `TopIconButton`, а не срабатывал — перенесён на сам `TopIconButton`.
+- Оverflow текста в `k38_screen` (первая мысль в ситуации) — добавлен `maxLines: 2`.
+- Overflow текста кнопок в `go_to_new_tariff_widget` — новый параметр `CustomButton.textIsFitted` (оборачивает текст в `FittedBox`/`BoxFit.scaleDown`).
+- `EventCard`: иконки увеличены (`height` 33→66), ширина иконки теперь ограничена шириной самой карточки (`cardWidth - 20`), а не долей ширины экрана — иначе увеличенная иконка вылезала за карточку; шрифт текста карточки увеличен до 15.
+
 **Не привязано намеренно (открытые пункты с прошлых частей задачи, актуальны и сейчас)**: `"Стоп мысль"` (аудио для `relax_dialog`) — файла нет ни в одной папке; `"Потерянность.mp3"` — файл есть, но помечен пользователем "под вопросом перезаписи", не привязан к группе `lostness`; нейтральные эмоции из исходного документа — не относятся к этим коллекциям, исключены из задачи пользователем явно.
