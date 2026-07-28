@@ -361,7 +361,11 @@ class K2Screen extends GetWidget<K2Controller> {
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle
-                                        .txtSFProDisplayLight16DeepPurple),
+                                        .txtSFProDisplayLight16DeepPurple
+                                        .copyWith(
+                                          fontSize: getFontSize(26),
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                 CustomImageView(
                                   svgPath: ImageConstant.imgVector46,
                                   height: getVerticalSize(8),
