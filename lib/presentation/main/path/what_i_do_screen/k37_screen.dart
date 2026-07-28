@@ -145,6 +145,7 @@ class K37Screen extends StatelessWidget {
 
                         onTap: ()=>Navigator.pop(context),
                         text: 'emotions_in_body'.tr().toUpperCase(),
+                        textIsFitted: true,
                         padding: ButtonPadding.PaddingT8,
                         prefixWidget: CustomImageView(
                           margin: getMargin(right: 12),

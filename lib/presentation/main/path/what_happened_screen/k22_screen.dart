@@ -292,7 +292,6 @@ class K22Screen extends GetWidget {
                       margin: getMargin(
                         bottom: 10,
                       ),
-                      alignment: Alignment.topCenter,
                     ),
                   ),
                 ),
