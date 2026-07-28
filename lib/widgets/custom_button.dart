@@ -20,11 +20,13 @@ class CustomButton extends StatelessWidget {
       this.bgColor,
       this.textStyle,
       this.centralWidget,
+      this.textIsFitted = false,
       this.standardPadding, this.showBorder = true});
 
   ButtonShape? shape;
 
   final Widget? centralWidget;
+  final bool textIsFitted;
   final Color? bgColor;
   ButtonPadding? padding;
 
@@ -94,11 +96,20 @@ class CustomButton extends StatelessWidget {
   _getCentralWidget() {
     return Center(
       child: centralWidget ??
-          CustomText(
-            text ?? "",
-            textAlign: TextAlign.center,
-            style: textStyle ?? _setFontStyle(),
-          ),
+          (textIsFitted
+              ? FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: CustomText(
+                    text ?? "",
+                    textAlign: TextAlign.center,
+                    style: textStyle ?? _setFontStyle(),
+                  ),
+                )
+              : CustomText(
+                  text ?? "",
+                  textAlign: TextAlign.center,
+                  style: textStyle ?? _setFontStyle(),
+                )),
     );
   }
 

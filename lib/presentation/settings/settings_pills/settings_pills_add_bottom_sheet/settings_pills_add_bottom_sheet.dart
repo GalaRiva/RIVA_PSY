@@ -68,9 +68,9 @@ class PillsAddBottomSheet extends StatelessWidget {
                         ),
                         GetBuilder(
                           builder: (PillsBottomSheetController _c) => TopIconButton(
+                            onTap: () =>
+                                controller.setDurationOfReception(context),
                             icon: CustomImageView(
-                              onTap: () =>
-                                  controller.setDurationOfReception(context),
                               svgPath: ImageConstant.imgCalendar,
                               color: Colors.black,
                               height: getVerticalSize(23),

@@ -67,6 +67,7 @@ class K38Screen extends GetWidget {
                         ),
                         child: Text(
                           'first_thoughts_in_situation'.tr(),
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtH1,

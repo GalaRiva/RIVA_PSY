@@ -16,11 +16,15 @@ class EventCard extends StatelessWidget {
   final Color? iconColor;
   final bool isSelect;
   final bool? textIsFitted;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 78, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth}) : super(key: key);
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width / 3.6;
+    // Icon width is capped to the card's own width (minus padding) rather
+    // than a flat screen-width fraction, so doubling the icon size below
+    // doesn't overflow narrower cards.
+    final iconWidth = (cardWidth ?? width) - 20;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -52,10 +56,10 @@ class EventCard extends StatelessWidget {
               color: iconColor ?? ColorConstant.cyan700,
               fit: BoxFit.scaleDown,
               height: getVerticalSize(
-                33,
+                66,
               ),
               width:
-              width,
+              iconWidth,
               radius: BorderRadius.circular(
                 getHorizontalSize(
                   3,
@@ -84,6 +88,7 @@ class EventCard extends StatelessWidget {
             maxLines: 3,
             style: AppStyle
                 .txtSFProDisplayLight11Gray800
+                .copyWith(fontSize: getFontSize(15))
         ),
       );
     else return Text(
@@ -92,6 +97,7 @@ class EventCard extends StatelessWidget {
         maxLines: 3,
         style: AppStyle
             .txtSFProDisplayLight11Gray800
+            .copyWith(fontSize: getFontSize(15))
 
     );
   }

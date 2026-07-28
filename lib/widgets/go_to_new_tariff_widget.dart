@@ -55,6 +55,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 ),
                 text: "${'go_to_tariff'.tr()}\"${'orion_tariff_name'.tr()}\""
                     .toUpperCase(),
+                textIsFitted: true,
                 onTap: () async {
                   Navigator.pushNamed(context, AppRoutes.buySubscription,
                       arguments: [
@@ -81,6 +82,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                   child: Icon(Icons.arrow_forward_ios_sharp, size: getSize(10), color: ColorConstant.deepPurple600,),
                 ),
                 text: 'to_free_recommendations'.tr().toUpperCase(),
+                textIsFitted: true,
                 onTap: () async {
                   if (onSecondButtonTap == null) {
                     Navigator.pushNamed(context, AppRoutes.recommendations);
