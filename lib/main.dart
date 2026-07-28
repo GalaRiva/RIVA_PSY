@@ -54,8 +54,7 @@ void main() async {
       notificationService.setListeners();
       //initializeDateFormatting('ru_RU');
 
-      final event = await FirebaseAuth.instance
-          .currentUser;
+      final event = await FirebaseAuth.instance.authStateChanges().first;
       if (event == null)
         AppRoutes.initialRoute = AppRoutes.signUp;
       else {
