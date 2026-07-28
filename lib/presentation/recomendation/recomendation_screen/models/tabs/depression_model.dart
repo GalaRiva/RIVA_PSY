@@ -22,7 +22,7 @@ class DepressionModel extends NegativeEmotionsModelTab{
 
    Future<List<AudioCardModel>?> audioAssets () async {
 
-     var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo: 'depression').get();
+     var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo: 'depression').orderBy('order').get();
      final audios = <AudioCardModel>[];
      final String appDocPath = (await getApplicationDocumentsDirectory()).path;
      for (var item in collection.docs) {
@@ -30,7 +30,7 @@ class DepressionModel extends NegativeEmotionsModelTab{
          final audio = Audio.fromJson(item.data());
          String filePath = appDocPath + '/' + '${audio.folder}/${audio.fileName}.${audio.format}';
          if(DataSourceService.dataSourceIsRemote()) {
-           filePath = 'http://95.181.164.171/' + audio.fileName + '.' + audio.format;
+           filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + audio.fileName + '.' + audio.format;
          }
          if(audio.tab == 'depression') {
            if(audio.name == 'Введение'){

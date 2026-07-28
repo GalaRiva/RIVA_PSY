@@ -32,7 +32,7 @@ class RelaxDialogController extends GetxController {
       list.add(AudioCardModel(
           e.name,
           DataSourceService.dataSourceIsRemote()
-              ? 'http://95.181.164.171/' +
+              ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
               e.fileName +
               '.' +
               e.format
