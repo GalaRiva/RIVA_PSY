@@ -52,7 +52,7 @@ class K1Controller extends GetxController {
         await CurrentUser.init();
         try {
           if(CurrentUser.repo.userId().isNotEmpty)
-            GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
+            await GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
 
         } catch (_) {
 
