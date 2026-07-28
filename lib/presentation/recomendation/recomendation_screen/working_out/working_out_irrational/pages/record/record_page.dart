@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +21,26 @@ class RecordPage extends StatelessWidget {
   final alternative = TextEditingController();
 
   String savedText = '';
+  Timer? _debounce;
 
   RecordPage({Key? key, required this.initWhyThisText, required this.initAlternativeText}) : super(key: key){
     whyThis.text = initWhyThisText;
     alternative.text = initAlternativeText;
   }
   final scrollController = ScrollController();
+
+  void _autosaveWhyThis(WorkingOutIrrationalCubit cubit, bool isThought) {
+    _debounce?.cancel();
+    _debounce = Timer(Duration(milliseconds: 1500), () {
+      savedText = whyThis.text;
+      if (isThought) {
+        cubit.fillSpendRecordModel(whyThisThoughts: savedText);
+      } else {
+        cubit.fillSpendRecordModel(whyThisDo: savedText);
+      }
+      cubit.updateDayEvents(nextState: false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +89,7 @@ class RecordPage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width - 60,
                       child: TextFormField(
                         onTap: () => scrollController.animateTo(scrollController.offset + MediaQuery.of(context).viewInsets.bottom, duration: Duration(milliseconds: 500), curve: Curves.easeIn),
+                        onChanged: (_) => _autosaveWhyThis(cubit, isThought),
                         controller: whyThis,
                         maxLines: 10,
                         minLines: 4,
@@ -91,22 +108,6 @@ class RecordPage extends StatelessWidget {
                               color: ColorConstant.fromHex('#3B3B4A'),
                             )),
                       ),
-                    ),
-                    SizedBox(
-                      height: 11,
-                    ),
-                    CustomButton(
-                      text: 'save'.tr().toUpperCase(),
-                      onTap: () {savedText = whyThis.text;
-                      if(isThought) {
-                        cubit.fillSpendRecordModel(whyThisThoughts: savedText, );
-                      } else {
-                          cubit.fillSpendRecordModel(whyThisDo: savedText);
-                      }
-                      cubit.updateDayEvents(nextState: false);
-                      },
-                      height: 47,
-                      width: size.width - 60,
                     ),
                     SizedBox(height: 27,),
                     Text(isThought ? 'alternative_thought'.tr().toUpperCase() : 'alternative_do'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
@@ -160,6 +161,8 @@ class RecordPage extends StatelessWidget {
                       width: size.width - 60,
                       height: 47,
                       onTap: () {
+                        _debounce?.cancel();
+                        savedText = whyThis.text;
                         if(isThought) {
                           cubit.fillSpendRecordModel(whyThisThoughts: savedText, alternativeThoughts: alternative.text);
                           cubit.goToNextState(WorkingOutIrrationalStage.alternativeThought);
