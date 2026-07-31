@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/models/audio/audio.dart';
 import '../../../../../core/models/audio/audio_card_model.dart';
@@ -119,19 +120,44 @@ class NegativeEmotionsModel {
     return list1.length.compareTo(list2.length);
   }
 
+  // Text_Recommendation docs carry the Russian text in title/content (the
+  // original, always-present fields) plus optional title_{lang}/content_{lang}
+  // added for the other supported locales. Falls back to the Russian field
+  // whenever a translation is missing for a given position, rather than
+  // showing blank text.
+  String _localizedField(
+      Map<String, dynamic> data, String field, String langCode) {
+    if (langCode != 'ru') {
+      final value = data['${field}_$langCode'];
+      if (value != null && value.toString().trim().isNotEmpty) {
+        return value.toString();
+      }
+    }
+    return (data[field] ?? '').toString();
+  }
+
   Future<List<SelectButtonWidget>?> _funButtons(String tab) async {
     try {
       var collection = await FirebaseFirestore.instance
           .collection('Text_Recommendation')
           .get();
       final buttons = <SelectButtonWidget>[];
-      for (var item in collection.docs) {
-        if (item.data()['tab'] == tab)
-          buttons.add(SelectButtonWidget(
-            title: item.data()['title'],
-            content: item.data()['content'],
-            height: double.parse(item.data()['height'].toString()) ?? 160,
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+      final docs = collection.docs.where((item) => item.data()['tab'] == tab).toList();
+      docs.sort((a, b) {
+        final orderA = a.data()['order'];
+        final orderB = b.data()['order'];
+        if (orderA is num && orderB is num) return orderA.compareTo(orderB);
+        return 0;
+      });
+      for (var item in docs) {
+        final data = item.data();
+        buttons.add(SelectButtonWidget(
+          title: _localizedField(data, 'title', langCode),
+          content: _localizedField(data, 'content', langCode),
+          height: double.parse(data['height'].toString()) ?? 160,
+        ));
       }
       return buttons;
     } catch (_) {
