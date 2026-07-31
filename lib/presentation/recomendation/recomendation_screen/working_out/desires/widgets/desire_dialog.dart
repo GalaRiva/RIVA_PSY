@@ -135,7 +135,11 @@ class _DesireActionButtonState extends State<_DesireActionButton> {
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          color: _pressed ? Colors.white.withOpacity(0.7) : ColorConstant.darkBg,
+          // ColorConstant.darkBg (#D7E1E1) is, despite the name, a light
+          // gray — identical to this dialog's own bgColor. Using it here
+          // made the button blend into the dialog instead of standing out
+          // dark against it. gray900 (#0d0d1b) is the actual dark tone.
+          color: _pressed ? ColorConstant.darkBg : ColorConstant.gray900,
           borderRadius: BorderRadius.circular(getHorizontalSize(3)),
           border: Border.all(color: Colors.white, width: 1),
           boxShadow: [
