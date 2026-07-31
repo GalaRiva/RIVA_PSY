@@ -4,6 +4,7 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
+import '../../../core/user_data/user.dart';
 import '../../../core/utils/build_info.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
@@ -76,6 +77,19 @@ class K7Screen extends StatelessWidget {
                                 padding: getPadding(left: 4, top: 16),
                                 child: Text(
                                     'build ${BuildInfo.gitHash} · ${BuildInfo.buildTime}',
+                                    style: AppStyle.txtSFProDisplayLight10Gray800)),
+                            // Temporary on-screen tariff/session diagnostic —
+                            // lets the account's actual runtime state be read
+                            // off a screenshot when USB/logcat access isn't
+                            // available. See PROJECT_CONTEXT.md, the
+                            // "tariff says Орион but app won't unlock" thread.
+                            Padding(
+                                padding: getPadding(left: 4, top: 12),
+                                child: SelectableText(
+                                    'email: ${CurrentUser.user.email}\n'
+                                    'userId(): ${CurrentUser.repo.userId()}\n'
+                                    'currentTariff: ${CurrentUser.user.currentTariff?.name}\n'
+                                    'tariffIsOrion(): ${CurrentUser.tariffIsOrion()}',
                                     style: AppStyle.txtSFProDisplayLight10Gray800)),
                             CustomButton(
                                 height: getVerticalSize(32),
