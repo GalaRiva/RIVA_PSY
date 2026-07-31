@@ -1,13 +1,7 @@
-import 'dart:async';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:riva_psy/core/app_export.dart';
-import 'package:riva_psy/core/user_data/user.dart';
-import 'package:provider/provider.dart';
 
-import '../../../providers/language_provider.dart';
 import 'k1_controller.dart';
 
 class K1Screen extends GetWidget {

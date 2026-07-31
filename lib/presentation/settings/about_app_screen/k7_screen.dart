@@ -4,6 +4,7 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
+import '../../../core/utils/build_info.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
 import 'drop_text_widget.dart';
@@ -71,6 +72,11 @@ class K7Screen extends StatelessWidget {
                             Padding(
                                 padding: getPadding(left: 4, top: 96),
                                 child: DropTextWidget(model: controller.privacyPolicy,)),
+                            Padding(
+                                padding: getPadding(left: 4, top: 16),
+                                child: Text(
+                                    'build ${BuildInfo.gitHash} · ${BuildInfo.buildTime}',
+                                    style: AppStyle.txtSFProDisplayLight10Gray800)),
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),

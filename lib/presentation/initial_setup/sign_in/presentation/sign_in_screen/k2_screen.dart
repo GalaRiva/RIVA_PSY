@@ -1,8 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import '../../../../../widgets/custom_app_bar.dart';
 import '../../../../../widgets/custom_pop_button.dart';
@@ -45,12 +43,12 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                 padding: const EdgeInsets.all(8.0),
                 child: CustomAppBar(
                   margin: getMargin(top: 64),
-                widget: CustomPopButton(text: 'Регистрация',
+                widget: CustomPopButton(text: 'sing_up'.tr(),
                   style: AppStyle.txtSFProDisplayLight10Gray800,)),
               ),
     Padding(
           padding: getPadding(top: 26),
-          child: Text("Вход",
+          child: Text('sign_in'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtH1)),
@@ -78,7 +76,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
       children: [
           Padding(
               padding: getPadding(top: 46),
-              child: Text(controller.useEmail ? "Почта" : "Номер телефона",
+              child: Text(controller.useEmail ? 'email'.tr() : 'phone_number'.tr(),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle
@@ -98,7 +96,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                   .SFProDisplayRegular14,
               formatter: [NumberFieldFormatter()],
               validator: (text) {
-                if (text!.trim() == "") return "Заполните поле";
+                if (text!.trim() == "") return 'fill_the_field'.tr();
               },),
           ),
           Visibility(
@@ -118,11 +116,11 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                 counterText: '',
                 validator: (text) {
                   if (text!.trim() == "")
-                    return "Заполните поле";
+                    return 'fill_the_field'.tr();
                   else if (!RegExp(
                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                       .hasMatch(text)) {
-                    return 'Пожалуйста введите верный формат вашей почты';
+                    return 'invalid_email_format'.tr();
                   }
                 },
                 textInputAction:
@@ -133,7 +131,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
 
     Padding(
           padding: getPadding(top: 38),
-          child: Text("Пароль",
+          child: Text('passwprd'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle
@@ -141,7 +139,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
     CustomTextFormField(
           focusNode: FocusNode(),
           controller: password,
-          hintText: "Ваш пароль",
+          hintText: 'your_password'.tr(),
           margin: getMargin(top: 14),
           variant: TextFormFieldVariant
               .UnderLineWhiteA700,
@@ -150,7 +148,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
           maxLength: 26,
           counterText: '',
           validator: (text) {
-            if (text!.trim() == "") return "Заполните поле";
+            if (text!.trim() == "") return 'fill_the_field'.tr();
           },
           textInputAction:
           TextInputAction.done),
@@ -176,7 +174,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Восстановить пароль ",
+              Text('restore_password'.tr() + " ",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle
@@ -199,7 +197,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                   CustomButton(
           height: getVerticalSize(32),
           width: getHorizontalSize(178),
-          text: "Далее".toUpperCase(),
+          text: 'continue'.tr().toUpperCase(),
           variant: ButtonVariant
               .OutlineBluegray60014,
           onTap: () => onTaptf(context, key),

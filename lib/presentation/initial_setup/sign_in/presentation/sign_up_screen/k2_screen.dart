@@ -1,9 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import '../../../../settings/settings_profile_screen/text_field_formatter.dart';
 import '../widgets/services_button.dart';
@@ -72,14 +69,14 @@ class K2Screen extends GetWidget<K2Controller> {
                                 color: ColorConstant.gray50)),
                         Padding(
                             padding: getPadding(top: 26),
-                            child: Text("Регистрация",
+                            child: Text('sing_up'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH1)),
                         Padding(
                             padding: getPadding(top: 10, right: 29),
                             child: Text(
-                                "Мы используем вашу почту только для безопасности ваших записей,  данные не передаются третьим лицам и обезличены",
+                                'we_use_email'.tr(),
                                 maxLines: null,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH2)),
@@ -129,7 +126,7 @@ class K2Screen extends GetWidget<K2Controller> {
                               mainAxisAlignment:
                                   MainAxisAlignment.center,
                               children: [
-                                Text("У меня уже есть аккаунт ",
+                                Text('have_account'.tr() + " ",
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle
@@ -149,7 +146,7 @@ class K2Screen extends GetWidget<K2Controller> {
                         ),
                         Padding(
                             padding: getPadding(top: 36),
-                            child: Text("Логин",
+                            child: Text('login'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style:
@@ -158,7 +155,7 @@ class K2Screen extends GetWidget<K2Controller> {
                           focusNode: FocusNode(),
                           formatter: [TextInputLoginFormatter()],
                           controller: group887Controller,
-                          hintText: "Ваш логин",
+                          hintText: 'your_login'.tr(),
                           margin: getMargin(top: 16),
                           variant:
                               TextFormFieldVariant.UnderLineWhiteA700,
@@ -166,7 +163,7 @@ class K2Screen extends GetWidget<K2Controller> {
                               .SFProDisplayRegular14,
                           validator: (text) {
                             if (text!.trim() == "")
-                              return "Заполните поле";
+                              return 'fill_the_field'.tr();
                           },
                         ),
                         GetBuilder(
@@ -178,8 +175,8 @@ class K2Screen extends GetWidget<K2Controller> {
                                   padding: getPadding(top: 38),
                                   child: Text(
                                       controller.useEmail
-                                          ? "Ваша почта"
-                                          : "Номер телефона",
+                                          ? 'your_email'.tr()
+                                          : 'phone_number'.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle
@@ -201,10 +198,10 @@ class K2Screen extends GetWidget<K2Controller> {
                                     counterText: '',
                                     validator: (text) {
                                       if (text!.trim() == "")
-                                        return "Заполните поле";
+                                        return 'fill_the_field'.tr();
                                       else if (text!.trim().length !=
                                           16) {
-                                        return 'Пожалуйста введите верный формат номера телефона';
+                                        return 'invalid_phone_format'.tr();
                                       }
                                     },
                                     textInputAction:
@@ -227,11 +224,11 @@ class K2Screen extends GetWidget<K2Controller> {
                                     counterText: '',
                                     validator: (text) {
                                       if (text!.trim() == "")
-                                        return "Заполните поле";
+                                        return 'fill_the_field'.tr();
                                       else if (!RegExp(
                                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(text)) {
-                                        return 'Пожалуйста введите верный формат вашей почты';
+                                        return 'invalid_email_format'.tr();
                                       }
                                     },
                                     textInputAction:
@@ -242,7 +239,7 @@ class K2Screen extends GetWidget<K2Controller> {
                         ),
                         Padding(
                             padding: getPadding(top: 38),
-                            child: Text("Пароль",
+                            child: Text('passwprd'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style:
@@ -252,7 +249,7 @@ class K2Screen extends GetWidget<K2Controller> {
                             child: SizedBox(
                               width: size.width - 32,
                               child: Text(
-                                  "Пароль должен содержать 8 символов и по крайне мере, одну цифру и один символ, такой как !·\$%&?",
+                                  'password_should'.tr(),
                                   textAlign: TextAlign.left,
                                   style: AppStyle
                                       .txtSFProDisplayLight12),
@@ -270,19 +267,19 @@ class K2Screen extends GetWidget<K2Controller> {
                             counterText: '',
                             validator: (text) {
                               if (text!.trim() == "")
-                                return "Заполните поле";
+                                return 'fill_the_field'.tr();
                               else if (text!.trim().length < 8) {
-                                return 'Длина пароля должна быть больше чем 8 символов';
+                                return 'password_length_min'.tr();
                               } else if (text!.trim().length > 26) {
-                                return 'Длина пароля должна быть меньше чем 26 символов';
+                                return 'password_length_max'.tr();
                               } else if (!isPasswordCompliant(text)) {
-                                return 'Пароль должен содержать по крайней мере одну\nцифру, одну строчкую и заглавную букву\nи один уникальныйсимвол, такой как !#\$%&?';
+                                return 'password_complexity'.tr();
                               }
                             },
                             textInputAction: TextInputAction.done),
                         Padding(
                             padding: getPadding(top: 38),
-                            child: Text("Подтверждение пароля",
+                            child: Text('confirm_password'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style:
@@ -300,10 +297,10 @@ class K2Screen extends GetWidget<K2Controller> {
                             counterText: '',
                             validator: (text) {
                               if (text!.trim() == "")
-                                return "Заполните поле";
+                                return 'fill_the_field'.tr();
                               else if (text !=
                                   passwordController.text) {
-                                return 'Пароли должны совпадать';
+                                return 'passwords_do_not_match'.tr();
                               }
                             },
                             textInputAction: TextInputAction.done),
@@ -315,7 +312,7 @@ class K2Screen extends GetWidget<K2Controller> {
                             children: [
                               CustomCheckbox(
                                   text:
-                                      "Принимаю Согласие на обработку персональных данных ",
+                                      '${'accept'.tr()} ${'concent_to_processing'.tr()} ',
                                   value: checkbox,
                                   onTapOnText: () =>
                                       Navigator.pushNamed(context,
@@ -337,7 +334,7 @@ class K2Screen extends GetWidget<K2Controller> {
                                           color: dividerColor1))),
                               CustomCheckbox(
                                   text:
-                                      "Принимаю Пользовательское соглашение",
+                                      '${'accept'.tr()} ${'user_conclusion'.tr()}',
                                   value: checkbox1,
                                   onTapOnText: () =>
                                       Navigator.pushNamed(context,
@@ -379,7 +376,7 @@ class K2Screen extends GetWidget<K2Controller> {
                         CustomButton(
                             height: getVerticalSize(32),
                             width: getHorizontalSize(178),
-                            text: "Далее".toUpperCase(),
+                            text: 'continue'.tr().toUpperCase(),
                             margin: getMargin(top: 42, bottom: 177),
                             variant:
                                 ButtonVariant.OutlineBluegray60014,
