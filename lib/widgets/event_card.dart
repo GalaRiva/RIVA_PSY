@@ -25,6 +25,12 @@ class EventCard extends StatelessWidget {
     // than a flat screen-width fraction, so doubling the icon size below
     // doesn't overflow narrower cards.
     final iconWidth = (cardWidth ?? width) - 20;
+    // Icon height scales with cardHeight (66 at the default 150) instead of
+    // being a flat constant — compact cards (cardHeight: 44, used by
+    // neutral_tab.dart and exercise_content_widget.dart) were getting the
+    // same 66px icon as a full-size 150-tall card and blowing way past
+    // their own bounds, wrecking the whole grid.
+    final iconHeight = (cardHeight ?? 150) * 66 / 150;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -56,7 +62,7 @@ class EventCard extends StatelessWidget {
               color: iconColor ?? ColorConstant.cyan700,
               fit: BoxFit.scaleDown,
               height: getVerticalSize(
-                66,
+                iconHeight,
               ),
               width:
               iconWidth,
@@ -67,10 +73,10 @@ class EventCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: getVerticalSize(model.name.isEmpty ? 23 : 5),
+              height: getVerticalSize(model.localizedName.isEmpty ? 23 : 5),
             ),
             Visibility(
-              visible: model.name.isNotEmpty,
+              visible: model.localizedName.isNotEmpty,
               child: text(),
             ),
           ],
@@ -83,7 +89,7 @@ class EventCard extends StatelessWidget {
       return FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
-            model.name + suffix!,
+            model.localizedName + suffix!,
             textAlign: TextAlign.center,
             maxLines: 3,
             style: AppStyle
@@ -92,7 +98,7 @@ class EventCard extends StatelessWidget {
         ),
       );
     else return Text(
-        model.name + suffix!,
+        model.localizedName + suffix!,
         textAlign: TextAlign.center,
         maxLines: 3,
         style: AppStyle

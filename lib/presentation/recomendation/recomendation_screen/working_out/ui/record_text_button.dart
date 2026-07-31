@@ -55,20 +55,20 @@ class RecordTextButton extends StatelessWidget {
                                 height: 30,
                               ),
                               _recordRow(title: 'Что произошло', dayEventVariable: [Text(
-                                dayEventModel.whatHappened!.name,
+                                dayEventModel.whatHappened!.localizedName,
                                 style: _style,
                               )]),
                               _recordRow(title: 'Где произошло', dayEventVariable: [Text(
-                                dayEventModel.whereHappened!.name,
+                                dayEventModel.whereHappened!.localizedName,
                                 style: _style,
                               )]),
                               _recordRow(title: 'С кем произошло', dayEventVariable: [Text(
-                                dayEventModel.whoDidItHappen!.name,
+                                dayEventModel.whoDidItHappen!.localizedName,
                                 style: _style,
                               )]),
                               _recordRow(title: 'Какую эмоцию испытал', dayEventVariable: [
                                 Text(
-                                  dayEventModel.whatEmotion!.first.name,
+                                  dayEventModel.whatEmotion!.first.localizedName,
                                   style: _style,
                                 ),
                                 IgnorePointer(

@@ -233,7 +233,7 @@ class K31Screen extends GetWidget {
                                 onTap: () {
                                   controller.showEmotionIntensityDialog(
                                       context, controller,
-                                      controller.emotions.first.name,
+                                      controller.emotions.first.localizedName,
                                       data['dayEventModel'], onSave: onSave);
                                 },
                                 text: 'continue'.tr().toUpperCase(),

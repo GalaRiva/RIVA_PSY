@@ -327,7 +327,7 @@ class K52Screen extends GetWidget {
                               ),
                             ),
                             Text(
-                              dayEventModel.whatHappened!.name,
+                              dayEventModel.whatHappened!.localizedName,
                               style: _style,
                             )
                           ]
@@ -371,7 +371,7 @@ class K52Screen extends GetWidget {
                         contents: [
                           [
                             Text(
-                              dayEventModel.whereHappened!.name,
+                              dayEventModel.whereHappened!.localizedName,
                               style: _style,
                             )
                           ]
@@ -417,7 +417,7 @@ class K52Screen extends GetWidget {
                         contents: [
                           [
                             Text(
-                              dayEventModel.whoDidItHappen!.name,
+                              dayEventModel.whoDidItHappen!.localizedName,
                               style: _style,
                             )
                           ]

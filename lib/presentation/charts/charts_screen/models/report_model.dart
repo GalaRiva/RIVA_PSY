@@ -18,11 +18,11 @@ class ReportModel {
       case 0:
         return event.date!.day.toString() + ' ' + event.date!.month.monthInText() + ' ' + event.date!.year.toString();
       case 1:
-        return  '${event.whatHappened!.name}\n${event.whereHappened!.name}\n${event.whoDidItHappen!.name}';
+        return  '${event.whatHappened!.localizedName}\n${event.whereHappened!.localizedName}\n${event.whoDidItHappen!.localizedName}';
       case 2:
         String emotion = '';
         for(var item in  event.whatEmotion!) {
-          emotion += '${item.name}\n';
+          emotion += '${item.localizedName}\n';
         }
         return emotion.length > 50 ? emotion.substring(0, 50) + '...' : emotion + '\n(${event.emotionIntensity})';
       case 3:

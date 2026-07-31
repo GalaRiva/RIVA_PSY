@@ -233,7 +233,7 @@ class K54Screen extends GetWidget {
                             ),
                           ),
                           Text(
-                            dayEventModel.whatHappened?.name ?? ' ',
+                            dayEventModel.whatHappened?.localizedName ?? ' ',
                             style: _style,
                           )]
                         ], fFocus: controller.eventSNode, sFocus: controller.eventANode,
@@ -281,7 +281,7 @@ class K54Screen extends GetWidget {
                         addController: controller.placeAddController,
                         contents: dayEventModel.whereHappened == null ? null :[
                           [Text(
-                            dayEventModel.whereHappened!.name,
+                            dayEventModel.whereHappened!.localizedName,
                             style: _style,
                           )]
                         ],fFocus: controller.placeSNode, sFocus: controller.placeANode,
@@ -330,7 +330,7 @@ class K54Screen extends GetWidget {
                         addController: controller.personaAddController,
                         contents: dayEventModel.whoDidItHappen == null ? null : [
                           [Text(
-                            dayEventModel.whoDidItHappen!.name,
+                            dayEventModel.whoDidItHappen!.localizedName,
                             style: _style,
                           )]
                         ],fFocus: controller.personaSNode, sFocus: controller.personaANode,

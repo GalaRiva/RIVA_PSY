@@ -156,7 +156,7 @@ class K61Controller extends GetxController {
         if (!listContainEmotion()) {
           listEventModels.add(emotion);
           list.add(
-              EmotionModel(1, emotion.name, getColor(listEventModels.length), key: emotion.key));
+              EmotionModel(1, emotion.localizedName, getColor(listEventModels.length), key: emotion.key));
         } else {
           for (var _item in list) {
             if (_item.identity == emotion.identity) {
@@ -310,7 +310,7 @@ class K61Controller extends GetxController {
         if (createNew) {
           int index = 0;
           emotionsInBody.add(EmotionInBodyModel(
-              emotion.name,
+              emotion.localizedName,
               1,
               dayEventModel.whatBodyParts!.map((e) {
                 index++;
@@ -322,7 +322,7 @@ class K61Controller extends GetxController {
         int index = 0;
 
         emotionsInBody.add(EmotionInBodyModel(
-            emotion.name,
+            emotion.localizedName,
             1,
             dayEventModel.whatBodyParts!.map((e) {
               index++;
@@ -382,7 +382,7 @@ class K61Controller extends GetxController {
         }
       }
     } else {
-      _places.add(PlaceModel(dayEventModel.whereHappened!.name, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].name, getColor(index), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
+      _places.add(PlaceModel(dayEventModel.whereHappened!.localizedName, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].localizedName, getColor(index), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
     }
   }
 

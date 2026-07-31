@@ -85,7 +85,7 @@ class ExerciseContentWidget extends StatelessWidget {
             right: 10,
           ),
           child: Text(
-            'how_to_live_through'.tr(args: [dayEvent.whatEmotion![0].name.toLowerCase().tr()]),
+            'how_to_live_through'.tr(args: [dayEvent.whatEmotion![0].localizedName.toLowerCase()]),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: AppStyle

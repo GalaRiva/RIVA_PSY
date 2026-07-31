@@ -62,7 +62,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                                   ),
                                 ),
                                 Text(
-                                  dayEventModel.whatHappened!.name,
+                                  dayEventModel.whatHappened!.localizedName,
                                   style: _style,
                                 )
                               ],
@@ -81,7 +81,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whereHappened!.name,
+                                  dayEventModel.whereHappened!.localizedName,
                                   style: _style,
                                 )
                               ],
@@ -100,7 +100,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whoDidItHappen!.name,
+                                  dayEventModel.whoDidItHappen!.localizedName,
                                   style: _style,
                                 )
                               ],
@@ -119,7 +119,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whatEmotion!.first.name,
+                                  dayEventModel.whatEmotion!.first.localizedName,
                                   style: _style,
                                 ),
                                 IgnorePointer(
