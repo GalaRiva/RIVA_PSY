@@ -834,6 +834,7 @@
   "addition_emotions": "Emociones adicionales",
   "record_keep": "El registro se guarda en tu dispositivo",
   "record_save": "Registro guardado",
+  "microphone_access_error": "Sin acceso al micrófono. Permite el acceso en los ajustes de la app e inténtalo de nuevo",
 
   "select_language": "Seleccionar idioma"
 }

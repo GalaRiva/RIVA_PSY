@@ -62,8 +62,8 @@ class NeutralTab extends StatelessWidget {
                         child: Wrap(
                           spacing: 12,
                           runAlignment: WrapAlignment.center,
-                          children: List.generate(list.length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 40 : 20),
+                          children: List.generate(list.where((element) => element.isNeutralPositive).length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralPositive).length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: size.width / 2 - 30,
 

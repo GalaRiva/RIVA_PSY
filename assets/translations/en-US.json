@@ -834,6 +834,7 @@
   "addition_emotions": "Additional emotions",
   "record_keep": "The entry is stored on your device",
   "record_save": "Entry saved",
+  "microphone_access_error": "No microphone access. Allow access in the app settings and try again",
 
   "select_language": "Select language"
 }

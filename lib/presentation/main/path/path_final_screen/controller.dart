@@ -87,15 +87,30 @@ class K39Controller extends GetxController {
       directory.createSync();
     }
 
+    bool started = false;
     if (await record.hasPermission()) {
-      await record.start(const RecordConfig(
-        encoder: AudioEncoder.aacLc, // by default
-        bitRate: 128000,
-      ),
-        path: path + '.m4a',
-        // by default
-      );
+      try {
+        await record.start(const RecordConfig(
+          encoder: AudioEncoder.aacLc, // by default
+          bitRate: 128000,
+        ),
+          path: path + '.m4a',
+          // by default
+        );
+        started = true;
+      } catch (_) {
+        started = false;
+      }
     }
+
+    if (!started) {
+      currentState = ButtonState.BeforeRecording;
+      controller.update();
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('microphone_access_error'.tr())));
+      return;
+    }
+
     _stopwatch.start();
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       timerText=  _formatTime(_stopwatch.elapsedMilliseconds);

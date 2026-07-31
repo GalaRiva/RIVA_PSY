@@ -121,6 +121,33 @@ class K2Screen extends GetWidget<K2Controller> {
                           ),
                         ),
                         Padding(
+                          padding: getPadding(top: 20),
+                          child: InkWell(
+                            onTap: () => Navigator.pushNamed(
+                                context, AppRoutes.signIn),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              children: [
+                                Text("У меня уже есть аккаунт ",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle
+                                        .txtSFProDisplayLight16DeepPurple
+                                        .copyWith(
+                                          fontSize: getFontSize(26),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgVector46,
+                                  height: getVerticalSize(8),
+                                  width: getHorizontalSize(4),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
                             padding: getPadding(top: 36),
                             child: Text("Логин",
                                 overflow: TextOverflow.ellipsis,
@@ -348,33 +375,6 @@ class K2Screen extends GetWidget<K2Controller> {
                             ),
                           ),
                         ),*/
-                        Padding(
-                          padding: getPadding(top: 42),
-                          child: InkWell(
-                            onTap: () => Navigator.pushNamed(
-                                context, AppRoutes.signIn),
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                              children: [
-                                Text("У меня уже есть аккаунт ",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle
-                                        .txtSFProDisplayLight16DeepPurple
-                                        .copyWith(
-                                          fontSize: getFontSize(26),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgVector46,
-                                  height: getVerticalSize(8),
-                                  width: getHorizontalSize(4),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
 
                         CustomButton(
                             height: getVerticalSize(32),
