@@ -17,6 +17,7 @@ import 'package:riva_psy/presentation/initial_setup/sign_in/domain/usecases/sign
 import 'package:riva_psy/presentation/initial_setup/sign_in/presentation/widgets/sms_code_message.dart';
 
 import '../../../../../core/db/firebase_firestore/data/repository.dart';
+import '../../../../../core/models/tariff_model.dart';
 import '../../../../../core/models/user_model.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../data/repository.dart';
@@ -103,7 +104,17 @@ class K2AuthController extends GetxController {
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'apple');
 
-        FireStoreRepositoryImpl().updateUser(userId: result.userId!, user: CurrentUser.user, create: true);
+        FireStoreRepositoryImpl().updateUser(
+            userId: result.userId!,
+            user: UserModel(
+              registrationDate: DateTime.now(),
+              login: result.login,
+              email: result.email,
+              male: true,
+              old: 33,
+              currentTariff: TariffModel.BASE_TARIFF,
+            ),
+            create: true);
 
         if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
           final dataSetResult = await GetAndSetRemoteDataLocally()
@@ -154,7 +165,17 @@ class K2AuthController extends GetxController {
         } else {
           final createUserInDB = await CreateUser().createUser(email: result.email, service: 'google');
 
-          FireStoreRepositoryImpl().updateUser(userId: result.userId!, user: CurrentUser.user, create: true);
+          FireStoreRepositoryImpl().updateUser(
+              userId: result.userId!,
+              user: UserModel(
+                registrationDate: DateTime.now(),
+                login: result.login,
+                email: result.email,
+                male: true,
+                old: 33,
+                currentTariff: TariffModel.BASE_TARIFF,
+              ),
+              create: true);
 
           if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
             final dataSetResult = await GetAndSetRemoteDataLocally()

@@ -335,8 +335,15 @@ class SignInDataRepository extends SignInDomainRepository {
     String? login,
     String? email,
   }) async {
+    // Diagnostic logging around the tariff-sync path — see
+    // PROJECT_CONTEXT.md for the "Firestore says Орион, app shows
+    // Базовый" investigation. Kept deliberately verbose so a single
+    // logcat capture is enough to tell which branch actually ran,
+    // instead of needing another round of "add more logs".
+    print('[TARIFF-DIAG] getAndSetRemoteUserLocally: userId="$userId" login="$login" email="$email"');
     try {
       if(userId.isEmpty) {
+        print('[TARIFF-DIAG] userId is empty, aborting');
         return FirebaseDataResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
             exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');
@@ -347,8 +354,11 @@ class SignInDataRepository extends SignInDomainRepository {
         await doc.get();
     late final UserModel user;
     if (userData.exists) {
+      print('[TARIFF-DIAG] doc "$userId" exists, raw fields: ${userData.data()}');
       user = UserModel.userFromFirebase(userData.data() ?? {});
+      print('[TARIFF-DIAG] parsed tariff: name="${user.currentTariff?.name}" endDate="${user.currentTariff?.endDate}"');
     } else {
+      print('[TARIFF-DIAG] doc "$userId" does NOT exist — creating fresh BASE_TARIFF user under this id');
       user = UserModel(
         registrationDate: DateTime.now(),
         login: login!,
@@ -371,9 +381,11 @@ class SignInDataRepository extends SignInDomainRepository {
         currentTariff: user.currentTariff,
         male: user.male,
         old: user.old);
+    print('[TARIFF-DIAG] setLocalUserData done, tariff written locally: "${user.currentTariff?.name}"');
     return FirebaseDataResult(
         firebaseResultStatus: FirebaseResultStatus.Success);
-    } catch (_) {
+    } catch (e, st) {
+      print('[TARIFF-DIAG] EXCEPTION in getAndSetRemoteUserLocally("$userId"): $e\n$st');
       return FirebaseDataResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');

@@ -50,13 +50,15 @@ class K1Controller extends GetxController {
 
       if(await FirebaseAuth.instance.authStateChanges().first != null) {
         await CurrentUser.init();
+        print('[TARIFF-DIAG] after CurrentUser.init(): cached tariff = "${CurrentUser.user.currentTariff?.name}"');
         try {
           if(CurrentUser.repo.userId().isNotEmpty)
             await GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(CurrentUser.repo.userId());
 
-        } catch (_) {
-
+        } catch (e, st) {
+          print('[TARIFF-DIAG] EXCEPTION during splash remote sync: $e\n$st');
         }
+        print('[TARIFF-DIAG] after splash sync: final tariff = "${CurrentUser.user.currentTariff?.name}" tariffIsOrion=${CurrentUser.tariffIsOrion()}');
       }
 
       if (wasInit != true) {

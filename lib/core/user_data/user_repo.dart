@@ -22,7 +22,14 @@ class UserRepo {
   String userId()
       {
         final id = (CurrentUser.user.email! + ' ' + authService).trim();
-        return id.trim() == '' ? CurrentUser.user.email! : id.trim();
+        final result = id.trim() == '' ? CurrentUser.user.email! : id.trim();
+        // Diagnostic: userId() silently degrades to just authService
+        // (e.g. "google") when the cached email is empty, instead of
+        // failing — that queries/creates the wrong Firestore doc and
+        // can reset a valid remote tariff back to Базовый locally.
+        // See PROJECT_CONTEXT.md for the tariff-not-loading investigation.
+        print('[TARIFF-DIAG] userId(): email="${CurrentUser.user.email}" authService="$authService" -> "$result"');
+        return result;
       }
   var authService = '';
 

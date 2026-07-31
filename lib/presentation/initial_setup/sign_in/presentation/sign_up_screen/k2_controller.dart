@@ -44,7 +44,17 @@ class K2Controller extends GetxController {
           if (getDataResult.firebaseResultStatus ==
               FirebaseResultStatus.Success) {
             final createUserInDB = await CreateUser().createUser(email: email, password: password);
-            FireStoreRepositoryImpl().updateUser(userId: email, user: CurrentUser.user, create: true);
+            FireStoreRepositoryImpl().updateUser(
+                userId: email,
+                user: UserModel(
+                  registrationDate: DateTime.now(),
+                  login: login,
+                  email: email,
+                  male: true,
+                  old: 33,
+                  currentTariff: TariffModel.BASE_TARIFF,
+                ),
+                create: true);
 
             if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
             await CurrentUser.repo.setService('');
@@ -95,7 +105,17 @@ class K2Controller extends GetxController {
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'apple');
 
-        FireStoreRepositoryImpl().updateUser(userId: result.userId!, user: CurrentUser.user, create: true);
+        FireStoreRepositoryImpl().updateUser(
+            userId: result.userId!,
+            user: UserModel(
+              registrationDate: DateTime.now(),
+              login: result.login,
+              email: result.email,
+              male: true,
+              old: 33,
+              currentTariff: TariffModel.BASE_TARIFF,
+            ),
+            create: true);
 
         if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
           final dataSetResult = await GetAndSetRemoteDataLocally()
@@ -147,7 +167,17 @@ class K2Controller extends GetxController {
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'google');
 
-        FireStoreRepositoryImpl().updateUser(userId: result.userId!, user: CurrentUser.user, create: true);
+        FireStoreRepositoryImpl().updateUser(
+            userId: result.userId!,
+            user: UserModel(
+              registrationDate: DateTime.now(),
+              login: result.login,
+              email: result.email,
+              male: true,
+              old: 33,
+              currentTariff: TariffModel.BASE_TARIFF,
+            ),
+            create: true);
 
         if(createUserInDB.firebaseResultStatus == FirebaseResultStatus.Success) {
           final dataSetResult = await GetAndSetRemoteDataLocally()
