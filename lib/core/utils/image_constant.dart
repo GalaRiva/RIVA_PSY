@@ -744,6 +744,7 @@ class ImageConstant {
   static String imgGroup663 = 'assets/images/img_group66_3.svg';
 
   static String imgEllipse102 = 'assets/images/img_ellipse102.png';
+  static String splashLogoRiva = 'assets/images/splash_logo_riva.png';
 
   static String imgFireGray800 = 'assets/images/img_fire_gray_800.svg';
 
