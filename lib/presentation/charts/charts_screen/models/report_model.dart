@@ -106,7 +106,8 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                           SizedBox(height: getVerticalSize(6)),
                           SizedBox(
                               width: (79),
-                              child: Image(imageText)),
+                              height: getVerticalSize(17),
+                              child: Image(imageText, fit: BoxFit.contain)),
                         ])),
 
                         Column(
