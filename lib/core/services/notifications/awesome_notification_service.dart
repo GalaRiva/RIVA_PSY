@@ -31,6 +31,18 @@ class AwesomeNotificationService extends NotificationService {
     for(int i = 0; i < length; i++) {
       final date = DateTime.now().add(workManagerModel.duration).add(Duration(days: i, ));
       if(true) {
+        // Random().nextInt(100) gave every notification an id in 0-99.
+        // A single course of reminders schedules one notification per day
+        // for the whole pill course (the for-loop above) — with 100
+        // possible ids and typically dozens of notifications created in
+        // one burst here, id collisions were common, and awesome_notifications
+        // treats a repeat id as "replace the existing schedule with this
+        // one" — so later days in the loop were silently overwriting
+        // earlier ones, dropping reminders with no error anywhere.
+        // Deterministic hash of what actually identifies this slot (pill +
+        // exact date + time) instead — stable, and only collides if the
+        // same reminder is scheduled twice, which is the desired behavior.
+        final id = (workManagerModel.pillName + date.toIso8601String() + _channelKey).hashCode & 0x7FFFFFFF;
         final create = await AwesomeNotifications().createNotification(
             schedule: NotificationCalendar(
                 month: date.month,
@@ -42,7 +54,7 @@ class AwesomeNotificationService extends NotificationService {
             ),
             content: NotificationContent(
               //simple notification
-              id: Random().nextInt(100),
+              id: id,
               channelKey: _channelKey,
               //set configuration wuth key "basic"
               title: 'RIVA PSY',
