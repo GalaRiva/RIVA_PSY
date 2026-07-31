@@ -48,7 +48,7 @@ class K1Controller extends GetxController {
     try {
       WorkManagerService().initService();
 
-      if(FirebaseAuth.instance.currentUser != null) {
+      if(await FirebaseAuth.instance.authStateChanges().first != null) {
         await CurrentUser.init();
         try {
           if(CurrentUser.repo.userId().isNotEmpty)

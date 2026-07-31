@@ -18,6 +18,7 @@
         android:label="RIVA PSY"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
+        android:allowBackup="false"
         android:versionCode="9"
         android:versionName="1.0.8">
         <activity
