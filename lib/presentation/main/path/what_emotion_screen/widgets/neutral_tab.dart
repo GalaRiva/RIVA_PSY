@@ -66,7 +66,7 @@ class NeutralTab extends StatelessWidget {
                             padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralPositive).length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
-                              iconSizeOverride: 96,
+                              iconSizeOverride: 108,
                               fontSizeOverride: 18,
                               isSelect: controller.contain(list.where((element) => element.isNeutralPositive).toList()[index]),
                               model: list.where((element) => element.isNeutralPositive).toList()[index], onTap: () {
@@ -84,10 +84,10 @@ class NeutralTab extends StatelessWidget {
                           spacing: 12,
                           runAlignment: WrapAlignment.center,
                           children: List.generate(list.where((element) => element.isNeutralNegative).length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 20 : 0),
+                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
-                              iconSizeOverride: 96,
+                              iconSizeOverride: 108,
                               fontSizeOverride: 18,
                               isSelect: controller.contain(list.where((element) => element.isNeutralNegative).toList()[index]),
                               model: list.where((element) => element.isNeutralNegative).toList()[index], onTap: () {

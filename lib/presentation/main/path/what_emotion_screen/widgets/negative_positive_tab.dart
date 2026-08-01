@@ -38,7 +38,7 @@ class NegativePositiveTab extends StatelessWidget {
                         padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 40 : 20),
                         child: EventCard(
                           cardWidth: size.width / 2 - 30,
-                          iconSizeOverride: 96,
+                          iconSizeOverride: 108,
                           fontSizeOverride: 18,
 
                               isSelect: controller.contain(list[index]),

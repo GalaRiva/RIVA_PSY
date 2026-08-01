@@ -40,7 +40,17 @@ class EventCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: cardHeight,
+        // Was a fixed `height: cardHeight` — with iconSizeOverride pushing
+        // the icon well past the size that formula originally budgeted
+        // for, and up to 3 lines of wrapped text below it, the natural
+        // content height regularly exceeded the fixed card height. Flutter
+        // doesn't clip a Column that overflows its parent's tight height
+        // constraint; it just renders past the box, so the "increase"
+        // was actually happening but invisible/overlapping neighboring
+        // cards instead of growing the card. minHeight lets the card grow
+        // to fit its content instead, while keeping the same size for
+        // cards whose content already fits.
+        constraints: BoxConstraints(minHeight: cardHeight ?? 150),
         width:
           cardWidth ?? width
         ,
