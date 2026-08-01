@@ -45,7 +45,7 @@ class TextForSelectPeriodWidget extends StatelessWidget {
                 "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: AppStyle.txtSFProDisplayLight10,
+            style: AppStyle.txtSFProDisplayLight10.copyWith(fontSize: getFontSize(20)),
           ),
           CustomImageView(
             svgPath: ImageConstant.rightArrow,

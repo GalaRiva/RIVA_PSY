@@ -99,7 +99,7 @@ class K62Screen extends GetWidget {
                               },
                               itemCount: 1,
                               itemBuilder: (context, index) {
-                                return CalendarTextButtonWidget(controller.year.toString(), controller.onYearMinus, controller.onYearPlus, 20);
+                                return CalendarTextButtonWidget(controller.year.toString(), controller.onYearMinus, controller.onYearPlus, 40);
                               },
                             ),
                           ),
@@ -122,7 +122,7 @@ class K62Screen extends GetWidget {
                               },
                               itemCount: 1,
                               itemBuilder: (context, index) {
-                                return CalendarTextButtonWidget(controller.month.monthInText(), controller.onMonthMinus, controller.onMonthPlus, 14);
+                                return CalendarTextButtonWidget(controller.month.monthInText(), controller.onMonthMinus, controller.onMonthPlus, 28);
                               },
                             ),
                           ),
