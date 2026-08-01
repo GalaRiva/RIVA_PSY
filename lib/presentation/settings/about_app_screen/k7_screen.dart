@@ -10,6 +10,7 @@ import '../../../core/utils/build_info.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
 import 'drop_text_widget.dart';
+import 'notification_diagnostics_widget.dart';
 
 // Live, direct-from-Firestore snapshot for the "Emociones negativas" text
 // and the audio-matching fallback count — not routed through
@@ -155,6 +156,9 @@ class K7Screen extends StatelessWidget {
                                           'Audio count for tab=wrath: ${d['audioCountForTab'] ?? d['audioError']}',
                                           style: AppStyle.txtSFProDisplayLight10Gray800);
                                     })),
+                            Padding(
+                                padding: getPadding(left: 4, top: 12),
+                                child: const NotificationDiagnosticsWidget()),
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),

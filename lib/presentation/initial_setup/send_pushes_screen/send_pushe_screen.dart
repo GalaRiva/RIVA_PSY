@@ -57,10 +57,26 @@ class SendPushesScreen extends StatelessWidget {
                     onTap: () async {
                       AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
                         if (!isAllowed) {
-                          // This is just a basic example. For real apps, you must show some
-                          // friendly dialog box before call the request method.
-                          // This is very important to not harm the user experience
-                          AwesomeNotifications().requestPermissionToSendNotifications();
+                          // The package's default permission list (Alert,
+                          // Sound, Badge, Vibration, Light) does NOT include
+                          // PreciseAlarms — without it, Android 12+ can
+                          // silently downgrade every scheduled reminder to
+                          // an inexact alarm, which is exactly why Pills
+                          // and diary reminders kept not firing even after
+                          // the cancelAllSchedules() race was fixed and
+                          // POST_NOTIFICATIONS was declared. Requesting it
+                          // explicitly here is what actually triggers
+                          // Android's "Alarms & reminders" settings prompt.
+                          AwesomeNotifications().requestPermissionToSendNotifications(
+                            permissions: [
+                              NotificationPermission.Alert,
+                              NotificationPermission.Sound,
+                              NotificationPermission.Badge,
+                              NotificationPermission.Vibration,
+                              NotificationPermission.Light,
+                              NotificationPermission.PreciseAlarms,
+                            ],
+                          );
                         }
                       });
 
