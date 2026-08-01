@@ -239,7 +239,7 @@ class K32Screen extends GetWidget {
                                                 child: BodyPartWidget(
                                                   cwidth: size.width / 2 - 30,
                                                   model: e,
-                                                  title: e.bodyPart,
+                                                  title: e.localizedBodyPart,
 
                                                   controller: controller,
                                                   color: ColorConstant.whiteA700,

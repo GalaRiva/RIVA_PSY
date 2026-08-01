@@ -179,7 +179,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                                 content: [
                                   Text(
                                     dayEventModel.whatBodyParts![index]
-                                            .bodyPartsModel.bodyPart ??
+                                            .bodyPartsModel.localizedBodyPart ??
                                         '',
                                     style: _style,
                                   )

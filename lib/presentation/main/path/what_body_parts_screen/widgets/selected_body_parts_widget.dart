@@ -38,7 +38,7 @@ class SelectedBodyPartsWidget extends StatelessWidget {
           ),
             child: Container(
                 margin: getMargin(left: 20, right: 20),
-                child: Center(child: Text(model.bodyPartsModel.bodyPart, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
+                child: Center(child: Text(model.bodyPartsModel.localizedBodyPart, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
           ),
           SizedBox(width: getHorizontalSize(12),),
           Visibility(

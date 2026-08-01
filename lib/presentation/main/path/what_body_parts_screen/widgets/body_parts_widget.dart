@@ -74,7 +74,7 @@ class BodyPartWidget extends StatelessWidget {
         Visibility(
           visible: !nonVisible,
           child: InkWell(
-            onTap: title == model.bodyPart
+            onTap: title == model.localizedBodyPart
                 ? () {
               if(model.whatHurts.isNotEmpty)
                     controller.showSelectWhatHartDialog(

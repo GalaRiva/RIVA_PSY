@@ -598,7 +598,7 @@ class K52Screen extends GetWidget {
                         contents: controller.selectedBodyParts
                             .map((e) => [
                                   Text(
-                                    e.bodyPartsModel.bodyPart,
+                                    e.bodyPartsModel.localizedBodyPart,
                                     style: _style,
                                   )
                                 ])

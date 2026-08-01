@@ -94,7 +94,7 @@ class WhereInBodyWidget extends StatelessWidget {
                         height: getSize(14),
                       ),
                       Padding(padding: getPadding(left: 6),
-                        child: Text('${(e).bodyPart.bodyPartsModel.bodyPart} ${(((e).quantity  / _sum(_all)) * 100).toInt()}%',
+                        child: Text('${(e).bodyPart.bodyPartsModel.localizedBodyPart} ${(((e).quantity  / _sum(_all)) * 100).toInt()}%',
                           overflow:
                           TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
@@ -165,7 +165,7 @@ class WhereInBodyWidget extends StatelessWidget {
                         height: getSize(14),
                       ),
                       Padding(padding: getPadding(left: 6),
-                        child: Text('${e.bodyPart.bodyPartsModel.bodyPart} ${((e.quantity  / _sum(positiveType!.bodyParts)) * 100).toInt()}%',
+                        child: Text('${e.bodyPart.bodyPartsModel.localizedBodyPart} ${((e.quantity  / _sum(positiveType!.bodyParts)) * 100).toInt()}%',
                           overflow:
                           TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
@@ -237,7 +237,7 @@ class WhereInBodyWidget extends StatelessWidget {
                         height: getSize(14),
                       ),
                       Padding(padding: getPadding(left: 6),
-                        child: Text('${e.bodyPart.bodyPartsModel.bodyPart} ${((e.quantity  / _sum(negativeType!.bodyParts)) * 100).toInt()}%',
+                        child: Text('${e.bodyPart.bodyPartsModel.localizedBodyPart} ${((e.quantity  / _sum(negativeType!.bodyParts)) * 100).toInt()}%',
                           overflow:
                           TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
@@ -274,7 +274,7 @@ class WhereInBodyWidget extends StatelessWidget {
                             PieSeries(
                                 dataSource: e.bodyParts,
                                 pointColorMapper: (dynamic model, int _) => model.color,
-                                xValueMapper: (dynamic data, _) => data.bodyPart.bodyPartsModel.bodyPart,
+                                xValueMapper: (dynamic data, _) => data.bodyPart.bodyPartsModel.localizedBodyPart,
                                 yValueMapper: (dynamic data, _) => data.quantity
                             )
                           ],
@@ -294,7 +294,7 @@ class WhereInBodyWidget extends StatelessWidget {
                                 height: getSize(14),
                               ),
                               Padding(padding: getPadding(left: 6),
-                                child: Text('${_e.bodyPart.bodyPartsModel.bodyPart} ${((_e.quantity / _sum(e.bodyParts)) * 100).toInt()}%',
+                                child: Text('${_e.bodyPart.bodyPartsModel.localizedBodyPart} ${((_e.quantity / _sum(e.bodyParts)) * 100).toInt()}%',
                                   overflow:
                                   TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,

@@ -445,7 +445,7 @@ class K54Screen extends GetWidget {
                         addController: controller.bodyPartsAddController,
                         contents:
                         controller.selectedBodyParts.isEmpty ? null : controller.selectedBodyParts.map((e) => [Text(
-                            e.bodyPartsModel.bodyPart,
+                            e.bodyPartsModel.localizedBodyPart,
                             style: _style,
                           )]).toList()
                         ,fFocus: controller.bodyPartsSNode, sFocus: controller.bodyPartsANode,

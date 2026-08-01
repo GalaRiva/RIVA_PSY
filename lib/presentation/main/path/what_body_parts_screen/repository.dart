@@ -49,6 +49,7 @@ class K32Repo {
           'light'.tr(),
           'tense'.tr()
         ],
+        whatHurtsKeys: ['headache', 'blushing_cheeks', 'tears', 'clenching_jaw', 'locking_jaw', 'stuttering', 'burning_ears', 'dizziness', 'relaxed', 'firm', 'soft', 'heavy', 'light', 'tense'],
         marginTop: 16,
         marginLeft: 70),
     BodyPartsModel(
@@ -69,6 +70,7 @@ class K32Repo {
           'bitterness2'.tr(),
           'spaciousness'.tr(),
         ],
+        whatHurtsKeys: ['lump_in_throat', 'choking', 'nausea', 'tense4', 'relaxed5', 'clenched', 'dull', 'sharp', 'throat_firm', 'throat_soft', 'sweetness', 'bitterness2', 'spaciousness'],
         marginTop: 36,
         marginLeft: 70),
     BodyPartsModel(
@@ -90,6 +92,7 @@ class K32Repo {
           'deep_inhales'.tr(),
           'holding_breath'.tr(),
         ],
+        whatHurtsKeys: ['rapid_heartbeat', 'stone_in_heart', 'shallow_breathing', 'rapid_breathing', 'heat_in_solar_plexus', 'emptiness', 'cold', 'spaciousness', 'sharp', 'chest_firm', 'chest_soft', 'clenched', 'deep_inhales', 'holding_breath'],
         marginTop: 70,
         marginLeft: 70),
     BodyPartsModel(
@@ -112,6 +115,7 @@ class K32Repo {
           'light_shoulders'.tr(),
           'heat'.tr(),
         ],
+        whatHurtsKeys: ['tense_shoulders', 'relaxed_shoulders', 'sweaty_palms', 'biting_cuticles', 'tingling_sensation', 'slumped_hunchbacked', 'clenched_fists', 'trembling_hands', 'folding_fingers', 'chills', 'chill', 'tense_hands', 'heavy_shoulders', 'light_shoulders', 'heat'],
         marginTop: 100,
         marginLeft: 110),
     BodyPartsModel(
@@ -130,6 +134,7 @@ class K32Repo {
           'relaxed2'.tr(),
           'tingling_sensatio2'.tr(),
         ],
+        whatHurtsKeys: ['heavy_legs', 'trembling_knees', 'cramps', 'clenching_toes', 'weakness_in_legs', 'firm3', 'soft2', 'lightness', 'tension', 'relaxed2', 'tingling_sensatio2'],
         marginTop: 280,
         marginLeft: 90),
     BodyPartsModel(
@@ -151,6 +156,7 @@ class K32Repo {
           'bright'.tr(),
           'dark'.tr(),
         ],
+        whatHurtsKeys: ['cold_in_stomach', 'tense2', 'relaxed3', 'warmth', 'soft3', 'firm2', 'nausea', 'nausea2', 'emptiness', 'fullness', 'clenched', 'spaciousness', 'bright', 'dark'],
         marginTop: 110,
         marginLeft: 70),
     BodyPartsModel(
@@ -165,6 +171,7 @@ class K32Repo {
           'firm'.tr(),
           'soft'.tr(),
         ],
+        whatHurtsKeys: ['rigid', 'relaxed4', 'tense3', 'warmth', 'chill', 'firm', 'soft'],
         marginTop: 70,
         marginLeft: 70),
   ];

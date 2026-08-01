@@ -28,7 +28,7 @@ class ReportModel {
       case 3:
         String bodyParts = '';
         for(var item in event.whatBodyParts!){
-          bodyParts += '${item.bodyPartsModel.bodyPart}\n${item.subtitle}\n';
+          bodyParts += '${item.bodyPartsModel.localizedBodyPart}\n${item.subtitle}\n';
         }
         return bodyParts.length > 50 ? bodyParts.substring(0, 50) + '...' : bodyParts;
       case 4:

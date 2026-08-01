@@ -51,7 +51,7 @@ class K32Controller extends GetxController {
       builder: (BuildContext context) {
         return GetBuilder(
           builder: (K32Controller _c) => CustomMessageBox(
-            title: model.bodyPart,
+            title: model.localizedBodyPart,
             height: getMessageBoxHeight(model),
             content: Center(
               child: Column(
@@ -61,7 +61,7 @@ class K32Controller extends GetxController {
                     child: Container(
                       margin: getMargin(all: 20),
                       child: Wrap(
-                        children: model.whatHurts.map((e) => Padding(
+                        children: model.localizedWhatHurts.map((e) => Padding(
                           padding: getPadding(bottom: 15, right: 6),
                           child: BodyPartWidget(model: model,
                             cwidth: size.width / 2 - 60,
