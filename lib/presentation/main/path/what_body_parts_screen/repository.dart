@@ -161,14 +161,14 @@ class K32Repo {
         marginLeft: 70),
     BodyPartsModel(
         key: 'back',
-        // Uses back_body_part, not back — 'back' collided with the
-        // navigation "Назад"/"Back"/"Atrás" string already used in 4 other
-        // places (duplicate JSON key, second definition silently wins),
-        // which meant this body part showed "Назад"/"Atrás" instead of
-        // "Спина"/"Espalda" in ru/es (en happened to read "Back" either
-        // way, masking it there). `key: 'back'` itself is unrelated — it's
-        // BodyPartsModel's stable identity/messageBoxHeight lookup key,
-        // not a translation key, so it's untouched.
+        // 'back' collided with the navigation "Назад"/"Back"/"Atrás" string
+        // already used elsewhere (duplicate JSON key, second definition
+        // silently wins), so the translation key had to be renamed to
+        // back_body_part. `key: 'back'` stays as the stable identity
+        // (messageBoxHeight lookup etc.) — bodyPartKey below is what
+        // localizedBodyPart actually re-translates from, so it doesn't
+        // fall back to re-running `'back'.tr()` and reintroducing the bug.
+        bodyPartKey: 'back_body_part',
         bodyPart: 'back_body_part'.tr(),
         whatHurts: [
           'rigid'.tr(),

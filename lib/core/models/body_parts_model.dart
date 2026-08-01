@@ -9,6 +9,13 @@ class BodyPartsModel {
   // Null for custom entries the user typed themselves — those have no
   // translation key, so identity falls back to `bodyPart`.
   final String? key;
+  // The actual translation key for `bodyPart`, when it differs from `key`.
+  // `key` doubles as the translation key for every entry except "back" —
+  // that one needs a stable identity ('back') distinct from its
+  // translation key ('back_body_part'), since 'back' the translation key
+  // collides with the navigation "Назад"/"Atrás" string (see repository.dart).
+  // Null means "same as key" — the common case.
+  final String? bodyPartKey;
   // Parallel to whatHurts — the literal translation key for each sensation
   // word, same order. Null (or a length mismatch) for anything seeded
   // before this field existed, or custom entries — falls back to the
@@ -16,7 +23,7 @@ class BodyPartsModel {
   final List<String>? whatHurtsKeys;
 
 
-  BodyPartsModel( {this.marginLeft, this.marginTop,required this.bodyPart, required this.whatHurts, this.key, this.whatHurtsKeys});
+  BodyPartsModel( {this.marginLeft, this.marginTop,required this.bodyPart, required this.whatHurts, this.key, this.bodyPartKey, this.whatHurtsKeys});
 
   String get identity => key ?? bodyPart;
 
@@ -24,7 +31,10 @@ class BodyPartsModel {
   // time instead of trusting the frozen text, which was translated once
   // at Hive-seed time and keeps showing whatever locale was active then
   // (see EventModel.localizedName — same bug, same fix, different model).
-  String get localizedBodyPart => key != null ? key!.tr() : bodyPart;
+  String get localizedBodyPart {
+    final translationKey = bodyPartKey ?? key;
+    return translationKey != null ? translationKey.tr() : bodyPart;
+  }
 
   List<String> get localizedWhatHurts {
     final keys = whatHurtsKeys;
@@ -48,6 +58,7 @@ class BodyPartsModel {
       marginLeft: json['marginLeft'],
       marginTop: json['marginTop'],
       key: json['key'],
+      bodyPartKey: json['bodyPartKey'],
       whatHurtsKeys: (json['whatHurtsKeys'] as List<dynamic>?)
           ?.map((e) => e.toString())
           .toList(),);
@@ -58,6 +69,7 @@ class BodyPartsModel {
     'marginLeft': marginLeft,
     'marginTop': marginTop,
     'key': key,
+    'bodyPartKey': bodyPartKey,
     'whatHurtsKeys': whatHurtsKeys,
   };
 }
