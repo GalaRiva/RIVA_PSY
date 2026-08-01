@@ -65,11 +65,10 @@ class NeutralTab extends StatelessWidget {
                           children: List.generate(list.where((element) => element.isNeutralPositive).length, (index)=> Padding(
                             padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralPositive).length - 1 ? 40 : 20),
                             child: EventCard(
-                              cardWidth: size.width / 2 - 30,
-
-                              textIsFitted: true,
+                              cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
+                              iconSizeOverride: 96,
+                              fontSizeOverride: 18,
                               isSelect: controller.contain(list.where((element) => element.isNeutralPositive).toList()[index]),
-                              cardHeight: 44 ,
                               model: list.where((element) => element.isNeutralPositive).toList()[index], onTap: () {
                               controller.emotion = list.where((element) => element.isNeutralPositive).toList()[index];
                               controller.update();
@@ -83,13 +82,14 @@ class NeutralTab extends StatelessWidget {
 
                         child: Wrap(
                           spacing: 12,
+                          runAlignment: WrapAlignment.center,
                           children: List.generate(list.where((element) => element.isNeutralNegative).length, (index)=> Padding(
                             padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 20 : 0),
                             child: EventCard(
-                              textIsFitted: true,
+                              cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
+                              iconSizeOverride: 96,
+                              fontSizeOverride: 18,
                               isSelect: controller.contain(list.where((element) => element.isNeutralNegative).toList()[index]),
-                              cardHeight: 44 ,
-                              cardWidth: size.width / 2.4,
                               model: list.where((element) => element.isNeutralNegative).toList()[index], onTap: () {
                               controller.emotion =list.where((element) => element.isNeutralNegative).toList()[index];
                               controller.update();

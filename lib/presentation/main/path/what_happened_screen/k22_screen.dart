@@ -212,8 +212,7 @@ class K22Screen extends GetWidget {
                                                 controller.update();
                                               }, isSelect: controller.contain(el),
                                                                                       cardWidth: size.width / 2 -30,
-                                                                                      textIsFitted: true,
-                                                                                      iconSizeOverride: 78,
+                                                                                      iconSizeOverride: 96,
                                                                                       fontSizeOverride: 18,
                                                                                       ),
                                             ))

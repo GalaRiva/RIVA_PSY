@@ -216,7 +216,7 @@ class K26Screen extends GetWidget {
                                           child: EventCard(
                                             cardWidth:
                                             size.width / 2 - 30,
-                                            iconSizeOverride: 78,
+                                            iconSizeOverride: 96,
                                             fontSizeOverride: 18,
                                             model: el, onTap: () {
                                                 controller.whoDidHappen = el;

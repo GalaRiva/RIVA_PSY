@@ -38,10 +38,9 @@ class NegativePositiveTab extends StatelessWidget {
                         padding:  EdgeInsets.only(bottom: index == list.length - 1 ? 40 : 20),
                         child: EventCard(
                           cardWidth: size.width / 2 - 30,
-                          iconSizeOverride: 78,
+                          iconSizeOverride: 96,
                           fontSizeOverride: 18,
 
-                          textIsFitted: true,
                               isSelect: controller.contain(list[index]),
                               model: list[index], onTap: () {
                               controller.emotion = list[index];
