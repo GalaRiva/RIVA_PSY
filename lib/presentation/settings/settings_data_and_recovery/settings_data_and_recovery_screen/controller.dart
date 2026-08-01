@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/services/firebase/firebase_exception_exporter.dart';
 import '../../../../core/services/google_drive_service.dart';
+import '../../../../core/user_data/user.dart';
 
 class DataAndRecoveryController extends GetxController {
   String service = 'Google Drive';
@@ -33,6 +34,17 @@ class DataAndRecoveryController extends GetxController {
   Future createServiceBackup(BuildContext context,
       {bool showErrorMessage = true}) async {
     if (service.toLowerCase() == 'google drive') {
+      if (CurrentUser.repo.userId().isEmpty) {
+        // addServiceBackup() below writes to .doc(userId()) directly — an
+        // empty id throws a raw "document path must be a non-empty
+        // string" Firestore error. Catching it here first turns that into
+        // a message that actually tells the user what to do about it.
+        if (showErrorMessage)
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                  'Не удалось определить учётную запись. Перезайдите в приложение и попробуйте снова.')));
+        return;
+      }
       final googleDrive = GoogleDriveService();
       try {
         final backupToUpload = await HiveDB.setHiveDBInFile();

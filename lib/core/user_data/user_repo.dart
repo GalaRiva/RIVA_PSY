@@ -21,7 +21,19 @@ class UserRepo {
 
   String userId()
       {
-        final email = (CurrentUser.user.email ?? '').trim();
+        var email = (CurrentUser.user.email ?? '').trim();
+        if (email.isEmpty) {
+          // The local SharedPreferences cache can be stale/empty for
+          // accounts that were created before login started persisting
+          // email/login locally (see the Google sign-in email fix) — the
+          // live FirebaseAuth session usually still has it even though
+          // CurrentUser.user doesn't. Falling back to it here is what
+          // fixed the Google Drive backup path throwing "A document path
+          // must be a non-empty string": addServiceBackup() calls
+          // .doc(_userId()) directly, and an empty string is an invalid
+          // Firestore doc id, not just a sync no-op like the tariff path.
+          email = (FirebaseAuth.instance.currentUser?.email ?? '').trim();
+        }
         // Confirmed live via the on-screen diagnostic: when the cached
         // email is empty, this used to still return authService alone
         // (e.g. "google") instead of failing — that's a valid-looking but
