@@ -1,7 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/services/notifications/notification_controller.dart';
 import '../../../core/utils/size_utils.dart';
 import '../../../theme/app_style.dart';
 import '../../../widgets/custom_button.dart';
@@ -70,6 +72,16 @@ class _NotificationDiagnosticsWidgetState
     } catch (e) {
       result['batteryError'] = e.toString();
     }
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final log = prefs.getStringList(notifEventLogKey) ?? [];
+      // Newest first — the most recent attempt is what actually answers
+      // "did anything happen at the time the reminder was due".
+      result['eventLog'] = log.reversed.take(15).join('\n');
+      result['eventLogCount'] = log.length;
+    } catch (e) {
+      result['eventLogError'] = e.toString();
+    }
     return result;
   }
 
@@ -77,6 +89,12 @@ class _NotificationDiagnosticsWidgetState
     setState(() {
       _future = _load();
     });
+  }
+
+  Future<void> _clearLog() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(notifEventLogKey);
+    _refresh();
   }
 
   @override
@@ -97,31 +115,50 @@ class _NotificationDiagnosticsWidgetState
                 'Alert разрешён: ${d['alert']}\n'
                 'Батарея не ограничена: ${d['batteryIgnored'] ?? d['batteryError']}\n'
                 'Запланировано в системе сейчас: ${d['scheduledCount'] ?? d['scheduledError']}\n'
-                '${d['scheduledSample'] ?? ''}',
+                '${d['scheduledSample'] ?? ''}\n'
+                '\nЖурнал попыток показа (всего записей: ${d['eventLogCount'] ?? 0}, новые сверху):\n'
+                '${(d['eventLog'] ?? d['eventLogError'] ?? '').toString().isEmpty ? '(пусто — ни CREATED, ни DISPLAYED ещё не зафиксированы)' : d['eventLog'] ?? d['eventLogError']}',
                 style: AppStyle.txtSFProDisplayLight10Gray800);
           },
         ),
         Padding(
           padding: getPadding(top: 8, bottom: 8),
-          child: CustomButton(
-            height: getVerticalSize(38),
-            width: getHorizontalSize(300),
-            text: 'запросить точные будильники и батарею',
-            onTap: () async {
-              await AwesomeNotifications().requestPermissionToSendNotifications(
-                permissions: [
-                  NotificationPermission.Alert,
-                  NotificationPermission.Sound,
-                  NotificationPermission.Badge,
-                  NotificationPermission.Vibration,
-                  NotificationPermission.Light,
-                  NotificationPermission.PreciseAlarms,
-                ],
-              );
-              await Permission.ignoreBatteryOptimizations.request();
-              _refresh();
-            },
+          child: Row(
+            children: [
+              CustomButton(
+                height: getVerticalSize(38),
+                width: getHorizontalSize(220),
+                text: 'запросить будильники+батарею',
+                onTap: () async {
+                  await AwesomeNotifications().requestPermissionToSendNotifications(
+                    permissions: [
+                      NotificationPermission.Alert,
+                      NotificationPermission.Sound,
+                      NotificationPermission.Badge,
+                      NotificationPermission.Vibration,
+                      NotificationPermission.Light,
+                      NotificationPermission.PreciseAlarms,
+                    ],
+                  );
+                  await Permission.ignoreBatteryOptimizations.request();
+                  _refresh();
+                },
+              ),
+              SizedBox(width: getHorizontalSize(10)),
+              CustomButton(
+                height: getVerticalSize(38),
+                width: getHorizontalSize(90),
+                text: 'обновить',
+                onTap: _refresh,
+              ),
+            ],
           ),
+        ),
+        CustomButton(
+          height: getVerticalSize(30),
+          width: getHorizontalSize(150),
+          text: 'очистить журнал',
+          onTap: _clearLog,
         ),
       ],
     );
