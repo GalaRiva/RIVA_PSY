@@ -218,6 +218,8 @@ class K25Screen extends GetWidget {
                                                   child: EventCard(
                                                       cardWidth:
                                                           size.width / 2 - 30,
+                                                      iconSizeOverride: 78,
+                                                      fontSizeOverride: 18,
                                                       isSelect: controller
                                                           .contain(el),
                                                       model: el,

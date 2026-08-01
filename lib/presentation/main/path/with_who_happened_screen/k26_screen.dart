@@ -215,7 +215,10 @@ class K26Screen extends GetWidget {
                                               bottom: 10),
                                           child: EventCard(
                                             cardWidth:
-                                            size.width / 2 - 30,model: el, onTap: () {
+                                            size.width / 2 - 30,
+                                            iconSizeOverride: 78,
+                                            fontSizeOverride: 18,
+                                            model: el, onTap: () {
                                                 controller.whoDidHappen = el;
                                                 controller.update();
                                               }, isSelect: controller.contain(el),),

@@ -16,7 +16,13 @@ class EventCard extends StatelessWidget {
   final Color? iconColor;
   final bool isSelect;
   final bool? textIsFitted;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth}) : super(key: key);
+  // Explicit overrides for callers that want an icon/font size independent
+  // of the cardHeight-proportional default (e.g. the main Path screens
+  // wanting a modest bump without inflating the whole card). Leave null to
+  // keep the normal proportional-to-cardHeight behavior.
+  final double? iconSizeOverride;
+  final double? fontSizeOverride;
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class EventCard extends StatelessWidget {
     // neutral_tab.dart and exercise_content_widget.dart) were getting the
     // same 66px icon as a full-size 150-tall card and blowing way past
     // their own bounds, wrecking the whole grid.
-    final iconHeight = (cardHeight ?? 150) * 66 / 150;
+    final iconHeight = iconSizeOverride ?? ((cardHeight ?? 150) * 66 / 150);
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -94,7 +100,7 @@ class EventCard extends StatelessWidget {
             maxLines: 3,
             style: AppStyle
                 .txtSFProDisplayLight11Gray800
-                .copyWith(fontSize: getFontSize(15))
+                .copyWith(fontSize: getFontSize(fontSizeOverride ?? 15))
         ),
       );
     else return Text(
@@ -103,7 +109,7 @@ class EventCard extends StatelessWidget {
         maxLines: 3,
         style: AppStyle
             .txtSFProDisplayLight11Gray800
-            .copyWith(fontSize: getFontSize(15))
+            .copyWith(fontSize: getFontSize(fontSizeOverride ?? 15))
 
     );
   }
