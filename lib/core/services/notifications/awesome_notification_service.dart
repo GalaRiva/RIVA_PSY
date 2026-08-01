@@ -49,7 +49,14 @@ class AwesomeNotificationService extends NotificationService {
                 day: date.day,
                 hour: date.hour,
                 minute: date.minute,
-                repeats: true,
+                // Was `repeats: true` on a schedule that already pins a
+                // specific calendar day — the outer loop above creates one
+                // of these per day of the course, so "repeats" here doesn't
+                // mean "daily", it means "re-arm on this exact month+day
+                // next year" once fired. Each entry is already meant to
+                // fire exactly once; repeats was never doing what it looked
+                // like it did.
+                repeats: false,
               allowWhileIdle: true
             ),
             content: NotificationContent(
@@ -58,8 +65,11 @@ class AwesomeNotificationService extends NotificationService {
               channelKey: _channelKey,
               //set configuration wuth key "basic"
               title: 'RIVA PSY',
+              // Was just 'Приём' with no pill name — every log entry showed
+              // the same generic title/body no matter which medication the
+              // reminder was actually for.
               body: workManagerModel.pillName != ''
-                  ? 'Приём'
+                  ? 'Пора принять: ${workManagerModel.pillName}'
                   : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
               payload: _payload,
               wakeUpScreen: true,
@@ -113,6 +123,14 @@ class AwesomeNotificationService extends NotificationService {
         channelShowBadge: true,
         importance: NotificationImportance.High,
         enableVibration: true,
+      ),
+    ], channelGroups: [
+      // The channel above references channelGroupKey 'reminders', but no
+      // NotificationChannelGroup with that key was ever registered — the
+      // channelGroups param here was simply never passed.
+      NotificationChannelGroup(
+        channelGroupKey: 'reminders',
+        channelGroupName: 'Напоминания',
       ),
     ]);
   }

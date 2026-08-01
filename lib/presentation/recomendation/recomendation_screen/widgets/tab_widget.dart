@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:just_audio/just_audio.dart';
 
+import '../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../core/user_data/user.dart';
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
@@ -41,9 +42,19 @@ class TabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Duration?>> _durations () async {
+    // tab.audioAssets() re-runs a fresh Firestore query every single call
+    // (see IntroductionModel etc.) with no orderBy — nothing guarantees two
+    // separate calls return the docs in the same order. This used to call
+    // it four separate times per build (once per item here, once for
+    // audioLength, once for each card's title, once again inside playFun),
+    // so the duration list built in one pass could end up matched against
+    // a differently-ordered asset list from a later pass — a track's
+    // "00:00" (or another track's) duration landing on the wrong card.
+    // Fetching once and threading the same resolved list through
+    // everything below removes the reordering window entirely.
+    Future<List<Duration?>> _durations (List<AudioCardModel> assets) async {
       final List<Duration?> list = [];
-      for (var item in (await tab.audioAssets())!) {
+      for (var item in assets) {
         try {
           if (DataSourceService.dataSourceIsRemote()) {
             await Future.delayed(Duration(milliseconds: 300), () async {
@@ -68,18 +79,18 @@ class TabWidget extends StatelessWidget {
       }
       return list;
     }
-    Future<List<Widget>> _audiosFun () async {
+    Future<List<Widget>> _audiosFun (List<AudioCardModel> assets) async {
       List<Widget> list = [];
 
       controller.audioInstance = AudioPlayer();
       final session = await AudioSession.instance;
       await session.configure(AudioSessionConfiguration.speech());
-      List<Duration?> dur = await _durations();
-      audioLength = (await tab.audioAssets())!.length;
+      List<Duration?> dur = await _durations(assets);
+      audioLength = assets.length;
        for (int i = 0; i < audioLength!; i++) {
           list.add(AudioCardWidget(
             index: i,
-                text: (await tab.audioAssets())![i].title,
+                text: assets[i].title,
                 onChange: (Duration duration) {
                   controller.audioInstance.seek(duration);
                   controller.update();
@@ -88,9 +99,9 @@ class TabWidget extends StatelessWidget {
             playFun: (val) async {
 
               if(DataSourceService.dataSourceIsRemote()) {
-                await controller.audioInstance.setUrl((await tab.audioAssets())![i].audioAsset, initialPosition: val);
+                await controller.audioInstance.setUrl(assets[i].audioAsset, initialPosition: val);
               } else
-                await controller.audioInstance.setAudioSource(AudioSource.file((await tab.audioAssets())![i].audioAsset), initialPosition: val);
+                await controller.audioInstance.setAudioSource(AudioSource.file(assets[i].audioAsset), initialPosition: val);
 
               await controller.audioInstance.play();
             },
@@ -106,9 +117,9 @@ class TabWidget extends StatelessWidget {
     }
 
     if(audioLength != _audios.length) {
-      tab.audioAssets().then((value) {
-        if (value != null)
-          _audiosFun().then((value) {
+      tab.audioAssets().then((assets) {
+        if (assets != null)
+          _audiosFun(assets).then((value) {
             _audios = value;
             controller.update();
           });

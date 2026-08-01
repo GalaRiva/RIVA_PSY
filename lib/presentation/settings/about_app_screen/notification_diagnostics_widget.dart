@@ -116,7 +116,8 @@ class _NotificationDiagnosticsWidgetState
                 'Батарея не ограничена: ${d['batteryIgnored'] ?? d['batteryError']}\n'
                 'Запланировано в системе сейчас: ${d['scheduledCount'] ?? d['scheduledError']}\n'
                 '${d['scheduledSample'] ?? ''}\n'
-                '\nЖурнал попыток показа (всего записей: ${d['eventLogCount'] ?? 0}, новые сверху):\n'
+                '\nCREATED = уведомление ПОСТАВЛЕНО В ПЛАН (в момент сохранения/открытия приложения), это НЕ значит, что оно сработало. Только DISPLAYED подтверждает реальный показ в нужное время.\n'
+                'Журнал (всего записей: ${d['eventLogCount'] ?? 0}, новые сверху):\n'
                 '${(d['eventLog'] ?? d['eventLogError'] ?? '').toString().isEmpty ? '(пусто — ни CREATED, ни DISPLAYED ещё не зафиксированы)' : d['eventLog'] ?? d['eventLogError']}',
                 style: AppStyle.txtSFProDisplayLight10Gray800);
           },
