@@ -138,12 +138,27 @@ class NegativeEmotionsModel {
 
   Future<List<SelectButtonWidget>?> _funButtons(String tab) async {
     try {
-      var collection = await FirebaseFirestore.instance
-          .collection('Text_Recommendation')
-          .get();
+      // Prefer a server round-trip over the default get(), which can be
+      // satisfied from cloud_firestore's local persistence cache — a
+      // device that queried this collection before today's title_en/
+      // title_es write would otherwise keep serving that pre-translation
+      // snapshot indefinitely for an unfiltered whole-collection get().
+      // Falls back to the (possibly stale) cache if genuinely offline,
+      // rather than showing no recommendations at all.
+      QuerySnapshot<Map<String, dynamic>> collection;
+      try {
+        collection = await FirebaseFirestore.instance
+            .collection('Text_Recommendation')
+            .get(const GetOptions(source: Source.server));
+      } catch (_) {
+        collection = await FirebaseFirestore.instance
+            .collection('Text_Recommendation')
+            .get();
+      }
       final buttons = <SelectButtonWidget>[];
       final prefs = await SharedPreferences.getInstance();
       final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+      print('[TEXTREC-DIAG] tab="$tab" langCode="$langCode" totalDocsFetched=${collection.docs.length}');
       final docs = collection.docs.where((item) => item.data()['tab'] == tab).toList();
       docs.sort((a, b) {
         final orderA = a.data()['order'];
@@ -153,8 +168,10 @@ class NegativeEmotionsModel {
       });
       for (var item in docs) {
         final data = item.data();
+        final title = _localizedField(data, 'title', langCode);
+        print('[TEXTREC-DIAG]   doc="${item.id}" hasTitleField="${data.containsKey('title_$langCode')}" -> title="$title"');
         buttons.add(SelectButtonWidget(
-          title: _localizedField(data, 'title', langCode),
+          title: title,
           content: _localizedField(data, 'content', langCode),
           height: double.parse(data['height'].toString()) ?? 160,
         ));
