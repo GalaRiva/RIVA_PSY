@@ -27,7 +27,22 @@ class K1Screen extends GetWidget {
         alignment: Alignment.center,
         children: [
           Positioned.fill(
-            child: Image.asset(ImageConstant.splashLogoRiva, fit: BoxFit.cover),
+            // BoxFit.cover crops to fill the screen — on a device aspect
+            // ratio noticeably different from the source image (360x812),
+            // that can crop out the logo entirely (it isn't perfectly
+            // centered in the artwork), leaving only the background color
+            // visible. BoxFit.contain guarantees the whole image, logo
+            // included, always fits — worst case is letterboxing, and the
+            // image's own background is close enough to this Scaffold's
+            // gray300 that the letterboxing is barely visible.
+            child: Image.asset(
+              ImageConstant.splashLogoRiva,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                print('[SPLASH-DIAG] splashLogoRiva failed to load: $error');
+                return const SizedBox.shrink();
+              },
+            ),
           ),
           SafeArea(
             child: GetBuilder(
