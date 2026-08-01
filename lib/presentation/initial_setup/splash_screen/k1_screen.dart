@@ -39,8 +39,25 @@ class K1Screen extends GetWidget {
               ImageConstant.splashLogoRiva,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
-                print('[SPLASH-DIAG] splashLogoRiva failed to load: $error');
-                return const SizedBox.shrink();
+                // Was SizedBox.shrink() on error — if decoding ever fails,
+                // that renders nothing at all, which looks identical to
+                // "no problem, just an empty screen" from a screenshot.
+                // Reported symptom is a fully blank screen with no logo,
+                // no ring, no text whatsoever — if this branch is what's
+                // firing, this makes that unmistakable instead of another
+                // silent blank.
+                return Container(
+                  color: Colors.red,
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      'SPLASH LOAD ERROR:\n$error',
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
               },
             ),
           ),
