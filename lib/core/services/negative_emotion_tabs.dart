@@ -16,6 +16,20 @@ class NegativeEmotionTabs {
   static const String TABS_KEY = 'TABS_KEY';
   static const String TABS_IMAGES_KEY = 'TABS_IMAGES';
 
+  // Same pattern as NegativeEmotionsModel._localizedField for
+  // Text_Recommendation: Tabs docs carry the Russian group name in `name`
+  // plus optional name_{lang} for the other locales. Falls back to the
+  // Russian field whenever a translation is missing.
+  static String _localizedTabName(Map<String, dynamic> data, String langCode) {
+    if (langCode != 'ru') {
+      final value = data['name_$langCode'];
+      if (value != null && value.toString().trim().isNotEmpty) {
+        return value.toString();
+      }
+    }
+    return (data['name'] ?? '').toString();
+  }
+
   static Future getTabs (BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String appDocPath = (await getApplicationDocumentsDirectory()).path;
@@ -42,6 +56,7 @@ class NegativeEmotionTabs {
                 .replaceAll('(', '')
                 .replaceAll(')', ''));
 
+        final langCode = context.locale.languageCode;
         for (int i = 0; i < _tabs.docs.length; i++) {
           final data = _tabs.docs[i].data();
 
@@ -51,7 +66,7 @@ class NegativeEmotionTabs {
             imagePath = _tabsImages.docs[i].data()['url'];
           }
 
-          tabs.add(NegativeEmotionTab(i, data['name'], imagePath, data['tag']));
+          tabs.add(NegativeEmotionTab(i, _localizedTabName(data, langCode), imagePath, data['tag']));
         }
 
 
@@ -72,7 +87,7 @@ class NegativeEmotionTabs {
             imagePath = imagesDocs[i].data()['url'];
           }
 
-          tabs.add(NegativeEmotionTab(i, data['name'], imagePath, data['tag']));
+          tabs.add(NegativeEmotionTab(i, _localizedTabName(data, context.locale.languageCode), imagePath, data['tag']));
         }
       }
       else {
