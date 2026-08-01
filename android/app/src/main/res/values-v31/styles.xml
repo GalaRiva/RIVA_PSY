@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ (API 31) replaces the classic windowBackground splash
+         (launch_background.xml, a layer-list with the full bg_native
+         illustration) with its own SplashScreen framework, which only
+         understands a solid background color plus a small centered icon —
+         it cannot render an arbitrary layered bitmap. Without this
+         override the system falls back to just the theme's background
+         color extraction, which is why devices on Android 12+ were seeing
+         a blank teal screen with no logo: the illustration was there, the
+         OS just never asked for it. This doesn't need androidx
+         core-splashscreen since we're not animating anything or targeting
+         pre-31 — the platform attributes are enough on API 31+ alone. -->
+    <style name="LaunchTheme" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowSplashScreenBackground">@color/ColorPrimary</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+</resources>
