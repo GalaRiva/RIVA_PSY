@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -27,7 +28,7 @@ class PdfPreviewWidget extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 150),
           child: CustomButton(
             width: 120,
-            text: 'Назад'.toUpperCase(),
+            text: 'back'.tr().toUpperCase(),
             bgColor: ColorConstant.whiteA700.withOpacity(0.4),
 
             onTap: () => Navigator.pop(context),
