@@ -35,6 +35,26 @@ class ExerciseContentController extends GetxController {
   List<EventModel>? additionalEmotions;
   DayEventModel? dayEvent;
 
+  // ExerciseContentWidget passes `future: controller.ensureAudiosLoaded()`
+  // straight into a FutureBuilder inside build() — any rebuild of that
+  // widget (e.g. from an ancestor's setState, not just navigating to a
+  // new dayEvent) used to call getAudios() again with the previous call
+  // possibly still in flight (it awaits several Firestore round-trips).
+  // Both calls mutated the same mainAudios/additionalAudios instance
+  // fields, so an interleaved second run didn't just replace the first
+  // one's results — it appended a second full copy on top of them,
+  // producing exact duplicates. Caching the Future per dayEvent means the
+  // underlying work only actually runs once.
+  Future<void>? _audiosFuture;
+  DayEventModel? _audiosFutureFor;
+  Future<void> ensureAudiosLoaded() {
+    if (_audiosFuture != null && identical(_audiosFutureFor, dayEvent)) {
+      return _audiosFuture!;
+    }
+    _audiosFutureFor = dayEvent;
+    return _audiosFuture = getAudios();
+  }
+
   Future<String> _audioPath(Audio audio) async {
     return DataSourceService.dataSourceIsRemote()
         ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
@@ -169,6 +189,18 @@ class ExerciseContentController extends GetxController {
         }
       }
     }
+    // Defensive dedup by the resolved audio path/URL (the actual unique
+    // identity of a track — two different files never resolve to the same
+    // path) — belt-and-suspenders alongside the future-caching fix above,
+    // in case the same doc is ever legitimately reachable through more
+    // than one matching path.
+    mainAudios = _dedupByAsset(mainAudios);
+    additionalAudios = _dedupByAsset(additionalAudios);
     print('[EXERCISE-DIAG] final mainAudios=${mainAudios.length} additionalAudios=${additionalAudios.length}');
+  }
+
+  List<AudioCardModel> _dedupByAsset(List<AudioCardModel> list) {
+    final seen = <String>{};
+    return list.where((a) => seen.add(a.audioAsset)).toList();
   }
 }

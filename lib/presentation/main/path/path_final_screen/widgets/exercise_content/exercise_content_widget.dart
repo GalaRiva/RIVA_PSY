@@ -94,7 +94,7 @@ class ExerciseContentWidget extends StatelessWidget {
         ),
         Padding(padding: getPadding(top: 12),
         child: FutureBuilder(
-          future: controller.getAudios(),
+          future: controller.ensureAudiosLoaded(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
