@@ -133,6 +133,7 @@ class K31Screen extends GetWidget {
                                   child: EventCard(
                                     iconColor: ColorConstant.fromHex('#5B4FA9'),
                                     cardWidth: size.width / 2 - 30,
+                                    cardHeight: 44,
 
                                     onTap: () {
                                       if(index != 0 || index != controller.emotions.length) {
@@ -189,6 +190,7 @@ class K31Screen extends GetWidget {
                                             } else null;
                                           },
                                       cardWidth: size.width / 2 - 30,
+                                      cardHeight: 44,
 
                                       isSelect: false,
                                     ),
