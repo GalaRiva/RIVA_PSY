@@ -35,6 +35,39 @@ class ExerciseContentController extends GetxController {
   List<EventModel>? additionalEmotions;
   DayEventModel? dayEvent;
 
+  Future<String> _audioPath(Audio audio) async {
+    return DataSourceService.dataSourceIsRemote()
+        ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
+            audio.fileName +
+            '.' +
+            audio.format
+        : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}';
+  }
+
+  // Audio.emotions is an empty string on every current Audio document (see
+  // PROJECT_CONTEXT.md §57) — the per-emotion match below always comes up
+  // empty right now, regardless of tariff/locale/anything else. Falls back
+  // to every audio tagged with the same Path "tab" (wrath/panic/...) as
+  // this specific emotion — coarser than per-emotion matching, but real.
+  // The tab isn't stored anywhere on DayEventModel/EventModel, so it's
+  // looked up via Text_Recommendation, whose docs are already grouped by
+  // tab and titled with each emotion's Russian canonical name.
+  final Map<String, String?> _tabCache = {};
+  Future<String?> _tabForEmotionRuName(String ruName) async {
+    if (_tabCache.containsKey(ruName)) return _tabCache[ruName];
+    String? tab;
+    try {
+      final snap = await FirebaseFirestore.instance
+          .collection('Text_Recommendation')
+          .where('title', isEqualTo: ruName)
+          .limit(1)
+          .get(const GetOptions(source: Source.server));
+      if (snap.docs.isNotEmpty) tab = snap.docs.first.data()['tab'] as String?;
+    } catch (_) {}
+    _tabCache[ruName] = tab;
+    return tab;
+  }
+
   Future getAudios() async {
     audioInstance = AudioPlayer(
 
@@ -109,7 +142,33 @@ class ExerciseContentController extends GetxController {
         print(_);
       }
     }
-    print(additionalAudios.length);
-    print(mainAudios.length);
+
+    if (mainAudios.isEmpty) {
+      final tab = await _tabForEmotionRuName(mainEmotionRuName);
+      print('[EXERCISE-DIAG] mainAudios empty, tab fallback for "$mainEmotionRuName" -> tab="$tab"');
+      if (tab != null) {
+        for (var audio in audios.where((a) => a.tab == tab)) {
+          mainAudios.add(AudioCardModel(audio.name, await _audioPath(audio)));
+        }
+      }
+    }
+    if (additionalAudios.isEmpty && (additionalEmotions?.isNotEmpty ?? false)) {
+      for (var i = 0; i < additionalEmotions!.length; i++) {
+        final tab = await _tabForEmotionRuName(additionalEmotionsRuNames[i]);
+        if (tab == null) continue;
+        for (var audio in audios.where((a) => a.tab == tab)) {
+          final alreadyAdded = additionalAudios
+                  .map((e) => e.title.toLowerCase())
+                  .contains(audio.name.toLowerCase()) ||
+              mainAudios
+                  .map((e) => e.title.toLowerCase())
+                  .contains(audio.name.toLowerCase());
+          if (!alreadyAdded) {
+            additionalAudios.add(AudioCardModel(audio.name, await _audioPath(audio)));
+          }
+        }
+      }
+    }
+    print('[EXERCISE-DIAG] final mainAudios=${mainAudios.length} additionalAudios=${additionalAudios.length}');
   }
 }
