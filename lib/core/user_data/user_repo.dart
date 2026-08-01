@@ -21,13 +21,17 @@ class UserRepo {
 
   String userId()
       {
-        final id = (CurrentUser.user.email! + ' ' + authService).trim();
-        final result = id.trim() == '' ? CurrentUser.user.email! : id.trim();
-        // Diagnostic: userId() silently degrades to just authService
-        // (e.g. "google") when the cached email is empty, instead of
-        // failing — that queries/creates the wrong Firestore doc and
-        // can reset a valid remote tariff back to Базовый locally.
-        // See PROJECT_CONTEXT.md for the tariff-not-loading investigation.
+        final email = (CurrentUser.user.email ?? '').trim();
+        // Confirmed live via the on-screen diagnostic: when the cached
+        // email is empty, this used to still return authService alone
+        // (e.g. "google") instead of failing — that's a valid-looking but
+        // wrong Firestore doc id, so getAndSetRemoteUserLocally either
+        // silently throws (null-asserting a login/email that was never
+        // passed for this call site) or creates a stray doc under the
+        // wrong id, either way never syncing the real one. Failing empty
+        // here means the caller's `if (userId().isNotEmpty)` guard skips
+        // the sync entirely instead of running it against a bogus id.
+        final result = email.isEmpty ? '' : '$email $authService'.trim();
         print('[TARIFF-DIAG] userId(): email="${CurrentUser.user.email}" authService="$authService" -> "$result"');
         return result;
       }
