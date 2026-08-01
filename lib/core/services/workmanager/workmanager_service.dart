@@ -18,7 +18,18 @@ class WorkManagerService {
     await workmanager.cancelAll();*/
     try {
       final AwesomeNotificationService notificationService = AwesomeNotificationService();
-      notificationService.canselAllSchedules();
+      // This was fire-and-forget (no await) while the rest of the function
+      // went on to schedule fresh notifications right after. Since
+      // cancelAllSchedules() is itself an async platform-channel call, its
+      // completion could land *after* the new schedules were created below
+      // — wiping out the very reminders this call had just set up, with no
+      // error anywhere since both the schedule and the cancel technically
+      // "succeeded". This runs on every save (add/edit pill, edit
+      // reminders, app start), so it could silently erase reminders on
+      // essentially every relevant user action. Permission being granted
+      // (POST_NOTIFICATIONS) doesn't help here — the app is cancelling its
+      // own notifications after creating them, not being blocked by the OS.
+      await notificationService.canselAllSchedules();
       List<Map<String, dynamic>> _time = [];
       _time += await _getReminders();
       _time += await _getRemindersAboutPills();
@@ -37,8 +48,8 @@ class WorkManagerService {
         await notificationService.init(workmanagerModel);
         try {
           await notificationService.showNotification(workmanagerModel, dur);
-        } catch (_) {
-
+        } catch (e) {
+          print('[NOTIF-DIAG] showNotification failed for "${workmanagerModel.pillName}" at ${workmanagerModel.hour}:${workmanagerModel.minute}: $e');
         }
         /*await workmanager.registerPeriodicTask(
           i.toString(),
@@ -48,8 +59,8 @@ class WorkManagerService {
         inputData: workmanagerModel.toJson()
       );*/
       }
-    } catch (_) {
-
+    } catch (e) {
+      print('[NOTIF-DIAG] initService aborted: $e');
     }
   }
 
