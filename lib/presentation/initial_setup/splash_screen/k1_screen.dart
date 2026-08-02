@@ -89,6 +89,29 @@ class K1Screen extends GetWidget {
                   )),
             ),
           ),
+          // TEMPORARY DIAGNOSTIC — remove once the blank-splash-on-repeat-
+          // login investigation is closed. Deliberately crude (yellow,
+          // top of the Stack, unmissable): if this doesn't appear at all on
+          // a repeat visit, build() itself isn't running / isn't reaching
+          // paint at that moment, which rules out everything inside this
+          // widget's own logic (the 99036b7 controller-recreation fix
+          // included) and points further up the navigation/frame pipeline.
+          // If it DOES appear, the printed values pin down exactly what
+          // state this build() call actually saw.
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: double.infinity,
+              color: const Color(0xFFFFEB3B),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              child: Text(
+                'DIAG build() @ ${DateTime.now().toIso8601String()}\n'
+                'wasInit=${controller.wasInit} secondsToNewPage=${controller.secondsToNewPage} loading=${controller.loading}',
+                style: const TextStyle(color: Colors.black, fontSize: 11, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ],
       ),
     );
