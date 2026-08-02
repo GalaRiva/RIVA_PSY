@@ -8,7 +8,6 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
-import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
@@ -118,9 +117,7 @@ class K13Screen extends GetWidget {
                                                     top: 6, right: 8, bottom: 6))
                                           ]))),
                               GestureDetector(
-                                  onTap: () {
-                                    onTapRowcart(context);
-                                  },
+                                  onTap: () => onTapBuySubscription(context),
                                   child: Container(
                                       margin: getMargin(top: 1),
                                       padding: getPadding(
@@ -218,27 +215,14 @@ class K13Screen extends GetWidget {
     await launchUrl(Uri.parse(manageSubscriptionUrl), mode: LaunchMode.externalApplication);
   }
 
-  onTapRowcart(BuildContext context) async {
+  // Was the in-app YooKassa purchase flow (Navigator.pushNamed(..,
+  // AppRoutes.buySubscription, ..)) — dead now that all billing lives on
+  // the website via Stripe. Same "static link out" pattern as
+  // onTapManageSubscription above, not a new mechanism.
+  static const String buySubscriptionUrl = 'https://rivapsy.com';
 
-    if(CurrentUser.tariffIsOrion()){
-      showDialog(
-        context: context, builder: (BuildContext context) =>
-          CustomMessageBox(
-            title: 'RIVA PSY',
-            content:
-            'already_subscribed_until'.tr(args: ['${CurrentUser.user.currentTariff!.endDate.day}', CurrentUser.user.currentTariff!.endDate.month
-                .monthInText(), '${CurrentUser.user.currentTariff!.endDate.year}']),
-          ),);
-    }
-    else {
-      Navigator.pushNamed(context, AppRoutes.buySubscription,
-          arguments: [
-            if(!CurrentUser.usedOreonTrials)
-              TariffModel.ORION_TARIFF_14_DAYS,
-            TariffModel.ORION_TARIFF_MONTH,
-            TariffModel.ORION_TARIFF_YEAR
-          ]);
-    }
+  onTapBuySubscription(BuildContext context) async {
+    await launchUrl(Uri.parse(buySubscriptionUrl), mode: LaunchMode.externalApplication);
   }
 
   onTapRowgrid(BuildContext context) {
