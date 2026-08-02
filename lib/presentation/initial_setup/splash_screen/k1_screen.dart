@@ -11,6 +11,21 @@ class K1Screen extends GetWidget {
   Widget build(BuildContext context) {
 
 
+    // The app uses plain MaterialApp, not GetMaterialApp — GetX's automatic
+    // route-based dependency cleanup (GetObserver marking a controller
+    // "dirty" when its route is disposed) never runs anywhere in this app,
+    // because that hook is only wired up by GetMaterialApp. Get.put() is a
+    // no-op when a non-dirty instance already exists (see get_instance.dart,
+    // _insert()), so without this explicit delete, every return trip to
+    // this screen (which happens on every login and every sign-up, not
+    // just app cold start — see k2_controller.dart in sign_in/sign_up)
+    // reused the *same* K1Controller from the very first visit: wasInit
+    // already true, secondsToNewPage already zeroed from that first run's
+    // completed timer(). initialization() then took the `else timer(context)`
+    // branch straight away with a 0-second delay, navigating off this
+    // screen before the splash image ever got a frame to paint — a blank
+    // flash, not a rendering bug in the image itself.
+    Get.delete<K1Controller>();
     final controller = Get.put(K1Controller());
     controller.initialization(context);
     return Scaffold(
