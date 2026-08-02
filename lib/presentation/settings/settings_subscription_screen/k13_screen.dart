@@ -7,7 +7,6 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:riva_psy/widgets/custom_switch.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
@@ -22,7 +21,7 @@ class K13Screen extends GetWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(K13Controller());
+    Get.put(K13Controller());
     return GetBuilder(
       builder: (K13Controller c) => Scaffold(
           backgroundColor: ColorConstant.gray300,
@@ -82,42 +81,42 @@ class K13Screen extends GetWidget {
                                         style: AppStyle
                                             .txtSFProDisplayLight14Gray800),
                                   )),
-                              Container(
-                                  margin: getMargin(top: 83),
-                                  padding: getPadding(all: 4),
-                                  decoration: AppDecoration.outlineBluegray80014
-                                      .copyWith(
-                                    color: ColorConstant.grayLight,
-                                          borderRadius:
-                                              BorderRadiusStyle.roundedBorder3),
-                                  child: Row(
-
-                                      children: [
-                                        CustomImageView(
-                                            svgPath: ImageConstant.imgClose,
-                                            height: getSize(24),
-                                            width: getSize(24),
-                                            margin:
-                                                getMargin(top: 5, bottom: 1)),
-                                        Padding(
-                                            padding: getPadding(
-                                                left: 15, top: 5, bottom: 4,),
-                                            child: Text(
-                                                'disable_autorenewal'.tr(),
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: AppStyle
-                                                    .txtSFProDisplayLight16)),
-                                        Spacer(),
-                                        CustomSwitch(
-                                            margin:
-                                                getMargin(right: 6, bottom: 2),
-                                            value: controller.enableAutoRenewal,
-                                            onChanged: (value) {
-                                              controller.enableAutoRenewal = value;
-                                              controller.update();
-                                            })
-                                      ])),
+                              GestureDetector(
+                                  onTap: () => onTapManageSubscription(context),
+                                  child: Container(
+                                      margin: getMargin(top: 83),
+                                      padding: getPadding(
+                                          left: 5, top: 8, right: 5, bottom: 8),
+                                      decoration: AppDecoration.outlineBluegray80014
+                                          .copyWith(
+                                        color: ColorConstant.grayLight,
+                                              borderRadius:
+                                                  BorderRadiusStyle.roundedBorder3),
+                                      child: Row(
+                                          children: [
+                                            CustomImageView(
+                                                svgPath: ImageConstant.imgCart,
+                                                height: getVerticalSize(18),
+                                                width: getHorizontalSize(22),
+                                                margin:
+                                                    getMargin(top: 1, bottom: 1)),
+                                            Padding(
+                                                padding: getPadding(left: 16),
+                                                child: Text(
+                                                    'manage_subscription_on_website'.tr(),
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: AppStyle
+                                                        .txtSFProDisplayLight16)),
+                                            Spacer(),
+                                            CustomImageView(
+                                                svgPath: ImageConstant
+                                                    .imgArrowrightGray700,
+                                                height: getVerticalSize(8),
+                                                width: getHorizontalSize(4),
+                                                margin: getMargin(
+                                                    top: 6, right: 8, bottom: 6))
+                                          ]))),
                               GestureDetector(
                                   onTap: () {
                                     onTapRowcart(context);
@@ -208,6 +207,15 @@ class K13Screen extends GetWidget {
           bottomNavigationBar:
               CustomBottomBar(onChanged: (BottomBarEnum type) {})),
     );
+  }
+
+  // Points at the Firebase Hosting magic-link page in front of Stripe's
+  // Customer Portal (functions/index.js: createPortalSession). Update this
+  // one line if the page ever moves to a different URL.
+  static const String manageSubscriptionUrl = 'https://rigel-psy-9361c.web.app';
+
+  onTapManageSubscription(BuildContext context) async {
+    await launchUrl(Uri.parse(manageSubscriptionUrl), mode: LaunchMode.externalApplication);
   }
 
   onTapRowcart(BuildContext context) async {

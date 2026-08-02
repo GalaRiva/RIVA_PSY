@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIVA PSY — Управление подпиской</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --brand: #1499A1;
+      --brand-dark: #0e7a80;
+      --bg: #D7E1E1;
+      --card-bg: #ffffff;
+      --text: #2c3333;
+      --text-muted: #6b7676;
+      --error: #c0392b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      padding: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      color: var(--brand-dark);
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0 0 28px;
+      line-height: 1.5;
+    }
+    input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      border: 1px solid #c7d2d2;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    input[type="email"]:focus {
+      border-color: var(--brand);
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--brand);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover { background: var(--brand-dark); }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .hidden { display: none; }
+    .error {
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 16px;
+    }
+    .spinner {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 16px;
+      border: 3px solid #e0e6e6;
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="form-view">
+      <h1>Управление подпиской</h1>
+      <p class="subtitle">Введите email, привязанный к аккаунту RIVA PSY — мы пришлём ссылку для входа в управление подпиской.</p>
+      <input type="email" id="email-input" placeholder="you@example.com" autocomplete="email">
+      <button id="send-btn">Отправить ссылку</button>
+      <p id="form-error" class="error hidden"></p>
+    </div>
+
+    <div id="sent-view" class="hidden">
+      <h1>Проверьте почту</h1>
+      <p class="subtitle">Мы отправили ссылку для входа на указанный email. Откройте её, чтобы перейти к управлению подпиской.</p>
+    </div>
+
+    <div id="processing-view" class="hidden">
+      <div class="spinner"></div>
+      <p class="subtitle">Проверяем ссылку и открываем управление подпиской…</p>
+    </div>
+
+    <div id="error-view" class="hidden">
+      <h1>Не получилось</h1>
+      <p id="error-text" class="error"></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getAuth,
+      sendSignInLinkToEmail,
+      isSignInWithEmailLink,
+      signInWithEmailLink,
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFunctions,
+      httpsCallable,
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAa3487j8pFOjngLty5Y0oTRbjiDK1r-ws",
+      authDomain: "rigel-psy-9361c.firebaseapp.com",
+      projectId: "rigel-psy-9361c",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const functions = getFunctions(app, "us-central1");
+
+    const EMAIL_STORAGE_KEY = "rivaPsyEmailForSignIn";
+
+    const views = {
+      form: document.getElementById("form-view"),
+      sent: document.getElementById("sent-view"),
+      processing: document.getElementById("processing-view"),
+      error: document.getElementById("error-view"),
+    };
+
+    function showView(name) {
+      Object.values(views).forEach((el) => el.classList.add("hidden"));
+      views[name].classList.remove("hidden");
+    }
+
+    function showFormError(message) {
+      const el = document.getElementById("form-error");
+      el.textContent = message;
+      el.classList.remove("hidden");
+    }
+
+    function showFatalError(message) {
+      document.getElementById("error-text").textContent = message;
+      showView("error");
+    }
+
+    const actionCodeSettings = {
+      url: window.location.origin + window.location.pathname,
+      handleCodeInApp: true,
+    };
+
+    async function handleReturnFromEmailLink() {
+      showView("processing");
+
+      let email = window.localStorage.getItem(EMAIL_STORAGE_KEY);
+      if (!email) {
+        // Link opened in a different browser/device than the one that
+        // requested it — Firebase can't recover the email on its own.
+        email = window.prompt("Введите email, на который приходила ссылка для входа:");
+      }
+      if (!email) {
+        showFatalError("Не удалось определить email. Откройте эту ссылку в том же браузере, где вы её запрашивали.");
+        return;
+      }
+
+      try {
+        await signInWithEmailLink(auth, email, window.location.href);
+        window.localStorage.removeItem(EMAIL_STORAGE_KEY);
+      } catch (err) {
+        showFatalError("Ссылка недействительна или уже была использована. Запросите новую.");
+        return;
+      }
+
+      try {
+        const createPortalSession = httpsCallable(functions, "createPortalSession");
+        const result = await createPortalSession();
+        window.location.href = result.data.url;
+      } catch (err) {
+        showFatalError(err.message || "Не удалось открыть управление подпиской. Напишите нам: support@rivapsy.com");
+      }
+    }
+
+    function handleFreshVisit() {
+      showView("form");
+      const emailInput = document.getElementById("email-input");
+      const sendBtn = document.getElementById("send-btn");
+
+      sendBtn.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+        if (!email) {
+          showFormError("Введите email.");
+          return;
+        }
+        sendBtn.disabled = true;
+        try {
+          await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+          window.localStorage.setItem(EMAIL_STORAGE_KEY, email);
+          showView("sent");
+        } catch (err) {
+          sendBtn.disabled = false;
+          showFormError("Не получилось отправить ссылку. Проверьте email и попробуйте снова.");
+        }
+      });
+    }
+
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      handleReturnFromEmailLink();
+    } else {
+      handleFreshVisit();
+    }
+  </script>
+</body>
+</html>

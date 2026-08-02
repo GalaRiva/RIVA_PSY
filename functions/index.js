@@ -1,4 +1,4 @@
-const { onRequest } = require('firebase-functions/v2/https');
+const { onRequest, onCall, HttpsError } = require('firebase-functions/v2/https');
 const { defineSecret } = require('firebase-functions/params');
 const logger = require('firebase-functions/logger');
 const admin = require('firebase-admin');
@@ -56,15 +56,20 @@ async function logUnmatched(reason, details) {
   });
 }
 
-async function applyTariff(docId, tariffName, tariffEndIso) {
-  await db.collection('Users').doc(docId).set(
-    {
-      tariff: tariffName,
-      tariff_is_end: tariffEndIso,
-    },
-    { merge: true }
-  );
-  logger.info('Applied tariff', { docId, tariffName, tariffEndIso });
+async function applyTariff(docId, tariffName, tariffEndIso, stripeCustomerId) {
+  const fields = {
+    tariff: tariffName,
+    tariff_is_end: tariffEndIso,
+  };
+  // Opportunistic — every event that reaches here already has the Stripe
+  // customer id in hand, so we stamp it whenever we have it. This is what
+  // createPortalSession() looks up later to open that person's Customer
+  // Portal without asking Stripe to search by email every time.
+  if (stripeCustomerId) {
+    fields.stripe_customer_id = stripeCustomerId;
+  }
+  await db.collection('Users').doc(docId).set(fields, { merge: true });
+  logger.info('Applied tariff', { docId, tariffName, tariffEndIso, stripeCustomerId });
 }
 
 /**
@@ -75,7 +80,7 @@ async function applyTariff(docId, tariffName, tariffEndIso) {
  * access to a paying customer — both worse than a short manual-review
  * delay.
  */
-async function resolveAndApplyTariff(email, tariffName, tariffEndIso, eventMeta) {
+async function resolveAndApplyTariff(email, tariffName, tariffEndIso, stripeCustomerId, eventMeta) {
   const docs = await findUserDocs(email);
 
   if (docs.length === 0) {
@@ -94,7 +99,7 @@ async function resolveAndApplyTariff(email, tariffName, tariffEndIso, eventMeta)
     return;
   }
 
-  await applyTariff(docs[0].id, tariffName, tariffEndIso);
+  await applyTariff(docs[0].id, tariffName, tariffEndIso, stripeCustomerId);
 }
 
 function isoFromUnixSeconds(unixSeconds) {
@@ -140,7 +145,7 @@ exports.stripeWebhook = onRequest(
           }
           const subscription = await stripe.subscriptions.retrieve(session.subscription);
           const tariffEndIso = isoFromUnixSeconds(subscription.current_period_end);
-          await resolveAndApplyTariff(email, ORION_TARIFF_NAME, tariffEndIso, {
+          await resolveAndApplyTariff(email, ORION_TARIFF_NAME, tariffEndIso, session.customer, {
             eventId: event.id,
             eventType: event.type,
             subscriptionId: subscription.id,
@@ -167,7 +172,7 @@ exports.stripeWebhook = onRequest(
           }
           const subscription = await stripe.subscriptions.retrieve(invoice.subscription);
           const tariffEndIso = isoFromUnixSeconds(subscription.current_period_end);
-          await resolveAndApplyTariff(email, ORION_TARIFF_NAME, tariffEndIso, {
+          await resolveAndApplyTariff(email, ORION_TARIFF_NAME, tariffEndIso, invoice.customer, {
             eventId: event.id,
             eventType: event.type,
             subscriptionId: subscription.id,
@@ -188,7 +193,9 @@ exports.stripeWebhook = onRequest(
             });
             break;
           }
-          await resolveAndApplyTariff(email, BASE_TARIFF_NAME, BASE_TARIFF_END_ISO, {
+          // Kept even on cancellation — still useful for re-opening the
+          // Customer Portal later (e.g. to resubscribe).
+          await resolveAndApplyTariff(email, BASE_TARIFF_NAME, BASE_TARIFF_END_ISO, subscription.customer, {
             eventId: event.id,
             eventType: event.type,
             subscriptionId: subscription.id,
@@ -214,5 +221,63 @@ exports.stripeWebhook = onRequest(
       // itself is safe to run again for the same event.
       res.status(500).send('internal error');
     }
+  }
+);
+
+/**
+ * Called from the subscription-management web page (Firebase Hosting)
+ * AFTER the visitor has completed Firebase Auth's email-link sign-in —
+ * i.e. after they've proven they actually control the mailbox for that
+ * email, not just typed one in. request.auth is populated automatically
+ * by the Callable Functions SDK from the caller's Firebase ID token, so
+ * the email used below is the verified one, never a client-supplied
+ * string — that's what stops a stranger from opening someone else's
+ * billing portal just by knowing their email address.
+ */
+exports.createPortalSession = onCall(
+  { secrets: [STRIPE_SECRET_KEY], region: 'us-central1' },
+  async (request) => {
+    if (!request.auth || !request.auth.token.email) {
+      throw new HttpsError('unauthenticated', 'Требуется вход по ссылке из письма.');
+    }
+    const email = request.auth.token.email;
+    const stripe = Stripe(STRIPE_SECRET_KEY.value());
+
+    // Primary path: a Users doc we already stamped with stripe_customer_id
+    // (via the webhook above) — no Stripe call needed for the common case.
+    let stripeCustomerId = null;
+    const docs = await findUserDocs(email);
+    const docsWithCustomerId = docs.filter((d) => d.get('stripe_customer_id'));
+    if (docsWithCustomerId.length === 1) {
+      stripeCustomerId = docsWithCustomerId[0].get('stripe_customer_id');
+    }
+
+    // Fallback: direct Stripe lookup by email. Uses the basic list filter
+    // (real-time/consistent) rather than the Search API (eventually
+    // consistent — a customer created moments ago might not be indexed
+    // yet), since this can run right after a fresh checkout.
+    if (!stripeCustomerId) {
+      const customers = await stripe.customers.list({ email, limit: 2 });
+      if (customers.data.length === 1) {
+        stripeCustomerId = customers.data[0].id;
+      } else {
+        logger.warn('createPortalSession: could not resolve a single Stripe customer', {
+          email,
+          firestoreMatches: docs.length,
+          stripeMatches: customers.data.length,
+        });
+        throw new HttpsError(
+          'not-found',
+          'Не удалось найти подписку для этого email. Напишите нам: support@rivapsy.com'
+        );
+      }
+    }
+
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: stripeCustomerId,
+      return_url: 'https://rigel-psy-9361c.web.app/',
+    });
+
+    return { url: portalSession.url };
   }
 );
