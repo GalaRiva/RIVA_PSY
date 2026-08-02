@@ -33,12 +33,10 @@ import '../presentation/records/record_add_screen/k54_screen.dart';
 import '../presentation/records/record_edit_screen/k52_screen.dart';
 import '../presentation/records/records_screen/k49_screen.dart';
 import '../presentation/settings/about_app_screen/k7_screen.dart';
-import '../presentation/settings/settings_buy_subscription_screen/k14_screen.dart';
 import '../presentation/settings/settings_data_and_recovery/settings_data_and_recovery_screen/data_and_recovery_screen.dart';
 import '../presentation/settings/settings_data_and_recovery/settings_recovery_screen/recovery_screen.dart';
 import '../presentation/settings/settings_errors_screen/k11_screen.dart';
 import '../presentation/settings/settings_offers_screen/k10_screen.dart';
-import '../presentation/settings/settings_payment_subscription_screen/k15_screen.dart';
 import '../presentation/settings/settings_profile_screen/k18_screen.dart';
 import '../presentation/settings/settings_promo_screen/k16_screen.dart';
 import '../presentation/settings/settings_reminders_screen/k12_page.dart';
@@ -83,10 +81,6 @@ class AppRoutes {
   static const String reminders = '/settings_reminders_screen';
 
   static const String subscription = '/settings_subscription_screen';
-
-  static const String buySubscription = '/settings_buy_subscription_screen';
-
-  static const String paymentSubscription = '/settings_payment_subscription_screen';
 
   static const String promo = '/settings_promo_screen';
 
@@ -176,8 +170,6 @@ static const String enterPasswordScreen = '/enter_password_screen';
     errors: (context) => K11Screen(),
     reminders: (context) => K12Page(),
     subscription: (context) => K13Screen(),
-    buySubscription: (context) => K14Screen(),
-    paymentSubscription: (context) => K15Screen(),
     promo: (context) => K16Screen(),
     tariffActivated: (context) => K17Screen(),
     profile: (context) => K18Screen(),

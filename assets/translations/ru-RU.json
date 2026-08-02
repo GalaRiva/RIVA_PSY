@@ -191,6 +191,7 @@
   "send_code": "отправить код",
   "promo_already_activated": "Данный промокод уже был активирован",
   "promo_inactive": "Данный промокод неактивен",
+  "promo_discount_contact_support": "Для активации скидки по этому промокоду напишите нам: support@rivapsy.com",
   "tariff_activated_congrats": "Поздравляем!\n\nТариф “Орион”\nактивирован",
 
   "enter_password": "Введите пароль",

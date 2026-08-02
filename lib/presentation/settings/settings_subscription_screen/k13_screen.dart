@@ -9,6 +9,7 @@ import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../core/user_data/user.dart';
+import '../../../core/utils/subscription_links.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_pop_button.dart';
@@ -219,10 +220,8 @@ class K13Screen extends GetWidget {
   // AppRoutes.buySubscription, ..)) — dead now that all billing lives on
   // the website via Stripe. Same "static link out" pattern as
   // onTapManageSubscription above, not a new mechanism.
-  static const String buySubscriptionUrl = 'https://rivapsy.com';
-
   onTapBuySubscription(BuildContext context) async {
-    await launchUrl(Uri.parse(buySubscriptionUrl), mode: LaunchMode.externalApplication);
+    await launchUrl(Uri.parse(subscriptionUrlForLocale(context)), mode: LaunchMode.externalApplication);
   }
 
   onTapRowgrid(BuildContext context) {

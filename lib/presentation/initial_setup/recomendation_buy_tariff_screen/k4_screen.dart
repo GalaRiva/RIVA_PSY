@@ -6,6 +6,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../core/models/tariff_model.dart';
+import '../../../core/utils/subscription_links.dart';
 
 class K4Screen extends StatelessWidget {
   TextEditingController group993Controller = TextEditingController();
@@ -80,15 +81,15 @@ class K4Screen extends StatelessWidget {
                               top: 14, bottom: 6),
                           variant: ButtonVariant
                               .OutlineBluegray60014,
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, AppRoutes.buySubscription, arguments: [
-                              if(!CurrentUser.usedOreonTrials)
-                                TariffModel.ORION_TARIFF_14_DAYS,
-                              TariffModel.ORION_TARIFF_MONTH,
-                              TariffModel.ORION_TARIFF_YEAR
-                            ]);
-
+                            // Was Navigator.pushNamed(.., AppRoutes.buySubscription, ..)
+                            // — in-app YooKassa flow, retired. This whole dialog is
+                            // unreachable in practice (see main_screen/controller.dart's
+                            // `false ?? ...` condition, a confirmed-dead-code bug left
+                            // as-is per prior user decision) but fixed for consistency.
+                            await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
+                                mode: LaunchMode.externalApplication);
                           })
                     ])),
           ),

@@ -191,6 +191,7 @@
   "send_code": "send code",
   "promo_already_activated": "This promo code has already been activated",
   "promo_inactive": "This promo code is inactive",
+  "promo_discount_contact_support": "To apply this promo code's discount, please contact us: support@rivapsy.com",
   "tariff_activated_congrats": "Congratulations!\n\nThe “Orion” plan\nis now active",
 
   "enter_password": "Enter password",

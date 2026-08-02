@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/core/app_export.dart';
 
+import '../core/utils/subscription_links.dart';
 import 'custom_button.dart';
 
 class GoToNewTariffWidget extends StatelessWidget {
@@ -10,19 +11,6 @@ class GoToNewTariffWidget extends StatelessWidget {
   final double? height;
   final bool goToFreeRecommendation;
   const GoToNewTariffWidget({Key? key, this.height, this.onSecondButtonTap, this.goToFreeRecommendation = true}) : super(key: key);
-
-  // Site has separate localized pages, not one URL for everyone — ru is
-  // served at the root, not /ru.
-  static String _subscriptionUrlForLocale(BuildContext context) {
-    switch (context.locale.languageCode) {
-      case 'en':
-        return 'https://rivapsy.com/en';
-      case 'es':
-        return 'https://rivapsy.com/es';
-      default:
-        return 'https://rivapsy.com/';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +60,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                   // — the in-app YooKassa flow. Billing lives on the website
                   // now; same static-link-out pattern as
                   // k13_screen.dart's onTapManageSubscription.
-                  await launchUrl(Uri.parse(_subscriptionUrlForLocale(context)),
+                  await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
                       mode: LaunchMode.externalApplication);
                 },
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,

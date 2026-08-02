@@ -1682,7 +1682,7 @@ packages:
     source: hosted
     version: "3.1.1"
   uuid:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: uuid
       sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
@@ -1793,14 +1793,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  yookassa_payments_flutter:
-    dependency: "direct main"
-    description:
-      name: yookassa_payments_flutter
-      sha256: "90adeda9b6ea671c20eabb00799f224532e1063426628ac467f5cf2388bf7e6d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
 sdks:
   dart: ">=3.12.0 <4.0.0"
   flutter: ">=3.41.0"

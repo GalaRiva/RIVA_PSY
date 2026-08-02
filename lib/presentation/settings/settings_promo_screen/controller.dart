@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../core/db/firebase_firestore/data/repository.dart';
 import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
+import '../../../core/utils/subscription_links.dart';
 import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_message_box.dart';
 import 'models/promo_model.dart';
@@ -41,12 +42,15 @@ class K16Controller {
               await CurrentUser.repo.setLocalUserData(currentTariff: tariff);
             }
           } else {
-            final costWithDiscount =
-                ((tariff.cost / 100) * promoModel.discount);
-            final updated =
-                tariff.copyWith(cost: tariff.cost -= costWithDiscount);
-            Navigator.pushNamed(context, AppRoutes.buySubscription,
-                arguments: {'tariff': updated.toJson(), 'promo': promo});
+            // Was Navigator.pushNamed(.., AppRoutes.buySubscription,
+            // arguments: {tariff, promo}) — the in-app YooKassa flow, which
+            // is what actually applied the partial discount amount at
+            // checkout. Billing now lives entirely on the website, which
+            // has no way to receive that discount context through a plain
+            // link — a partial-discount code has no working checkout path
+            // left after this fix. Flagged to the user; not silently
+            // sending them to a full-price page without explanation.
+            _showMessage(context, 'promo_discount_contact_support'.tr());
           }
         }
       } else {

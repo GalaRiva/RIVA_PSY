@@ -7,7 +7,7 @@ import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_push
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
-import '../../../core/models/tariff_model.dart';
+import '../../../core/utils/subscription_links.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -61,10 +61,11 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               height: getVerticalSize(54),
                               text: "${'go_to_tariff'.tr()}${'orion_tariff_name'.tr()}"
                                   .toUpperCase(),
-                              onTap: () {
-                                Navigator.pushNamed(context,
-                                    AppRoutes.buySubscription,
-                                    arguments: [TariffModel.ORION_TARIFF_YEAR]);
+                              onTap: () async {
+                                // Was Navigator.pushNamed(.., AppRoutes.buySubscription, ..)
+                                // — in-app YooKassa flow, retired.
+                                await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
+                                    mode: LaunchMode.externalApplication);
                               },margin: getMargin(
                               left: 18, top: 19, right: 18),
                               variant: ButtonVariant
