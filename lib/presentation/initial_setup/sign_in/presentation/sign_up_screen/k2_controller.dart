@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:riva_psy/core/models/tariff_model.dart';
@@ -85,6 +86,7 @@ class K2Controller extends GetxController {
   }
 
   Future authWithApple(context) async {
+    try {
     final result = await SignInWithApple().call();
     if (result.firebaseResultStatus == FirebaseResultStatus.Success) {
       result as FirebaseSignInResult;
@@ -141,9 +143,19 @@ class K2Controller extends GetxController {
     } else {
       showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
     }
+    } catch (e) {
+      // Same safety net as authWithGoogle in sign_in_screen/k2_controller.dart:
+      // an uncaught FirebaseException from Firestore calls in the chain above
+      // used to leave the user stuck on this screen with no feedback after a
+      // "successful" Apple auth.
+      print(e);
+      showMessage(context,
+          title: 'Регистрация', content: 'network_error_try_later'.tr());
+    }
   }
 
   Future authWithGoogle(context) async {
+    try {
     final result = await SignInWithGoogle().call();
     if (result.firebaseResultStatus == FirebaseResultStatus.Success) {
       result as FirebaseSignInResult;
@@ -203,6 +215,13 @@ class K2Controller extends GetxController {
 
     } else {
       showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+    }
+    } catch (e) {
+      // Same safety net as above — this file's authWithGoogle had never
+      // been wrapped either (only sign_in_screen's was, previously).
+      print(e);
+      showMessage(context,
+          title: 'Регистрация', content: 'network_error_try_later'.tr());
     }
   }
 }

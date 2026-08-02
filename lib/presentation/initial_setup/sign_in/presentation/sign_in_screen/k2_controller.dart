@@ -84,6 +84,7 @@ class K2AuthController extends GetxController {
   }
 
   Future authWithApple(context) async {
+    try {
     final result = await SignInWithApple().call();
     if (result.firebaseResultStatus == FirebaseResultStatus.Success) {
       result as FirebaseSignInResult;
@@ -139,6 +140,14 @@ class K2AuthController extends GetxController {
 
     } else {
       showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+    }
+    } catch (e) {
+      // Same safety net as authWithGoogle below: an uncaught FirebaseException
+      // from Firestore calls in the chain above used to leave the user stuck
+      // on this screen with no feedback after a "successful" Apple auth.
+      print(e);
+      showMessage(context,
+          title: 'Регистрация', content: 'network_error_try_later'.tr());
     }
   }
 
