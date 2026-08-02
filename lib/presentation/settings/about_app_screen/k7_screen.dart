@@ -59,7 +59,7 @@ class K7Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = K7Controller();
+    final controller = K7Controller(context.locale.languageCode);
     return Scaffold(
         backgroundColor: ColorConstant.gray300,
         resizeToAvoidBottomInset: false,
