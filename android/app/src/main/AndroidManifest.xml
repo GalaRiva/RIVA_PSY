@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.riva_psy.app">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -11,6 +12,18 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+
+    <!-- Not declared by this app — merged in transitively from
+         com.google.android.gms:play-services-measurement-api (pulled in by
+         firebase-messaging, which is legitimately used for push
+         notifications). The app has no ads/attribution SDK and doesn't use
+         the advertising ID, so these three are explicitly stripped from
+         the final merged manifest rather than left in just because a
+         dependency happened to add them. Confirmed via the actual
+         manifest-merger blame report, not guessed. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
 
     <application
         android:icon="@mipmap/ic_launcher"
