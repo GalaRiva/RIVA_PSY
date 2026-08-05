@@ -45,7 +45,10 @@ class K2AuthController extends GetxController {
             await SignInWithEmail().signInWithEmail(email!, password);
         if (signInResult.firebaseResultStatus == FirebaseResultStatus.Success) {
           signInResult as FirebaseSignInResult;
-          GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(signInResult.userId!);
+          // Was un-awaited: the tariff synced here could still be mid-write
+          // when the setLocalUserData below re-reads local tariff storage,
+          // losing the race and reverting to BASE_TARIFF (see updateTariff).
+          await GetAndSetRemoteDataLocally().getAndSetRemoteDataLocally(signInResult.userId!);
           await CurrentUser.repo.setService('');
           await CurrentUser.repo.setLocalUserData(email: email);
 
@@ -74,8 +77,8 @@ class K2AuthController extends GetxController {
             title: 'Авторизация',
             content: userStateCheck.exceptionMessage!);
       }*/
-    } catch (_) {
-      print(_);
+    } catch (e) {
+      print(e);
       showMessage(context,
           title: 'Авторизация',
           content:

@@ -19,6 +19,33 @@ import '../services/services_auth_service.dart';
 class SignInDataRepository extends SignInDomainRepository {
   final _instance = FirebaseAuth.instance;
 
+  // Confirmed on a real device: a single forced getIdToken(true) refresh
+  // before the first Firestore Users read isn't reliably enough — retested
+  // on an otherwise byte-identical build and the login race intermittently
+  // still hit permission-denied, then succeeded on retry. So retry the read
+  // itself a couple of times with a short delay and a fresh token each
+  // time, instead of gambling on the claims landing before the first try.
+  Future<DocumentSnapshot<Map<String, dynamic>>> _getUsersDocWithRetry(
+      String userId) async {
+    final _collection = FirebaseFirestore.instance.collection('Users');
+    const maxAttempts = 3;
+    const retryDelay = Duration(milliseconds: 400);
+    for (var attempt = 1; attempt <= maxAttempts; attempt++) {
+      await FirebaseAuth.instance.currentUser?.getIdToken(true);
+      try {
+        return await _collection.doc(userId).get();
+      } on FirebaseException catch (e) {
+        final isPermissionDenied = e.code == 'permission-denied';
+        if (!isPermissionDenied || attempt == maxAttempts) rethrow;
+        print(
+            '[AUTH-DIAG] Users read denied (attempt $attempt/$maxAttempts), retrying in ${retryDelay.inMilliseconds}ms: $e');
+        await Future.delayed(retryDelay);
+      }
+    }
+    throw StateError(
+        'unreachable: _getUsersDocWithRetry exhausted without returning or throwing');
+  }
+
   @override
   Future<FirebaseResult> signUpWithEmail(String email, String password) async {
     try {
@@ -112,8 +139,7 @@ class SignInDataRepository extends SignInDomainRepository {
   @override
   Future<FirebaseResult> checkUserState(String userId, String? password) async {
     try {
-      final _collection = FirebaseFirestore.instance.collection('Users');
-      final _doc = await _collection.doc(userId).get();
+      final _doc = await _getUsersDocWithRetry(userId);
       if ((_doc).exists) {
         final user = UserDataModel.fromJson(_doc.data()!);
 
@@ -175,13 +201,33 @@ class SignInDataRepository extends SignInDomainRepository {
         return number!;
       }
 
-      final _doc = _collection.doc(userId());
-      await _doc.set(UserDataModel(
-              passwordHash: password != null ? password.md5() : null,
-              email: email,
-              number: number,
-              service: service)
-          .toJson());
+      // Unlike the Users collection read (_getUsersDocWithRetry), this
+      // write had zero protection against the same token-claims race —
+      // createUser() runs right after sign-in/sign-up, same as
+      // checkUserState, and login failures were traced to exactly this
+      // race. Retry on permission-denied here too instead of assuming a
+      // write is somehow less exposed to it than a read.
+      const maxAttempts = 3;
+      const retryDelay = Duration(milliseconds: 400);
+      for (var attempt = 1; attempt <= maxAttempts; attempt++) {
+        await FirebaseAuth.instance.currentUser?.getIdToken(true);
+        try {
+          final _doc = _collection.doc(userId());
+          await _doc.set(UserDataModel(
+                  passwordHash: password != null ? password.md5() : null,
+                  email: email,
+                  number: number,
+                  service: service)
+              .toJson());
+          break;
+        } on FirebaseException catch (e) {
+          final isPermissionDenied = e.code == 'permission-denied';
+          if (!isPermissionDenied || attempt == maxAttempts) rethrow;
+          print(
+              '[AUTH-DIAG] UsersData write denied (attempt $attempt/$maxAttempts), retrying in ${retryDelay.inMilliseconds}ms: $e');
+          await Future.delayed(retryDelay);
+        }
+      }
       return FirebaseUserResult(
           userResultStatus: FirebaseUserResultStatus.WasCreated,
           firebaseResultStatus: FirebaseResultStatus.Success);
@@ -360,9 +406,11 @@ class SignInDataRepository extends SignInDomainRepository {
             exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');
 
       }
-    final doc = FirebaseFirestore.instance.collection('Users').doc(userId);
-    final userData =
-        await doc.get();
+    // Same retry-on-permission-denied race as checkUserState above — this
+    // is the other spot that can be the *first* Firestore Users read after
+    // sign-in (email/password path calls this directly, skipping
+    // checkUserState).
+    final userData = await _getUsersDocWithRetry(userId);
     late final UserModel user;
     if (userData.exists) {
       print('[TARIFF-DIAG] doc "$userId" exists, raw fields: ${userData.data()}');

@@ -27,9 +27,12 @@ class K17Repo {
   }
 
   Future<void> updateTariff(TariffModel tariffModel) async {
-    // TODO: implement updateTasks
     await HiveDB.deleteBox(_eventTag);
-    HiveDB.setBox(tariffModel.toJson(), _eventTag);
+    // Was fire-and-forgotten: a second setLocalUserData call right after
+    // this one (see k2_controller sign-in flows) could run getTariff()
+    // before this write landed, find the box still empty, and persist
+    // BASE_TARIFF over the tariff just synced from Firestore.
+    await HiveDB.setBox(tariffModel.toJson(), _eventTag);
     CurrentUser.user.currentTariff = tariffModel;
   }
 }

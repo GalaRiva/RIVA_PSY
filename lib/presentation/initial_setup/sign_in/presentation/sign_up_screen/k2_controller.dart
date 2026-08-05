@@ -76,8 +76,8 @@ class K2Controller extends GetxController {
           showMessage(context,
               title: 'Регистрация', content: signUpResult.exceptionMessage!);
         }
-        } catch (_) {
-      print(_);
+        } catch (e) {
+      print(e);
       showMessage(context,
           title: 'Регистрация',
           content:

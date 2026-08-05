@@ -84,12 +84,32 @@ class K1Controller extends GetxController {
           _downloadingFiles([collectionAudio, collectionImages], SharedPrefs.sharedPreferences,
               [AUDIO_KEY, IMAGE_KEY], onError: () {
             loading = false;
-            secondsToNewPage = 0;
+            // Was 0 — Timer(Duration(seconds: 0), ...) fires on the next
+            // event-loop tick, racing Flutter's first frame paint instead
+            // of guaranteeing it. A trivial widget tree usually wins that
+            // race (which is why the bisected single-Container test on
+            // this screen painted fine); the real Stack/Image/GetBuilder
+            // tree needs more layout work and consistently lost it,
+            // producing exactly the reported "blank flash" — same race
+            // class as the earlier stale-controller splash bug, different
+            // trigger. A small non-zero delay guarantees at least one
+            // real frame gets presented before navigating away.
+            secondsToNewPage = 1;
             DataSourceService.setRemoteDataSource();
             timer(context);
           }).then((value) {
             loading = false;
-            secondsToNewPage = 0;
+            // Was 0 — Timer(Duration(seconds: 0), ...) fires on the next
+            // event-loop tick, racing Flutter's first frame paint instead
+            // of guaranteeing it. A trivial widget tree usually wins that
+            // race (which is why the bisected single-Container test on
+            // this screen painted fine); the real Stack/Image/GetBuilder
+            // tree needs more layout work and consistently lost it,
+            // producing exactly the reported "blank flash" — same race
+            // class as the earlier stale-controller splash bug, different
+            // trigger. A small non-zero delay guarantees at least one
+            // real frame gets presented before navigating away.
+            secondsToNewPage = 1;
             timer(context);
           });
         } else {

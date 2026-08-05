@@ -4,13 +4,19 @@ import 'package:riva_psy/core/app_export.dart';
 
 import 'k1_controller.dart';
 
-class K1Screen extends GetWidget {
-
+class K1Screen extends StatefulWidget {
+  const K1Screen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<K1Screen> createState() => _K1ScreenState();
+}
 
+class _K1ScreenState extends State<K1Screen> {
+  late final K1Controller controller;
 
+  @override
+  void initState() {
+    super.initState();
     // The app uses plain MaterialApp, not GetMaterialApp — GetX's automatic
     // route-based dependency cleanup (GetObserver marking a controller
     // "dirty" when its route is disposed) never runs anywhere in this app,
@@ -21,13 +27,16 @@ class K1Screen extends GetWidget {
     // just app cold start — see k2_controller.dart in sign_in/sign_up)
     // reused the *same* K1Controller from the very first visit: wasInit
     // already true, secondsToNewPage already zeroed from that first run's
-    // completed timer(). initialization() then took the `else timer(context)`
-    // branch straight away with a 0-second delay, navigating off this
-    // screen before the splash image ever got a frame to paint — a blank
-    // flash, not a rendering bug in the image itself.
+    // completed timer(). initState() runs exactly once per route visit (a
+    // new Route always gets a new State), which is what this fix needs:
+    // fresh-per-visit without being fresh-per-rebuild too.
     Get.delete<K1Controller>();
-    final controller = Get.put(K1Controller());
+    controller = Get.put(K1Controller());
     controller.initialization(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.gray300,
       // Was a hand-built widget tree combining a teal circular badge with
@@ -57,10 +66,6 @@ class K1Screen extends GetWidget {
                 // Was SizedBox.shrink() on error — if decoding ever fails,
                 // that renders nothing at all, which looks identical to
                 // "no problem, just an empty screen" from a screenshot.
-                // Reported symptom is a fully blank screen with no logo,
-                // no ring, no text whatsoever — if this branch is what's
-                // firing, this makes that unmistakable instead of another
-                // silent blank.
                 return Container(
                   color: Colors.red,
                   alignment: Alignment.center,
@@ -77,7 +82,7 @@ class K1Screen extends GetWidget {
             ),
           ),
           SafeArea(
-            child: GetBuilder(
+            child: GetBuilder<K1Controller>(
               builder: (K1Controller _) => Visibility(
                   visible: controller.loading,
                   child: Align(
@@ -94,4 +99,3 @@ class K1Screen extends GetWidget {
     );
   }
 }
-
