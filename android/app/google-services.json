@@ -12,7 +12,28 @@
           "package_name": "com.riva_psy.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "7653326357-bgohp6l4bc5f3vrtf75n740hfacn30hf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.riva_psy.app",
+            "certificate_hash": "5f62315bb0a98cab344d51ddc1cf2fe1bd1e1418"
+          }
+        },
+        {
+          "client_id": "7653326357-csk1ebad8tjme1a39tu9spjffuvcjk24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.riva_psy.app",
+            "certificate_hash": "03d6a147b4cc369b931e570da3e0e688280007fe"
+          }
+        },
+        {
+          "client_id": "7653326357-b1mhkh0o9knlt688dlmh4r94ub8d38kg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA_t0goB_ClKhnJOZDX14mgBlNdbj2zN-Q"
@@ -20,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7653326357-b1mhkh0o9knlt688dlmh4r94ub8d38kg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

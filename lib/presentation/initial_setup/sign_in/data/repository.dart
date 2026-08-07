@@ -377,7 +377,8 @@ class SignInDataRepository extends SignInDomainRepository {
           exceptionMessage:
               'Произошла непредвиденная ошибка, проверьте подключение к интернету',
         );
-      } catch (_) {
+      } catch (e) {
+        print(e);
         return FirebaseSignInResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
             exceptionMessage:

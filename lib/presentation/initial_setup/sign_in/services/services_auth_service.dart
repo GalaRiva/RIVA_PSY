@@ -35,8 +35,8 @@ class ServicesAuthService {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       return true;
-    } catch (_) {
-      print(_);
+    } catch (e) {
+      print(e);
       return false;
     }
 
