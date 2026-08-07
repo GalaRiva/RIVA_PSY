@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "7653326357-5e75t7qjdl9rjrgf4dmvn35vacamp3l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.riva_psy.app",
+            "certificate_hash": "a69f311f788bfcb7d51a33d9105ab9fe6abce914"
+          }
+        },
+        {
           "client_id": "7653326357-bgohp6l4bc5f3vrtf75n740hfacn30hf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

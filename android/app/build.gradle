@@ -65,8 +65,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            // Re-enabling this (v28, with hand-written keep rules for
+            // google_sign_in/gms/firebase in proguard-rules.pro) broke sign-in
+            // on EVERY channel, including Internal App Sharing, which had been
+            // confirmed working right before that with minification off (v26).
+            // The keep rules weren't sufficient — rather than keep guessing at
+            // ProGuard rules without device access to verify each attempt,
+            // shipping on the one configuration that's actually been confirmed
+            // to work. Revisit only with a proper on-device test loop.
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
