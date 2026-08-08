@@ -17,6 +17,7 @@ import '../../../core/utils/size_utils.dart';
 import 'models/emotion_in_body.dart';
 import 'models/emotion_model.dart';
 import 'models/report_model.dart';
+import '../../../widgets/emotion_color_blob.dart';
 
 class K61Controller extends GetxController {
   bool loading = true;
@@ -156,7 +157,7 @@ class K61Controller extends GetxController {
         if (!listContainEmotion()) {
           listEventModels.add(emotion);
           list.add(
-              EmotionModel(1, emotion.localizedName, getColor(listEventModels.length), key: emotion.key));
+              EmotionModel(1, emotion.localizedName, getColor(listEventModels.length, emotionKey: emotion.key), key: emotion.key));
         } else {
           for (var _item in list) {
             if (_item.identity == emotion.identity) {
@@ -177,7 +178,15 @@ class K61Controller extends GetxController {
     return emotions = list;
   }
 
-  Color getColor(int length) {
+  Color getColor(int length, {String? emotionKey}) {
+    // Individual negative-spectrum emotions get their exact hand-picked
+    // color (same one used for the blob on the Path screens) instead of a
+    // position-based palette color, so the chart slice for e.g. "Гнев"
+    // always reads as the same red no matter what order it was logged in.
+    if (emotionKey != null) {
+      final exact = emotionSpectrumColor(emotionKey);
+      if (exact != null) return exact;
+    }
     if (length < palette.length) {
       return palette[length];
     } else {
@@ -376,13 +385,13 @@ class K61Controller extends GetxController {
 
     if(placeIsExist() != null) {
       for(var item in dayEventModel.whatEmotion!){
-        var val = EmotionModel(1, item.name, getColor(placeIsExist()!.emotions.length), key: item.key);
+        var val = EmotionModel(1, item.name, getColor(placeIsExist()!.emotions.length, emotionKey: item.key), key: item.key);
         if(!listContainEmotion(placeIsExist()!.emotions, val)){
           placeIsExist()!.emotions.add(val);
         }
       }
     } else {
-      _places.add(PlaceModel(dayEventModel.whereHappened!.localizedName, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].localizedName, getColor(index), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
+      _places.add(PlaceModel(dayEventModel.whereHappened!.localizedName, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].localizedName, getColor(index, emotionKey: dayEventModel.whatEmotion![index].key), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
     }
   }
 
