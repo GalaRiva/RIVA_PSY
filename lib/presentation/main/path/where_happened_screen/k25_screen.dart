@@ -269,16 +269,10 @@ class K25Screen extends GetWidget {
                   ),
                 ),
               ),
-              Container(
-                width: size.width,
-                height: getVerticalSize(60),
-                margin: getMargin(
-                  bottom: 0,
-                ),
-                alignment: Alignment.topCenter,
-                color: ColorConstant.gray300,
-                child: Align(
-                  alignment: Alignment.center,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: GetBuilder(
                     builder: (K25Controller _c) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -294,10 +288,6 @@ class K25Screen extends GetWidget {
                           ),
                           onTap: () => Navigator.pop(context),
                           text: 'choosing_event'.tr().toUpperCase(),
-                          margin: getMargin(
-                            bottom: 10,
-                          ),
-                          alignment: Alignment.topCenter,
                           padding: ButtonPadding.PaddingT8,
                           prefixWidget: CustomImageView(
                             margin: getMargin(right: 12),

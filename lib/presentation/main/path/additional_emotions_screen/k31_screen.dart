@@ -47,7 +47,10 @@ class K31Screen extends GetWidget {
       body: SafeArea(
         child: SizedBox(
           width: size.width,
-          child: SingleChildScrollView(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+          SingleChildScrollView(
             child: Padding(
               padding: getPadding(
                 left: 15,
@@ -217,58 +220,59 @@ class K31Screen extends GetWidget {
                               ),
                             )
                         ),
-                        Padding(
-                          padding: getPadding(
-                            top: 100,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomButton(
-                                height: getVerticalSize(
-                                  32,
-                                ),
-                                width: getHorizontalSize(
-                                  177,
-                                ),
-                                onTap: () => Navigator.pop(context),
-                                text: 'choosing_emotion'.tr().toUpperCase(),
-                                margin: getMargin(
-                                  bottom: 73,
-                                ),
-                                padding: ButtonPadding.PaddingT8,
-                                prefixWidget: CustomImageView(
-                                  margin: getMargin(right: 12),
-                                  svgPath: ImageConstant.leftArrow,
-                                ),
-                              ),
-                              CustomButton(
-                                height: getVerticalSize(
-                                  32,
-                                ),
-                                width: getHorizontalSize(
-                                  140,
-                                ),
-                                onTap: () {
-                                  controller.showEmotionIntensityDialog(
-                                      context, controller,
-                                      controller.emotions.first.localizedName,
-                                      data['dayEventModel'], onSave: onSave);
-                                },
-                                text: 'continue'.tr().toUpperCase(),
-                                margin: getMargin(
-                                  left: 13,
-                                  bottom: 73,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        SizedBox(height: getVerticalSize(80)),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomButton(
+                    height: getVerticalSize(
+                      32,
+                    ),
+                    width: getHorizontalSize(
+                      177,
+                    ),
+                    variant: ButtonVariant.Base,
+                    onTap: () => Navigator.pop(context),
+                    text: 'choosing_emotion'.tr().toUpperCase(),
+                    padding: ButtonPadding.PaddingT8,
+                    prefixWidget: CustomImageView(
+                      margin: getMargin(right: 12),
+                      svgPath: ImageConstant.leftArrow,
+                    ),
+                  ),
+                  CustomButton(
+                    height: getVerticalSize(
+                      32,
+                    ),
+                    width: getHorizontalSize(
+                      140,
+                    ),
+                    variant: ButtonVariant.Base,
+                    onTap: () {
+                      controller.showEmotionIntensityDialog(
+                          context, controller,
+                          controller.emotions.first.localizedName,
+                          data['dayEventModel'], onSave: onSave);
+                    },
+                    text: 'continue'.tr().toUpperCase(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+            ],
           ),
         ),
       ),

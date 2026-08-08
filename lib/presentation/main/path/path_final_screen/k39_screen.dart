@@ -98,33 +98,25 @@ class K39Screen extends GetWidget {
                            ],
                          ),
                        ),
-          Container(
-            width: size.width,
-            height: getVerticalSize(60),
-            margin: getMargin(
-              bottom: 0,
-            ),
-              alignment: Alignment.bottomCenter,
-
-              color: ColorConstant.gray300,
-            child: Center(
-          child: Padding(
-            padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
-            child: CustomButton(
-              width: getHorizontalSize(
-                148,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
+              child: CustomButton(
+                height: getVerticalSize(32),
+                width: getHorizontalSize(
+                  148,
+                ),
+                variant: ButtonVariant.Base,
+                text: 'done'.tr().toUpperCase(),
+                onTap: () async {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRoutes.main, (route) => false);
+                  controller.deleteAllController();
+                },
               ),
-              text: 'done'.tr().toUpperCase(),
-              onTap: () async {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, AppRoutes.main, (route) => false);
-                controller.deleteAllController();
-              },
-              alignment: Alignment.bottomCenter,
             ),
           ),
-      )
-          )
               ],
             ),
           ),

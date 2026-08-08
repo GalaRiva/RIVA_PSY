@@ -264,24 +264,12 @@ class K26Screen extends GetWidget {
                 ),
               ),
 
-              Container(
-                width: size.width,
-                height: getVerticalSize(60),
-                margin: getMargin(
-                  bottom: 0,
-                ),
-                color: ColorConstant.gray300,
+              Align(
                 alignment: Alignment.bottomCenter,
-
-                child: Center(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: GetBuilder(
-                      builder: (K26Controller _c) => Container(
-                        width: double.maxFinite,
-                        padding: getPadding(top: 14),
-
-                        child: Row(
+                child: Padding(
+                  padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
+                  child: GetBuilder(
+                      builder: (K26Controller _c) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -295,11 +283,6 @@ class K26Screen extends GetWidget {
                               ),
                               onTap: () => Navigator.pop(context),
                               text: 'choosing_place'.tr().toUpperCase(),
-                              margin: getMargin(
-                                bottom: 10,
-                              ),
-                              alignment: Alignment.topCenter,
-
                               padding: ButtonPadding.PaddingT8,
                               prefixWidget: CustomImageView(
                                 margin: getMargin(right: 12),
@@ -344,8 +327,6 @@ class K26Screen extends GetWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
 
             ],
           ),

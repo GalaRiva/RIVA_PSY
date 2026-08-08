@@ -117,9 +117,10 @@ class K38Screen extends GetWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: getPadding(left: 16, bottom: 10, right: 16),
+                  padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomButton(
                         height: getVerticalSize(
@@ -128,6 +129,7 @@ class K38Screen extends GetWidget {
                         width: getHorizontalSize(
                           159,
                         ),
+                        variant: ButtonVariant.Base,
                         onTap: ()=>Navigator.pop(context),
                         text: 'what_did_I_do'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
@@ -143,6 +145,7 @@ class K38Screen extends GetWidget {
                         width: getHorizontalSize(
                           140,
                         ),
+                        variant: ButtonVariant.Base,
                         onTap: () async {
                           dayEventModel.firstThoughts = fieldController.text;
                           dayEventModel.date = DateTime.now();

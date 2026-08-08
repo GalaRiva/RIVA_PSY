@@ -254,14 +254,10 @@ class K22Screen extends GetWidget {
                   ),
                 ),
               ),
-              Container(
-                width: size.width,
-                height: getVerticalSize(60),
-                margin: getMargin(
-                  bottom: 0,
-                ),
-                color: ColorConstant.gray300,
-                child: Center(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: getPadding(top: 14, bottom: 10),
                   child: GetBuilder(
                     builder: (K22Controller _c) => CustomButton(
                       height: getVerticalSize(
@@ -293,9 +289,6 @@ class K22Screen extends GetWidget {
                       text: controller.currentEventList.isNotEmpty
                           ? 'continue'.tr().toUpperCase()
                           : 'cancel'.tr().toUpperCase(),
-                      margin: getMargin(
-                        bottom: 10,
-                      ),
                     ),
                   ),
                 ),

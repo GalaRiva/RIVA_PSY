@@ -131,9 +131,10 @@ class K37Screen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: getPadding(right: 16, bottom:10, left: 16 ),
+                  padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomButton(
                         height: getVerticalSize(
