@@ -22,7 +22,8 @@ class K6Controller extends GetxController {
       showModalBottomSheet(
           context: context, builder: (context) => PillsAddBottomSheet(),
       backgroundColor: AppColors.background.withOpacity(1),
-      elevation: 0
+      elevation: 0,
+      isScrollControlled: true
     );
   }
 

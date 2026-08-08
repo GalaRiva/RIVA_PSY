@@ -278,19 +278,11 @@ class K32Screen extends GetWidget {
                 ),
               ),
 
-    Container(
-        width: size.width,
-        height: getVerticalSize(60),
-        margin: getMargin(
-          bottom: 0,
-        ),
+    Align(
         alignment: Alignment.bottomCenter,
-
-        color: ColorConstant.gray300,
-        child: Center(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: GetBuilder(
+        child: Padding(
+          padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
+          child: GetBuilder(
                     builder: (K32Controller _c) => Container(
                       width: double.maxFinite,
 
@@ -309,9 +301,6 @@ class K32Screen extends GetWidget {
                             ),
                             onTap: () => Navigator.pop(context),
                             text: 'choosing_emotion'.tr().toUpperCase(),
-                            margin: getMargin(
-                              bottom: 10,
-                            ),
                             variant: ButtonVariant.Base,
                             padding: ButtonPadding.PaddingT8,
                             prefixWidget: CustomImageView(
@@ -366,7 +355,6 @@ class K32Screen extends GetWidget {
                   ),
                 ),
               ),
-    )
             ],
           ),
         ),

@@ -101,6 +101,7 @@ class PillRemindersScreen extends StatelessWidget {
       showModalBottomSheet(
           elevation: 0,
           backgroundColor: AppColors.background.withOpacity(1),
+          isScrollControlled: true,
 
           context: context, builder: (_) {
         return PillsAddBottomSheet();

@@ -66,6 +66,7 @@ class AdmissionScheduleController extends GetxController {
       showModalBottomSheet(
         backgroundColor: AppColors.background,
           context: context,
+          isScrollControlled: true,
           builder: (context) => PillsAddBottomSheet()).then((value) async {
         scheduleWasCreated = (await _pillsRepo.getEvent()).isNotEmpty;
       });

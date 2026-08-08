@@ -22,7 +22,15 @@ class EmotionPieChart extends StatelessWidget {
           for (final e in data)
             PieChartSectionData(
               value: e.quantity.toDouble(),
-              color: e.color,
+              // A radial gradient (lighter near the center, full color at
+              // the outer edge) reads as a lit, dimensional slice instead
+              // of a flat color fill — gradient overrides color in fl_chart.
+              gradient: RadialGradient(
+                colors: [
+                  Color.lerp(e.color, Colors.white, 0.4)!,
+                  e.color,
+                ],
+              ),
               showTitle: false,
               // fl_chart defaults radius to a fixed 40px regardless of the
               // surrounding box, so the pie never grows unless set here.

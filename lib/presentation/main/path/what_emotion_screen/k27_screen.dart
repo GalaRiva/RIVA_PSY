@@ -318,18 +318,10 @@ class K27Screen extends GetWidget {
               ),
             ),
 
-            Container(
-                width: size.width,
-                height: getVerticalSize(60),
-                margin: getMargin(
-        bottom: 0,
-                ),
-                alignment: Alignment.bottomCenter,
-
-                color: ColorConstant.gray300,
-                child: Center(
-              child: Align(
-                alignment: Alignment.topCenter,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                 child: GetBuilder(
                   builder: (K27Controller _c) => Container(
                     width: double.maxFinite,
@@ -346,9 +338,6 @@ class K27Screen extends GetWidget {
                           ),
                           onTap: () => Navigator.pop(context),
                           text: 'choosing_person'.tr().toUpperCase(),
-                          margin: getMargin(
-                            bottom: 10,
-                          ),
                           variant: ButtonVariant.Base,
 
                           padding: ButtonPadding.PaddingT8,
@@ -423,7 +412,6 @@ class K27Screen extends GetWidget {
                 ),
               ),
             ),
-            )
           ],
         ),
       ),

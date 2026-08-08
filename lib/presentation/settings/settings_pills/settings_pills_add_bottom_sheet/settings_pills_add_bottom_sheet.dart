@@ -27,7 +27,7 @@ class PillsAddBottomSheet extends StatelessWidget {
           ),
           child: Container(
             color: ColorConstant.gray300.withOpacity(1),
-              height: (size.height - (size.height / 3)) + MediaQuery.of(context).viewInsets.bottom,
+              height: (size.height - (size.height / 6)) + MediaQuery.of(context).viewInsets.bottom,
               child: Stack(
                 children: [
                   SingleChildScrollView(

@@ -111,7 +111,17 @@ direction: Axis.vertical,
                                     barRods: [
                                       BarChartRodData(
                                         toY: e.emotions[i].quantity.toDouble(),
-                                        color: e.emotions[i].color,
+                                        // Same glass language as the body-map
+                                        // markers: a soft translucent-to-full
+                                        // color gradient instead of a flat fill.
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Color.lerp(e.emotions[i].color, Colors.white, 0.5)!,
+                                            e.emotions[i].color,
+                                          ],
+                                        ),
                                         width: 12,
                                         borderRadius: BorderRadius.circular(3),
                                       ),
