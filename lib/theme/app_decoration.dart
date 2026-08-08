@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'app_colors.dart';
 
 class AppDecoration {
+  // Premium redesign: same soft glow/translucency language as the body-map
+  // emotion markers (circular_container_widget.dart's radial-gradient +
+  // blurred BoxShadow), applied to a rectangular card instead of a circle.
+  static BoxDecoration get glassCard => BoxDecoration(
+        color: AppColors.surface.withOpacity(0.55),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.18),
+            blurRadius: 30,
+            spreadRadius: 2,
+          ),
+        ],
+      );
   static BoxDecoration get fillTeal200 => BoxDecoration(
         color: ColorConstant.teal200,
       );

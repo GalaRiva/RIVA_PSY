@@ -205,40 +205,19 @@ class K61Screen extends GetWidget{
                               : GetBuilder(
                                   builder: (K61Controller _c) => Padding(
                                     padding: getPadding(top: 6),
-                                    child: SizedBox(
-                                      height: controller.getTabHeight(),
-                                      width: size.width,
-                                      child: TabBarView(
-                                        children: [
-                                          DiagnosticOfTheConditionWidget(
-                                            start: controller.dateStart,
-                                            end: controller.dateEnd,
-                                            dataForChart:
-                                                controller.dataForChart,
-                                            controller: controller,
-                                          ),
-                                          ReportWidget(
-                                            start: controller.dateStart,
-                                            controller: controller,
-                                            end: controller.dateEnd,
-                                            fields: controller.fields,
-                                          ),
-                                          WhatEmotionWidget(
-                                            start: controller.dateStart,
-                                            controller: controller,
-                                            end: controller.dateEnd,
-                                            emotions: controller.emotions,
-                                            emotionsTypes:
-                                                controller.emotionsTypes,
-                                          ),
-                                          WhereInBodyWidget(start: controller.dateStart,
-                                              controller: controller,
-                                              end: controller.dateEnd, neutralType: controller.neutralType, emotionsInBody: controller.emotionsInBody, positiveType: controller.positiveType, negativeType: controller.negativeType, )
-                                        ,WhereAndWhatEmotionsWidget(controller: controller,),
-                                          AdmissionScheduleWidget(),
-                                        ],
-                                      ),
-                                    ),
+                                    // Was a TabBarView inside a SizedBox pinned to
+                                    // controller.getTabHeight() (a fixed size.height-214)
+                                    // — every tab was forced into that one viewport no
+                                    // matter how much content it actually had, so
+                                    // taller tabs got clipped instead of the page
+                                    // growing to fit them. Rendering only the active
+                                    // tab directly removes that ceiling: it grows with
+                                    // its own content inside the page's own
+                                    // SingleChildScrollView. Tab switching already
+                                    // happens by tapping (TabBar's onTap sets
+                                    // currentTab), not by swiping, so TabBarView's
+                                    // paging behavior isn't needed.
+                                    child: _buildTabContent(controller),
                                   ),
                                 ),
                         ],
@@ -255,5 +234,48 @@ class K61Screen extends GetWidget{
         onChanged: (BottomBarEnum type) {},
       ),
     );
+  }
+
+  Widget _buildTabContent(K61Controller controller) {
+    switch (controller.currentTab) {
+      case 1:
+        return DiagnosticOfTheConditionWidget(
+          start: controller.dateStart,
+          end: controller.dateEnd,
+          dataForChart: controller.dataForChart,
+          controller: controller,
+        );
+      case 2:
+        return ReportWidget(
+          start: controller.dateStart,
+          controller: controller,
+          end: controller.dateEnd,
+          fields: controller.fields,
+        );
+      case 3:
+        return WhatEmotionWidget(
+          start: controller.dateStart,
+          controller: controller,
+          end: controller.dateEnd,
+          emotions: controller.emotions,
+          emotionsTypes: controller.emotionsTypes,
+        );
+      case 4:
+        return WhereInBodyWidget(
+          start: controller.dateStart,
+          controller: controller,
+          end: controller.dateEnd,
+          neutralType: controller.neutralType,
+          emotionsInBody: controller.emotionsInBody,
+          positiveType: controller.positiveType,
+          negativeType: controller.negativeType,
+        );
+      case 5:
+        return WhereAndWhatEmotionsWidget(controller: controller);
+      case 6:
+        return AdmissionScheduleWidget();
+      default:
+        return const SizedBox();
+    }
   }
 }

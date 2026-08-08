@@ -25,7 +25,7 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
 
     return Container(
       width: size.width,
-      decoration: AppDecoration.fillGray200,
+      decoration: AppDecoration.glassCard,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +171,7 @@ direction: Axis.vertical,
         Container(
           width: size.width,
           height: size.height - 214,
-          decoration: AppDecoration.fillGray200,
+          decoration: AppDecoration.glassCard,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

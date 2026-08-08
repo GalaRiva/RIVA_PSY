@@ -413,8 +413,4 @@ class K61Controller extends GetxController {
     return listToReturn;
   }
 
-  double getTabHeight() {
-        return size.height - 214;
-  }
-
 }

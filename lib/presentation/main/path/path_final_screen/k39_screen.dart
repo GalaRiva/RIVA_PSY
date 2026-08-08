@@ -109,7 +109,7 @@ class K39Screen extends GetWidget {
               color: ColorConstant.gray300,
             child: Center(
           child: Padding(
-            padding: getPadding(left: 26, bottom: 10, right: 26),
+            padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
             child: CustomButton(
               width: getHorizontalSize(
                 148,

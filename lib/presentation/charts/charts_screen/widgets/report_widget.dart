@@ -23,7 +23,7 @@ class ReportWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      decoration: AppDecoration.fillGray200,
+      decoration: AppDecoration.glassCard,
       child: SingleChildScrollView(
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

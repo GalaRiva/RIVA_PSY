@@ -21,7 +21,7 @@ class DiagnosticOfTheConditionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      decoration: AppDecoration.fillGray200,
+      decoration: AppDecoration.glassCard,
       child: Column(
         children: [
           Padding(

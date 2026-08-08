@@ -219,7 +219,7 @@ class K26Screen extends GetWidget {
                                           child: EventCard(
                                             cardWidth:
                                             size.width / 2 - 30,
-                                            iconSizeOverride: 216,
+                                            iconSizeOverride: 108,
                                             fontSizeOverride: 18,
                                             model: el, onTap: () {
                                                 controller.whoDidHappen = el;
@@ -279,6 +279,7 @@ class K26Screen extends GetWidget {
                     child: GetBuilder(
                       builder: (K26Controller _c) => Container(
                         width: double.maxFinite,
+                        padding: getPadding(top: 14),
 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
