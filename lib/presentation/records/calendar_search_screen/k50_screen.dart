@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../calendar_search_screen/controller.dart';
+import '../../../theme/app_colors.dart';
 
 
 class K50Screen extends GetWidget {
@@ -31,7 +32,7 @@ class K50Screen extends GetWidget {
         return true;
       },
       child: Scaffold(
-        backgroundColor: ColorConstant.gray30002,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: Container(
             width: double.maxFinite,

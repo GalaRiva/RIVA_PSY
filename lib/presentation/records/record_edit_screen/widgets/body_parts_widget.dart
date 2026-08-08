@@ -62,7 +62,7 @@ class BodyPartWidget extends StatelessWidget {
                   fontSize: getFontSize(
                     10,
                   ),
-                  fontFamily: 'SF Pro Display',
+                  fontFamily: 'Manrope',
                   fontWeight: FontWeight.w400,
                 ),
               ),

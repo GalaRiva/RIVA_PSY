@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';
 import '../../../../theme/app_decoration.dart';
@@ -9,6 +8,7 @@ import '../../../../theme/app_style.dart';
 import '../controller.dart';
 import '../models/emotion_model.dart';
 import 'text_for_select_period_widget.dart';
+import '../../../../widgets/emotion_pie_chart.dart';
 
 class WhatEmotionWidget extends StatelessWidget {
   final DateTime start;
@@ -28,12 +28,10 @@ class WhatEmotionWidget extends StatelessWidget {
       for(var item in list) _s += item.quantity;
       return _s;
     }
-    return SingleChildScrollView(
-      child: Container(
-        width: size.width,
-        height: size.height - 214,
-        decoration: AppDecoration.fillGray200,
-        child: SingleChildScrollView(
+    return Container(
+      width: size.width,
+      decoration: AppDecoration.fillGray200,
+      child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,23 +65,11 @@ class WhatEmotionWidget extends StatelessWidget {
                 child: Padding(
                   padding: getPadding(top: 20),
                   child: Container(
-                    width: getSize(170),
-                    height: getSize(170),
+                    width: getSize(300),
+                    height: getSize(300),
                     child: Visibility(
                       visible: emotions.isNotEmpty,
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: SfCircularChart(
-                          series: [
-                            PieSeries(
-                                dataSource: emotions,
-                                pointColorMapper: (dynamic model, int _) => model.color,
-                                xValueMapper: (dynamic data, _) => data.name,
-                                yValueMapper: (dynamic data, _) => data.quantity
-                            )
-                          ],
-                        ),
-                      ),
+                      child: EmotionPieChart(data: emotions, radius: getSize(145)),
                     ),
                   ),
                 ),
@@ -106,7 +92,7 @@ class WhatEmotionWidget extends StatelessWidget {
                         TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle
-                            .txtSFProDisplayLight10Gray800,),
+                            .txtSFProDisplayLight10Gray800.copyWith(fontSize: getFontSize(16)),),
                       )
                     ],
                   ),
@@ -139,23 +125,11 @@ class WhatEmotionWidget extends StatelessWidget {
                 child: Padding(
                   padding: getPadding(top: 20),
                   child: Container(
-                    width: getSize(170),
-                    height: getSize(170),
+                    width: getSize(300),
+                    height: getSize(300),
                     child: Visibility(
                       visible: emotionsTypes.isNotEmpty,
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: SfCircularChart(
-                          series: [
-                            PieSeries(
-                                dataSource: emotionsTypes,
-                                pointColorMapper: (dynamic model, int _) => model.color,
-                                xValueMapper: (dynamic data, _) => (data.name as String).tr(),
-                                yValueMapper: (dynamic data, _) => data.quantity
-                            )
-                          ],
-                        ),
-                      ),
+                      child: EmotionPieChart(data: emotionsTypes, radius: getSize(145)),
                     ),
                   ),
                 ),
@@ -178,7 +152,7 @@ class WhatEmotionWidget extends StatelessWidget {
                           TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle
-                              .txtSFProDisplayLight10Gray800,),
+                              .txtSFProDisplayLight10Gray800.copyWith(fontSize: getFontSize(16)),),
                       ),
                     ],
                   ),
@@ -188,7 +162,6 @@ class WhatEmotionWidget extends StatelessWidget {
 
             ],
           ),
-        ),
       ),
     );
   }

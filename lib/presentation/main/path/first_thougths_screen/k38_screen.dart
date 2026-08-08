@@ -7,6 +7,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../core/models/day_event_model.dart';
 import 'controller.dart';
+import '../../../../theme/app_colors.dart';
 
 class K38Screen extends GetWidget {
 
@@ -19,7 +20,7 @@ class K38Screen extends GetWidget {
     ((ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
     as DayEventModel);
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SizedBox(
           width: size.width,
@@ -89,7 +90,7 @@ class K38Screen extends GetWidget {
                         padding:
                         getPadding(left: 0, top: 18, right: 0),
                         child: SizedBox(
-                          height: 57,
+                          height: 114,
                           width: MediaQuery.of(context).size.width - 32,
                           child: TextFormField(
                             controller: fieldController,
@@ -104,7 +105,7 @@ class K38Screen extends GetWidget {
                                 filled: true,
                                 hintText: 'your_thoughts'.tr(),
 
-                                hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
+                                hintStyle: TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                             ),
                           ),
                         ),

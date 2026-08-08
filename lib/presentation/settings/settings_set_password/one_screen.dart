@@ -12,6 +12,7 @@ import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_password_field.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
+import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -24,7 +25,7 @@ class OneScreen extends GetWidget<OneScreenController> {
 
     }).obs);
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SizedBox(

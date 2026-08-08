@@ -12,7 +12,8 @@ import 'grid.dart';
 
 Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
     BuildContext context) {
-  return Padding(
+  return SingleChildScrollView(
+    child: Padding(
     padding: getPadding(right: 16, left: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +43,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
                       fontSize: getFontSize(
                         12,
                       ),
-                      fontFamily: 'SF Pro Display',
+                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: getVerticalSize(
                         1.25,
@@ -69,7 +70,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
                       fontSize: getFontSize(
                         12,
                       ),
-                      fontFamily: 'SF Pro Display',
+                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: getVerticalSize(
                         1.25,
@@ -96,7 +97,7 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
                       fontSize: getFontSize(
                         12,
                       ),
-                      fontFamily: 'SF Pro Display',
+                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: getVerticalSize(
                         1.25,
@@ -128,8 +129,10 @@ Widget schedule(List<PillModel> pills, AdmissionScheduleController controller,
           padding: ButtonPadding.PaddingAll8,
           onTap: () => Navigator.pushNamed(context, AppRoutes.pills)
               .then((value) => controller.update()),
-        )
+        ),
+        SizedBox(height: getVerticalSize(30)),
       ],
+    ),
     ),
   );
 }

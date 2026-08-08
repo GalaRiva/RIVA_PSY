@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/services/notifications/awesome_notification_service.dart';
 import 'core/utils/color_constant.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
 
@@ -87,14 +88,12 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: ThemeData(
-          primaryColor: MaterialColor(ColorConstant.cyan700.value, color),
+        theme: AppTheme.lightTheme.copyWith(
           scrollbarTheme: ScrollbarThemeData(
             trackColor: MaterialStatePropertyAll<Color>(Colors.white),
             thumbColor: MaterialStatePropertyAll<Color>(ColorConstant.fromHex('#7F7F90')),
             trackBorderColor: MaterialStatePropertyAll<Color>(Colors.transparent),
           ),
-          scaffoldBackgroundColor:  ColorConstant.gray200,
           visualDensity: VisualDensity.standard,
         ),
         title: 'RIVA PSY',

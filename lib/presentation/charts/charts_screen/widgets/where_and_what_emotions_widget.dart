@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/user_data/user.dart';
@@ -8,11 +8,12 @@ import '../../../../core/utils/size_utils.dart';
 import '../../../../widgets/custom_search_view.dart';
 import '../../../../widgets/go_to_new_tariff_widget.dart';
 import '../controller.dart';
-import '../models/emotion_model.dart';
 
 class WhereAndWhatEmotionsWidget extends StatelessWidget {
   final K61Controller controller;
   const WhereAndWhatEmotionsWidget({Key? key, required this.controller}) : super(key: key);
+
+  static const double chartHeight = 108;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,6 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
 
     return Container(
       width: size.width,
-      height: size.height - 214,
       decoration: AppDecoration.fillGray200,
       child: SingleChildScrollView(
         child: Column(
@@ -86,30 +86,40 @@ direction: Axis.vertical,
                   SizedBox(height: getVerticalSize(14),),
                   Stack(
                     children: [
-                      grid(),
+                      grid(chartHeight),
                       Container(
-                        height: getVerticalSize(60),
+                        height: getVerticalSize(chartHeight),
                         width: size.width - 32,
                         child: IgnorePointer(
-                          child: SfCartesianChart(
-                            margin: EdgeInsets.only(bottom: 0, top: 0),
-                              plotAreaBorderColor: Colors.transparent,
-                              primaryXAxis: CategoryAxis(
-                                isVisible: false
-                              ),
-                              primaryYAxis: NumericAxis(
-                                  isVisible: false,
-                                  minimum: 0, maximum: e.emotionMax.toDouble(), interval: 1),
-                              tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <CartesianSeries<EmotionModel, String>>[
-                                ColumnSeries<EmotionModel, String>(
-                                  dataSource: e.emotions,
-                                  xValueMapper: (EmotionModel data, _) => data.name,
-                                  yValueMapper: (EmotionModel data, _) => data.quantity,
-                                  pointColorMapper: (EmotionModel data, int _) => data.color,
-                                  name: e.place
-                                )
-                              ]),
+                          // Premium redesign (spec block 3): the light grid
+                          // lines behind this chart (grid()/line() above)
+                          // already provide the subtle horizontal
+                          // direction — fl_chart's own axis/grid stay off
+                          // so nothing doubles up or looks "technical".
+                          child: BarChart(
+                            BarChartData(
+                              maxY: e.emotionMax.toDouble(),
+                              minY: 0,
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
+                              borderData: FlBorderData(show: false),
+                              barTouchData: const BarTouchData(enabled: false),
+                              barGroups: [
+                                for (var i = 0; i < e.emotions.length; i++)
+                                  BarChartGroupData(
+                                    x: i,
+                                    barRods: [
+                                      BarChartRodData(
+                                        toY: e.emotions[i].quantity.toDouble(),
+                                        color: e.emotions[i].color,
+                                        width: 12,
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -137,7 +147,7 @@ direction: Axis.vertical,
                                   TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
                                   style: AppStyle
-                                      .txtSFProDisplayLight10Gray800,),
+                                      .txtSFProDisplayLight10Gray800.copyWith(fontSize: getFontSize(16)),),
                               )
                             ],
                           ),
@@ -217,21 +227,22 @@ direction: Axis.vertical,
     );
   }
 
-  Widget grid() {
+  Widget grid(double height) {
+    final gap = (height - 11) / 10;
     return Container(
-      height: getVerticalSize(60),
+      height: getVerticalSize(height),
       width: size.width - 31,
       child: Row(
         children: [
           Container(
-            height: getVerticalSize(60),
+            height: getVerticalSize(height),
             width: 1,
             color: Colors.white,
           ),
           SizedBox(
-            height: getVerticalSize(60),
+            height: getVerticalSize(height),
             child: Column(
-              children: List<Widget>.generate(11, (index) => line(index)),
+              children: List<Widget>.generate(11, (index) => line(index, gap)),
             ),
           )
         ],
@@ -239,7 +250,7 @@ direction: Axis.vertical,
     );
   }
 
-  Widget line(i) => Column(
+  Widget line(i, double gap) => Column(
     children: [
       SizedBox(
         width: size.width - 32,
@@ -259,7 +270,7 @@ direction: Axis.vertical,
   Visibility(
     visible: i != 10,
     child: SizedBox(
-      height: getVerticalSize(4.8),
+      height: getVerticalSize(gap),
     ),
   )
   ],

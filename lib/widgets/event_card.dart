@@ -6,6 +6,7 @@ import '../../../core/utils/size_utils.dart';
 import '../../../theme/app_decoration.dart';
 import '../../../theme/app_style.dart';
 import '../../../widgets/custom_image_view.dart';
+import 'emotion_color_blob.dart';
 
 class EventCard extends StatelessWidget {
   final EventModel model;
@@ -22,7 +23,11 @@ class EventCard extends StatelessWidget {
   // keep the normal proportional-to-cardHeight behavior.
   final double? iconSizeOverride;
   final double? fontSizeOverride;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride}) : super(key: key);
+  // Premium redesign: only the emotion-selection screens opt into this —
+  // every other Path screen (places, people, activities) that also renders
+  // through EventCard keeps its normal SVG icon.
+  final EmotionMood? emotionMood;
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,22 +77,32 @@ class EventCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            CustomImageView(
-              alignment: Alignment.center,
-              svgPath: model.svgPath,
-              color: iconColor ?? ColorConstant.cyan700,
-              fit: BoxFit.scaleDown,
-              height: getVerticalSize(
-                iconHeight,
-              ),
-              width:
-              iconWidth,
-              radius: BorderRadius.circular(
-                getHorizontalSize(
-                  3,
-                ),
-              ),
-            ),
+            emotionMood == null
+                ? CustomImageView(
+                    alignment: Alignment.center,
+                    svgPath: model.svgPath,
+                    color: iconColor ?? ColorConstant.cyan700,
+                    // BoxFit.scaleDown never scales an SVG past its own
+                    // viewBox size — so raising iconSizeOverride/iconHeight
+                    // had no visible effect, the icon was capped at its
+                    // intrinsic size no matter how big the box got.
+                    // BoxFit.contain scales up to fill the box too.
+                    fit: BoxFit.contain,
+                    height: getVerticalSize(
+                      iconHeight,
+                    ),
+                    width:
+                    iconWidth,
+                    radius: BorderRadius.circular(
+                      getHorizontalSize(
+                        3,
+                      ),
+                    ),
+                  )
+                : _EmotionBlob(
+                    color: emotionBlobColor(model.identity, emotionMood!),
+                    size: getVerticalSize(iconHeight).clamp(0, iconWidth),
+                  ),
             SizedBox(
               height: getVerticalSize(model.localizedName.isEmpty ? 23 : 5),
             ),
@@ -124,4 +139,40 @@ class EventCard extends StatelessWidget {
     );
   }
 
+}
+
+/// Abstract "color blob" standing in for an emotion's face icon — a soft
+/// circle with a glow (per spec: BoxShape.circle + a wide-blur BoxShadow),
+/// colored per emotionBlobColor().
+class _EmotionBlob extends StatelessWidget {
+  final Color color;
+  final double size;
+
+  const _EmotionBlob({required this.color, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    final blobSize = size <= 0 ? 40.0 : size;
+    return SizedBox(
+      width: blobSize,
+      height: blobSize,
+      child: Center(
+        child: Container(
+          width: blobSize * 0.72,
+          height: blobSize * 0.72,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color,
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.55),
+                blurRadius: 24,
+                spreadRadius: 4,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

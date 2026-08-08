@@ -13,6 +13,7 @@ import '../../../theme/app_style.dart';
 import '../../../widgets/custom_bottom_bar.dart';
 import 'controller.dart';
 import 'widgets/where_and_what_emotions_widget.dart';
+import '../../../theme/app_colors.dart';
 
 class K61Screen extends GetWidget{
   const K61Screen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class K61Screen extends GetWidget{
     final controller = Get.put(K61Controller());
     controller.init();
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
@@ -78,7 +79,7 @@ class K61Screen extends GetWidget{
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Container(
-                                height: getVerticalSize(50),
+                                height: getVerticalSize(70),
                                 width: MediaQuery.of(context).size.width - 32,
                                 child: TabBar(
                                   physics: NeverScrollableScrollPhysics(),
@@ -93,59 +94,101 @@ class K61Screen extends GetWidget{
                                   labelStyle: TextStyle(
                                     color: ColorConstant.gray800,
                                     fontSize: getFontSize(
-                                      14,
+                                      12,
                                     ),
-                                    fontFamily: 'SF Pro Display',
+                                    fontFamily: 'Manrope',
                                     fontWeight: FontWeight.w300,
                                   ),
                                   labelColor: ColorConstant.cyan700,
                                   tabs: [
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'state_diagnosis'.tr(),
                                         height: getVerticalSize(70),
+                                        child: Center(
+                                          child: Text(
+                                            'state_diagnosis'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'summary_report'.tr(),
                                         height: getVerticalSize(70),
+                                        child: Center(
+                                          child: Text(
+                                            'summary_report'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'what_emotions_am_I_feeling'.tr(),
                                         height: getVerticalSize(70),
+                                        child: Center(
+                                          child: Text(
+                                            'what_emotions_am_I_feeling'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'where_do_my_emotions_live_in_the_body'.tr(),
                                         height: getVerticalSize(70),
+                                        child: Center(
+                                          child: Text(
+                                            'where_do_my_emotions_live_in_the_body'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
                                         height: getVerticalSize(70),
-                                        text: 'where_and_what_emotions_am_I_experiencing'.tr(),
+                                        child: Center(
+                                          child: Text(
+                                            'where_and_what_emotions_am_I_experiencing'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: getHorizontalSize(120),
+                                      width: getHorizontalSize(140),
                                       height: getVerticalSize(70),
                                       child: Tab(
-                                        text: 'medication_intake_schedule_graph'.tr(),
                                         height: getVerticalSize(70),
+                                        child: Center(
+                                          child: Text(
+                                            'medication_intake_schedule_graph'.tr(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],

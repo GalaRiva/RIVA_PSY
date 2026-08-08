@@ -102,7 +102,7 @@ class RecordPage extends StatelessWidget {
                             filled: true,
                             hintText: '',
                             hintStyle: TextStyle(
-                              fontFamily: 'SF Pro Display',
+                              fontFamily: 'Manrope',
                               fontWeight: FontWeight.w300,
                               fontSize: 14,
                               color: ColorConstant.fromHex('#3B3B4A'),
@@ -148,7 +148,7 @@ class RecordPage extends StatelessWidget {
                             filled: true,
                             hintText: '',
                             hintStyle: TextStyle(
-                              fontFamily: 'SF Pro Display',
+                              fontFamily: 'Manrope',
                               fontWeight: FontWeight.w300,
                               fontSize: 14,
                               color: ColorConstant.fromHex('#3B3B4A'),

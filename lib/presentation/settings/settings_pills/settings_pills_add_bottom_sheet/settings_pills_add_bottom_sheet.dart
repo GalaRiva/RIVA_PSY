@@ -11,6 +11,7 @@ import '../../../../widgets/custom_button.dart';
 import '../../../initial_setup/sign_in/presentation/sign_in_screen/text_input_login_formatter.dart';
 import '../widget/top_icon_button.dart';
 import 'controller.dart';
+import '../../../../theme/app_icons.dart';
 
 class PillsAddBottomSheet extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
@@ -26,7 +27,7 @@ class PillsAddBottomSheet extends StatelessWidget {
           ),
           child: Container(
             color: ColorConstant.gray300.withOpacity(1),
-              height: (size.height - (size.height / 4)) + MediaQuery.of(context).viewInsets.bottom,
+              height: (size.height - (size.height / 3)) + MediaQuery.of(context).viewInsets.bottom,
               child: Stack(
                 children: [
                   SingleChildScrollView(
@@ -129,7 +130,7 @@ class PillsAddBottomSheet extends StatelessWidget {
                                       controller.addTime(context: context),
                                   suffixWidget: Padding(
                                     padding: const EdgeInsets.only(left: 20),
-                                    child: Icon(Icons.add, color: ColorConstant.deepPurple600, size: 20,),
+                                    child: Icon(AppIcons.plus, color: ColorConstant.deepPurple600, size: 20,),
                                   ),
                                   text: 'add_appointment'.tr().toUpperCase(),
                             textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,

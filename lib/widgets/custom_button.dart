@@ -237,7 +237,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,
@@ -249,7 +249,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,
@@ -261,7 +261,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,
@@ -273,7 +273,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -285,7 +285,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             17,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.20,
@@ -297,7 +297,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             10,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.20,
@@ -309,7 +309,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             9,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.22,
@@ -321,7 +321,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,
@@ -333,7 +333,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,
@@ -345,7 +345,7 @@ class CustomButton extends StatelessWidget {
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.25,

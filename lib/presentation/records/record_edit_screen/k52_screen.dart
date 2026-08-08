@@ -21,6 +21,7 @@ import '../../../widgets/custom_pop_button.dart';
 import '../../../widgets/second_variant_event_card.dart';
 
 import 'widgets/event_change_text_field_widget.dart';
+import '../../../theme/app_colors.dart';
 
 class K52Screen extends GetWidget {
 
@@ -35,7 +36,7 @@ class K52Screen extends GetWidget {
       fontSize: getFontSize(
         9,
       ),
-      fontFamily: 'SF Pro Display',
+      fontFamily: 'Manrope',
       fontWeight: FontWeight.w400,
     );
     DayEventModel dayEventModel = (ModalRoute.of(context)?.settings.arguments ??
@@ -45,7 +46,7 @@ class K52Screen extends GetWidget {
     controller.selectedBodyParts = dayEventModel.whatBodyParts ?? [];
     controller.initDate(dayEventModel.date!);
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SizedBox(

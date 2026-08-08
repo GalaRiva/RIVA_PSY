@@ -7,6 +7,7 @@ import '../../../../../core/models/event_model.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
 import '../../../../../widgets/event_card.dart';
+import '../../../../../widgets/emotion_color_blob.dart';
 import '../controller.dart';
 
 class NeutralTab extends StatelessWidget {
@@ -60,7 +61,8 @@ class NeutralTab extends StatelessWidget {
                         width: (MediaQuery.of(context).size.width - 32) / 2,
 
                         child: Wrap(
-                          spacing: 12,
+                          spacing: 16,
+                          runSpacing: 16,
                           runAlignment: WrapAlignment.center,
                           children: List.generate(list.where((element) => element.isNeutralPositive).length, (index)=> Padding(
                             padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralPositive).length - 1 ? 40 : 20),
@@ -68,6 +70,7 @@ class NeutralTab extends StatelessWidget {
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
                               iconSizeOverride: 108,
                               fontSizeOverride: 18,
+                              emotionMood: EmotionMood.positive,
                               isSelect: controller.contain(list.where((element) => element.isNeutralPositive).toList()[index]),
                               model: list.where((element) => element.isNeutralPositive).toList()[index], onTap: () {
                               controller.emotion = list.where((element) => element.isNeutralPositive).toList()[index];
@@ -81,7 +84,8 @@ class NeutralTab extends StatelessWidget {
                         width: (MediaQuery.of(context).size.width - 32) / 2,
 
                         child: Wrap(
-                          spacing: 12,
+                          spacing: 16,
+                          runSpacing: 16,
                           runAlignment: WrapAlignment.center,
                           children: List.generate(list.where((element) => element.isNeutralNegative).length, (index)=> Padding(
                             padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 40 : 20),
@@ -89,6 +93,7 @@ class NeutralTab extends StatelessWidget {
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
                               iconSizeOverride: 108,
                               fontSizeOverride: 18,
+                              emotionMood: EmotionMood.negative,
                               isSelect: controller.contain(list.where((element) => element.isNeutralNegative).toList()[index]),
                               model: list.where((element) => element.isNeutralNegative).toList()[index], onTap: () {
                               controller.emotion =list.where((element) => element.isNeutralNegative).toList()[index];

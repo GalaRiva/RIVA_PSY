@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import 'controller.dart';
+import '../../../../../theme/app_colors.dart';
 
 class WorkingOutCalendarPage extends GetWidget {
 
@@ -26,7 +27,7 @@ class WorkingOutCalendarPage extends GetWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConstant.gray30002,
+        backgroundColor: AppColors.background,
         body: Container(
           width: double.maxFinite,
           child: Column(

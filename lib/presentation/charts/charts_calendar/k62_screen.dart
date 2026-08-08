@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import 'controller.dart';
+import '../../../theme/app_colors.dart';
 
 class K62Screen extends GetWidget {
 
@@ -26,7 +27,7 @@ class K62Screen extends GetWidget {
     controller.getDaysForRows = controller.initializeDaysList();
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray30002,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Container(
           width: double.maxFinite,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import 'k1_controller.dart';
+import '../../../theme/app_colors.dart';
 
 class K1Screen extends StatefulWidget {
   const K1Screen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _K1ScreenState extends State<K1Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       // Was a hand-built widget tree combining a teal circular badge with
       // a separate wordmark image (img_rigel_cyan_700.svg) that spelled
       // "RIGEL", not "RIVA" — a leftover from the pre-rebrand build that

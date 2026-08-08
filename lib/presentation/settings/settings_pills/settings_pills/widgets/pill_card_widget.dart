@@ -11,13 +11,15 @@ import '../../../../../core/utils/image_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
 import '../../../../../widgets/custom_image_view.dart';
+import '../../../../../theme/app_colors.dart';
 
 Widget PillCardWidget(BuildContext context, {required PillModel pillModel, required bool isSelected, required Function update}) {
 
   _onTap () {
     showModalBottomSheet (
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         elevation: 0,
+        isScrollControlled: true,
         context: context, builder: (context) => PillsEditBottomSheet(pill: pillModel)).then((value) {
           update();});
   }

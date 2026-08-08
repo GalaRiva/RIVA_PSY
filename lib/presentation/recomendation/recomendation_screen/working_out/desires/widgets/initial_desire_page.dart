@@ -28,7 +28,7 @@ class InitialDesirePage extends StatelessWidget {
             SizedBox(height: 20,),
             Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
             SizedBox(height: 20,),
-            Text('its_not_about_great_dreams'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight12,),
+            Text('its_not_about_great_dreams'.tr(), style: AppStyle.txtSFProDisplayLight12,),
 
             SizedBox(height: 20,),
             Row(children: [

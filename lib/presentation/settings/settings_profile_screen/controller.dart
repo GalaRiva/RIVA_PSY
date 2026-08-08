@@ -129,7 +129,7 @@ class K18Controller extends GetxController {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
-                            fontFamily: 'SF Pro Display'),
+                            fontFamily: 'Manrope'),
                       ),
                       Padding(
                         padding: getPadding(top: 20),
@@ -152,7 +152,7 @@ class K18Controller extends GetxController {
                                 color: ColorConstant.fromHex('#3B3B4A'),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w300,
-                                fontFamily: 'SF Pro Display'),
+                                fontFamily: 'Manrope'),
                             decoration: InputDecoration(
                                 hintText: CurrentUser.user.login,
                                 counterText: "",
@@ -232,7 +232,7 @@ class K18Controller extends GetxController {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
-                            fontFamily: 'SF Pro Display'),
+                            fontFamily: 'Manrope'),
                       ),
                       Padding(
                         padding: getPadding(top: 20),
@@ -255,7 +255,7 @@ class K18Controller extends GetxController {
                                 color: ColorConstant.fromHex('#3B3B4A'),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w300,
-                                fontFamily: 'SF Pro Display'),
+                                fontFamily: 'Manrope'),
                             decoration: InputDecoration(
                                 hintText: CurrentUser.user.old.toString(),
                                 counterText: "",

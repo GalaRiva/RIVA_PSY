@@ -23,9 +23,9 @@ class ReportWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      height: size.height - 214,
       decoration: AppDecoration.fillGray200,
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -82,6 +82,7 @@ class ReportWidget extends StatelessWidget {
             ),
           )
         ],
+      ),
       ),
     );
   }

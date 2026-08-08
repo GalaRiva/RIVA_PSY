@@ -21,7 +21,6 @@ class AdmissionScheduleWidget extends StatelessWidget {
     final controller = Get.put(AdmissionScheduleController());
     return Container(
       width: size.width,
-      height: size.height - 214,
       decoration: AppDecoration.fillGray200,
       child: FutureBuilder(
         future: controller.initialize(),

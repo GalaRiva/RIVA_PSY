@@ -10,9 +10,9 @@ class  ColorConstant {
 
   static Color blueGray60014 = fromHex('#145f6b80');
 
-  static Color cyan700A0 = fromHex('#a01499a1');
+  static Color cyan700A0 = fromHex('#a02A5C55');
 
-  static Color lightGreen = fromHex('#66C1BD');
+  static Color lightGreen = fromHex('#6B958C');
 
   static Color lightText = fromHex('#838687');
 
@@ -20,7 +20,7 @@ class  ColorConstant {
 
   static Color whiteA70099 = fromHex('#99ffffff');
 
-  static Color cyan70078 = fromHex('#781499a1');
+  static Color cyan70078 = fromHex('#782A5C55');
 
   static Color blueGray700 = fromHex('#403875');
 
@@ -56,7 +56,7 @@ class  ColorConstant {
 
   static Color deepPurple500 = fromHex('#6051be');
 
-  static Color teal200 = fromHex('#65c1bc');
+  static Color teal200 = fromHex('#6B958C');
 
   static Color gray50 = fromHex('#f8f8f8');
 
@@ -64,7 +64,7 @@ class  ColorConstant {
 
   static Color blueGray20001 = fromHex('#b8ccca');
 
-  static Color cyan7008c = fromHex('#8c1499a1');
+  static Color cyan7008c = fromHex('#8c2A5C55');
 
   static Color gray80070 = fromHex('#703b3a4a');
 
@@ -88,9 +88,9 @@ class  ColorConstant {
 
   static Color grayLight = fromHex('#E7EAEA');
 
-  static Color darkWhite = fromHex('#E5EFED');
+  static Color darkWhite = fromHex('#E4EFEA');
 
-  static Color blueGreen = fromHex('#6D908F');
+  static Color blueGreen = fromHex('#4F7A70');
 
   static Color grayTextColor = fromHex('#7C8B88');
 
@@ -116,9 +116,9 @@ class  ColorConstant {
 
   static Color gray80082 = fromHex('#823b3a4a');
 
-  static Color teal20001 = fromHex('#7fbdba');
+  static Color teal20001 = fromHex('#7FA89E');
 
-  static Color cyan700 = fromHex('#1499a1');
+  static Color cyan700 = fromHex('#2A5C55');
 
   static Color gray800A0 = fromHex('#a03b3a4a');
 

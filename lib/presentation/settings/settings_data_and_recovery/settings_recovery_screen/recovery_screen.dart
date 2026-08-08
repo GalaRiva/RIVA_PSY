@@ -11,6 +11,7 @@ import '../../../../widgets/custom_pop_button.dart';
 import '../settings_data_and_recovery_screen/widgets/card_data_and_recovery_button_widget.dart';
 import 'controller.dart';
 import 'widgets/card_recovery_button_widget.dart';
+import '../../../../theme/app_icons.dart';
 
 class RecoveryScreen extends StatelessWidget {
   const RecoveryScreen({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class RecoveryScreen extends StatelessWidget {
                             onTap: () async {
                               await controller.deleteBackup(e);
                             },
-                            child: Center(child: Icon(Icons.close, size: getVerticalSize(18), color: ColorConstant.deepPurple600,)),
+                            child: Center(child: Icon(AppIcons.x, size: getVerticalSize(18), color: ColorConstant.deepPurple600,)),
                           ),
                           onTap: () => controller.setUpRecoveryData(e, service, context)))
                           .toList(),

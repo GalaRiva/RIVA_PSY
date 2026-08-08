@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import '../../../../theme/app_colors.dart';
 
 // ignore: must_be_immutable
 class Chipviewframe178ItemWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class Chipviewframe178ItemWidget extends StatelessWidget {
           fontSize: getFontSize(
             9,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -39,7 +40,7 @@ class Chipviewframe178ItemWidget extends StatelessWidget {
         ),
       ),
       selected: false,
-      backgroundColor: ColorConstant.gray100C4,
+      backgroundColor: AppColors.background,
       selectedColor: ColorConstant.gray100C4,
       shape: RoundedRectangleBorder(
         side: BorderSide(

@@ -145,7 +145,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.21,
@@ -157,7 +157,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,
@@ -169,7 +169,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -181,7 +181,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -193,7 +193,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -205,7 +205,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -217,7 +217,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,
@@ -229,7 +229,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -241,7 +241,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.27,
@@ -253,7 +253,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.14,
@@ -265,7 +265,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             13,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.20,
@@ -282,7 +282,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.21,
@@ -294,7 +294,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,
@@ -306,7 +306,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,
@@ -318,7 +318,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -330,7 +330,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -342,7 +342,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -354,7 +354,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -366,7 +366,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,
@@ -378,7 +378,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.27,
@@ -390,7 +390,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             11,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w400,
           height: getVerticalSize(
             1.27,
@@ -402,7 +402,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.14,
@@ -414,7 +414,7 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.20,

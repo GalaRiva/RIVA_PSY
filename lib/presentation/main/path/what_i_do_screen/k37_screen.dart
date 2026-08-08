@@ -5,6 +5,7 @@ import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../core/models/day_event_model.dart';
+import '../../../../theme/app_colors.dart';
 
 
 class K37Screen extends StatelessWidget {
@@ -20,7 +21,7 @@ class K37Screen extends StatelessWidget {
     dayEvent ?? (ModalRoute.of(context)?.settings.arguments ?? DayEventModel())
     as DayEventModel;
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SizedBox(
           height: size.height,
@@ -103,7 +104,7 @@ class K37Screen extends StatelessWidget {
                         padding:
                         getPadding(left: 0, top: 18, right: 0),
                         child: SizedBox(
-                          height: 57,
+                          height: 114,
                           width: MediaQuery.of(context).size.width - 32,
                           child: TextFormField(
                             controller: fieldController,
@@ -118,7 +119,7 @@ class K37Screen extends StatelessWidget {
                                 filled: true,
                                 hintText: 'your_actions'.tr(),
 
-                                hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
+                                hintStyle: TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                             ),
                           ),
                         ),

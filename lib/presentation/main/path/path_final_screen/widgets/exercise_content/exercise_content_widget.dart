@@ -8,6 +8,7 @@ import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/size_utils.dart';
 import '../../../../../../theme/app_style.dart';
 import '../../../../../../widgets/event_card.dart';
+import '../../../../../../widgets/emotion_color_blob.dart';
 import '../audio_container/audio_containers.dart';
 import 'controller.dart';
 
@@ -21,6 +22,10 @@ class ExerciseContentWidget extends StatelessWidget {
     final controller = Get.put(ExerciseContentController());
     controller.dayEvent = dayEvent;
     controller.update();
+    // Premium redesign: color blobs instead of icons on this screen too.
+    final categoryMood = dayEvent.emotionInDayEvent == EmotionInDayEvent.NEGATIVE
+        ? EmotionMood.negative
+        : EmotionMood.positive;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -58,6 +63,7 @@ class ExerciseContentWidget extends StatelessWidget {
             right: 10,),
           child: EventCard(
             iconColor: dayEvent.whatEmotion!.length > 1 ? ColorConstant.fromHex('#5B4FA9') : ColorConstant.cyan700,
+            emotionMood: moodForKey(dayEvent.whatEmotion![0].identity, categoryMood),
             model: dayEvent.whatEmotion![0],
             cardHeight: 44, isSelect: false,
           ),
@@ -144,7 +150,9 @@ class ExerciseContentWidget extends StatelessWidget {
                           return Padding(
                             padding: getPadding(right: 12),
                             child: EventCard(
-
+                              emotionMood: moodForKey(
+                                  controller.additionalEmotions![index].identity,
+                                  categoryMood),
                               model: controller.additionalEmotions![index],
                               cardHeight: 44, isSelect: false,
                             ),

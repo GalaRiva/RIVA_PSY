@@ -14,6 +14,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'controller.dart';
 import 'widgets/listtime_item_widget.dart';
+import '../../../theme/app_colors.dart';
 
 class K12Page extends GetWidget<K12Controller> {
   @override
@@ -23,7 +24,7 @@ class K12Page extends GetWidget<K12Controller> {
     return Scaffold(
         bottomNavigationBar:
             CustomBottomBar(onChanged: (BottomBarEnum type) {}),
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -57,46 +58,46 @@ class K12Page extends GetWidget<K12Controller> {
                                           (BuildContext context, int index) {
                                         return Column(
                                           children: [
-                                            Row(
+                                            GestureDetector(
+                                                behavior: HitTestBehavior.opaque,
+                                                onTap: () async {
+                                                  if (!controller
+                                                      .list[index]
+                                                      .selected) {
+                                                    for (var item
+                                                        in controller
+                                                            .list)
+                                                      item.selected =
+                                                          false;
+                                                    controller
+                                                            .list[index]
+                                                            .selected =
+                                                        true;
+                                                    CurrentUser.user
+                                                            .reminderTime =
+                                                        controller
+                                                            .list[index]
+                                                            .quantity;
+                                                    await controller
+                                                        .generateNewNotifications(
+                                                            controller
+                                                                .list[
+                                                                    index]
+                                                                .quantity,
+                                                            controller
+                                                                    .notificationList ??
+                                                                []);
+                                                    controller.update();
+                                                  }
+                                                },
+                                                child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  GestureDetector(
-                                                      onTap: () async {
-                                                        if (!controller
-                                                            .list[index]
-                                                            .selected) {
-                                                          for (var item
-                                                              in controller
-                                                                  .list)
-                                                            item.selected =
-                                                                false;
-                                                          controller
-                                                                  .list[index]
-                                                                  .selected =
-                                                              true;
-                                                          CurrentUser.user
-                                                                  .reminderTime =
-                                                              controller
-                                                                  .list[index]
-                                                                  .quantity;
-                                                          await controller
-                                                              .generateNewNotifications(
-                                                                  controller
-                                                                      .list[
-                                                                          index]
-                                                                      .quantity,
-                                                                  controller
-                                                                          .notificationList ??
-                                                                      []);
-                                                          controller.update();
-                                                        }
-                                                      },
-                                                      child:
-                                                          CustomCheckboxNotification(
-                                                              controller
-                                                                  .list[index]
-                                                                  .selected)),
+                                                  CustomCheckboxNotification(
+                                                      controller
+                                                          .list[index]
+                                                          .selected),
                                                   Padding(
                                                       padding: getPadding(
                                                           left: 18, top: 1),
@@ -117,6 +118,7 @@ class K12Page extends GetWidget<K12Controller> {
                                                               : AppStyle
                                                                   .txtSFProDisplayLight12Gray500))
                                                 ]),
+                                            ),
                                             SizedBox(
                                               height: 40,
                                             )

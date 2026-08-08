@@ -7,6 +7,7 @@ import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../core/models/tariff_model.dart';
 import '../../../core/utils/subscription_links.dart';
+import '../../../theme/app_icons.dart';
 
 class K4Screen extends StatelessWidget {
   TextEditingController group993Controller = TextEditingController();
@@ -48,7 +49,7 @@ class K4Screen extends StatelessWidget {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(Icons.close, color: ColorConstant.gray800,))
+                              child: Icon(AppIcons.x, color: ColorConstant.gray800,))
                         ],
                       ),
                       Padding(padding: getPadding(

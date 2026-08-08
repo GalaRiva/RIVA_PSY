@@ -9,6 +9,8 @@ import '../../../../core/models/day_event_model.dart';
 import '../../../../core/models/event_model.dart';
 import '../../../../widgets/event_card.dart';
 import 'controller.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_icons.dart';
 
 class K22Screen extends GetWidget {
   final DayEventModel? dayEvent;
@@ -29,7 +31,7 @@ class K22Screen extends GetWidget {
     final _focus2 = FocusNode();
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SizedBox(
           height: size.height,
@@ -161,7 +163,7 @@ class K22Screen extends GetWidget {
                                       child: IconButton(
                                         iconSize: 14,
                                         icon: Icon(
-                                          Icons.add,
+                                          AppIcons.plus,
                                           size: getSize(20),
                                         ),
                                         onPressed: () async {
@@ -200,7 +202,8 @@ class K22Screen extends GetWidget {
                                     child: GetBuilder(
                                       builder: (K22Controller _c) => Wrap(
                                         runAlignment: WrapAlignment.center,
-                                        spacing: 12,
+                                        spacing: 16,
+                                        runSpacing: 16,
 
                                         children: controller.currentEventList
                                             .map((el) => Padding(
@@ -212,7 +215,7 @@ class K22Screen extends GetWidget {
                                                 controller.update();
                                               }, isSelect: controller.contain(el),
                                                                                       cardWidth: size.width / 2 -30,
-                                                                                      iconSizeOverride: 108,
+                                                                                      iconSizeOverride: 216,
                                                                                       fontSizeOverride: 18,
                                                                                       ),
                                             ))

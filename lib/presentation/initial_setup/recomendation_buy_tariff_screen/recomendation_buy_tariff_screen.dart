@@ -8,6 +8,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../core/utils/subscription_links.dart';
+import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -17,7 +18,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
   TextEditingController group995Controller = TextEditingController();
 
   @override Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: ColorConstant.gray300,
+    return Scaffold(backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: Center(
           child: Container(

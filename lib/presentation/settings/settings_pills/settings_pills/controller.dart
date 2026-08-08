@@ -9,6 +9,7 @@ import '../../../../core/services/workmanager/workmanager_service.dart';
 import '../models/pill_model.dart';
 import 'pills_list_model.dart';
 import 'widgets/pill_list_widget.dart';
+import '../../../../theme/app_colors.dart';
 
 class PillsController extends GetxController {
   var _currentPillsList = PillsList.actual;
@@ -23,9 +24,10 @@ class PillsController extends GetxController {
 
   void addPill(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
         context: context,
         elevation: 0,
+        isScrollControlled: true,
         builder: (context) => PillsAddBottomSheet()).then((value) {
 
           update();});

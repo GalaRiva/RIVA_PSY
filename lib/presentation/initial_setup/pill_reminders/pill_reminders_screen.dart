@@ -11,6 +11,7 @@ import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
 import '../recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import '../set_reminders_screen/k3_screen.dart';
+import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -20,7 +21,7 @@ class PillRemindersScreen extends StatelessWidget {
   TextEditingController group995Controller = TextEditingController();
 
   @override Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: ColorConstant.gray300,
+    return Scaffold(backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: Container(
             height: size.height,
@@ -99,7 +100,7 @@ class PillRemindersScreen extends StatelessWidget {
     Navigator.pop(context);
       showModalBottomSheet(
           elevation: 0,
-          backgroundColor: ColorConstant.gray300.withOpacity(1),
+          backgroundColor: AppColors.background.withOpacity(1),
 
           context: context, builder: (_) {
         return PillsAddBottomSheet();

@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart' ;
 
 import 'controller.dart';
 import 'widgets/card_settings_button_widget.dart';
+import '../../../theme/app_colors.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -15,7 +16,7 @@ class K6Screen extends GetWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(K6Controller());
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: SizedBox(
               width: size.width,

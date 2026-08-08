@@ -5,6 +5,7 @@ import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../theme/app_style.dart';
 import '../../../../widgets/custom_text_form_field.dart';
+import '../../../../theme/app_icons.dart';
 
 class RetractableContainerWidget extends StatefulWidget {
   final EdgeInsetsGeometry padding;
@@ -134,7 +135,7 @@ class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
                         padding: getPadding(bottom: 1),
                         child: wasTapped
                             ? Icon(
-                                Icons.close_outlined,
+                                AppIcons.x,
                                 color: ColorConstant.deepPurple600,
                                 size: getVerticalSize(20),
                               )

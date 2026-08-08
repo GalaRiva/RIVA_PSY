@@ -11,6 +11,7 @@ import '../../../../theme/app_style.dart';
 import '../../../../widgets/body_widget.dart';
 import '../../../../widgets/custom_image_view.dart';
 import '../../../../widgets/second_variant_event_card.dart';
+import '../../../../theme/app_icons.dart';
 
 Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
   final _color = ColorConstant.fromHex('#5B4FA9');
@@ -19,7 +20,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
   debugPrint(dayEventModel.toJson().toString());
@@ -243,7 +244,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                                                     borderRadius: BorderRadius.circular(3),
                                                     color: ColorConstant.fromHex('#F9F9F9')),
                                                 child: Center(
-                                                  child: Icon(Icons.check, color: ColorConstant.cyan700, size: 10,),
+                                                  child: Icon(AppIcons.check, color: ColorConstant.cyan700, size: 10,),
                                                 ),
                                               ))
                                     ],
@@ -281,7 +282,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                       ),
                       SizedBox(
                         width: 4, height: 8,
-                          child: Icon(Icons.chevron_right_sharp, size: 8, color: ColorConstant.gray200,))
+                          child: Icon(AppIcons.caretRight, size: 8, color: ColorConstant.gray200,))
                     ],
                   ),
                 )

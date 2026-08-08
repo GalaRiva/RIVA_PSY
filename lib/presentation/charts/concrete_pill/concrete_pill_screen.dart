@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/color_constant.dart';
 import '../../../../widgets/custom_message_box.dart';
 import 'widgets/message_box_with_central_icon.dart';
+import '../../../theme/app_colors.dart';
 
 class ConcretePillScreen extends StatelessWidget {
 
@@ -14,7 +15,7 @@ class ConcretePillScreen extends StatelessWidget {
     final _date = data['date'] ?? DateTime.now();
 
     return Scaffold(
-      backgroundColor: ColorConstant.fromHex('#D7E1E1').withOpacity(0.44),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Center(
           child: MessageBoxWithCentralIcon(_pillName, _time, context, _date).widget()

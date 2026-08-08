@@ -11,6 +11,7 @@ import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_password_field.dart';
 import '../../../widgets/custom_pop_button.dart';
+import '../../../theme/app_colors.dart';
 import'controller.dart';
 
 class K9Screen extends GetWidget<K9Controller> {
@@ -41,7 +42,7 @@ class K9Screen extends GetWidget<K9Controller> {
       }
     }).obs;
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SizedBox(

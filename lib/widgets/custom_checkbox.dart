@@ -123,7 +123,7 @@ class CustomCheckbox extends StatelessWidget {
           fontSize: getFontSize(
             12,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.25,

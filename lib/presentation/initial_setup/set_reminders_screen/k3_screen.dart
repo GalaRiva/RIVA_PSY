@@ -16,6 +16,7 @@ import '../../../core/user_data/user.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../widgets/custom_checkbox_notification.dart';
+import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -29,7 +30,7 @@ class K3Screen extends GetWidget<K3Controller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: Container(
             width: size.width,
@@ -91,7 +92,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                                             _controller) =>
                                                         SizedBox(
                                                       height:
-                                                          (40 + 15) * 4,
+                                                          (40 + 15) * 5,
                                                       width: 150,
                                                       child: ListView
                                                           .builder(
@@ -110,24 +111,26 @@ class K3Screen extends GetWidget<K3Controller> {
                                                                     .only(
                                                                 bottom:
                                                                     40),
-                                                            child: Row(
+                                                            child: GestureDetector(
+                                                              behavior: HitTestBehavior.opaque,
+                                                              onTap: () {
+                                                                if (!controller.list[index].selected) {
+                                                                  for (var item in controller.list) item.selected = false;
+                                                                  controller.list[index].selected = true;
+                                                                  quantity = controller.list[index].quantity;
+                                                                  controller.update();
+                                                                }
+                                                              },
+                                                              child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment.center,
                                                                 children: [
-                                                                  GestureDetector(
-                                                                      onTap: () {
-                                                                        if (!controller.list[index].selected) {
-                                                                          for (var item in controller.list) item.selected = false;
-                                                                          controller.list[index].selected = true;
-                                                                          quantity = controller.list[index].quantity;
-                                                                          controller.update();
-                                                                        }
-                                                                      },
-                                                                      child: CustomCheckboxNotification(controller.list[index].selected)),
+                                                                  CustomCheckboxNotification(controller.list[index].selected),
                                                                   Padding(
                                                                       padding: getPadding(left: 18, top: 1),
                                                                       child: Text("${controller.list[index].quantity} ${'times_per_day'.tr()}", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: controller.list[index].selected ? AppStyle.txtSFProDisplayLight12 : AppStyle.txtSFProDisplayLight12Gray500))
                                                                 ]),
+                                                            ),
                                                           );
                                                         },
                                                       ),
@@ -221,7 +224,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                                   ColorConstant.gray800,
                                               fontSize: getFontSize(12),
                                               fontFamily:
-                                                  'SF Pro Display',
+                                                  'Manrope',
                                               fontWeight:
                                                   FontWeight.w300)),
                                       GestureDetector(
@@ -235,7 +238,7 @@ class K3Screen extends GetWidget<K3Controller> {
                                                 fontSize:
                                                     getFontSize(12),
                                                 fontFamily:
-                                                    'SF Pro Display',
+                                                    'Manrope',
                                                 fontWeight:
                                                     FontWeight.w300,
                                                 decoration:

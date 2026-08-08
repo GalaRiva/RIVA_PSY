@@ -14,6 +14,8 @@ import '../../../../core/models/event_model.dart';
 import '../../../../widgets/event_card.dart';
 import 'controller.dart';
 import 'widgets/neutral_tab.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_icons.dart';
 
 class K27Screen extends GetWidget {
   final DayEventModel? dayEvent;
@@ -79,7 +81,7 @@ class K27Screen extends GetWidget {
     final _focus = FocusNode();
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
@@ -206,7 +208,7 @@ class K27Screen extends GetWidget {
                               child: IconButton(
                                 iconSize: 14,
                                 icon: Icon(
-                                  Icons.add,
+                                  AppIcons.plus,
                                   size: getSize(20),
                                 ),
                                 onPressed: () async {
@@ -260,7 +262,7 @@ class K27Screen extends GetWidget {
                                       fontSize: getFontSize(
                                         14,
                                       ),
-                                      fontFamily: 'SF Pro Display',
+                                      fontFamily: 'Manrope',
                                       fontWeight: FontWeight.w300,
                                       height: getVerticalSize(
                                         1.21,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import '../theme/app_icons.dart';
 
 class CustomMessageBox extends StatelessWidget {
   final String title;
@@ -45,7 +46,7 @@ class CustomMessageBox extends StatelessWidget {
                             fontSize: 13,
 
                             fontWeight: FontWeight.w300,
-                            fontFamily: 'SF Pro Display'),
+                            fontFamily: 'Manrope'),
                       ),
                     ),
                         Visibility(
@@ -54,7 +55,7 @@ class CustomMessageBox extends StatelessWidget {
                               alignment: Alignment.center,
                               onPressed: () => onPop != null ? onPop!() : Navigator.pop(context),
                               icon: Icon(
-                                Icons.close,
+                                AppIcons.x,
                                 size: getSize(18),
                                 color: Colors.white,
                               )),
@@ -79,7 +80,7 @@ class CustomMessageBox extends StatelessWidget {
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w300,
-                                  fontFamily: 'SF Pro Display'),
+                                  fontFamily: 'Manrope'),
                             ),
                           )
                         : content ?? Container(),

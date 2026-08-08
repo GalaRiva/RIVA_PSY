@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'text_for_select_period_widget.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/user_data/user.dart';
 
@@ -42,7 +42,6 @@ class WhereInBodyWidget extends StatelessWidget {
       builder: (K61Controller _c) =>
       Container(
         width: size.width,
-        height: size.height - 214,
         decoration: AppDecoration.fillGray200,
         child: SingleChildScrollView(
           child: Column(
@@ -267,19 +266,21 @@ class WhereInBodyWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         height: getHorizontalSize(83),
                       width: getHorizontalSize(83),
-                        child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: SfCircularChart(
-                          series: [
-                            PieSeries(
-                                dataSource: e.bodyParts,
-                                pointColorMapper: (dynamic model, int _) => model.color,
-                                xValueMapper: (dynamic data, _) => data.bodyPart.bodyPartsModel.localizedBodyPart,
-                                yValueMapper: (dynamic data, _) => data.quantity
-                            )
-                          ],
+                        child: PieChart(
+                          PieChartData(
+                            sections: [
+                              for (final part in e.bodyParts)
+                                PieChartSectionData(
+                                  value: part.quantity.toDouble(),
+                                  color: part.color,
+                                  showTitle: false,
+                                  radius: getHorizontalSize(40),
+                                ),
+                            ],
+                            sectionsSpace: 1,
+                            centerSpaceRadius: 0,
+                          ),
                         ),
-                      ),
                       ),
                       Wrap(
                         direction: Axis.vertical,

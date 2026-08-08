@@ -14,6 +14,7 @@ import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
+import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -24,7 +25,7 @@ class K13Screen extends GetWidget {
     Get.put(K13Controller());
     return GetBuilder(
       builder: (K13Controller c) => Scaffold(
-          backgroundColor: ColorConstant.gray300,
+          backgroundColor: AppColors.background,
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(

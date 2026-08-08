@@ -100,7 +100,7 @@ class CustomSearchView extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,
@@ -112,7 +112,7 @@ class CustomSearchView extends StatelessWidget {
           fontSize: getFontSize(
             14,
           ),
-          fontFamily: 'SF Pro Display',
+          fontFamily: 'Manrope',
           fontWeight: FontWeight.w300,
           height: getVerticalSize(
             1.21,

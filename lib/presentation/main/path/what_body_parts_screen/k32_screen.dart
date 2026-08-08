@@ -14,6 +14,8 @@ import '../../../../core/models/day_event_model.dart';
 import '../../../../widgets/body_widget.dart';
 import 'controller.dart';
 import 'widgets/body_parts_widget.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_icons.dart';
 
 class K32Screen extends GetWidget {
 
@@ -33,7 +35,7 @@ class K32Screen extends GetWidget {
     final _focus2 = FocusNode();
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
@@ -164,7 +166,7 @@ class K32Screen extends GetWidget {
                                       child: IconButton(
                                         iconSize: 14,
                                         icon: Icon(
-                                          Icons.add,
+                                          AppIcons.plus,
                                           size: getSize(20),
                                         ),
                                         onPressed: () async {
@@ -251,13 +253,17 @@ class K32Screen extends GetWidget {
                               padding: getPadding(top: 36),
                               child:  GetBuilder(
                                   builder: (K32Controller _c) => SizedBox(
-                                    height: getVerticalSize(380),
+                                    height: getVerticalSize(380) * 1.18,
                                     width: (size.width - 32),
-                                    child: Row(
-                                      children: [
-                                        BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),),
-                                        BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(), index: 2,),
-                                      ],
+                                    child: Transform.scale(
+                                      scale: 1.18,
+                                      alignment: Alignment.topCenter,
+                                      child: Row(
+                                        children: [
+                                          BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),),
+                                          BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(), index: 2,),
+                                        ],
+                                      ),
                                     ),
                                   ))
                             ),

@@ -11,6 +11,7 @@ import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
 import 'drop_text_widget.dart';
 import 'notification_diagnostics_widget.dart';
+import '../../../theme/app_colors.dart';
 
 // Live, direct-from-Firestore snapshot for the "Emociones negativas" text
 // and the audio-matching fallback count — not routed through
@@ -61,7 +62,7 @@ class K7Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = K7Controller(context.locale.languageCode);
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SizedBox(

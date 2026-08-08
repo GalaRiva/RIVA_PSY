@@ -8,6 +8,7 @@ import 'k2_controller.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_checkbox.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
+import '../../../../../theme/app_colors.dart';
 
 class K2Screen extends GetWidget<K2Controller> {
   TextEditingController group887Controller = TextEditingController();
@@ -49,7 +50,7 @@ class K2Screen extends GetWidget<K2Controller> {
   Widget build(BuildContext context) {
     final key = GlobalKey<FormState>();
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -119,28 +120,43 @@ class K2Screen extends GetWidget<K2Controller> {
                         ),
                         Padding(
                           padding: getPadding(top: 20),
-                          child: InkWell(
-                            onTap: () => Navigator.pushNamed(
-                                context, AppRoutes.signIn),
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                              children: [
-                                Text('have_account'.tr() + " ",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle
-                                        .txtSFProDisplayLight16DeepPurple
-                                        .copyWith(
-                                          fontSize: getFontSize(26),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgVector46,
-                                  height: getVerticalSize(8),
-                                  width: getHorizontalSize(4),
-                                ),
-                              ],
+                          child: SizedBox(
+                            height: 75,
+                            width: size.width,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(3)),
+                                side: BorderSide(
+                                    width: 1,
+                                    color: ColorConstant.cyan700),
+                              ),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, AppRoutes.signIn),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      'have_account'.tr(),
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: AppStyle
+                                          .txtSFProDisplayLight16
+                                          .copyWith(fontSize: 20),
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  CustomImageView(
+                                    svgPath: ImageConstant.imgVector46,
+                                    height: getVerticalSize(8),
+                                    width: getHorizontalSize(4),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

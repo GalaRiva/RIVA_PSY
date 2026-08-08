@@ -8,6 +8,7 @@ import '../../../core/models/tariff_model.dart';
 import '../../../core/user_data/user.dart';
 import 'controller.dart';
 import 'repository.dart';
+import '../../../theme/app_colors.dart';
 
 class K17Screen extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class K17Screen extends StatelessWidget {
       }
     });
     return Scaffold(
-      backgroundColor: ColorConstant.teal200,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Container(
           width: double.maxFinite,

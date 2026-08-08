@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../core/models/body_parts_model.dart';
 import '../core/user_data/user.dart';
-import '../core/utils/image_constant.dart';
 import '../core/utils/size_utils.dart';
+import 'body_zone_colors.dart';
 import 'circular_container_widget.dart';
-import 'custom_image_view.dart';
 
 class BodyWidget extends StatelessWidget {
   final int index;
@@ -28,10 +28,20 @@ class BodyWidget extends StatelessWidget {
                 .map((e)
             {
               _circleIndex++;
+                      // Zone colors are keyed by body-part identity (spec:
+                      // голова и лицо — голубой, горло — синий, грудная
+                      // клетка — бордовый, плечи и руки — красный, живот —
+                      // зеленый, ноги — желтый, спина — фиолетовый) rather
+                      // than by list position, so they can't drift out of
+                      // sync if the list order ever changes.
+                      final fallbackColor = circleColors != null &&
+                              _circleIndex - 1 < circleColors!.length
+                          ? circleColors![_circleIndex - 1]
+                          : ColorConstant.teal200;
                       return Visibility(
                           visible: e.marginLeft != null && e.marginTop != null,
                           child: CircularContainerWidget(
-                              color: circleColors?[_circleIndex - 1] ?? ColorConstant.teal200,
+                              color: bodyZoneColor(e.key, fallbackColor),
                               margin: getMargin(
                                   top: e.marginTop ?? 0,
                                   left: e.marginLeft ?? 0)));
@@ -39,19 +49,21 @@ class BodyWidget extends StatelessWidget {
                 .toList(),
           ),
           index == 1
-              ? CustomImageView(
+              ? SvgPicture.asset(
+                  CurrentUser.user.male!
+                      ? 'assets/images/body_outline_male.svg'
+                      : 'assets/images/body_outline_female.svg',
                   height: getVerticalSize(380),
                   width: (size.width - 32) / 2,
-                  svgPath: CurrentUser.user.male!
-                      ? ImageConstant.eventMan
-                      : ImageConstant.eventWoman,
+                  fit: BoxFit.contain,
                 )
-              : CustomImageView(
+              : SvgPicture.asset(
+                  CurrentUser.user.male!
+                      ? 'assets/images/body_outline_male_back.svg'
+                      : 'assets/images/body_outline_female_back.svg',
                   height: getVerticalSize(380),
                   width: (size.width - 32) / 2,
-                  svgPath: CurrentUser.user.male!
-                      ? ImageConstant.eventMan2
-                      : ImageConstant.eventWoman2,
+                  fit: BoxFit.contain,
                 ),
         ],
       ),

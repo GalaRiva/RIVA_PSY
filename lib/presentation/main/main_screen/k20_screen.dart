@@ -25,6 +25,7 @@ import '../../../widgets/inner_shadow.dart';
 import 'controller.dart';
 import 'repository.dart';
 import 'widgets/try_irrational_dialog.dart';
+import '../../../theme/app_colors.dart';
 
 class K20Screen extends GetWidget<K20Controller> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -41,7 +42,7 @@ class K20Screen extends GetWidget<K20Controller> {
     return Builder(
       builder: (context) {
         return Scaffold(
-          backgroundColor: ColorConstant.gray300,
+          backgroundColor: AppColors.background,
           body: SafeArea(
             child: SizedBox(
               width: size.width,

@@ -5,6 +5,7 @@ import 'package:riva_psy/theme/app_style.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../../../core/utils/color_constant.dart';
+import '../../../../../../theme/app_icons.dart';
 
 class WishesDetailDialog extends StatelessWidget {
   final int index;
@@ -63,7 +64,7 @@ class WishesDetailDialog extends StatelessWidget {
               children: [
                 Align(alignment: Alignment.topRight, child: GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Icon(Icons.close, color: ColorConstant.blueGray400, size: 20,)),),
+                    child: Icon(AppIcons.x, color: ColorConstant.blueGray400, size: 20,)),),
                 SizedBox(height: 10,),
                 Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
                 SizedBox(height: 10,),

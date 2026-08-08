@@ -5,6 +5,7 @@ import 'package:riva_psy/core/app_export.dart';
 
 import '../core/utils/subscription_links.dart';
 import 'custom_button.dart';
+import '../theme/app_icons.dart';
 
 class GoToNewTariffWidget extends StatelessWidget {
   final VoidCallback? onSecondButtonTap;
@@ -77,7 +78,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 margin: getMargin(top: 40),
                 suffixWidget: Padding(
                   padding: getPadding(left: 10),
-                  child: Icon(Icons.arrow_forward_ios_sharp, size: getSize(10), color: ColorConstant.deepPurple600,),
+                  child: Icon(AppIcons.caretRight, size: getSize(10), color: ColorConstant.deepPurple600,),
                 ),
                 text: 'to_free_recommendations'.tr().toUpperCase(),
                 textIsFitted: true,

@@ -4,6 +4,7 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../core/utils/color_constant.dart';
 import '../core/utils/image_constant.dart';
 import '../core/utils/size_utils.dart';
+import '../theme/app_colors.dart';
 import '../theme/app_decoration.dart';
 import 'custom_image_view.dart';
 import 'inner_shadow.dart';
@@ -29,7 +30,10 @@ class CircularSliderWidget extends StatelessWidget {
         right: 17,
         bottom: 19,
       ),
-      decoration: AppDecoration.fillGray2007c.copyWith(
+      // Was AppDecoration.fillGray2007c (solid gray fill behind the track) —
+      // premium redesign asks for a thin elegant track line with no filled
+      // background behind it.
+      decoration: BoxDecoration(
         borderRadius: BorderRadiusStyle.circleBorder101,
       ),
       child: Stack(
@@ -64,19 +68,21 @@ class CircularSliderWidget extends StatelessWidget {
                   startAngle: 105,
                   angleRange: 330,
                   size: 220,
+                  // Thin elegant track line instead of the old thick
+                  // (15px) filled band — premium redesign.
                   customColors: CustomSliderColors(
-                    trackColor: Colors.white,
-                    dotColor: ColorConstant.fromHex("#768295"),
+                    trackColor: AppColors.divider,
+                    dotColor: AppColors.primary,
                     progressBarColors: [
-                      ColorConstant.fromHex('#403875'),
-                      ColorConstant.fromHex('#7FBDBA'),
+                      AppColors.primary,
+                      AppColors.primaryLight,
                     ],
                   ),
                   customWidths: CustomSliderWidths(
-                      handlerBorderWidth: 9,
-                      progressBarWidth: 15,
-                      handlerSize: 12,
-                      trackWidth: 15)),
+                      handlerBorderWidth: 4,
+                      progressBarWidth: 3,
+                      handlerSize: 8,
+                      trackWidth: 3)),
               min: 0,
               max: 10,
               initialValue: value,

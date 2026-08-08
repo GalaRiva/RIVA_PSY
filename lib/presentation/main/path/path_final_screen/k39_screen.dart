@@ -11,6 +11,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'widgets/voice_button.dart';
 import 'controller.dart';
+import '../../../../theme/app_colors.dart';
 
 class K39Screen extends GetWidget {
 
@@ -27,7 +28,7 @@ class K39Screen extends GetWidget {
         return false;
       },
       child: Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: SizedBox(
             width: size.width,

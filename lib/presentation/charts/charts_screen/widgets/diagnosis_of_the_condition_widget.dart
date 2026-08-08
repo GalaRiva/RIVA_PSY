@@ -1,11 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import '../../../../core/utils/color_constant.dart';
-import '../../../../core/utils/image_constant.dart';
 import '../../../../core/utils/size_utils.dart';
+import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_decoration.dart';
-import '../../../../widgets/custom_image_view.dart';
 import '../../charts_screen/widgets/text_for_select_period_widget.dart';
 import '../controller.dart';
 
@@ -23,7 +21,6 @@ class DiagnosticOfTheConditionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      height: size.height - 214,
       decoration: AppDecoration.fillGray200,
       child: Column(
         children: [
@@ -36,49 +33,42 @@ class DiagnosticOfTheConditionWidget extends StatelessWidget {
               margin: getMargin(top: 22),
               height: getVerticalSize(120),
               width: size.width - 32,
-              child: Stack(
-                children: [
-                  CustomImageView(
-                    height: getHorizontalSize(120),
-                    width: size.width - 32,
-                    svgPath: ImageConstant.imageGrid,
-                    fit: BoxFit.fill,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: getVerticalSize(120),
-                  width: getHorizontalSize(1),
-                  color: Colors.black,
-                  ),
-
-                  Align(
-                    alignment: Alignment.center,
-                    child: Divider(
-                      height: getVerticalSize(1),
-                      color: Colors.black,
-                      thickness: getVerticalSize(1),
-                      indent: 0,
-                      endIndent: 0,
-                    ),
-                  ),Padding(
-                  padding: getPadding(top: 20, bottom: 20),
-    child:
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child:  SfSparkLineChart(
-                        color:  ColorConstant.cyan700,
-                        axisLineWidth: 0,
-                        data: dataForChart,
-                        marker: SparkChartMarker(
-                          borderColor: ColorConstant.cyan700,
-                            color: ColorConstant.cyan700,
-                            borderWidth: 8,
-                            shape: SparkChartMarkerShape.circle,
-                            displayMode: SparkChartMarkerDisplayMode.all),
+              // Premium redesign (spec block 3): was a hard background grid
+              // image plus manually-drawn black axis/divider lines behind a
+              // sparkline with a marker dot on every single point — the
+              // "слишком технический" look the spec calls out. fl_chart's
+              // LineChart gives curved (isCurved) lines, no visible axes,
+              // and a translucent gradient fill under the line natively.
+              child: LineChart(
+                LineChartData(
+                  gridData: const FlGridData(show: false),
+                  titlesData: const FlTitlesData(show: false),
+                  borderData: FlBorderData(show: false),
+                  lineTouchData: const LineTouchData(enabled: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: [
+                        for (var i = 0; i < dataForChart.length; i++)
+                          FlSpot(i.toDouble(), dataForChart[i].toDouble()),
+                      ],
+                      isCurved: true,
+                      color: AppColors.primary,
+                      barWidth: 3,
+                      dotData: const FlDotData(show: false),
+                      belowBarData: BarAreaData(
+                        show: true,
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.primary.withOpacity(0.3),
+                            AppColors.primary.withOpacity(0.0),
+                          ],
+                        ),
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           )

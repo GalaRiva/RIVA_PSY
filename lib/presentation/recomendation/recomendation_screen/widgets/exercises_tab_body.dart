@@ -42,7 +42,7 @@ class ExercisesTabBody extends StatelessWidget {
                     fontSize: getFontSize(
                       14,
                     ),
-                    fontFamily: 'SF Pro Display',
+                    fontFamily: 'Manrope',
                     fontWeight: FontWeight.w300,
                   ),
                   labelColor: ColorConstant.cyan700,
@@ -119,7 +119,7 @@ class ExercisesTabBody extends StatelessWidget {
                                       14,
                                     ),
                                     fontFamily:
-                                    'SF Pro Display',
+                                    'Manrope',
                                     fontWeight:
                                     FontWeight.w300,
                                   ),

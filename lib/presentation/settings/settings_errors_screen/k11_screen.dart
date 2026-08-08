@@ -11,13 +11,14 @@ import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_pop_button.dart';
 import 'controller.dart';
+import '../../../theme/app_colors.dart';
 
 class K11Screen extends GetWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(K11Controller());
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SizedBox(
@@ -64,7 +65,7 @@ class K11Screen extends GetWidget {
                                       filled: true,
                                       hintText: 'your_suggestions'.tr(),
 
-                                      hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
+                                      hintStyle: TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                                   ),
                                 ),
                               ),

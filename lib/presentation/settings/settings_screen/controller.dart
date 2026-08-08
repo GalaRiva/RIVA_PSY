@@ -5,6 +5,7 @@ import 'package:riva_psy/core/user_data/user.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
+import '../../../theme/app_colors.dart';
 
 class K6Controller extends GetxController {
   bool password = CurrentUser.user.passwordEnable;
@@ -20,7 +21,7 @@ class K6Controller extends GetxController {
     else
       showModalBottomSheet(
           context: context, builder: (context) => PillsAddBottomSheet(),
-      backgroundColor: ColorConstant.gray300.withOpacity(1),
+      backgroundColor: AppColors.background.withOpacity(1),
       elevation: 0
     );
   }

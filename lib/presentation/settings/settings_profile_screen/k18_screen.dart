@@ -14,6 +14,7 @@ import '../../../widgets/custom_pop_button.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import 'controller.dart';
 import 'widgets/retractable_container_widget.dart';
+import '../../../theme/app_colors.dart';
 
 class K18Screen extends GetWidget {
   @override
@@ -22,7 +23,7 @@ class K18Screen extends GetWidget {
     final key = GlobalKey<FormState>();
 
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SingleChildScrollView(

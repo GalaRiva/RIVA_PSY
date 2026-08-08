@@ -8,6 +8,7 @@ import '../../../../theme/app_style.dart';
 import '../../../../widgets/custom_image_view.dart';
 import '../../../../widgets/custom_search_view.dart';
 import '../../../../widgets/second_variant_event_card.dart';
+import '../../../../theme/app_icons.dart';
 
 class EventChangeWidget extends StatelessWidget {
   final List<List<Widget>> contents;
@@ -162,7 +163,7 @@ class EventChangeWidget extends StatelessWidget {
           ),
           child: InkWell(
               onTap: () => onAdd!(addController.text),
-              child: Icon(Icons.add))
+              child: Icon(AppIcons.plus))
           ),
             suffixConstraints: BoxConstraints(
               maxHeight: getVerticalSize(

@@ -109,7 +109,7 @@ class K27Controller extends GetxController {
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
-                        fontFamily: 'SF Pro Display'),
+                        fontFamily: 'Manrope'),
                   ),
                   Center(
                     child: Card(

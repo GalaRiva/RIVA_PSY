@@ -12,6 +12,7 @@ import '../../../../../../../core/models/audio/audio.dart';
 import '../../../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../../../core/services/datasource_service.dart';
 import '../../../../../../main/path/path_final_screen/widgets/audio_container/audio_container_widget.dart';
+import '../../../../../../../theme/app_icons.dart';
 
 class RelaxDialog extends StatelessWidget {
   const RelaxDialog({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class RelaxDialog extends StatelessWidget {
                         child: InkWell(
                           onTap: () => Navigator.pop(context),
                           child: Icon(
-                            Icons.close, size: 9, color: ColorConstant.grayLight,),
+                            AppIcons.x, size: 9, color: ColorConstant.grayLight,),
                         ),
                       ),
                       Text('champion'.tr().toUpperCase(), textAlign: TextAlign.center,

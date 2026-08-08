@@ -7,6 +7,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import 'controller.dart';
+import '../../../../theme/app_colors.dart';
 
 // ignore_for_file: must_be_immutable
 class K24Page extends GetWidget {
@@ -20,7 +21,7 @@ class K24Page extends GetWidget {
     content['initialValue'] == null ? null : controller.eventNameController.text = content['initialValue'];
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(

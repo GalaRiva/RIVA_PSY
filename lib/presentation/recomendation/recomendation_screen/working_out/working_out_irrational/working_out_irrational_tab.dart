@@ -17,6 +17,7 @@ import 'pages/gratitude/gratitude_page.dart';
 import 'pages/initial_working_out/empty_initial_working_out_page.dart';
 import 'pages/initial_working_out/initial_working_out_page.dart';
 import 'widgets/dialog_records_not_enough.dart';
+import '../../../../../theme/app_colors.dart';
 
 class WorkingOutIrrationalTab extends StatelessWidget {
 
@@ -31,7 +32,7 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         return dialogOpened;
       },
       child: Scaffold(
-        backgroundColor: ColorConstant.gray200,
+        backgroundColor: AppColors.background,
         body: BlocConsumer<WorkingOutIrrationalCubit, WorkingOutIrrationalState>(
           listenWhen: (prev, cur) {
             dayEventsIsEmpty = false;

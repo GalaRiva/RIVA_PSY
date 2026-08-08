@@ -28,7 +28,7 @@ class RecordTextButton extends StatelessWidget {
                     fontSize: getFontSize(
                       9,
                     ),
-                    fontFamily: 'SF Pro Display',
+                    fontFamily: 'Manrope',
                     fontWeight: FontWeight.w400,
                   );
                   return Center(

@@ -9,7 +9,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -18,7 +18,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -27,7 +27,7 @@ class AppStyle {
     fontSize: getFontSize(
       8,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -36,7 +36,7 @@ class AppStyle {
     fontSize: getFontSize(
       8,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -45,7 +45,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -54,7 +54,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -72,7 +72,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -81,7 +81,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -91,7 +91,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -100,7 +100,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -109,7 +109,7 @@ class AppStyle {
     fontSize: getFontSize(
       20,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -118,7 +118,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -136,7 +136,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -145,7 +145,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -154,7 +154,7 @@ class AppStyle {
     fontSize: getFontSize(
       10,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -163,7 +163,7 @@ class AppStyle {
     fontSize: getFontSize(
       10,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -172,7 +172,7 @@ class AppStyle {
     fontSize: getFontSize(
       Platform.isIOS ? 12 : 10,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -182,7 +182,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -191,7 +191,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -200,7 +200,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -209,7 +209,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -218,7 +218,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -227,7 +227,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -236,7 +236,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -245,7 +245,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -254,7 +254,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -263,7 +263,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -272,7 +272,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -281,7 +281,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w300,
   );
 
@@ -290,7 +290,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -299,7 +299,7 @@ class AppStyle {
     fontSize: getFontSize(
       24,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w300,
   );
 
@@ -308,7 +308,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -317,7 +317,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -326,7 +326,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -335,7 +335,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -344,7 +344,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -353,7 +353,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -362,7 +362,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -371,7 +371,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -380,7 +380,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -389,7 +389,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -398,7 +398,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -407,7 +407,7 @@ class AppStyle {
     fontSize: getFontSize(
       10,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -425,7 +425,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -434,7 +434,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -443,7 +443,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -452,7 +452,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -461,7 +461,7 @@ class AppStyle {
     fontSize: getFontSize(
       10,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -470,7 +470,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -479,7 +479,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -488,7 +488,7 @@ class AppStyle {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -497,7 +497,7 @@ class AppStyle {
     fontSize: getFontSize(
       14,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -506,7 +506,7 @@ class AppStyle {
     fontSize: getFontSize(
       24,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w300,
   );
 
@@ -515,7 +515,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w300,
   );
 
@@ -533,7 +533,7 @@ class AppStyle {
     fontSize: getFontSize(
       16,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w300,
   );
 
@@ -542,7 +542,7 @@ class AppStyle {
     fontSize: getFontSize(
       12,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -551,7 +551,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 
@@ -560,7 +560,7 @@ class AppStyle {
     fontSize: getFontSize(
       11,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
 }

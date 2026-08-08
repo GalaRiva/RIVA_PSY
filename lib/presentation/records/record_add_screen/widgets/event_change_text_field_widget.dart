@@ -64,7 +64,7 @@ class EventChangeTextFieldWidget extends StatelessWidget {
                     filled: true,
                     hintText: hintText,
 
-                    hintStyle: TextStyle(fontFamily: 'SF Pro Display', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
+                    hintStyle: TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w300, fontSize: 14, color: ColorConstant.fromHex('#3B3B4A'),)
                 ),
               ),
             ),

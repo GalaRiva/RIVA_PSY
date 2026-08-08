@@ -10,13 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/services/notifications/flutter_local_notification_service.dart';
 import '../../../core/utils/shared_prefs.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../theme/app_colors.dart';
 
 class SendPushesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.darkBg,
+      backgroundColor: AppColors.background,
       body: Container(
         decoration: AppDecoration.txt,
         child: Center(

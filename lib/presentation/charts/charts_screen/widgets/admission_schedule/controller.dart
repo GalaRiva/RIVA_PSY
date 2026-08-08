@@ -7,6 +7,7 @@ import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_add_bottom_sheet/settings_pills_add_bottom_sheet.dart';
 
 import '../../../../settings/settings_pills/repository.dart';
+import '../../../../../theme/app_colors.dart';
 
 class AdmissionScheduleController extends GetxController {
   bool scheduleWasCreated = false;
@@ -63,7 +64,7 @@ class AdmissionScheduleController extends GetxController {
   Future createSchedule(BuildContext context) async {
     if (!scheduleWasCreated) {
       showModalBottomSheet(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
           context: context,
           builder: (context) => PillsAddBottomSheet()).then((value) async {
         scheduleWasCreated = (await _pillsRepo.getEvent()).isNotEmpty;

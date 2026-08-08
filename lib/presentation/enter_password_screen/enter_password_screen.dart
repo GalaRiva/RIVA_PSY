@@ -7,6 +7,7 @@ import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import '../../widgets/custom_password_field.dart';
 import '../../widgets/custom_pop_button.dart';
+import '../../theme/app_colors.dart';
 import'controller.dart';
 
 class EnterPasswordScreen extends GetWidget<EnterPasswordController> {
@@ -16,7 +17,7 @@ class EnterPasswordScreen extends GetWidget<EnterPasswordController> {
     final controller = Get.put(EnterPasswordController());
     if(controller.passField == null) controller.passField = controller.createCustomField(context);
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,

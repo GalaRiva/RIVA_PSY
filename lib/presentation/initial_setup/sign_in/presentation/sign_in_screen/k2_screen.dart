@@ -9,6 +9,7 @@ import '../widgets/services_button.dart';
 import 'k2_controller.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
+import '../../../../../theme/app_colors.dart';
 
 class K2AuthScreen extends GetWidget<K2AuthController> {
   final number = TextEditingController();
@@ -21,7 +22,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
   Widget build(BuildContext context) {
     final key = GlobalKey<FormState>();
     return Scaffold(
-        backgroundColor: ColorConstant.gray300,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(

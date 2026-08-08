@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
 import 'drop_text_model.dart';
+import '../../../theme/app_icons.dart';
 
 class DropTextWidget extends StatefulWidget {
   final DropTextModel model;
@@ -80,7 +81,7 @@ class _DropTextWidgetState extends State<DropTextWidget>
                 width: 10,
               ),
               Icon(
-                wasTapped ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                wasTapped ? AppIcons.caretUp : AppIcons.caretDown,
               )
             ],
           )),

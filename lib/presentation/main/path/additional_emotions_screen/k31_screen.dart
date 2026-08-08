@@ -9,7 +9,9 @@ import '../../../../core/models/day_event_model.dart';
 import '../../../../core/models/event_model.dart';
 import '../../../../core/utils/emotion_in_day_event_extension.dart';
 import '../../../../widgets/event_card.dart';
+import '../../../../widgets/emotion_color_blob.dart';
 import 'controller.dart';
+import '../../../../theme/app_colors.dart';
 
 class K31Screen extends GetWidget {
   final DayEventModel? dayEvent;
@@ -32,8 +34,16 @@ class K31Screen extends GetWidget {
     controller.title = (data['emotionCategory'] as EmotionInDayEvent).getEmotionType().tr();
 
     controller.additionalEmotions = (data['someEmotions'] as List<EventModel>);
+    // Premium redesign: color blobs instead of icons here too. Individual
+    // "neutral" emotions self-encode their mood via a _positive/_negative
+    // key suffix (moodForKey handles that); everything else falls back to
+    // whichever category this whole batch was fetched under.
+    final categoryMood =
+        (data['emotionCategory'] as EmotionInDayEvent) == EmotionInDayEvent.NEGATIVE
+            ? EmotionMood.negative
+            : EmotionMood.positive;
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SizedBox(
           width: size.width,
@@ -132,6 +142,9 @@ class K31Screen extends GetWidget {
                                   padding: getPadding(right: 12),
                                   child: EventCard(
                                     iconColor: ColorConstant.fromHex('#5B4FA9'),
+                                    emotionMood: moodForKey(
+                                        controller.emotions[index].identity,
+                                        categoryMood),
                                     cardWidth: size.width / 2 - 30,
                                     cardHeight: 44,
 
@@ -178,7 +191,10 @@ class K31Screen extends GetWidget {
                                   return Padding(
                                     padding: getPadding(right: 12),
                                     child: EventCard(
-
+                                      emotionMood: moodForKey(
+                                          controller.additionalEmotions[index]
+                                              .identity,
+                                          categoryMood),
                                       model: controller.additionalEmotions[index],
                                       onTap: () {
                                         if (!controller.emotions.contains(controller.additionalEmotions[index])) {

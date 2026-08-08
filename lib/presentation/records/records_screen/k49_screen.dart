@@ -9,6 +9,7 @@ import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'controller.dart';
+import '../../../theme/app_colors.dart';
 
 class K49Screen extends GetWidget {
   @override
@@ -23,7 +24,7 @@ class K49Screen extends GetWidget {
     });
 
     return Scaffold(
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../calendar_add_screen/controller.dart';
+import '../../../theme/app_colors.dart';
 
 class K51Screen extends GetWidget {
 
@@ -38,7 +39,7 @@ class K51Screen extends GetWidget {
         return true;
       },
       child: Scaffold(
-        backgroundColor: ColorConstant.gray30002,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(

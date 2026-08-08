@@ -62,7 +62,7 @@ class WorkingOutScreen extends StatelessWidget {
                           fontSize: getFontSize(
                             14,
                           ),
-                          fontFamily: 'SF Pro Display',
+                          fontFamily: 'Manrope',
                           fontWeight: FontWeight.w300,
                         ),
                         indicatorSize: TabBarIndicatorSize.label,

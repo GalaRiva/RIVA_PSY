@@ -18,8 +18,21 @@ class PillListWidget extends StatelessWidget {
       required this.title})
       : super(key: key);
 
+  // Carousel cards can each need a different height (varies with
+  // hoursOfTakingPills.length, see pill_card_widget.dart's _bodyHeight) —
+  // PageView gives every page the same height, so the carousel uses the
+  // tallest card among the current pills rather than each card's own.
+  double _cardHeight(PillModel pill) {
+    final hours = pill.hoursOfTakingPills.length;
+    final bodyHeight = getVerticalSize(hours > 2 ? 47 + ((hours % 2) * 21) : 47);
+    return getVerticalSize(30) + bodyHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final carouselHeight = pills.isEmpty
+        ? 0.0
+        : pills.map(_cardHeight).reduce((a, b) => a > b ? a : b);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,16 +43,23 @@ class PillListWidget extends StatelessWidget {
           style: AppStyle.txtSFProDisplayLight11
               .copyWith(color: ColorConstant.gray800),
         )),
-        Wrap(
-          direction: Axis.vertical,
-          spacing: getVerticalSize(16),
-          children: pills
-              .map((e) => SizedBox(
-            width: size.width -32,
+        Visibility(
+          visible: pills.isNotEmpty,
+          child: SizedBox(
+            height: carouselHeight,
+            width: size.width - 32,
+            child: PageView.builder(
+              controller: PageController(viewportFraction: 0.92),
+              itemCount: pills.length,
+              itemBuilder: (context, index) => Padding(
+                padding: getPadding(right: 12),
                 child: PillCardWidget(context,
-                    pillModel: e, isSelected: isSelected, update: update),
-              ))
-              .toList(),
+                    pillModel: pills[index],
+                    isSelected: isSelected,
+                    update: update),
+              ),
+            ),
+          ),
         ),
       ],
     );

@@ -12,6 +12,7 @@ import '../../../../widgets/custom_button.dart';
 import '../../../initial_setup/sign_in/presentation/sign_in_screen/text_input_login_formatter.dart';
 import '../widget/top_icon_button.dart';
 import 'controller.dart';
+import '../../../../theme/app_icons.dart';
 
 class PillsEditBottomSheet extends StatelessWidget {
   final PillModel pill;
@@ -131,7 +132,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                             controller.addTime(context: context),
                         suffixWidget: Padding(
                           padding: const EdgeInsets.only(left: 20),
-                          child: Icon(Icons.add, color: ColorConstant.deepPurple600, size: 20,),
+                          child: Icon(AppIcons.plus, color: ColorConstant.deepPurple600, size: 20,),
                         ),
                         text: 'add_appointment'.tr().toUpperCase(),
                         textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
@@ -169,7 +170,7 @@ class PillsEditBottomSheet extends StatelessWidget {
                 ButtonFontStyle.SFProDisplayRegular12Gray,
                 suffixWidget: Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Icon(controller.actual ? Icons.remove : Icons.add, color: ColorConstant.deepPurple600, size: 20,),
+                  child: Icon(controller.actual ? AppIcons.minus : AppIcons.plus, color: ColorConstant.deepPurple600, size: 20,),
                 ),
                 textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
                 text:

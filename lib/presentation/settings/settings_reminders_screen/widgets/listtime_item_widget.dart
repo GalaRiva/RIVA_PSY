@@ -113,7 +113,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w300,
-                                  fontFamily: 'SF Pro Display'),
+                                  fontFamily: 'Manrope'),
                             ),
                             Padding(
                               padding: getPadding(top: 20),
@@ -144,7 +144,7 @@ class _ListtimeItemWidgetState extends State<ListtimeItemWidget> {
                                         color: ColorConstant.fromHex('#3B3B4A'),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w300,
-                                        fontFamily: 'SF Pro Display'),
+                                        fontFamily: 'Manrope'),
                                     inputFormatters: [TextFieldTimeFormatter()],
                                     decoration: InputDecoration(
                                         hintText: '$hours:$minutes',

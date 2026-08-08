@@ -19,6 +19,7 @@ import 'controller.dart';
 import '../records_screen/controller.dart';
 import 'widgets/event_change_text_field_widget.dart';
 import 'widgets/voice_button.dart';
+import '../../../theme/app_colors.dart';
 
 class K54Screen extends GetWidget {
 
@@ -28,7 +29,7 @@ class K54Screen extends GetWidget {
     fontSize: getFontSize(
       9,
     ),
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,
   );
   DayEventModel dayEventModel = DayEventModel(emotionIntensity: 5, howDoYouFeel: 5);
@@ -41,7 +42,7 @@ class K54Screen extends GetWidget {
     controller.initDate(date);
     return Scaffold(
 
-      backgroundColor: ColorConstant.gray300,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
