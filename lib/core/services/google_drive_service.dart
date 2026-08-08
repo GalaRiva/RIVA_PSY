@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:riva_psy/core/services/security_storage_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:riva_psy/presentation/initial_setup/sign_in/services/services_auth_service.dart';
 const _scopes = [ga.DriveApi.driveFileScope];
 final _clientId = Platform.isAndroid
     ? '408583851820-gcrn80s3cu2av4cqm2jhhf67ei007p8r.apps.googleusercontent.com'
@@ -20,16 +21,14 @@ class GoogleDriveService {
   //Get Authenticated Http Client
 
   Future<ga.DriveApi> _getClient() async {
-    final googleSignIn = GoogleSignIn(
-        clientId: Platform.isAndroid ? null : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com',
-        scopes: [
-      ga.DriveApi.driveAppdataScope,
-      ga.DriveApi.driveFileScope
-    ]);
-    var user = await googleSignIn.signIn();
+    await ServicesAuthService.ensureGoogleSignInInitialized();
+    final user = await GoogleSignIn.instance.authenticate();
+    final headers = await user.authorizationClient.authorizationHeaders(
+      [ga.DriveApi.driveAppdataScope, ga.DriveApi.driveFileScope],
+      promptIfNecessary: true,
+    );
 
-
-    final client = GoogleAuthClient(await user!.authHeaders);
+    final client = GoogleAuthClient(headers ?? {});
     return ga.DriveApi(client);
   }
 

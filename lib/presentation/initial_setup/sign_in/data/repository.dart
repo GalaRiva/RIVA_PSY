@@ -330,7 +330,7 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету',
+              'Произошла непредвиденная ошибка, проверьте подключение к интернету\n[diag] ${_servicesAuth.lastError}',
         );
       }
       } on FirebaseAuthException catch (e) {
@@ -375,14 +375,14 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету',
+              'Произошла непредвиденная ошибка, проверьте подключение к интернету\n[diag] ${_servicesAuth.lastError}',
         );
       } catch (e) {
         print(e);
         return FirebaseSignInResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
             exceptionMessage:
-                'Произошла непредвиденная ошибка, проверьте подключение к интернету или повторите попытку попытку позднее');
+                'Произошла непредвиденная ошибка, проверьте подключение к интернету или повторите попытку попытку позднее\n[diag] ${e.toString()}');
       }
     }
   }
@@ -448,7 +448,7 @@ class SignInDataRepository extends SignInDomainRepository {
       print('[TARIFF-DIAG] EXCEPTION in getAndSetRemoteUserLocally("$userId"): $e\n$st');
       return FirebaseDataResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
-          exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');
+          exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.\n[diag] $e');
     }
   }
 }

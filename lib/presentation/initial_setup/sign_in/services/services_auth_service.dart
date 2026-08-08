@@ -13,30 +13,60 @@ class ServicesAuthService {
   User? _appleUser;
   User get appleUser => _appleUser!;
 
+  // Temporary diagnostic aid: the catch blocks below used to swallow the
+  // real exception behind a generic "проверьте подключение к интернету"
+  // message, which made a Play-App-Signing cert mismatch (the OAuth client
+  // rejecting an unrecognized signing cert) indistinguishable from an actual
+  // network problem. Surfacing the raw exception text in the dialog lets us
+  // tell those apart from a single test round instead of guessing blind.
+  String? lastError;
+
+  // google_sign_in 7.x moved from a per-call `GoogleSignIn()` instance to a
+  // process-wide `GoogleSignIn.instance` that must be `initialize()`d
+  // exactly once before any other call — repeating it is documented as
+  // undefined behavior. GoogleDriveService (a separate feature, Drive
+  // backup/restore) also calls GoogleSignIn.instance, so this guard is
+  // static and shared via ensureGoogleSignInInitialized() rather than
+  // living per-instance, since both features must not race to initialize
+  // the same singleton independently.
+  static bool _googleSignInInitialized = false;
+
+  static Future<void> ensureGoogleSignInInitialized() async {
+    if (_googleSignInInitialized) return;
+    await GoogleSignIn.instance.initialize(
+      clientId: Platform.isAndroid ? null : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com',
+      // Without this, the plugin has no audience to issue an ID token for —
+      // on Android this can surface as ApiException: 10 (DEVELOPER_ERROR)
+      // even when the signing cert and OAuth client are correctly
+      // registered, since Firebase's signInWithCredential needs that ID
+      // token. Value is the web (client_type 3) OAuth client from
+      // android/app/google-services.json, the standard serverClientId for
+      // an Android app backed by this Firebase project.
+      serverClientId: '7653326357-b1mhkh0o9knlt688dlmh4r94ub8d38kg.apps.googleusercontent.com',
+    );
+    _googleSignInInitialized = true;
+  }
+
   Future<bool> authWithGoogle () async {
     try {
-    final googleSignIn = GoogleSignIn(
-      clientId: Platform.isAndroid ? null  : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com'
-    );
+    await ensureGoogleSignInInitialized();
 
-
-    final googleUser = await googleSignIn.signIn();
-    if(googleUser == null) return false;
+    final googleUser = await GoogleSignIn.instance.authenticate();
     _googleUser = googleUser;
 
-    final googleAuth = await googleUser.authentication;
+    // Synchronous in 7.x (was a Future in 6.x), and no longer carries an
+    // accessToken — Firebase's signInWithCredential only needs the idToken.
+    final googleAuth = googleUser.authentication;
 
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken
+      idToken: googleAuth.idToken,
     );
-
-
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       return true;
     } catch (e) {
       print(e);
+      lastError = e.toString();
       return false;
     }
 
@@ -99,6 +129,7 @@ class ServicesAuthService {
       return true;
     } catch (exception) {
       print(exception);
+      lastError = exception.toString();
       return false;
     }
   }
