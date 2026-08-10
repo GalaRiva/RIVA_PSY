@@ -167,19 +167,23 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
             registrationDate.toIso8601String();
     }
     try {
+      final doc = instance.collection(_userCollection).doc(userId);
       if (!create) {
-        final doc = await instance
-            .collection(_userCollection)
-            .doc(userId);
-        doc.update(userDataForUpdate);
+        await doc.update(userDataForUpdate);
       } else {
-        final doc = await instance
-            .collection(_userCollection)
-            .doc(userId);
-        doc
-            .set(userDataForUpdate);
+        await doc.set(userDataForUpdate);
       }
-    } catch (_) {
+    } catch (e) {
+      // Was a bare `catch (_) { if (onError != null) onError(); }` with the
+      // actual .update()/.set() calls not awaited — the write could fail
+      // (or just never finish before the app moved on) with no error ever
+      // reaching a caller, no log, nothing. That's how a registration could
+      // "succeed" locally while Users/{userId} was never actually created
+      // in Firestore. Kept swallowing here (several callers fire this
+      // without awaiting it) but now actually awaits the write and logs the
+      // failure — getAndSetRemoteUserLocally passes onError to detect this
+      // specific case and surface a real error instead of reporting success.
+      print('[USERS-WRITE] updateUser(userId: $userId, create: $create) failed: $e');
       if (onError != null) onError();
     }
   }

@@ -63,6 +63,8 @@ class NegativeEmotionsModel {
 
   Future<List<AudioCardModel>?> _audioAssets(String tab) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
       var collection =
           await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo: tab).get();
       final audios = <AudioCardModel>[];
@@ -71,15 +73,15 @@ class NegativeEmotionsModel {
       for (var item in collection.docs) {
         final audio = Audio.fromJson(item.data());
         try {
-
+          final fileName = audio.localizedFileName(langCode);
           String filePath = appDocPath +
               '/' +
-              '${audio.folder}/${audio.fileName}.${audio.format}';
+              '${audio.folder}/${fileName}.${audio.format}';
           if (DataSourceService.dataSourceIsRemote()) {
-            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + audio.fileName + '.' + audio.format;
+            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
           }
           if (audio.tab == tab)
-            audios.add(AudioCardModel(audio.name, filePath));
+            audios.add(AudioCardModel(audio.localizedName(langCode), filePath));
         } catch (_) {
           print('error load ${ 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + audio.fileName + '.' + audio.format}');
           print (_);

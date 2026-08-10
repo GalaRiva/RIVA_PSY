@@ -70,7 +70,7 @@ class AudioCardWidget extends StatelessWidget {
     return GetBuilder(
         builder: (K70Controller _c) =>
         SizedBox(
-        height: getVerticalSize(65),
+        height: getVerticalSize(80),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -79,6 +79,7 @@ class AudioCardWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                fontSize: getFontSize(14),
                 letterSpacing: getHorizontalSize(
                   0.44,
                 ),
@@ -91,8 +92,8 @@ class AudioCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomIconButton(
-                  height: getVerticalSize(32),
-                  width: getVerticalSize(32),
+                  height: getVerticalSize(44),
+                  width: getVerticalSize(44),
                   child: CustomImageView(
                     svgPath: ImageConstant.imgMusicCyan70032x32,
                   ),
@@ -100,8 +101,8 @@ class AudioCardWidget extends StatelessWidget {
                 Padding(
                   padding: getPadding(left: 10),
                   child: Container(
-                    width: size.width - 74,
-                    height: getVerticalSize(32),
+                    width: size.width - 86,
+                    height: getVerticalSize(44),
                     decoration: AppDecoration.back.copyWith(
                       color: ColorConstant.gray300,
                       borderRadius: BorderRadiusStyle.roundedBorder3,
@@ -143,18 +144,19 @@ class AudioCardWidget extends StatelessWidget {
                           },
 
                           child: CustomImageView(
-                            height: getSize(30),
-                            width: getSize(30),
+                            height: getSize(38),
+                            width: getSize(38),
                             svgPath: (state == AudioState.Stopped || currentAudioIndex() != index) ? ImageConstant.buttonStart : ImageConstant.imgVolume,
                           ),
                         ),
                         SizedBox(
-                          width: size.width - 159,
+                          width: size.width - 171,
                           child: SliderTheme(
 
                               data: SliderTheme.of(context).copyWith(
-                                trackHeight: 1,
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
+                                trackHeight: 3,
+                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 9),
+                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
                               ),
                               child: Slider(
                                 value: duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble() ? maxDuration.inSeconds.toDouble() : duration.inSeconds.toDouble(),

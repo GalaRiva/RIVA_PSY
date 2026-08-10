@@ -116,7 +116,10 @@ class K32Repo {
           'heat'.tr(),
         ],
         whatHurtsKeys: ['tense_shoulders', 'relaxed_shoulders', 'sweaty_palms', 'biting_cuticles', 'tingling_sensation', 'slumped_hunchbacked', 'clenched_fists', 'trembling_hands', 'folding_fingers', 'chills', 'chill', 'tense_hands', 'heavy_shoulders', 'light_shoulders', 'heat'],
-        marginTop: 100,
+        // Was 100 (shoulder height) — several whatHurts entries are hand-
+        // specific ("trembling_hands", "clenched_fists", "sweaty_palms"),
+        // so the marker reads better lower, roughly at hand/wrist level.
+        marginTop: 190,
         marginLeft: 110),
     BodyPartsModel(
         key: 'legs',

@@ -253,10 +253,10 @@ class K32Screen extends GetWidget {
                               padding: getPadding(top: 36),
                               child:  GetBuilder(
                                   builder: (K32Controller _c) => SizedBox(
-                                    height: getVerticalSize(380) * 1.18,
+                                    height: getVerticalSize(380) * 1.42,
                                     width: (size.width - 32),
                                     child: Transform.scale(
-                                      scale: 1.18,
+                                      scale: 1.42,
                                       alignment: Alignment.topCenter,
                                       child: Row(
                                         children: [

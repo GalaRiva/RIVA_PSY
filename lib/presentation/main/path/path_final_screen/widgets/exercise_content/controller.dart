@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../core/models/audio/audio.dart';
 import '../../../../../../core/models/audio/audio_card_model.dart';
@@ -55,13 +56,24 @@ class ExerciseContentController extends GetxController {
     return _audiosFuture = getAudios();
   }
 
-  Future<String> _audioPath(Audio audio) async {
+  // Same `<field>_<langCode>` fallback-to-Russian convention already used by
+  // NegativeEmotionsModel._localizedField — read the locale
+  // easy_localization persisted (main.dart) directly from SharedPreferences,
+  // since this is a plain GetxController with no BuildContext to read
+  // context.locale from.
+  Future<String> _currentLangCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+  }
+
+  Future<String> _audioPath(Audio audio, String langCode) async {
+    final fileName = audio.localizedFileName(langCode);
     return DataSourceService.dataSourceIsRemote()
         ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
-            audio.fileName +
+            fileName +
             '.' +
             audio.format
-        : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}';
+        : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${fileName}.${audio.format}';
   }
 
   // Audio.emotions is an empty string on every current Audio document (see
@@ -99,6 +111,7 @@ class ExerciseContentController extends GetxController {
             )
         ));
     mainAudios = [];
+    final langCode = await _currentLangCode();
     var collectionAudio =
         await FirebaseFirestore.instance.collection('Audio').get();
     var audios =
@@ -129,13 +142,8 @@ class ExerciseContentController extends GetxController {
             .map((e) => e.toLowerCase())
             .contains(mainEmotionRuName.toLowerCase())) {
           mainAudios.add(AudioCardModel(
-              audio.name,
-              DataSourceService.dataSourceIsRemote()
-                  ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
-                  audio.fileName +
-                  '.' +
-                  audio.format
-                  : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}'));
+              audio.localizedName(langCode),
+              await _audioPath(audio, langCode)));
         }
         if (additionalEmotions != null) {
           for (var i = 0; i < additionalEmotions!.length; i++) {
@@ -146,15 +154,10 @@ class ExerciseContentController extends GetxController {
                 !additionalAudios
                     .map((e) => e.title.toLowerCase())
                     .toList()
-                    .contains(audio.name.toLowerCase())) {
+                    .contains(audio.localizedName(langCode).toLowerCase())) {
               additionalAudios.add(AudioCardModel(
-                  audio.name,
-                  DataSourceService.dataSourceIsRemote()
-                      ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
-                          audio.fileName +
-                          '.' +
-                          audio.format
-                      : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${audio.fileName}.${audio.format}'));
+                  audio.localizedName(langCode),
+                  await _audioPath(audio, langCode)));
             }
           }
         }
@@ -168,7 +171,7 @@ class ExerciseContentController extends GetxController {
       print('[EXERCISE-DIAG] mainAudios empty, tab fallback for "$mainEmotionRuName" -> tab="$tab"');
       if (tab != null) {
         for (var audio in audios.where((a) => a.tab == tab)) {
-          mainAudios.add(AudioCardModel(audio.name, await _audioPath(audio)));
+          mainAudios.add(AudioCardModel(audio.localizedName(langCode), await _audioPath(audio, langCode)));
         }
       }
     }
@@ -177,14 +180,15 @@ class ExerciseContentController extends GetxController {
         final tab = await _tabForEmotionRuName(additionalEmotionsRuNames[i]);
         if (tab == null) continue;
         for (var audio in audios.where((a) => a.tab == tab)) {
+          final localizedTitle = audio.localizedName(langCode);
           final alreadyAdded = additionalAudios
                   .map((e) => e.title.toLowerCase())
-                  .contains(audio.name.toLowerCase()) ||
+                  .contains(localizedTitle.toLowerCase()) ||
               mainAudios
                   .map((e) => e.title.toLowerCase())
-                  .contains(audio.name.toLowerCase());
+                  .contains(localizedTitle.toLowerCase());
           if (!alreadyAdded) {
-            additionalAudios.add(AudioCardModel(audio.name, await _audioPath(audio)));
+            additionalAudios.add(AudioCardModel(localizedTitle, await _audioPath(audio, langCode)));
           }
         }
       }

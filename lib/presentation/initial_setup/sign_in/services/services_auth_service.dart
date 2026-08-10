@@ -21,46 +21,45 @@ class ServicesAuthService {
   // tell those apart from a single test round instead of guessing blind.
   String? lastError;
 
-  // google_sign_in 7.x moved from a per-call `GoogleSignIn()` instance to a
-  // process-wide `GoogleSignIn.instance` that must be `initialize()`d
-  // exactly once before any other call — repeating it is documented as
-  // undefined behavior. GoogleDriveService (a separate feature, Drive
-  // backup/restore) also calls GoogleSignIn.instance, so this guard is
-  // static and shared via ensureGoogleSignInInitialized() rather than
-  // living per-instance, since both features must not race to initialize
-  // the same singleton independently.
-  static bool _googleSignInInitialized = false;
-
-  static Future<void> ensureGoogleSignInInitialized() async {
-    if (_googleSignInInitialized) return;
-    await GoogleSignIn.instance.initialize(
-      clientId: Platform.isAndroid ? null : '408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com',
-      // Without this, the plugin has no audience to issue an ID token for —
-      // on Android this can surface as ApiException: 10 (DEVELOPER_ERROR)
-      // even when the signing cert and OAuth client are correctly
-      // registered, since Firebase's signInWithCredential needs that ID
-      // token. Value is the web (client_type 3) OAuth client from
-      // android/app/google-services.json, the standard serverClientId for
-      // an Android app backed by this Firebase project.
-      serverClientId: '7653326357-b1mhkh0o9knlt688dlmh4r94ub8d38kg.apps.googleusercontent.com',
-    );
-    _googleSignInInitialized = true;
-  }
+  // Reverted from google_sign_in 7.x (Credential Manager) back to the
+  // classic 6.x native Google Sign-In SDK. Credential Manager's
+  // "[16] Account reauth failed" turned out to be a confirmed, unfixable
+  // (from our side) instability in Google's own Play Services component —
+  // see https://github.com/flutter/flutter/issues/184918, closed by a
+  // Flutter maintainer as "not_planned" with the same package version,
+  // same error, same working config. The old SDK doesn't go through
+  // Credential Manager at all, so it isn't exposed to that bug.
+  // Shared across ServicesAuthService and GoogleDriveService like the old
+  // per-instance API required — each feature gets its own GoogleSignIn
+  // instance with the scopes it needs, no shared initialization step.
+  static final GoogleSignIn _googleSignIn = GoogleSignIn(
+    // Web (client_type 3) OAuth client from android/app/google-services.json
+    // — needed so Firebase's signInWithCredential has an audience to
+    // validate the ID token against.
+    serverClientId: '7653326357-b1mhkh0o9knlt688dlmh4r94ub8d38kg.apps.googleusercontent.com',
+  );
 
   Future<bool> authWithGoogle () async {
     try {
-    await ensureGoogleSignInInitialized();
+      // Sign out first so the account picker always shows, rather than
+      // silently reusing (or failing to reuse) a cached session.
+      try {
+        await _googleSignIn.signOut();
+      } catch (_) {}
 
-    final googleUser = await GoogleSignIn.instance.authenticate();
-    _googleUser = googleUser;
+      final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        // User dismissed the account picker.
+        return false;
+      }
+      _googleUser = googleUser;
 
-    // Synchronous in 7.x (was a Future in 6.x), and no longer carries an
-    // accessToken — Firebase's signInWithCredential only needs the idToken.
-    final googleAuth = googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      idToken: googleAuth.idToken,
-    );
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       return true;

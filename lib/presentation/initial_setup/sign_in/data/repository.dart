@@ -429,10 +429,18 @@ class SignInDataRepository extends SignInDomainRepository {
 
       );
       final firestoreRepo = FireStoreRepositoryImpl();
+      bool writeFailed = false;
       await firestoreRepo.updateUser(
         userId: userId,
           user: user,
-          create: true);
+          create: true,
+          onError: () => writeFailed = true);
+      if (writeFailed) {
+        print('[TARIFF-DIAG] Users/"$userId" create write failed — reporting error instead of silently proceeding as if it succeeded');
+        return FirebaseDataResult(
+            firebaseResultStatus: FirebaseResultStatus.Error,
+            exceptionMessage: 'Ошибка сохранения профиля, попробуйте ещё раз.');
+      }
     }
     await CurrentUser.repo.setLocalUserData(
         login: user.login,

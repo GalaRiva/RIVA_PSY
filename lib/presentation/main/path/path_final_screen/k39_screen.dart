@@ -32,10 +32,10 @@ class K39Screen extends GetWidget {
         body: SafeArea(
           child: SizedBox(
             width: size.width,
-            child: Stack(            alignment: Alignment.bottomCenter,
-
+            child: Stack(
               children: [
-                SingleChildScrollView(
+                Positioned.fill(
+                  child: SingleChildScrollView(
 
                    child: Column(
                            crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,6 +98,7 @@ class K39Screen extends GetWidget {
                            ],
                          ),
                        ),
+                ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

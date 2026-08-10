@@ -23,6 +23,15 @@ class NeutralTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.currentTab = 3;
+    // 2026-08-10: each +/- pair gets its own concept order (see
+    // neutralConceptSortKey) so both columns read in the same thematic
+    // order as each other instead of the original list order.
+    final positiveList = list.where((e) => e.isNeutralPositive).toList()
+      ..sort((a, b) => neutralConceptSortKey(a.identity)
+          .compareTo(neutralConceptSortKey(b.identity)));
+    final negativeList = list.where((e) => e.isNeutralNegative).toList()
+      ..sort((a, b) => neutralConceptSortKey(a.identity)
+          .compareTo(neutralConceptSortKey(b.identity)));
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,16 +73,16 @@ class NeutralTab extends StatelessWidget {
                           spacing: 16,
                           runSpacing: 16,
                           runAlignment: WrapAlignment.center,
-                          children: List.generate(list.where((element) => element.isNeutralPositive).length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralPositive).length - 1 ? 40 : 20),
+                          children: List.generate(positiveList.length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == positiveList.length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
                               iconSizeOverride: 108,
                               fontSizeOverride: 18,
                               emotionMood: EmotionMood.positive,
-                              isSelect: controller.contain(list.where((element) => element.isNeutralPositive).toList()[index]),
-                              model: list.where((element) => element.isNeutralPositive).toList()[index], onTap: () {
-                              controller.emotion = list.where((element) => element.isNeutralPositive).toList()[index];
+                              isSelect: controller.contain(positiveList[index]),
+                              model: positiveList[index], onTap: () {
+                              controller.emotion = positiveList[index];
                               controller.update();
                             },),
                           ))
@@ -87,16 +96,16 @@ class NeutralTab extends StatelessWidget {
                           spacing: 16,
                           runSpacing: 16,
                           runAlignment: WrapAlignment.center,
-                          children: List.generate(list.where((element) => element.isNeutralNegative).length, (index)=> Padding(
-                            padding:  EdgeInsets.only(bottom: index == list.where((element) => element.isNeutralNegative).length - 1 ? 40 : 20),
+                          children: List.generate(negativeList.length, (index)=> Padding(
+                            padding:  EdgeInsets.only(bottom: index == negativeList.length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
                               iconSizeOverride: 108,
                               fontSizeOverride: 18,
                               emotionMood: EmotionMood.negative,
-                              isSelect: controller.contain(list.where((element) => element.isNeutralNegative).toList()[index]),
-                              model: list.where((element) => element.isNeutralNegative).toList()[index], onTap: () {
-                              controller.emotion =list.where((element) => element.isNeutralNegative).toList()[index];
+                              isSelect: controller.contain(negativeList[index]),
+                              model: negativeList[index], onTap: () {
+                              controller.emotion = negativeList[index];
                               controller.update();
                             },),
                           ))

@@ -27,7 +27,12 @@ class EventCard extends StatelessWidget {
   // every other Path screen (places, people, activities) that also renders
   // through EventCard keeps its normal SVG icon.
   final EmotionMood? emotionMood;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood}) : super(key: key);
+  // Opt-in per call site: swaps the card's border outline for the soft
+  // drop-shadow look used by the rest of the app's cards/buttons
+  // (AppDecoration.outlineBluegray600143 et al.), without touching the many
+  // other EventCard call sites that still rely on the bordered look.
+  final bool useShadowStyle;
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood, this.useShadowStyle = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +71,18 @@ class EventCard extends StatelessWidget {
               3,
             ),
         ),
-          border: Border.all(
+          border: useShadowStyle ? null : Border.all(
             color: isSelect ? ColorConstant.cyan700 : ColorConstant.fromHex('#403875').withOpacity(0.22),
             width: 1
-          )
+          ),
+          boxShadow: useShadowStyle ? [
+            BoxShadow(
+              color: ColorConstant.blueGray60014,
+              spreadRadius: getHorizontalSize(2),
+              blurRadius: getHorizontalSize(2),
+              offset: Offset(0, 5),
+            ),
+          ] : null,
       ),
         padding: EdgeInsets.all(4),
         child: Column(

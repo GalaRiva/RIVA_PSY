@@ -94,10 +94,16 @@ class K27Screen extends GetWidget {
                 right: 4,
                 bottom: 40,
               ),
-              child: SizedBox(
-                height: size.height,
-
-                child: Column(
+              // NestedScrollView so the header (current_emotion/title/search
+              // fields) scrolls away together with the tab content, matching
+              // every other Path screen, instead of staying pinned while
+              // only the tab body scrolls underneath it.
+              child: DefaultTabController(
+                length: emotionsTypes == null ? 3 : emotionsTypes!.length,
+                child: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                    SliverToBoxAdapter(
+                      child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -238,82 +244,76 @@ class K27Screen extends GetWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: DefaultTabController(
-                        length: emotionsTypes == null ? 3 : emotionsTypes!.length,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: getPadding(top: 40),
-                              child: Align(
-                                alignment: Alignment.topCenter,
-                                child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width - 32,
-                                  child: TabBar(
-                                    onTap: (val) {
-                                      controller.currentTab = val + 1;
-                                      controller.update();
-                                    },
-                                    indicatorColor: ColorConstant.fromHex('#1499A1'),
-                                    unselectedLabelColor: ColorConstant.gray800A0,
-                                    labelStyle: TextStyle(
-                                      color: ColorConstant.gray800A0,
-                                      fontSize: getFontSize(
-                                        14,
-                                      ),
-                                      fontFamily: 'Manrope',
-                                      fontWeight: FontWeight.w300,
-                                      height: getVerticalSize(
-                                        1.21,
-                                      ),
-                                    ),
-                                    labelColor: ColorConstant.cyan700,
-                                    tabs:  _tabs()
-                                  ),
+                  ],
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: getPadding(top: 40),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width - 32,
+                            child: TabBar(
+                              onTap: (val) {
+                                controller.currentTab = val + 1;
+                                controller.update();
+                              },
+                              indicatorColor: ColorConstant.fromHex('#1499A1'),
+                              unselectedLabelColor: ColorConstant.gray800A0,
+                              labelStyle: TextStyle(
+                                color: ColorConstant.gray800A0,
+                                fontSize: getFontSize(
+                                  14,
+                                ),
+                                fontFamily: 'Manrope',
+                                fontWeight: FontWeight.w300,
+                                height: getVerticalSize(
+                                  1.21,
                                 ),
                               ),
+                              labelColor: ColorConstant.cyan700,
+                              tabs:  _tabs()
                             ),
-                            GetBuilder(
-                              builder: (K27Controller _c) => Expanded(
-                                child: TabBarView(
-                                  children: emotionsTypes != null ? List.generate(emotionsTypes!.length, (index) => emotionsTypes![index] == EmotionInDayEvent.NEGATIVE ? NegativePositiveTab(
-                                    dayEventModel: dayEventModel,
-                                    number: 1,
-                                    list: controller.currentEventListOne, controller: controller,
-                                  ) : emotionsTypes![index] == EmotionInDayEvent.POSITIVE ? NegativePositiveTab(
-                                    dayEventModel: dayEventModel,
-                                    number: 2,
-                                    controller: controller, list: controller.currentEventListTwo,
-                                  ) : NegativePositiveTab(
-                                    dayEventModel: dayEventModel,
-                                    number: 3,
-                                    controller: controller, list: controller.currentEventListThree.where((element) => element.isNeutralPositive).toList(),
-                                  )) : [
-                                    NegativePositiveTab(
-                                      dayEventModel: dayEventModel,
-                                      number: 1,
-                                      list: controller.currentEventListOne, controller: controller,
-                                    ),
-                                    NegativePositiveTab(
-                                      dayEventModel: dayEventModel,
-                                      number: 2,
-                                      controller: controller, list: controller.currentEventListTwo,
-                                    ),
-                                    NeutralTab(
-                                      dayEventModel: dayEventModel,
-                                      number: 3,
-                                      controller: controller, list: controller.currentEventListThree,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ],
+                  body: GetBuilder(
+                    builder: (K27Controller _c) => TabBarView(
+                      children: emotionsTypes != null ? List.generate(emotionsTypes!.length, (index) => emotionsTypes![index] == EmotionInDayEvent.NEGATIVE ? NegativePositiveTab(
+                        dayEventModel: dayEventModel,
+                        number: 1,
+                        list: controller.currentEventListOne, controller: controller,
+                      ) : emotionsTypes![index] == EmotionInDayEvent.POSITIVE ? NegativePositiveTab(
+                        dayEventModel: dayEventModel,
+                        number: 2,
+                        controller: controller, list: controller.currentEventListTwo,
+                      ) : NegativePositiveTab(
+                        dayEventModel: dayEventModel,
+                        number: 3,
+                        controller: controller, list: controller.currentEventListThree.where((element) => element.isNeutralPositive).toList(),
+                      )) : [
+                        NegativePositiveTab(
+                          dayEventModel: dayEventModel,
+                          number: 1,
+                          list: controller.currentEventListOne, controller: controller,
+                        ),
+                        NegativePositiveTab(
+                          dayEventModel: dayEventModel,
+                          number: 2,
+                          controller: controller, list: controller.currentEventListTwo,
+                        ),
+                        NeutralTab(
+                          dayEventModel: dayEventModel,
+                          number: 3,
+                          controller: controller, list: controller.currentEventListThree,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

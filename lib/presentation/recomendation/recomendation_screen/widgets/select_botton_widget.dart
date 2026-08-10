@@ -24,11 +24,9 @@ class _SelectButtonWState extends State<SelectButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
-      height: 30,
-      child: CustomButton( text: widget.title.toUpperCase(),
+    return  CustomButton( text: widget.title.toUpperCase(),
         width: size.width / 2 - 40,
-        height: 20,
+        minHeight: getVerticalSize(30),
         bgColor: opened ? ColorConstant.blueGray20001 : Colors.white.withOpacity(0.24),
         onTap: () {
         setState(() {
@@ -50,8 +48,7 @@ class _SelectButtonWState extends State<SelectButtonWidget> {
         textStyle: AppStyle.txtSFProDisplayRegular12.copyWith(
             fontWeight: FontWeight.w600,
             color: opened ? ColorConstant.whiteA700 : ColorConstant.deepPurple600
-        ),),
-    );
+        ),);
   }
 }
 

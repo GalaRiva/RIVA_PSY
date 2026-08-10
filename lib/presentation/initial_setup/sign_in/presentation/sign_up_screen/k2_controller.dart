@@ -45,7 +45,12 @@ class K2Controller extends GetxController {
           if (getDataResult.firebaseResultStatus ==
               FirebaseResultStatus.Success) {
             final createUserInDB = await CreateUser().createUser(email: email, password: password);
-            FireStoreRepositoryImpl().updateUser(
+            // Was fire-and-forget (no `await`) — the Navigator call a few
+            // lines down could fire before this write finished, cutting it
+            // off. This write is redundant with the one inside
+            // getAndSetRemoteDataLocally() above (same doc, same data) but
+            // awaiting it is a safe, minimal fix either way.
+            await FireStoreRepositoryImpl().updateUser(
                 userId: email,
                 user: UserModel(
                   registrationDate: DateTime.now(),

@@ -144,10 +144,8 @@ class TabWidget extends StatelessWidget {
                           visible: tab.titleImage() != null && tab.titleText() != null,
                           child: Padding(
                             padding: getPadding(left: 16, right: 16),
-                            child: SizedBox(
-                              height: getVerticalSize(100),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   DataSourceService.dataSourceIsRemote() ? SvgPicture.network(
                                     tab.titleImage() ?? '',
@@ -164,14 +162,16 @@ class TabWidget extends StatelessWidget {
                                     fit: BoxFit.contain,
                                   ),
                                   SizedBox(width: getHorizontalSize(10),),
+                                  // No fixed height here — was clipping
+                                  // translations longer than the Russian
+                                  // original (e.g. Spanish "Termina cada
+                                  // ejercicio..."). The Row/Column above
+                                  // grows to fit instead.
                                   Container(
                                     alignment: Alignment.topLeft,
                                     width: size.width -getHorizontalSize( 140),
-                                    height: getVerticalSize(100),
                                     child: Text(
                                       tab.titleText() ?? '',
-                                      maxLines: 10,
-                                      overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayMedium9.copyWith(
                                           fontSize: 14,
@@ -182,7 +182,6 @@ class TabWidget extends StatelessWidget {
                                   )
                                 ],
                               ),
-                            ),
                           ),
                         ),
                         Visibility(

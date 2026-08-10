@@ -9,6 +9,7 @@ import '../controller.dart';
 import '../models/emotion_model.dart';
 import 'text_for_select_period_widget.dart';
 import '../../../../widgets/emotion_pie_chart.dart';
+import '../../../../widgets/emotion_bubble_chart.dart';
 
 class WhatEmotionWidget extends StatelessWidget {
   final DateTime start;
@@ -35,70 +36,10 @@ class WhatEmotionWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          Padding(
-          padding: getPadding(
-          left: 20,
-            top: 21,
-            right: 20
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'what_emotions_am_I_feeling'.tr(),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: AppStyle
-                    .txtSFProDisplayLight14Gray800,
-              ),
-              Text(
-                "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: AppStyle.txtSFProDisplayLight10
-                    .copyWith(color: ColorConstant.cyan700),
-              ),
-            ],
-          ),
-          ),
-              Center(
-                child: Padding(
-                  padding: getPadding(top: 20),
-                  child: Container(
-                    width: getSize(300),
-                    height: getSize(300),
-                    child: Visibility(
-                      visible: emotions.isNotEmpty,
-                      child: EmotionPieChart(data: emotions, radius: getSize(145)),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: getPadding(all: 16),
-                child: Wrap(children: emotions.map((e) => Padding(
-                  padding: getPadding(right: 16,bottom: 18),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        color: e.color,
-                        width: getSize(14),
-                        height: getSize(14),
-                      ),
-                      Padding(padding: getPadding(left: 6),
-                      child: Text('${e.name} ${((e.quantity  / _sum(emotions)) * 100).toInt()}%',
-                        overflow:
-                        TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight10Gray800.copyWith(fontSize: getFontSize(16)),),
-                      )
-                    ],
-                  ),
-                )).toList(),),
-              ),
-              Padding(padding: getPadding(top: 15, left: 16, right: 16),
+              // 2026-08-10: "Позитивные и негативные эмоции" moved to the
+              // top — it's the quick-read summary, the emotion cloud below
+              // is the detailed breakdown.
+              Padding(padding: getPadding(top: 21, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -157,6 +98,43 @@ class WhatEmotionWidget extends StatelessWidget {
                     ],
                   ),
                 )).toList(),),
+              ),
+          Padding(
+          padding: getPadding(
+          left: 20,
+            top: 30,
+            right: 20
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'what_emotions_am_I_feeling'.tr(),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: AppStyle
+                    .txtSFProDisplayLight14Gray800,
+              ),
+              Text(
+                "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: AppStyle.txtSFProDisplayLight10
+                    .copyWith(color: ColorConstant.cyan700),
+              ),
+            ],
+          ),
+          ),
+              // "Эмоциональное облако" (2026-08-10): a physics-driven bubble
+              // cloud replaces the flat pie — positive emotions drift up,
+              // negative drift down, bubble area tracks frequency. Includes
+              // its own regrouped/sorted legend, so no separate Wrap here.
+              Visibility(
+                visible: emotions.isNotEmpty,
+                child: Padding(
+                  padding: getPadding(top: 10),
+                  child: EmotionBubbleChart(data: emotions),
+                ),
               ),
               SizedBox(height: 60,)
 

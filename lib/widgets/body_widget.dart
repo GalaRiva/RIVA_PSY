@@ -23,8 +23,32 @@ class BodyWidget extends StatelessWidget {
       width: (size.width - 32) / 2,
       child: Stack(
         children: [
+          // Outline first, markers on top — was the other way round, so the
+          // back-view silhouette (which has an opaque white fill, unlike
+          // the front one) completely hid its own markers underneath it.
+          index == 1
+              ? SvgPicture.asset(
+                  CurrentUser.user.male!
+                      ? 'assets/images/body_outline_male.svg'
+                      : 'assets/images/body_outline_female.svg',
+                  height: getVerticalSize(380),
+                  width: (size.width - 32) / 2,
+                  fit: BoxFit.contain,
+                )
+              : SvgPicture.asset(
+                  CurrentUser.user.male!
+                      ? 'assets/images/body_outline_male_back.svg'
+                      : 'assets/images/body_outline_female_back.svg',
+                  height: getVerticalSize(380),
+                  width: (size.width - 32) / 2,
+                  fit: BoxFit.contain,
+                ),
           Stack(
             children: list!
+                // Front view shows every zone except "спина"; back view
+                // shows only "спина" — each sensation appears on exactly
+                // one of the two silhouettes, never both.
+                .where((e) => index == 1 ? e.identity != 'back' : e.identity == 'back')
                 .map((e)
             {
               _circleIndex++;
@@ -48,23 +72,6 @@ class BodyWidget extends StatelessWidget {
                     })
                 .toList(),
           ),
-          index == 1
-              ? SvgPicture.asset(
-                  CurrentUser.user.male!
-                      ? 'assets/images/body_outline_male.svg'
-                      : 'assets/images/body_outline_female.svg',
-                  height: getVerticalSize(380),
-                  width: (size.width - 32) / 2,
-                  fit: BoxFit.contain,
-                )
-              : SvgPicture.asset(
-                  CurrentUser.user.male!
-                      ? 'assets/images/body_outline_male_back.svg'
-                      : 'assets/images/body_outline_female_back.svg',
-                  height: getVerticalSize(380),
-                  width: (size.width - 32) / 2,
-                  fit: BoxFit.contain,
-                ),
         ],
       ),
     );

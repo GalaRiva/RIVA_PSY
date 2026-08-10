@@ -11,7 +11,7 @@ const Map<String, Color> bodyZoneColors = {
   'shoulders_and_arms': Color(0xFFE53935), // красный
   'stomach': Color(0xFF43A047), // зеленый
   'legs': Color(0xFFFDD835), // желтый
-  'back': Color(0xFF8E24AA), // фиолетовый
+  'back': Color(0xFF30D5C8), // бирюзовый
 };
 
 Color bodyZoneColor(String? key, Color fallback) =>

@@ -18,6 +18,7 @@ import 'models/emotion_in_body.dart';
 import 'models/emotion_model.dart';
 import 'models/report_model.dart';
 import '../../../widgets/emotion_color_blob.dart';
+import '../../../widgets/body_zone_colors.dart';
 
 class K61Controller extends GetxController {
   bool loading = true;
@@ -170,6 +171,25 @@ class K61Controller extends GetxController {
     }
 
     for (var item in _places) {
+      // A place with many distinct emotions logged once or twice each turns
+      // into visual noise (every bar reads as "full height" once the max is
+      // just 1-2) — cap the chart at the top 10 by quantity and fold the
+      // rest into a single "Другое" bucket instead of drawing 20-30 bars.
+      if (item.emotions.length > 10) {
+        item.emotions.sort((a, b) => b.quantity.compareTo(a.quantity));
+        final top = item.emotions.take(10).toList();
+        final otherQuantity = item.emotions
+            .skip(10)
+            .fold<int>(0, (sum, e) => sum + e.quantity);
+        if (otherQuantity > 0) {
+          top.add(EmotionModel(
+              otherQuantity, 'other_emotions_chart_bucket'.tr(), ColorConstant.gray500));
+        }
+        item.emotions
+          ..clear()
+          ..addAll(top);
+      }
+      item.emotionMax = 0;
       for (var emotion in item.emotions){
         if(emotion.quantity > item.emotionMax) item.emotionMax = emotion.quantity;
       }
@@ -355,8 +375,14 @@ class K61Controller extends GetxController {
         }
       }
     if(createNew)
+      // Was purely positional (getColor(index)) — palette[0] is white, so
+      // whichever zone happened to be first in the list (e.g. "спина")
+      // rendered as an invisible white marker/legend swatch instead of its
+      // intended color. Zone color is now looked up by identity, same as
+      // the marker circles on the body silhouette itself (body_widget.dart),
+      // so the two always match and never depend on insertion order.
       list.add(
-    BodyPartModel(bodyParts, quantity, getColor(model.bodyParts.length)));
+    BodyPartModel(bodyParts, quantity, bodyZoneColor(bodyParts.bodyPartsModel.key, getColor(model.bodyParts.length))));
     }
 
     return list;
@@ -411,13 +437,18 @@ class K61Controller extends GetxController {
       for(var item in listToReturn)
      if (item.bodyPart.bodyPartsModel.identity == second.bodyPart.bodyPartsModel.identity){
        item.quantity++;
-       item.color = getColor(listToReturn.length);
+       // Was positional (getColor(listToReturn.length)) — this ran *after*
+       // _getBodyPartsType already set the correct zone color, silently
+       // overwriting it with palette[0]=white (or whatever else) whenever a
+       // zone landed at that index. Zone identity determines the color now,
+       // same as everywhere else this data is drawn.
+       item.color = bodyZoneColor(item.bodyPart.bodyPartsModel.identity, getColor(listToReturn.length));
        return true;
      }
      return false;
     }
     for(var item in list) {
-      if(!contain(item)) listToReturn.add(item..color = getColor(listToReturn.length));
+      if(!contain(item)) listToReturn.add(item..color = bodyZoneColor(item.bodyPart.bodyPartsModel.identity, getColor(listToReturn.length)));
     }
     return listToReturn;
   }

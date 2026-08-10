@@ -71,17 +71,21 @@ class WhereInBodyWidget extends StatelessWidget {
                   padding: getPadding(top: 18),
                   child:  Center(
                         child: SizedBox(
-                          height: getVerticalSize(380),
+                          height: getVerticalSize(380) * 1.26,
                           width: (size.width - 32),
-                          child: Row(
-                            children: [
-                              BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index))), //
-                              BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index)), index: 2,),                            ],
-                        ),
-                      ))
+                          child: Transform.scale(
+                            scale: 1.26,
+                            alignment: Alignment.topCenter,
+                            child: Row(
+                              children: [
+                                BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index))), //
+                                BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index)), index: 2,),                            ],
+                            ),
+                          ),
+                        ))
               ),
               Padding(
-                padding: getPadding(all: 16),
+                padding: getPadding(left: 16, right: 16, bottom: 16, top: 50),
                 child: Wrap(children: _all.map((e) => Padding(
                   padding: getPadding(right: 16,bottom: 18),
                   child: Row(
@@ -141,18 +145,22 @@ class WhereInBodyWidget extends StatelessWidget {
                   padding: getPadding(top: 18),
                   child:   Center(
                         child: SizedBox(
-                          height: getVerticalSize(380),
+                          height: getVerticalSize(380) * 1.26,
                           width: (size.width - 32),
-                          child: Row(
-                            children: [
-                              BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
-                              BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
-                            ],
-                        ),
-                      ))
+                          child: Transform.scale(
+                            scale: 1.26,
+                            alignment: Alignment.topCenter,
+                            child: Row(
+                              children: [
+                                BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
+                                BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
+                              ],
+                            ),
+                          ),
+                        ))
               ),
               Padding(
-                padding: getPadding(all: 16),
+                padding: getPadding(left: 16, right: 16, bottom: 16, top: 50),
                 child: Wrap(children: positiveType!.bodyParts.map((e) => Padding(
                   padding: getPadding(right: 16,bottom: 18),
                   child: Row(
@@ -212,19 +220,23 @@ class WhereInBodyWidget extends StatelessWidget {
                   padding: getPadding(top: 18),
                   child:  Center(
                         child: SizedBox(
-                          height: getVerticalSize(380),
+                          height: getVerticalSize(380) * 1.26,
                           width: (size.width - 32),
-                          child: Row(
-                            children: [
-                              BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
-                              BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
-                            ],
+                          child: Transform.scale(
+                            scale: 1.26,
+                            alignment: Alignment.topCenter,
+                            child: Row(
+                              children: [
+                                BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
+                                BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
+                              ],
+                            ),
                           ),
                         ),
                       )
               ),
               Padding(
-                padding: getPadding(all: 16),
+                padding: getPadding(left: 16, right: 16, bottom: 16, top: 50),
                 child: Wrap(children: negativeType!.bodyParts.map((e) => Padding(
                   padding: getPadding(right: 16,bottom: 18),
                   child: Row(
@@ -248,22 +260,25 @@ class WhereInBodyWidget extends StatelessWidget {
                 )).toList(),),
               ),
               Padding(
-                padding: getPadding(left: 20, top: 40),
-                child: Wrap(
+                padding: getPadding(left: 20, top: 40, right: 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                  alignment: WrapAlignment.center,
                   spacing: getHorizontalSize(30),
                   children: emotionsInBody.map((e) => Padding(
                   padding: getPadding(bottom: 23),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(e.emotionModel,
                         overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
+                        textAlign: TextAlign.center,
                         style: AppStyle.txtSFProDisplayLight10Gray800,
                       ),
                       SizedBox(height: getVerticalSize(5),),
                       Container(
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.center,
                         height: getHorizontalSize(83),
                       width: getHorizontalSize(83),
                         child: PieChart(
@@ -284,6 +299,7 @@ class WhereInBodyWidget extends StatelessWidget {
                       ),
                       Wrap(
                         direction: Axis.vertical,
+                        alignment: WrapAlignment.center,
                         children: e.bodyParts.map((_e) => Padding(
                           padding: getPadding(right: 16,bottom: 18),
                           child: Row(
@@ -311,6 +327,7 @@ class WhereInBodyWidget extends StatelessWidget {
                     ],
                   )
                 )).toList(),),
+                ),
               ),
             ],
           ),

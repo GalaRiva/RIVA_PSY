@@ -21,7 +21,7 @@ class CustomButton extends StatelessWidget {
       this.textStyle,
       this.centralWidget,
       this.textIsFitted = false,
-      this.standardPadding, this.showBorder = true});
+      this.standardPadding, this.showBorder = true, this.minHeight});
 
   ButtonShape? shape;
 
@@ -49,6 +49,12 @@ class CustomButton extends StatelessWidget {
 
   double? height;
 
+  // Opt-in: when set, the button grows to fit wrapped multi-line text
+  // (e.g. a translation longer than the Russian original) instead of
+  // clipping it at a fixed `height`. Other call sites are unaffected —
+  // they keep passing `height` and get the old fixed-height behavior.
+  final double? minHeight;
+
   String? text;
 
   Widget? prefixWidget;
@@ -71,7 +77,9 @@ class CustomButton extends StatelessWidget {
       child: Container(
         margin: margin ?? EdgeInsets.zero,
         width: width ?? double.maxFinite,
-        height: height ?? 50,
+        height: minHeight != null ? null : (height ?? 50),
+        constraints: minHeight != null ? BoxConstraints(minHeight: minHeight!) : null,
+        padding: minHeight != null ? getPadding(top: 6, bottom: 6, left: 6, right: 6) : null,
         decoration: _buildTextButtonStyle(),
         child: _buildButtonWithOrWithoutIcon(),
       ),

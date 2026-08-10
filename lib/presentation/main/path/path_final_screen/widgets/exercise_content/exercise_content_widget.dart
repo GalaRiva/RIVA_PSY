@@ -66,6 +66,8 @@ class ExerciseContentWidget extends StatelessWidget {
             emotionMood: moodForKey(dayEvent.whatEmotion![0].identity, categoryMood),
             model: dayEvent.whatEmotion![0],
             cardHeight: 44, isSelect: false,
+            cardWidth: size.width - 20,
+            useShadowStyle: true,
           ),
         ),
         Padding(
@@ -155,6 +157,8 @@ class ExerciseContentWidget extends StatelessWidget {
                                   categoryMood),
                               model: controller.additionalEmotions![index],
                               cardHeight: 44, isSelect: false,
+                              cardWidth: size.width / 2.4,
+                              useShadowStyle: true,
                             ),
                           );
 

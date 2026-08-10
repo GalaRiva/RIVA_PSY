@@ -19,17 +19,15 @@ class NegativePositiveTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.currentTab = number;
-    // 2026-08-07: "сгруппировать негативные эмоции по цвету: коричневые
-    // вместе, красные вместе, зеленые вместе и т.д." — only the negative
-    // tab (number 1) has the user-specified family groupings at all
-    // (_familyOverrides is built entirely from standardEventListOne);
-    // sorting the positive tab by the same key would be a no-op grouping
-    // nothing, so it's left in its original order.
-    final displayList = number == 1
-        ? (List<EventModel>.from(list)
-          ..sort((a, b) => emotionFamilySortKey(a.identity)
-              .compareTo(emotionFamilySortKey(b.identity))))
-        : list;
+    // 2026-08-07/2026-08-10: "сгруппировать эмоции по цвету" — negative
+    // (tab 1) and positive (tab 2) each have their own 7-family grouping,
+    // sorted by the order the user listed those families in.
+    final displayList = List<EventModel>.from(list)
+      ..sort((a, b) => (number == 1
+              ? emotionFamilySortKey(a.identity)
+                  .compareTo(emotionFamilySortKey(b.identity))
+              : positiveEmotionFamilySortKey(a.identity)
+                  .compareTo(positiveEmotionFamilySortKey(b.identity))));
     return SingleChildScrollView(
       child: Column(
 
