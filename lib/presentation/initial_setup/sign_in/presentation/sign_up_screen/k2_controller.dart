@@ -70,23 +70,23 @@ class K2Controller extends GetxController {
                 context, AppRoutes.splashScreen, (route) => false);
           } else {
               showMessage(context,
-                  title: 'Регистрация', content: createUserInDB.exceptionMessage!);
+                  title: 'Registration', content: createUserInDB.exceptionMessage!);
 
             }
           } else {
             showMessage(context,
-                title: 'Регистрация', content: getDataResult.exceptionMessage!);
+                title: 'Registration', content: getDataResult.exceptionMessage!);
           }
         } else {
           showMessage(context,
-              title: 'Регистрация', content: signUpResult.exceptionMessage!);
+              title: 'Registration', content: signUpResult.exceptionMessage!);
         }
         } catch (e) {
       print(e);
       showMessage(context,
-          title: 'Регистрация',
+          title: 'Registration',
           content:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету или попоробуйте позднее');
+              'An unexpected error occurred, please check your internet connection or try again later');
     }
   }
 
@@ -101,7 +101,7 @@ class K2Controller extends GetxController {
             .getAndSetRemoteDataLocally(
             result.userId!, email: result.email, login: result.login);
         if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-          showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+          showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
         } else {
           await CurrentUser.repo.setService('apple');
           await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
@@ -135,18 +135,18 @@ class K2Controller extends GetxController {
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
           } else {
-            showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
         } else {
           showMessage(context,
-              title: 'Регистрация', content: createUserInDB.exceptionMessage!);
+              title: 'Registration', content: createUserInDB.exceptionMessage!);
 
         }
 
       }
 
     } else {
-      showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+      showMessage(context, title: 'Registration', content: result.exceptionMessage!);
     }
     } catch (e) {
       // Same safety net as authWithGoogle in sign_in_screen/k2_controller.dart:
@@ -155,7 +155,7 @@ class K2Controller extends GetxController {
       // "successful" Apple auth.
       print(e);
       showMessage(context,
-          title: 'Регистрация', content: 'network_error_try_later'.tr());
+          title: 'Registration', content: 'network_error_try_later'.tr());
     }
   }
 
@@ -172,7 +172,7 @@ class K2Controller extends GetxController {
         print(dataSetResult.firebaseResultStatus.toString());
 
         if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-          showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+          showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
         }
         else {
           await CurrentUser.repo.setService('google');
@@ -208,25 +208,25 @@ class K2Controller extends GetxController {
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
           } else {
-            showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
         } else {
           showMessage(context,
-              title: 'Регистрация', content: createUserInDB.exceptionMessage!);
+              title: 'Registration', content: createUserInDB.exceptionMessage!);
 
         }
 
       }
 
     } else {
-      showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+      showMessage(context, title: 'Registration', content: result.exceptionMessage!);
     }
     } catch (e) {
       // Same safety net as above — this file's authWithGoogle had never
       // been wrapped either (only sign_in_screen's was, previously).
       print(e);
       showMessage(context,
-          title: 'Регистрация', content: 'network_error_try_later'.tr());
+          title: 'Registration', content: 'network_error_try_later'.tr());
     }
   }
 }

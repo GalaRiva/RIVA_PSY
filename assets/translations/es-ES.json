@@ -1,7 +1,6 @@
 {
   "hi": "Hola, {}",
   "how_do_you_feel": "¿cómo te sientes?",
-
   "continue": "Siguiente",
   "setup": "Configurar",
   "save": "Guardar",
@@ -19,16 +18,12 @@
   "understand": "Entendido",
   "start2": "Empezar",
   "cancel_result": "cancelar resultado",
-
   "normal": "Normal",
   "terribly": "Fatal",
   "fine": "Genial",
-
   "complete_path": "Completar el Camino",
-
   "save_record": "Registro {} guardado",
   "create_record": "Registro creado",
-
   "sunday": "Domingo",
   "tuesday": "Martes",
   "wednesday": "Miércoles",
@@ -36,7 +31,6 @@
   "friday": "Viernes",
   "saturday": "Sábado",
   "monday": "Lunes",
-
   "monday_short": "Lun",
   "tuesday_short": "Mar",
   "wednesday_short": "Mié",
@@ -44,21 +38,16 @@
   "friday_short": "Vie",
   "saturday_short": "Sáb",
   "sunday_short": "Dom",
-
   "never": "Nunca",
   "today": "Hoy",
   "yesterday": "Ayer",
-
   "abbreveated_year": "a.",
   "abbreveated_month": "m.",
   "abbreveated_month2": "mes.",
   "abbreveated_day": "d.",
-
   "abbreveated_euro": "euros",
-
   "year": "año",
   "day": "día",
-
   "september": "Septiembre",
   "october": "Octubre",
   "november": "Noviembre",
@@ -71,7 +60,6 @@
   "june": "Junio",
   "july": "Julio",
   "august": "Agosto",
-
   "september2": "Septiembre",
   "october2": "Octubre",
   "november2": "Noviembre",
@@ -84,7 +72,6 @@
   "june2": "Junio",
   "july2": "Julio",
   "august2": "Agosto",
-
   "sing_up": "Registro",
   "we_use_number": "Usamos tu número de teléfono solo para proteger tus registros; los datos no se comparten con terceros y son anónimos",
   "we_use_email": "Usamos tu correo electrónico solo para proteger tus registros; los datos no se comparten con terceros y son anónimos",
@@ -104,11 +91,8 @@
   "concent_to_processing": "Consentimiento para el tratamiento de datos personales",
   "user_conclusion": "Términos de uso",
   "have_account": "Ya tengo una cuenta",
-
   "sign_in": "Iniciar sesión",
-
   "settings": "Ajustes",
-
   "about_app": "Acerca de la app",
   "passwprd": "Contraseña",
   "data_and_recovery": "Datos y recuperación",
@@ -117,20 +101,19 @@
   "report_an_error": "Reportar un error",
   "reminders": "Recordatorios",
   "subscription": "Suscripción",
+  "base_tariff_description": "Acceso limitado a recomendaciones, estadísticas y audio",
   "your_profile": "Tu perfil",
-
   "backup": "Copia de seguridad",
   "days_ago": "días atrás",
   "restore": "Restaurar",
   "your_data_will": "Tus datos se copiarán automáticamente en {} cada semana.",
   "last_copy": "Última copia",
-
+  "press_backup_hint": "Toca «Copia de seguridad» para guardar una copia de tus datos en {} en cualquier momento.",
   "select_backup": "Selecciona una copia de seguridad",
   "records": "Registros",
   "records_title": "Registros",
   "all_existing_data": "Todos los datos actuales se sustituirán por los de la copia que has abierto. ¿Estás seguro de que quieres restaurarla?",
   "version_from_restore": "La versión del {} se restauró correctamente",
-
   "medication": "Medicamento",
   "medication_name": "Nombre del medicamento",
   "set_reception_duration": "Establecer duración del tratamiento",
@@ -140,7 +123,6 @@
   "date_added": "Por fecha de alta",
   "what_we_accept": "Lo que estamos tomando",
   "appointment": "Toma",
-
   "add_pill": "Añadir medicamento",
   "reminder_n": "Recordatorio {}",
   "add_pill_dialog_title": "Añadir medicamento",
@@ -156,14 +138,12 @@
   "add_reminder_to_actual": "Añadir el recordatorio a la lista de medicamentos actuales",
   "cancel_intake": "cancelar toma",
   "resume_intake": "reanudar toma",
-
   "write_your_wishes": "Escribe qué te gustaría ver: gráficos, síntomas, emociones, ejercicios",
   "your_suggestions": "Tus sugerencias",
   "upload_screenshot": "Adjunta una captura de la pantalla que te gustaría mejorar",
   "upload_image": "Subir imagen",
   "suggestion_title": "Sugerencia de mejora",
   "suggestion_sent": "Tu sugerencia ha sido enviada",
-
   "describe_issue": "Describe qué salió mal, por favor",
   "error_screenshot": "Adjunta una captura de la pantalla donde ocurrió el error",
   "error_message_title": "Informe de error",
@@ -172,20 +152,17 @@
   "cancel_notifications": "Podrás desactivar las notificaciones",
   "remind_to_make_entry": "Recordarme crear un registro a las",
   "change_frequency_reminders": "¿Quieres cambiar la frecuencia y la hora de los recordatorios?",
-
   "current_tariff": "Plan actual",
   "limited_access": "Acceso limitado a recomendaciones, estadísticas y audio",
   "active_until": "Activo hasta",
   "manage_subscription_on_website": "Puedes gestionar tu suscripción en rivapsy.com",
   "buy_subscription": "Comprar suscripción",
   "enter_promo_code": "Introducir código promocional",
-
   "already_subscribed_until": "Ya tienes una suscripción hasta el {} de {} de {}.",
   "buy_subscription_breadcrumb": " | Suscripción ",
   "buy_subscription_breadcrumb2": "| Comprar suscripción",
   "for_price_per_year": "por {} ₽/año",
   "promo_breadcrumb": " | Suscripción | Código de regalo",
-
   "promo_code": "Código promocional",
   "enter_gift_code": "Introduce el código de regalo",
   "send_code": "enviar código",
@@ -193,7 +170,6 @@
   "promo_inactive": "Este código promocional está inactivo",
   "promo_discount_contact_support": "Para aplicar el descuento de este código promocional, contáctenos: support@rivapsy.com",
   "tariff_activated_congrats": "¡Enhorabuena!\n\nEl plan “Orión”\nya está activo",
-
   "enter_password": "Introduce la contraseña",
   "password_recovery_not_provided": "El sistema no permite recuperar la contraseña, ",
   "password_recovery_reason1": "ya que ",
@@ -206,7 +182,6 @@
   "gender": "Sexo",
   "male": "Masculino",
   "female": "Femenino",
-
   "profile": "Perfil",
   "old_password": "Contraseña anterior",
   "new_password": "Nueva contraseña",
@@ -214,27 +189,23 @@
   "logout": "cerrar sesión de tu cuenta",
   "couldnt_change_password": "No pudiste cambiar tu contraseña",
   "profile_data_changed": "Los datos del perfil se han cambiado correctamente",
-  "network_error_try_later": "Se produjo un error, comprueba tu conexión a internet o inténtalo más tarde",
+  "network_error_try_later": "An error occurred, check your internet connection or try again later",
   "wrong_old_password": "La contraseña anterior es incorrecta",
   "change_login": "Cambiar el inicio de sesión",
   "change_age": "Cambiar la edad",
   "password_length_min": "La contraseña debe tener más de 8 caracteres",
   "password_length_max": "La contraseña debe tener menos de 26 caracteres",
   "password_complexity": "La contraseña debe contener al menos un dígito, una letra minúscula y una mayúscula, y un carácter único como !#$%&?",
-
   "send_path": "Completar el Camino",
-
   "current_emotion": "Emoción ahora",
   "find_emotion": "Buscar una emoción",
   "add_emotion": "Añadir emoción",
-
   "negative": "Negativas",
   "positive": "Positivas",
   "neutral": "Neutrales",
   "neutral_positive": "Neutrales (más bien positivas)",
   "neutral_negative": "Neutrales (más bien negativas)",
   "neutral_blank": "Neutrales (aprox.)",
-
   "people": "Personas",
   "animals_and_nature": "Animales y naturaleza",
   "places_and_activities": "Lugares y actividades",
@@ -294,6 +265,7 @@
   "person_not_found_add_your_own": "Persona no encontrada\nAñade tu propia persona",
   "how_to_live_through_emotions": "Cómo vivir las emociones",
   "how_to_live_through": "Cómo vivir {}",
+  "continue_with_service": "Continuar con {}",
   "how_to_live_through_additional_emotions": "Cómo vivir las emociones adicionales:",
   "head_and_face": "Cabeza y cara",
   "throat": "Garganta",
@@ -379,14 +351,12 @@
   "rigid": "Rígida",
   "relaxed4": "Relajada",
   "tense3": "Tensa",
-
   "what_did_I_do": "¿Qué hice?",
   "for_example_left_slammed_door": "Por ejemplo: Me fui dando un portazo",
   "your_actions": "Tus acciones",
   "first_thoughts_in_situation": "Primeros pensamientos en la situación",
   "for_example_wish_it_was_me": "Por ejemplo: ¡Ojalá fuera yo!",
   "record_saved": "Registro {} guardado",
-
   "charts": "Gráficos",
   "state_diagnosis": "Evaluación del estado",
   "summary_report": "Informe resumido del estado",
@@ -396,7 +366,6 @@
   "where_and_what_emotions": "Dónde y qué emociones",
   "send_summary_report": "Enviar informe resumido",
   "change_time_period": "Cambiar periodo de tiempo",
-
   "date": "Fecha",
   "situation": "Situación",
   "emotions": "Emociones",
@@ -426,7 +395,6 @@
   "SMER": "SMER",
   "alternative_actions": "Acciones alternativas",
   "alternative_thoughts": "Pensamientos alternativos",
-
   "rest": "Descanso",
   "sleep": "Sueño",
   "waking_up": "Despertar",
@@ -564,7 +532,6 @@
   "sympathy_+": "Simpatía +",
   "empathy_-": "Sentido de conexión -",
   "sympathy_-": "Simpatía -",
-
   "joy": "Alegría",
   "happiness": "Felicidad",
   "delight": "Deleite",
@@ -612,7 +579,6 @@
   "reverence": "Reverencia",
   "gratitude2": "Reconocimiento",
   "patriotism": "Patriotismo",
-
   "anger_rage": "Ira (furia)",
   "hate": "Odio",
   "wrath": "Cólera",
@@ -629,7 +595,6 @@
   "disgust": "Asco",
   "fear2": "Miedo",
   "horror": "Horror",
-
   "desperation": "Desesperación",
   "fear": "Susto",
   "suspicion": "Sospecha",
@@ -675,17 +640,14 @@
   "shame": "Vergüenza",
   "repulsion": "Rechazo",
   "bewilderment": "Confusión",
-
   "work_out_irrational": "Trabajar lo irracional",
   "path_to_healthy_life": "el camino hacia una vida y relaciones sanas",
   "work_out_irrational_thoughts": "Trabajar los pensamientos irracionales, convertir lo disfuncional en funcional",
   "want_try": "quiero probar",
   "please_remember": "Recuerda que solo tú ves esto, y ser honesto contigo mismo te beneficia a ti. ¡Nuestro apoyo y calidez están contigo!",
   "recommended_to_take_per_day": "Se recomienda hacer 2-3 registros al día. No te apresures. Preferimos la calidad a la cantidad. Deja que lo nuevo y bueno se asiente y se estabilice.",
-
   "prestige_in_focus": "El prestigio en el foco: la felicidad",
   "alternative": "Alternativa",
-
   "go_to_tariff": "Cambiar al plan ",
   "orion_tariff_name": "Orión",
   "to_free_recommendations": "a recomendaciones gratuitas",
@@ -693,19 +655,16 @@
   "in_free_version": "En la versión gratuita, las copias de seguridad se guardarán en tu propio almacenamiento en la nube.",
   "tariff_title": "Plan",
   "for_storing_data_go_to_orion": "Para almacenar todos los datos introducidos en tu smartphone y con la máxima privacidad, cambia al plan Orión. Obtén acceso completo a recomendaciones, estadísticas y audio",
-
   "alternative_reaction": "Reacciones alternativas",
   "through_path": "Completa el Camino, añade pensamientos y emociones, y transforma lo desagradable en positivo",
   "auto_thought": "Pensamiento automático",
   "auto_do": "Acción automática",
   "challenge_thought": "Cuestionar el pensamiento",
   "challenge_do": "Cuestionar la acción",
-
   "why_i_do_that": "¿POR QUÉ hice eso?\n¿Por qué precisamente esa reacción? ¿Quizás adopté ese patrón, o tuve una experiencia negativa antes?",
   "which_my_behaviors": "¿Cuál de mis comportamientos es más adecuado  para esta situación?\n¿Cómo quiero actuar en situaciones parecidas en el futuro? \n¿Cómo intentaré reaccionar  y actuar en una situación así?",
   "why_i_think_that": "¿Por qué pensé eso?  ¿En qué me basé para decidirlo?  ¿Dónde he oído estas palabras, y/o de quién?",
   "i_with_i_could_think_about_it": "¿Qué me habría gustado pensar en su lugar?  ¿Qué pensamiento se ajusta mejor a la situación? ¿Qué otros pensamientos podría haber en esta situación? Por ejemplo, los de alguien  a quien respetas",
-
   "alternative_thought": "pensamiento alternativo",
   "alternative_do": "acción alternativa",
   "show_more": "Mostrar todo",
@@ -716,19 +675,16 @@
   "champion": "¡Campeón! Descansa un poco.",
   "let_your_thoughts": "Deja que tus pensamientos se asienten y arraiguen, y vuelve mañana. Es mejor así)",
   "if_during_the_day": "Si durante el día vuelves a ciertos pensamientos negativos concretos, anótalos en el Camino, y si no tienes la posibilidad de hacerlo aquí y ahora:",
-
   "unknown_page": "Página desconocida",
   "back": "Atrás",
   "initial_thought": "Pensamiento inicial",
   "initial_action": "Acción inicial",
   "alternative_thoughts_and_actions_title": "Pensamientos y acciones alternativos",
   "why_i_thought_so": "Por qué pensé eso",
-
   "find_record": "Buscar un registro",
   "add_record": "Añadir un registro",
   "do": "Acción",
   "voice_record": "Grabación de voz",
-
   "return_your_own_life": "Recupera tu propia vida. Respira con libertad. Conviértete en una persona tranquila, ligera, segura y atractiva.\n\nConocerse a uno mismo no es solo cuestión de lo negativo, también de lo agradable. \n\nExplórate desde distintos ángulos. \n\nPoco a poco, irán apareciendo nuevos datos en los gráficos, que a su vez pueden revelarte algo nuevo sobre ti misma)",
   "happiness_in_focus": "la felicidad en el foco",
   "get_full_access_to_recomendation": "Obtén acceso completo a recomendaciones, estadísticas, audio y ejercicios: pásate al plan \"Orión\"",
@@ -745,10 +701,8 @@
   "you_have_right_on_thoughts": "Tienes derecho \na tus pensamientos y emociones.",
   "you_have_right_be_different": " Tienes derecho a ser diferente. ¡Ser más o menos normal es normal!",
   "university_today": "El universo es hoy así gracias a que tú existes",
-
   "thank_you_for_being_there": "¡Gracias por estar aquí! ",
   "warm_hug_from_us": "¡Un abrazo cálido de nuestra parte! Vuelve mañana, te estaremos esperando",
-
   "three_days_without_complaints": "Tres días sin quejarse",
   "three_days_without_one_complaints": "Tres días sin una sola queja.\nNi del tiempo, ni de la salud, la política, el trabajo, un ser querido, el transporte, ni mucho menos de ti mismo — ¡de nada!)",
   "during_the_first_attempts": "Durante los primeros intentos pueden aflorar emociones negativas reprimidas o resentimientos; anótalos en la app y realiza las sesiones de audio.",
@@ -759,7 +713,6 @@
   "i_cant_anticipate": "\"No puedo prever, puedo crear. El futuro se construye. Si mi mano es la de un escultor, entonces los rasgos fragmentados de mi tiempo se convertirán en un rostro hermoso, y lo que quiero se hará realidad.\"\n\nCiudadela. Antoine de Saint-Exupéry",
   "best_praise": "El mejor elogio y recompensa es lo que ya has ganado con solo hacerlo",
   "now_lets_look_at_moments": "Ahora, uno por uno, veamos 1-3-5 momentos de hoy en los que te sentiste bien… o... más o menos bien",
-
   "desires": "Deseos",
   "its_not_about_great_dreams": "No se trata de grandes sueños, metas o carreras, sino de los deseos más simples.\n\nLos deseos tratan de cosas simples. Este ejercicio te ayuda a aprender a escucharte a ti mismo y tus verdaderos deseos.\n\nEscribe lo que te gusta o amas, y lo que quieres.\n¿Qué, exactamente?\n\n¿Qué quiero ahora mismo? Alguna pequeña cosa, aquí y ahora.\nQuiero beber/tumbarme/sentarme/dormir, pescado, una manzana, una película, un libro — lo que sea, y qué exactamente.\n",
   "get_start_with_simple_things": "Empieza con cosas simples, y cuanto más practicas, más profundamente empiezas a mirar y trazar tu propio camino.\n\nEjemplo: Quiero una manzana ahora mismo, quiero llorar ahora mismo, quiero beber, quiero escuchar música.",
@@ -783,20 +736,15 @@
   "executed_1": "Lo cumplí",
   "executing": "Cumpliendo",
   "will_execute": "Lo cumpliré",
-
   "lost_wish": "El deseo se ha esfumado",
   "lost": "Se esfumó",
-
   "report": "Informe",
   "later": "Más tarde",
   "save_desire": "guardar deseo",
   "desires_stage": "Deseos {}/3",
   "desires_past": "Deseos pasados",
   "recommendation_for_efficiency": "Recomendación para la efectividad del ejercicio",
-
   "more_detailed": "más detalles",
-
-
   "help_and_support": "La ayuda y el apoyo pueden ser necesarios en cualquier momento\n\nObtén acceso completo a recomendaciones, sesiones, análisis y ejercicios todo el año.\n\nCuida de ti mismo\n\nAyuda de calidad día y noche",
   "test_period": "Periodo de prueba (14 días)",
   "subscribe": "suscribirse",
@@ -813,7 +761,6 @@
   "password_changed": "Contraseña guardada correctamente",
   "delete_reminder": "Quitar el recordatorio de la lista de medicamentos actuales",
   "access_to_all_recomendation": "Acceso a todas las recomendaciones en texto y audio,\nmeditaciones, ejercicios y prácticas para tu salud mental, calma y crecimiento",
-
   "offer_success_send": "Sugerencia enviada correctamente",
   "exception_message_succe_send": "Informe de error enviado correctamente",
   "archive_records": "Registros archivados",
@@ -823,7 +770,6 @@
   "to_talk_it_out": "Desahogarse",
   "create_voice_record": "Crear una grabación de voz",
   "mind_update": "Actualizar mi forma de pensar",
-
   "introduction": "Introducción",
   "recommendations_and_exercises": "Recomendaciones y ejercicios",
   "exercises": "Ejercicios",
@@ -839,11 +785,10 @@
   "depression": "Depresión",
   "panic": "Pánico",
   "breathing_relaxation_instruction": "Termina cada ejercicio con una respiración profunda, inhalando y exhalando por la boca, 3 veces. Nota cómo ha cambiado la sensación en tus brazos, piernas y pecho",
-  "unexpected_error_check_connection": "Se produjo un error inesperado. Comprueba tu conexión a internet o inténtalo de nuevo más tarde.",
+  "unexpected_error_check_connection": "An unexpected error occurred. Please check your internet connection or try again later.",
   "addition_emotions": "Emociones adicionales",
   "record_keep": "El registro se guarda en tu dispositivo",
   "record_save": "Registro guardado",
-  "microphone_access_error": "Sin acceso al micrófono. Permite el acceso en los ajustes de la app e inténtalo de nuevo",
-
+  "microphone_access_error": "No microphone access. Allow access in the app settings and try again",
   "select_language": "Seleccionar idioma"
 }

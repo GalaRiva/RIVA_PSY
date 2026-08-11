@@ -45,7 +45,10 @@ class TextForSelectPeriodWidget extends StatelessWidget {
                 "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: AppStyle.txtSFProDisplayLight10.copyWith(fontSize: getFontSize(20)),
+            // Was fontSize 20 — twice the size of the other card headers
+            // (txtSFProDisplayLight14Gray800, size 14) it sits next to,
+            // making it look out of place rather than just "readable".
+            style: AppStyle.txtSFProDisplayLight10.copyWith(fontSize: getFontSize(14)),
           ),
           CustomImageView(
             svgPath: ImageConstant.rightArrow,

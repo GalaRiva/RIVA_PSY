@@ -48,7 +48,10 @@ class TariffModel {
   static TariffModel BASE_TARIFF = TariffModel(
   name: 'Базовый',
   endDate: DateTime(9999, 12, 24),
-  description: 'Ограниченный доступ к рекомендациям, статистике и аудио',
+  // Translation key, not literal display text — the subscription screen
+  // calls .tr() on this. Was hardcoded Russian, showing up untranslated
+  // even in the Spanish/English builds.
+  description: 'base_tariff_description',
   cost: 0,
   advantages: [], nameInEn: 'Base',
   );

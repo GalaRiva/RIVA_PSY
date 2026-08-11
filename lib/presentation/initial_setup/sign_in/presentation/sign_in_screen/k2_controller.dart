@@ -82,7 +82,7 @@ class K2AuthController extends GetxController {
       showMessage(context,
           title: 'Авторизация',
           content:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету или попоробуйте позднее');
+              'An unexpected error occurred, please check your internet connection or try again later');
     }
   }
 
@@ -97,7 +97,7 @@ class K2AuthController extends GetxController {
             .getAndSetRemoteDataLocally(
             result.userId!, email: result.email, login: result.login);
         if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-          showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+          showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
         } else {
           await CurrentUser.repo.setService('apple');
           await CurrentUser.repo.setLocalUserData(email: result.email);
@@ -131,18 +131,18 @@ class K2AuthController extends GetxController {
             Navigator.pushNamedAndRemoveUntil(
                 context, AppRoutes.splashScreen, (route) => false);
           } else {
-            showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
         } else {
           showMessage(context,
-              title: 'Регистрация', content: createUserInDB.exceptionMessage!);
+              title: 'Registration', content: createUserInDB.exceptionMessage!);
 
         }
 
       }
 
     } else {
-      showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+      showMessage(context, title: 'Registration', content: result.exceptionMessage!);
     }
     } catch (e) {
       // Same safety net as authWithGoogle below: an uncaught FirebaseException
@@ -150,7 +150,7 @@ class K2AuthController extends GetxController {
       // on this screen with no feedback after a "successful" Apple auth.
       print(e);
       showMessage(context,
-          title: 'Регистрация', content: 'network_error_try_later'.tr());
+          title: 'Registration', content: 'network_error_try_later'.tr());
     }
   }
 
@@ -165,7 +165,7 @@ class K2AuthController extends GetxController {
               .getAndSetRemoteDataLocally(
               result.userId!, email: result.email, login: result.login);
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-            showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
           else {
             await CurrentUser.repo.setService('google');
@@ -200,18 +200,18 @@ class K2AuthController extends GetxController {
               Navigator.pushNamedAndRemoveUntil(
                   context, AppRoutes.splashScreen, (route) => false);
             } else {
-              showMessage(context, title: 'Регистрация', content: dataSetResult.exceptionMessage!);
+              showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
             }
           } else {
             showMessage(context,
-                title: 'Регистрация', content: createUserInDB.exceptionMessage!);
+                title: 'Registration', content: createUserInDB.exceptionMessage!);
 
           }
 
         }
 
       } else {
-        showMessage(context, title: 'Регистрация', content: result.exceptionMessage!);
+        showMessage(context, title: 'Registration', content: result.exceptionMessage!);
       }
     } catch (e) {
       // Safety net: any uncaught exception from the chain above (e.g. a
@@ -220,7 +220,7 @@ class K2AuthController extends GetxController {
       // auth into nowhere". Always surface something instead of swallowing.
       print(e);
       showMessage(context,
-          title: 'Регистрация', content: 'network_error_try_later'.tr());
+          title: 'Registration', content: 'network_error_try_later'.tr());
     }
   }
 }

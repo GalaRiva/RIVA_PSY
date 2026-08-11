@@ -133,7 +133,12 @@ class K37Screen extends StatelessWidget {
                 child: Padding(
                   padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // Was spaceEvenly (reserves equal gaps at both outer
+                    // edges too) with a 171-wide back button — too narrow
+                    // for the Spanish "EMOCIONES EN EL CUERPO" label even
+                    // with textIsFitted scaling it down, so it visually
+                    // crowded into the "SIGUIENTE" button next to it.
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomButton(
@@ -141,7 +146,7 @@ class K37Screen extends StatelessWidget {
                           32,
                         ),
                         width: getHorizontalSize(
-                          171,
+                          195,
                         ),
                         variant: ButtonVariant.Base,
 
@@ -159,7 +164,7 @@ class K37Screen extends StatelessWidget {
                           32,
                         ),
                         width: getHorizontalSize(
-                          140,
+                          125,
                         ),
                         variant: ButtonVariant.Base,
                         text: 'continue'.tr().toUpperCase(),

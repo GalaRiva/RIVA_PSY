@@ -58,7 +58,7 @@ class ResetPasswordController extends GetxController {
       print(_);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Ошибка, проверьте подключение к интернету или попробуйте позднее')));
+              'Error, please check your internet connection or try again later')));
     }
   }
 

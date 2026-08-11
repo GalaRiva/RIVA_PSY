@@ -23,7 +23,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
     final key = GlobalKey<FormState>();
     return Scaffold(
         backgroundColor: AppColors.background,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

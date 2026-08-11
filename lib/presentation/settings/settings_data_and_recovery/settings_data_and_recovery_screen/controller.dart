@@ -42,7 +42,7 @@ class DataAndRecoveryController extends GetxController {
         if (showErrorMessage)
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
-                  'Не удалось определить учётную запись. Перезайдите в приложение и попробуйте снова.')));
+                  'Could not identify your account. Please re-enter the app and try again.')));
         return;
       }
       final googleDrive = GoogleDriveService();
@@ -72,7 +72,7 @@ class DataAndRecoveryController extends GetxController {
           if (showErrorMessage)
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
-                    'Произошла ошибка, проверьте подключение к интернету или попробуйте позднее\nОписание ошибки - $_')));
+                    'An error occurred, please check your internet connection or try again later\nError details - $_')));
         }
         update();
       } catch (_) {
@@ -80,7 +80,7 @@ class DataAndRecoveryController extends GetxController {
         print(_);
         if (showErrorMessage)
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Произошла непредвиденная ошибка\nОписание ошибки - $_')));
+              SnackBar(content: Text('An unexpected error occurred\nError details - $_')));
       }
     }
   }

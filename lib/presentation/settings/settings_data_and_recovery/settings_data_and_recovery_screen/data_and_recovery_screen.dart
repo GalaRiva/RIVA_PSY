@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../core/utils/image_constant.dart';
@@ -32,12 +33,12 @@ class DataAndRecoveryScreen extends StatelessWidget {
                   children: [
                     CustomAppBar(
                       widget: CustomPopButton(
-                        text: 'Настройки',
+                        text: 'settings'.tr(),
                       ),
                     ),
                     Padding(
                         padding: getPadding(top: 25),
-                        child: Text("Данные и восстановление",
+                        child: Text('data_and_recovery'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtH1)),
@@ -52,12 +53,12 @@ class DataAndRecoveryScreen extends StatelessWidget {
                       child: GetBuilder(
                         builder: (DataAndRecoveryController _c) => CardDataAndRecoveryButtonWidget(context,
                             controller: controller,
-                            title: 'Резервная копия',
+                            title: 'backup'.tr(),
                           onTap: controller.service == '' ? null : () async => await controller.createServiceBackup(context),
                           suffixWidget: Column(
                             children: [
                               Text(
-                                'Последняя копия',
+                                'last_copy'.tr(),
                                 style: AppStyle.txtSFProDisplayLight11Gray800,
                               ),
                               Text(
@@ -71,7 +72,7 @@ class DataAndRecoveryScreen extends StatelessWidget {
                     CardDataAndRecoveryButtonWidget(context,
                         controller: controller,
                         onTap: controller.service == '' ? null : () => Navigator.pushNamed(context, AppRoutes.recovery, arguments: controller.service),
-                        title: 'Восстановить',
+                        title: 'restore'.tr(),
                         suffixWidget: CustomImageView(
                             svgPath: ImageConstant.imgArrowrightGray700,
                             height: getVerticalSize(8),
@@ -80,7 +81,7 @@ class DataAndRecoveryScreen extends StatelessWidget {
                     Padding(
                       padding: getPadding(top: 7, left: 15, right: 35),
                       child: Text(
-                        'Нажмите «Резервная копия», чтобы в любой момент сохранить копию своих данных в ${controller.service}.',
+                        'press_backup_hint'.tr(args: [controller.service]),
                         style: AppStyle.txtSFProDisplayLight11Gray800,
                       ),
                     ),

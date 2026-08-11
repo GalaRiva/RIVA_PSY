@@ -78,8 +78,9 @@ class WhereInBodyWidget extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: Row(
                               children: [
-                                BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index))), //
-                                BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index)), index: 2,),                            ],
+                                Transform.translate(offset: Offset(20, 0), child: BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index)))), //
+                                Transform.translate(offset: Offset(-20, 0), child: BodyWidget(list: _all.map((e) =>  (e).bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(_all.length, (index) => controller.getColor(index)), index: 2,)),
+                              ],
                             ),
                           ),
                         ))
@@ -152,8 +153,8 @@ class WhereInBodyWidget extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: Row(
                               children: [
-                                BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
-                                BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index))),
+                                Transform.translate(offset: Offset(20, 0), child: BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index)))),
+                                Transform.translate(offset: Offset(-20, 0), child: BodyWidget(list: positiveType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(positiveType!.bodyParts.length, (index) => controller.getColor(index)))),
                               ],
                             ),
                           ),
@@ -227,8 +228,8 @@ class WhereInBodyWidget extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: Row(
                               children: [
-                                BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
-                                BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index))),
+                                Transform.translate(offset: Offset(20, 0), child: BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index)))),
+                                Transform.translate(offset: Offset(-20, 0), child: BodyWidget(list: negativeType!.bodyParts.map((e) => e.bodyPart.bodyPartsModel).toList(), index: 2, circleColors: List<Color>.generate(negativeType!.bodyParts.length, (index) => controller.getColor(index)))),
                               ],
                             ),
                           ),

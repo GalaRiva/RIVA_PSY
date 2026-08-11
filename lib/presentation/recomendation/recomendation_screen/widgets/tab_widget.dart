@@ -219,10 +219,15 @@ class TabWidget extends StatelessWidget {
                 ),
                 Visibility(
                     visible: CurrentUser.user.currentTariff!.name == 'Базовый' && isStandardCheck == true,
-                    child: GoToNewTariffWidget(height: height , onSecondButtonTap: () {
+                    child: Padding(
+                      // Was flush with the top of the stack, directly over
+                      // this tab's own header/instruction text instead of
+                      // starting below it.
+                      padding: getPadding(top: 100),
+                      child: GoToNewTariffWidget(height: height, onSecondButtonTap: () {
                       controller.tabController!.animateTo(0);
                       controller.currentTab = 0;
-                    },))
+                    },)))
 
               ],
             ),

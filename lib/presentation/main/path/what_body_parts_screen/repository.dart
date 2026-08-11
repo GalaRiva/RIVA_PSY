@@ -160,7 +160,7 @@ class K32Repo {
           'dark'.tr(),
         ],
         whatHurtsKeys: ['cold_in_stomach', 'tense2', 'relaxed3', 'warmth', 'soft3', 'firm2', 'nausea', 'nausea2', 'emptiness', 'fullness', 'clenched', 'spaciousness', 'bright', 'dark'],
-        marginTop: 110,
+        marginTop: 140,
         marginLeft: 70),
     BodyPartsModel(
         key: 'back',

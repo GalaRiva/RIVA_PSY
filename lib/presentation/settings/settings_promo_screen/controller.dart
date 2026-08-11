@@ -63,7 +63,7 @@ class K16Controller {
       print(_);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Ошибка, проверьте подключение к интернету или попробуйте позднее')));
+              'Error, please check your internet connection or try again later')));
     }*/
   }
 

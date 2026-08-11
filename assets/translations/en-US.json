@@ -117,6 +117,7 @@
   "report_an_error": "Report an error",
   "reminders": "Reminders",
   "subscription": "Subscription",
+  "base_tariff_description": "Limited access to recommendations, statistics, and audio",
   "your_profile": "Your profile",
 
   "backup": "Backup",
@@ -124,6 +125,7 @@
   "restore": "Restore",
   "your_data_will": "Your data will be automatically backed up to {} every week.",
   "last_copy": "Last backup",
+  "press_backup_hint": "Tap \"Backup\" to save a copy of your data to {} at any time.",
 
   "select_backup": "Select a backup",
   "records": "Entries",
@@ -294,6 +296,7 @@
   "person_not_found_add_your_own": "Person not found\nAdd your own person",
   "how_to_live_through_emotions": "How to live through emotions",
   "how_to_live_through": "How to live through {}",
+  "continue_with_service": "Continue with {}",
   "how_to_live_through_additional_emotions": "How to live through additional emotions:",
   "head_and_face": "Head and face",
   "throat": "Throat",

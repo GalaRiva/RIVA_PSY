@@ -294,8 +294,11 @@ class K61Controller extends GetxController {
           }
         }
       if (createNew)
-        model = (EmotionModel(
-            1, 'positive_emotions', getColor(emotionsTypes.length)));
+        // Fixed colors per spec (white = positive, black = negative) rather
+        // than the positional palette — that was assigning palette[0]=white
+        // to whichever of the two categories happened to be logged first,
+        // so "negative" could just as easily end up white as "positive".
+        model = (EmotionModel(1, 'positive_emotions', Colors.white));
     } else {
       bool createNew = true;
       if (emotionsTypes.isNotEmpty)
@@ -306,8 +309,7 @@ class K61Controller extends GetxController {
           }
         }
       if (createNew)
-        model = (EmotionModel(
-            1, 'negative_emotions', getColor(emotionsTypes.length)));
+        model = (EmotionModel(1, 'negative_emotions', Colors.black));
     }
     return model;
   }

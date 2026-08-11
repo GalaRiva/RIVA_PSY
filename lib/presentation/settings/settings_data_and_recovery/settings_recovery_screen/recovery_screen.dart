@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/db/firebase_firestore/models/backup_model.dart';
 
 import '../../../../core/app_export.dart';
@@ -32,18 +33,18 @@ class RecoveryScreen extends StatelessWidget {
               children: [
             CustomAppBar(
             widget: CustomPopButton(
-            text: 'Настройки',
+            text: 'settings'.tr(),
             ),
           ),
           Padding(
               padding: getPadding(top: 25),
-              child: Text("Восстановить",
+              child: Text('restore'.tr(),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtH1)),
           Padding(
               padding: getPadding(top: 42),
-              child: Text("Выберите резервную копию",
+              child: Text('select_backup'.tr(),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtSFProDisplayLight16)),

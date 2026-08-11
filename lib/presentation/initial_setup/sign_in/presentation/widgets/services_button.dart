@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -20,7 +21,7 @@ Widget ServicesButton(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              'Продолжить с $serviceName',
+              'continue_with_service'.tr(args: [serviceName]),
               style: AppStyle.txtSFProDisplayLight16.copyWith(fontSize: 20),
             ),
             SizedBox(width: 30,),

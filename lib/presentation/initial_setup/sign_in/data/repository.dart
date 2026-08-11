@@ -330,7 +330,7 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету\n[diag] ${_servicesAuth.lastError}',
+              'An unexpected error occurred, please check your internet connection\n[diag] ${_servicesAuth.lastError}',
         );
       }
       } on FirebaseAuthException catch (e) {
@@ -348,7 +348,7 @@ class SignInDataRepository extends SignInDomainRepository {
       return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'На вашем устройстве не доступен данный способ авторизации');
+              'This sign-in method is not available on your device');
     } else {
       try {
         if (await _servicesAuth.authWithApple()) {
@@ -375,14 +375,14 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Произошла непредвиденная ошибка, проверьте подключение к интернету\n[diag] ${_servicesAuth.lastError}',
+              'An unexpected error occurred, please check your internet connection\n[diag] ${_servicesAuth.lastError}',
         );
       } catch (e) {
         print(e);
         return FirebaseSignInResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
             exceptionMessage:
-                'Произошла непредвиденная ошибка, проверьте подключение к интернету или повторите попытку попытку позднее\n[diag] ${e.toString()}');
+                'An unexpected error occurred, please check your internet connection or try again later\n[diag] ${e.toString()}');
       }
     }
   }
@@ -404,7 +404,7 @@ class SignInDataRepository extends SignInDomainRepository {
         print('[TARIFF-DIAG] userId is empty, aborting');
         return FirebaseDataResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
-            exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.');
+            exceptionMessage: 'Error saving data, please try again.');
 
       }
     // Same retry-on-permission-denied race as checkUserState above — this
@@ -439,7 +439,7 @@ class SignInDataRepository extends SignInDomainRepository {
         print('[TARIFF-DIAG] Users/"$userId" create write failed — reporting error instead of silently proceeding as if it succeeded');
         return FirebaseDataResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
-            exceptionMessage: 'Ошибка сохранения профиля, попробуйте ещё раз.');
+            exceptionMessage: 'Error saving profile, please try again.');
       }
     }
     await CurrentUser.repo.setLocalUserData(
@@ -456,7 +456,7 @@ class SignInDataRepository extends SignInDomainRepository {
       print('[TARIFF-DIAG] EXCEPTION in getAndSetRemoteUserLocally("$userId"): $e\n$st');
       return FirebaseDataResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
-          exceptionMessage: 'Ошибка сохранения данных, попробуйте ещё раз.\n[diag] $e');
+          exceptionMessage: 'Error saving data, please try again.\n[diag] $e');
     }
   }
 }

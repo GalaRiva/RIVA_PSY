@@ -67,7 +67,7 @@ class K13Screen extends GetWidget {
                               Padding(
                                   padding: getPadding(top: 12),
                                   child: Text(
-                                      CurrentUser.user.currentTariff!.description,
+                                      CurrentUser.user.currentTariff!.description.tr(),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle
