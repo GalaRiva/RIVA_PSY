@@ -76,16 +76,39 @@ class ExerciseContentController extends GetxController {
         : '${(await getApplicationDocumentsDirectory()).path}/${audio.folder}/${fileName}.${audio.format}';
   }
 
+  // The 11 official "Негативные эмоции" tab categories (see
+  // NegativeEmotionTabs/negative_emotions_model.dart) already have a fixed,
+  // known tab tag — no need to go through Firestore to find it. Checked
+  // first, before the Text_Recommendation lookup below, so this screen's
+  // audio matching doesn't silently come up empty for one of these (e.g.
+  // "Одиночество") just because no Text_Recommendation doc happens to be
+  // titled exactly that, or lacks a `tab` field.
+  static const Map<String, String> _knownEmotionTabs = {
+    'Злость': 'wrath',
+    'Паника': 'panic',
+    'Страх': 'fear2',
+    'Грусть': 'sorrow',
+    'Обида': 'resentment',
+    'Неуверенность': 'uncertainty',
+    'Отвращение': 'disgust',
+    'Вина': 'guilt',
+    'Лень': 'laziness',
+    'Одиночество': 'loneliness',
+    'Потерянность': 'lostness',
+  };
+
   // Audio.emotions is an empty string on every current Audio document (see
   // PROJECT_CONTEXT.md §57) — the per-emotion match below always comes up
   // empty right now, regardless of tariff/locale/anything else. Falls back
   // to every audio tagged with the same Path "tab" (wrath/panic/...) as
   // this specific emotion — coarser than per-emotion matching, but real.
-  // The tab isn't stored anywhere on DayEventModel/EventModel, so it's
-  // looked up via Text_Recommendation, whose docs are already grouped by
-  // tab and titled with each emotion's Russian canonical name.
+  // The tab isn't stored anywhere on DayEventModel/EventModel, so for
+  // anything outside the known 11 it's looked up via Text_Recommendation,
+  // whose docs are already grouped by tab and titled with each emotion's
+  // Russian canonical name.
   final Map<String, String?> _tabCache = {};
   Future<String?> _tabForEmotionRuName(String ruName) async {
+    if (_knownEmotionTabs.containsKey(ruName)) return _knownEmotionTabs[ruName];
     if (_tabCache.containsKey(ruName)) return _tabCache[ruName];
     String? tab;
     try {

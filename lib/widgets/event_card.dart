@@ -112,7 +112,7 @@ class EventCard extends StatelessWidget {
                       ),
                     ),
                   )
-                : _EmotionBlob(
+                : EmotionBlob(
                     color: emotionBlobColor(model.identity, emotionMood!),
                     size: getVerticalSize(iconHeight).clamp(0, iconWidth),
                     pulse: isSelect,
@@ -160,18 +160,18 @@ class EventCard extends StatelessWidget {
 /// colored per emotionBlobColor(). When [pulse] is true (the emotion is
 /// currently selected) it slowly breathes — grows and glows a touch more,
 /// then eases back — instead of sitting static.
-class _EmotionBlob extends StatefulWidget {
+class EmotionBlob extends StatefulWidget {
   final Color color;
   final double size;
   final bool pulse;
 
-  const _EmotionBlob({required this.color, required this.size, this.pulse = false});
+  const EmotionBlob({required this.color, required this.size, this.pulse = false});
 
   @override
-  State<_EmotionBlob> createState() => _EmotionBlobState();
+  State<EmotionBlob> createState() => EmotionBlobState();
 }
 
-class _EmotionBlobState extends State<_EmotionBlob> with SingleTickerProviderStateMixin {
+class EmotionBlobState extends State<EmotionBlob> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
@@ -182,7 +182,7 @@ class _EmotionBlobState extends State<_EmotionBlob> with SingleTickerProviderSta
   }
 
   @override
-  void didUpdateWidget(covariant _EmotionBlob oldWidget) {
+  void didUpdateWidget(covariant EmotionBlob oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.pulse && !oldWidget.pulse) {
       _controller.repeat(reverse: true);

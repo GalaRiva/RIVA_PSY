@@ -49,6 +49,9 @@ class BodyPartsModel {
   static const _messageBoxHeights = {
     'head_and_face': 266.0, 'throat': 266.0, 'chest': 314.0,
     'shoulders_and_arms': 314.0, 'legs': 266.0, 'stomach': 314.0,
+    // Was missing entirely — fell through to the 160 default, far smaller
+    // than every other body part's dialog regardless of its own content.
+    'back': 266.0,
   };
   double get messageBoxHeight => _messageBoxHeights[key] ?? 160;
 

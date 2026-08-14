@@ -13,6 +13,7 @@ const Map<String, String> audioCoverAssets = {
   'Злость': 'assets/images/audio_covers/anger.jpg',
   'Неуверенность': 'assets/images/audio_covers/uncertainty.jpg',
   'Неуверенность1': 'assets/images/audio_covers/uncertainty_2.jpg',
+  'Обида': 'assets/images/audio_covers/resentment.jpg',
   'Обреченность': 'assets/images/audio_covers/doom.jpg',
   'Одиночество': 'assets/images/audio_covers/loneliness.jpg',
   'Паника 1': 'assets/images/audio_covers/panic_1.jpg',

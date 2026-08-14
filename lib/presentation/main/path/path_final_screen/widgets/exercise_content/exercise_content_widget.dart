@@ -6,6 +6,7 @@ import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
 import '../../../../../../core/models/day_event_model.dart';
 import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/size_utils.dart';
+import '../../../../../../theme/app_decoration.dart';
 import '../../../../../../theme/app_style.dart';
 import '../../../../../../widgets/event_card.dart';
 import '../../../../../../widgets/emotion_color_blob.dart';
@@ -76,16 +77,30 @@ class ExerciseContentWidget extends StatelessWidget {
           padding: getPadding(top: 18,
             left: 10,
             right: 10,),
-          child: EventCard(
-            iconColor: dayEvent.whatEmotion!.length > 1 ? ColorConstant.fromHex('#5B4FA9') : ColorConstant.cyan700,
-            emotionMood: moodForKey(dayEvent.whatEmotion![0].identity, categoryMood),
-            model: dayEvent.whatEmotion![0],
-            cardHeight: 44, isSelect: false,
-            // Card itself stays 44 (unchanged layout footprint) — only the
-            // blob grows, per explicit request that it read as too small.
-            iconSizeOverride: 32,
-            cardWidth: size.width - 20,
-            useShadowStyle: true,
+          // Same size/shape as the "Выговориться" card above (glassCard,
+          // left icon + text row) instead of the tall centered-column
+          // layout EventCard uses elsewhere — explicit request to make the
+          // two cards read as a matched pair.
+          child: Container(
+            padding: getPadding(all: 10),
+            decoration: AppDecoration.glassCard,
+            child: Row(
+              children: [
+                EmotionBlob(
+                  color: emotionBlobColor(dayEvent.whatEmotion![0].identity, categoryMood),
+                  size: 43,
+                ),
+                Padding(
+                  padding: getPadding(left: 16),
+                  child: Text(
+                    dayEvent.whatEmotion![0].localizedName,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: AppStyle.txtSFProDisplayLight14Cyan700,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Padding(
