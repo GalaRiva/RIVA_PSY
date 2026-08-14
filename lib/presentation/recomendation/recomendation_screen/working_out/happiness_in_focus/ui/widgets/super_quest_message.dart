@@ -68,7 +68,11 @@ class SuperQuestMessage extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Material(
         child: Container(
-          width: 270,
+          // Was a fixed 270 — hard-capped the image inside a narrow dialog
+          // regardless of device size. Now scales with the screen (minus
+          // the 15px outer Padding on each side) like the rest of this
+          // feature's full-width pages already do.
+          width: MediaQuery.of(context).size.width - 30,
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
               color: ColorConstant.gray200,
@@ -99,15 +103,17 @@ class SuperQuestMessage extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              AspectRatio(aspectRatio:300/260,child: Container(
-                color: ColorConstant.darkWhite,
-                padding: EdgeInsets.all(35),
-
+              // Was a 35px-padded Container nested inside an outer
+              // AspectRatio(300/260), shrinking the actual image well
+              // below the dialog's own width. One AspectRatio matching the
+              // asset's real proportions, no padding, fills the space.
+              ClipRRect(
+                borderRadius: BorderRadius.circular(3),
                 child: AspectRatio(
                   aspectRatio: 230/190,
                   child: Image.asset(ImageConstant.happinessInFocusMessage, fit: BoxFit.cover,),
                 ),
-              ),),
+              ),
               SizedBox(
                 height: 15,
               ),

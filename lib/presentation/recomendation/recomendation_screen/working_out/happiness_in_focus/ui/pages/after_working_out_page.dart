@@ -45,8 +45,11 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
 
     ];
     final String image = images[progress > 4 ? 5 : progress];
-    return AspectRatio(aspectRatio: 230/190,
-      child: Image.asset(image, fit: BoxFit.cover,),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(3),
+      child: AspectRatio(aspectRatio: 230/190,
+        child: Image.asset(image, fit: BoxFit.cover,),
+      ),
     );
   }
 
@@ -69,13 +72,7 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 20),
                       child: Center(child: _title(cubit.todayWorkingOut > 4 ? 5 : cubit.todayWorkingOut)),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(35),
-                      child: AspectRatio(
-                        aspectRatio: 300/260,
-                        child: _image(cubit.todayWorkingOut),
-                      ),
-                    ),
+                    _image(cubit.todayWorkingOut),
                     CustomButton(
                       text: 'continue'.tr().toUpperCase(),
                       variant: ButtonVariant.Cyan,
@@ -94,14 +91,11 @@ class HappinessInFocusAfterWorkingOutPage extends StatelessWidget {
                         cubit.goToNextState(HappinessInFocusStage.InitialHappinessInFocusState);
                       },
                     ),
-                    Container(
-                      padding: EdgeInsets.all(35),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(3),
                       child: AspectRatio(
-                        aspectRatio: 300/260,
-                        child: AspectRatio(
-                          aspectRatio: 230/190,
-                          child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
-                        ),
+                        aspectRatio: 230/190,
+                        child: Image.asset(ImageConstant.happinessInFocusSuperQuest, fit: BoxFit.cover,),
                       ),
                     ),
                     CustomButton(

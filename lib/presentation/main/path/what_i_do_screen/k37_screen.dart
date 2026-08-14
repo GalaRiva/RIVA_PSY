@@ -104,10 +104,10 @@ class K37Screen extends StatelessWidget {
                         padding:
                         getPadding(left: 0, top: 18, right: 0),
                         child: SizedBox(
-                          height: 114,
                           width: MediaQuery.of(context).size.width - 32,
                           child: TextFormField(
                             controller: fieldController,
+                            minLines: 5,
                             maxLines: 30,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(4, 8, 4, 8),

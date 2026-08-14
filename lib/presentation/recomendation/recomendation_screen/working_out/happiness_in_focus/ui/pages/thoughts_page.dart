@@ -64,17 +64,13 @@ class HappinessInFocusThoughtsPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 25,),
-            AspectRatio(
-                aspectRatio: 300/260,
-                child: Container(
-                  padding: EdgeInsets.all(35),
-                  decoration: BoxDecoration(color: ColorConstant.darkWhite,
-                  borderRadius: BorderRadius.circular(3)),
-                    child: AspectRatio(
-                      aspectRatio: 230/190,
-                      child: Image.asset(ImageConstant.happinessInFocusThoughts, fit: BoxFit.cover,),
-                    ),
-                )),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: AspectRatio(
+                aspectRatio: 230/190,
+                child: Image.asset(ImageConstant.happinessInFocusThoughts, fit: BoxFit.cover,),
+              ),
+            ),
             Text('write_what_today_gave_pleasant_emotions'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),
       SizedBox(height: 20,),
             Text('for_example'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(color: ColorConstant.gray8008c),),

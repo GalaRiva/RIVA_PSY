@@ -19,11 +19,11 @@ class ExercisesTabBody extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 25),
+            padding: EdgeInsets.only(top: 14),
             child: Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: 45,
+                height: 38,
                 width: size.width,
                 child: TabBar(
                   dividerHeight: 0,
@@ -88,11 +88,11 @@ class ExercisesTabBody extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 30),
+                          padding: EdgeInsets.only(top: 12),
                           child: Align(
                             alignment: Alignment.topCenter,
                             child: Container(
-                              height: (50),
+                              height: (25),
                               width: MediaQuery.of(context)
                                   .size
                                   .width,
