@@ -124,7 +124,13 @@ class CustomButton extends StatelessWidget {
   _buildTextButtonStyle() {
     return BoxDecoration(
       borderRadius: _setBorderRadius(),
-      color: bgColor ?? Colors.white.withOpacity(0.7) ?? _setColor(),
+      // Was `bgColor ?? Colors.white.withOpacity(0.7) ?? _setColor()` —
+      // Colors.white.withOpacity(0.7) is never null, so `?? _setColor()`
+      // was permanently unreachable. Every CustomButton that relies on
+      // `variant` instead of an explicit `bgColor` (e.g. ButtonVariant.Cyan)
+      // has been silently rendering as translucent white instead of its
+      // intended color for as long as this line existed.
+      color: bgColor ?? _setColor(),
       border: !showBorder ?   null  :    Border.all(color: Colors.white, width: 1),
       boxShadow: [
         BoxShadow(

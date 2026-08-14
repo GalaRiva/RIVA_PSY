@@ -12,6 +12,7 @@ import '../../settings/settings_pills/models/pill_model.dart';
 import 'models/place_model.dart';
 import '../../../core/models/day_event_model.dart';
 import '../../../core/models/emotional_state_model.dart';
+import '../../../core/services/dashboards/energy_matrix_service.dart';
 import '../../../core/utils/size_utils.dart';
 
 import 'models/emotion_in_body.dart';
@@ -20,17 +21,39 @@ import 'models/report_model.dart';
 import '../../../widgets/emotion_color_blob.dart';
 import '../../../widgets/body_zone_colors.dart';
 
-class K61Controller extends GetxController {
+class K61Controller extends GetxController with GetSingleTickerProviderStateMixin {
   bool loading = true;
 
+  static const int tabCount = 9;
+  TabController? tabController;
+
+  void initTabController() {
+    if (tabController != null) return;
+    tabController = TabController(length: tabCount, vsync: this, initialIndex: currentTab - 1);
+    tabController!.addListener(() {
+      if (!tabController!.indexIsChanging) {
+        currentTab = tabController!.index + 1;
+        update();
+      }
+    });
+  }
 
   var pills = <PillModel>[];
   void init() async {
     loading = false;
     dataForChart = await getIntensity();
     emotions = await getEmotions();
+    // Unbounded (ignores the shared week-range date picker used by the
+    // other tabs) — Экраны 1/2/3 are accumulated-pattern retrospectives,
+    // not a snapshot of the current week, and a week window would almost
+    // never clear their per-tag/per-cell minimum sample sizes.
+    allDayEvents = (await _k49Repo.getEvent()).where((e) => e.showInCharts).toList();
+    energyMatrixPoints = EnergyMatrixService.compute(allDayEvents);
     update();
   }
+
+  List<DayEventModel> allDayEvents = [];
+  List<EnergyMatrixPoint> energyMatrixPoints = [];
 
   final reportModel = ReportModel();
 
@@ -455,4 +478,9 @@ class K61Controller extends GetxController {
     return listToReturn;
   }
 
+  @override
+  void onClose() {
+    tabController?.dispose();
+    super.onClose();
+  }
 }

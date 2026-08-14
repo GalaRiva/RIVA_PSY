@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:vibration/vibration.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -23,6 +24,41 @@ import '../../initial_setup/send_pushes_screen/send_pushe_screen.dart';
 class K20Controller extends GetxController {
 
   Rx<bool> canView = false.obs;
+
+  double sliderValue = 5;
+  String? selectedEmotionKey;
+  int saveBurstTrigger = 0;
+
+  static const int positiveThreshold = 6;
+
+  void setSliderValue(double value) {
+    final crossedIntoPositive = sliderValue < positiveThreshold && value >= positiveThreshold;
+    final crossedOutOfPositive = sliderValue >= positiveThreshold && value < positiveThreshold;
+    final tickChanged = value.round() != sliderValue.round();
+    sliderValue = value;
+    if (value < positiveThreshold) selectedEmotionKey = null;
+    if (crossedIntoPositive || crossedOutOfPositive) {
+      // Raw Vibrator.vibrate() call (via the vibration package) instead of
+      // HapticFeedback — the latter routes through
+      // View.performHapticFeedback(), which silently no-ops if the device's
+      // "Touch feedback"/"Vibrate on tap" system toggle is off, independent
+      // of the app's own VIBRATE permission. This bypasses that toggle.
+      Vibration.vibrate(duration: 70);
+    } else if (tickChanged) {
+      Vibration.vibrate(duration: 25);
+    }
+    update();
+  }
+
+  void selectEmotion(String key) {
+    selectedEmotionKey = selectedEmotionKey == key ? null : key;
+    update();
+  }
+
+  void triggerSaveBurst() {
+    saveBurstTrigger++;
+    update();
+  }
 
   Future openMessages (BuildContext context) async {
     const FIRST_MONTH_KEY = 'MONTH_PASSED';

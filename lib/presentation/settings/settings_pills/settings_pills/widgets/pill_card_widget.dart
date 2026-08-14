@@ -1,16 +1,13 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills_edit_bottom_sheet/settings_pills_edit_bottom_sheet.dart';
+import 'package:riva_psy/presentation/settings/settings_pills/widget/medication_icon_color_picker.dart';
+import 'package:riva_psy/theme/app_icons.dart';
 
 import '../../../../../core/utils/color_constant.dart';
-import '../../../../../core/utils/image_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
-import '../../../../../widgets/custom_image_view.dart';
 import '../../../../../theme/app_colors.dart';
 
 Widget PillCardWidget(BuildContext context, {required PillModel pillModel, required bool isSelected, required Function update}) {
@@ -24,129 +21,102 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
           update();});
   }
 
-  final _bodyHeight = getVerticalSize(pillModel.hoursOfTakingPills.length > 2 ? 47  + ((pillModel.hoursOfTakingPills.length % 2) * 21) : 47);
-  String getDurationText () {
-    if(pillModel.startDate == null || pillModel.endDate == null) return 'set_reception_duration'.tr().toUpperCase();
-    return '${(pillModel.startDate!).dateInText()} - ${pillModel.endDate!.dateInText()}'.toUpperCase();
-  }
+  final color = Color(pillModel.colorValue);
+  final totalDays = pillModel.endDate.difference(pillModel.startDate).inDays;
+  final showProgress = isSelected && totalDays > 0 && totalDays <= 366;
+  final dayOfCourse = showProgress
+      ? (DateTime.now().difference(pillModel.startDate).inDays + 1).clamp(1, totalDays)
+      : 0;
+  final progress = showProgress ? dayOfCourse / totalDays : 0.0;
+
+  final instructionLabel = pillModel.instructionTiming != null
+      ? pillModel.instructionTiming!.tr()
+      : null;
+  final subtitleParts = [
+    if (pillModel.dosage != null && pillModel.dosage!.isNotEmpty) pillModel.dosage!,
+    if (pillModel.hoursOfTakingPills.isNotEmpty) pillModel.hoursOfTakingPills.join(', '),
+    if (instructionLabel != null) instructionLabel,
+  ];
+
   return Container(
-    height: getVerticalSize(30) + _bodyHeight,
     decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(3)),
-    child: Column(
-      children: [
-        Container(
-          height: getVerticalSize(30),
-          alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-              color: !isSelected
-                  ? ColorConstant.fromHex('#7F7F90')
-                  : ColorConstant.cyan700,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(3),
-                topRight: Radius.circular(3),
-              )),
-          child: Center(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: getPadding(left: 6),
-                  child: Text(
-                    pillModel.name,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtSFProDisplayLight14.copyWith(color: Colors.white),
-                  ),
+        borderRadius: BorderRadius.circular(getHorizontalSize(8))),
+    child: Padding(
+      padding: getPadding(all: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: getHorizontalSize(40),
+                height: getHorizontalSize(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: color,
                 ),
-                Padding(
-                  padding: getPadding(right: 11),
-                  child: InkWell(
-                    onTap: _onTap,
-                    child: Row(
-                      children: [
-                        Text(
-                          'redo'.tr(),
+                child: Icon(
+                  medicationIconForType(pillModel.iconType),
+                  color: Colors.white,
+                  size: getHorizontalSize(20),
+                ),
+              ),
+              SizedBox(width: getHorizontalSize(12)),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      pillModel.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyle.txtSFProDisplayLight16.copyWith(
+                          color: ColorConstant.gray800, fontWeight: FontWeight.w500),
+                    ),
+                    if (subtitleParts.isNotEmpty)
+                      Padding(
+                        padding: getPadding(top: 4),
+                        child: Text(
+                          subtitleParts.join(' • '),
                           overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtSFProDisplayLight9Gray50,
+                          style: AppStyle.txtSFProDisplayLight11
+                              .copyWith(color: ColorConstant.gray800),
                         ),
-                        SizedBox(
-                          width: getVerticalSize(7),
-                        ),
-                        CustomImageView(
-                          color: Colors.white,
-                          svgPath: ImageConstant.imgVector46,
-                          height: getVerticalSize(
-                            8,
-                          ),
-                          width: getHorizontalSize(
-                            4,
-                          ),
-                          radius: BorderRadius.circular(
-                            getHorizontalSize(
-                              1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-         Container(
-            height: _bodyHeight,
-            alignment: Alignment.topCenter,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  width: getHorizontalSize(91),
-                  decoration: BoxDecoration(
-                      color: ColorConstant.grayLight,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(3),
-                      )),
-                  child: Padding(
-                    padding: getPadding(top: 17, bottom: 17, right: 10, left: 10),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Wrap(
-                        spacing: getHorizontalSize(18),
-                        direction: Axis.horizontal,
-                        children: pillModel.hoursOfTakingPills.map((e) => Padding(
-                          padding: getPadding(bottom: 10),
-                          child: Text(e, style: AppStyle.txtSFProDisplayLight11.copyWith(color: ColorConstant.gray800)),
-                        )).toList(),
                       ),
-                    ),
-                  ),
+                  ],
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: getPadding(
-                      all: 17
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(getDurationText() ,style: AppStyle.txtSFProDisplayLight11.copyWith(
-                        color: ColorConstant.gray800
-                      )),
-                    ),
-                  ),
-                )
-              ],
-            )
+              ),
+              InkWell(
+                onTap: _onTap,
+                child: Icon(
+                  AppIcons.pencilSimple,
+                  size: getHorizontalSize(18),
+                  color: ColorConstant.gray800,
+                ),
+              ),
+            ],
           ),
-
-      ],
+          if (showProgress) ...[
+            SizedBox(height: getVerticalSize(10)),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(getHorizontalSize(3)),
+              child: LinearProgressIndicator(
+                value: progress,
+                minHeight: getVerticalSize(4),
+                backgroundColor: ColorConstant.grayLight,
+                valueColor: AlwaysStoppedAnimation<Color>(color),
+              ),
+            ),
+            SizedBox(height: getVerticalSize(4)),
+            Text(
+              'day_n_of_m'.tr(args: ['$dayOfCourse', '$totalDays']),
+              style: AppStyle.txtSFProDisplayLight11.copyWith(color: ColorConstant.gray800),
+            ),
+          ],
+        ],
+      ),
     ),
   );
 }

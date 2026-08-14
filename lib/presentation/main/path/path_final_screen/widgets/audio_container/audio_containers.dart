@@ -36,8 +36,10 @@ class AudioContainers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // Must match AudioContainerWidget's per-row height (103) or later rows
+    // in this Wrap get clipped.
     return Container(
-      height: getVerticalSize(95 * audios.length.toDouble()),
+      height: getVerticalSize(103 * audios.length.toDouble()),
       width: size.width,
       color:  ColorConstant.fromHex('#E7EAEA'),
       child: FutureBuilder(

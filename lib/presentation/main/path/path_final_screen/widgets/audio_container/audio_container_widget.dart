@@ -29,7 +29,10 @@ class AudioContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      height: getVerticalSize(95),
+      // 80 (AudioCardWidget content) + 23 (its own bottom spacing, ~1.5x
+      // the old implicit 15px gap) — must stay in lockstep with the
+      // AudioContainers total-height formula below, or later rows clip.
+      height: getVerticalSize(103),
       child: Center(
         child: AudioCardWidget(
           text: audioCardModel.title,

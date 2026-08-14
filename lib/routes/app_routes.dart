@@ -32,6 +32,7 @@ import '../presentation/records/calendar_search_screen/k50_screen.dart';
 import '../presentation/records/record_add_screen/k54_screen.dart';
 import '../presentation/records/record_edit_screen/k52_screen.dart';
 import '../presentation/records/records_screen/k49_screen.dart';
+import '../presentation/gallery/moments_gallery_screen.dart';
 import '../presentation/settings/about_app_screen/k7_screen.dart';
 import '../presentation/settings/settings_data_and_recovery/settings_data_and_recovery_screen/data_and_recovery_screen.dart';
 import '../presentation/settings/settings_data_and_recovery/settings_recovery_screen/recovery_screen.dart';
@@ -111,6 +112,8 @@ class AppRoutes {
   static const String path_final = '/path_final_screen';
 
   static const String records = '/records_screen';
+
+  static const String moments_gallery = '/moments_gallery_screen';
 
   static const String calendar_search = '/calendar_search_screen';
 
@@ -199,6 +202,7 @@ static const String enterPasswordScreen = '/enter_password_screen';
     record_add: (context) => K54Screen(),
     record_edit: (context) => K52Screen(),
     records: (context) => K49Screen(),
+    moments_gallery: (context) => const MomentsGalleryScreen(),
     // charts
     charts_calendar: (context) => K62Screen(),
     charts: (context) => K61Screen(),

@@ -13,6 +13,8 @@ import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_message_box.dart';
 import '../models/pill_model.dart';
 import '../repository.dart';
+import '../widget/duration_selector.dart';
+import '../widget/medication_icon_color_picker.dart';
 
 class PillsBottomSheetController extends GetxController {
   final BuildContext context;
@@ -22,8 +24,14 @@ class PillsBottomSheetController extends GetxController {
 
   final _repo = PillsRepo();
   final nameController = TextEditingController();
+  final dosageController = TextEditingController();
   var time = <String>[];
-  
+
+  String instructionTiming = 'regardless_of_food';
+  String iconType = 'capsule';
+  Color color = medicationColorPalette.first;
+  String? durationType;
+
   DateTime? _startDate;
   DateTime? _endDate;
   Duration? _duration;
@@ -31,6 +39,38 @@ class PillsBottomSheetController extends GetxController {
   String getDurationText () {
     if(_startDate == null || _endDate == null) return 'set_reception_duration'.tr().toUpperCase();
     return '${(_startDate!).dateInText()} - ${_endDate!.dateInText()}'.toUpperCase();
+  }
+
+  void setInstructionTiming(String value) {
+    instructionTiming = value;
+    update();
+  }
+
+  void setIconType(String value) {
+    iconType = value;
+    update();
+  }
+
+  void setColor(Color value) {
+    color = value;
+    update();
+  }
+
+  void addPresetTime(String presetTime) {
+    if (!time.contains(presetTime)) time.add(presetTime);
+    update();
+  }
+
+  void setDurationType(String value) {
+    durationType = value;
+    if (value == 'custom') {
+      setDurationOfReception(context);
+      return;
+    }
+    final start = DateTime.now();
+    _startDate = start;
+    _endDate = durationEndDate(value, start);
+    update();
   }
 
   void addTime ({int? itemIndex, required BuildContext context}) {
@@ -145,9 +185,26 @@ class PillsBottomSheetController extends GetxController {
     else {
       final list = await _repo.getEvent();
       final actual = checkDateInRange(DateTime.now(), _startDate!, _endDate!);
-      list.add(PillModel(name: nameController.text, hoursOfTakingPills: time, startDate: _startDate!, createDate: DateTime.now(), endDate: _endDate!, adoptions: []));
+      list.add(PillModel(
+        name: nameController.text,
+        hoursOfTakingPills: time,
+        startDate: _startDate!,
+        createDate: DateTime.now(),
+        endDate: _endDate!,
+        adoptions: [],
+        dosage: dosageController.text.trim().isEmpty ? null : dosageController.text.trim(),
+        instructionTiming: instructionTiming,
+        iconType: iconType,
+        colorValue: color.value,
+        durationType: durationType,
+      ));
       await _repo.updateEvent(list);
       nameController.text = '';
+      dosageController.text = '';
+      instructionTiming = 'regardless_of_food';
+      iconType = 'capsule';
+      color = medicationColorPalette.first;
+      durationType = null;
       _duration = null;
       time = [];
       _startDate = null;

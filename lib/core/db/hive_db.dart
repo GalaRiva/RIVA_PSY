@@ -39,7 +39,12 @@ class HiveDB {
 
   static Future<File> _createFileToTransfer(String content) async {
     final file = File(_pathDataForTransfer!);
-    await file.writeAsString(content).then((value) async => await file.create(recursive: true));
+    await file.create(recursive: true);
+    // Gzipped instead of plain text — backup history only grows, and diary
+    // JSON compresses well (lots of repeated key names). getHiveDBFromFile
+    // below still falls back to reading a file as plain JSON, so backups
+    // made before this change keep restoring correctly.
+    await file.writeAsBytes(gzip.encode(utf8.encode(content)));
 
     return file;
   }
@@ -47,7 +52,15 @@ class HiveDB {
   static Future getHiveDBFromFile(String path) async {
     try {
       final file = File(path);
-      Map<String, dynamic> data = jsonDecode(await file.readAsString());
+      final bytes = await file.readAsBytes();
+      String contents;
+      try {
+        contents = utf8.decode(gzip.decode(bytes));
+      } catch (_) {
+        // Not gzip — an older, pre-compression backup. Read as plain JSON.
+        contents = utf8.decode(bytes);
+      }
+      Map<String, dynamic> data = jsonDecode(contents);
       for (var item in HiveDBTags.allTagsForTransfer) {
         await openBox(item);
         List<dynamic>? maps = data[item];
@@ -102,7 +115,8 @@ class HiveDBTags {
     dayEvents,
     pills,
     spentRecords,
-    desires
+    desires,
+    insights
   ];
   static const events = 'events';
   static const desires = 'desires';
@@ -120,4 +134,5 @@ class HiveDBTags {
   static const audio = 'audio';
   static const pills = 'pills';
   static const spentRecords = 'spentRecords';
+  static const insights = 'insights';
 }

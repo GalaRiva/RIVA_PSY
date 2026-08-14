@@ -115,6 +115,7 @@ class EventCard extends StatelessWidget {
                 : _EmotionBlob(
                     color: emotionBlobColor(model.identity, emotionMood!),
                     size: getVerticalSize(iconHeight).clamp(0, iconWidth),
+                    pulse: isSelect,
                   ),
             SizedBox(
               height: getVerticalSize(model.localizedName.isEmpty ? 23 : 5),
@@ -156,36 +157,82 @@ class EventCard extends StatelessWidget {
 
 /// Abstract "color blob" standing in for an emotion's face icon — a soft
 /// circle with a glow (per spec: BoxShape.circle + a wide-blur BoxShadow),
-/// colored per emotionBlobColor().
-class _EmotionBlob extends StatelessWidget {
+/// colored per emotionBlobColor(). When [pulse] is true (the emotion is
+/// currently selected) it slowly breathes — grows and glows a touch more,
+/// then eases back — instead of sitting static.
+class _EmotionBlob extends StatefulWidget {
   final Color color;
   final double size;
+  final bool pulse;
 
-  const _EmotionBlob({required this.color, required this.size});
+  const _EmotionBlob({required this.color, required this.size, this.pulse = false});
+
+  @override
+  State<_EmotionBlob> createState() => _EmotionBlobState();
+}
+
+class _EmotionBlobState extends State<_EmotionBlob> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100));
+    if (widget.pulse) _controller.repeat(reverse: true);
+  }
+
+  @override
+  void didUpdateWidget(covariant _EmotionBlob oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.pulse && !oldWidget.pulse) {
+      _controller.repeat(reverse: true);
+    } else if (!widget.pulse && oldWidget.pulse) {
+      _controller.stop();
+      _controller.value = 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final blobSize = size <= 0 ? 40.0 : size;
-    return SizedBox(
-      width: blobSize,
-      height: blobSize,
-      child: Center(
-        child: Container(
-          width: blobSize * 0.72,
-          height: blobSize * 0.72,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-            boxShadow: [
-              BoxShadow(
-                color: color.withOpacity(0.55),
-                blurRadius: 24,
-                spreadRadius: 4,
+    final blobSize = widget.size <= 0 ? 40.0 : widget.size;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final t = widget.pulse ? Curves.easeInOut.transform(_controller.value) : 0.0;
+        final scale = 1.0 + (t * 0.1);
+        final glow = 24 + (t * 12);
+        final spread = 4 + (t * 3);
+        return SizedBox(
+          width: blobSize,
+          height: blobSize,
+          child: Center(
+            child: Transform.scale(
+              scale: scale,
+              child: Container(
+                width: blobSize * 0.72,
+                height: blobSize * 0.72,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: widget.color,
+                  boxShadow: [
+                    BoxShadow(
+                      color: widget.color.withOpacity(0.55),
+                      blurRadius: glow,
+                      spreadRadius: spread,
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

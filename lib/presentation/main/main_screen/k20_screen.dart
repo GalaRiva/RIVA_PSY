@@ -20,12 +20,27 @@ import 'dart:ui';
 import '../../../core/models/day_event_model.dart';
 
 import '../../../providers/language_provider.dart';
+import '../../../widgets/chip_selector.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/inner_shadow.dart';
+import '../../../widgets/pressable_scale.dart';
+import '../../../widgets/spark_burst.dart';
+import '../../../core/models/event_model.dart';
+import '../../../core/models/insight_model.dart';
+import '../../../core/services/insights/insight_engine.dart';
+import '../../../core/services/milestones/milestone_service.dart';
+import '../path/path_final_screen/repository.dart';
 import 'controller.dart';
 import 'repository.dart';
 import 'widgets/try_irrational_dialog.dart';
 import '../../../theme/app_colors.dart';
+
+Color _moodColor(double value) {
+  final t = (value / 10).clamp(0.0, 1.0);
+  return Color.lerp(const Color(0xFF6B85B8), const Color(0xFFFF9933), t)!;
+}
+
+const _quickPositiveEmotions = ['joy', 'tranquility', 'inspiration'];
 
 class K20Screen extends GetWidget<K20Controller> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -34,7 +49,7 @@ class K20Screen extends GetWidget<K20Controller> {
   Widget build(BuildContext context) {
 
     final _repo = K20Repo();
-    int value = 10;
+    final _dayEventsRepo = K39Repo();
     final controller = Get.put(K20Controller());
     Timer(Duration(seconds: 2), () async{
       await controller.openMessages(context);
@@ -61,7 +76,7 @@ class K20Screen extends GetWidget<K20Controller> {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: getPadding(
-                            top: 39,
+                            top: 20,
                           ),
                           child: Text(
                             DateTime.now().weekday.dayInText() +
@@ -106,7 +121,7 @@ class K20Screen extends GetWidget<K20Controller> {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 34,
+                          top: 16,
                         ),
                         child: Center(
                           child: CustomText(
@@ -118,11 +133,30 @@ class K20Screen extends GetWidget<K20Controller> {
                         ),
                       ),
                       Center(
-                        child: Card(
+                        child: GetBuilder<K20Controller>(
+                          builder: (_cardC) {
+                          // Original single background color, unchanged —
+                          // instead of shifting hue (too washed-out against
+                          // gray2007c to read as "bright"), a white glow
+                          // grows around the disc as the slider approaches
+                          // "Прекрасно".
+                          final glowStrength = (_cardC.sliderValue / 10).clamp(0.0, 1.0);
+                          return Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.15 + glowStrength * 0.65),
+                                blurRadius: 10 + glowStrength * 34,
+                                spreadRadius: glowStrength * 10,
+                              ),
+                            ],
+                          ),
+                          child: Card(
                           clipBehavior: Clip.antiAlias,
                           elevation: 0,
                           margin: getMargin(
-                            top: 12,
+                            top: 6,
                           ),
                           color: ColorConstant.gray2007c,
                           shape: RoundedRectangleBorder(
@@ -168,14 +202,12 @@ class K20Screen extends GetWidget<K20Controller> {
                                 SizedBox(
                                   height: getSize(160),
                                   width: getSize(160),
-                                  child: GetBuilder(
-                                    builder: (K20Controller _c) => SleekCircularSlider(
-                                      onChangeEnd: (_value) {
-                                        value = _value.toInt();
-                                        controller.update();
+                                  child: SleekCircularSlider(
+                                      onChange: (_value) {
+                                        controller.setSliderValue(_value);
                                       },
                                       appearance: CircularSliderAppearance(
-                                        animationEnabled: true,
+                                        animationEnabled: false,
                                         infoProperties: InfoProperties(
                                           topLabelText: '',
                                           mainLabelStyle: TextStyle(color: Colors.transparent)
@@ -198,8 +230,32 @@ class K20Screen extends GetWidget<K20Controller> {
                                               trackWidth: 15)),
                                       min: 0,
                                       max: 10,
-                                      initialValue: value.toDouble(),
+                                      // Fixed at mount time on purpose — this is
+                                      // an *initial* value, not a live-controlled
+                                      // one. Feeding it controller.sliderValue on
+                                      // every rebuild made the slider's own
+                                      // didUpdateWidget think the value changed
+                                      // externally and re-run its internal
+                                      // animate/sync logic on every drag tick,
+                                      // fighting the live drag gesture instead of
+                                      // just letting the slider report onChange.
+                                      initialValue: 5,
                                     ),
+                                ),
+                                GetBuilder<K20Controller>(
+                                  builder: (_c) => AnimatedContainer(
+                                  duration: const Duration(milliseconds: 250),
+                                  width: getSize(95),
+                                  height: getSize(95),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: RadialGradient(
+                                      colors: [
+                                        _moodColor(_c.sliderValue).withOpacity(0.55),
+                                        _moodColor(_c.sliderValue).withOpacity(0.1),
+                                      ],
+                                    ),
+                                  ),
                                   ),
                                 ),
                                 ClipRRect(
@@ -233,14 +289,20 @@ class K20Screen extends GetWidget<K20Controller> {
                                     ),
                                   ),
                                 ),
+                                GetBuilder<K20Controller>(
+                                  builder: (_c) => SparkBurst(trigger: _c.saveBurstTrigger),
+                                ),
                               ],
                             ),
                           ),
+                          ),
+                          );
+                          },
                         ),
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 34,
+                          top: 16,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -270,40 +332,106 @@ class K20Screen extends GetWidget<K20Controller> {
                           ],
                         ),
                       ),
-                      CustomButton(
-                        onTap: ()
-                        async {
-                          await _repo.updateEvent(EmotionalStateModel(value, DateTime.now()));
-                          showDialog(
-                            context: context, builder: (BuildContext context) =>
-                              CustomMessageBox(
-                                title: 'create_record'.tr(),
-                                content: 'save_record'.tr(args: [
-                                  '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
-                                ]),
-                              ),);
-                        },
-                        text: 'save'.tr().toUpperCase(),
-                        margin: getMargin(
-                          left: 74,
-                          top: 38,
-                          right: 74,
+                      GetBuilder<K20Controller>(
+                        builder: (_c) => AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 250),
+                          child: _c.sliderValue >= K20Controller.positiveThreshold
+                              ? Padding(
+                                  key: const ValueKey('quick_emotion_chips'),
+                                  padding: getPadding(top: 8),
+                                  child: Center(
+                                    // Scaled down — this row competes with
+                                    // "Пройти путь" for vertical space below
+                                    // the fold, and the chips don't need to
+                                    // be full-size to stay tappable.
+                                    child: Transform.scale(
+                                      scale: 0.85,
+                                      child: ChipSelector<String>(
+                                        selected: _c.selectedEmotionKey,
+                                        onSelected: _c.selectEmotion,
+                                        options: _quickPositiveEmotions
+                                            .map((key) => ChipOption(value: key, label: key.tr()))
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(key: ValueKey('no_chips')),
                         ),
-                        variant: ButtonVariant.OutlineBluegray60014,
+                      ),
+                      GetBuilder<K20Controller>(
+                        builder: (_c) => PressableScale(
+                          onTap: () async {
+                            final currentValue = _c.sliderValue.round();
+                            await _repo.updateEvent(EmotionalStateModel(currentValue, DateTime.now()));
+                            final emotionKey = _c.selectedEmotionKey;
+                            DayEventModel? savedEvent;
+                            if (emotionKey != null) {
+                              final events = await _dayEventsRepo.getEvent();
+                              savedEvent = DayEventModel(
+                                howDoYouFeel: currentValue,
+                                date: DateTime.now(),
+                                showInCharts: true,
+                                whatEmotion: [EventModel(emotionKey.tr(), '', emotionKey)],
+                                emotionIntensity: currentValue,
+                                emotionInDayEvent: EmotionInDayEvent.POSITIVE,
+                              );
+                              events.add(savedEvent);
+                              await _dayEventsRepo.updateEvent(events);
+                              InsightEngine().run().catchError((_) => <InsightModel>[]);
+                            }
+                            _c.selectedEmotionKey = null;
+                            _c.triggerSaveBurst();
+                            // Give the button's spring-back and the spark
+                            // burst time to actually be seen before the
+                            // "record saved" dialog's modal barrier covers
+                            // the whole screen — showDialog() used to fire
+                            // immediately, hiding both animations before
+                            // they had a chance to play.
+                            await Future.delayed(const Duration(milliseconds: 550));
+                            showDialog(
+                              context: context, builder: (BuildContext context) =>
+                                CustomMessageBox(
+                                  title: 'create_record'.tr(),
+                                  content: 'save_record'.tr(args: [
+                                    '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
+                                  ]),
+                                ),).then((_) {
+                              if (savedEvent != null) {
+                                MilestoneService.maybeCelebrate(context, savedEvent!);
+                              }
+                            });
+                          },
+                          child: CustomButton(
+                            text: 'save'.tr().toUpperCase(),
+                            margin: getMargin(
+                              left: 74,
+                              top: 18,
+                              right: 74,
+                            ),
+                            variant: ButtonVariant.OutlineBluegray60014,
+                          ),
+                        ),
                       ),
                       CustomButton(
 
                           onTap: (){
-                          Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel().copyWith(howDoYouFeel: value, showInCharts: true));
+                          Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel().copyWith(howDoYouFeel: controller.sliderValue.round(), showInCharts: true));
                           },
                         text: 'complete_path'.tr().toUpperCase(),
                         margin: getMargin(
                           left: 68,
-                          top: 27,
+                          top: 14,
                           right: 68,
+                          bottom: 16,
                         ),
-                        variant: ButtonVariant.OutlineBluegray60014,
-                        fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                        // Bright/filled, matching the medication module's
+                        // primary Save button (cyan700 + white text) — was
+                        // the same muted outline style as every other
+                        // secondary button, which buried the screen's
+                        // second-most-important action.
+                        bgColor: ColorConstant.cyan700,
+                        textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                       ),
                     ],
                   ),

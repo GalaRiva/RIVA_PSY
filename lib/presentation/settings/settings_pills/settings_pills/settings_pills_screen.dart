@@ -6,6 +6,7 @@ import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/size_utils.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/settings_pills/controller.dart';
+import 'package:riva_psy/widgets/chip_selector.dart';
 import 'package:riva_psy/widgets/custom_app_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_pop_button.dart';
@@ -60,50 +61,6 @@ class PillsScreen extends StatelessWidget {
                             height: getVerticalSize(24)),
                       ),
                     ),
-                    Padding(padding: getPadding(top: 18, left: 16, right: 16),
-                      child: GetBuilder(
-                        builder: (PillsController _c) =>
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: CustomButton(
-                                    padding: ButtonPadding.PaddingT8,
-                                    text: 'current_appointments'.tr(),
-                                    onTap: () =>
-                                        controller.changePillsListState(
-                                            PillsList.actual),
-                                    textStyle: controller.currentPillsList ==
-                                        PillsList.actual
-                                        ?  AppStyle.txtSFProDisplayLight16 : AppStyle.txtSFProDisplayLight16Gray ,
-                                    bgColor: controller.currentPillsList ==
-                                        PillsList.actual
-                                        ? Colors.white
-                                        : ColorConstant.blueGray100,
-                                    showBorder: false,
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
-                                Expanded(
-                                  child: CustomButton(
-                                    showBorder: false,
-                                    padding: ButtonPadding.PaddingT8,
-                                    text: 'date_added'.tr(),
-                                    onTap: () =>
-                                        controller.changePillsListState(
-                                            PillsList.onData),
-                                    textStyle: controller.currentPillsList ==
-                                        PillsList.onData
-                                        ?  AppStyle.txtSFProDisplayLight16 : AppStyle.txtSFProDisplayLight16Gray ,
-                                    bgColor: controller.currentPillsList ==
-                                        PillsList.onData
-                                        ? Colors.white
-                                        : ColorConstant.blueGray100,
-                                  ),
-                                ),
-                              ],
-                            ),
-                      ),),
                     GetBuilder(
                       builder: (PillsController _c) => SizedBox(
                         width: size.width - 32,
@@ -123,20 +80,28 @@ class PillsScreen extends StatelessWidget {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(padding: getPadding(top: 22),
-                                    child: controller.getListOnListType(
-                                        controller.currentPillsList ==
-                                            PillsList.actual
-                                            ? PillsList.actual
-                                            : PillsList.onData),
+                                  Padding(
+                                    padding: getPadding(top: 18),
+                                    child: ChipSelector<PillsList>(
+                                      selected: controller.currentPillsList,
+                                      onSelected: controller.changePillsListState,
+                                      options: [
+                                        ChipOption(
+                                          value: PillsList.actual,
+                                          label: '${'active_short'.tr()} (${controller.actualPills.length})',
+                                        ),
+                                        ChipOption(
+                                          value: PillsList.onData,
+                                          label: 'archive_completed'.tr(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Padding(padding: getPadding(top: 28),
+                                  Padding(
+                                    padding: getPadding(top: 22),
                                     child: controller.getListOnListType(
-                                        controller.currentPillsList ==
-                                            PillsList.actual
-                                            ? PillsList.onData
-                                            : PillsList.actual),
-                                  )
+                                        controller.currentPillsList),
+                                  ),
                                 ],
                               );
                             }),

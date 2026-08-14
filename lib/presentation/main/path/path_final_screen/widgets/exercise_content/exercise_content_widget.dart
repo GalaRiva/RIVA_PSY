@@ -66,24 +66,11 @@ class ExerciseContentWidget extends StatelessWidget {
             emotionMood: moodForKey(dayEvent.whatEmotion![0].identity, categoryMood),
             model: dayEvent.whatEmotion![0],
             cardHeight: 44, isSelect: false,
+            // Card itself stays 44 (unchanged layout footprint) — only the
+            // blob grows, per explicit request that it read as too small.
+            iconSizeOverride: 32,
             cardWidth: size.width - 20,
             useShadowStyle: true,
-          ),
-        ),
-        Padding(
-          padding: getPadding(
-            top: 12,
-          ),
-          child: Padding(
-            padding: getPadding(left: 10, right: 10),
-            child: SizedBox(
-              width: getHorizontalSize(135),
-              child: Text(
-                'clicking_to_see_related_emotions'.tr(),
-                textAlign: TextAlign.left,
-                style: AppStyle.txtSFProDisplayLight10Gray800,
-              ),
-            ),
           ),
         ),
         Padding(

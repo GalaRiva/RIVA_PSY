@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart' hide AudioSource;
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/models/body_parts_model.dart';
 import 'package:riva_psy/core/models/event_model.dart';
 import 'package:riva_psy/presentation/records/record_edit_screen/widgets/voice_button.dart';
@@ -22,6 +24,60 @@ class K52Controller extends GetxController {
   final DayEventModel dayEventModel;
 
   K52Controller(this.dayEventModel);
+
+  final AudioPlayer _voiceNotePlayer = AudioPlayer();
+  bool isPlayingVoiceNote = false;
+
+  Future<void> toggleVoiceNotePlayback(String path) async {
+    if (isPlayingVoiceNote) {
+      await _voiceNotePlayer.stop();
+      isPlayingVoiceNote = false;
+      update();
+      return;
+    }
+    try {
+      await _voiceNotePlayer.setAudioSource(AudioSource.file(path));
+      isPlayingVoiceNote = true;
+      update();
+      _voiceNotePlayer.playerStateStream.listen((state) {
+        if (state.processingState == ProcessingState.completed) {
+          isPlayingVoiceNote = false;
+          _voiceNotePlayer.seek(Duration.zero);
+          _voiceNotePlayer.pause();
+          update();
+        }
+      });
+      await _voiceNotePlayer.play();
+    } catch (_) {
+      isPlayingVoiceNote = false;
+      update();
+    }
+  }
+
+  // The old "delete" link only nulled the model's reference — the actual
+  // .m4a file stayed behind in app-documents, an unbounded leak for anyone
+  // who deletes/re-records a lot. Removing the file too, best-effort.
+  Future<void> deleteVoiceRecording() async {
+    if (isPlayingVoiceNote) {
+      await _voiceNotePlayer.stop();
+      isPlayingVoiceNote = false;
+    }
+    final path = dayEventModel.pathToAudio;
+    if (path != null) {
+      try {
+        final file = File(path);
+        if (await file.exists()) await file.delete();
+      } catch (_) {}
+    }
+    dayEventModel.pathToAudio = null;
+    update();
+  }
+
+  @override
+  void onClose() {
+    _voiceNotePlayer.dispose();
+    super.onClose();
+  }
 
   void initDate(DateTime diffrentDate){
     if(date == null) {

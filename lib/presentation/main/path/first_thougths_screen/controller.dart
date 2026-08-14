@@ -6,6 +6,9 @@ import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../../core/db/hive_db.dart';
+import '../../../../core/models/insight_model.dart';
+import '../../../../core/services/insights/insight_engine.dart';
+import '../../../../core/services/milestones/milestone_service.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../../widgets/custom_message_box.dart';
 import '../add_emotion_screen/controller.dart';
@@ -28,6 +31,8 @@ class K38Controller extends GetxController {
       final events = await _repo.getEvent();
       events.add(dayEventModel);
       await _repo.updateEvent(events);
+      InsightEngine().run().catchError((_) => <InsightModel>[]);
+      await MilestoneService.maybeCelebrate(context, dayEventModel);
     } catch (_) {}
 
     showDialog(context: context, builder: (BuildContext context) =>

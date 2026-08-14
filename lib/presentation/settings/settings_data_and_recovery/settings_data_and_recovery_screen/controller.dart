@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 import 'package:riva_psy/core/db/firebase_firestore/models/backup_model.dart';
 import 'package:riva_psy/core/db/hive_db.dart';
@@ -93,25 +94,22 @@ class DataAndRecoveryController extends GetxController {
 
   String getDays(DateTime? date) {
     if (date == null) {
-      return 'Никогда';
+      return 'never'.tr();
     }
     final days = DateTime.now().difference(date).inDays.abs();
     debugPrint('days $days');
     if (days > 365) {
-      return 'Больше года назад';
+      return 'more_than_year_ago'.tr();
     }
     if (days > 60) {
-      return 'Больше ${days / 30} месяцев назад';
+      return 'more_than_months_ago'.tr(args: [(days / 30).floor().toString()]);
     }
     if (days > 30) {
-      return 'Больше месяца назад';
+      return 'more_than_month_ago'.tr();
     }
-    if (days == 0) return 'Сегодня';
+    if (days == 0) return 'today'.tr();
+    if (days == 1) return 'yesterday'.tr();
 
-    return days < 2
-        ? '$days день назад'
-        : days < 5
-            ? '$days дня назад'
-            : '$days дней назад';
+    return '$days ${'days_ago'.tr()}';
   }
 }

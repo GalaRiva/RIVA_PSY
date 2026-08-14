@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_ticket_provider_mixin.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../../core/models/event_model.dart';
@@ -14,9 +15,28 @@ import '../../../../widgets/custom_message_box.dart';
 import '../../../../widgets/inner_shadow.dart';
 import 'repository.dart';
 
-class K27Controller extends GetxController {
+class K27Controller extends GetxController with GetSingleTickerProviderStateMixin {
 
   final _repo = K27Repo();
+
+  TabController? tabController;
+
+  // Idempotent — the screen calls this on every build (GetX controllers
+  // survive rebuilds via Get.put), but a TabController must only be created
+  // once per length. Keeps the app's own `currentTab` in sync whether the
+  // user taps a tab OR swipes between them (TabBar's `onTap` alone only
+  // covers taps, leaving `currentTab` stale after a swipe).
+  void initTabController(int length) {
+    if (tabController != null && tabController!.length == length) return;
+    tabController?.dispose();
+    tabController = TabController(length: length, vsync: this, initialIndex: currentTab - 1);
+    tabController!.addListener(() {
+      if (!tabController!.indexIsChanging) {
+        currentTab = tabController!.index + 1;
+        update();
+      }
+    });
+  }
 
   final searchController = TextEditingController();
   final addEventController = TextEditingController();

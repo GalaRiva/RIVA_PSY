@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'widgets/admission_schedule/admission_schedule_widget.dart';
 import 'widgets/diagnosis_of_the_condition_widget.dart';
+import 'widgets/energy_matrix_widget.dart';
 import 'widgets/report_widget.dart';
+import 'widgets/social_battery_widget.dart';
+import 'widgets/synergy_heatmap_widget.dart';
 import 'widgets/what_emotion_widget.dart';
 import 'widgets/where_in_body_widget.dart';
 
@@ -22,27 +25,26 @@ class K61Screen extends GetWidget{
   Widget build(BuildContext context) {
     final controller = Get.put(K61Controller());
     controller.init();
+    controller.initTabController();
     return Scaffold(
       backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SizedBox(
-          width: size.width,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: getPadding(
-                bottom: 5,
-              ),
+        // NestedScrollView instead of one big SingleChildScrollView around
+        // a manually-switched tab body: gives TabBarView a bounded height
+        // (the remaining space below the header/tab-bar slivers) so swiping
+        // between tabs works, while each tab's own SingleChildScrollView
+        // (see _buildTabContents) still lets its content scroll and grow
+        // freely without being clipped — same fix as before, just per-tab
+        // instead of whole-page.
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: getPadding(
-                      top: 39,
-                      left: 16,
-                      right: 16,
-                    ),
+                    padding: getPadding(top: 39, left: 16, right: 16),
                     child: Text(
                       'charts'.tr(),
                       overflow: TextOverflow.ellipsis,
@@ -51,183 +53,59 @@ class K61Screen extends GetWidget{
                     ),
                   ),
                   Padding(
-                    padding: getPadding(
-                      top: 12,
-                      left: 16,
-                      right: 16,
-                    ),
+                    padding: getPadding(top: 12, left: 16, right: 16),
                     child: Divider(
-                      height: getVerticalSize(
-                        1,
-                      ),
-                      thickness: getVerticalSize(
-                        1,
-                      ),
+                      height: getVerticalSize(1),
+                      thickness: getVerticalSize(1),
                       color: ColorConstant.gray50,
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      top: 14,
-                    ),
-                    child: DefaultTabController(
-                      length: 6,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: getPadding(top: 40),
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                height: getVerticalSize(70),
-                                width: MediaQuery.of(context).size.width - 32,
-                                child: TabBar(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  isScrollable: true,
-                                  onTap: (val) {
-                                    controller.currentTab = val + 1;
-                                    controller.update();
-                                  },
-                                  indicatorColor:
-                                      ColorConstant.fromHex('#1499A1'),
-                                  unselectedLabelColor: ColorConstant.gray800,
-                                  labelStyle: TextStyle(
-                                    color: ColorConstant.gray800,
-                                    fontSize: getFontSize(
-                                      12,
-                                    ),
-                                    fontFamily: 'Manrope',
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  labelColor: ColorConstant.cyan700,
-                                  tabs: [
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'state_diagnosis'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'summary_report'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'what_emotions_am_I_feeling'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'where_do_my_emotions_live_in_the_body'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'where_and_what_emotions_am_I_experiencing'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getHorizontalSize(140),
-                                      height: getVerticalSize(70),
-                                      child: Tab(
-                                        height: getVerticalSize(70),
-                                        child: Center(
-                                          child: Text(
-                                            'medication_intake_schedule_graph'.tr(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          controller.loading == true
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                    color: ColorConstant.cyan700,
-                                  ),
-                                )
-                              : GetBuilder(
-                                  builder: (K61Controller _c) => Padding(
-                                    padding: getPadding(top: 6),
-                                    // Was a TabBarView inside a SizedBox pinned to
-                                    // controller.getTabHeight() (a fixed size.height-214)
-                                    // — every tab was forced into that one viewport no
-                                    // matter how much content it actually had, so
-                                    // taller tabs got clipped instead of the page
-                                    // growing to fit them. Rendering only the active
-                                    // tab directly removes that ceiling: it grows with
-                                    // its own content inside the page's own
-                                    // SingleChildScrollView. Tab switching already
-                                    // happens by tapping (TabBar's onTap sets
-                                    // currentTab), not by swiping, so TabBarView's
-                                    // paging behavior isn't needed.
-                                    child: _buildTabContent(controller),
-                                  ),
-                                ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: getPadding(top: 26),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    height: getVerticalSize(70),
+                    width: MediaQuery.of(context).size.width - 32,
+                    child: TabBar(
+                      controller: controller.tabController,
+                      isScrollable: true,
+                      // Tabs sit closer together: narrower fixed width per
+                      // tab plus tighter labelPadding (default is 16px each
+                      // side, on top of the box width).
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      indicatorColor: ColorConstant.fromHex('#1499A1'),
+                      unselectedLabelColor: ColorConstant.gray800,
+                      labelStyle: TextStyle(
+                        color: ColorConstant.gray800,
+                        fontSize: getFontSize(12),
+                        fontFamily: 'Manrope',
+                        fontWeight: FontWeight.w300,
+                      ),
+                      labelColor: ColorConstant.cyan700,
+                      tabs: _tabs(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          body: controller.loading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: ColorConstant.cyan700,
+                  ),
+                )
+              : GetBuilder(
+                  builder: (K61Controller _c) => TabBarView(
+                    controller: controller.tabController,
+                    children: _buildTabContents(controller),
+                  ),
+                ),
         ),
       ),
       bottomNavigationBar: CustomBottomBar(
@@ -236,46 +114,73 @@ class K61Screen extends GetWidget{
     );
   }
 
-  Widget _buildTabContent(K61Controller controller) {
-    switch (controller.currentTab) {
-      case 1:
-        return DiagnosticOfTheConditionWidget(
-          start: controller.dateStart,
-          end: controller.dateEnd,
-          dataForChart: controller.dataForChart,
-          controller: controller,
-        );
-      case 2:
-        return ReportWidget(
-          start: controller.dateStart,
-          controller: controller,
-          end: controller.dateEnd,
-          fields: controller.fields,
-        );
-      case 3:
-        return WhatEmotionWidget(
-          start: controller.dateStart,
-          controller: controller,
-          end: controller.dateEnd,
-          emotions: controller.emotions,
-          emotionsTypes: controller.emotionsTypes,
-        );
-      case 4:
-        return WhereInBodyWidget(
-          start: controller.dateStart,
-          controller: controller,
-          end: controller.dateEnd,
-          neutralType: controller.neutralType,
-          emotionsInBody: controller.emotionsInBody,
-          positiveType: controller.positiveType,
-          negativeType: controller.negativeType,
-        );
-      case 5:
-        return WhereAndWhatEmotionsWidget(controller: controller);
-      case 6:
-        return AdmissionScheduleWidget();
-      default:
-        return const SizedBox();
-    }
+  List<Widget> _tabs() {
+    const keys = [
+      'state_diagnosis',
+      'summary_report',
+      'what_emotions_am_I_feeling',
+      'where_do_my_emotions_live_in_the_body',
+      'where_and_what_emotions_am_I_experiencing',
+      'medication_intake_schedule_graph',
+      'energy_matrix',
+      'synergy_heatmap',
+      'social_battery',
+    ];
+    return keys
+        .map((key) => SizedBox(
+              width: getHorizontalSize(104),
+              height: getVerticalSize(70),
+              child: Tab(
+                height: getVerticalSize(70),
+                child: Center(
+                  child: Text(
+                    key.tr(),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ))
+        .toList();
+  }
+
+  List<Widget> _buildTabContents(K61Controller controller) {
+    Widget scrollable(Widget child) => SingleChildScrollView(child: child);
+    return [
+      scrollable(DiagnosticOfTheConditionWidget(
+        start: controller.dateStart,
+        end: controller.dateEnd,
+        dataForChart: controller.dataForChart,
+        controller: controller,
+      )),
+      scrollable(ReportWidget(
+        start: controller.dateStart,
+        controller: controller,
+        end: controller.dateEnd,
+        fields: controller.fields,
+      )),
+      scrollable(WhatEmotionWidget(
+        start: controller.dateStart,
+        controller: controller,
+        end: controller.dateEnd,
+        emotions: controller.emotions,
+        emotionsTypes: controller.emotionsTypes,
+      )),
+      scrollable(WhereInBodyWidget(
+        start: controller.dateStart,
+        controller: controller,
+        end: controller.dateEnd,
+        neutralType: controller.neutralType,
+        emotionsInBody: controller.emotionsInBody,
+        positiveType: controller.positiveType,
+        negativeType: controller.negativeType,
+      )),
+      scrollable(WhereAndWhatEmotionsWidget(controller: controller)),
+      scrollable(AdmissionScheduleWidget()),
+      scrollable(EnergyMatrixWidget(points: controller.energyMatrixPoints)),
+      scrollable(SynergyHeatmapWidget(events: controller.allDayEvents)),
+      scrollable(SocialBatteryWidget(events: controller.allDayEvents)),
+    ];
   }
 }

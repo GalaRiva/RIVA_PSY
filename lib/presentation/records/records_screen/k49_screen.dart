@@ -137,6 +137,22 @@ class K49Screen extends GetWidget {
                       ),
                     ),
                   ),
+                  CustomButton(
+                    height: getVerticalSize(
+                      32,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.moments_gallery);
+                    },
+                    text: 'moments_gallery_button'.tr().toUpperCase(),
+                    margin: getMargin(
+                      left: 68,
+                      top: 10,
+                      right: 68,
+                    ),
+                    variant: ButtonVariant.OutlineBluegray60014,
+                    fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                  ),
 
                   GetBuilder(
                     builder: (K49Controller _c) =>Padding(

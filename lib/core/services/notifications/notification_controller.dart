@@ -77,6 +77,10 @@ class NotificationController {
           (route) =>
               (route.settings.name != AppRoutes.concrete_pill) || route.isFirst,
           arguments: receivedAction.payload);
+    } else if (receivedAction.channelKey == 'gratitude') {
+      MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+          AppRoutes.main,
+          (route) => (route.settings.name != AppRoutes.main) || route.isFirst);
     }
   }
 }

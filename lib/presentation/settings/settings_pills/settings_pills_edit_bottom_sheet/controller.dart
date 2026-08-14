@@ -14,6 +14,8 @@ import '../../../../widgets/custom_message_box.dart';
 import '../models/pill_model.dart';
 import '../repository.dart';
 import '../../../../core/utils/date_extension.dart';
+import '../widget/duration_selector.dart';
+import '../widget/medication_icon_color_picker.dart';
 
 class PillsEditBottomSheetController extends GetxController {
 
@@ -21,6 +23,11 @@ class PillsEditBottomSheetController extends GetxController {
   void init(PillModel pill) {
     pillModel = pill;
     nameController.text = pillModel.name;
+    dosageController.text = pillModel.dosage ?? '';
+    instructionTiming = pillModel.instructionTiming ?? 'regardless_of_food';
+    iconType = pillModel.iconType;
+    color = Color(pillModel.colorValue);
+    durationType = pillModel.durationType;
     _startDate = pillModel.startDate;
     _endDate = pillModel.endDate;
     actual = pillModel.actual();
@@ -33,7 +40,13 @@ class PillsEditBottomSheetController extends GetxController {
 
   final _repo = PillsRepo();
   final nameController = TextEditingController();
+  final dosageController = TextEditingController();
   List<String> time = [];
+
+  String instructionTiming = 'regardless_of_food';
+  String iconType = 'capsule';
+  Color color = medicationColorPalette.first;
+  String? durationType;
 
   DateTime? _startDate;
   DateTime? _endDate;
@@ -42,6 +55,38 @@ class PillsEditBottomSheetController extends GetxController {
   String getDurationText () {
     if(_startDate == null || _endDate == null) return 'set_reception_duration'.tr().toUpperCase();
     return '${(_startDate!).dateInText()} - ${_endDate!.dateInText()}'.toUpperCase();
+  }
+
+  void setInstructionTiming(String value) {
+    instructionTiming = value;
+    update();
+  }
+
+  void setIconType(String value) {
+    iconType = value;
+    update();
+  }
+
+  void setColor(Color value) {
+    color = value;
+    update();
+  }
+
+  void addPresetTime(String presetTime) {
+    if (!time.contains(presetTime)) time.add(presetTime);
+    update();
+  }
+
+  void setDurationType(BuildContext context, String value) {
+    durationType = value;
+    if (value == 'custom') {
+      setDurationOfReception(context);
+      return;
+    }
+    final start = DateTime.now();
+    _startDate = start;
+    _endDate = durationEndDate(value, start);
+    update();
   }
 
   void addTime({int? itemIndex, required BuildContext context}) {
@@ -154,7 +199,12 @@ class PillsEditBottomSheetController extends GetxController {
         name: nameController.text,
         hoursOfTakingPills: time,
         createDate: pillModel.createDate,
-        startDate: _startDate!, endDate: !actual && _endDate!.isAfter(DateTime.now()) ? DateTime.now().add(Duration(seconds: -1)) : _endDate!, adoptions: pillModel.adoptions);
+        startDate: _startDate!, endDate: !actual && _endDate!.isAfter(DateTime.now()) ? DateTime.now().add(Duration(seconds: -1)) : _endDate!, adoptions: pillModel.adoptions,
+        dosage: dosageController.text.trim().isEmpty ? null : dosageController.text.trim(),
+        instructionTiming: instructionTiming,
+        iconType: iconType,
+        colorValue: color.value,
+        durationType: durationType);
     final list = await _repo.getEvent();
     for (int i = 0; i < list.length; i++) {
 

@@ -36,9 +36,9 @@ class PillsController extends GetxController {
 
   PillListWidget getListOnListType(PillsList currentType) {
     if(currentType == PillsList.onData) {
-      return PillListWidget(pills: onDataPills, isSelected: _currentPillsList == currentType, update: update, title: 'date_added'.tr());
+      return PillListWidget(pills: onDataPills, isSelected: _currentPillsList == currentType, update: update, title: 'archive_completed'.tr(), emptyText: 'no_archived_pills'.tr());
     } else {
-      return PillListWidget(pills: actualPills, isSelected: _currentPillsList == currentType, update: update, title: 'current_appointments'.tr());
+      return PillListWidget(pills: actualPills, isSelected: _currentPillsList == currentType, update: update, title: '${'active_short'.tr()} (${actualPills.length})', emptyText: 'no_active_pills'.tr());
     }
   }
 
@@ -68,21 +68,22 @@ class PillsController extends GetxController {
   Future<PillsListModel> getPills() async {
     final pills = await repo.getEvent();
     final actual = <PillModel>[];
-    final onData = <PillModel>[];
+    final archived = <PillModel>[];
+    final now = DateTime.now();
     for (int i = 0; i < pills.length; i++) {
       final item = pills[i];
       if (item.actual()) {
-          actual.add(item);
+        actual.add(item);
+      } else if (item.endDate.isBefore(now)) {
+        archived.add(item);
       }
-        onData.add(item);
-
     }
-    onDataPills = onData;
+    onDataPills = archived;
     actualPills = actual;
 
-    onDataPills.sort((d1, d2) => d1.compareTo(d2));
+    onDataPills.sort((d1, d2) => d2.endDate.compareTo(d1.endDate));
     await repo.updateEvent(pills);
-    return PillsListModel(actualList: actual, onDataList: onData);
+    return PillsListModel(actualList: actual, onDataList: archived);
   }
 
   bool checkDateInRange(DateTime date, DateTime startDate, DateTime endDate) {

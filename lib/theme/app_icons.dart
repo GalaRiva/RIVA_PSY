@@ -19,4 +19,11 @@ abstract class AppIcons {
   static const IconData caretRight = IconData(0xe13a, fontFamily: 'Phosphor');
   static const IconData caretUp = IconData(0xe13c, fontFamily: 'Phosphor');
   static const IconData caretDown = IconData(0xe136, fontFamily: 'Phosphor');
+
+  // Medication form icons
+  static const IconData pillCapsule = IconData(0xe700, fontFamily: 'Phosphor');
+  static const IconData pillTablet = IconData(0xe18c, fontFamily: 'Phosphor');
+  static const IconData pillDrops = IconData(0xe210, fontFamily: 'Phosphor');
+  static const IconData pillSpray = IconData(0xe7e4, fontFamily: 'Phosphor');
+  static const IconData pencilSimple = IconData(0xe3b4, fontFamily: 'Phosphor');
 }

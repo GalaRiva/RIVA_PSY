@@ -653,7 +653,27 @@ class K52Screen extends GetWidget {
                                     ),
                                     Padding(
                                       padding: getPadding(
-                                        left: 31,
+                                        left: 20,
+                                      ),
+                                      child: InkWell(
+                                        onTap: () => controller.toggleVoiceNotePlayback(dayEventModel.pathToAudio!),
+                                        child: Text(
+                                          controller.isPlayingVoiceNote ? 'stop'.tr() : 'play'.tr(),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: AppStyle
+                                              .txtSFProDisplayLight11Cyan700
+                                              .copyWith(
+                                            letterSpacing: getHorizontalSize(
+                                              0.44,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: getPadding(
+                                        left: 20,
                                       ),
                                       child: InkWell(
                                         onTap: () => controller
@@ -674,10 +694,10 @@ class K52Screen extends GetWidget {
                                     ),
                                     Padding(
                                       padding: getPadding(
-                                        left: 35,
+                                        left: 20,
                                       ),
                                       child: InkWell(
-                                        onTap: () => dayEventModel.pathToAudio = null,
+                                        onTap: () => controller.deleteVoiceRecording(),
                                         child: Text(
                                           'delete'.tr(),
                                           overflow: TextOverflow.ellipsis,

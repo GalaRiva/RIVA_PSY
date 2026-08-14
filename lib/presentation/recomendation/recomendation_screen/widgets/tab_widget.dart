@@ -13,11 +13,14 @@ import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_decoration.dart';
 import '../../../../../theme/app_style.dart';
 import '../../../../../widgets/custom_image_view.dart';
+import '../../../../core/services/audio/post_audio_checkin_gate.dart';
 import '../../../../core/services/datasource_service.dart';
 import '../controller.dart';
 import '../models/audio_model.dart';
+import '../models/tabs/medetation_model.dart';
 import '../models/tabs/negative_emotion_tabs/negative_emotions_tab.dart';
 import '../../../../widgets/audio_card_widget.dart';
+import 'post_audio_checkin_sheet.dart';
 import 'package:audio_session/audio_session.dart';
 
 import '../../../../../widgets/go_to_new_tariff_widget.dart';
@@ -109,6 +112,18 @@ class TabWidget extends StatelessWidget {
               await controller.audioInstance.pause();
             },
             loadFun: () async {}, audioInstance: controller.audioInstance, currentAudioIndex: () => controller.currentAudioIndex ?? 0, changeCurrentAudioIndex: (int index) { controller.currentAudioIndex = index; },
+            onNaturalCompletion: tab is MeditationModel
+                ? () {
+                    if (!PostAudioCheckinGate.canShow) return;
+                    PostAudioCheckinGate.markShown();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => PostAudioCheckinSheet(trackTitle: assets[i].title),
+                    );
+                  }
+                : null,
             ));
 
         }

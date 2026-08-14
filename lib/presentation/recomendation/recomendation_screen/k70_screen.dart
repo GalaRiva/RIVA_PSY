@@ -76,82 +76,80 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
             create: (_) => HappinessInFocusCubit()),
       ],
       child: Scaffold(
-        body: SingleChildScrollView(
-          controller: scroll,
-          //physics: NeverScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height - (MediaQuery.of(context).padding.bottom + MediaQuery.of(context).padding.top),
-                child: SafeArea(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Padding(
-                               padding: EdgeInsets.only(top: 10, left: 16),
-                               child: Text(
-                                 'recommendations_and_exercises'.tr(),
-                                 overflow: TextOverflow.ellipsis,
-                                 textAlign: TextAlign.left,
-                                 style: AppStyle.txtSFProDisplayLight10Gray800,
-                               ),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(
-                                 top: 12,
-                               ),
-                               child: Divider(
-                                 height: 1,
-                                 thickness: 1,
-                                 indent: 16,
-                                 endIndent: 16,
-                                 color: ColorConstant.gray50,
-                               ),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(top: 14, left: 16),
-                               child: Text(
-                                 'cope_with_emotions_heading'.tr(),
-                                 style: AppStyle.txtH1,
-                               ),
-                             ),
-                             Align(
-                               alignment: Alignment.topCenter,
-                               child: CustomButton(
-                                 variant: ButtonVariant.Cyan,
-                                 fontStyle: ButtonFontStyle.White16,
-                                 text: 'help_with_panic_and_affect'.tr(),
-                                 bgColor: ColorConstant.cyan700,
-                                 width: size.width - 32,
-                                 onTap: () {
-                                   pageController.animateToPage(0,
-                                       duration: Duration(milliseconds: 400),
-                                       curve: Curves.easeIn);
-                                   controller.tabController!.animateTo(2);
-                                   controller.currentTab = 2;
-                                   controller.tabControllerSecond!
-                                       .animateTo(controller.panicTab);
-                                   controller.currentTabSecond = controller.panicTab;
-                                 },
-                                 height: 37,
-                               ),
-                             ),
-                             Expanded(
-                               child: CustomTabBar(
-                                 tabs: [
-                                   ExercisesTabBody(controller: controller),
-                                   WorkingOutScreen()
-                                 ],
-                                 labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr()],
-                                 controller: pageController,
-                               ),
-                             )
-                           ],
-                         ),
+        body: SafeArea(
+          // Was a SingleChildScrollView wrapping a SizedBox pinned to
+          // exactly one screen's height — the title/divider/heading/CTA
+          // button chrome above CustomTabBar was permanently fixed, no
+          // matter how little the active tab's own content needed, eating
+          // ~120px+ before any real content started. NestedScrollView lets
+          // that header block collapse away on scroll instead, matching
+          // the same fix already applied to the charts screen.
+          child: NestedScrollView(
+            controller: scroll,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, left: 16),
+                      child: Text(
+                        'recommendations_and_exercises'.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle.txtSFProDisplayLight10Gray800,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
+                        indent: 16,
+                        endIndent: 16,
+                        color: ColorConstant.gray50,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, left: 16),
+                      child: Text(
+                        'cope_with_emotions_heading'.tr(),
+                        style: AppStyle.txtH1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8, left: 16, right: 16),
+                      child: CustomButton(
+                        variant: ButtonVariant.Cyan,
+                        fontStyle: ButtonFontStyle.White16,
+                        text: 'help_with_panic_and_affect'.tr(),
+                        bgColor: ColorConstant.cyan700,
+                        width: size.width - 32,
+                        onTap: () {
+                          pageController.animateToPage(0,
+                              duration: Duration(milliseconds: 400),
+                              curve: Curves.easeIn);
+                          controller.tabController!.animateTo(2);
+                          controller.currentTab = 2;
+                          controller.tabControllerSecond!
+                              .animateTo(controller.panicTab);
+                          controller.currentTabSecond = controller.panicTab;
+                        },
+                        height: 37,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).viewInsets.bottom,)
             ],
+            body: CustomTabBar(
+              tabs: [
+                ExercisesTabBody(controller: controller),
+                WorkingOutScreen()
+              ],
+              labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr()],
+              controller: pageController,
+            ),
           ),
         ),
         bottomNavigationBar: CustomBottomBar(),

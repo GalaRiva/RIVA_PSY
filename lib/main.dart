@@ -12,6 +12,7 @@ import 'package:riva_psy/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/services/insights/insight_workmanager.dart';
 import 'core/services/notifications/awesome_notification_service.dart';
 import 'core/utils/color_constant.dart';
 import 'theme/app_theme.dart';
@@ -53,6 +54,10 @@ void main() async {
       await HiveDB.initDB();
       final notificationService = AwesomeNotificationService();
       notificationService.setListeners();
+      if (!Platform.isIOS) {
+        await registerNightlyInsightTask().catchError((_) {});
+        registerGratitudeNudgeTask().catchError((_) {});
+      }
       //initializeDateFormatting('ru_RU');
 
       final event = await FirebaseAuth.instance.authStateChanges().first;

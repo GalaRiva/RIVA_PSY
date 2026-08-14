@@ -10,10 +10,39 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../presentation/charts/concrete_pill/concrete_pill_screen.dart';
 import '../../../routes/app_routes.dart';
+import '../insights/insights_repo.dart';
+import '../insights/offline_translations.dart';
 import '../workmanager/workmanager_model.dart';
 import 'notification_controller.dart';
 
 class AwesomeNotificationService extends NotificationService {
+  // If a 'regularity' insight fired for this pill in the last 2 days, the
+  // next reminder's body is drawn from a 3-way pool: the standard "Time to
+  // take X" text, or one of 2 encouraging nudges (category 8 from the
+  // insight template library) — so the nudge shows up sometimes, not every
+  // time. Only the very next occurrence gets this — the rest of the course
+  // keeps the standard text, since we can't know future insight state when
+  // pre-scheduling many days at once. Uses OfflineTranslations rather than
+  // easy_localization's `.tr()` because this also runs from the nightly
+  // workmanager background isolate (see insight_workmanager.dart), which
+  // never builds the EasyLocalization widget tree `.tr()` depends on.
+  Future<String?> _regularityNudgeText(String pillName) async {
+    if (pillName.isEmpty) return null;
+    final insights = await InsightsRepo().getAll();
+    final recent = insights.where((i) =>
+        i.category == 'regularity' &&
+        i.namedArgs['pill'] == pillName &&
+        DateTime.now().difference(i.generatedAt).inDays <= 2);
+    if (recent.isEmpty) return null;
+    final pick = Random().nextInt(3); // 0 = keep the standard reminder text
+    if (pick == 0) return null;
+    final translations = await OfflineTranslations.load();
+    return OfflineTranslations.tr(translations, 'insight_action_prompt_template_$pick', {
+      'pill': pillName,
+      'days': recent.first.namedArgs['days'] ?? '',
+    });
+  }
+
   @override
   Future showNotification(WorkManagerModel workManagerModel, Duration dur,) async {
     final _channelKey =
@@ -25,6 +54,7 @@ class AwesomeNotificationService extends NotificationService {
       "time":
           '${workManagerModel.hour}:${workManagerModel.minute.timeFormatted()}'
     };
+    final nudgeText = await _regularityNudgeText(workManagerModel.pillName);
     final now = DateTime.now();
     int length = now.difference(workManagerModel.end).inDays.abs();
     if(now.isAfter(workManagerModel.end)) length = 0;
@@ -69,7 +99,9 @@ class AwesomeNotificationService extends NotificationService {
               // the same generic title/body no matter which medication the
               // reminder was actually for.
               body: workManagerModel.pillName != ''
-                  ? 'Пора принять: ${workManagerModel.pillName}'
+                  ? (i == 0 && nudgeText != null
+                      ? nudgeText
+                      : 'Пора принять: ${workManagerModel.pillName}')
                   : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
               payload: _payload,
               wakeUpScreen: true,
@@ -137,5 +169,35 @@ class AwesomeNotificationService extends NotificationService {
 
   Future canselAllSchedules () async {
     await AwesomeNotifications().cancelAllSchedules();
+  }
+
+  /// Schedules a one-off local notification for the next 09:00 — used to
+  /// tell the user about insights the nightly analysis found while the app
+  /// was closed. Reuses the 'scheduled' channel already registered by the
+  /// regular reminder flow instead of adding a new channel.
+  Future scheduleInsightNotification({required String title, required String body}) async {
+    final now = DateTime.now();
+    var target = DateTime(now.year, now.month, now.day, 9, 0);
+    if (!now.isBefore(target)) target = target.add(const Duration(days: 1));
+    final id = ('insight_batch_${target.toIso8601String()}').hashCode & 0x7FFFFFFF;
+    await AwesomeNotifications().createNotification(
+      schedule: NotificationCalendar(
+        year: target.year,
+        month: target.month,
+        day: target.day,
+        hour: target.hour,
+        minute: target.minute,
+        repeats: false,
+        allowWhileIdle: true,
+      ),
+      content: NotificationContent(
+        id: id,
+        channelKey: 'scheduled',
+        title: title,
+        body: body,
+        wakeUpScreen: true,
+        category: NotificationCategory.Reminder,
+      ),
+    );
   }
 }

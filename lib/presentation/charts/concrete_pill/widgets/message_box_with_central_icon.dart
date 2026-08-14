@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/models/insight_model.dart';
+import 'package:riva_psy/core/services/insights/insight_engine.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/adoption_model.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/models/pill_model.dart';
 
@@ -40,6 +42,7 @@ class MessageBoxWithCentralIcon {
       }
     }
     await PillsRepo().updateEvent(list);
+    InsightEngine().run().catchError((_) => <InsightModel>[]);
     if(AppRoutes.notificationScreenIsInitial == false) {
       Navigator.pop(context);
     } else {

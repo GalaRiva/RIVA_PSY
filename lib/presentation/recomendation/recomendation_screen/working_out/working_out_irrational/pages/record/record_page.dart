@@ -28,6 +28,7 @@ class RecordPage extends StatelessWidget {
     alternative.text = initAlternativeText;
   }
   final scrollController = ScrollController();
+  final whyThisFocusNode = FocusNode();
 
   void _autosaveWhyThis(WorkingOutIrrationalCubit cubit, bool isThought) {
     _debounce?.cancel();
@@ -62,6 +63,10 @@ class RecordPage extends StatelessWidget {
                         ? RecordCardDataType.Thought
                         : RecordCardDataType.Do,
                 showShadow: false,
+                // Was unwired — the button looked disabled (and was: no
+                // onTap at all). It now does exactly what the field below
+                // it is for: jump straight to writing the challenge.
+                onButtonTap: () => FocusScope.of(context).requestFocus(whyThisFocusNode),
               ),
             ),
           ),
@@ -88,6 +93,7 @@ class RecordPage extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 60,
                       child: TextFormField(
+                        focusNode: whyThisFocusNode,
                         onTap: () => scrollController.animateTo(scrollController.offset + MediaQuery.of(context).viewInsets.bottom, duration: Duration(milliseconds: 500), curve: Curves.easeIn),
                         onChanged: (_) => _autosaveWhyThis(cubit, isThought),
                         controller: whyThis,

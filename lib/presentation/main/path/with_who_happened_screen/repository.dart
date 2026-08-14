@@ -17,6 +17,18 @@ class K26Repo {
     if(listToReturn.isEmpty) {
       await updateEvent(standartEventList);
       listToReturn = standartEventList;
+    } else {
+      // Existing installs already have a persisted box from before this
+      // seed list's last change — the isEmpty branch only ever fires once,
+      // on a box's very first read, so a plain seed-list change would never
+      // reach anyone who already has data. Front-fill any standard entries
+      // missing by key so future additions still show up.
+      final existingKeys = listToReturn.map((e) => e.identity).toSet();
+      final missing = standartEventList.where((e) => !existingKeys.contains(e.identity)).toList();
+      if (missing.isNotEmpty) {
+        listToReturn = [...missing, ...listToReturn];
+        await updateEvent(listToReturn);
+      }
     }
     return listToReturn;
   }

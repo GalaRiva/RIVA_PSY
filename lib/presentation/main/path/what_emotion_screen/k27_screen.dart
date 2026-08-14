@@ -57,6 +57,7 @@ class K27Screen extends GetWidget {
             as DayEventModel;
 
     final controller = Get.put(K27Controller());
+    controller.initTabController(emotionsTypes == null ? 3 : emotionsTypes!.length);
     if(controller.currentEventListOne != controller.currentEventListOneAfterInit)
       controller.initCurrentEventList(1).then((value) {
       controller.currentEventListOne = value;
@@ -98,9 +99,7 @@ class K27Screen extends GetWidget {
               // fields) scrolls away together with the tab content, matching
               // every other Path screen, instead of staying pinned while
               // only the tab body scrolls underneath it.
-              child: DefaultTabController(
-                length: emotionsTypes == null ? 3 : emotionsTypes!.length,
-                child: NestedScrollView(
+              child: NestedScrollView(
                   headerSliverBuilder: (context, innerBoxIsScrolled) => [
                     SliverToBoxAdapter(
                       child: Column(
@@ -256,10 +255,7 @@ class K27Screen extends GetWidget {
                             height: 50,
                             width: MediaQuery.of(context).size.width - 32,
                             child: TabBar(
-                              onTap: (val) {
-                                controller.currentTab = val + 1;
-                                controller.update();
-                              },
+                              controller: controller.tabController,
                               indicatorColor: ColorConstant.fromHex('#1499A1'),
                               unselectedLabelColor: ColorConstant.gray800A0,
                               labelStyle: TextStyle(
@@ -283,6 +279,7 @@ class K27Screen extends GetWidget {
                   ],
                   body: GetBuilder(
                     builder: (K27Controller _c) => TabBarView(
+                      controller: controller.tabController,
                       children: emotionsTypes != null ? List.generate(emotionsTypes!.length, (index) => emotionsTypes![index] == EmotionInDayEvent.NEGATIVE ? NegativePositiveTab(
                         dayEventModel: dayEventModel,
                         number: 1,
@@ -316,8 +313,6 @@ class K27Screen extends GetWidget {
                   ),
                 ),
               ),
-            ),
-
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
