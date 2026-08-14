@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/image_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_decoration.dart';
@@ -16,11 +15,7 @@ Widget beforeRecording (BuildContext context) => Container(
   padding: getPadding(
     all: 10,
   ),
-  decoration: AppDecoration.outlineBluegray600143.copyWith(
-    color: ColorConstant.grayLight,
-
-    borderRadius: BorderRadiusStyle.roundedBorder3,
-  ),
+  decoration: AppDecoration.glassCard,
   child: Row(
     children: [
       CustomIconButton(
@@ -51,17 +46,11 @@ Widget beforeRecording (BuildContext context) => Container(
                 top: 1,
               ),
               child: Text(
-                'create_voice_record'.tr(),
+                'voice_diary_privacy_note'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle.txtSFProDisplayLight9,
               ),
-            ),
-            Text(
-              'record_keep'.tr(),
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
-              style: AppStyle.txtSFProDisplayLight9,
             ),
           ],
         ),

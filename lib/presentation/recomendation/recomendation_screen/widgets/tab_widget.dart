@@ -162,7 +162,14 @@ class TabWidget extends StatelessWidget {
                             child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  DataSourceService.dataSourceIsRemote() ? SvgPicture.network(
+                                  (tab.titleImage() ?? '').startsWith('assets/')
+                                    ? Image.asset(
+                                        tab.titleImage()!,
+                                        height: getVerticalSize(100),
+                                        width: getHorizontalSize(60),
+                                        fit: BoxFit.contain,
+                                      )
+                                    : DataSourceService.dataSourceIsRemote() ? SvgPicture.network(
                                     tab.titleImage() ?? '',
                                     height: getVerticalSize(100),
                                     placeholderBuilder: (context) {

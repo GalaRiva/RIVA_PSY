@@ -11,11 +11,7 @@ import '../../../../../widgets/custom_image_view.dart';
 Widget recording (BuildContext context, String timer) => Container(
   height: getVerticalSize(63),
   width: MediaQuery.of(context).size.width - 20,
-  decoration: AppDecoration.outlineBluegray600143.copyWith(
-    color: ColorConstant.grayLight,
-
-    borderRadius: BorderRadiusStyle.roundedBorder3,
-  ),
+  decoration: AppDecoration.glassCard,
   child: Row(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

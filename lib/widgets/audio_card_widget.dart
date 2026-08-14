@@ -182,29 +182,33 @@ class AudioCardWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: size.width - 171,
-                          child: SliderTheme(
-
-                              data: SliderTheme.of(context).copyWith(
-                                trackHeight: 3,
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 9),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
-                              ),
-                              child: Slider(
-                                value: duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble() ? maxDuration.inSeconds.toDouble() : duration.inSeconds.toDouble(),
-                                min: 0.0,
-                                thumbColor: ColorConstant.cyan700,
-                                activeColor: ColorConstant.cyan700,
-                                inactiveColor: Colors.white,
-                                max: maxDuration.inSeconds.toDouble(),
-                                onChanged: (double value) {
-                                    duration = Duration(seconds: value.toInt());
-                                    onChange(duration);
-                                },
-                              ),
-                            )
-
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 250),
+                          child: isPlayingThis
+                              ? SizedBox(
+                                  key: const ValueKey('slider'),
+                                  width: size.width - 171,
+                                  child: SliderTheme(
+                                      data: SliderTheme.of(context).copyWith(
+                                        trackHeight: 3,
+                                          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 9),
+                                          overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                      ),
+                                      child: Slider(
+                                        value: duration.inSeconds.toDouble() >= maxDuration.inSeconds.toDouble() ? maxDuration.inSeconds.toDouble() : duration.inSeconds.toDouble(),
+                                        min: 0.0,
+                                        thumbColor: ColorConstant.cyan700,
+                                        activeColor: ColorConstant.cyan700,
+                                        inactiveColor: Colors.white,
+                                        max: maxDuration.inSeconds.toDouble(),
+                                        onChanged: (double value) {
+                                            duration = Duration(seconds: value.toInt());
+                                            onChange(duration);
+                                        },
+                                      ),
+                                    )
+                                )
+                              : const SizedBox(key: ValueKey('no-slider')),
                         ),
                         Text(
                           _formatTime(maxDuration.inMilliseconds),

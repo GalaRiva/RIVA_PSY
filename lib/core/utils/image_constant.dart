@@ -1074,6 +1074,15 @@ class ImageConstant {
   static const recommendationsLogo =
       'assets/images/recomendations/Framerecomendations.svg';
 
+  static const recommendationsWrath =
+      'assets/images/recomendations/emotion_wrath.png';
+
+  static const recommendationsResentment =
+      'assets/images/recomendations/emotion_resentment.png';
+
+  static const recommendationsSorrow =
+      'assets/images/recomendations/emotion_sorrow.png';
+
   static const workingOutImg = 'assets/images/workingOutImg.png';
 
   static const handImg = 'assets/images/hand_img.png';

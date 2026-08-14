@@ -122,6 +122,7 @@ flutter:
 
     - assets/images/pdf/
     - assets/images/recomendations/
+    - assets/images/audio_covers/
     - assets/images/event_images/
     - assets/fonts/
   fonts: 

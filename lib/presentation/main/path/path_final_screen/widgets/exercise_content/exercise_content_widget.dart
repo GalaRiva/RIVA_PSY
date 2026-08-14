@@ -10,6 +10,7 @@ import '../../../../../../theme/app_style.dart';
 import '../../../../../../widgets/event_card.dart';
 import '../../../../../../widgets/emotion_color_blob.dart';
 import '../audio_container/audio_containers.dart';
+import '../audio_container/hero_audio_carousel.dart';
 import 'controller.dart';
 
 class ExerciseContentWidget extends StatelessWidget {
@@ -26,7 +27,21 @@ class ExerciseContentWidget extends StatelessWidget {
     final categoryMood = dayEvent.emotionInDayEvent == EmotionInDayEvent.NEGATIVE
         ? EmotionMood.negative
         : EmotionMood.positive;
-    return Column(
+    // Hero Carousel concept, "Вариант А": tint the section with the same
+    // accent color already used for the emotion chip above (emotionBlobColor)
+    // instead of sampling the artwork's dominant color — no new dependency,
+    // still ties the background to the specific emotion the user picked.
+    final accentColor =
+        emotionBlobColor(dayEvent.whatEmotion![0].identity, categoryMood);
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [accentColor.withOpacity(0.22), accentColor.withOpacity(0.05)],
+        ),
+      ),
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
     Padding(
@@ -36,11 +51,11 @@ class ExerciseContentWidget extends StatelessWidget {
       right: 10,
     ),
     child: Text(
-    'main_emotion'.tr(),
+    'you_are_feeling'.tr(),
     overflow: TextOverflow.ellipsis,
     textAlign: TextAlign.left,
     style: AppStyle
-        .txtSFProDisplayLight14Gray800a0,
+        .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
     ),
     ),
         Padding(
@@ -84,7 +99,7 @@ class ExerciseContentWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: AppStyle
-                .txtSFProDisplayLight14Gray800a0,
+                .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         Padding(padding: getPadding(top: 12),
@@ -100,29 +115,34 @@ class ExerciseContentWidget extends StatelessWidget {
               );
             }
             return Column(children: [
-              Padding(
-                padding: getPadding(top: 12,),
-                child: AudioContainers(audios: controller.mainAudios, controller: controller, startIndex: 0,),
-              ),
+              if (controller.mainAudios.isNotEmpty)
+                Padding(
+                  padding: getPadding(top: 12,),
+                  child: HeroAudioCarousel(
+                    audios: controller.mainAudios,
+                    controller: controller,
+                    accentColor: accentColor,
+                  ),
+                ),
               Visibility(
                   visible: dayEvent.whatEmotion!.length > 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      tilePadding: getPadding(top: 20, left: 10, right: 10),
+                      childrenPadding: EdgeInsets.zero,
+                      expandedAlignment: Alignment.centerLeft,
+                      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                      iconColor: ColorConstant.cyan700,
+                      collapsedIconColor: ColorConstant.cyan700,
+                      title: Text(
+                        'additional_emotions_short'.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle
+                            .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
+                      ),
                 children: [
-                  Padding(
-                    padding: getPadding(
-                      top: 34,
-                      left: 10,
-                      right: 10,
-                    ),
-                    child: Text(
-                      'additional_emotions_short'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800a0,
-                    ),
-                  ),
                   Padding(
                       padding: getPadding(
                         top: 18,
@@ -172,13 +192,15 @@ class ExerciseContentWidget extends StatelessWidget {
                     child: AudioContainers(audios: controller.additionalAudios, controller: controller, startIndex: controller.mainAudios.length,),
                   ),
                 ],
-              ))
+                    ),
+                  ))
 
             ],);
           },
         ),
         )
       ],
+    ),
     );
   }
 }

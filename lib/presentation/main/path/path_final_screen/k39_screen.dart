@@ -10,10 +10,23 @@ import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'widgets/voice_button.dart';
+import 'widgets/exercise_content/controller.dart';
 import 'controller.dart';
 import '../../../../theme/app_colors.dart';
 
 class K39Screen extends GetWidget {
+
+  // ExerciseContentController owns the shared AudioPlayer for this screen's
+  // practices carousel. Nothing was ever deleting it on the way out — via
+  // either the back button or "Завершить практику" — so a track left
+  // playing kept playing indefinitely with no UI left to reach a pause
+  // button. Get.delete() runs the controller's onClose(), which disposes
+  // the player.
+  void _stopExerciseAudio() {
+    if (Get.isRegistered<ExerciseContentController>()) {
+      Get.delete<ExerciseContentController>();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +37,7 @@ class K39Screen extends GetWidget {
     controller.initRecorder();
     return WillPopScope(
       onWillPop: () async{
+        _stopExerciseAudio();
         Navigator.pushNamedAndRemoveUntil(context, AppRoutes.main, (route) => false);
         return false;
       },
@@ -105,12 +119,15 @@ class K39Screen extends GetWidget {
               padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
               child: CustomButton(
                 height: getVerticalSize(32),
-                width: getHorizontalSize(
-                  148,
-                ),
+                // 'finish_practice' ("Завершить практику" / "Finish the
+                // practice") runs longer than the old "Готово" — a fixed
+                // 148 clipped it. Width now tracks the screen instead.
+                width: MediaQuery.of(context).size.width - getHorizontalSize(52),
                 variant: ButtonVariant.Base,
-                text: 'done'.tr().toUpperCase(),
+                textIsFitted: true,
+                text: 'finish_practice'.tr().toUpperCase(),
                 onTap: () async {
+                  _stopExerciseAudio();
                   Navigator.pushNamedAndRemoveUntil(
                       context, AppRoutes.main, (route) => false);
                   controller.deleteAllController();

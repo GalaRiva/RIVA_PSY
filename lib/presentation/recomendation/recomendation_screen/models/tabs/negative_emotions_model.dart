@@ -188,7 +188,22 @@ class NegativeEmotionsModel {
     final list = <Widget>[];
     tabHeights = [];
 
-    tabs = NegativeEmotionTabs.tabs.map((e) => Tab(text: e.title)).toList();
+    tabs = NegativeEmotionTabs.tabs
+        .map((e) => Tab(
+              child: Text(
+                e.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ))
+        .toList();
+    // Bundled replacements for tags whose Firestore-sourced icon isn't set —
+    // takes priority over item.imagePath so these three always show the
+    // supplied artwork regardless of what's configured server-side.
+    const localImageOverrides = {
+      'wrath': ImageConstant.recommendationsWrath,
+      'resentment': ImageConstant.recommendationsResentment,
+      'sorrow': ImageConstant.recommendationsSorrow,
+    };
     for (var item in NegativeEmotionTabs.tabs) {
       final audios =  await _audioAssets(item.tag);
       if (item.tag == 'panic') controller.panicTab = item.tabIndex;
@@ -196,7 +211,7 @@ class NegativeEmotionsModel {
           funAudioAssets: audios,
           funTitleText: 'breathing_relaxation_instruction'.tr(),
           funButtons: await _funButtons(item.tag),
-          funTitleImage: item.imagePath);
+          funTitleImage: localImageOverrides[item.tag] ?? item.imagePath);
       final tabHeight = ((audios?.length ?? 0) * (getVerticalSize(65) + 30)) + 200;
       tabHeights.add(tabHeight);
       list.add(TabWidget(

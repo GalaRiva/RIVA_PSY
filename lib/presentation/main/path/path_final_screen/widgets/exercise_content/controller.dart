@@ -143,7 +143,8 @@ class ExerciseContentController extends GetxController {
             .contains(mainEmotionRuName.toLowerCase())) {
           mainAudios.add(AudioCardModel(
               audio.localizedName(langCode),
-              await _audioPath(audio, langCode)));
+              await _audioPath(audio, langCode),
+              ruTitle: audio.name));
         }
         if (additionalEmotions != null) {
           for (var i = 0; i < additionalEmotions!.length; i++) {
@@ -157,7 +158,8 @@ class ExerciseContentController extends GetxController {
                     .contains(audio.localizedName(langCode).toLowerCase())) {
               additionalAudios.add(AudioCardModel(
                   audio.localizedName(langCode),
-                  await _audioPath(audio, langCode)));
+                  await _audioPath(audio, langCode),
+                  ruTitle: audio.name));
             }
           }
         }
@@ -171,7 +173,7 @@ class ExerciseContentController extends GetxController {
       print('[EXERCISE-DIAG] mainAudios empty, tab fallback for "$mainEmotionRuName" -> tab="$tab"');
       if (tab != null) {
         for (var audio in audios.where((a) => a.tab == tab)) {
-          mainAudios.add(AudioCardModel(audio.localizedName(langCode), await _audioPath(audio, langCode)));
+          mainAudios.add(AudioCardModel(audio.localizedName(langCode), await _audioPath(audio, langCode), ruTitle: audio.name));
         }
       }
     }
@@ -188,7 +190,7 @@ class ExerciseContentController extends GetxController {
                   .map((e) => e.title.toLowerCase())
                   .contains(localizedTitle.toLowerCase());
           if (!alreadyAdded) {
-            additionalAudios.add(AudioCardModel(localizedTitle, await _audioPath(audio, langCode)));
+            additionalAudios.add(AudioCardModel(localizedTitle, await _audioPath(audio, langCode), ruTitle: audio.name));
           }
         }
       }
