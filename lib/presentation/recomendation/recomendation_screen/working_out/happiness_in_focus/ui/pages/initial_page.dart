@@ -42,7 +42,7 @@ class HappinessInFocusInitialPage extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 5),
                       child: Text(
                         'return_your_own_life'.tr(),
-                        style: AppStyle.txtSFProDisplayLight12,
+                        style: AppStyle.txtSFProDisplayLight16,
                       ),
                     ),
                     Padding(
