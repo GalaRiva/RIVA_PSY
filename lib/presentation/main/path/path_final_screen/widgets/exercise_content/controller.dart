@@ -69,9 +69,7 @@ class ExerciseContentController extends GetxController {
   Future<String> _audioPath(Audio audio, String langCode) async {
     final fileName = audio.localizedFileName(langCode);
     return DataSourceService.dataSourceIsRemote()
-        ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/' +
-            audio.folder +
-            '/' +
+        ? 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' +
             fileName +
             '.' +
             audio.format
