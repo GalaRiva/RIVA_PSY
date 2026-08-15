@@ -1,23 +1,18 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/models/day_event_model.dart';
-import 'package:riva_psy/core/utils/date_extension.dart';
 
-import '../../../../core/db/hive_db.dart';
 import '../../../../core/models/insight_model.dart';
 import '../../../../core/services/insights/insight_engine.dart';
 import '../../../../core/services/milestones/milestone_service.dart';
 import '../../../../routes/app_routes.dart';
-import '../../../../widgets/custom_message_box.dart';
 import '../add_emotion_screen/controller.dart';
 import '../additional_emotions_screen/controller.dart';
 import '../../../charts/charts_screen/controller.dart';
 import '../../../records/records_screen/controller.dart';
 import '../what_body_parts_screen/controller.dart';
 import '../what_emotion_screen/controller.dart';
-import '../what_emotion_screen/repository.dart';
 import '../what_happened_screen/controller.dart';
 import '../where_happened_screen/controller.dart';
 import '../with_who_happened_screen/controller.dart';
@@ -35,25 +30,11 @@ class K38Controller extends GetxController {
       await MilestoneService.maybeCelebrate(context, dayEventModel);
     } catch (_) {}
 
-    showDialog(context: context, builder: (BuildContext context) =>
-      CustomMessageBox(
-        onPop: () {
-          Navigator.pop(context);
-          Navigator.pushNamed(context, AppRoutes.path_final, arguments: dayEventModel);
-          _deleteControllers();
-
-        },
-        title: 'record_created'.tr(),
-        content: 'record_saved'.tr(args: [
-          '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} г ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
-        ]),
-      ),
-    ).then((value) async {
-
-          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.path_final, (route) => false, arguments: dayEventModel);
-
-      _deleteControllers();
-    });
+    // The "record saved" confirmation dialog that used to sit here was
+    // redundant — the very next screen is the emotion-processing Path
+    // itself, which already reads as continuation/confirmation.
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.path_final, (route) => false, arguments: dayEventModel);
+    _deleteControllers();
   }
 
   void _deleteControllers (){

@@ -27,32 +27,14 @@ class CounterOfSpentRecordsWidget extends StatelessWidget {
         color: ColorConstant.gray300,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 130, child: Text('alternative_thoughts'.tr(), style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
-                  CountBar(
-                      currentCount: workingOutQuantity,
-                      inTotalCount: notWorkingOutQuantity),
-                  Text('($workingOutQuantity/$notWorkingOutQuantity)',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 130, child: Text('alternative_actions'.tr(),style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
-                  CountBar(
-                      currentCount: workingOutQuantity,
-                      inTotalCount: notWorkingOutQuantity),
-                  Text('($workingOutQuantity/$notWorkingOutQuantity)',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)
-                ],
-              ),
+              SizedBox(width: 130, child: Text('new_decision'.tr(), style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)),
+              CountBar(
+                  currentCount: workingOutQuantity,
+                  inTotalCount: notWorkingOutQuantity),
+              Text('($workingOutQuantity/$notWorkingOutQuantity)',style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.grayTextColor, fontSize: 16),)
             ],
           ),
         ),

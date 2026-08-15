@@ -34,7 +34,7 @@ class DepressionModel extends NegativeEmotionsModelTab{
          final fileName = audio.localizedFileName(langCode);
          String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
          if(DataSourceService.dataSourceIsRemote()) {
-           filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
+           filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/' + audio.folder + '/' + fileName + '.' + audio.format;
          }
          if(audio.tab == 'depression') {
            if(audio.name == 'Введение'){

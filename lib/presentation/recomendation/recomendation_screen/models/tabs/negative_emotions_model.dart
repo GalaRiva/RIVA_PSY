@@ -78,12 +78,12 @@ class NegativeEmotionsModel {
               '/' +
               '${audio.folder}/${fileName}.${audio.format}';
           if (DataSourceService.dataSourceIsRemote()) {
-            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
+            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/' + audio.folder + '/' + fileName + '.' + audio.format;
           }
           if (audio.tab == tab)
             audios.add(AudioCardModel(audio.localizedName(langCode), filePath));
         } catch (_) {
-          print('error load ${ 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + audio.fileName + '.' + audio.format}');
+          print('error load ${ 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/' + audio.folder + '/' + audio.fileName + '.' + audio.format}');
           print (_);
         }
       }

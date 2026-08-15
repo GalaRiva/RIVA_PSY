@@ -6,6 +6,7 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/cubit.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_pdf.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/models/spent_record_model.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/counter_of_spent_records_widet.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/record_card.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
@@ -15,8 +16,6 @@ import 'package:riva_psy/widgets/pdf_viewer_widget.dart';
 import '../../../bloc/cubit.dart';
 
 class AlternativePage extends StatelessWidget {
-
-  final double widthOneCell = (size.width - 40) / 7;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +31,17 @@ class AlternativePage extends StatelessWidget {
                 child: RecordCard(
                   mode: StandardRecordCardMode(cubit.state.dayEventModel!),
                   dataType: RecordCardDataType.Thought,
+                  // The source asset is a native 300×72 strip — matching
+                  // that ratio exactly (as before) isn't distorted, it's
+                  // just too thin to read as a real image next to the
+                  // sibling "Do" card's much taller one. Cropping into a
+                  // shape closer to that sibling's makes it read as equally
+                  // substantial instead of a sliver.
                   image: AspectRatio(
-                    aspectRatio: 300 / 72,
+                    aspectRatio: 300 / 180,
                     child: Image.asset(
                       ImageConstant.alternativeWorkingOutImg,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       color: ColorConstant.cyan700.withOpacity(0.35),
                       colorBlendMode: BlendMode.overlay,
                     ),
@@ -48,7 +53,7 @@ class AlternativePage extends StatelessWidget {
                 ),
               ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 20),
               child: CustomButton(
                 width: size.width > 320 ? 295 : size.width - 60,
                 text: 'back'.tr().toUpperCase(),
@@ -57,8 +62,8 @@ class AlternativePage extends StatelessWidget {
               ),
             ),
             CounterOfSpentRecordsWidget(
-                workingOutQuantity: cubit.workingOutEventsLength(),
-                notWorkingOutQuantity: cubit.allNegativeDayEventsLength()),
+                workingOutQuantity: cubit.workingOutEventsLengthInRange(),
+                notWorkingOutQuantity: cubit.allNegativeDayEventsLengthInRange()),
             SizedBox(
               height: 40,
             ),
@@ -145,91 +150,105 @@ class AlternativePage extends StatelessWidget {
                     ),
                   ),
                 )),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Wrap(
-                direction: Axis.vertical,
-                spacing: 5,
-                children: [
-                  Wrap(
-                    spacing: 5,
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        width: 45, height: 30,
-                        child: Center(
-                          child: Text('date'.tr(), style: AppStyle
-                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
-                              .ellipsis,),
-                        ),),
-                      Container(
-                        color: Colors.white,
-                        width: 145, height: 30,
-                        child: Center(
-                          child: Text('alternative_thoughts'.tr(), style: AppStyle
-                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
-                              .ellipsis,),
-                        ),),
-                      Container(
-                        color: Colors.white,
-                        width: 145, height: 30,
-                        child: Center(
-                          child: Text('alternative_actions'.tr(), style: AppStyle
-                              .txtSFProDisplayLight11Gray800, overflow: TextOverflow
-                              .ellipsis,),
-                        ),),
-                    ],),
-                  Wrap(
-                    spacing: 5,
-                      children: List.generate(7, (index) =>
-                          Container(
-                              color: Colors.white,
-                              width: 45, height: 30,),)
-                  ),
-                  if(cubit.workingOutEventsLength() > 0)
-                  Padding(padding: EdgeInsets.symmetric(vertical: 35),
-                  child: Container(
-                    width: size.width - 30,
-                    color: Colors.white.withOpacity(0.48),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Real history instead of the old always-empty 7-box grid — one
+            // card per SpentRecordModel actually saved in the selected date
+            // range, newest first, in the same style already proven below
+            // (was only ever shown for the single latest record).
+            FutureBuilder<List<SpentRecordModel>>(
+              future: cubit.getSpentRecordModels(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Center(
+                        child: CircularProgressIndicator(
+                            color: ColorConstant.cyan700)),
+                  );
+                }
+                final records = snapshot.data ?? [];
+                if (records.isEmpty) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 35),
+                    child: Text(
+                      'no_new_decisions_in_period'.tr(),
+                      textAlign: TextAlign.center,
+                      style: AppStyle.txtSFProDisplayLight16Gray,
+                    ),
+                  );
+                }
+                final lastRecord = cubit.lastSpentRecordModel();
+                return Column(
+                  children: records.reversed.map((record) {
+                    final isLast = record == lastRecord;
+                    return Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Container(
+                        width: size.width - 30,
+                        color: Colors.white.withOpacity(0.48),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Column(
                             children: [
-                              Text('${'alternative'.tr()} ${cubit.lastSpentRecordModel().dayEventModel.date!.formatForRecord('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Gray,),
-                              InkWell(
-                                  onTap: cubit.redoSpentRecordModel,
-                                  child: Text('redo'.tr(), style: AppStyle.txtSFProDisplayLight16Gray,)),
-
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      '${'alternative'.tr()} ${record.dayEventModel.date!.formatForRecord('dd.MM.yy')}',
+                                      style: AppStyle.txtSFProDisplayLight16Gray),
+                                  if (isLast)
+                                    InkWell(
+                                        onTap: cubit.redoSpentRecordModel,
+                                        child: Text('redo'.tr(),
+                                            style: AppStyle
+                                                .txtSFProDisplayLight16Gray)),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 6, bottom: 10),
+                                child: Divider(
+                                  indent: 0,
+                                  endIndent: 0,
+                                  color: ColorConstant.grayTextColor,
+                                  thickness: 1,
+                                ),
+                              ),
+                              Text('alternative_thought'.tr(),
+                                  style: AppStyle.txtSFProDisplayLight16Gray
+                                      .copyWith(fontSize: 12)),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                child: ExpandableTextWidget(
+                                  text: '${record.alternativeThoughts}',
+                                  textStyle: AppStyle
+                                      .txtSFProDisplayLight16Gray
+                                      .copyWith(fontSize: 12),
+                                  maxLines: 3,
+                                ),
+                              ),
+                              Text('alternative_do'.tr(),
+                                  style: AppStyle.txtSFProDisplayLight16Gray
+                                      .copyWith(fontSize: 12)),
+                              Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: ExpandableTextWidget(
+                                  text: '${record.alternativeDo}',
+                                  textStyle: AppStyle
+                                      .txtSFProDisplayLight16Gray
+                                      .copyWith(fontSize: 12),
+                                  maxLines: 3,
+                                ),
+                              ),
                             ],
                           ),
-                          Padding(padding: EdgeInsets.only(top: 6, bottom: 10),
-                          child: Divider(
-                            indent: 0, endIndent: 0,
-                            color: ColorConstant.grayTextColor,thickness: 1,
-                          ),
-                          ),
-                          Text('alternative_thought'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 15),
-                          child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeThoughts}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
-
-                          ),
-                          Text('alternative_do'.tr(), style: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12),),
-                          Padding(padding: EdgeInsets.only(top: 15),
-                            child: ExpandableTextWidget(text: '${cubit.lastSpentRecordModel().alternativeDo}', textStyle: AppStyle.txtSFProDisplayLight16Gray.copyWith(fontSize: 12), maxLines: 3,),
-
-                          ),
-
-
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  )
-                ],
-              ),
+                    );
+                  }).toList(),
+                );
+              },
             ),
             SizedBox(height: 20,)
           ],

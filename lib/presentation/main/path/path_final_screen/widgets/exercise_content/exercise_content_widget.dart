@@ -132,7 +132,7 @@ class ExerciseContentWidget extends StatelessWidget {
             return Column(children: [
               if (controller.mainAudios.isNotEmpty)
                 Padding(
-                  padding: getPadding(top: 12,),
+                  padding: getPadding(top: 12, bottom: 20),
                   child: HeroAudioCarousel(
                     audios: controller.mainAudios,
                     controller: controller,

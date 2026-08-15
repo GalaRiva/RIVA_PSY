@@ -21,7 +21,6 @@ import '../../../core/models/day_event_model.dart';
 
 import '../../../providers/language_provider.dart';
 import '../../../widgets/chip_selector.dart';
-import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/inner_shadow.dart';
 import '../../../widgets/pressable_scale.dart';
 import '../../../widgets/spark_burst.dart';
@@ -383,24 +382,15 @@ class K20Screen extends GetWidget<K20Controller> {
                             _c.selectedEmotionKey = null;
                             _c.triggerSaveBurst();
                             // Give the button's spring-back and the spark
-                            // burst time to actually be seen before the
-                            // "record saved" dialog's modal barrier covers
-                            // the whole screen — showDialog() used to fire
-                            // immediately, hiding both animations before
-                            // they had a chance to play.
+                            // burst time to actually be seen before any
+                            // milestone celebration overlay covers the
+                            // screen — the "record saved" confirmation
+                            // dialog that used to sit here was redundant
+                            // with the spark burst itself and got removed.
                             await Future.delayed(const Duration(milliseconds: 550));
-                            showDialog(
-                              context: context, builder: (BuildContext context) =>
-                                CustomMessageBox(
-                                  title: 'create_record'.tr(),
-                                  content: 'save_record'.tr(args: [
-                                    '${DateTime.now().day} ${DateTime.now().month.monthInText()} ${DateTime.now().year} ${DateTime.now().hour.timeFormatted()}:${DateTime.now().minute.timeFormatted()}'
-                                  ]),
-                                ),).then((_) {
-                              if (savedEvent != null) {
-                                MilestoneService.maybeCelebrate(context, savedEvent!);
-                              }
-                            });
+                            if (savedEvent != null) {
+                              MilestoneService.maybeCelebrate(context, savedEvent!);
+                            }
                           },
                           child: CustomButton(
                             text: 'save'.tr().toUpperCase(),

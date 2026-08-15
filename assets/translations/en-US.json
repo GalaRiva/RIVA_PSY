@@ -626,6 +626,8 @@
   "SMER": "SMER",
   "alternative_actions": "Alternative actions",
   "alternative_thoughts": "Alternative thoughts",
+  "new_decision": "New decision!",
+  "no_new_decisions_in_period": "No new decisions in this period yet",
 
   "rest": "Rest",
   "sleep": "Sleep",

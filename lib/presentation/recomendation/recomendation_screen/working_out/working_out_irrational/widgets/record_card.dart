@@ -54,13 +54,20 @@ class RecordCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  dataType == RecordCardDataType.Thought
-                      ? 'auto_thought'.tr()
-                      : 'auto_do'.tr(),
-                  style: AppStyle.txtSFProDisplayLight16,
-                  overflow: TextOverflow.ellipsis,
+                // Was crashing into RecordTextButton with no gap once both
+                // texts' combined width reached the row's own width —
+                // spaceBetween only spaces children apart when there's
+                // leftover room, neither child shrinks on its own.
+                Flexible(
+                  child: Text(
+                    dataType == RecordCardDataType.Thought
+                        ? 'auto_thought'.tr()
+                        : 'auto_do'.tr(),
+                    style: AppStyle.txtSFProDisplayLight16,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
+                SizedBox(width: 8),
                 RecordTextButton(dayEventModel: dayEventModel)
               ],
             ),

@@ -27,6 +27,19 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
 
   int allNegativeDayEventsLength() => _dayEvents.length;
 
+  // Date-range-aware counterparts for the "Новое решение!" progress counter
+  // — the plain versions above ignore dateStart/dateEnd entirely, so the
+  // period picker on the Альтернативы screen had no effect on the numbers
+  // it sits right next to. Mirrors the filtering already done in
+  // getSpentRecordModels() below.
+  int workingOutEventsLengthInRange() => _spentRecordModels
+      .where((e) => e.dayEventModel.date!.dateInRange(dateStart, dateEnd))
+      .length;
+
+  int allNegativeDayEventsLengthInRange() => _dayEvents
+      .where((e) => e.date!.dateInRange(dateStart, dateEnd))
+      .length;
+
   SpentRecordModel lastSpentRecordModel() => _spentRecordModels.last;
 
   int get spentRecordsToday => _spentRecordModels.where((element) => element.date.difference(DateTime.now()).inHours.abs() < 24).length;
@@ -107,25 +120,31 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
       return;
     }
 
+    // Capture the event actually being completed *before* it gets
+    // reassigned below to whatever's next (or null, if this was the last
+    // one) — the save-and-advance block used to run against the
+    // already-reassigned value, so finishing the last outstanding event
+    // made it null and silently skipped saving _currentSpentRecordModel
+    // and skipped both goToNextState calls (alternative/gratitude),
+    // leaving only the caller's hardcoded fallback to initialStage.
+    final justCompletedDayEvent = selectedDayEventModel!;
     if(nextState) {
       _dayEvents = await _repo.getDayEvent();
-      final index = _dayEvents.indexOf(selectedDayEventModel!);
+      final index = _dayEvents.indexOf(justCompletedDayEvent);
       print('dayEventIndex - $index');
       if(index >= 0) {
         _dayEvents.removeAt(index);
         _dayEvents.insert(
-            index, selectedDayEventModel!.copyWith(workingOut: true));
+            index, justCompletedDayEvent.copyWith(workingOut: true));
         _repo.updateDayEventEvent(_dayEvents);
         _dontWorkingOutEvents.removeLast();
       }
     }
-    selectedDayEventModel =
-      existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
-    if(selectedDayEventModel !=null) {
+    {
       final index = _spentRecordModels
           .map((e) => e.dayEventModel)
           .toList()
-          .indexOf(selectedDayEventModel!);
+          .indexOf(justCompletedDayEvent);
       print('spendModelIndex - $index');
       if (index >= 0) {
         _spentRecordModels.removeAt(index);
@@ -150,6 +169,8 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
         }
       });
     }
+    selectedDayEventModel =
+      existMoreDontWorkingOutEvents() ? _dontWorkingOutEvents.last : null;
   }
 
   Future<List<SpentRecordModel>> getSpentRecordModels() async {

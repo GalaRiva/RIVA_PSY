@@ -592,6 +592,8 @@
   "SMER": "СМЭР",
   "alternative_actions": "Альтернативные действия",
   "alternative_thoughts": "Альтернативные мысли",
+  "new_decision": "Новое решение!",
+  "no_new_decisions_in_period": "За этот период пока нет ни одного нового решения",
   "rest": "Отдых",
   "sleep": "Сон",
   "waking_up": "Пробуждение",
