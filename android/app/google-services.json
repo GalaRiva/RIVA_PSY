@@ -38,6 +38,14 @@
           }
         },
         {
+          "client_id": "7653326357-vkfc7gv5l15gflst4btfjapjg066j54p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.riva_psy.app",
+            "certificate_hash": "95e59630322f41a454389a72ba2ca705fc112f39"
+          }
+        },
+        {
           "client_id": "7653326357-vq22nh7g9a80k6b1t4o2mu3ud5t74bn1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
