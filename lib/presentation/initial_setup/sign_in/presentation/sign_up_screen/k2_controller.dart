@@ -33,6 +33,19 @@ class K2Controller extends GetxController {
     update();
   }
 
+  bool obscurePassword = true;
+  bool obscureConfirmPassword = true;
+
+  void toggleObscurePassword() {
+    obscurePassword = !obscurePassword;
+    update();
+  }
+
+  void toggleObscureConfirmPassword() {
+    obscureConfirmPassword = !obscureConfirmPassword;
+    update();
+  }
+
   Future createNewUser(context, login, String password,
       {String? number, String? email}) async {
     try {

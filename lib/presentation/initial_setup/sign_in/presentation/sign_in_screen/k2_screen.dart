@@ -91,7 +91,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
               margin: getMargin(top: 16),
               maxLength: 16,
               variant: TextFormFieldVariant
-                  .UnderLineWhiteA700,
+                  .FillGray200,
               counterText: '',
               fontStyle: TextFormFieldFontStyle
                   .SFProDisplayRegular14,
@@ -108,7 +108,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                 hintText: "example@mail.ru",
                 margin: getMargin(top: 14),
                 variant: TextFormFieldVariant
-                    .UnderLineWhiteA700,
+                    .FillGray200,
                 fontStyle: TextFormFieldFontStyle
                     .SFProDisplayRegular14,
                 textInputType:
@@ -137,22 +137,33 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
               textAlign: TextAlign.left,
               style: AppStyle
                   .txtSFProDisplayLight16)),
-    CustomTextFormField(
+    GetBuilder<K2AuthController>(
+      builder: (_c) => CustomTextFormField(
           focusNode: FocusNode(),
           controller: password,
           hintText: 'your_password'.tr(),
           margin: getMargin(top: 14),
           variant: TextFormFieldVariant
-              .UnderLineWhiteA700,
+              .FillGray200,
           fontStyle: TextFormFieldFontStyle
               .SFProDisplayRegular14,
           maxLength: 26,
           counterText: '',
+          isObscureText: _c.obscurePassword,
+          suffix: IconButton(
+            icon: Icon(
+              _c.obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+              color: ColorConstant.blueGray400,
+              size: 20,
+            ),
+            onPressed: _c.toggleObscurePassword,
+          ),
           validator: (text) {
             if (text!.trim() == "") return 'fill_the_field'.tr();
           },
           textInputAction:
           TextInputAction.done),
+    ),
 
                   /*Padding(
                     padding: getPadding(top: 42),
@@ -196,11 +207,11 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
 
 
                   CustomButton(
-          height: getVerticalSize(32),
-          width: getHorizontalSize(178),
+          height: getVerticalSize(48),
+          width: size.width - 32,
           text: 'continue'.tr().toUpperCase(),
-          variant: ButtonVariant
-              .OutlineBluegray60014,
+          bgColor: ColorConstant.cyan700,
+          textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
           onTap: () => onTaptf(context, key),
           alignment: Alignment.center)
     ]),

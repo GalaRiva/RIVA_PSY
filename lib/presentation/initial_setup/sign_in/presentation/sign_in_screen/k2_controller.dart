@@ -34,6 +34,13 @@ class K2AuthController extends GetxController {
     update();
   }
 
+  bool obscurePassword = true;
+
+  void toggleObscurePassword() {
+    obscurePassword = !obscurePassword;
+    update();
+  }
+
   Future auth(context, password, {String? email, String? number}) async {
     try {
       /*final FirebaseResult userStateCheck =

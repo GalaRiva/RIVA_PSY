@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 import 'package:riva_psy/core/models/tariff_model.dart';
 import 'package:riva_psy/core/models/user_data_model.dart';
 import 'package:riva_psy/core/services/firebase/firebase_auth_exception_handler.dart';
@@ -428,18 +427,39 @@ class SignInDataRepository extends SignInDomainRepository {
         currentTariff: TariffModel.BASE_TARIFF,
 
       );
-      final firestoreRepo = FireStoreRepositoryImpl();
-      bool writeFailed = false;
-      await firestoreRepo.updateUser(
-        userId: userId,
-          user: user,
-          create: true,
-          onError: () => writeFailed = true);
-      if (writeFailed) {
-        print('[TARIFF-DIAG] Users/"$userId" create write failed — reporting error instead of silently proceeding as if it succeeded');
-        return FirebaseDataResult(
-            firebaseResultStatus: FirebaseResultStatus.Error,
-            exceptionMessage: 'Error saving profile, please try again.');
+      // Same token-claims race already fixed for the Users *read*
+      // (_getUsersDocWithRetry above) and for the UsersData write in
+      // createUser() below — this Users *create* write ran right after
+      // sign-in/sign-up too but had never gotten the same retry, so a
+      // fresh Apple/Google sign-up could hit permission-denied on the
+      // very first attempt and surface "Error saving profile" with no
+      // retry at all. Bypasses FireStoreRepositoryImpl.updateUser() here
+      // (it swallows the real FirebaseException behind a bare onError()
+      // callback, so it can't distinguish permission-denied from anything
+      // else) rather than changing that method's shared behavior for its
+      // many other callers.
+      const maxAttempts = 3;
+      const retryDelay = Duration(milliseconds: 400);
+      var created = false;
+      for (var attempt = 1; attempt <= maxAttempts && !created; attempt++) {
+        await FirebaseAuth.instance.currentUser?.getIdToken(true);
+        try {
+          await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(userId)
+              .set(user.userToFirebase());
+          created = true;
+        } on FirebaseException catch (e) {
+          final isPermissionDenied = e.code == 'permission-denied';
+          if (!isPermissionDenied || attempt == maxAttempts) {
+            print('[TARIFF-DIAG] Users/"$userId" create write failed after $attempt attempt(s): $e');
+            return FirebaseDataResult(
+                firebaseResultStatus: FirebaseResultStatus.Error,
+                exceptionMessage: 'Error saving profile, please try again.');
+          }
+          print('[AUTH-DIAG] Users create denied (attempt $attempt/$maxAttempts), retrying in ${retryDelay.inMilliseconds}ms: $e');
+          await Future.delayed(retryDelay);
+        }
       }
     }
     await CurrentUser.repo.setLocalUserData(

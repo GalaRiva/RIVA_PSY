@@ -121,41 +121,44 @@ class K2Screen extends GetWidget<K2Controller> {
                         Padding(
                           padding: getPadding(top: 20),
                           child: SizedBox(
-                            height: 75,
+                            height: 56,
                             width: size.width,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(3)),
-                                side: BorderSide(
-                                    width: 1,
-                                    color: ColorConstant.cyan700),
-                              ),
-                              onPressed: () => Navigator.pushNamed(
-                                  context, AppRoutes.signIn),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      'have_account'.tr(),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.center,
-                                      style: AppStyle
-                                          .txtSFProDisplayLight16
-                                          .copyWith(fontSize: 20),
-                                    ),
+                            child: Material(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(16),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(16),
+                                onTap: () => Navigator.pushNamed(
+                                    context, AppRoutes.signIn),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(width: 1, color: ColorConstant.cyan700),
                                   ),
-                                  SizedBox(width: 12),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgVector46,
-                                    height: getVerticalSize(8),
-                                    width: getHorizontalSize(4),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          'have_account'.tr(),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          style: AppStyle
+                                              .txtSFProDisplayLight16
+                                              .copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: ColorConstant.cyan700),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      CustomImageView(
+                                        svgPath: ImageConstant.imgVector46,
+                                        height: getVerticalSize(8),
+                                        width: getHorizontalSize(4),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
@@ -174,7 +177,7 @@ class K2Screen extends GetWidget<K2Controller> {
                           hintText: 'your_login'.tr(),
                           margin: getMargin(top: 16),
                           variant:
-                              TextFormFieldVariant.UnderLineWhiteA700,
+                              TextFormFieldVariant.FillGray200,
                           fontStyle: TextFormFieldFontStyle
                               .SFProDisplayRegular14,
                           validator: (text) {
@@ -206,7 +209,7 @@ class K2Screen extends GetWidget<K2Controller> {
                                     hintText: "+7-911-111-22-33",
                                     margin: getMargin(top: 14),
                                     variant: TextFormFieldVariant
-                                        .UnderLineWhiteA700,
+                                        .FillGray200,
                                     fontStyle: TextFormFieldFontStyle
                                         .SFProDisplayRegular14,
                                     textInputType: TextInputType.phone,
@@ -231,7 +234,7 @@ class K2Screen extends GetWidget<K2Controller> {
                                     hintText: "example@mail.ru",
                                     margin: getMargin(top: 14),
                                     variant: TextFormFieldVariant
-                                        .UnderLineWhiteA700,
+                                        .FillGray200,
                                     fontStyle: TextFormFieldFontStyle
                                         .SFProDisplayRegular14,
                                     textInputType:
@@ -270,29 +273,40 @@ class K2Screen extends GetWidget<K2Controller> {
                                   style: AppStyle
                                       .txtSFProDisplayLight12),
                             )),
-                        CustomTextFormField(
-                            focusNode: FocusNode(),
-                            controller: passwordController,
-                            hintText: "",
-                            margin: getMargin(top: 14),
-                            variant: TextFormFieldVariant
-                                .UnderLineWhiteA700,
-                            fontStyle: TextFormFieldFontStyle
-                                .SFProDisplayRegular14,
-                            maxLength: 26,
-                            counterText: '',
-                            validator: (text) {
-                              if (text!.trim() == "")
-                                return 'fill_the_field'.tr();
-                              else if (text!.trim().length < 8) {
-                                return 'password_length_min'.tr();
-                              } else if (text!.trim().length > 26) {
-                                return 'password_length_max'.tr();
-                              } else if (!isPasswordCompliant(text)) {
-                                return 'password_complexity'.tr();
-                              }
-                            },
-                            textInputAction: TextInputAction.done),
+                        GetBuilder<K2Controller>(
+                          builder: (_c) => CustomTextFormField(
+                              focusNode: FocusNode(),
+                              controller: passwordController,
+                              hintText: "",
+                              margin: getMargin(top: 14),
+                              variant: TextFormFieldVariant
+                                  .FillGray200,
+                              fontStyle: TextFormFieldFontStyle
+                                  .SFProDisplayRegular14,
+                              maxLength: 26,
+                              counterText: '',
+                              isObscureText: _c.obscurePassword,
+                              suffix: IconButton(
+                                icon: Icon(
+                                  _c.obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                  color: ColorConstant.blueGray400,
+                                  size: 20,
+                                ),
+                                onPressed: _c.toggleObscurePassword,
+                              ),
+                              validator: (text) {
+                                if (text!.trim() == "")
+                                  return 'fill_the_field'.tr();
+                                else if (text!.trim().length < 8) {
+                                  return 'password_length_min'.tr();
+                                } else if (text!.trim().length > 26) {
+                                  return 'password_length_max'.tr();
+                                } else if (!isPasswordCompliant(text)) {
+                                  return 'password_complexity'.tr();
+                                }
+                              },
+                              textInputAction: TextInputAction.done),
+                        ),
                         Padding(
                             padding: getPadding(top: 38),
                             child: Text('confirm_password'.tr(),
@@ -300,26 +314,37 @@ class K2Screen extends GetWidget<K2Controller> {
                                 textAlign: TextAlign.left,
                                 style:
                                     AppStyle.txtSFProDisplayLight16)),
-                        CustomTextFormField(
-                            focusNode: FocusNode(),
-                            controller: passwordRepeatController,
-                            hintText: "",
-                            margin: getMargin(top: 14),
-                            variant: TextFormFieldVariant
-                                .UnderLineWhiteA700,
-                            fontStyle: TextFormFieldFontStyle
-                                .SFProDisplayRegular14,
-                            maxLength: 26,
-                            counterText: '',
-                            validator: (text) {
-                              if (text!.trim() == "")
-                                return 'fill_the_field'.tr();
-                              else if (text !=
-                                  passwordController.text) {
-                                return 'passwords_do_not_match'.tr();
-                              }
-                            },
-                            textInputAction: TextInputAction.done),
+                        GetBuilder<K2Controller>(
+                          builder: (_c) => CustomTextFormField(
+                              focusNode: FocusNode(),
+                              controller: passwordRepeatController,
+                              hintText: "",
+                              margin: getMargin(top: 14),
+                              variant: TextFormFieldVariant
+                                  .FillGray200,
+                              fontStyle: TextFormFieldFontStyle
+                                  .SFProDisplayRegular14,
+                              maxLength: 26,
+                              counterText: '',
+                              isObscureText: _c.obscureConfirmPassword,
+                              suffix: IconButton(
+                                icon: Icon(
+                                  _c.obscureConfirmPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                  color: ColorConstant.blueGray400,
+                                  size: 20,
+                                ),
+                                onPressed: _c.toggleObscureConfirmPassword,
+                              ),
+                              validator: (text) {
+                                if (text!.trim() == "")
+                                  return 'fill_the_field'.tr();
+                                else if (text !=
+                                    passwordController.text) {
+                                  return 'passwords_do_not_match'.tr();
+                                }
+                              },
+                              textInputAction: TextInputAction.done),
+                        ),
                         SizedBox(height: 26,),
 
                         GetBuilder(
@@ -390,12 +415,12 @@ class K2Screen extends GetWidget<K2Controller> {
                         ),*/
 
                         CustomButton(
-                            height: getVerticalSize(32),
-                            width: getHorizontalSize(178),
+                            height: getVerticalSize(48),
+                            width: size.width - 32,
                             text: 'continue'.tr().toUpperCase(),
-                            margin: getMargin(top: 42, bottom: 177),
-                            variant:
-                                ButtonVariant.OutlineBluegray60014,
+                            margin: getMargin(top: 42, bottom: 60),
+                            bgColor: ColorConstant.cyan700,
+                            textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                             onTap: () => onTaptf(context, key),
                             alignment: Alignment.center)
                       ]),
