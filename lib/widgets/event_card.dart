@@ -32,7 +32,12 @@ class EventCard extends StatelessWidget {
   // (AppDecoration.outlineBluegray600143 et al.), without touching the many
   // other EventCard call sites that still rely on the bordered look.
   final bool useShadowStyle;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood, this.useShadowStyle = false}) : super(key: key);
+  // Opt-in per call site (like iconSizeOverride/fontSizeOverride) — the
+  // corner radius was a flat 3px shared by all 17+ EventCard call sites
+  // across the app. Left null keeps that exact existing look everywhere;
+  // only screens that explicitly pass this get rounder corners.
+  final double? borderRadiusOverride;
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood, this.useShadowStyle = false, this.borderRadiusOverride}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +73,7 @@ class EventCard extends StatelessWidget {
           color: ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),
           borderRadius: BorderRadius.circular(
             getHorizontalSize(
-              3,
+              borderRadiusOverride ?? 3,
             ),
         ),
           border: useShadowStyle ? null : Border.all(

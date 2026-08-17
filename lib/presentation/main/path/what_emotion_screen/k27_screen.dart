@@ -149,6 +149,7 @@ class K27Screen extends GetWidget {
                         onSubmit: (text) => _focus.unfocus(),
                         controller: controller.searchController,
                         hintText: 'find_emotion'.tr(),
+                        variant: SearchViewVariant.FillGray200,
                         margin: getMargin(
                           top: 28,
                           right: 16,
@@ -177,6 +178,7 @@ class K27Screen extends GetWidget {
                         focusNode: _focus2,
                         controller: controller.addEventController,
                         hintText: 'add_emotion'.tr(),
+                        variant: SearchViewVariant.FillGray200,
                         margin: getMargin(
                           top: 25,
                           right: 16,
@@ -349,7 +351,8 @@ class K27Screen extends GetWidget {
                             width: getHorizontalSize(
                               140,
                             ),
-        variant: ButtonVariant.Base,
+        bgColor: ColorConstant.cyan700,
+                            textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                             onTap: controller.getCurrentListByNumber(controller.currentTab).isNotEmpty
                                 ? () async {
                               if(controller.emotion == null) {

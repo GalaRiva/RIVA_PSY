@@ -94,7 +94,7 @@ class BodyPartWidget extends StatelessWidget {
               width: cwidth ?? size.width / 2 - 30,
               decoration: BoxDecoration(
                   color: color,
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
                         color:

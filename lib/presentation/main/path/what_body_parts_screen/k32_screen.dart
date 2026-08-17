@@ -105,6 +105,7 @@ class K32Screen extends GetWidget {
                                 onSubmit: (t) => _focus.unfocus(),
                                 controller: controller.searchController,
                                 hintText: 'find_body_part'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -149,6 +150,7 @@ class K32Screen extends GetWidget {
                                 },
                                 controller: controller.addEventController,
                                 hintText: 'add_body_part'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -312,7 +314,8 @@ class K32Screen extends GetWidget {
                             height: getVerticalSize(
                               32,
                             ),
-                            variant: ButtonVariant.Base,
+                            bgColor: ColorConstant.cyan700,
+                            textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                             width: getHorizontalSize(
                               140,
                             ),

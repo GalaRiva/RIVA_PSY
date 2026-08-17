@@ -100,6 +100,7 @@ class K22Screen extends GetWidget {
                                 onSubmit: (text) => _focus.unfocus(),
                                 controller: controller.searchController,
                                 hintText: 'find_event'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -128,6 +129,7 @@ class K22Screen extends GetWidget {
                                 focusNode: _focus2,
                                 controller: controller.addEventController,
                                 hintText: 'add_event'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -217,6 +219,8 @@ class K22Screen extends GetWidget {
                                                                                       cardWidth: size.width / 2 -30,
                                                                                       iconSizeOverride: 60,
                                                                                       fontSizeOverride: 18,
+                                                                                      useShadowStyle: true,
+                                                                                      borderRadiusOverride: 16,
                                                                                       ),
                                             ))
                                             .toList(),
@@ -266,7 +270,8 @@ class K22Screen extends GetWidget {
                       width: getHorizontalSize(
                         178,
                       ),
-                      variant: ButtonVariant.Base,
+                      bgColor: ColorConstant.cyan700,
+                      textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                       onTap: controller.currentEventList.isNotEmpty
                           ? () {
                         if(controller.whatHappened == null) {

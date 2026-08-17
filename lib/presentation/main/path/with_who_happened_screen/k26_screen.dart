@@ -105,6 +105,7 @@ class K26Screen extends GetWidget {
                                 onSubmit: (t) => _focus.unfocus(),
                                 controller: controller.searchController,
                                 hintText: 'find_person'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 28,
                                   right: 16,
@@ -133,6 +134,7 @@ class K26Screen extends GetWidget {
                                 focusNode: _focus2,
                                 controller: controller.addEventController,
                                 hintText: 'add_person'.tr(),
+                                variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
                                   top: 25,
                                   right: 16,
@@ -219,7 +221,7 @@ class K26Screen extends GetWidget {
                                           child: EventCard(
                                             cardWidth:
                                             size.width / 2 - 30,
-                                            iconSizeOverride: 60,
+                                            iconSizeOverride: 60, useShadowStyle: true, borderRadiusOverride: 16,
                                             fontSizeOverride: 18,
                                             model: el, onTap: () {
                                                 controller.whoDidHappen = el;
@@ -296,7 +298,8 @@ class K26Screen extends GetWidget {
                               width: getHorizontalSize(
                                 140,
                               ),
-                              variant: ButtonVariant.Base,
+                              bgColor: ColorConstant.cyan700,
+                              textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
 
                               onTap: controller.currentEventList.isNotEmpty
                                   ? () {

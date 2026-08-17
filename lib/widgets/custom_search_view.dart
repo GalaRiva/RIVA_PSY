@@ -87,9 +87,22 @@ class CustomSearchView extends StatelessWidget {
       prefixIconConstraints: prefixConstraints,
       suffixIcon: suffix,
       suffixIconConstraints: suffixConstraints,
+      fillColor: _setFillColor(),
       filled: _setFilled(),
       isDense: true,
+      contentPadding: variant == SearchViewVariant.FillGray200
+          ? getPadding(left: 16, top: 12, bottom: 12)
+          : null,
     );
+  }
+
+  _setFillColor() {
+    switch (variant) {
+      case SearchViewVariant.FillGray200:
+        return ColorConstant.grayLight;
+      default:
+        return null;
+    }
   }
 
   _setFontStyle() {
@@ -129,6 +142,11 @@ class CustomSearchView extends StatelessWidget {
             color: ColorConstant.whiteA700,
           ),
         );
+      case SearchViewVariant.FillGray200:
+        return OutlineInputBorder(
+          borderRadius: BorderRadius.circular(getHorizontalSize(16)),
+          borderSide: BorderSide.none,
+        );
       case SearchViewVariant.None:
         return InputBorder.none;
       default:
@@ -142,6 +160,8 @@ class CustomSearchView extends StatelessWidget {
 
   _setFilled() {
     switch (variant) {
+      case SearchViewVariant.FillGray200:
+        return true;
       case SearchViewVariant.UnderLineGray8008c:
         return false;
       case SearchViewVariant.None:
@@ -156,6 +176,7 @@ enum SearchViewVariant {
   None,
   UnderLineGray8008c,
   UnderLineWhiteA700,
+  FillGray200,
 }
 enum SearchViewFontStyle {
   SFProDisplayLight14,
