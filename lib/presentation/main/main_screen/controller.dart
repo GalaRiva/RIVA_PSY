@@ -16,7 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/utils/shared_prefs.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_message_box.dart';
-import '../../initial_setup/pill_reminders/pill_reminders_screen.dart';
 import '../../initial_setup/recomendation_buy_tariff_screen/k4_screen.dart';
 import '../../initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import '../../initial_setup/send_pushes_screen/send_pushe_screen.dart';
@@ -76,12 +75,14 @@ class K20Controller extends GetxController {
       showDialog(
         useSafeArea: false,
           context: context, builder: (_) => RecommendationBuyTariffScreen());
-    } else if(SharedPrefs.sharedPreferences.getBool('pill_reminders' ) == null) {
-      showDialog(        useSafeArea: false,
-
-          context: context, builder: (_) => PillRemindersScreen());
     }
 
+    // "Напоминания о приёме лекарств" popup (PillRemindersScreen) removed
+    // from this onboarding chain by request — was shown once per user via
+    // the 'pill_reminders' SharedPreferences flag, unconditionally, with
+    // no way to disable it short of tapping through it. The reminders
+    // *feature* itself (Настройки → Напоминания) is untouched, this only
+    // removes the unprompted popup.
 
     else if((CurrentUser.user.registrationDate.month != DateTime.now().month || CurrentUser.user.registrationDate.year != DateTime.now().year) && ((prefs.getBool(FIRST_MONTH_KEY) ?? true) == true)){
       showDialog(

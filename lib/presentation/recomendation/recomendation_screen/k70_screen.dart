@@ -26,11 +26,50 @@ class K70Screen extends StatefulWidget {
 
 class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
   final controller = Get.put(K70Controller());
+  late final PageController pageController;
+  // Was all of this — reading route arguments, resetting
+  // controller.currentTab/currentTabSecond, controller.init(this)
+  // (recreating both TabControllers) — run directly in build(). Any
+  // rebuild of this screen for *any* reason (a dialog opening elsewhere
+  // and changing MediaQuery insets, a keyboard appearing, an unrelated
+  // GetBuilder update bubbling up) re-ran it too, silently snapping the
+  // tab selection back to whatever the route's original arguments said
+  // (index 0 / "Введение" for routes with no arguments) even though the
+  // user had since navigated to a different tab. Moved to
+  // didChangeDependencies(), guarded to run exactly once, since that's
+  // the correct one-time-per-route lifecycle hook that still has
+  // ModalRoute.of(context) available (initState() doesn't reliably).
+  bool _tabsInitialized = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_tabsInitialized) return;
+    _tabsInitialized = true;
+
+    final data = ModalRoute.of(context)?.settings.arguments as Map?;
+    int initialTab = 0;
+    if (data != null) {
+      controller.currentTab = data['first'] ?? 0;
+      controller.currentTabSecond = data['second'] ?? 0;
+      initialTab = data['initialTab'] ?? 0;
+    } else {
+      controller.currentTab = 0;
+      controller.currentTabSecond = 0;
+    }
+    controller.init(this);
+
+    controller.tabControllerSecond!.addListener(() {
+      controller.currentTabSecond = controller.tabControllerSecond!.index;
+      controller.update();
+    });
+
+    pageController = PageController(initialPage: initialTab);
   }
 
   final scroll  = ScrollController();
@@ -41,28 +80,6 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       debugPrint('animate');
       scroll.animateTo(scroll.offset+ MediaQuery.of(context).viewInsets.bottom, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
     }
-
-    final data = ModalRoute.of(context)?.settings.arguments as Map?;
-    int initialTab = 0;
-
-    if (data != null) {
-      controller.currentTab = data['first'] ?? 0;
-      controller.currentTabSecond = data['second'] ?? 0;
-      initialTab = data['initialTab'] ?? 0;
-    }
-    if (data == null) {
-      controller.currentTab = 0;
-      controller.currentTabSecond = 0;
-    }
-    controller.init(this);
-
-    controller.tabControllerSecond!.addListener(() {
-      controller.currentTabSecond = controller.tabControllerSecond!.index;
-
-      controller.update();
-    });
-
-    PageController pageController = PageController(initialPage: initialTab);
 
     return MultiBlocProvider(
       providers: [

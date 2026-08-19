@@ -4,7 +4,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../theme/app_style.dart';
-import '../../../../../widgets/custom_message_box.dart';
+import '../../../../../widgets/exercise_instruction_dialog.dart';
 import '../../../../core/utils/size_utils.dart';
 
 class SelectButtonWidget extends StatefulWidget {
@@ -33,12 +33,12 @@ class _SelectButtonWState extends State<SelectButtonWidget> {
           opened = !opened;
         });
           showDialog(
-              barrierColor: Colors.transparent,
+              barrierColor: Colors.black.withOpacity(0.35),
               context: context,
               builder: (context) =>
-                  CustomMessageBox(title: widget.title,
+                  ExerciseInstructionDialog(title: widget.title,
                     content: widget.content.split('.').join('.\n').split('?').join('.\n').split('!').join('.\n'),
-                    height: 470 ?? 150,)).then((value) {
+                    )).then((value) {
             setState(() {
               opened = !opened;
             });

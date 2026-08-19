@@ -106,3 +106,66 @@ firebase functions:log
 `reason` (`no_match` / `multiple_matches` / `no_email`), email покупателя,
 и (при `multiple_matches`) список совпавших doc ID в `Users` — чтобы вручную
 решить, какой аккаунт настоящий.
+
+# Google Play Billing → Firestore tariff sync
+
+Android-версия оплаты (кнопки в приложении), заменяет Stripe Payment Link
+для Android, пока аккаунт разработчика не оформлен как компания и не может
+зарегистрировать Stripe как "альтернативную платёжную систему" в Play
+Console. Функция `verifyAndroidPurchase` — callable-функция, которую
+вызывает само приложение сразу после покупки (не webhook, в отличие от
+Stripe) — проверяет токен покупки через Android Publisher API и, если
+подписка активна, пишет `tariff: "Орион"` / `tariff_is_end` в тот же
+Firestore `Users`, что и Stripe-путь.
+
+## Перед деплоем — обязательные шаги в Play Console
+
+1. **Создать два товара-подписки** (Play Console → Monetize → Products →
+   Subscriptions) с **точно такими ID** (код их ищет по этим строкам):
+   - `riva_psy_orion_monthly` — 5,90 €/мес
+   - `riva_psy_orion_yearly` — 69 €/год
+
+   Опубликовать оба (черновик не будет виден `queryProductDetails()` в
+   приложении).
+
+2. **Включить Android Publisher API** для проекта `rigel-psy-9361c` в
+   Google Cloud Console (APIs & Services → Library → "Google Play Android
+   Developer API" → Enable).
+
+3. **Дать доступ service account'у Cloud Functions** в Play Console:
+   Play Console → Setup → API access → должен появиться проект
+   `rigel-psy-9361c` (Cloud Console linked project) → напротив service
+   account'а `7653326357-compute@developer.gserviceaccount.com` (тот же,
+   что уже используется для остальных функций) нажать "Grant Access" и
+   выдать права минимум на "View financial data" + "Manage orders and
+   subscriptions" (в интерфейсе Play Console формулировки могут немного
+   отличаться — нужен доступ к чтению/управлению подписками, не только
+   "View app information").
+
+   Без этого шага `verifyAndroidPurchase` будет падать с ошибкой доступа
+   при любой попытке проверить покупку.
+
+4. Установить зависимости (если ещё не сделано для Stripe-части):
+   ```bash
+   cd functions
+   npm install
+   ```
+
+## Деплой
+
+Секретов для этой функции не требуется (в отличие от Stripe) — она
+использует собственный service account функции через Application Default
+Credentials:
+```bash
+firebase deploy --only functions
+```
+
+## Проверка
+
+Тестовые покупки в Play Billing требуют **закрытого тестирования**
+(Play Console → Testing → Internal testing), с тестовым аккаунтом,
+добавленным в список тестировщиков (License testing), иначе с настоящей
+карты спишутся реальные деньги за тестовую покупку. После тестовой покупки
+в приложении — смотреть `firebase functions:log` на предмет вызовов
+`verifyAndroidPurchase`, и `Users/{doc id}` в Firestore на предмет
+`tariff: "Орион"`.

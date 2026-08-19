@@ -1,12 +1,15 @@
+import 'dart:io' show Platform;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
-import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
 import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
+import '../../../core/services/google_play_billing_service.dart';
+import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
 import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
@@ -62,12 +65,8 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                               height: getVerticalSize(54),
                               text: "${'go_to_tariff'.tr()}${'orion_tariff_name'.tr()}"
                                   .toUpperCase(),
-                              onTap: () async {
-                                // Was Navigator.pushNamed(.., AppRoutes.buySubscription, ..)
-                                // — in-app YooKassa flow, retired.
-                                await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
-                                    mode: LaunchMode.externalApplication);
-                              },margin: getMargin(
+                              onTap: () => _openPlanChooser(context),
+                              margin: getMargin(
                               left: 18, top: 19, right: 18),
                               variant: ButtonVariant
                                   .OutlineBluegray60014,
@@ -110,6 +109,52 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
         ));
   }
 
+  // Same reasoning as go_to_new_tariff_widget.dart / k13_screen.dart: opens
+  // the Payment Link directly with the account's own email locked in, so
+  // Stripe's webhook can match the payment automatically instead of it
+  // landing in UnmatchedStripePayments.
+  void _openPlanChooser(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.background.withOpacity(1),
+      elevation: 0,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: getPadding(left: 16, right: 16, top: 24, bottom: 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+              height: getVerticalSize(54),
+              width: double.maxFinite,
+              text: 'subscribe_monthly'.tr().toUpperCase(),
+              textIsFitted: true,
+              onTap: () async {
+                Navigator.pop(context);
+                await _subscribeBuyTariff(context,
+                    productId: GooglePlayBillingService.monthlyProductId,
+                    stripeUrl: monthlyPaymentLinkUrl);
+              },
+            ),
+            SizedBox(height: getVerticalSize(12)),
+            CustomButton(
+              height: getVerticalSize(54),
+              width: double.maxFinite,
+              text: 'subscribe_yearly'.tr().toUpperCase(),
+              textIsFitted: true,
+              onTap: () async {
+                Navigator.pop(context);
+                await _subscribeBuyTariff(context,
+                    productId: GooglePlayBillingService.yearlyProductId,
+                    stripeUrl: yearlyPaymentLinkUrl);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   onTapOne(BuildContext context, [bool continu = false]) {
     SharedPrefs.sharedPreferences.setBool('recommendation_buy_tariff', true);
     Navigator.pop(context);
@@ -119,13 +164,27 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
             useSafeArea: false,
             context: context,
             builder: (_) => SendPushesScreen());
-      } else if (SharedPrefs.sharedPreferences.getBool('pill_reminders') ==
-          null) {
-        showDialog(
-            useSafeArea: false,
-            context: context,
-            builder: (_) => PillRemindersScreen());
+      }
+      // PillRemindersScreen popup removed from this chain by request.
+    }
+  }
+}
+
+Future<void> _subscribeBuyTariff(BuildContext context,
+    {required String productId, required String stripeUrl}) async {
+  if (Platform.isAndroid) {
+    try {
+      await GooglePlayBillingService.buy(productId);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Не удалось начать покупку: $e')),
+        );
       }
     }
+  } else {
+    await launchUrl(
+        Uri.parse(paymentLinkUrlForEmail(stripeUrl, CurrentUser.user.email)),
+        mode: LaunchMode.externalApplication);
   }
 }

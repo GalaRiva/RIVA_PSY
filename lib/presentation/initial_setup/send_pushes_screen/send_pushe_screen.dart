@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
-import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
 import 'package:riva_psy/widgets/custom_message_box.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,12 +91,7 @@ class SendPushesScreen extends StatelessWidget {
                       FirebaseMessaging.onBackgroundMessage(_messageHandler);
                       SharedPrefs.sharedPreferences.setBool('send_pushes', true);
                       Navigator.pop(context);
-                      if(SharedPrefs.sharedPreferences.getBool('pill_reminders') == null) {
-                          showDialog(        useSafeArea: false,
-
-                              context: context,
-                              builder: (_) => PillRemindersScreen());
-                        }
+                      // PillRemindersScreen popup removed from this chain by request.
                       },
                     text: 'yes'.tr().toUpperCase(),
                   ),

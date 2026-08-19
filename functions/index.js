@@ -3,6 +3,7 @@ const { defineSecret } = require('firebase-functions/params');
 const logger = require('firebase-functions/logger');
 const admin = require('firebase-admin');
 const Stripe = require('stripe');
+const { google } = require('googleapis');
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -279,5 +280,106 @@ exports.createPortalSession = onCall(
     });
 
     return { url: portalSession.url };
+  }
+);
+
+// Android package name (android/app/build.gradle's applicationId) — the
+// Android Publisher API needs this to know which app's subscription the
+// purchase token belongs to.
+const ANDROID_PACKAGE_NAME = 'com.riva_psy.app';
+
+const ACTIVE_SUBSCRIPTION_STATES = new Set([
+  'SUBSCRIPTION_STATE_ACTIVE',
+  'SUBSCRIPTION_STATE_IN_GRACE_PERIOD',
+]);
+
+/**
+ * Verifies a Google Play Billing purchase server-side and applies the
+ * Orion tariff — the Android-native counterpart to stripeWebhook, used now
+ * that registering Stripe as an "alternative payment system" in Play
+ * Console requires a registered company (see lib/core/services/
+ * google_play_billing_service.dart for the client side).
+ *
+ * Never trusts the client's own claim of having purchased something — a
+ * purchase token is just an opaque string the client could resend or
+ * forge, so the only source of truth is Google's own Android Publisher
+ * API, queried here with the Cloud Function's own service account
+ * (no separate secret needed, unlike Stripe — see functions/README.md
+ * for the one-time Play Console step that grants this service account
+ * access).
+ */
+exports.verifyAndroidPurchase = onCall(
+  { region: 'us-central1' },
+  async (request) => {
+    if (!request.auth || !request.auth.token.email) {
+      throw new HttpsError('unauthenticated', 'Требуется вход в приложение.');
+    }
+    const { purchaseToken, productId } = request.data || {};
+    if (!purchaseToken || typeof purchaseToken !== 'string') {
+      throw new HttpsError('invalid-argument', 'purchaseToken обязателен.');
+    }
+    if (!productId || typeof productId !== 'string') {
+      throw new HttpsError('invalid-argument', 'productId обязателен.');
+    }
+
+    const auth = new google.auth.GoogleAuth({
+      scopes: ['https://www.googleapis.com/auth/androidpublisher'],
+    });
+    const androidpublisher = google.androidpublisher({ version: 'v3', auth });
+
+    let subscription;
+    try {
+      const res = await androidpublisher.purchases.subscriptionsv2.get({
+        packageName: ANDROID_PACKAGE_NAME,
+        token: purchaseToken,
+      });
+      subscription = res.data;
+    } catch (err) {
+      logger.error('Android Publisher API error', {
+        error: err.message,
+        productId,
+      });
+      throw new HttpsError(
+        'internal',
+        'Не удалось проверить покупку через Google Play.'
+      );
+    }
+
+    const state = subscription.subscriptionState;
+    if (!ACTIVE_SUBSCRIPTION_STATES.has(state)) {
+      logger.warn('verifyAndroidPurchase: subscription not active', {
+        state,
+        productId,
+        email: request.auth.token.email,
+      });
+      throw new HttpsError(
+        'failed-precondition',
+        `Подписка не активна (статус: ${state}).`
+      );
+    }
+
+    const lineItem = (subscription.lineItems || []).find(
+      (item) => item.productId === productId
+    ) || (subscription.lineItems || [])[0];
+    const expiryTimeIso = lineItem && lineItem.expiryTime;
+    if (!expiryTimeIso) {
+      logger.error('verifyAndroidPurchase: no expiryTime in response', {
+        productId,
+        subscription,
+      });
+      throw new HttpsError(
+        'internal',
+        'Не удалось определить дату окончания подписки.'
+      );
+    }
+
+    const email = request.auth.token.email;
+    await resolveAndApplyTariff(email, ORION_TARIFF_NAME, expiryTimeIso, null, {
+      source: 'google_play',
+      productId,
+      subscriptionState: state,
+    });
+
+    return { tariff: ORION_TARIFF_NAME, tariffIsEnd: expiryTimeIso };
   }
 );

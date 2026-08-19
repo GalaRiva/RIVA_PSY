@@ -18,6 +18,8 @@ import '../../../core/models/emotional_state_model.dart';
 import '../../../core/user_data/user.dart';
 import 'dart:ui';
 import '../../../core/models/day_event_model.dart';
+import '../../../core/services/google_play_billing_service.dart';
+import '../../../core/services/in_app_update_service.dart';
 
 import '../../../providers/language_provider.dart';
 import '../../../widgets/chip_selector.dart';
@@ -53,6 +55,14 @@ class K20Screen extends GetWidget<K20Controller> {
     Timer(Duration(seconds: 2), () async{
       await controller.openMessages(context);
     });
+    // Fire-and-forget — InAppUpdateService itself guards against running
+    // more than once per app session (this build() re-runs on every
+    // GetBuilder update, same as the openMessages() Timer above).
+    InAppUpdateService.checkAndPromptUpdate(context);
+    // Also idempotent (no-ops if already listening) — must be started
+    // somewhere the app reaches on every launch so a purchase completed
+    // while the app was backgrounded still gets picked up and verified.
+    GooglePlayBillingService.startListening();
     return Builder(
       builder: (context) {
         return Scaffold(

@@ -107,79 +107,133 @@ class CustomBottomBar extends StatelessWidget {
     }
 
     getCurrentIndex(AppRoutes.currentRoute);
+    // Was a plain BottomNavigationBar with a 1px cyan line above the
+    // selected icon — replaced with a floating rounded bar (same fixed
+    // position at the bottom of the screen, same 5 routes/onTap logic
+    // above, purely a different visual shell) with an animated soft pill
+    // behind the selected icon instead of the static line, and the
+    // center item (index 2 — already sized 32 vs. 15-18 for the rest,
+    // clearly meant to be the primary action) raised into its own filled
+    // circle, a common pattern for a bar's main action.
     return Container(
+      padding: EdgeInsets.only(top: getVerticalSize(10)),
       decoration: BoxDecoration(
-        color: ColorConstant.blueGray20001,
+        color: ColorConstant.whiteA700,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(getHorizontalSize(28)),
+          topRight: Radius.circular(getHorizontalSize(28)),
+        ),
         boxShadow: [
           BoxShadow(
             color: ColorConstant.deepPurple7000c,
-            spreadRadius: getHorizontalSize(
-              2,
-            ),
-            blurRadius: getHorizontalSize(
-              2,
-            ),
-            offset: Offset(
-              0,
-              -5.41,
-            ),
+            spreadRadius: getHorizontalSize(1),
+            blurRadius: getHorizontalSize(16),
+            offset: Offset(0, -4),
           ),
         ],
       ),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
-        currentIndex: selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        items: List.generate(bottomMenuList.length, (index) {
-          return BottomNavigationBarItem(
-            icon: CustomImageView(
-              svgPath: bottomMenuList[index].icon,
-              height: getSize(
-                bottomMenuList[index].size,
-              ),
-              width: getSize(
-                bottomMenuList[index].size,
-              ),
-              color: ColorConstant.gray800,
-            ),
-            activeIcon: Container(
-              height: getSize(32 + 4),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: getVerticalSize(34),
-                      height: 1,
-                      color: ColorConstant.cyan700,
-                    ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: getVerticalSize(52),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: List.generate(bottomMenuList.length, (index) {
+              final isSelected = index == selectedIndex;
+              final isCenter = index == 2;
+              return _BottomBarItem(
+                icon: bottomMenuList[index].icon,
+                iconSize: bottomMenuList[index].size,
+                isSelected: isSelected,
+                isCenter: isCenter,
+                onTap: () {
+                  selectedIndex = index;
+                  getCurrentPage(selectedIndex);
+                },
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-                  ),
-                  Center(
-                    child: CustomImageView(
-                      svgPath: bottomMenuList[index].icon,
-                      height: getSize(
-                        bottomMenuList[index].size,
-                      ),
-                      width: getSize(
-                        bottomMenuList[index].size,
-                      ),
-                      color: ColorConstant.cyan700,
-                    ),
-                  ),
-                ],
+class _BottomBarItem extends StatelessWidget {
+  final String icon;
+  final double iconSize;
+  final bool isSelected;
+  final bool isCenter;
+  final VoidCallback onTap;
+
+  const _BottomBarItem({
+    required this.icon,
+    required this.iconSize,
+    required this.isSelected,
+    required this.isCenter,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isCenter) {
+      return GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Transform.translate(
+          offset: Offset(0, getVerticalSize(-14)),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOut,
+            width: getSize(56),
+            height: getSize(56),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorConstant.cyan700,
+              boxShadow: [
+                BoxShadow(
+                  color: ColorConstant.cyan700.withOpacity(0.4),
+                  blurRadius: 16,
+                  spreadRadius: isSelected ? 2 : 0,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Center(
+              child: CustomImageView(
+                svgPath: icon,
+                height: getSize(iconSize),
+                width: getSize(iconSize),
+                color: ColorConstant.whiteA700,
               ),
             ),
-            label: '',
-          );
-        }),
-        onTap: (index) {
-          selectedIndex = index;
-          getCurrentPage(selectedIndex);
-        },
+          ),
+        ),
+      );
+    }
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
+        width: getSize(44),
+        height: getSize(44),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isSelected
+              ? ColorConstant.cyan700.withOpacity(0.12)
+              : Colors.transparent,
+        ),
+        child: Center(
+          child: CustomImageView(
+            svgPath: icon,
+            height: getSize(iconSize),
+            width: getSize(iconSize),
+            color: isSelected ? ColorConstant.cyan700 : ColorConstant.gray800,
+          ),
+        ),
       ),
     );
   }

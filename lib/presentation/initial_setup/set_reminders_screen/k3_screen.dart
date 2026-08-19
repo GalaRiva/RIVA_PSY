@@ -7,7 +7,6 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
-import 'package:riva_psy/presentation/initial_setup/pill_reminders/pill_reminders_screen.dart';
 import 'package:riva_psy/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
 import 'controller.dart';
@@ -290,13 +289,8 @@ class K3Screen extends GetWidget<K3Controller> {
             useSafeArea: false,
             context: context,
             builder: (_) => RecommendationBuyTariffScreen());
-      } else if (SharedPrefs.sharedPreferences.getBool('pill_reminders') ==
-          null) {
-        showDialog(
-            useSafeArea: false,
-            context: context,
-            builder: (_) => PillRemindersScreen());
       }
+      // PillRemindersScreen popup removed from this chain by request.
     }
   }
 

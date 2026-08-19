@@ -76,16 +76,27 @@ class EventCard extends StatelessWidget {
               borderRadiusOverride ?? 3,
             ),
         ),
-          border: useShadowStyle ? null : Border.all(
-            color: isSelect ? ColorConstant.cyan700 : ColorConstant.fromHex('#403875').withOpacity(0.22),
-            width: 1
-          ),
+          border: useShadowStyle
+              ? (isSelect
+                  ? Border.all(color: ColorConstant.cyan700, width: 2)
+                  : null)
+              : Border.all(
+                  color: isSelect
+                      ? ColorConstant.cyan700
+                      : ColorConstant.fromHex('#403875').withOpacity(0.22),
+                  width: 1),
           boxShadow: useShadowStyle ? [
             BoxShadow(
-              color: ColorConstant.blueGray60014,
-              spreadRadius: getHorizontalSize(2),
-              blurRadius: getHorizontalSize(2),
-              offset: Offset(0, 5),
+              // Was a flat blueGray6001 4 shadow regardless of selection —
+              // useShadowStyle cards had no persistent selected look at
+              // all (no border either), so a tap only flashed the InkWell
+              // ripple and then looked identical to unselected again.
+              color: isSelect
+                  ? ColorConstant.cyan700.withOpacity(0.35)
+                  : ColorConstant.blueGray60014,
+              spreadRadius: getHorizontalSize(isSelect ? 1 : 2),
+              blurRadius: getHorizontalSize(isSelect ? 8 : 2),
+              offset: Offset(0, isSelect ? 3 : 5),
             ),
           ] : null,
       ),

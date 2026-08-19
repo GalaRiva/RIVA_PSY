@@ -252,7 +252,9 @@ class K32Screen extends GetWidget {
                                           .toList(),
                                     )),
                             Padding(
-                              padding: getPadding(top: 36),
+                              // Was top: 36 — raised closer to the pill
+                              // list above it per request.
+                              padding: getPadding(top: 12),
                               child:  GetBuilder(
                                   builder: (K32Controller _c) => SizedBox(
                                     height: getVerticalSize(380) * 1.42,
@@ -262,8 +264,28 @@ class K32Screen extends GetWidget {
                                       alignment: Alignment.topCenter,
                                       child: Row(
                                         children: [
-                                          BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),),
-                                          BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(), index: 2,),
+                                          // Each BodyWidget's own SVG
+                                          // (body_outline_*.svg) has a fair
+                                          // amount of built-in horizontal
+                                          // whitespace around the
+                                          // silhouette itself, so the two
+                                          // views sit far apart even with
+                                          // zero Row spacing between their
+                                          // boxes. Nudging each one inward
+                                          // eats into that empty margin —
+                                          // the marker dots inside each
+                                          // BodyWidget's own Stack move
+                                          // with it, so their alignment
+                                          // relative to their own
+                                          // silhouette is unaffected.
+                                          Transform.translate(
+                                            offset: const Offset(18, 0),
+                                            child: BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),),
+                                          ),
+                                          Transform.translate(
+                                            offset: const Offset(-18, 0),
+                                            child: BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(), index: 2,),
+                                          ),
                                         ],
                                       ),
                                     ),

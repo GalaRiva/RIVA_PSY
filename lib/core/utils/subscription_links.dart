@@ -15,3 +15,22 @@ String subscriptionUrlForLocale(BuildContext context) {
       return 'https://rivapsy.com/';
   }
 }
+
+// Live Stripe Payment Links (functions/README.md documents the deploy/
+// webhook side) — one product, two recurring prices. Regenerated whenever
+// the product/price is recreated in Stripe, e.g. moving test -> live.
+const String monthlyPaymentLinkUrl = 'https://buy.stripe.com/8x214n4TP6FnevzaV79k400';
+const String yearlyPaymentLinkUrl = 'https://buy.stripe.com/7sY4gz3PL7Jr1IN9R39k401';
+
+// prefilled_email both pre-fills and locks the email field on Stripe's
+// checkout page, so the buyer can't accidentally type a different address
+// than the one their Users doc is keyed on — that's what lets
+// functions/index.js's findUserDocs() match the payment automatically
+// instead of it landing in UnmatchedStripePayments. Works the same
+// regardless of whether the account was created via email/password,
+// Google, or Apple, since findUserDocs() already tries all three doc-id
+// shapes for whatever real email address is passed here.
+String paymentLinkUrlForEmail(String baseUrl, String? email) {
+  if (email == null || email.isEmpty) return baseUrl;
+  return '$baseUrl?prefilled_email=${Uri.encodeComponent(email)}';
+}

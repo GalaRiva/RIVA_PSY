@@ -28,7 +28,6 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="RIVA PSY"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"

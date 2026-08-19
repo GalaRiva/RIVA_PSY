@@ -1,8 +1,12 @@
+import 'dart:io' show Platform;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/core/app_export.dart';
 
+import '../core/services/google_play_billing_service.dart';
+import '../core/user_data/user.dart';
 import '../core/utils/subscription_links.dart';
 import 'custom_button.dart';
 import '../theme/app_icons.dart';
@@ -53,17 +57,27 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 width: getHorizontalSize(
                   288,
                 ),
-                text: "${'go_to_tariff'.tr()}\"${'orion_tariff_name'.tr()}\""
-                    .toUpperCase(),
+                text: 'subscribe_monthly'.tr().toUpperCase(),
                 textIsFitted: true,
-                onTap: () async {
-                  // Was Navigator.pushNamed(.., AppRoutes.buySubscription, ..)
-                  // — the in-app YooKassa flow. Billing lives on the website
-                  // now; same static-link-out pattern as
-                  // k13_screen.dart's onTapManageSubscription.
-                  await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
-                      mode: LaunchMode.externalApplication);
-                },
+                onTap: () => _subscribe(context,
+                    productId: GooglePlayBillingService.monthlyProductId,
+                    stripeUrl: monthlyPaymentLinkUrl),
+                fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                alignment: Alignment.center,
+              ),
+      SizedBox(height: 12,),
+      CustomButton(
+                height: getVerticalSize(
+                  54,
+                ),
+                width: getHorizontalSize(
+                  288,
+                ),
+                text: 'subscribe_yearly'.tr().toUpperCase(),
+                textIsFitted: true,
+                onTap: () => _subscribe(context,
+                    productId: GooglePlayBillingService.yearlyProductId,
+                    stripeUrl: yearlyPaymentLinkUrl),
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
                 alignment: Alignment.center,
               ),
@@ -102,5 +116,29 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
   ),
 ),
     );
+  }
+}
+
+// Android buys through Google Play Billing (see GooglePlayBillingService for
+// why — Stripe's "alternative payment system" registration in Play Console
+// requires a registered company, which this account doesn't have yet).
+// Non-Android platforms keep the original Stripe Payment Link, which is
+// still how the future PWA/website checkout is meant to work.
+Future<void> _subscribe(BuildContext context,
+    {required String productId, required String stripeUrl}) async {
+  if (Platform.isAndroid) {
+    try {
+      await GooglePlayBillingService.buy(productId);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Не удалось начать покупку: $e')),
+        );
+      }
+    }
+  } else {
+    await launchUrl(
+        Uri.parse(paymentLinkUrlForEmail(stripeUrl, CurrentUser.user.email)),
+        mode: LaunchMode.externalApplication);
   }
 }

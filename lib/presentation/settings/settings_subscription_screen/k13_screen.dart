@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
+import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
 import '../../../widgets/custom_app_bar.dart';
@@ -82,46 +85,15 @@ class K13Screen extends GetWidget {
                                         style: AppStyle
                                             .txtSFProDisplayLight14Gray800),
                                   )),
-                              GestureDetector(
-                                  onTap: () => onTapManageSubscription(context),
-                                  child: Container(
-                                      margin: getMargin(top: 83),
-                                      padding: getPadding(
-                                          left: 5, top: 8, right: 5, bottom: 8),
-                                      decoration: AppDecoration.outlineBluegray80014
-                                          .copyWith(
-                                        color: ColorConstant.grayLight,
-                                              borderRadius:
-                                                  BorderRadiusStyle.roundedBorder3),
-                                      child: Row(
-                                          children: [
-                                            CustomImageView(
-                                                svgPath: ImageConstant.imgCart,
-                                                height: getVerticalSize(18),
-                                                width: getHorizontalSize(22),
-                                                margin:
-                                                    getMargin(top: 1, bottom: 1)),
-                                            Padding(
-                                                padding: getPadding(left: 16),
-                                                child: Text(
-                                                    'manage_subscription_on_website'.tr(),
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: AppStyle
-                                                        .txtSFProDisplayLight16)),
-                                            Spacer(),
-                                            CustomImageView(
-                                                svgPath: ImageConstant
-                                                    .imgArrowrightGray700,
-                                                height: getVerticalSize(8),
-                                                width: getHorizontalSize(4),
-                                                margin: getMargin(
-                                                    top: 6, right: 8, bottom: 6))
-                                          ]))),
+                              // "Управление подпиской" (Stripe Customer
+                              // Portal) button removed — subscriptions are
+                              // now sold via Google Play Billing, so
+                              // management belongs in Google Play itself,
+                              // not our Stripe portal.
                               GestureDetector(
                                   onTap: () => onTapBuySubscription(context),
                                   child: Container(
-                                      margin: getMargin(top: 1),
+                                      margin: getMargin(top: 83),
                                       padding: getPadding(
                                           left: 5, top: 8, right: 5, bottom: 8),
                                       decoration: AppDecoration
@@ -208,21 +180,70 @@ class K13Screen extends GetWidget {
     );
   }
 
-  // Points at the Firebase Hosting magic-link page in front of Stripe's
-  // Customer Portal (functions/index.js: createPortalSession). Update this
-  // one line if the page ever moves to a different URL.
-  static const String manageSubscriptionUrl = 'https://rigel-psy-9361c.web.app';
-
-  onTapManageSubscription(BuildContext context) async {
-    await launchUrl(Uri.parse(manageSubscriptionUrl), mode: LaunchMode.externalApplication);
-  }
-
   // Was the in-app YooKassa purchase flow (Navigator.pushNamed(..,
   // AppRoutes.buySubscription, ..)) — dead now that all billing lives on
-  // the website via Stripe. Same "static link out" pattern as
-  // onTapManageSubscription above, not a new mechanism.
-  onTapBuySubscription(BuildContext context) async {
-    await launchUrl(Uri.parse(subscriptionUrlForLocale(context)), mode: LaunchMode.externalApplication);
+  // the website via Stripe. Now opens a plan-choice sheet that links
+  // straight to a Payment Link with the account's own email locked in —
+  // same reasoning as go_to_new_tariff_widget.dart's two buttons: keeps
+  // Stripe's webhook able to match the payment automatically instead of
+  // it landing in UnmatchedStripePayments.
+  onTapBuySubscription(BuildContext context) {
+    // Same already-subscribed guard as onTapRowgrid below — was missing
+    // here, so an Orion user tapping "Купить подписку" got sent straight
+    // to checkout with no indication they already have an active plan.
+    if (CurrentUser.tariffIsOrion()) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomMessageBox(
+          title: 'RIVA PSY',
+          content: 'already_subscribed_until'.tr(args: [
+            '${CurrentUser.user.currentTariff!.endDate.day}',
+            CurrentUser.user.currentTariff!.endDate.month.monthInText(),
+            '${CurrentUser.user.currentTariff!.endDate.year}'
+          ]),
+        ),
+      );
+      return;
+    }
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.background.withOpacity(1),
+      elevation: 0,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: getPadding(left: 16, right: 16, top: 24, bottom: 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+              height: getVerticalSize(54),
+              width: double.maxFinite,
+              text: 'subscribe_monthly'.tr().toUpperCase(),
+              textIsFitted: true,
+              onTap: () async {
+                Navigator.pop(context);
+                await _subscribeK13(context,
+                    productId: GooglePlayBillingService.monthlyProductId,
+                    stripeUrl: monthlyPaymentLinkUrl);
+              },
+            ),
+            SizedBox(height: getVerticalSize(12)),
+            CustomButton(
+              height: getVerticalSize(54),
+              width: double.maxFinite,
+              text: 'subscribe_yearly'.tr().toUpperCase(),
+              textIsFitted: true,
+              onTap: () async {
+                Navigator.pop(context);
+                await _subscribeK13(context,
+                    productId: GooglePlayBillingService.yearlyProductId,
+                    stripeUrl: yearlyPaymentLinkUrl);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   onTapRowgrid(BuildContext context) {
@@ -241,5 +262,27 @@ class K13Screen extends GetWidget {
 
   onTaptf(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.settings);
+  }
+}
+
+// Same Android-vs-rest split as go_to_new_tariff_widget.dart's _subscribe —
+// see GooglePlayBillingService for why Android goes through Play Billing
+// instead of the Stripe Payment Link now.
+Future<void> _subscribeK13(BuildContext context,
+    {required String productId, required String stripeUrl}) async {
+  if (Platform.isAndroid) {
+    try {
+      await GooglePlayBillingService.buy(productId);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Не удалось начать покупку: $e')),
+        );
+      }
+    }
+  } else {
+    await launchUrl(
+        Uri.parse(paymentLinkUrlForEmail(stripeUrl, CurrentUser.user.email)),
+        mode: LaunchMode.externalApplication);
   }
 }

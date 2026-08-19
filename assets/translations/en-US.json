@@ -214,7 +214,7 @@
   "current_tariff": "Current plan",
   "limited_access": "Limited access to recommendations, statistics, and audio",
   "active_until": "Active until",
-  "manage_subscription_on_website": "Manage your subscription at rivapsy.com",
+  "manage_subscription_on_website": "Manage subscription",
   "buy_subscription": "Buy subscription",
   "enter_promo_code": "Enter promo code",
 
@@ -890,6 +890,8 @@
 
   "go_to_tariff": "Switch to plan ",
   "orion_tariff_name": "Orion",
+  "subscribe_monthly": "Monthly",
+  "subscribe_yearly": "Yearly",
   "to_free_recommendations": "to free recommendations",
   "get_full_access": "Get full access to recommendations, statistics, audio, and exercises: switch to the \"Orion\" plan",
   "in_free_version": "In the free version, backups will be stored in your own cloud storage.",

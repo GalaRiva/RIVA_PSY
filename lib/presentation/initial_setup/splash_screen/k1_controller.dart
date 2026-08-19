@@ -24,6 +24,11 @@ import '../sign_in/domain/usecases/get_and_set_remote_data_locally.dart';
 class K1Controller extends GetxController {
   bool loading = false;
   bool wasInit = false;
+  // Was bumped to 6 for a diagnostic round (ruling out "shows too briefly
+  // to notice" as the explanation for "this screen never shows" reports)
+  // — confirmed unrelated (the real cause was the GetBuilder loading
+  // indicator, since removed from k1_screen.dart), and 6s read as slow.
+  // Back to the original default.
   int secondsToNewPage = 2;
 
   final _repo = K1Repo();
