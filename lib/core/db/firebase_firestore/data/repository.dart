@@ -146,6 +146,8 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
       bool? male,
       TariffModel? currentTariff,
       DateTime? registrationDate,
+      DateTime? quizCompletedAt,
+      String? quizLeadingTrait,
       bool create = false,
       Function? onError}) async {
     // TODO: implement updateUser
@@ -165,6 +167,13 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
       if (registrationDate != null)
         userDataForUpdate['registration_date'] =
             registrationDate.toIso8601String();
+      // quiz_completed_at is the server-side anchor for the welcome-offer
+      // countdown — deliberately never derived from device time.
+      if (quizCompletedAt != null)
+        userDataForUpdate['quiz_completed_at'] =
+            quizCompletedAt.toIso8601String();
+      if (quizLeadingTrait != null)
+        userDataForUpdate['quiz_leading_trait'] = quizLeadingTrait;
     }
     try {
       final doc = instance.collection(_userCollection).doc(userId);
@@ -204,6 +213,18 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
   }
 
   @override
+  Future<DateTime?> getQuizCompletedAt() async {
+    try {
+      if (_userId().isEmpty) return null;
+      final doc = await instance.collection(_userCollection).doc(_userId()).get();
+      final raw = doc.data()?['quiz_completed_at'] as String?;
+      return raw == null ? null : DateTime.tryParse(raw);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
   Future<bool> canUseTrial({required String trialName}) async {
     try {
       if(_userId().isEmpty) return false;
@@ -224,6 +245,39 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
       await coll.doc(_userId()).set({'use' : true});
       return true;
     }catch (_) {
+      return false;
+    }
+  }
+
+  final String _oneTimeFlagsCollection = 'OneTimeFlags';
+
+  @override
+  Future<bool> hasCompletedOneTimeFlag({required String flagName}) async {
+    try {
+      if (_userId().isEmpty) return false;
+      final doc = instance
+          .collection(_oneTimeFlagsCollection)
+          .doc(flagName)
+          .collection('users')
+          .doc(_userId());
+      return (await doc.get()).data() != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> completeOneTimeFlag({required String flagName}) async {
+    try {
+      if (_userId().isEmpty) return false;
+      await instance
+          .collection(_oneTimeFlagsCollection)
+          .doc(flagName)
+          .collection('users')
+          .doc(_userId())
+          .set({'completed_at': DateTime.now().toIso8601String()});
+      return true;
+    } catch (_) {
       return false;
     }
   }

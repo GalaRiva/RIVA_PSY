@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 import '../models/tariff_model.dart';
 import '../user_data/user.dart';
@@ -23,6 +24,13 @@ class GooglePlayBillingService {
   static const String monthlyProductId = 'riva_psy_orion_monthly';
   static const String yearlyProductId = 'riva_psy_orion_yearly';
 
+  // Must match the Offer ID created in Play Console -> Monetize ->
+  // Subscriptions -> [plan] -> Offers, eligibility set to
+  // "developer-determined" — Play Console doesn't filter who sees it, the
+  // app decides by only passing useWelcomeOffer: true when quiz_completed_at
+  // (see quiz paywall) says this user is still within the welcome window.
+  static const String welcomeOfferId = 'welcome70';
+
   static final InAppPurchase _iap = InAppPurchase.instance;
   static StreamSubscription<List<PurchaseDetails>>? _subscription;
 
@@ -42,10 +50,41 @@ class GooglePlayBillingService {
     _subscription = null;
   }
 
+  /// Read-only price lookup for display (e.g. the quiz paywall showing the
+  /// regular price before a purchase is attempted) — doesn't buy anything.
+  ///
+  /// A subscription with offers returns one ProductDetails per base-plan/
+  /// offer combination (see buy()'s doc comment) — `.first` isn't reliably
+  /// the plain base-plan price, it can just as easily be a discounted offer
+  /// variant. This explicitly picks the entry with no offer id attached.
+  static Future<ProductDetails?> queryProduct(String productId) async {
+    if (!Platform.isAndroid) return null;
+    final response = await _iap.queryProductDetails({productId});
+    if (response.productDetails.isEmpty) return null;
+    for (final details in response.productDetails) {
+      if (details is GooglePlayProductDetails) {
+        final index = details.subscriptionIndex;
+        final offers = details.productDetails.subscriptionOfferDetails;
+        if (index != null && offers != null && offers[index].offerId == null) {
+          return details;
+        }
+      }
+    }
+    return response.productDetails.first;
+  }
+
   /// Throws on any failure (Billing unavailable, product not found in Play
   /// Console, purchase sheet dismissed) — callers show that as a message,
   /// same as the existing Stripe buttons' launchUrl failures.
-  static Future<void> buy(String productId) async {
+  ///
+  /// [useWelcomeOffer]: on Android, querying one product ID for a
+  /// subscription returns one ProductDetails per base-plan/offer
+  /// combination (see GooglePlayProductDetails.fromProductDetails) — when
+  /// true, this looks for the entry whose offer id is [welcomeOfferId] and
+  /// buys with its offerToken instead of the plain base-plan price. Falls
+  /// back to the regular price if that offer isn't found (e.g. not created
+  /// in Play Console yet).
+  static Future<void> buy(String productId, {bool useWelcomeOffer = false}) async {
     if (!Platform.isAndroid) {
       throw Exception('Google Play Billing доступен только на Android.');
     }
@@ -58,7 +97,26 @@ class GooglePlayBillingService {
       throw Exception(
           'Товар "$productId" не найден в Play Console — проверьте, что подписка создана и опубликована.');
     }
-    final purchaseParam = PurchaseParam(productDetails: response.productDetails.first);
+
+    ProductDetails selected = response.productDetails.first;
+    String? offerToken;
+    if (useWelcomeOffer) {
+      for (final details in response.productDetails) {
+        if (details is GooglePlayProductDetails) {
+          final index = details.subscriptionIndex;
+          final offers = details.productDetails.subscriptionOfferDetails;
+          if (index != null && offers != null && offers[index].offerId == welcomeOfferId) {
+            selected = details;
+            offerToken = details.offerToken;
+            break;
+          }
+        }
+      }
+    }
+
+    final purchaseParam = offerToken != null
+        ? GooglePlayPurchaseParam(productDetails: selected, offerToken: offerToken)
+        : PurchaseParam(productDetails: selected);
     await _iap.buyNonConsumable(purchaseParam: purchaseParam);
     // Result arrives asynchronously via purchaseStream -> _onPurchaseUpdate,
     // not as a return value from buyNonConsumable() itself.

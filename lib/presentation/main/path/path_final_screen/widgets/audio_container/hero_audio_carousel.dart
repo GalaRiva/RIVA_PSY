@@ -8,6 +8,7 @@ import 'package:vibration/vibration.dart';
 import '../../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../../core/services/datasource_service.dart';
 import '../../../../../../core/utils/audio_cover_map.dart';
+import '../../../../../../widgets/fullscreen_audio_player_screen.dart';
 import '../exercise_content/controller.dart';
 
 // "Decoupled Player": the carousel above only shows artwork/mood — track
@@ -145,6 +146,21 @@ class _HeroAudioCarouselState extends State<HeroAudioCarousel> {
       setState(() => _isPlaying = true);
     }
     widget.controller.update();
+    // Pausing just stops in place — only a transition into "playing" opens
+    // the full-screen view.
+    if (_isPlaying && mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => FullscreenAudioPlayerScreen(
+            title: widget.audios[_focusedIndex].title,
+            cover: _cover(_focusedIndex),
+            audioInstance: widget.controller.audioInstance,
+            accentColor: widget.accentColor,
+          ),
+        ),
+      );
+    }
   }
 
   String _formatTime(int seconds) {
@@ -162,8 +178,13 @@ class _HeroAudioCarouselState extends State<HeroAudioCarousel> {
   }
 
   Widget _cover(int index) {
-    final asset = audioCoverAsset(widget.audios[index].ruTitle);
+    final ruTitle = widget.audios[index].ruTitle;
     final radius = BorderRadius.circular(28);
+    final animatedBuilder = animatedAudioCoverBuilder(ruTitle);
+    if (animatedBuilder != null) {
+      return ClipRRect(borderRadius: radius, child: animatedBuilder(context));
+    }
+    final asset = audioCoverAsset(ruTitle);
     if (asset != null) {
       return ClipRRect(
         borderRadius: radius,

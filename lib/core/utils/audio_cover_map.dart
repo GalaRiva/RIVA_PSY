@@ -1,3 +1,7 @@
+import 'package:flutter/widgets.dart';
+
+import '../../widgets/animated_meditation_cover.dart';
+
 // Maps a track's Russian title (Audio.name in Firestore — stable across
 // locales, unlike the already-localized display title) to a bundled cover
 // asset. Tracks with no entry here render a generated accent-color card
@@ -36,4 +40,15 @@ const Map<String, String> audioCoverAssets = {
 String? audioCoverAsset(String? ruTitle) {
   if (ruTitle == null) return null;
   return audioCoverAssets[ruTitle.trim()];
+}
+
+// Covers rendered as live, animated Flutter art instead of a bundled image
+// — same lookup pattern as audioCoverAssets above.
+final Map<String, WidgetBuilder> animatedAudioCovers = {
+  'Сердце': (context) => const HeartCongruenceCover(),
+};
+
+WidgetBuilder? animatedAudioCoverBuilder(String? ruTitle) {
+  if (ruTitle == null) return null;
+  return animatedAudioCovers[ruTitle.trim()];
 }

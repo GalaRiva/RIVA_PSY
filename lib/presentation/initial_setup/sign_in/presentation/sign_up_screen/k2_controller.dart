@@ -20,6 +20,7 @@ import '../../domain/usecases/check_user_state.dart';
 import '../../domain/usecases/get_and_set_remote_data_locally.dart';
 import '../../domain/usecases/sign_in_with_apple.dart';
 import '../../domain/usecases/sign_in_with_google.dart';
+import '../../../strengths_quiz/quiz_flow.dart';
 
 class K2Controller extends GetxController {
   final _instance = FirebaseFirestore.instance;
@@ -79,8 +80,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('');
             await CurrentUser.repo.setLocalUserData(email: email);
 
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.splashScreen, (route) => false);
+            await startPostRegistrationQuizFlow(context);
           } else {
               showMessage(context,
                   title: 'Registration', content: createUserInDB.exceptionMessage!);
@@ -145,8 +145,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('apple');
             await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.splashScreen, (route) => false);
+            await startPostRegistrationQuizFlow(context);
           } else {
             showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
@@ -218,8 +217,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('google');
             await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.splashScreen, (route) => false);
+            await startPostRegistrationQuizFlow(context);
           } else {
             showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }

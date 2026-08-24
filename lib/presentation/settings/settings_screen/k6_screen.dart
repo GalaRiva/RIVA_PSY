@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart' ;
 import 'controller.dart';
 import 'widgets/card_settings_button_widget.dart';
 import '../../../theme/app_colors.dart';
+import '../../initial_setup/strengths_quiz/quiz_flow.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -140,6 +141,18 @@ class K6Screen extends GetWidget {
                               onTap: () => Navigator.pushNamed(
                                   context, AppRoutes.selectLanguage),
                               title: 'language',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            // Exercises the exact same production flow real
+                            // registration now triggers — keep this entry
+                            // point for quick on-device testing without
+                            // needing a fresh account each time.
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => startPostRegistrationQuizFlow(context),
+                              title: '🧪 Quiz test (temp)',
                               svgIcon: ImageConstant.imgUser,
                               controller: controller,
                               svgSize: 24,

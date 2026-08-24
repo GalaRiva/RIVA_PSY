@@ -26,6 +26,7 @@ import '../../../widgets/chip_selector.dart';
 import '../../../widgets/inner_shadow.dart';
 import '../../../widgets/pressable_scale.dart';
 import '../../../widgets/spark_burst.dart';
+import '../../../widgets/welcome_offer_banner.dart';
 import '../../../core/models/event_model.dart';
 import '../../../core/models/insight_model.dart';
 import '../../../core/services/insights/insight_engine.dart';
@@ -81,6 +82,7 @@ class K20Screen extends GetWidget<K20Controller> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      const WelcomeOfferBanner(),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
