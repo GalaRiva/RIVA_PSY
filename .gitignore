@@ -6,3 +6,20 @@
 !/.packages
 !/.flutter-plugins-dependencies
 !/.flutter-plugins
+
+# OS/editor junk
+.DS_Store
+
+# Local Firebase CLI cache
+/.firebase/
+
+# Backup files left over from manual edits
+*.bak
+
+# Platform build output not covered by the root /build/ rule above
+/android/build/
+/android/app/release/
+
+# Xcode SwiftPM local caches
+ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+ios/Runner.xcworkspace/xcshareddata/swiftpm/
