@@ -17,32 +17,32 @@ Widget CardSettingsButtonWidget(BuildContext context,
     required String svgIcon, double? svgSize,
     required String title,
     Function(bool)? onSwitch,
-    bool? valueForSwitch, double height = 38}) {
+    bool? valueForSwitch, double height = 44}) {
   return InkWell(
       onTap: onTap,
       child: Container(
-        height: getVerticalSize(height),
-          padding: getPadding(left: 7, top: 5, right: 7, bottom: 5),
+        constraints: BoxConstraints(minHeight: getVerticalSize(height)),
+          padding: getPadding(left: 7, top: 10, right: 7, bottom: 10),
           decoration: AppDecoration.outlineBluegray80014
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder3,
           color: ColorConstant.grayLight
           ),
-          child: Center(
-            child: Row(
+          child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start, children: [
+                crossAxisAlignment: CrossAxisAlignment.center, children: [
               CustomImageView(
                   svgPath: svgIcon,
                   height: getVerticalSize(svgSize ?? 20),
-                  width: getHorizontalSize(svgSize ?? 20),
-                  margin: getMargin(top: 3, bottom: 5)),
-              Padding(
-                  padding: getPadding(left: 21, top: 5, bottom: 2),
-                  child: CustomText(title,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtSFProDisplayLight16)),
-              Spacer(),
+                  width: getHorizontalSize(svgSize ?? 20)),
+              Expanded(
+                  child: Padding(
+                    padding: getPadding(left: 21),
+                    child: CustomText(title,
+                        overflow: TextOverflow.visible,
+                        textAlign: TextAlign.left,
+                        style: AppStyle.txtSFProDisplayLight16
+                            .copyWith(fontSize: getFontSize(17))),
+                  )),
               onSwitch == null || valueForSwitch == null
                   ? CustomImageView(
                       svgPath: ImageConstant.imgArrowrightGray700,
@@ -55,5 +55,5 @@ Widget CardSettingsButtonWidget(BuildContext context,
                           onChanged: onSwitch),
                     )
             ]),
-          )));
+          ));
 }

@@ -90,7 +90,7 @@ class BodyPartWidget extends StatelessWidget {
                     controller.update();
                   },
             child: Container(
-              height: getVerticalSize(50),
+              constraints: BoxConstraints(minHeight: getVerticalSize(50)),
               width: cwidth ?? size.width / 2 - 30,
               decoration: BoxDecoration(
                   color: color,
@@ -103,10 +103,13 @@ class BodyPartWidget extends StatelessWidget {
                         blurRadius: 5)
                   ]),
               child: Center(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: AppStyle.txtSFProDisplayLight16,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: getHorizontalSize(6), vertical: getVerticalSize(6)),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: AppStyle.txtSFProDisplayLight16,
+                  ),
                 ),
               ),
             ),

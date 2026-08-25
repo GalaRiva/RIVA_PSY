@@ -144,40 +144,34 @@ class K31Screen extends GetWidget {
                     Padding(
                       padding: getPadding(top: 18),
                       child: GetBuilder(
-                        builder: (K31Controller _c) => SizedBox(
-                          height: getVerticalSize(90),
-                          width: size.width,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: const PageScrollPhysics(),
-                            itemCount: controller.additionalEmotions.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: getPadding(right: 12),
-                                child: EventCard(
-                                  emotionMood: moodForKey(
-                                      controller
-                                          .additionalEmotions[index].identity,
-                                      categoryMood),
-                                  model: controller.additionalEmotions[index],
-                                  onTap: () {
-                                    if (!controller.emotions
-                                        .contains(controller.additionalEmotions[index])) {
-                                      controller.emotions
-                                          .add(controller.additionalEmotions[index]);
-                                      controller.additionalEmotions.removeAt(index);
-                                      controller.update();
-                                    }
-                                  },
-                                  cardWidth: size.width / 2 - 30,
-                                  cardHeight: 44,
-                                  useShadowStyle: true,
-                                  borderRadiusOverride: 16,
-                                  isSelect: false,
-                                ),
-                              );
-                            },
-                          ),
+                        builder: (K31Controller _c) => Wrap(
+                          spacing: getHorizontalSize(12),
+                          runSpacing: getVerticalSize(12),
+                          children: controller.additionalEmotions
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            final index = entry.key;
+                            final emotion = entry.value;
+                            return EventCard(
+                              emotionMood:
+                                  moodForKey(emotion.identity, categoryMood),
+                              model: emotion,
+                              onTap: () {
+                                if (!controller.emotions.contains(emotion)) {
+                                  controller.emotions.add(emotion);
+                                  controller.additionalEmotions
+                                      .removeAt(index);
+                                  controller.update();
+                                }
+                              },
+                              cardWidth: size.width / 2 - 22,
+                              cardHeight: 44,
+                              useShadowStyle: true,
+                              borderRadiusOverride: 16,
+                              isSelect: false,
+                            );
+                          }).toList(),
                         ),
                       ),
                     ),

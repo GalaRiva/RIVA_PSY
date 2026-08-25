@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/models/day_event_model.dart';
 import '../../../../core/services/dashboards/synergy_heatmap_service.dart';
+import '../../../../theme/app_colors.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Тепловая карта синергии" — cross-tab of two context dimensions
@@ -50,8 +51,8 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
   }
 
   Color _cellColor(HeatmapCell cell) {
-    const stressColor = Color(0xFFF2A65A); // мягкий оранжевый/персиковый
-    const comfortColor = Color(0xFF3FBF8F); // изумрудный/пастельно-зелёный
+    const stressColor = AppColors.chartRose;
+    const comfortColor = AppColors.chartTeal;
     final t = _showTension ? cell.bodyTensionRate : (cell.avgMood / 10).clamp(0.0, 1.0);
     // Tension is "more = worse" (stress-colored), mood is "more = better"
     // (comfort-colored) — same two colors, opposite direction of t.
@@ -248,7 +249,17 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
           duration: const Duration(milliseconds: 300),
           width: cellSize - 4,
           height: cellSize - 4,
-          decoration: BoxDecoration(color: _cellColor(cell), borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(
+            color: _cellColor(cell),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: _cellColor(cell).withOpacity(0.35),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
         ),
       ),
     );

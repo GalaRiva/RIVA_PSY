@@ -130,14 +130,19 @@ class _CustomTabBarState extends State<CustomTabBar>
                               child: Container(
                                 height: 46,
                                 width: labelWidth,
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: Center(
-                                  child: Text(
-                                    widget.labels[index],
-                                    style: AppStyle.txtSFProDisplayLight14
-                                        .copyWith(
-                                            color: currentPos == index
-                                                ? ColorConstant.cyan700
-                                                : Colors.white),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      widget.labels[index],
+                                      maxLines: 1,
+                                      style: AppStyle.txtSFProDisplayLight14
+                                          .copyWith(
+                                              color: currentPos == index
+                                                  ? ColorConstant.cyan700
+                                                  : Colors.white),
+                                    ),
                                   ),
                                 ),
                               ),

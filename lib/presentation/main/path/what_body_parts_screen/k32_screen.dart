@@ -239,9 +239,9 @@ class K32Screen extends GetWidget {
                                       children: controller.currentEventList
                                           .map((e) => Padding(
                                                 padding: getPadding(
-                                                    right: 12, bottom: 18),
+                                                    right: 8, bottom: 18),
                                                 child: BodyPartWidget(
-                                                  cwidth: size.width / 2 - 30,
+                                                  cwidth: size.width / 2 - 22,
                                                   model: e,
                                                   title: e.localizedBodyPart,
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/services/dashboards/energy_matrix_service.dart';
+import '../../../../theme/app_colors.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Матрица Энергии" — quadrant scatter of context tags (who/what/where),
@@ -60,10 +61,10 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
   }
 
   Color _quadrantColor(double x, double y) {
-    if (x >= 0 && y >= 0) return const Color(0xFFFF9933); // Драйв
-    if (x >= 0 && y < 0) return const Color(0xFF3FBF8F); // Ресурс
-    if (x < 0 && y >= 0) return const Color(0xFFE05B5B); // Стресс
-    return const Color(0xFF6B85B8); // Истощение
+    if (x >= 0 && y >= 0) return AppColors.chartGold; // Драйв
+    if (x >= 0 && y < 0) return AppColors.chartTeal; // Ресурс
+    if (x < 0 && y >= 0) return AppColors.chartRose; // Стресс
+    return AppColors.chartPurple; // Истощение
   }
 
   String _quadrantKey(double x, double y) {
@@ -227,8 +228,17 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: color.withOpacity(0.65),
+            gradient: RadialGradient(
+              colors: [color.withOpacity(0.85), color.withOpacity(0.6)],
+            ),
             border: Border.all(color: Colors.white, width: 1.5 / _scale),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.35),
+                blurRadius: 12 / _scale,
+                spreadRadius: 1 / _scale,
+              ),
+            ],
           ),
           alignment: Alignment.center,
           child: canvasDiameter * _scale > 34
@@ -285,14 +295,14 @@ class _QuadrantBackgroundPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final mid = size.width / 2;
     final zones = <Rect, Color>{
-      Rect.fromLTWH(mid, 0, mid, mid): const Color(0xFFFF9933).withOpacity(0.08), // Драйв
-      Rect.fromLTWH(mid, mid, mid, mid): const Color(0xFF3FBF8F).withOpacity(0.08), // Ресурс
-      Rect.fromLTWH(0, 0, mid, mid): const Color(0xFFE05B5B).withOpacity(0.08), // Стресс
-      Rect.fromLTWH(0, mid, mid, mid): const Color(0xFF6B85B8).withOpacity(0.08), // Истощение
+      Rect.fromLTWH(mid, 0, mid, mid): AppColors.chartGold.withOpacity(0.08), // Драйв
+      Rect.fromLTWH(mid, mid, mid, mid): AppColors.chartTeal.withOpacity(0.08), // Ресурс
+      Rect.fromLTWH(0, 0, mid, mid): AppColors.chartRose.withOpacity(0.08), // Стресс
+      Rect.fromLTWH(0, mid, mid, mid): AppColors.chartPurple.withOpacity(0.08), // Истощение
     };
     zones.forEach((rect, color) => canvas.drawRect(rect, Paint()..color = color));
     final axisPaint = Paint()
-      ..color = Colors.black12
+      ..color = AppColors.primary.withOpacity(0.12)
       ..strokeWidth = 1;
     canvas.drawLine(Offset(mid, 0), Offset(mid, size.height), axisPaint);
     canvas.drawLine(Offset(0, mid), Offset(size.width, mid), axisPaint);

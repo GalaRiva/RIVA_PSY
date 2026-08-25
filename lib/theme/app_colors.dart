@@ -14,4 +14,13 @@ abstract class AppColors {
 
   static const Color error = Color(0xFFD94A4A);
   static const Color divider = Color(0xFFEAEEEE);
+
+  // Shared data-viz accent set for the analytics dashboards (Energy Matrix
+  // quadrants, Synergy Heatmap gradient, Social Battery split) — one
+  // consistent four-color language drawn from the app's own brand colors
+  // instead of each chart picking its own ad-hoc traffic-light palette.
+  static const Color chartTeal = primary; // calm / resourced / alone
+  static const Color chartGold = Color(0xFFC9A24B); // energized / drive / social
+  static const Color chartRose = Color(0xFFB0495C); // stress / tension
+  static const Color chartPurple = Color(0xFF5B4EA8); // depleted / burnout
 }

@@ -17,8 +17,8 @@ class SocialBatteryWidget extends StatelessWidget {
 
   const SocialBatteryWidget({Key? key, required this.events}) : super(key: key);
 
-  static const _aloneColor = Color(0xFF3FBF8F);
-  static const _socialColor = Color(0xFFF2A65A);
+  static const _aloneColor = AppColors.chartTeal;
+  static const _socialColor = AppColors.chartGold;
 
   @override
   Widget build(BuildContext context) {
@@ -60,37 +60,82 @@ class SocialBatteryWidget extends StatelessWidget {
   Widget _buildGauge(double level) {
     final t = (level / 100).clamp(0.0, 1.0);
     final color = Color.lerp(_socialColor, _aloneColor, t)!;
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(14),
-          child: Stack(
-            children: [
-              Container(height: 24, color: Colors.black.withOpacity(0.05)),
-              FractionallySizedBox(widthFactor: t, child: Container(height: 24, color: color)),
-            ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.55),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white.withOpacity(0.8), width: 1),
+        boxShadow: [
+          BoxShadow(color: color.withOpacity(0.22), blurRadius: 18, offset: const Offset(0, 8)),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(colors: [color.withOpacity(0.95), color.withOpacity(0.7)]),
+              boxShadow: [
+                BoxShadow(color: color.withOpacity(0.45), blurRadius: 14, spreadRadius: 1),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                '${level.round()}%',
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: getVerticalSize(6)),
-        Text('${level.round()}%', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: color)),
-      ],
+          SizedBox(width: getHorizontalSize(14)),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Stack(
+                children: [
+                  Container(height: 14, color: AppColors.primary.withOpacity(0.08)),
+                  FractionallySizedBox(
+                    widthFactor: t,
+                    child: Container(
+                      height: 14,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [color.withOpacity(0.85), color]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildLegend() {
-    Widget dot(Color c, String label) => Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(width: 8, height: 8, decoration: BoxDecoration(color: c, shape: BoxShape.circle)),
-            const SizedBox(width: 4),
-            Text(label, style: const TextStyle(fontSize: 11, color: Colors.black54)),
-          ],
+    Widget chip(Color c, String label) => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: c.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: c.withOpacity(0.3), width: 1),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(width: 8, height: 8, decoration: BoxDecoration(color: c, shape: BoxShape.circle)),
+              const SizedBox(width: 6),
+              Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: c)),
+            ],
+          ),
         );
     return Row(
       children: [
-        dot(_aloneColor.withOpacity(0.5), 'myself'.tr()),
-        const SizedBox(width: 16),
-        dot(_socialColor.withOpacity(0.5), 'social_battery_legend_social'.tr()),
+        chip(_aloneColor, 'myself'.tr()),
+        const SizedBox(width: 8),
+        chip(_socialColor, 'social_battery_legend_social'.tr()),
       ],
     );
   }
@@ -133,7 +178,7 @@ class SocialBatteryWidget extends StatelessWidget {
               show: true,
               getDotPainter: (spot, percent, bar, index) {
                 if (index < points.length && points[index].isBreakPoint) {
-                  return FlDotCirclePainter(radius: 5, color: const Color(0xFFE05B5B), strokeWidth: 1.5, strokeColor: Colors.white);
+                  return FlDotCirclePainter(radius: 5, color: AppColors.chartRose, strokeWidth: 1.5, strokeColor: Colors.white);
                 }
                 return FlDotCirclePainter(radius: 0, color: Colors.transparent);
               },
@@ -156,7 +201,26 @@ class SocialBatteryWidget extends StatelessWidget {
     final x = result.breakPointHours;
     final y = result.recoveryHours;
     if (x == null || y == null) {
-      return Text('social_battery_no_limit_yet'.tr(), style: AppStyle.txtSFProDisplayLight14);
+      return Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withOpacity(0.06),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('🌙', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'social_battery_no_limit_yet'.tr(),
+                style: AppStyle.txtSFProDisplayLight14.copyWith(height: 1.4),
+              ),
+            ),
+          ],
+        ),
+      );
     }
     final xStr = x.toStringAsFixed(1);
     final yStr = y.toStringAsFixed(1);

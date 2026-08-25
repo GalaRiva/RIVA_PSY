@@ -61,8 +61,8 @@ class DesireStageSecondPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'what_concrete_and_how'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'what_concrete_and_how'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
             ),
             SizedBox(
               height: 20,
@@ -78,8 +78,8 @@ class DesireStageSecondPage extends StatelessWidget {
             ),
 
             Text(
-              'if_love_apples'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'if_love_apples'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
             ),
             SizedBox(
               height: 20,

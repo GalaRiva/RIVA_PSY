@@ -9,6 +9,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
 import '../../../../../../core/utils/image_constant.dart';
+import '../../../../../../core/utils/size_utils.dart';
 import '../../../../../../theme/app_style.dart';
 
 class DesireStageThirdPage extends StatelessWidget {
@@ -62,8 +63,8 @@ class DesireStageThirdPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'i_can_fulfill_this_desire'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'i_can_fulfill_this_desire'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
             ),
             SizedBox(
               height: 20,
@@ -79,8 +80,8 @@ class DesireStageThirdPage extends StatelessWidget {
             ),
 
             Text(
-              'if_love_apples'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'if_love_apples'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
             ),
 
             SizedBox(

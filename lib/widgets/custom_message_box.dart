@@ -36,17 +36,21 @@ class CustomMessageBox extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: getPadding(left: 6),
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: ColorConstant.gray200,
-                            fontSize: 13,
+                    Expanded(
+                      child: Padding(
+                        padding: getPadding(left: 6, right: 6),
+                        child: Text(
+                          title,
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: ColorConstant.gray200,
+                              fontSize: 13,
 
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'Manrope'),
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'Manrope'),
+                        ),
                       ),
                     ),
                         Visibility(

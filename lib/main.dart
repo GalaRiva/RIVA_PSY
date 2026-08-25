@@ -105,6 +105,17 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.initialRoute ,
         routes: AppRoutes.routes,
+        // Most screens use fixed-size containers around text (getSize()-based,
+        // scaled to screen dimensions, not to font size) — at large OS
+        // accessibility text-scale settings that overflows and clips text
+        // instead of reflowing. Clamping keeps the OS setting's benefit
+        // (still noticeably bigger text) without letting it grow past what
+        // the fixed layouts can absorb.
+        builder: (context, child) => MediaQuery.withClampedTextScaling(
+          minScaleFactor: 0.9,
+          maxScaleFactor: 1.2,
+          child: child!,
+        ),
       ),
     );
   }

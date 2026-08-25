@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../core/services/dashboards/dashboard_feedback_store.dart';
 import '../core/utils/color_constant.dart';
+import '../theme/app_colors.dart';
 
 /// Shared "Сводка / Совет / Немного теории" block used under all three
 /// analytics dashboards (Матрица, Тепловая карта, Батарейка). Highlighted
@@ -79,7 +80,11 @@ class _DashboardInsightCardState extends State<DashboardInsightCard> {
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(color: const Color(0xFFFFF3D6), borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(
+            color: AppColors.chartGold.withOpacity(0.14),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.chartGold.withOpacity(0.25), width: 1),
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

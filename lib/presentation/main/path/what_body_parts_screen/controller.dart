@@ -62,9 +62,9 @@ class K32Controller extends GetxController {
                       margin: getMargin(all: 20),
                       child: Wrap(
                         children: model.localizedWhatHurts.map((e) => Padding(
-                          padding: getPadding(bottom: 15, right: 6),
+                          padding: getPadding(bottom: 15, right: 4),
                           child: BodyPartWidget(model: model,
-                            cwidth: size.width / 2 - 60,
+                            cwidth: size.width / 2 - 52,
 
                             title: e, controller: controller, color: Colors.white,),
                         )).toList(),

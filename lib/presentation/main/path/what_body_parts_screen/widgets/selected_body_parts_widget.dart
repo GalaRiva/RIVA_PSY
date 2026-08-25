@@ -24,10 +24,10 @@ class SelectedBodyPartsWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: getVerticalSize(
-              50,
+            constraints: BoxConstraints(
+              minHeight: getVerticalSize(50),
             ),
-          width: size.width / 2 - 30,
+          width: size.width / 2 - 20,
           decoration: BoxDecoration(
             color: ColorConstant.whiteA700,
             borderRadius: BorderRadius.circular(3),
@@ -37,17 +37,21 @@ class SelectedBodyPartsWidget extends StatelessWidget {
             ),
           ),
             child: Container(
-                margin: getMargin(left: 20, right: 20),
-                child: Center(child: Text(model.bodyPartsModel.localizedBodyPart, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
+                margin: getMargin(left: 12, right: 12, top: 8, bottom: 8),
+                child: Center(
+                    child: Text(model.bodyPartsModel.localizedBodyPart,
+                        textAlign: TextAlign.center,
+                        style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16)),
+                )),
           ),
           SizedBox(width: getHorizontalSize(12),),
           Visibility(
             visible: model.bodyPartsModel.whatHurts.isNotEmpty,
             child: Container(
-              height: getVerticalSize(
-                50,
+              constraints: BoxConstraints(
+                minHeight: getVerticalSize(50),
               ),
-              width: size.width / 2 - 30,
+              width: size.width / 2 - 20,
               decoration: BoxDecoration(
                 color: ColorConstant.whiteA700,
                 borderRadius: BorderRadius.circular(3),
@@ -57,8 +61,12 @@ class SelectedBodyPartsWidget extends StatelessWidget {
                 ),
               ),
               child: Container(
-                  margin: getMargin(left: 20, right: 20),
-                  child: Center(child: Text(model.subtitle, textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16),))),
+                  margin: getMargin(left: 12, right: 12, top: 8, bottom: 8),
+                  child: Center(
+                      child: Text(model.subtitle,
+                          textAlign: TextAlign.center,
+                          style: AppStyle.txtSFProDisplayLight10w400.copyWith(fontSize: 16)),
+                  )),
             ),
           ),
           SizedBox(width: getHorizontalSize(12),),

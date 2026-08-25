@@ -61,8 +61,8 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'write_what_you_wish'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'write_what_you_wish'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
             ),
             AspectRatio(
                 aspectRatio: 300 / 111,
@@ -74,7 +74,7 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'most_simple_desires'.tr().toUpperCase(),
+              'most_simple_desires'.tr(),
               style: AppStyle.txtSFProDisplayLight16,
               textAlign: TextAlign.center,
             ),
@@ -82,8 +82,8 @@ class DesireStageFirstPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'what_i_wish'.tr().toUpperCase(),
-              style: AppStyle.txtSFProDisplayLight12,
+              'what_i_wish'.tr(),
+              style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
               textAlign: TextAlign.center,
             ),
             SizedBox(
