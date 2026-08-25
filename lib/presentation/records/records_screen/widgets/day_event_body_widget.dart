@@ -24,8 +24,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
     fontWeight: FontWeight.w400,
   );
   debugPrint(dayEventModel.toJson().toString());
-  return SizedBox(
-    height: getVerticalSize(204),
+  return IntrinsicHeight(
     child: Stack(
       children: [
         Padding(
@@ -302,7 +301,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
         Container(
           alignment: Alignment.topLeft,
           width: getHorizontalSize(43),
-          height: getVerticalSize(204),
+          height: double.infinity,
           decoration: BoxDecoration(
               color: ColorConstant.fromHex('#E7EAEA'),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(3))),

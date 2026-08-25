@@ -13,8 +13,10 @@ class SecondVariantEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-              height: getSize(
-                  17
+              constraints: BoxConstraints(
+                minHeight: getSize(
+                    17
+                ),
               ),
               decoration: BoxDecoration(
                   color: ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),

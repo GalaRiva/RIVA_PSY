@@ -11,6 +11,8 @@ import '../../../theme/app_colors.dart';
 import '../../initial_setup/strengths_quiz/quiz_flow.dart';
 import '../../initial_setup/set_reminders_screen/k3_screen.dart';
 import '../../consultation/consultation_screen.dart';
+import '../../../core/services/insights/insight_workmanager.dart';
+import '../../../core/services/insights/insights_repo.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -178,6 +180,55 @@ class K6Screen extends GetWidget {
                                   context: context,
                                   builder: (_) => K3Screen()),
                               title: '🧪 Reminders test (temp)',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            // Runs the real nightly insight checks immediately
+                            // instead of waiting for WorkManager (which can be
+                            // delayed hours by Doze/charging constraints) —
+                            // only fires a notification if a check actually
+                            // finds something, same as the real job.
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () {
+                                runNightlyInsightAnalysisNow();
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text(
+                                      'Проверка запущена. Если в дневнике достаточно данных — уведомление придёт через несколько секунд.'),
+                                ));
+                              },
+                              title: '🧪 Insight test (temp)',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            // Wipes stored insights so a stale one (e.g. one
+                            // whose notification failed to display before the
+                            // icon-resource bug was fixed) can't sit on
+                            // cooldown and block re-testing a fresh one.
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () {
+                                InsightsRepo().clearAll();
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text('Сохранённые инсайты очищены.'),
+                                ));
+                              },
+                              title: '🧪 Clear insights (temp)',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () {
+                                runGratitudeNudgeNow();
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text('Уведомление с благодарностью отправлено — проверь шторку.'),
+                                ));
+                              },
+                              title: '🧪 Gratitude test (temp)',
                               svgIcon: ImageConstant.imgUser,
                               controller: controller,
                               svgSize: 24,

@@ -6,6 +6,7 @@ import 'package:riva_psy/core/app_export.dart';
 
 import '../core/db/firebase_firestore/data/repository.dart';
 import '../presentation/initial_setup/strengths_quiz/paywall_screen.dart';
+import '../theme/app_colors.dart';
 
 const Duration _offerWindow = Duration(hours: 24);
 const Color _hotRed = Color(0xFFFF5A45);
@@ -100,14 +101,14 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
               width: double.infinity,
               padding: getPadding(left: 16, top: 12, right: 16, bottom: 12),
               decoration: BoxDecoration(
-                color: _urgencyBordo,
+                color: AppColors.background,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: _hotRed.withOpacity(0.4 + t * 0.5), width: 1.5),
+                border: Border.all(color: _urgencyBordo.withOpacity(0.5 + t * 0.35), width: 1.5),
                 boxShadow: [
                   BoxShadow(
-                    color: _hotRed.withOpacity(0.15 + t * 0.25),
-                    blurRadius: 10 + t * 8,
-                    spreadRadius: t * 1.5,
+                    color: _hotRed.withOpacity(0.08 + t * 0.10),
+                    blurRadius: 8 + t * 6,
+                    spreadRadius: t,
                   ),
                 ],
               ),
@@ -116,7 +117,7 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
           },
           child: Row(
             children: [
-              const Icon(Icons.local_fire_department_rounded, color: _hotRed, size: 22),
+              const Icon(Icons.local_fire_department_rounded, color: _urgencyBordo, size: 22),
               SizedBox(width: getHorizontalSize(10)),
               Expanded(
                 child: Column(
@@ -125,8 +126,8 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
                     Text(
                       'quiz_paywall_cta'.tr(),
                       style: AppStyle.txtSFProDisplayRegular14.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                        color: _urgencyBordo,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
@@ -140,7 +141,7 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right_rounded, color: Colors.white, size: 22),
+              const Icon(Icons.chevron_right_rounded, color: _urgencyBordo, size: 22),
             ],
           ),
         ),

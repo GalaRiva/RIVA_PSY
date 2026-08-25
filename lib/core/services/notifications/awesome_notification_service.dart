@@ -98,14 +98,16 @@ class AwesomeNotificationService extends NotificationService {
               // Was just 'Приём' with no pill name — every log entry showed
               // the same generic title/body no matter which medication the
               // reminder was actually for.
-              body: workManagerModel.pillName != ''
+              body: OfflineTranslations.toSentenceLines(workManagerModel.pillName != ''
                   ? (i == 0 && nudgeText != null
                       ? nudgeText
                       : 'Пора принять: ${workManagerModel.pillName}')
-                  : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния',
+                  : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния'),
               payload: _payload,
               wakeUpScreen: true,
-              category: NotificationCategory.Reminder
+              category: NotificationCategory.Reminder,
+              color: const Color(0xFF2A5C55),
+              notificationLayout: NotificationLayout.BigText,
             ),
             actionButtons: workManagerModel.pillName != ''
                 ? [
@@ -145,7 +147,7 @@ class AwesomeNotificationService extends NotificationService {
     final _channelKey = workManagerModel.pillName.isNotEmpty ? 'open' :
     'scheduled';
 
-    await AwesomeNotifications().initialize('resource://drawable/ic_launcher', [
+    await AwesomeNotifications().initialize('resource://drawable/ic_stat_notify', [
       // notification icon
       NotificationChannel(
         channelGroupKey: 'reminders',
@@ -155,6 +157,7 @@ class AwesomeNotificationService extends NotificationService {
         channelShowBadge: true,
         importance: NotificationImportance.High,
         enableVibration: true,
+        defaultColor: const Color(0xFF2A5C55),
       ),
     ], channelGroups: [
       // The channel above references channelGroupKey 'reminders', but no
@@ -197,6 +200,8 @@ class AwesomeNotificationService extends NotificationService {
         body: body,
         wakeUpScreen: true,
         category: NotificationCategory.Reminder,
+        color: const Color(0xFF2A5C55),
+        notificationLayout: NotificationLayout.BigText,
       ),
     );
   }

@@ -1,7 +1,6 @@
 {
   "hi": "Hi, {}",
   "how_do_you_feel": "how are you feeling?",
-
   "continue": "Next",
   "quiz_skip": "Skip",
   "quiz_scale_low": "Not at all like me",
@@ -67,16 +66,12 @@
   "understand": "Got it",
   "start2": "Begin",
   "cancel_result": "cancel result",
-
   "normal": "Normal",
   "terribly": "Terrible",
   "fine": "Great",
-
   "complete_path": "Complete the Path",
-
   "save_record": "Entry {} saved",
   "create_record": "Entry created",
-
   "sunday": "Sunday",
   "tuesday": "Tuesday",
   "wednesday": "Wednesday",
@@ -84,7 +79,6 @@
   "friday": "Friday",
   "saturday": "Saturday",
   "monday": "Monday",
-
   "monday_short": "Mon",
   "tuesday_short": "Tue",
   "wednesday_short": "Wed",
@@ -92,24 +86,19 @@
   "friday_short": "Fri",
   "saturday_short": "Sat",
   "sunday_short": "Sun",
-
   "never": "Never",
   "today": "Today",
   "yesterday": "Yesterday",
   "more_than_year_ago": "More than a year ago",
   "more_than_months_ago": "More than {} months ago",
   "more_than_month_ago": "More than a month ago",
-
   "abbreveated_year": "yr.",
   "abbreveated_month": "mo.",
   "abbreveated_month2": "mo.",
   "abbreveated_day": "d.",
-
   "abbreveated_euro": "euro",
-
   "year": "year",
   "day": "day",
-
   "september": "September",
   "october": "October",
   "november": "November",
@@ -122,7 +111,6 @@
   "june": "June",
   "july": "July",
   "august": "August",
-
   "september2": "September",
   "october2": "October",
   "november2": "November",
@@ -135,7 +123,6 @@
   "june2": "June",
   "july2": "July",
   "august2": "August",
-
   "sing_up": "Sign up",
   "we_use_number": "We use your phone number only to secure your records — this data is not shared with third parties and is anonymized",
   "we_use_email": "We use your email only to secure your records — this data is not shared with third parties and is anonymized",
@@ -155,11 +142,8 @@
   "concent_to_processing": "Consent to personal data processing",
   "user_conclusion": "Terms of Use",
   "have_account": "I already have an account",
-
   "sign_in": "Sign in",
-
   "settings": "Settings",
-
   "about_app": "About the app",
   "passwprd": "Password",
   "data_and_recovery": "Data and recovery",
@@ -170,14 +154,12 @@
   "subscription": "Subscription",
   "base_tariff_description": "Limited access to recommendations, statistics, and audio",
   "your_profile": "Your profile",
-
   "backup": "Backup",
   "days_ago": "days ago",
   "restore": "Restore",
   "your_data_will": "Your data will be automatically backed up to {} every week.",
   "last_copy": "Last backup",
   "press_backup_hint": "Tap \"Backup\" to save a copy of your data to {} at any time.",
-
   "select_backup": "Select a backup",
   "records": "Entries",
   "records_title": "Records",
@@ -189,7 +171,6 @@
   "milestone_celebration_body": "Your gallery already has {count} bright moments. Quite a treasure ✨",
   "all_existing_data": "All existing data will be replaced with the data from the backup you opened. Are you sure you want to restore it?",
   "version_from_restore": "Version from {} restored successfully",
-
   "medication": "Medication",
   "medication_name": "Medication name",
   "set_reception_duration": "Set duration of intake",
@@ -204,7 +185,6 @@
   "no_archived_pills": "Archive is empty",
   "what_we_accept": "What we're taking",
   "appointment": "Intake",
-
   "add_pill": "Add medication",
   "reminder_n": "Reminder {}",
   "add_pill_dialog_title": "Adding medication",
@@ -241,14 +221,12 @@
   "form_tablet": "Tablet",
   "form_drops": "Drops",
   "form_spray": "Spray",
-
   "write_your_wishes": "Write what you'd like to see: charts, symptoms, emotions, exercises",
   "your_suggestions": "Your suggestions",
   "upload_screenshot": "Attach a screenshot of the app screen you'd like improved",
   "upload_image": "Upload image",
   "suggestion_title": "Suggestion for improvement",
   "suggestion_sent": "Your suggestion has been sent",
-
   "describe_issue": "Please describe what went wrong",
   "error_screenshot": "Attach a screenshot of the app screen where the error occurred",
   "error_message_title": "Error report",
@@ -257,20 +235,17 @@
   "cancel_notifications": "You'll be able to turn off notifications",
   "remind_to_make_entry": "Remind me to make an entry at",
   "change_frequency_reminders": "Want to change the frequency and time of reminders?",
-
   "current_tariff": "Current plan",
   "limited_access": "Limited access to recommendations, statistics, and audio",
   "active_until": "Active until",
   "manage_subscription_on_website": "Manage subscription",
   "buy_subscription": "Buy subscription",
   "enter_promo_code": "Enter promo code",
-
   "already_subscribed_until": "You're already subscribed until {} {} {}.",
   "buy_subscription_breadcrumb": " | Subscription ",
   "buy_subscription_breadcrumb2": "| Buy subscription",
   "for_price_per_year": "for {} ₽/year",
   "promo_breadcrumb": " | Subscription | Gift code",
-
   "promo_code": "Promo code",
   "enter_gift_code": "Enter gift code",
   "send_code": "send code",
@@ -278,7 +253,6 @@
   "promo_inactive": "This promo code is inactive",
   "promo_discount_contact_support": "To apply this promo code's discount, please contact us: support@rivapsy.com",
   "tariff_activated_congrats": "Congratulations!\n\nThe “Orion” plan\nis now active",
-
   "enter_password": "Enter password",
   "password_recovery_not_provided": "Password recovery isn't provided by the system, ",
   "password_recovery_reason1": "because ",
@@ -291,7 +265,6 @@
   "gender": "Gender",
   "male": "Male",
   "female": "Female",
-
   "profile": "Profile",
   "old_password": "Old password",
   "new_password": "New password",
@@ -306,20 +279,16 @@
   "password_length_min": "Password length must be more than 8 characters",
   "password_length_max": "Password length must be less than 26 characters",
   "password_complexity": "The password must contain at least one digit, one lowercase and one uppercase letter, and one unique character such as !#$%&?",
-
   "send_path": "Complete the Path",
-
   "current_emotion": "Emotion right now",
   "find_emotion": "Find an emotion",
   "add_emotion": "Add an emotion",
-
   "negative": "Negative",
   "positive": "Positive",
   "neutral": "Neutral",
   "neutral_positive": "Neutral (leaning positive)",
   "neutral_negative": "Neutral (leaning negative)",
   "neutral_blank": "Neutral (roughly)",
-
   "people": "People",
   "animals_and_nature": "Animals and nature",
   "places_and_activities": "Places and activities",
@@ -468,14 +437,12 @@
   "rigid": "Rigid",
   "relaxed4": "Relaxed",
   "tense3": "Tense",
-
   "what_did_I_do": "What did I do?",
   "for_example_left_slammed_door": "For example: Left, slammed the door",
   "your_actions": "Your actions",
   "first_thoughts_in_situation": "First thoughts in the situation",
   "for_example_wish_it_was_me": "For example: I wish that were me!",
   "record_saved": "Entry {} saved",
-
   "charts": "Charts",
   "state_diagnosis": "State assessment",
   "summary_report": "Summary state report",
@@ -485,7 +452,6 @@
   "where_and_what_emotions": "Where and what emotions",
   "send_summary_report": "Send summary report",
   "change_time_period": "Change time period",
-
   "date": "Date",
   "situation": "Situation",
   "emotions": "Emotions",
@@ -675,7 +641,6 @@
   "alternative_thoughts": "Alternative thoughts",
   "new_decision": "New decision!",
   "no_new_decisions_in_period": "No new decisions in this period yet",
-
   "rest": "Rest",
   "sleep": "Sleep",
   "waking_up": "Waking up",
@@ -813,7 +778,6 @@
   "sympathy_+": "Sympathy +",
   "empathy_-": "Sense of connection -",
   "sympathy_-": "Sympathy -",
-
   "joy": "Joy",
   "happiness": "Happiness",
   "delight": "Delight",
@@ -861,7 +825,6 @@
   "reverence": "Reverence",
   "gratitude2": "Appreciation",
   "patriotism": "Patriotism",
-
   "anger_rage": "Anger (rage)",
   "hate": "Hate",
   "wrath": "Wrath",
@@ -878,7 +841,6 @@
   "disgust": "Disgust",
   "fear2": "Fear",
   "horror": "Horror",
-
   "desperation": "Desperation",
   "fear": "Fright",
   "suspicion": "Suspicion",
@@ -924,17 +886,14 @@
   "shame": "Shame",
   "repulsion": "Repulsion",
   "bewilderment": "Confusion",
-
   "work_out_irrational": "Work through the irrational",
   "path_to_healthy_life": "the path to a healthy life and relationships",
   "work_out_irrational_thoughts": "Work through irrational thoughts, turn the dysfunctional into functional",
   "want_try": "I want to try",
   "please_remember": "Please remember that only you see this, and being honest with yourself benefits you. We're here with warmth and support!",
   "recommended_to_take_per_day": "We recommend 2-3 entries a day. Take your time. We're about quality, not quantity. Let new, good things settle in and stabilize.",
-
   "prestige_in_focus": "Prestige in focus — happiness",
   "alternative": "Alternative",
-
   "go_to_tariff": "Switch to plan ",
   "orion_tariff_name": "Orion",
   "subscribe_monthly": "Monthly",
@@ -944,19 +903,16 @@
   "in_free_version": "In the free version, backups will be stored in your own cloud storage.",
   "tariff_title": "Plan",
   "for_storing_data_go_to_orion": "To store all entered data on your smartphone with maximum privacy, switch to the Orion plan. Get full access to recommendations, statistics, and audio",
-
   "alternative_reaction": "Alternative reactions",
   "through_path": "Complete the Path, add thoughts and emotions, and turn the unpleasant into positive",
   "auto_thought": "Automatic thought",
   "auto_do": "Automatic action",
   "challenge_thought": "Challenge the thought",
   "challenge_do": "Challenge the action",
-
   "why_i_do_that": "WHY did I do that?\nWhy exactly that reaction? Maybe I picked up this pattern, or had a negative experience before?",
   "which_my_behaviors": "Which of my behaviors is more fitting  for this situation?\nHow do I want to act in similar situations in the future?\nHow will I try to react  and act in a situation like this?",
   "why_i_think_that": "Why did I think that? What made me decide that?  Where have I heard these words, and/or from whom?",
   "i_with_i_could_think_about_it": "What would I have liked to think instead?  Which thought fits the situation better? What other thoughts could there be in this situation? For example, from someone  you respect",
-
   "alternative_thought": "alternative thought",
   "alternative_do": "alternative action",
   "show_more": "Show all",
@@ -967,19 +923,16 @@
   "champion": "Champion! Take a little rest.",
   "let_your_thoughts": "Let your thoughts settle and take root, and come back tomorrow. It's better this way)",
   "if_during_the_day": "If during the day you keep coming back to certain, specific negative thoughts, note them in the Path, and if there's no chance to go through it here and now:",
-
   "unknown_page": "Unknown page",
   "back": "Back",
   "initial_thought": "Initial thought",
   "initial_action": "Initial action",
   "alternative_thoughts_and_actions_title": "Alternative thoughts and actions",
   "why_i_thought_so": "Why I thought that",
-
   "find_record": "Find an entry",
   "add_record": "Add an entry",
   "do": "Action",
   "voice_record": "Voice recording",
-
   "return_your_own_life": "Take your life back. Breathe freely. Become a calm, light, confident, attractive person.\n\nGetting to know yourself isn't only about the negative — it's also about the pleasant.\n\nExplore yourself from different angles.\n\nOver time, new data will appear in your charts, which in turn may reveal something new about yourself)",
   "happiness_in_focus": "happiness in focus",
   "get_full_access_to_recomendation": "Get full access to recommendations, statistics, audio, and exercises: switch to the \"Orion\" plan",
@@ -996,10 +949,8 @@
   "you_have_right_on_thoughts": "You have the right \nto your thoughts and emotions.",
   "you_have_right_be_different": " You have the right to be different. It's normal to be more or less normal!",
   "university_today": "The universe is the way it is today because you exist",
-
   "thank_you_for_being_there": "Thank you for being here! ",
   "warm_hug_from_us": "A warm hug from us! Come back tomorrow, we'll be waiting for you",
-
   "three_days_without_complaints": "Three days without complaints",
   "three_days_without_one_complaints": "Three days without a single complaint.\nNot about the weather, health, politics, work, a loved one, transport, or, above all, yourself — about nothing!)",
   "during_the_first_attempts": "During the first attempts, suppressed negative emotions and grievances may surface — note them in the app and go through the audio sessions.",
@@ -1010,7 +961,6 @@
   "i_cant_anticipate": "\"I cannot foresee, I can only create. The future is made. If my hand is a sculptor's hand, then the fragmented features of my time will become a beautiful face, and what I want will come to be.\"\n\nCitadelle. Antoine de Saint-Exupéry",
   "best_praise": "The best praise and reward is what you've already gained by doing it",
   "now_lets_look_at_moments": "Now, one by one, let's look at 1-3-5 moments from today when you felt good… or... more or less good",
-
   "desires": "Desires",
   "its_not_about_great_dreams": "This isn't about big dreams, goals, or races — just the simplest desires.\n\nDesires are about simple things. This exercise helps you learn to hear yourself and your true desires.\n\nWrite down what you love or like, and what you want.\nWhat exactly?\n\nWhat do I want right now? Some small thing, here and now.\nI want to drink/lie down/sit/sleep, fish, an apple, a movie, a book — anything, and exactly what.\n",
   "get_start_with_simple_things": "It starts with simple things, and the more you practice, the more deeply you start to look into and shape your own path.\n\nExample: I want an apple right now, I want to cry right now, I want to drink, I want to listen to music.",
@@ -1034,20 +984,15 @@
   "executed_1": "Fulfilled it",
   "executing": "Fulfilling",
   "will_execute": "Will fulfill",
-
   "lost_wish": "The desire is gone",
   "lost": "Gone",
-
   "report": "Report",
   "later": "Later",
   "save_desire": "save desire",
   "desires_stage": "Desires {}/3",
   "desires_past": "Past desires",
   "recommendation_for_efficiency": "Recommendation for exercise effectiveness",
-
   "more_detailed": "more details",
-
-
   "help_and_support": "Help and support may be needed at any moment\n\nGet full access to recommendations, sessions, analytics, and exercises all year round.\n\nTake care of yourself\n\nQuality help day and night",
   "test_period": "Trial period (14 days)",
   "subscribe": "subscribe",
@@ -1072,7 +1017,6 @@
   "password_changed": "Password successfully saved",
   "delete_reminder": "Remove the reminder from current medications",
   "access_to_all_recomendation": "Access to all text and audio recommendations,\nmeditations, exercises, and practices for your mental health, calm, and growth",
-
   "offer_success_send": "Suggestion sent successfully",
   "exception_message_succe_send": "Error report sent successfully",
   "archive_records": "Archived entries",
@@ -1084,7 +1028,6 @@
   "voice_diary_privacy_note": "The entry is stored only on this device 🔒",
   "finish_practice": "Finish the practice",
   "mind_update": "Update your thinking",
-
   "introduction": "Introduction",
   "recommendations_and_exercises": "Recommendations and exercises",
   "exercises": "Exercises",
@@ -1105,9 +1048,7 @@
   "record_keep": "The entry is stored on your device",
   "record_save": "Entry saved",
   "microphone_access_error": "No microphone access. Allow access in the app settings and try again",
-
   "select_language": "Select language",
-
   "energy_matrix": "Energy Matrix",
   "energy_matrix_x_negative": "Low mood",
   "energy_matrix_x_positive": "Good mood",
@@ -1131,7 +1072,6 @@
   "energy_matrix_burnout_1": "\"{tag}\" is linked to apathy and low energy — little resource and little joy here. 🌧️",
   "energy_matrix_burnout_2": "Around \"{tag}\" you more often feel exhausted rather than relieved.",
   "energy_matrix_burnout_3": "\"{tag}\" is a burnout zone — both mood and energy run low here.",
-
   "synergy_heatmap": "Synergy Heatmap",
   "heatmap_pair_activity_person": "Activity × Person",
   "heatmap_pair_activity_place": "Activity × Place",
@@ -1140,16 +1080,13 @@
   "heatmap_empty": "Not enough matching entries for this pair yet. Try another combination or keep journaling.",
   "heatmap_cell_summary": "{row} × {col}: {count} entries, average score {score}",
   "heatmap_cell_summary_tension": "{row} × {col}: body symptoms in {percent}% of entries",
-
   "social_battery": "Social Battery",
   "social_battery_empty": "Not enough data yet to estimate your social battery. Track who you were with (including \"Myself\" if you were alone) and your mood — and the gauge will appear.",
   "social_battery_legend_social": "With others",
   "social_battery_nudge": "Your social resource limit is around {hours}h in a row. After that your irritation level tends to rise. Plan breaks!",
   "social_battery_no_limit_yet": "Not enough data yet to estimate your personal socializing limit — keep journaling.",
-
   "insights_period_all_time": "All time",
   "insight_feedback_dismissed": "Hid this tip for a while — if the pattern comes back, we'll show it again.",
-
   "insight_matrix_summary_1": "Your biggest resource drain right now is {vampire}. This context consistently brings on tension and drains your energy. But there's a counterweight: {donor} reliably brings you back to calm and comfort.",
   "insight_matrix_summary_2": "The data shows a contrast: {vampire} is most often tied to tension and low energy, while {donor} is tied to calm and a good mood.",
   "insight_matrix_nudge_1": "Balance is currently tilted toward stress. Try scheduling \"{donor}\" right after \"{vampire}\" this week to offset the energy drain.",
@@ -1157,7 +1094,6 @@
   "insight_matrix_theory_title": "How does energy drain work?",
   "insight_matrix_theory_body": "Psychology splits emotions along two axes: how pleasant they are (valence) and how much physical energy they demand (activation). Anger and anxiety make the body produce cortisol and adrenaline — that drains your internal battery even while you're just sitting in a chair. Calm and solitude activate the parasympathetic system, which restores your strength.",
   "insight_matrix_no_contrast": "Not enough contrast between zones yet — keep journaling and personal analytics will appear here.",
-
   "insight_heatmap_summary_1": "Context changes everything: {activity} feels heavy under \"{cond_bad}\", but brings calm under \"{cond_good}\".",
   "insight_heatmap_summary_2": "We noticed a pattern: {activity} triggers different reactions depending on conditions — hardest under \"{cond_bad}\", easiest under \"{cond_good}\".",
   "insight_heatmap_nudge_1": "The problem isn't the activity itself, it's the environment. What exactly about \"{cond_bad}\" causes the tension — could that factor be softened?",
@@ -1165,12 +1101,11 @@
   "insight_heatmap_theory_title": "Why does environment matter so much?",
   "insight_heatmap_theory_body": "The brain forms reflexive links not just with tasks themselves but with the surroundings too. Lighting, noise, or the presence of specific people can quietly overload the nervous system — this is called sensory overload. Changing just one element of the environment (like noise-cancelling headphones) can noticeably shift your emotional reaction to a routine task.",
   "insight_heatmap_no_contrast": "No strong contrast found for this pair yet — try another combination above or keep journaling.",
-
   "insight_battery_summary": "Your comfortable socializing limit right now is about {x}h. Past that point your mood tends to dip and irritability can appear. To fully recharge, your nervous system usually needs about {y}h alone.",
   "insight_battery_theory_title": "What is social burnout?",
   "insight_battery_theory_body": "Any socializing — even with the people you love most — takes real work from the brain: reading micro-expressions, adjusting your tone, managing empathy. Under stress, that work exhausts people faster. Needing time alone isn't a sign you don't love the people around you — it's a basic physiological need to lower cognitive load.",
-
   "energy_matrix_intro": "Each bubble is a person, place, or activity from your diary. Its position shows whether that context charges you with energy or drains it.",
   "synergy_heatmap_intro": "Cells show how the same activity feels under different conditions — where it's easy for you, and where it's hard. Sometimes it's not the activity itself, but the environment.",
-  "social_battery_intro": "Shows how much social resource you have left right now, and how much time alone you typically need to recharge."
+  "social_battery_intro": "Shows how much social resource you have left right now, and how much time alone you typically need to recharge.",
+  "gratitude_popup_dismiss": "Thank you ✨"
 }

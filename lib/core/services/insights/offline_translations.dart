@@ -32,4 +32,17 @@ class OfflineTranslations {
     });
     return value;
   }
+
+  /// Breaks a notification body into one sentence per line — sentence-ending
+  /// punctuation (.!?) followed by whitespace becomes a line break, so a
+  /// multi-sentence insight/nudge reads as short lines in the notification
+  /// shade instead of one dense paragraph. Language-agnostic (RU/EN/ES all
+  /// end sentences the same way), so it works on the already-`tr()`'d text
+  /// regardless of locale.
+  static String toSentenceLines(String text) {
+    return text
+        .split(RegExp(r'(?<=[.!?])\s+(?=\S)'))
+        .where((s) => s.trim().isNotEmpty)
+        .join('\n');
+  }
 }

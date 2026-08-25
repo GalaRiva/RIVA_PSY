@@ -17,6 +17,8 @@ class InsightsRepo {
     await _save(all);
   }
 
+  Future<void> clearAll() => _save([]);
+
   Future<void> markRead(String id) => _update(id, (i) => i.copyWith(isRead: true));
 
   Future<void> setFeedback(String id, String feedback) =>

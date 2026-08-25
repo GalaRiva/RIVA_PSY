@@ -6,6 +6,7 @@ import 'package:workmanager/workmanager.dart';
 
 import '../../db/hive_db.dart';
 import '../workmanager/workmanager_service.dart';
+import 'gratitude_nudge_store.dart';
 import 'insight_engine.dart';
 import 'insight_notifier.dart';
 import 'offline_translations.dart';
@@ -40,9 +41,14 @@ void insightCallbackDispatcher() {
   });
 }
 
+/// Brand teal — set as both the channel's default accent and each
+/// notification's own `color` so the small-icon badge in the shade renders
+/// on-brand instead of the OS default (plain black/gray circle).
+const Color _brandNotificationColor = Color(0xFF2A5C55);
+
 Future<void> _runNightlyInsightAnalysis() async {
   await HiveDB.initDB();
-  await AwesomeNotifications().initialize('resource://drawable/ic_launcher', [
+  await AwesomeNotifications().initialize('resource://drawable/ic_stat_notify', [
     NotificationChannel(
       channelGroupKey: 'reminders',
       channelKey: 'scheduled',
@@ -51,6 +57,7 @@ Future<void> _runNightlyInsightAnalysis() async {
       channelShowBadge: true,
       importance: NotificationImportance.High,
       enableVibration: true,
+      defaultColor: _brandNotificationColor,
     ),
   ], channelGroups: [
     NotificationChannelGroup(
@@ -71,7 +78,7 @@ Future<void> _runNightlyInsightAnalysis() async {
 /// standalone local notification — a lightweight prompt to notice something
 /// good right now, independent of any diary/pill data.
 Future<void> _runGratitudeNudge() async {
-  await AwesomeNotifications().initialize('resource://drawable/ic_launcher', [
+  await AwesomeNotifications().initialize('resource://drawable/ic_stat_notify', [
     NotificationChannel(
       channelGroupKey: 'reminders',
       channelKey: 'gratitude',
@@ -80,6 +87,7 @@ Future<void> _runGratitudeNudge() async {
       channelShowBadge: true,
       importance: NotificationImportance.High,
       enableVibration: true,
+      defaultColor: _brandNotificationColor,
     ),
   ], channelGroups: [
     NotificationChannelGroup(
@@ -89,7 +97,9 @@ Future<void> _runGratitudeNudge() async {
   ]);
   final translations = await OfflineTranslations.load();
   final pick = Random().nextInt(30) + 1;
-  final body = OfflineTranslations.tr(translations, 'gratitude_nudge_template_$pick');
+  final body = OfflineTranslations.toSentenceLines(
+      OfflineTranslations.tr(translations, 'gratitude_nudge_template_$pick'));
+  await GratitudeNudgeStore.save(body);
   final id = ('gratitude_${DateTime.now().toIso8601String()}').hashCode & 0x7FFFFFFF;
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
@@ -99,6 +109,8 @@ Future<void> _runGratitudeNudge() async {
       body: body,
       wakeUpScreen: true,
       category: NotificationCategory.Reminder,
+      color: _brandNotificationColor,
+      notificationLayout: NotificationLayout.BigText,
     ),
   );
 }
@@ -139,6 +151,16 @@ Future<void> registerGratitudeNudgeTask() async {
     existingWorkPolicy: ExistingWorkPolicy.keep,
   );
 }
+
+/// Manual trigger for the exact same nightly-analysis code path, for
+/// on-device testing from Settings — real WorkManager runs can be delayed
+/// hours by Android (Doze, the `requiresCharging` constraint, OEM battery
+/// management) so waiting for one isn't a practical way to verify this works.
+Future<void> runNightlyInsightAnalysisNow() => _runNightlyInsightAnalysis();
+
+/// Manual trigger for the exact same gratitude-nudge code path, same
+/// reasoning as [runNightlyInsightAnalysisNow].
+Future<void> runGratitudeNudgeNow() => _runGratitudeNudge();
 
 Duration _delayUntilNext(int hour, int minute) {
   final now = DateTime.now();

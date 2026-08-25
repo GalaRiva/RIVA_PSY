@@ -1,5 +1,6 @@
 import '../../models/insight_model.dart';
 import '../notifications/awesome_notification_service.dart';
+import 'insight_popup_store.dart';
 import 'offline_translations.dart';
 
 /// Turns a batch of freshly-generated insights into a single local
@@ -15,12 +16,14 @@ class InsightNotifier {
     final String body;
     if (batch.length <= 2) {
       body = batch
-          .map((i) => OfflineTranslations.tr(translations, i.templateKey, i.namedArgs))
+          .map((i) => OfflineTranslations.toSentenceLines(
+              OfflineTranslations.tr(translations, i.templateKey, i.namedArgs)))
           .join('\n\n');
     } else {
       body = OfflineTranslations.tr(
           translations, 'insight_notification_many_body', {'count': '${batch.length}'});
     }
+    await InsightPopupStore.save(title, body);
     await AwesomeNotificationService().scheduleInsightNotification(title: title, body: body);
   }
 }

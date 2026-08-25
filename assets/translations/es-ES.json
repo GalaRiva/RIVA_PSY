@@ -1049,7 +1049,6 @@
   "record_save": "Registro guardado",
   "microphone_access_error": "No microphone access. Allow access in the app settings and try again",
   "select_language": "Seleccionar idioma",
-
   "energy_matrix": "Matriz de Energía",
   "energy_matrix_x_negative": "Mal humor",
   "energy_matrix_x_positive": "Buen humor",
@@ -1073,7 +1072,6 @@
   "energy_matrix_burnout_1": "«{tag}» está ligado a la apatía y la falta de energía — poco recurso y poca alegría aquí. 🌧️",
   "energy_matrix_burnout_2": "Cerca de «{tag}» sientes más agotamiento que alivio.",
   "energy_matrix_burnout_3": "«{tag}» es una zona de desgaste — tanto el ánimo como la energía están bajos aquí.",
-
   "synergy_heatmap": "Mapa de calor de sinergia",
   "heatmap_pair_activity_person": "Actividad × Persona",
   "heatmap_pair_activity_place": "Actividad × Lugar",
@@ -1082,16 +1080,13 @@
   "heatmap_empty": "Todavía no hay suficientes registros que combinen esta pareja. Prueba otra combinación o sigue escribiendo en el diario.",
   "heatmap_cell_summary": "{row} × {col}: {count} registros, puntuación media {score}",
   "heatmap_cell_summary_tension": "{row} × {col}: síntomas corporales en el {percent}% de los registros",
-
   "social_battery": "Batería social",
   "social_battery_empty": "Todavía no hay suficientes datos para evaluar tu batería social. Anota con quién estuviste (incluido «Yo», si estuviste a solas) y tu ánimo — y la escala aparecerá.",
   "social_battery_legend_social": "En compañía",
   "social_battery_nudge": "Tu límite de recurso social es de unas {hours} h. seguidas. Después de eso, tu nivel de irritación suele subir. ¡Planifica pausas!",
   "social_battery_no_limit_yet": "Todavía no hay suficientes datos para estimar tu límite personal de socialización — sigue escribiendo en el diario.",
-
   "insights_period_all_time": "Todo el tiempo",
   "insight_feedback_dismissed": "Ocultamos este consejo por un tiempo — si el patrón se repite, lo mostraremos de nuevo.",
-
   "insight_matrix_summary_1": "Tu mayor fuente de desgaste ahora mismo es {vampire}. Este contexto suele generar tensión y te resta energía. Pero también hay un contrapeso: {donor} te devuelve de forma constante a la calma y la comodidad.",
   "insight_matrix_summary_2": "Los datos muestran un contraste: {vampire} suele estar ligado a la tensión y la baja energía, mientras que {donor} se asocia con la calma y el buen humor.",
   "insight_matrix_nudge_1": "El equilibrio está inclinado hacia el estrés. Prueba a programar «{donor}» justo después de «{vampire}» esta semana para compensar el desgaste de energía.",
@@ -1099,7 +1094,6 @@
   "insight_matrix_theory_title": "¿Cómo funciona el gasto de energía?",
   "insight_matrix_theory_body": "La psicología divide las emociones en dos ejes: cuán agradables son (valencia) y cuánta energía física requieren (activación). La ira y la ansiedad hacen que el cuerpo produzca cortisol y adrenalina — eso gasta tu batería interna incluso si solo estás sentado/a en una silla. La calma y la soledad activan el sistema parasimpático, que restaura tus fuerzas.",
   "insight_matrix_no_contrast": "Todavía no hay suficiente contraste entre zonas — sigue escribiendo en el diario y aquí aparecerá tu análisis personal.",
-
   "insight_heatmap_summary_1": "El contexto lo cambia todo: {activity} se siente pesado bajo «{cond_bad}», pero trae calma bajo «{cond_good}».",
   "insight_heatmap_summary_2": "Notamos un patrón: {activity} genera reacciones distintas según las condiciones — más difícil bajo «{cond_bad}», más fácil bajo «{cond_good}».",
   "insight_heatmap_nudge_1": "El problema no es la actividad en sí, sino el entorno. ¿Qué exactamente en «{cond_bad}» genera tensión? ¿Se puede suavizar ese factor?",
@@ -1107,12 +1101,11 @@
   "insight_heatmap_theory_title": "¿Por qué importa tanto el entorno?",
   "insight_heatmap_theory_body": "El cerebro forma conexiones reflejas no solo con las tareas en sí, sino también con el entorno. La iluminación, el ruido o la presencia de ciertas personas pueden sobrecargar el sistema nervioso sin que te des cuenta — esto se llama sobrecarga sensorial. Cambiar un solo elemento del entorno (como usar auriculares con cancelación de ruido) puede modificar notablemente tu reacción emocional ante una tarea rutinaria.",
   "insight_heatmap_no_contrast": "Todavía no encontramos un contraste claro para esta combinación — prueba otra pareja arriba o sigue escribiendo en el diario.",
-
   "insight_battery_summary": "Tu límite cómodo de socialización ahora mismo es de unas {x}h. Después de ese punto tu ánimo tiende a bajar y puede aparecer irritabilidad. Para recargarte por completo, tu sistema nervioso suele necesitar unas {y}h a solas.",
   "insight_battery_theory_title": "¿Qué es el agotamiento social?",
   "insight_battery_theory_body": "Cualquier interacción social — incluso con las personas que más quieres — exige un trabajo real del cerebro: leer microexpresiones, ajustar el tono de voz, gestionar la empatía. Bajo estrés, ese trabajo agota antes. Necesitar tiempo a solas no es una señal de que no quieres a quienes te rodean — es una necesidad fisiológica básica para reducir la carga cognitiva.",
-
   "energy_matrix_intro": "Cada burbuja es una persona, lugar o actividad de tu diario. Su posición muestra si ese contexto te carga de energía o te la quita.",
   "synergy_heatmap_intro": "Las celdas muestran cómo se siente la misma actividad en distintas condiciones — dónde te resulta fácil y dónde difícil. A veces el problema no es la actividad en sí, sino el entorno.",
-  "social_battery_intro": "Muestra cuánto recurso social te queda ahora mismo y cuánto tiempo a solas sueles necesitar para recargarte."
+  "social_battery_intro": "Muestra cuánto recurso social te queda ahora mismo y cuánto tiempo a solas sueles necesitar para recargarte.",
+  "gratitude_popup_dismiss": "Gracias ✨"
 }
