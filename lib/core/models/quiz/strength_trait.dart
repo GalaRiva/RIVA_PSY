@@ -21,7 +21,7 @@ extension StrengthTraitAssets on StrengthTrait {
     StrengthTrait.humor: 'humor',
   };
 
-  String get imageAsset => 'assets/images/quiz/${_imageFileNames[this]}.png';
+  String get imageAsset => 'assets/images/quiz/${_imageFileNames[this]}.jpg';
 
   // easy_localization keys — one statement per trait, and the paired
   // result text (strength + shadow side + how the app helps, as one

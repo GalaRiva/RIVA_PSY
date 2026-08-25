@@ -13,6 +13,7 @@ import 'widgets/voice_button.dart';
 import 'widgets/exercise_content/controller.dart';
 import 'controller.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../consultation/consultation_prompt_card.dart';
 
 class K39Screen extends GetWidget {
 
@@ -106,6 +107,11 @@ class K39Screen extends GetWidget {
                                ),
                                child: ScreenBodyWidget(isNegative: dayEventModel.emotionInDayEvent == EmotionInDayEvent.NEGATIVE, dayEventModel: dayEventModel,)
                              ),
+                             if (context.locale.languageCode == 'ru')
+                               Padding(
+                                 padding: getPadding(left: 16, right: 16, top: 20),
+                                 child: const ConsultationPromptCard(),
+                               ),
                              SizedBox(
                                height: getVerticalSize(140),
                              )

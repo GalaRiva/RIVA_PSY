@@ -30,7 +30,7 @@ class QuizBridgeScreen extends StatelessWidget {
                 aspectRatio: 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(28),
-                  child: Image.asset('assets/images/quiz/love.png', fit: BoxFit.cover),
+                  child: Image.asset('assets/images/quiz/love.jpg', fit: BoxFit.cover),
                 ),
               ),
               SizedBox(height: getVerticalSize(32)),

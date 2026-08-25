@@ -9,6 +9,8 @@ import 'controller.dart';
 import 'widgets/card_settings_button_widget.dart';
 import '../../../theme/app_colors.dart';
 import '../../initial_setup/strengths_quiz/quiz_flow.dart';
+import '../../initial_setup/set_reminders_screen/k3_screen.dart';
+import '../../consultation/consultation_screen.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -145,6 +147,18 @@ class K6Screen extends GetWidget {
                               controller: controller,
                               svgSize: 24,
                             ),
+                            if (context.locale.languageCode == 'ru')
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const ConsultationScreen())),
+                                title: 'consultation_menu_item',
+                                svgIcon: ImageConstant.imgConsultation,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
                             // Exercises the exact same production flow real
                             // registration now triggers — keep this entry
                             // point for quick on-device testing without
@@ -153,6 +167,17 @@ class K6Screen extends GetWidget {
                               context,
                               onTap: () => startPostRegistrationQuizFlow(context),
                               title: '🧪 Quiz test (temp)',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => showDialog(
+                                  useSafeArea: false,
+                                  context: context,
+                                  builder: (_) => K3Screen()),
+                              title: '🧪 Reminders test (temp)',
                               svgIcon: ImageConstant.imgUser,
                               controller: controller,
                               svgSize: 24,

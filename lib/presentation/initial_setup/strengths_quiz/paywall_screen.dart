@@ -145,7 +145,7 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/quiz/paywall_hero.png', fit: BoxFit.cover),
+          Image.asset('assets/images/quiz/paywall_hero.jpg', fit: BoxFit.cover),
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(

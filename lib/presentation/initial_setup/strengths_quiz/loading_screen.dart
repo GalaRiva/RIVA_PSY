@@ -81,7 +81,7 @@ class _ProfileGenerationLoadingScreenState extends State<ProfileGenerationLoadin
           // Poster (the video's own first frame) shows instantly, so there's
           // no dark gap while VideoPlayerController initializes — the video
           // then crossfades in on top once ready.
-          Image.asset('assets/images/quiz/profile_generation_poster.png', fit: BoxFit.cover),
+          Image.asset('assets/images/quiz/profile_generation_poster.jpg', fit: BoxFit.cover),
           AnimatedOpacity(
             opacity: _videoReady ? 1 : 0,
             duration: const Duration(milliseconds: 250),

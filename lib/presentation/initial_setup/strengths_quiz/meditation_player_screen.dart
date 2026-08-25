@@ -91,7 +91,7 @@ class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/quiz/love.png', fit: BoxFit.cover),
+          Image.asset('assets/images/quiz/love.jpg', fit: BoxFit.cover),
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
