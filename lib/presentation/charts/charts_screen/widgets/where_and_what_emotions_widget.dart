@@ -3,26 +3,34 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/app_export.dart';
-import '../../../../core/user_data/user.dart';
 import '../../../../core/utils/size_utils.dart';
+import '../../../../theme/app_colors.dart';
 import '../../../../widgets/custom_search_view.dart';
 import '../../../../widgets/go_to_new_tariff_widget.dart';
 import '../controller.dart';
+import '../models/emotion_model.dart';
+import '../models/place_model.dart';
 
+// Quiet-luxury / trauma-informed redesign: no gridlines, no dense
+// wall-of-bars, each place gets its own soft card, and only the top few
+// emotions are shown by default so the eye lands on what actually matters
+// instead of a dozen 4%-each slivers.
 class WhereAndWhatEmotionsWidget extends StatelessWidget {
   final K61Controller controller;
   const WhereAndWhatEmotionsWidget({Key? key, required this.controller}) : super(key: key);
 
   static const double chartHeight = 108;
+  static const int _topN = 3;
+  static const Color _otherColor = Color(0xFFBFC4C4);
+
+  double _sum(List<EmotionModel> list) {
+    double s = 0;
+    for (var item in list) s += item.quantity;
+    return s;
+  }
 
   @override
   Widget build(BuildContext context) {
-    double _sum(List<dynamic> list) {
-      double _s = 0;
-      for (var item in list) _s += item.quantity;
-      return _s;
-    }
-
     return Container(
       width: size.width,
       decoration: AppDecoration.glassCard,
@@ -36,11 +44,21 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
                 'where_and_what_emotions'.tr(),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
-                style: AppStyle.txtSFProDisplayLight14Gray800,
+                style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(
+                  fontSize: getFontSize(17),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             Padding(
-              padding: getPadding(left: 16, right: 16),
+              padding: getPadding(left: 20, top: 6, right: 20),
+              child: Text(
+                'where_and_what_emotions_intro'.tr(),
+                style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.4),
+              ),
+            ),
+            Padding(
+              padding: getPadding(left: 16, top: 18, right: 16),
               child: CustomSearchView(
                 onChange: (text) {
                   controller.searchPlaces(text);
@@ -48,134 +66,39 @@ class WhereAndWhatEmotionsWidget extends StatelessWidget {
                 },
                 focusNode: FocusNode(),
                 hintText: 'find_a_place'.tr(),
-                margin: getMargin(
-                  left: 2,
-                  top: 23,
-                ),
-                variant: SearchViewVariant.UnderLineWhiteA700,
+                variant: SearchViewVariant.FillGray200,
                 fontStyle: SearchViewFontStyle.SFProDisplayLight14Gray800,
-                suffix: Container(
-                  margin: getMargin(
-                    left: 30,
-                    top: 1,
-                    right: 10,
-                    bottom: 9,
-                  ),
+                suffix: Padding(
+                  padding: getPadding(right: 14),
                   child: CustomImageView(
                     svgPath: ImageConstant.imgSearchWhiteA700,
+                    color: ColorConstant.gray800.withOpacity(0.6),
+                    height: getVerticalSize(18),
+                    width: getHorizontalSize(18),
                   ),
                 ),
                 suffixConstraints: BoxConstraints(
-                  maxHeight: getVerticalSize(
-                    26,
-                  ),
+                  maxHeight: getVerticalSize(26),
                 ),
               ),
             ),
-
-            Padding(padding: getPadding(top: 32, left: 16, right: 16, bottom: 32),
-            child: Wrap(
-              spacing: 30,
-direction: Axis.vertical,
-              children: controller.placesResult.map((e) =>  Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(e.place,
-                  style: AppStyle.txtSFProDisplayLight12Gray800,
-                  ),
-                  SizedBox(height: getVerticalSize(14),),
-                  Stack(
-                    children: [
-                      grid(chartHeight),
-                      Container(
-                        height: getVerticalSize(chartHeight),
-                        width: size.width - 32,
-                        child: IgnorePointer(
-                          // Premium redesign (spec block 3): the light grid
-                          // lines behind this chart (grid()/line() above)
-                          // already provide the subtle horizontal
-                          // direction — fl_chart's own axis/grid stay off
-                          // so nothing doubles up or looks "technical".
-                          child: BarChart(
-                            BarChartData(
-                              maxY: e.emotionMax.toDouble(),
-                              minY: 0,
-                              gridData: const FlGridData(show: false),
-                              titlesData: const FlTitlesData(show: false),
-                              borderData: FlBorderData(show: false),
-                              barTouchData: const BarTouchData(enabled: false),
-                              barGroups: [
-                                for (var i = 0; i < e.emotions.length; i++)
-                                  BarChartGroupData(
-                                    x: i,
-                                    barRods: [
-                                      BarChartRodData(
-                                        toY: e.emotions[i].quantity.toDouble(),
-                                        // Same glass language as the body-map
-                                        // markers: a soft translucent-to-full
-                                        // color gradient instead of a flat fill.
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Color.lerp(e.emotions[i].color, Colors.white, 0.5)!,
-                                            e.emotions[i].color,
-                                          ],
-                                        ),
-                                        width: 12,
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(padding: getPadding(top: 16),
-                      child: SizedBox(
-                        width: size.width,
-                        height: getSize(50),
-                        child: ListView(
-                          physics: PageScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          children: e.emotions.map((_e) => Padding(
-                          padding: getPadding(bottom: 18, right: 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                color: (_e).color,
-                                width: getSize(14),
-                                height: getSize(14),
-                              ),
-                              Padding(padding: getPadding(left: 6),
-                                child: Text('${(_e).name} ${(((_e).quantity  / _sum(e.emotions)) * 100).toInt()}%',
-                                  overflow:
-                                  TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: AppStyle
-                                      .txtSFProDisplayLight10Gray800.copyWith(fontSize: getFontSize(16)),),
-                              )
-                            ],
-                          ),
-                        )).toList(),),
-                      )
-                  )
-                ],
-              )).toList(),
+            Padding(
+              padding: getPadding(top: 24, left: 16, right: 16, bottom: 24),
+              child: Wrap(
+                spacing: 14,
+                direction: Axis.vertical,
+                children: controller.placesResult
+                    .map((e) => _PlaceCard(place: e, sumAll: _sum(e.emotions)))
+                    .toList(),
+              ),
             ),
-            ),
-            SizedBox(height: 20,)
           ],
         ),
       ),
     );
   }
 
-  Widget _emptyTab () {
+  Widget _emptyTab() {
     return Stack(
       children: [
         Container(
@@ -208,17 +131,15 @@ direction: Axis.vertical,
                       left: 2,
                       top: 23,
                     ),
-                    variant: SearchViewVariant.UnderLineWhiteA700,
+                    variant: SearchViewVariant.FillGray200,
                     fontStyle: SearchViewFontStyle.SFProDisplayLight14Gray800,
-                    suffix: Container(
-                      margin: getMargin(
-                        left: 30,
-                        top: 1,
-                        right: 10,
-                        bottom: 9,
-                      ),
+                    suffix: Padding(
+                      padding: getPadding(right: 14),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgSearchWhiteA700,
+                        color: ColorConstant.gray800.withOpacity(0.6),
+                        height: getVerticalSize(18),
+                        width: getHorizontalSize(18),
                       ),
                     ),
                     suffixConstraints: BoxConstraints(
@@ -236,53 +157,198 @@ direction: Axis.vertical,
       ],
     );
   }
+}
 
-  Widget grid(double height) {
-    final gap = (height - 11) / 10;
+// One place's card: name, bar chart (top emotions + a folded-in "Other"),
+// a two-column legend of circular dots, and — only if anything was folded
+// in — a toggle to reveal what "Other" is made of.
+class _PlaceCard extends StatefulWidget {
+  final PlaceModel place;
+  final double sumAll;
+  const _PlaceCard({required this.place, required this.sumAll});
+
+  @override
+  State<_PlaceCard> createState() => _PlaceCardState();
+}
+
+class _PlaceCardState extends State<_PlaceCard> {
+  bool _expanded = false;
+  late final List<EmotionModel> _sorted;
+  late final List<EmotionModel> _top;
+  late final List<EmotionModel> _hidden;
+  late final List<EmotionModel> _display;
+
+  @override
+  void initState() {
+    super.initState();
+    _sorted = [...widget.place.emotions]..sort((a, b) => b.quantity.compareTo(a.quantity));
+    if (_sorted.length <= WhereAndWhatEmotionsWidget._topN + 1) {
+      _top = _sorted;
+      _hidden = const [];
+    } else {
+      _top = _sorted.take(WhereAndWhatEmotionsWidget._topN).toList();
+      _hidden = _sorted.skip(WhereAndWhatEmotionsWidget._topN).toList();
+    }
+    final otherQty = _hidden.fold<int>(0, (s, e) => s + e.quantity);
+    _display = [
+      ..._top,
+      if (otherQty > 0)
+        EmotionModel(otherQty, 'other_emotions_bucket'.tr(), WhereAndWhatEmotionsWidget._otherColor),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Headroom above the tallest bar so its percent label always has room
+    // to sit above it — without this, fl_chart pushes the label down
+    // *inside* the bar when it's close to maxY, and the (color-matched)
+    // text disappears against the bar's own fill.
+    final maxY = _display.map((e) => e.quantity).reduce((a, b) => a > b ? a : b).toDouble() * 1.25;
     return Container(
-      height: getVerticalSize(height),
-      width: size.width - 31,
-      child: Row(
+      width: size.width - 32,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF7F5F0),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 14, offset: const Offset(0, 4)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: getVerticalSize(height),
-            width: 1,
-            color: Colors.white,
+          Text(
+            widget.place.place,
+            style: AppStyle.txtSFProDisplayLight12Gray800.copyWith(fontWeight: FontWeight.w600),
           ),
+          SizedBox(height: getVerticalSize(16)),
           SizedBox(
-            height: getVerticalSize(height),
-            child: Column(
-              children: List<Widget>.generate(11, (index) => line(index, gap)),
+            height: getVerticalSize(WhereAndWhatEmotionsWidget.chartHeight),
+            width: double.infinity,
+            child: BarChart(
+              BarChartData(
+                maxY: maxY,
+                minY: 0,
+                // spaceBetween (the default) pins bars to the chart's outer
+                // edges — with only 1-3 bars now (top-3 + Other) that reads
+                // as lopsided; spaceEvenly keeps them centered and evenly
+                // breathing regardless of count.
+                alignment: BarChartAlignment.spaceEvenly,
+                gridData: const FlGridData(show: false),
+                titlesData: const FlTitlesData(show: false),
+                borderData: FlBorderData(show: false),
+                // Value labels are shown permanently (not on touch) so the
+                // percent is readable directly on the bar — no gridlines,
+                // no axis, nothing to cross-reference.
+                barTouchData: BarTouchData(
+                  enabled: false,
+                  touchTooltipData: BarTouchTooltipData(
+                    // A subtle white chip behind the label — belt-and-
+                    // suspenders alongside the maxY headroom above, so the
+                    // percent stays legible even in a tight spot instead of
+                    // ever blending into a same-toned bar.
+                    getTooltipColor: (_) => Colors.white.withOpacity(0.85),
+                    tooltipBorderRadius: BorderRadius.circular(6),
+                    tooltipPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    tooltipMargin: 6,
+                    fitInsideVertically: true,
+                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                      final em = _display[group.x];
+                      final percent = ((em.quantity / widget.sumAll) * 100).round();
+                      return BarTooltipItem(
+                        '$percent%',
+                        TextStyle(
+                          color: em.color,
+                          fontWeight: FontWeight.w700,
+                          fontSize: getFontSize(10),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                barGroups: [
+                  for (var i = 0; i < _display.length; i++)
+                    BarChartGroupData(
+                      x: i,
+                      showingTooltipIndicators: const [0],
+                      barRods: [
+                        BarChartRodData(
+                          toY: _display[i].quantity.toDouble(),
+                          // Solid, matte fill — the old top-light/bottom-dark
+                          // gradient read as a dated 2010s chart texture.
+                          color: _display[i].color,
+                          width: 30,
+                          // Full capsule (radius = half the bar width), not
+                          // just rounded top corners.
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ),
-          )
+          ),
+          SizedBox(height: getVerticalSize(16)),
+          _legendGrid(_display),
+          if (_hidden.isNotEmpty) ...[
+            SizedBox(height: getVerticalSize(10)),
+            GestureDetector(
+              onTap: () => setState(() => _expanded = !_expanded),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    _expanded ? 'show_less'.tr() : 'show_more'.tr(),
+                    style: TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w600),
+                  ),
+                  Icon(
+                    _expanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
+                    size: 16,
+                    color: AppColors.primary,
+                  ),
+                ],
+              ),
+            ),
+            if (_expanded)
+              Padding(
+                padding: EdgeInsets.only(top: getVerticalSize(8)),
+                child: _legendGrid(_hidden),
+              ),
+          ],
         ],
       ),
     );
   }
 
-  Widget line(i, double gap) => Column(
-    children: [
-      SizedBox(
-        width: size.width - 32,
-
-        child: Divider(
-          height: getVerticalSize(
-            1,
-          ),
-          thickness: getVerticalSize(
-            1,
-          ),
-          indent: 0,
-          endIndent: 0,
-          color: ColorConstant.gray50,
-        ),
-      ),
-  Visibility(
-    visible: i != 10,
-    child: SizedBox(
-      height: getVerticalSize(gap),
-    ),
-  )
-  ],
-  );
+  Widget _legendGrid(List<EmotionModel> items) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      childAspectRatio: 4.2,
+      children: items.map((em) {
+        final percent = ((em.quantity / widget.sumAll) * 100).round();
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: getSize(10),
+              height: getSize(10),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: em.color),
+            ),
+            SizedBox(width: getHorizontalSize(6)),
+            Flexible(
+              child: Text(
+                '${em.name} — $percent%',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: getFontSize(12), color: const Color(0xFF3B3A4A)),
+              ),
+            ),
+          ],
+        );
+      }).toList(),
+    );
+  }
 }

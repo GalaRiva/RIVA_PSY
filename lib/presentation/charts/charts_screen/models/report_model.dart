@@ -24,19 +24,20 @@ class ReportModel {
         for(var item in  event.whatEmotion!) {
           emotion += '${item.localizedName}\n';
         }
-        return emotion.length > 50 ? emotion.substring(0, 50) + '...' : emotion + '\n(${event.emotionIntensity})';
+        // Was silently dropping the intensity whenever the text happened to
+        // be truncated — the two are unrelated (truncation was cutting off
+        // real content well before 50 characters), so both are kept now.
+        return '$emotion(${event.emotionIntensity})';
       case 3:
         String bodyParts = '';
         for(var item in event.whatBodyParts!){
           bodyParts += '${item.bodyPartsModel.localizedBodyPart}\n${item.subtitle}\n';
         }
-        return bodyParts.length > 50 ? bodyParts.substring(0, 50) + '...' : bodyParts;
+        return bodyParts;
       case 4:
-        final text = (event.whatIDo?.length ?? 0) > 40 ? event.whatIDo!.substring(0, 40) + '...' : event.whatIDo ?? '';
-        return text;
+        return event.whatIDo ?? '';
       default:
-        final text = (event.firstThoughts?.length ?? 0) > 40 ? event.firstThoughts!.substring(0, 40) + '...' : event.firstThoughts ?? '';
-        return text;
+        return event.firstThoughts ?? '';
     }
   }
 
@@ -70,23 +71,7 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
     )
     );
 
-    List<List<DayEventModel>> eventsInMatrix = [[]];
-    for(int i = 0; i < events.length; i++) {
-      if(i != 0) {
-        if (i % 4 == 0 && eventsInMatrix.length > 2)
-          eventsInMatrix.add([]);
-        else if (i % 3 == 0 && eventsInMatrix.length < 2)
-          eventsInMatrix.add([]);
-      }
-      eventsInMatrix[eventsInMatrix.length - 1].add(events[i]);
-    }
-
-    pdf.addPage(Page(
-        pageFormat: PdfPageFormat.a4.landscape,
-        build: (context) {
-
-      return Column(children: [
-        SizedBox(
+    Widget brandingHeader() => SizedBox(
           height: getVerticalSize(100),
           child: Row(
             children: [
@@ -140,55 +125,60 @@ final _borderColor = PdfColor.fromInt(0xFFD7E1E1);
                   ]))
             ],
           ),
-        ),
-        SizedBox(height: (39)),
-        Row(children: List<Widget>.generate(6, (index) => Padding(padding: EdgeInsets.only(right: 3),
-            child:
-            Container(
-                width: (_columnWeight[index]),
-                height: (29),
-                decoration: BoxDecoration(
-                    border: Border.all(color: _borderColor)
-                ),
-                child: Center(
-                    child: Text(_columnTags[index].tr(), style: _headerStyle.copyWith())
-                )
-            )))),
+        );
 
-        SizedBox(height: 2),
-        _listEvents(eventsInMatrix[0])
-      ]);
-    }));
-    if(eventsInMatrix.length > 1) {
-      for(int i = 1; i < eventsInMatrix.length; i++) {
-        pdf.addPage(Page(
-            pageFormat: PdfPageFormat.a4.landscape,
-            build: (context) => _listEvents(eventsInMatrix[i])));
-      }
-    }
+    // Header row is marked repeat:true so pw.Table reprints it on every
+    // page on its own — no more manually splitting `events` into pages.
+    // Cells carry no border of their own — pw.Table measures each cell at
+    // its own intrinsic size before it knows the shared row height, so a
+    // per-cell Container border gets painted once at that (too-small) size
+    // and again at the resolved row height, leaving a faint "ghost" box.
+    // TableBorder on the Table itself (below) draws the grid after row
+    // heights are settled, so there's only ever one line.
+    TableRow columnHeaderRow() => TableRow(
+          repeat: true,
+          children: List<Widget>.generate(
+            6,
+            (index) => Container(
+              height: (29),
+              alignment: Alignment.center,
+              child: Text(_columnTags[index].tr(), style: _headerStyle),
+            ),
+          ),
+        );
+
+    // Each cell sizes to fit its own text instead of a fixed height with a
+    // hard maxLines cut — a short entry stays compact (more entries per
+    // page), a long one just gets the room it actually needs, and pw.Table
+    // (a SpanningWidget) carries rows over to a new page by itself.
+    TableRow eventRow(DayEventModel event) => TableRow(
+          children: List<Widget>.generate(
+            6,
+            (index) => Container(
+              padding: const EdgeInsets.all(6),
+              child: Text(_getTextFromEvent(index, event), style: _headerStyle),
+            ),
+          ),
+        );
+
+    pdf.addPage(MultiPage(
+      pageFormat: PdfPageFormat.a4.landscape,
+      header: (context) =>
+          context.pageNumber == 1 ? brandingHeader() : SizedBox(height: getVerticalSize(20)),
+      build: (context) => [
+        SizedBox(height: (2)),
+        Table(
+          border: TableBorder.all(color: _borderColor, width: 1),
+          columnWidths: {
+            for (var i = 0; i < _columnWeight.length; i++) i: FixedColumnWidth(_columnWeight[i]),
+          },
+          children: [
+            columnHeaderRow(),
+            ...events.map(eventRow),
+          ],
+        ),
+      ],
+    ));
     return pdf.save();
   }
-
-
-  Widget _listEvents(List<DayEventModel> events) {
-    return SizedBox(
-        height: (100 * events.length.toDouble()),
-        child : ListView.builder(itemBuilder: (context, index) {
-          return Row(children: List<Widget>.generate(6, (_index) => Padding(padding: EdgeInsets.only(right: 3, bottom: 2),
-              child:
-              Container(
-                  height: (98),
-                  width: (_columnWeight[_index]),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: _borderColor)
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 8),
-                      child: Text(_getTextFromEvent(_index, events[index]), style: _headerStyle.copyWith(), maxLines: 8)
-                  )
-              ))));
-        }, itemCount: events.length > 3 ? 3 : events.length));
-  }
-
-
 }

@@ -4,7 +4,6 @@ import 'package:get/get.dart' hide Trans;
 import 'widgets/admission_schedule/admission_schedule_widget.dart';
 import 'widgets/diagnosis_of_the_condition_widget.dart';
 import 'widgets/energy_matrix_widget.dart';
-import 'widgets/report_widget.dart';
 import 'widgets/social_battery_widget.dart';
 import 'widgets/synergy_heatmap_widget.dart';
 import 'widgets/what_emotion_widget.dart';
@@ -78,15 +77,27 @@ class K61Screen extends GetWidget{
                       // tab plus tighter labelPadding (default is 16px each
                       // side, on top of the box width).
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
-                      indicatorColor: ColorConstant.fromHex('#1499A1'),
-                      unselectedLabelColor: ColorConstant.gray800,
+                      // Soft pill instead of an underline — quiet-luxury
+                      // brief: the active tab reads as a gentle tinted
+                      // capsule, not a hard line.
+                      indicator: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.10),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      dividerColor: Colors.transparent,
+                      unselectedLabelColor: ColorConstant.gray800.withOpacity(0.6),
                       labelStyle: TextStyle(
-                        color: ColorConstant.gray800,
+                        fontSize: getFontSize(12),
+                        fontFamily: 'Manrope',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      unselectedLabelStyle: TextStyle(
                         fontSize: getFontSize(12),
                         fontFamily: 'Manrope',
                         fontWeight: FontWeight.w300,
                       ),
-                      labelColor: ColorConstant.cyan700,
+                      labelColor: AppColors.primary,
                       tabs: _tabs(),
                     ),
                   ),
@@ -117,11 +128,10 @@ class K61Screen extends GetWidget{
   List<Widget> _tabs() {
     const keys = [
       'state_diagnosis',
-      'summary_report',
       'what_emotions_am_I_feeling',
-      'where_do_my_emotions_live_in_the_body',
-      'where_and_what_emotions_am_I_experiencing',
-      'medication_intake_schedule_graph',
+      'tab_body_map',
+      'tab_places',
+      'tab_medication_dynamics',
       'energy_matrix',
       'synergy_heatmap',
       'social_battery',
@@ -153,12 +163,6 @@ class K61Screen extends GetWidget{
         end: controller.dateEnd,
         dataForChart: controller.dataForChart,
         controller: controller,
-      )),
-      scrollable(ReportWidget(
-        start: controller.dateStart,
-        controller: controller,
-        end: controller.dateEnd,
-        fields: controller.fields,
       )),
       scrollable(WhatEmotionWidget(
         start: controller.dateStart,

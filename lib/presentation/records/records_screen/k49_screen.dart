@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'widgets/day_event_widget.dart';
+import 'widgets/records_report_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -50,6 +51,7 @@ class K49Screen extends GetWidget {
                       style: AppStyle.txtSFProDisplayLight10Gray800,
                     ),
                   ),
+                  RecordsReportCard(controller: controller),
                   Padding(
                     padding: getPadding(
                       top: 12,

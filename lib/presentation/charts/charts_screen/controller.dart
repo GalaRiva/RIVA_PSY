@@ -24,7 +24,7 @@ import '../../../widgets/body_zone_colors.dart';
 class K61Controller extends GetxController with GetSingleTickerProviderStateMixin {
   bool loading = true;
 
-  static const int tabCount = 9;
+  static const int tabCount = 8;
   TabController? tabController;
 
   void initTabController() {
@@ -194,24 +194,10 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     }
 
     for (var item in _places) {
-      // A place with many distinct emotions logged once or twice each turns
-      // into visual noise (every bar reads as "full height" once the max is
-      // just 1-2) — cap the chart at the top 10 by quantity and fold the
-      // rest into a single "Другое" bucket instead of drawing 20-30 bars.
-      if (item.emotions.length > 10) {
-        item.emotions.sort((a, b) => b.quantity.compareTo(a.quantity));
-        final top = item.emotions.take(10).toList();
-        final otherQuantity = item.emotions
-            .skip(10)
-            .fold<int>(0, (sum, e) => sum + e.quantity);
-        if (otherQuantity > 0) {
-          top.add(EmotionModel(
-              otherQuantity, 'other_emotions_chart_bucket'.tr(), ColorConstant.gray500));
-        }
-        item.emotions
-          ..clear()
-          ..addAll(top);
-      }
+      // Grouping down to the top few + a single "Other" bucket now happens
+      // in WhereAndWhatEmotionsWidget itself (top-3 + fold-the-rest) — doing
+      // it here too produced a second, nested "Other" bucket with an
+      // inconsistent name.
       item.emotionMax = 0;
       for (var emotion in item.emotions){
         if(emotion.quantity > item.emotionMax) item.emotionMax = emotion.quantity;

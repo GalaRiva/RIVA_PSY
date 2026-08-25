@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
 
+import '../../charts/charts_screen/models/report_model.dart';
 import 'repository.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,6 +15,25 @@ class K49Controller extends GetxController {
   double listHeight = 0;
   List<List<DayEventModel>> events = [];
   List<DayEventModel> list = [];
+
+  // SMER report (moved here from the Charts screen — it's fundamentally
+  // about these diary entries, not the analytics tabs). Deliberately
+  // independent of K61Controller: its own date range, its own event fetch,
+  // so removing the Charts tab can't affect any of the other 8 tabs there.
+  final reportModel = ReportModel();
+  var reportDateStart = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+  var reportDateEnd = DateTime.now().add(Duration(days: 7 - DateTime.now().weekday));
+
+  bool _inReportRange(DateTime date) {
+    final start = DateTime(reportDateStart.year, reportDateStart.month, reportDateStart.day - 1);
+    final end = DateTime(reportDateEnd.year, reportDateEnd.month, reportDateEnd.day + 1);
+    return start.isBefore(date) && end.isAfter(date);
+  }
+
+  Future<List<DayEventModel>> getReportEvents() async {
+    final dayEvents = (await _repo.getEvent()).where((e) => e.showInCharts).toList();
+    return dayEvents.where((e) => _inReportRange(e.date ?? DateTime.now())).toList();
+  }
 
   Future<List<DayEventModel>> initializeList() async {
     return _repo.getEvent();

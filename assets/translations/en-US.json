@@ -1107,5 +1107,12 @@
   "energy_matrix_intro": "Each bubble is a person, place, or activity from your diary. Its position shows whether that context charges you with energy or drains it.",
   "synergy_heatmap_intro": "Cells show how the same activity feels under different conditions — where it's easy for you, and where it's hard. Sometimes it's not the activity itself, but the environment.",
   "social_battery_intro": "Shows how much social resource you have left right now, and how much time alone you typically need to recharge.",
-  "gratitude_popup_dismiss": "Thank you ✨"
+  "gratitude_popup_dismiss": "Thank you ✨",
+  "where_and_what_emotions_intro": "See how your surroundings affect how you feel.",
+  "show_less": "Show less",
+  "other_emotions_bucket": "Other",
+  "tab_body_map": "Body Map",
+  "tab_places": "Places",
+  "tab_medication_dynamics": "Medication",
+  "summary_report_intro": "Gather your diary entries for a chosen period into one PDF and send it to your psychologist — by email or any messenger."
 }
