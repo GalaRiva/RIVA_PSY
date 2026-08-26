@@ -5,6 +5,7 @@ import '../../../../core/app_export.dart';
 import '../../../../core/models/day_event_model.dart';
 import '../../../../core/services/dashboards/synergy_heatmap_service.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Тепловая карта синергии" — cross-tab of two context dimensions
@@ -51,7 +52,7 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
   }
 
   Color _cellColor(HeatmapCell cell) {
-    const stressColor = AppColors.chartRose;
+    const stressColor = AppColors.chartStress;
     const comfortColor = AppColors.chartTeal;
     final t = _showTension ? cell.bodyTensionRate : (cell.avgMood / 10).clamp(0.0, 1.0);
     // Tension is "more = worse" (stress-colored), mood is "more = better"
@@ -91,10 +92,10 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
       pinnedColLabel: pinnedColLabel,
     );
 
-    return Container(
+    return SizedBox(
       width: size.width,
-      decoration: AppDecoration.glassCard,
-      padding: getPadding(left: 20, top: 21, right: 20, bottom: 20),
+      child: AmbientBloomCard(
+      padding: const EdgeInsets.fromLTRB(12, 21, 12, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -120,6 +121,7 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
             _buildInsight(result),
           ],
         ],
+      ),
       ),
     );
   }
@@ -154,17 +156,31 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: options.entries
-            .map((entry) => Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ChoiceChip(
-                    label: Text(entry.value, style: const TextStyle(fontSize: 12)),
-                    selected: _pair == entry.key,
-                    selectedColor: ColorConstant.cyan700.withOpacity(0.2),
-                    onSelected: (_) => setState(() => _pair = entry.key),
+        children: options.entries.map((entry) {
+          final selected = _pair == entry.key;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: GestureDetector(
+              onTap: () => setState(() => _pair = entry.key),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                  color: selected ? AppColors.chartTeal : AppColors.chartTeal.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  entry.value,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                    color: selected ? Colors.white : AppColors.chartTeal,
                   ),
-                ))
-            .toList(),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -175,7 +191,7 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
         Text('heatmap_show_tension'.tr(), style: const TextStyle(fontSize: 12, color: Colors.black54)),
         Switch(
           value: _showTension,
-          activeColor: ColorConstant.cyan700,
+          activeColor: AppColors.chartTeal,
           onChanged: (v) => setState(() => _showTension = v),
         ),
       ],
@@ -183,8 +199,8 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
   }
 
   Widget _buildGrid(HeatmapResult result) {
-    const cellSize = 62.0;
-    const headerColWidth = 84.0;
+    const cellSize = 76.0;
+    const headerColWidth = 78.0;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -250,8 +266,18 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
           width: cellSize - 4,
           height: cellSize - 4,
           decoration: BoxDecoration(
-            color: _cellColor(cell),
+            // Glass tile: a soft highlight in the corner instead of a flat
+            // fill, so a deep jewel-tone cell still reads as light/airy.
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.lerp(_cellColor(cell), Colors.white, 0.35)!,
+                _cellColor(cell),
+              ],
+            ),
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.white.withOpacity(0.4), width: 1),
             boxShadow: [
               BoxShadow(
                 color: _cellColor(cell).withOpacity(0.35),

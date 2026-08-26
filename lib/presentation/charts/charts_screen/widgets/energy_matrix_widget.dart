@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/services/dashboards/energy_matrix_service.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Матрица Энергии" — quadrant scatter of context tags (who/what/where),
@@ -23,16 +24,24 @@ class EnergyMatrixWidget extends StatefulWidget {
   State<EnergyMatrixWidget> createState() => _EnergyMatrixWidgetState();
 }
 
-class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
+class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> with SingleTickerProviderStateMixin {
   static const double _canvasSize = 340;
 
   final _transformController = TransformationController();
   double _scale = 1.0;
   bool _darkened = false;
 
+  // Slow shared "breathing" pulse for every bubble — a single controller
+  // driving all of them stays in sync and costs one ticker, not N.
+  late final AnimationController _breath = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2600),
+  )..repeat(reverse: true);
+
   @override
   void dispose() {
     _transformController.dispose();
+    _breath.dispose();
     super.dispose();
   }
 
@@ -57,13 +66,13 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
   double _onScreenDiameter(int frequency) {
     final maxFreq = widget.points.map((e) => e.frequency).reduce(max);
     final t = frequency / maxFreq;
-    return 28 + sqrt(t) * 40;
+    return 34 + sqrt(t) * 48;
   }
 
   Color _quadrantColor(double x, double y) {
-    if (x >= 0 && y >= 0) return AppColors.chartGold; // Драйв
+    if (x >= 0 && y >= 0) return AppColors.chartAqua; // Драйв
     if (x >= 0 && y < 0) return AppColors.chartTeal; // Ресурс
-    if (x < 0 && y >= 0) return AppColors.chartRose; // Стресс
+    if (x < 0 && y >= 0) return AppColors.chartStress; // Стресс
     return AppColors.chartPurple; // Истощение
   }
 
@@ -100,10 +109,10 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size.width,
-      decoration: AppDecoration.glassCard,
-      padding: getPadding(left: 20, top: 21, right: 20, bottom: 20),
+      child: AmbientBloomCard(
+      padding: const EdgeInsets.fromLTRB(12, 21, 12, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,6 +142,7 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
             _buildInsight(),
           ],
         ],
+      ),
       ),
     );
   }
@@ -225,38 +235,55 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
       child: GestureDetector(
         onTap: () => _onBubbleTap(p),
         onDoubleTap: _resetZoom,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: RadialGradient(
-              colors: [color.withOpacity(0.85), color.withOpacity(0.6)],
-            ),
-            border: Border.all(color: Colors.white, width: 1.5 / _scale),
-            boxShadow: [
-              BoxShadow(
-                color: color.withOpacity(0.35),
-                blurRadius: 12 / _scale,
-                spreadRadius: 1 / _scale,
+        child: AnimatedBuilder(
+          animation: _breath,
+          builder: (context, child) {
+            final t = Curves.easeInOut.transform(_breath.value);
+            return Transform.scale(scale: 1 + t * 0.02, child: child);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              // Glass-sphere gradient: a lighter highlight near the top-left,
+              // deepening into the full jewel-tone color — reads as a
+              // translucent bead of glass rather than a flat painted disc.
+              gradient: RadialGradient(
+                center: const Alignment(-0.35, -0.4),
+                radius: 1.1,
+                colors: [
+                  Color.lerp(color, Colors.white, 0.55)!.withOpacity(0.9),
+                  color.withOpacity(0.88),
+                  Color.lerp(color, Colors.black, 0.15)!.withOpacity(0.92),
+                ],
+                stops: const [0.0, 0.6, 1.0],
               ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: canvasDiameter * _scale > 34
-              ? Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Text(
-                    p.tagLabel,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: (11 / _scale).clamp(7, 13),
-                      fontWeight: FontWeight.w600,
+              border: Border.all(color: Colors.white.withOpacity(0.55), width: 1 / _scale),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withOpacity(0.4),
+                  blurRadius: 14 / _scale,
+                  spreadRadius: 0.5 / _scale,
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: canvasDiameter * _scale > 34
+                ? Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: Text(
+                      p.tagLabel,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: (11 / _scale).clamp(7, 13),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                )
-              : null,
+                  )
+                : null,
+          ),
         ),
       ),
     );
@@ -283,10 +310,26 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> {
     );
   }
 
-  Widget _axisLabel(String text) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(color: Colors.white.withOpacity(0.8), borderRadius: BorderRadius.circular(6)),
-        child: Text(text, style: const TextStyle(fontSize: 10, color: Colors.black54)),
+  // Hairline instead of a solid white plaque — a thin muted rule with the
+  // label floating just above it, so the axis reads as a quiet structural
+  // cue rather than a boxed UI chip competing with the bubbles.
+  Widget _axisLabel(String text) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 10,
+                color: AppColors.textSecondary,
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 3),
+            Container(width: 18, height: 1, color: AppColors.textSecondary.withOpacity(0.35)),
+          ],
+        ),
       );
 }
 
@@ -295,9 +338,9 @@ class _QuadrantBackgroundPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final mid = size.width / 2;
     final zones = <Rect, Color>{
-      Rect.fromLTWH(mid, 0, mid, mid): AppColors.chartGold.withOpacity(0.08), // Драйв
+      Rect.fromLTWH(mid, 0, mid, mid): AppColors.chartAqua.withOpacity(0.08), // Драйв
       Rect.fromLTWH(mid, mid, mid, mid): AppColors.chartTeal.withOpacity(0.08), // Ресурс
-      Rect.fromLTWH(0, 0, mid, mid): AppColors.chartRose.withOpacity(0.08), // Стресс
+      Rect.fromLTWH(0, 0, mid, mid): AppColors.chartStress.withOpacity(0.08), // Стресс
       Rect.fromLTWH(0, mid, mid, mid): AppColors.chartPurple.withOpacity(0.08), // Истощение
     };
     zones.forEach((rect, color) => canvas.drawRect(rect, Paint()..color = color));

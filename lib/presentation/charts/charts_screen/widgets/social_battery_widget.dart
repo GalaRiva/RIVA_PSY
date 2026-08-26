@@ -6,28 +6,47 @@ import '../../../../core/app_export.dart';
 import '../../../../core/models/day_event_model.dart';
 import '../../../../core/services/dashboards/social_battery_service.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Трекер социальной батарейки" — a capsule gauge for the current charge
 /// level, plus a mood line chart with an alone/social split background and
 /// a break-point marker where a social session historically tends to start
 /// pulling mood down.
-class SocialBatteryWidget extends StatelessWidget {
+class SocialBatteryWidget extends StatefulWidget {
   final List<DayEventModel> events;
 
   const SocialBatteryWidget({Key? key, required this.events}) : super(key: key);
 
+  @override
+  State<SocialBatteryWidget> createState() => _SocialBatteryWidgetState();
+}
+
+class _SocialBatteryWidgetState extends State<SocialBatteryWidget> with SingleTickerProviderStateMixin {
   static const _aloneColor = AppColors.chartTeal;
-  static const _socialColor = AppColors.chartGold;
+  static const _socialColor = AppColors.chartAqua;
+
+  // One-shot reveal — the line chart draws itself in left-to-right on
+  // first appearance instead of just popping in fully formed.
+  late final AnimationController _reveal = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..forward();
+
+  @override
+  void dispose() {
+    _reveal.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final result = SocialBatteryService.compute(events);
+    final result = SocialBatteryService.compute(widget.events);
 
-    return Container(
+    return SizedBox(
       width: size.width,
-      decoration: AppDecoration.glassCard,
-      padding: getPadding(left: 20, top: 21, right: 20, bottom: 20),
+      child: AmbientBloomCard(
+      padding: const EdgeInsets.fromLTRB(12, 21, 12, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,11 +67,12 @@ class SocialBatteryWidget extends StatelessWidget {
             SizedBox(height: getVerticalSize(20)),
             _buildLegend(),
             SizedBox(height: getVerticalSize(8)),
-            SizedBox(height: getVerticalSize(140), child: _buildChart(result)),
+            SizedBox(height: getVerticalSize(190), child: _buildChart(result)),
             SizedBox(height: getVerticalSize(20)),
             _buildInsight(result),
           ],
         ],
+      ),
       ),
     );
   }
@@ -73,19 +93,19 @@ class SocialBatteryWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(colors: [color.withOpacity(0.95), color.withOpacity(0.7)]),
               boxShadow: [
-                BoxShadow(color: color.withOpacity(0.45), blurRadius: 14, spreadRadius: 1),
+                BoxShadow(color: color.withOpacity(0.45), blurRadius: 16, spreadRadius: 1),
               ],
             ),
             child: Center(
               child: Text(
                 '${level.round()}%',
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
               ),
             ),
           ),
@@ -159,7 +179,7 @@ class SocialBatteryWidget extends StatelessWidget {
       }
     }
 
-    return LineChart(
+    final chart = LineChart(
       LineChartData(
         gridData: const FlGridData(show: false),
         titlesData: const FlTitlesData(show: false),
@@ -172,13 +192,18 @@ class SocialBatteryWidget extends StatelessWidget {
           LineChartBarData(
             spots: [for (var i = 0; i < points.length; i++) FlSpot(i.toDouble(), points[i].mood.toDouble())],
             isCurved: true,
-            color: AppColors.primary,
+            color: AppColors.chartTeal,
             barWidth: 3,
             dotData: FlDotData(
               show: true,
               getDotPainter: (spot, percent, bar, index) {
                 if (index < points.length && points[index].isBreakPoint) {
-                  return FlDotCirclePainter(radius: 5, color: AppColors.chartRose, strokeWidth: 1.5, strokeColor: Colors.white);
+                  return FlDotCirclePainter(radius: 5, color: AppColors.chartStress, strokeWidth: 1.5, strokeColor: Colors.white);
+                }
+                // The most recent point — "you, right now" — gets a soft
+                // glow instead of vanishing like the rest of the line.
+                if (index == points.length - 1) {
+                  return _GlowDotPainter(color: AppColors.chartGold);
                 }
                 return FlDotCirclePainter(radius: 0, color: Colors.transparent);
               },
@@ -188,12 +213,27 @@ class SocialBatteryWidget extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [AppColors.primary.withOpacity(0.3), AppColors.primary.withOpacity(0.0)],
+                colors: [AppColors.chartTeal.withOpacity(0.3), AppColors.chartTeal.withOpacity(0.0)],
               ),
             ),
           ),
         ],
       ),
+    );
+
+    return AnimatedBuilder(
+      animation: _reveal,
+      builder: (context, child) {
+        final t = Curves.easeOutCubic.transform(_reveal.value);
+        return ClipRect(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            widthFactor: t.clamp(0.001, 1.0),
+            child: child,
+          ),
+        );
+      },
+      child: chart,
     );
   }
 
@@ -233,4 +273,42 @@ class SocialBatteryWidget extends StatelessWidget {
       theoryBody: 'insight_battery_theory_body'.tr(),
     );
   }
+}
+
+/// Marks the mood line's most recent point with a soft glow — layered
+/// translucent rings behind a solid center — instead of a plain dot, so
+/// "here and now" stands out from the rest of the line.
+class _GlowDotPainter extends FlDotPainter {
+  final Color color;
+  final double radius;
+
+  const _GlowDotPainter({required this.color, this.radius = 5});
+
+  @override
+  void draw(Canvas canvas, FlSpot spot, Offset offsetInCanvas) {
+    for (final r in [radius * 3.4, radius * 2.3, radius * 1.5]) {
+      canvas.drawCircle(offsetInCanvas, r, Paint()..color = color.withOpacity(0.12));
+    }
+    canvas.drawCircle(offsetInCanvas, radius, Paint()..color = Colors.white);
+    canvas.drawCircle(
+      offsetInCanvas,
+      radius,
+      Paint()
+        ..color = color
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.8,
+    );
+  }
+
+  @override
+  Size getSize(FlSpot spot) => Size.square(radius * 6.8);
+
+  @override
+  Color get mainColor => color;
+
+  @override
+  FlDotPainter lerp(FlDotPainter a, FlDotPainter b, double t) => b;
+
+  @override
+  List<Object?> get props => [color, radius];
 }

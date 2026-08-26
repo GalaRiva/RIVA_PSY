@@ -16,11 +16,14 @@ abstract class AppColors {
   static const Color divider = Color(0xFFEAEEEE);
 
   // Shared data-viz accent set for the analytics dashboards (Energy Matrix
-  // quadrants, Synergy Heatmap gradient, Social Battery split) — one
-  // consistent four-color language drawn from the app's own brand colors
-  // instead of each chart picking its own ad-hoc traffic-light palette.
-  static const Color chartTeal = primary; // calm / resourced / alone
-  static const Color chartGold = Color(0xFFC9A24B); // energized / drive / social
-  static const Color chartRose = Color(0xFFB0495C); // stress / tension
-  static const Color chartPurple = Color(0xFF5B4EA8); // depleted / burnout
+  // quadrants, Synergy Heatmap gradient, Social Battery split) — narrowed
+  // to shades within the teal/emerald family (plus purple as the one
+  // deliberate outlier for "depleted") rather than a four-hue traffic-light
+  // set. Gold is kept only as a small decorative accent (e.g. the "right
+  // now" glow point, popup borders) — it's no longer used to encode data.
+  static const Color chartTeal = Color(0xFF0E8F6B); // calm / resourced / alone — deep emerald
+  static const Color chartAqua = Color(0xFF1CB8A6); // energized / drive / social — vivid turquoise
+  static const Color chartStress = Color(0xFF2E5C63); // stress / tension — cool slate-teal
+  static const Color chartPurple = Color(0xFF5A3FC2); // depleted / burnout — rich violet
+  static const Color chartGold = Color(0xFFDFA320); // decorative accents only — not a data color
 }
