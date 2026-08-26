@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vibration/vibration.dart';
@@ -14,8 +13,6 @@ import 'package:riva_psy/presentation/main/main_screen/widgets/try_irrational_di
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/shared_prefs.dart';
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_message_box.dart';
 import '../../initial_setup/recomendation_buy_tariff_screen/k4_screen.dart';
 import '../../initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import '../../initial_setup/send_pushes_screen/send_pushe_screen.dart';
@@ -60,7 +57,6 @@ class K20Controller extends GetxController {
   }
 
   Future openMessages (BuildContext context) async {
-    const FIRST_MONTH_KEY = 'MONTH_PASSED';
     SharedPreferences prefs = SharedPrefs.sharedPreferences;
     if (SharedPrefs.sharedPreferences.getBool('set_reminders') == null)
       showDialog(
@@ -84,46 +80,11 @@ class K20Controller extends GetxController {
     // *feature* itself (Настройки → Напоминания) is untouched, this only
     // removes the unprompted popup.
 
-    else if((CurrentUser.user.registrationDate.month != DateTime.now().month || CurrentUser.user.registrationDate.year != DateTime.now().year) && ((prefs.getBool(FIRST_MONTH_KEY) ?? true) == true)){
-      showDialog(
-            context: context, builder: (BuildContext context) => CustomMessageBox(
-          title: 'RIVA PSY',
-          content: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: getMargin(top: 30,right: 84, left: 84),
-                    child: Text('change_frequency_reminders'.tr(), style: AppStyle.txtSFProDisplayLight14, textAlign: TextAlign.center,)),
-                SizedBox(height: getVerticalSize(26),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomButton(
-                        height: getVerticalSize(32),
-                        width: getHorizontalSize(136),
-                        text: 'no'.tr().toUpperCase(),
-                        padding: ButtonPadding.PaddingT8,
-                        onTap: () => Navigator.pop(context),
-                        alignment: Alignment.center),
-                    SizedBox(width: getHorizontalSize(13),),
-                    CustomButton(
-                        height: getVerticalSize(32),
-                        width: getHorizontalSize(136),
-                        text: 'yes'.tr().toUpperCase(),
-                        padding: ButtonPadding.PaddingT8,
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.reminders),
-                        alignment: Alignment.center),
-                  ],
-                )
-              ],
-            ),
-          ),
-        )
-        );
-        await prefs.setBool(FIRST_MONTH_KEY, false);
+    // "Хотите изменить частоту и время напоминаний?" one-month-anniversary
+    // popup removed by request — same reasoning as the pill-reminders popup
+    // above (unprompted, no real value). The reminders feature itself is
+    // untouched.
 
-    }
     else if (false ?? Random().nextInt(100) > 50 && !CurrentUser.usedOreonTrials && !CurrentUser.tariffIsOrion()) {
       showDialog(context: context, builder: (_) => K4Screen());
     }

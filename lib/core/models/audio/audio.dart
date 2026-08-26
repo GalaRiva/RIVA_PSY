@@ -10,12 +10,14 @@ class Audio {
   // Per-locale overrides, same `<field>_<langCode>` convention already used
   // elsewhere in this app for Firestore text (e.g. Tabs.name_es,
   // Text_Recommendation.title_es) — absent on every pre-existing (Russian)
-  // document. Only 'es' exists for now; add more _<langCode> fields the same
-  // way if/when other languages get their own recordings.
+  // document. Add more _<langCode> fields the same way if/when other
+  // languages get their own recordings.
   final String? fileNameEs;
   final String? nameEs;
+  final String? fileNameEn;
+  final String? nameEn;
 
-  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.emotions, {this.fileNameEs, this.nameEs});
+  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.emotions, {this.fileNameEs, this.nameEs, this.fileNameEn, this.nameEn});
 
   factory Audio.fromJson(Map<String, dynamic> json) {
     return Audio(
@@ -27,15 +29,23 @@ class Audio {
         json.toString().contains('emotions') ? (json['emotions'] as String? ?? '').split(', ') : [],
         fileNameEs: json['fileName_es'] as String?,
         nameEs: json['name_es'] as String?,
+        fileNameEn: json['fileName_en'] as String?,
+        nameEn: json['name_en'] as String?,
     );
   }
 
   // Localized display name/file, following the same `_localizedField`
   // fallback-to-Russian shape used by NegativeEmotionsModel/NegativeEmotionTabs.
-  String localizedName(String langCode) =>
-      langCode == 'es' && (nameEs ?? '').trim().isNotEmpty ? nameEs! : name;
-  String localizedFileName(String langCode) =>
-      langCode == 'es' && (fileNameEs ?? '').trim().isNotEmpty ? fileNameEs! : fileName;
+  String localizedName(String langCode) {
+    if (langCode == 'es' && (nameEs ?? '').trim().isNotEmpty) return nameEs!;
+    if (langCode == 'en' && (nameEn ?? '').trim().isNotEmpty) return nameEn!;
+    return name;
+  }
+  String localizedFileName(String langCode) {
+    if (langCode == 'es' && (fileNameEs ?? '').trim().isNotEmpty) return fileNameEs!;
+    if (langCode == 'en' && (fileNameEn ?? '').trim().isNotEmpty) return fileNameEn!;
+    return fileName;
+  }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
@@ -47,6 +57,8 @@ class Audio {
     json['emotions'] = this.emotions;
     json['fileName_es'] = this.fileNameEs;
     json['name_es'] = this.nameEs;
+    json['fileName_en'] = this.fileNameEn;
+    json['name_en'] = this.nameEn;
     return json;
   }
 
