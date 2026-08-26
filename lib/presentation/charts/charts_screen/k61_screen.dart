@@ -52,7 +52,7 @@ class K61Screen extends GetWidget{
                     ),
                   ),
                   Padding(
-                    padding: getPadding(top: 12, left: 16, right: 16),
+                    padding: getPadding(top: 8, left: 16, right: 16),
                     child: Divider(
                       height: getVerticalSize(1),
                       thickness: getVerticalSize(1),
@@ -64,7 +64,7 @@ class K61Screen extends GetWidget{
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: getPadding(top: 26),
+                padding: getPadding(top: 4),
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(

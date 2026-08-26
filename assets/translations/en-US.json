@@ -1072,6 +1072,8 @@
   "energy_matrix_burnout_1": "\"{tag}\" is linked to apathy and low energy — little resource and little joy here. 🌧️",
   "energy_matrix_burnout_2": "Around \"{tag}\" you more often feel exhausted rather than relieved.",
   "energy_matrix_burnout_3": "\"{tag}\" is a burnout zone — both mood and energy run low here.",
+  "energy_matrix_other": "Other",
+  "energy_matrix_other_body": "Less frequent tags in this zone: {tags}.",
   "synergy_heatmap": "Synergy Heatmap",
   "heatmap_pair_activity_person": "Activity × Person",
   "heatmap_pair_activity_place": "Activity × Place",
@@ -1080,6 +1082,12 @@
   "heatmap_empty": "Not enough matching entries for this pair yet. Try another combination or keep journaling.",
   "heatmap_cell_summary": "{row} × {col}: {count} entries, average score {score}",
   "heatmap_cell_summary_tension": "{row} × {col}: body symptoms in {percent}% of entries",
+  "heatmap_cell_count": "{count} entries",
+  "heatmap_cell_body_mood_high": "Based on your data, this is a comfort zone that recharges you.",
+  "heatmap_cell_body_mood_mid": "A neutral zone — it neither drains nor gives you energy.",
+  "heatmap_cell_body_mood_low": "This combination usually feels heavy.",
+  "heatmap_cell_body_tension_high": "Your body often reacts with tension in this situation.",
+  "heatmap_cell_body_tension_low": "Your body usually stays relaxed in this situation.",
   "social_battery": "Social Battery",
   "social_battery_empty": "Not enough data yet to estimate your social battery. Track who you were with (including \"Myself\" if you were alone) and your mood — and the gauge will appear.",
   "social_battery_legend_social": "With others",
@@ -1114,5 +1122,6 @@
   "tab_body_map": "Body Map",
   "tab_places": "Places",
   "tab_medication_dynamics": "Medication",
-  "summary_report_intro": "Gather your diary entries for a chosen period into one PDF and send it to your psychologist — by email or any messenger."
+  "summary_report_intro": "Gather your diary entries for a chosen period into one PDF and send it to your psychologist — by email or any messenger.",
+  "food_and_entertainment": "Food & fun"
 }

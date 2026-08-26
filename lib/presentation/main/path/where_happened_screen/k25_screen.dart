@@ -165,15 +165,15 @@ class K25Screen extends GetWidget {
                                       bottom: 9,
                                     ),
                                     child: SizedBox(
-                                      width: getHorizontalSize(20),
-                                      height: getVerticalSize(20),
-                                      child: IconButton(
-                                        iconSize: 14,
-                                        icon: Icon(
+                                      width: getHorizontalSize(26),
+                                      height: getVerticalSize(26),
+                                      child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        child: Icon(
                                           AppIcons.plus,
-                                          size: getSize(20),
+                                          size: getSize(18),
                                         ),
-                                        onPressed: () async {
+                                        onTap: () async {
                                           var result =
                                               (await Navigator.pushNamed(
                                                   context, AppRoutes.addEmotion,

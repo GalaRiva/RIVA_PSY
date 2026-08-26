@@ -71,7 +71,9 @@ class K32Repo {
           'spaciousness'.tr(),
         ],
         whatHurtsKeys: ['lump_in_throat', 'choking', 'nausea', 'tense4', 'relaxed5', 'clenched', 'dull', 'sharp', 'throat_firm', 'throat_soft', 'sweetness', 'bitterness2', 'spaciousness'],
-        marginTop: 36,
+        // Was 36 — too close to head_and_face's marginTop:16, so both
+        // markers landed on the head instead of the throat sitting below it.
+        marginTop: 65,
         marginLeft: 70),
     BodyPartsModel(
         key: 'chest',
@@ -93,7 +95,8 @@ class K32Repo {
           'holding_breath'.tr(),
         ],
         whatHurtsKeys: ['rapid_heartbeat', 'stone_in_heart', 'shallow_breathing', 'rapid_breathing', 'heat_in_solar_plexus', 'emptiness', 'cold', 'spaciousness', 'sharp', 'chest_firm', 'chest_soft', 'clenched', 'deep_inhales', 'holding_breath'],
-        marginTop: 70,
+        // Was 70 — nudged down for more separation from throat.
+        marginTop: 95,
         marginLeft: 70),
     BodyPartsModel(
         key: 'shoulders_and_arms',

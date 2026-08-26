@@ -6,6 +6,7 @@ import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_decoration.dart';
 import '../../charts_screen/widgets/text_for_select_period_widget.dart';
 import '../controller.dart';
+import 'admission_schedule/widgets/insight_card.dart';
 
 class DiagnosticOfTheConditionWidget extends StatelessWidget {
   final DateTime start;
@@ -71,7 +72,11 @@ class DiagnosticOfTheConditionWidget extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: getPadding(top: 56, left: 16, right: 16, bottom: 20),
+            child: const InsightSection(),
+          ),
         ],
       ),
     );

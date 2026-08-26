@@ -7,6 +7,7 @@ import '../../../../core/models/day_event_model.dart';
 import '../../../../core/services/dashboards/social_battery_service.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../widgets/ambient_bloom_card.dart';
+import '../../../../widgets/dashboard_detail_sheet.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Трекер социальной батарейки" — a capsule gauge for the current charge
@@ -50,11 +51,19 @@ class _SocialBatteryWidgetState extends State<SocialBatteryWidget> with SingleTi
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('social_battery'.tr(), overflow: TextOverflow.ellipsis, style: AppStyle.txtSFProDisplayLight14Gray800),
-          SizedBox(height: getVerticalSize(6)),
-          Text(
-            'social_battery_intro'.tr(),
-            style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.4),
+          Row(
+            children: [
+              Text('social_battery'.tr(), overflow: TextOverflow.ellipsis, style: AppStyle.txtSFProDisplayLight14Gray800),
+              const SizedBox(width: 6),
+              GestureDetector(
+                onTap: () => DashboardDetailSheet.show(
+                  context,
+                  title: 'social_battery'.tr(),
+                  body: 'social_battery_intro'.tr(),
+                ),
+                child: Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textSecondary.withOpacity(0.7)),
+              ),
+            ],
           ),
           SizedBox(height: getVerticalSize(16)),
           if (result.isEmpty)
@@ -67,7 +76,7 @@ class _SocialBatteryWidgetState extends State<SocialBatteryWidget> with SingleTi
             SizedBox(height: getVerticalSize(20)),
             _buildLegend(),
             SizedBox(height: getVerticalSize(8)),
-            SizedBox(height: getVerticalSize(190), child: _buildChart(result)),
+            SizedBox(height: getVerticalSize(250), child: _buildChart(result)),
             SizedBox(height: getVerticalSize(20)),
             _buildInsight(result),
           ],

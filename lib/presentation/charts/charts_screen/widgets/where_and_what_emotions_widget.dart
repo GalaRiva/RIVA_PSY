@@ -277,10 +277,10 @@ class _PlaceCardState extends State<_PlaceCard> {
                           // Solid, matte fill — the old top-light/bottom-dark
                           // gradient read as a dated 2010s chart texture.
                           color: _display[i].color,
-                          width: 30,
+                          width: 38,
                           // Full capsule (radius = half the bar width), not
                           // just rounded top corners.
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(19),
                         ),
                       ],
                     ),

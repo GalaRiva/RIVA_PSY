@@ -18,7 +18,6 @@ import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_icons.dart';
 
 class K32Screen extends GetWidget {
-
   final DayEventModel? dayEvent;
   final Function(DayEventModel dayEvent)? onSave;
 
@@ -163,15 +162,15 @@ class K32Screen extends GetWidget {
                                       bottom: 9,
                                     ),
                                     child: SizedBox(
-                                      width: getHorizontalSize(20),
-                                      height: getVerticalSize(20),
-                                      child: IconButton(
-                                        iconSize: 14,
-                                        icon: Icon(
+                                      width: getHorizontalSize(26),
+                                      height: getVerticalSize(26),
+                                      child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        child: Icon(
                                           AppIcons.plus,
-                                          size: getSize(20),
+                                          size: getSize(18),
                                         ),
-                                        onPressed: () async {
+                                        onTap: () async {
                                           if (controller
                                               .addEventController.text.isNotEmpty) {
                                             await controller.updateCurrentEventList(
@@ -194,6 +193,15 @@ class K32Screen extends GetWidget {
                                   ),
                                 ),
                               ),
+                            ),
+                            // Moved up to right after the search fields —
+                            // it used to sit below the entire body-part
+                            // chip list, which pushed it far enough down
+                            // the scroll that it stayed hidden under the
+                            // fixed button bar however far you scrolled.
+                            Padding(
+                              padding: getPadding(top: 0),
+                              child: _BodyMapRow(controller: controller),
                             ),
                             Padding(
                               padding: getPadding(top: 34),
@@ -251,46 +259,6 @@ class K32Screen extends GetWidget {
                                               ))
                                           .toList(),
                                     )),
-                            Padding(
-                              // Was top: 36 — raised closer to the pill
-                              // list above it per request.
-                              padding: getPadding(top: 12),
-                              child:  GetBuilder(
-                                  builder: (K32Controller _c) => SizedBox(
-                                    height: getVerticalSize(380) * 1.42,
-                                    width: (size.width - 32),
-                                    child: Transform.scale(
-                                      scale: 1.42,
-                                      alignment: Alignment.topCenter,
-                                      child: Row(
-                                        children: [
-                                          // Each BodyWidget's own SVG
-                                          // (body_outline_*.svg) has a fair
-                                          // amount of built-in horizontal
-                                          // whitespace around the
-                                          // silhouette itself, so the two
-                                          // views sit far apart even with
-                                          // zero Row spacing between their
-                                          // boxes. Nudging each one inward
-                                          // eats into that empty margin —
-                                          // the marker dots inside each
-                                          // BodyWidget's own Stack move
-                                          // with it, so their alignment
-                                          // relative to their own
-                                          // silhouette is unaffected.
-                                          Transform.translate(
-                                            offset: const Offset(18, 0),
-                                            child: BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),),
-                                          ),
-                                          Transform.translate(
-                                            offset: const Offset(-18, 0),
-                                            child: BodyWidget(list: controller.selectedEventList.map((e) => e.bodyPartsModel).toList(), index: 2,),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ))
-                            ),
                             SizedBox(
                               height: getVerticalSize(100),
                             )
@@ -386,6 +354,75 @@ class K32Screen extends GetWidget {
       ),
       bottomNavigationBar: CustomBottomBar(
         onChanged: (BottomBarEnum type) {},
+      ),
+    );
+  }
+}
+
+// At its full (reference-matching) size the front+back pair is wider than
+// the screen, so a plain Row would either overflow or — if centered — get
+// pushed off to one side. A horizontal scroll view lets it be its full
+// size and still open centered, by jumping to the middle of the scroll
+// range right after first layout.
+class _BodyMapRow extends StatefulWidget {
+  final K32Controller controller;
+
+  const _BodyMapRow({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  State<_BodyMapRow> createState() => _BodyMapRowState();
+}
+
+class _BodyMapRowState extends State<_BodyMapRow> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scrollController.hasClients) return;
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent / 2);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      builder: (K32Controller _c) => SingleChildScrollView(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            // Each BodyWidget's own SVG (body_outline_*.svg) has a fair
+            // amount of built-in horizontal whitespace around the
+            // silhouette itself, so the two views sit far apart even with
+            // zero Row spacing between their boxes. Nudging each one inward
+            // eats into that empty margin — the marker dots inside each
+            // BodyWidget's own Stack move with it, so their alignment
+            // relative to their own silhouette is unaffected.
+            Transform.translate(
+              offset: const Offset(18, 0),
+              child: BodyWidget(
+                list: widget.controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),
+                scale: 1.26,
+              ),
+            ),
+            Transform.translate(
+              offset: const Offset(-18, 0),
+              child: BodyWidget(
+                list: widget.controller.selectedEventList.map((e) => e.bodyPartsModel).toList(),
+                index: 2,
+                scale: 1.26,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

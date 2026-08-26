@@ -9,7 +9,6 @@ import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'widgets/calendar_ribbon.dart';
 import 'widgets/daily_timeline.dart';
-import 'widgets/insight_card.dart';
 import 'widgets/monthly_stats_view.dart';
 
 class AdmissionScheduleWidget extends StatelessWidget {
@@ -95,8 +94,6 @@ class AdmissionScheduleWidget extends StatelessWidget {
               doses: controller.dosesOn(controller.selectedDate),
               controller: controller,
             ),
-            SizedBox(height: getVerticalSize(18)),
-            const InsightSection(),
           ] else
             MonthlyStatsView(adherence: controller.monthlyAdherence()),
           SizedBox(height: getVerticalSize(20)),

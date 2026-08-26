@@ -11,13 +11,20 @@ class EnergyMatrixPoint {
   final double x;
   final double y;
   final int frequency;
+  // Non-null only for a synthetic "Other" bubble that folds together every
+  // tag past the top-N-per-quadrant cap — holds the individual tag names it
+  // stands in for, since tagLabel itself is just "Другое" at that point.
+  final List<String>? groupedTags;
 
   EnergyMatrixPoint({
     required this.tagLabel,
     required this.x,
     required this.y,
     required this.frequency,
+    this.groupedTags,
   });
+
+  bool get isGroup => groupedTags != null;
 }
 
 class EnergyMatrixInsight {

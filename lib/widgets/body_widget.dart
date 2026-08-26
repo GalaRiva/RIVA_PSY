@@ -12,15 +12,22 @@ class BodyWidget extends StatelessWidget {
   final int index;
   final List<BodyPartsModel>? list;
   final List<Color>? circleColors;
+  // Uniform size multiplier, applied to the box AND to every marker's
+  // margin together — a native bigger render instead of an external
+  // Transform.scale, which was fitting BoxFit.contain against the wrong
+  // (unscaled) box size and letting the outline's feet paint outside it.
+  final double scale;
 
-  const BodyWidget({Key? key, this.list, this.index = 1, this.circleColors}) : super(key: key);
+  const BodyWidget({Key? key, this.list, this.index = 1, this.circleColors, this.scale = 1.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int _circleIndex = 0;
+    final boxHeight = getVerticalSize(380) * scale;
+    final boxWidth = (size.width - 32) / 2 * scale;
     return SizedBox(
-      height: getVerticalSize(380),
-      width: (size.width - 32) / 2,
+      height: boxHeight,
+      width: boxWidth,
       child: Stack(
         children: [
           // Outline first, markers on top — was the other way round, so the
@@ -31,16 +38,16 @@ class BodyWidget extends StatelessWidget {
                   CurrentUser.user.male!
                       ? 'assets/images/body_outline_male.svg'
                       : 'assets/images/body_outline_female.svg',
-                  height: getVerticalSize(380),
-                  width: (size.width - 32) / 2,
+                  height: boxHeight,
+                  width: boxWidth,
                   fit: BoxFit.contain,
                 )
               : SvgPicture.asset(
                   CurrentUser.user.male!
                       ? 'assets/images/body_outline_male_back.svg'
                       : 'assets/images/body_outline_female_back.svg',
-                  height: getVerticalSize(380),
-                  width: (size.width - 32) / 2,
+                  height: boxHeight,
+                  width: boxWidth,
                   fit: BoxFit.contain,
                 ),
           Stack(
@@ -66,9 +73,11 @@ class BodyWidget extends StatelessWidget {
                           visible: e.marginLeft != null && e.marginTop != null,
                           child: CircularContainerWidget(
                               color: bodyZoneColor(e.key, fallbackColor),
+                              height: getSize(39) * scale,
+                              width: getSize(39) * scale,
                               margin: getMargin(
-                                  top: e.marginTop ?? 0,
-                                  left: e.marginLeft ?? 0)));
+                                  top: (e.marginTop ?? 0) * scale,
+                                  left: (e.marginLeft ?? 0) * scale)));
                     })
                 .toList(),
           ),

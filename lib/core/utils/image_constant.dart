@@ -38,7 +38,7 @@ class ImageConstant {
 
   static String imgConsultation = 'assets/images/consultation_icon.svg';
 
-  static String imgSmallLogo = 'assets/images/rigel_small_logo.svg';
+  static String imgSmallLogo = 'assets/images/riva_logo_mark_white.png';
 
   static String imgClip = 'assets/images/clip.svg';
 
@@ -966,6 +966,24 @@ class ImageConstant {
   static const eventPlace8 = 'assets/images/event_images/Groupplace8.svg';
 
   static const eventPlace9 = 'assets/images/event_images/Groupplace9.svg';
+
+  static const eventPlay = 'assets/images/event_images/icon_play.svg';
+
+  static const eventPause = 'assets/images/event_images/icon_pause.svg';
+
+  static const eventExclamation = 'assets/images/event_images/icon_exclamation.svg';
+
+  static const eventFlower = 'assets/images/event_images/icon_flower.svg';
+
+  static const eventCoffee = 'assets/images/event_images/icon_coffee.svg';
+
+  static const eventPizza = 'assets/images/event_images/icon_pizza.svg';
+
+  static const eventCake = 'assets/images/event_images/icon_cake.svg';
+
+  static const eventHeadphones = 'assets/images/event_images/icon_headphones.svg';
+
+  static const eventPopcorn = 'assets/images/event_images/icon_popcorn.svg';
 
   static const eventWhere2 = 'assets/images/event_images/Groupwhere2.svg';
 

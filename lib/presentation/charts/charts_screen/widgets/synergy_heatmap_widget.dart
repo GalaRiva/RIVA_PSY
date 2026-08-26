@@ -6,6 +6,7 @@ import '../../../../core/models/day_event_model.dart';
 import '../../../../core/services/dashboards/synergy_heatmap_service.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../widgets/ambient_bloom_card.dart';
+import '../../../../widgets/dashboard_detail_sheet.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
 
 /// "Тепловая карта синергии" — cross-tab of two context dimensions
@@ -64,20 +65,29 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
     )!;
   }
 
+  // Humanized read of the cell instead of raw numbers — the count still
+  // shows (as a quiet subtitle, like the Energy Matrix's frequency line),
+  // but the body sentence names the *feeling* of the combination rather
+  // than reciting the score back at the user.
+  String _cellBodyText(HeatmapCell cell) {
+    if (_showTension) {
+      return cell.bodyTensionRate >= 0.4
+          ? 'heatmap_cell_body_tension_high'.tr()
+          : 'heatmap_cell_body_tension_low'.tr();
+    }
+    final t = (cell.avgMood / 10).clamp(0.0, 1.0);
+    if (t >= 0.65) return 'heatmap_cell_body_mood_high'.tr();
+    if (t >= 0.4) return 'heatmap_cell_body_mood_mid'.tr();
+    return 'heatmap_cell_body_mood_low'.tr();
+  }
+
   void _onCellTap(HeatmapCell cell) {
-    final text = _showTension
-        ? 'heatmap_cell_summary_tension'.tr(namedArgs: {
-            'row': cell.rowLabel,
-            'col': cell.colLabel,
-            'percent': (cell.bodyTensionRate * 100).round().toString(),
-          })
-        : 'heatmap_cell_summary'.tr(namedArgs: {
-            'row': cell.rowLabel,
-            'col': cell.colLabel,
-            'count': '${cell.count}',
-            'score': cell.avgMood.toStringAsFixed(1),
-          });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text), duration: const Duration(seconds: 3)));
+    DashboardDetailSheet.show(
+      context,
+      title: '${cell.rowLabel} × ${cell.colLabel}',
+      subtitle: 'heatmap_cell_count'.tr(namedArgs: {'count': '${cell.count}'}),
+      body: _cellBodyText(cell),
+    );
   }
 
   @override
@@ -99,11 +109,19 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('synergy_heatmap'.tr(), overflow: TextOverflow.ellipsis, style: AppStyle.txtSFProDisplayLight14Gray800),
-          SizedBox(height: getVerticalSize(6)),
-          Text(
-            'synergy_heatmap_intro'.tr(),
-            style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.4),
+          Row(
+            children: [
+              Text('synergy_heatmap'.tr(), overflow: TextOverflow.ellipsis, style: AppStyle.txtSFProDisplayLight14Gray800),
+              const SizedBox(width: 6),
+              GestureDetector(
+                onTap: () => DashboardDetailSheet.show(
+                  context,
+                  title: 'synergy_heatmap'.tr(),
+                  body: 'synergy_heatmap_intro'.tr(),
+                ),
+                child: Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textSecondary.withOpacity(0.7)),
+              ),
+            ],
           ),
           SizedBox(height: getVerticalSize(12)),
           _buildPairChips(),

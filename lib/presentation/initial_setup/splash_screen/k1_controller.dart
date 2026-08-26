@@ -28,13 +28,16 @@ class K1Controller extends GetxController {
   // to notice" as the explanation for "this screen never shows" reports)
   // — confirmed unrelated (the real cause was the GetBuilder loading
   // indicator, since removed from k1_screen.dart), and 6s read as slow.
-  // Back to the original default.
-  int secondsToNewPage = 2;
+  // This fires *after* all real init work below has already finished — it
+  // was pure padding on top of the actual (network-dependent) wait, not
+  // guarding anything except the sub-frame race described where it's set
+  // below. 400ms is comfortably more than that one frame needs.
+  int msToNewPage = 400;
 
   final _repo = K1Repo();
 
   Timer timer(BuildContext context) =>
-      Timer(Duration(seconds: secondsToNewPage), () async {
+      Timer(Duration(milliseconds: msToNewPage), () async {
 
             if (CurrentUser.user.passwordEnable &&
                 CurrentUser.user.password!.isNotEmpty) {
@@ -99,7 +102,7 @@ class K1Controller extends GetxController {
             // class as the earlier stale-controller splash bug, different
             // trigger. A small non-zero delay guarantees at least one
             // real frame gets presented before navigating away.
-            secondsToNewPage = 1;
+            msToNewPage = 400;
             DataSourceService.setRemoteDataSource();
             timer(context);
           }).then((value) {
@@ -114,7 +117,7 @@ class K1Controller extends GetxController {
             // class as the earlier stale-controller splash bug, different
             // trigger. A small non-zero delay guarantees at least one
             // real frame gets presented before navigating away.
-            secondsToNewPage = 1;
+            msToNewPage = 400;
             timer(context);
           });
         } else {

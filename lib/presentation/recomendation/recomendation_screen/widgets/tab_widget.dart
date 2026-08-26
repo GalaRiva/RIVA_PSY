@@ -60,20 +60,16 @@ class TabWidget extends StatelessWidget {
       for (var item in assets) {
         try {
           if (DataSourceService.dataSourceIsRemote()) {
-            await Future.delayed(Duration(milliseconds: 300), () async {
-              list.add(await controller.audioInstance.setUrl(
-                  item.audioAsset, initialPosition: Duration.zero, preload: true));
-            });
+            list.add(await controller.audioInstance.setUrl(
+                item.audioAsset, initialPosition: Duration.zero, preload: true));
           } else
             list.add(await controller.audioInstance.setAudioSource(
                 AudioSource.file(item.audioAsset),
                 initialPosition: Duration.zero));
         } catch (_) {
           try {
-            await Future.delayed(Duration(milliseconds: 200), () async {
-              list.add(await controller.audioInstance.setUrl(
-                  item.audioAsset, initialPosition: Duration.zero));
-            });
+            list.add(await controller.audioInstance.setUrl(
+                item.audioAsset, initialPosition: Duration.zero));
           } catch (_) {
             print('error load - ${item.audioAsset}');
             list.add(Duration.zero);

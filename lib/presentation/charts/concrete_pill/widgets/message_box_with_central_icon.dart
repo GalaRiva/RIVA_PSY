@@ -102,7 +102,7 @@ class MessageBoxWithCentralIcon {
                   decoration: BoxDecoration(
                       color: ColorConstant.cyan700, shape: BoxShape.circle),
                   child: CustomImageView(
-                    svgPath: ImageConstant.imgSmallLogo,
+                    imagePath: ImageConstant.imgSmallLogo,
                     alignment: Alignment.center,
                     width: getVerticalSize(31),
                     height: getVerticalSize(31),
