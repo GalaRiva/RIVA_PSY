@@ -60,6 +60,25 @@ class CurrentUser extends UserModel {
     }
   }
 
+  // Sign-out drops back to the anonymous state, but `user` is a static
+  // field that otherwise just keeps whatever was last loaded by init() —
+  // including currentTariff. Without this, a signed-out session could keep
+  // showing Orion-tier UI (no paywall) using a cached value from before
+  // logout, since init() itself only runs when a Firebase Auth session
+  // exists and is skipped entirely for an anonymous user.
+  static void reset() {
+    user = UserModel(
+        login: '',
+        email: '',
+        password: '',
+        reminderTime: 1,
+        currentTariff: TariffModel.BASE_TARIFF,
+        old: 33,
+        male: true,
+        registrationDate: DateTime.now());
+    usedOreonTrials = false;
+  }
+
   static bool tariffIsOrion() {
     if (user.currentTariff!.name == TariffModel.ORION_TARIFF_YEAR.name)
       return true;

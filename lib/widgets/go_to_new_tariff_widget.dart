@@ -22,17 +22,14 @@ class GoToNewTariffWidget extends StatelessWidget {
     return Container(
       height: height ?? size.height - (240 + 53),
       width: size.width,
-decoration: BoxDecoration(
-  gradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-    ColorConstant.gray200.withOpacity(0.5),
-    ColorConstant.gray200,
-    ColorConstant.gray200,
-  ])
-
-),      child: Container(
+      // Was a 3-stop gradient where only the top ~1/3 was actually
+      // translucent (0.5) and the rest fully opaque — meant to look like a
+      // teaser over real content, but in practice covered almost the whole
+      // area with solid color. One flat, more transparent fill throughout.
+      decoration: BoxDecoration(
+        color: ColorConstant.gray200.withOpacity(0.72),
+      ),
+      child: Container(
   margin: getMargin(bottom: 40),
   child: SingleChildScrollView(
     child: Column(
@@ -104,12 +101,6 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 },
                 alignment: Alignment.center,
               ),
-              SizedBox(height: 13,),
-              SizedBox(
-                width: getHorizontalSize(
-    280,
-    ),
-                  child: Text('in_free_version'.tr(), style: AppStyle.txtSFProDisplayLight12Gray800,)),
               SizedBox(height: 27,)
             ],
           ),

@@ -101,6 +101,7 @@ class K18Controller extends GetxController {
 
   Future signOut(context) async {
     await FirebaseAuth.instance.signOut();
+    CurrentUser.reset();
     DataSourceService.setRemoteDataSource();
     // Signing out drops back to the anonymous state, not a forced
     // registration screen — the app works the same way for a signed-out

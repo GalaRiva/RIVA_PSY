@@ -89,6 +89,7 @@ class NegativeEmotionsModel {
       }
       return sortRussianAlphabetically(audios);
     } catch (_) {
+      debugPrint('[AUDIO-DIAG] _audioAssets("$tab") failed: $_');
       return [];
     }
   }
@@ -180,6 +181,7 @@ class NegativeEmotionsModel {
       }
       return buttons;
     } catch (_) {
+      debugPrint('[TEXTREC-DIAG] _funButtons("$tab") failed: $_');
       return [];
     }
   }

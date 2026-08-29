@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -245,11 +246,36 @@ class TabWidget extends StatelessWidget {
                     // there's real content under it), so covering the
                     // header too is a small loss next to leaving actual
                     // playback reachable without a subscription.
-                    child: GoToNewTariffWidget(height: height, onSecondButtonTap: () {
+                    // No `height:` here — this used to inherit tabHeight,
+                    // which is derived from this tab's own audio count and
+                    // collapses to ~200px when that list is empty. The
+                    // overlay's own promo content (title/image/buttons/
+                    // disclaimer) needs far more than that, so a low-audio
+                    // tab clipped it down to an apparently blank gray box.
+                    // Omitting height lets the widget fall back to its own
+                    // sensible full-screen-ish default.
+                    child: GoToNewTariffWidget(onSecondButtonTap: () {
                       controller.tabController!.animateTo(0);
                       controller.currentTab = 0;
-                    }))
-
+                    })),
+                // Temporary on-screen diagnostic (debug builds only) — a
+                // blank tab here has had two different suspected causes
+                // already; this shows the actual values live instead of
+                // guessing a third time.
+                if (kDebugMode)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      color: Colors.black87,
+                      padding: EdgeInsets.all(4),
+                      child: Text(
+                        'tariff=${CurrentUser.user.currentTariff?.name} std=$isStandardCheck audios=${_audios.length} audioLen=$audioLength',
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ),
+                  ),
               ],
             ),
       ),

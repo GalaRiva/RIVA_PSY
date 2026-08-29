@@ -49,6 +49,21 @@ class K6Screen extends GetWidget {
                             SizedBox(
                               height: getVerticalSize(78),
                             ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => Navigator.pushNamed(
+                                  context, AppRoutes.profile),
+                              title: 'your_profile',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                              bgColor: ColorConstant.cyan700,
+                              textColor: Colors.white,
+                              iconColor: Colors.white,
+                            ),
+                            SizedBox(
+                              height: getVerticalSize(21),
+                            ),
                             CardSettingsButtonWidget(context,
                                 onTap: () => onTapRowrefresh(context),
                                 title: 'about_app',
@@ -141,15 +156,6 @@ class K6Screen extends GetWidget {
                             ),
                             SizedBox(
                               height: getVerticalSize(40),
-                            ),
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => Navigator.pushNamed(
-                                  context, AppRoutes.profile),
-                              title: 'your_profile',
-                              svgIcon: ImageConstant.imgUser,
-                              controller: controller,
-                              svgSize: 24,
                             ),
                             CardSettingsButtonWidget(
                               context,

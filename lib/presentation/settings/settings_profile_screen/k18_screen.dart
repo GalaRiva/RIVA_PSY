@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -21,6 +22,11 @@ class K18Screen extends GetWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(K18Controller());
     final key = GlobalKey<FormState>();
+    // Anonymous (local-UUID-only) users have no Firebase Auth session — the
+    // form below assumes a real account at every save/password/logout
+    // action, so it's swapped for a plain "create an account" prompt
+    // instead of being left to silently fail or crash.
+    final isAnonymous = FirebaseAuth.instance.currentUser == null;
 
     return Scaffold(
         backgroundColor: AppColors.background,
@@ -46,6 +52,27 @@ class K18Screen extends GetWidget {
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH1)),
+                        if (isAnonymous) ...[
+                          Padding(
+                            padding: getPadding(top: 24),
+                            child: Text(
+                              'anonymous_profile_notice'.tr(),
+                              textAlign: TextAlign.left,
+                              style: AppStyle.txtSFProDisplayLight14Gray800,
+                            ),
+                          ),
+                          CustomButton(
+                            height: getVerticalSize(47),
+                            width: double.infinity,
+                            margin: getMargin(top: 24, bottom: 40),
+                            text: 'account_required_cta'.tr().toUpperCase(),
+                            variant: ButtonVariant.Cyan,
+                            fontStyle: ButtonFontStyle.White16,
+                            onTap: () => Navigator.pushNamed(
+                                context, AppRoutes.signUp,
+                                arguments: {'contextual': true}),
+                          ),
+                        ] else ...[
                         Padding(
                             padding: getPadding(top: 37),
                             child: Text('login'.tr(),
@@ -362,6 +389,7 @@ class K18Screen extends GetWidget {
                             ),
                             onTap: ()async  =>await  controller.signOut(context),
                             alignment: Alignment.center),
+                        ],
                       ]),
                 )),
           ),
