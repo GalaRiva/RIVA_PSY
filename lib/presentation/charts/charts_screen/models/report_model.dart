@@ -18,10 +18,10 @@ class ReportModel {
       case 0:
         return event.date!.day.toString() + ' ' + event.date!.month.monthInText() + ' ' + event.date!.year.toString();
       case 1:
-        return  '${event.whatHappened!.localizedName}\n${event.whereHappened!.localizedName}\n${event.whoDidItHappen!.localizedName}';
+        return  '${event.whatHappened?.localizedName ?? ''}\n${event.whereHappened?.localizedName ?? ''}\n${event.whoDidItHappen?.localizedName ?? ''}';
       case 2:
         String emotion = '';
-        for(var item in  event.whatEmotion!) {
+        for(var item in  event.whatEmotion ?? const []) {
           emotion += '${item.localizedName}\n';
         }
         // Was silently dropping the intensity whenever the text happened to
@@ -30,7 +30,7 @@ class ReportModel {
         return '$emotion(${event.emotionIntensity})';
       case 3:
         String bodyParts = '';
-        for(var item in event.whatBodyParts!){
+        for(var item in event.whatBodyParts ?? const []){
           bodyParts += '${item.bodyPartsModel.localizedBodyPart}\n${item.subtitle}\n';
         }
         return bodyParts;

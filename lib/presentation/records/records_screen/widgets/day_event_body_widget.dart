@@ -48,7 +48,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                                 CustomImageView(
                                   alignment: Alignment.center,
                                   svgPath:
-                                      dayEventModel.whatHappened!.svgPath,
+                                      dayEventModel.whatHappened?.svgPath,
                                   color: _color,
                                   fit: BoxFit.scaleDown,
                                   height: getVerticalSize(
@@ -62,7 +62,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                                   ),
                                 ),
                                 Text(
-                                  dayEventModel.whatHappened!.localizedName,
+                                  dayEventModel.whatHappened?.localizedName ?? '',
                                   style: _style,
                                 )
                               ],
@@ -81,7 +81,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whereHappened!.localizedName,
+                                  dayEventModel.whereHappened?.localizedName ?? '',
                                   style: _style,
                                 )
                               ],
@@ -100,7 +100,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whoDidItHappen!.localizedName,
+                                  dayEventModel.whoDidItHappen?.localizedName ?? '',
                                   style: _style,
                                 )
                               ],
@@ -119,7 +119,9 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                             SecondVariantEventCard(
                               content: [
                                 Text(
-                                  dayEventModel.whatEmotion!.first.localizedName,
+                                  (dayEventModel.whatEmotion?.isNotEmpty ?? false)
+                                      ? dayEventModel.whatEmotion!.first.localizedName
+                                      : '',
                                   style: _style,
                                 ),
                                 IgnorePointer(
@@ -172,13 +174,13 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                     width: getHorizontalSize(250),
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: dayEventModel.whatBodyParts!.length,
+                        itemCount: (dayEventModel.whatBodyParts ?? const []).length,
                         itemBuilder: (context, index) => Padding(
                               padding: getPadding(right: 10),
                               child: SecondVariantEventCard(
                                 content: [
                                   Text(
-                                    dayEventModel.whatBodyParts![index]
+                                    (dayEventModel.whatBodyParts ?? const [])[index]
                                             .bodyPartsModel.localizedBodyPart ??
                                         '',
                                     style: _style,
@@ -373,10 +375,9 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: BodyWidget(
-                        list: dayEventModel.whatBodyParts!
+                        list: (dayEventModel.whatBodyParts ?? const [])
                                 .map((e) => e.bodyPartsModel)
-                                .toList() ??
-                            [],
+                                .toList(),
                       ),
                     )),
               ],

@@ -314,7 +314,7 @@ class K52Screen extends GetWidget {
                           [
                             CustomImageView(
                               alignment: Alignment.center,
-                              svgPath: dayEventModel.whatHappened!.svgPath,
+                              svgPath: dayEventModel.whatHappened?.svgPath,
                               color: _color,
                               fit: BoxFit.scaleDown,
                               height: getVerticalSize(
@@ -328,7 +328,7 @@ class K52Screen extends GetWidget {
                               ),
                             ),
                             Text(
-                              dayEventModel.whatHappened!.localizedName,
+                              dayEventModel.whatHappened?.localizedName ?? '',
                               style: _style,
                             )
                           ]
@@ -372,7 +372,7 @@ class K52Screen extends GetWidget {
                         contents: [
                           [
                             Text(
-                              dayEventModel.whereHappened!.localizedName,
+                              dayEventModel.whereHappened?.localizedName ?? '',
                               style: _style,
                             )
                           ]
@@ -418,7 +418,7 @@ class K52Screen extends GetWidget {
                         contents: [
                           [
                             Text(
-                              dayEventModel.whoDidItHappen!.localizedName,
+                              dayEventModel.whoDidItHappen?.localizedName ?? '',
                               style: _style,
                             )
                           ]
@@ -460,7 +460,7 @@ class K52Screen extends GetWidget {
                         searchController: controller.emotionSearchController,
                         addController: controller.eventAddController,
                         contents: [
-                          dayEventModel.whatEmotion!
+                          (dayEventModel.whatEmotion ?? const [])
                               .map((e) => Text(
                                     e.name,
                                     style: _style,

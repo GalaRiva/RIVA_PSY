@@ -116,7 +116,8 @@ class HiveDBTags {
     pills,
     spentRecords,
     desires,
-    insights
+    insights,
+    guidedJournalAnswers
   ];
   static const events = 'events';
   static const desires = 'desires';
@@ -135,4 +136,5 @@ class HiveDBTags {
   static const pills = 'pills';
   static const spentRecords = 'spentRecords';
   static const insights = 'insights';
+  static const guidedJournalAnswers = 'guidedJournalAnswers';
 }

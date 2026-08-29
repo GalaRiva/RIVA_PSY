@@ -150,7 +150,7 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
 
     for (var event in await getDayEventModel()) {
       _getPlaces(event);
-      for (var emotion in event.whatEmotion!) {
+      for (var emotion in event.whatEmotion ?? const []) {
         final emotionType = await getEmotionTypes(event, emotion);
         if (emotionType != null) {
           emotionsTypes.add(emotionType);
@@ -402,6 +402,12 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
 
   void _getPlaces (DayEventModel dayEventModel) {
 
+    // No place, no emotions — nothing meaningful to plot on the Places
+    // chart for this entry (a "lightweight" record like a saved Guided
+    // Journal reflection, which has no whereHappened at all).
+    if (dayEventModel.whereHappened == null) return;
+    final whatEmotion = dayEventModel.whatEmotion ?? const [];
+
     PlaceModel? placeIsExist () {
       for (var item in _places) {
         if (item.identity == dayEventModel.whereHappened!.identity) {
@@ -421,14 +427,14 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     }
 
     if(placeIsExist() != null) {
-      for(var item in dayEventModel.whatEmotion!){
+      for(var item in whatEmotion){
         var val = EmotionModel(1, item.name, getColor(placeIsExist()!.emotions.length, emotionKey: item.key), key: item.key);
         if(!listContainEmotion(placeIsExist()!.emotions, val)){
           placeIsExist()!.emotions.add(val);
         }
       }
     } else {
-      _places.add(PlaceModel(dayEventModel.whereHappened!.localizedName, List<EmotionModel>.generate(dayEventModel.whatEmotion!.length, (index) => EmotionModel(1, dayEventModel.whatEmotion![index].localizedName, getColor(index, emotionKey: dayEventModel.whatEmotion![index].key), key: dayEventModel.whatEmotion![index].key)), placeKey: dayEventModel.whereHappened!.key));
+      _places.add(PlaceModel(dayEventModel.whereHappened!.localizedName, List<EmotionModel>.generate(whatEmotion.length, (index) => EmotionModel(1, whatEmotion[index].localizedName, getColor(index, emotionKey: whatEmotion[index].key), key: whatEmotion[index].key)), placeKey: dayEventModel.whereHappened!.key));
     }
   }
 
