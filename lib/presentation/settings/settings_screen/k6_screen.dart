@@ -14,6 +14,7 @@ import '../../initial_setup/set_reminders_screen/k3_screen.dart';
 import '../../consultation/consultation_screen.dart';
 import '../../../core/services/insights/insight_workmanager.dart';
 import '../../../core/services/insights/insights_repo.dart';
+import '../../../core/services/rating/rating_request_service.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -109,6 +110,15 @@ class K6Screen extends GetWidget {
                               onTap: () => onTapRowcheckmarkone(context),
                               title: 'report_an_error',
                               svgIcon: ImageConstant.imgCheckmarkGray80024x24,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => launchUrl(
+                                  Uri.parse('mailto:support@rivapsy.com')),
+                              title: 'write_to_us',
+                              svgIcon: ImageConstant.imgMail,
                               controller: controller,
                               svgSize: 24,
                             ),
@@ -234,6 +244,23 @@ class K6Screen extends GetWidget {
                                   ));
                                 },
                                 title: '🧪 Gratitude test (temp)',
+                                svgIcon: ImageConstant.imgUser,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
+                              // Clears the rating-request throttle (last-call
+                              // timestamp + lifetime count) so the quiz-result
+                              // review prompt can be re-tested without waiting
+                              // 90 days between attempts.
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () async {
+                                  await RatingRequestService.debugResetThrottle();
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('Троттлинг запроса оценки сброшен.'),
+                                  ));
+                                },
+                                title: '🧪 Reset rating throttle (temp)',
                                 svgIcon: ImageConstant.imgUser,
                                 controller: controller,
                                 svgSize: 24,

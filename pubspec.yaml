@@ -76,6 +76,7 @@ dependencies:
   flutter_svg_provider: ^1.0.3
 
   #other
+  in_app_review: ^2.0.9
   workmanager: ^0.6.0
   crypto: ^3.0.3
   permission_handler: ^11.3.0
