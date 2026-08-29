@@ -78,7 +78,14 @@ class CustomButton extends StatelessWidget {
         margin: margin ?? EdgeInsets.zero,
         width: width ?? double.maxFinite,
         height: minHeight != null ? null : (height ?? 50),
-        constraints: minHeight != null ? BoxConstraints(minHeight: minHeight!) : null,
+        // No maxHeight here left prefix/suffix icons that don't specify
+        // their own size (many call sites just pass an SvgPicture with no
+        // width/height) free to claim unbounded height once the fixed
+        // `height` constraint was gone — the button ballooned to fill the
+        // whole screen instead of just growing enough for 2 lines of text.
+        constraints: minHeight != null
+            ? BoxConstraints(minHeight: minHeight!, maxHeight: minHeight! * 2.2)
+            : null,
         padding: minHeight != null ? getPadding(top: 6, bottom: 6, left: 6, right: 6) : null,
         decoration: _buildTextButtonStyle(),
         child: _buildButtonWithOrWithoutIcon(),
@@ -92,7 +99,13 @@ class CustomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           prefixWidget ?? SizedBox(),
-          _getCentralWidget(),
+          // Flexible bounds the text to whatever width the icon(s) leave
+          // — without it, a plain Row child gets its own unconstrained
+          // natural width, so a translation longer than the original
+          // (e.g. English "CHOOSING AN EMOTION" vs Russian) doesn't wrap;
+          // it just overflows past the button and behind whatever's
+          // drawn next to it.
+          Flexible(child: _getCentralWidget()),
           suffixWidget ?? SizedBox(),
         ],
       );

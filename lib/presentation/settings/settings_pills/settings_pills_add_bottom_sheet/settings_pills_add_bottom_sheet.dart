@@ -27,7 +27,11 @@ class PillsAddBottomSheet extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Padding(
-          padding: getPadding(left: 16, right: 16, top: 35,
+          // Left/right stay 0 here — this padding was pushing the whole
+          // gray sheet in from the screen edges (shrinking it), when the
+          // actual ask was room *inside* it. The inset below now lives on
+          // the content itself instead.
+          padding: getPadding(top: 35,
             bottom: MediaQuery.of(context).viewInsets.bottom + 40
           ),
           child: Container(
@@ -37,7 +41,9 @@ class PillsAddBottomSheet extends StatelessWidget {
                 children: [
                   SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
-                    child: Column(
+                    child: Padding(
+                      padding: getPadding(left: 24, right: 24),
+                      child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
@@ -251,6 +257,7 @@ class PillsAddBottomSheet extends StatelessWidget {
                           ),
                         )
                       ],
+                      ),
                     ),
                   ),
                   Container(

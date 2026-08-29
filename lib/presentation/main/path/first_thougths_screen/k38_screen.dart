@@ -130,11 +130,12 @@ class K38Screen extends GetWidget {
                           159,
                         ),
                         variant: ButtonVariant.Base,
+                        textIsFitted: true,
                         onTap: ()=>Navigator.pop(context),
                         text: 'what_did_I_do'.tr().toUpperCase(),
                         padding: ButtonPadding.PaddingT8,
                         prefixWidget: CustomImageView(
-                          margin: getMargin(right: 12),
+                          margin: getMargin(right: 4),
                           svgPath: ImageConstant.leftArrow,
                         ),
                       ),

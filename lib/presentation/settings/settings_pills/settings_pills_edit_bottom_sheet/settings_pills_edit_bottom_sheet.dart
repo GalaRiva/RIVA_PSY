@@ -34,7 +34,7 @@ class PillsEditBottomSheet extends StatelessWidget {
         height: size.height - (size.height / 3),
         child: Container(
           child: Padding(
-            padding: getPadding(left: 16, right: 16, top: 35),
+            padding: getPadding(left: 24, right: 24, top: 35),
             child: Stack(
                 children: [
             SingleChildScrollView(

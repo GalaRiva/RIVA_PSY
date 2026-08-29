@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -116,50 +117,59 @@ class K7Screen extends StatelessWidget {
                             Padding(
                                 padding: getPadding(left: 4, top: 96),
                                 child: DropTextWidget(model: controller.privacyPolicy,)),
-                            Padding(
-                                padding: getPadding(left: 4, top: 16),
-                                child: Text(
-                                    'build ${BuildInfo.gitHash} · ${BuildInfo.buildTime}',
-                                    style: AppStyle.txtSFProDisplayLight10Gray800)),
-                            // Temporary on-screen tariff/session diagnostic —
-                            // lets the account's actual runtime state be read
-                            // off a screenshot when USB/logcat access isn't
-                            // available. See PROJECT_CONTEXT.md, the
-                            // "tariff says Орион but app won't unlock" thread.
-                            Padding(
-                                padding: getPadding(left: 4, top: 12),
-                                child: SelectableText(
-                                    'email: ${CurrentUser.user.email}\n'
-                                    'userId(): ${CurrentUser.repo.userId()}\n'
-                                    'currentTariff: ${CurrentUser.user.currentTariff?.name}\n'
-                                    'tariffIsOrion(): ${CurrentUser.tariffIsOrion()}\n'
-                                    'context.locale: ${context.locale} (languageCode: ${context.locale.languageCode})',
-                                    style: AppStyle.txtSFProDisplayLight10Gray800)),
-                            // Temporary: live Text_Recommendation (одна позиция
-                            // тега wrath) + Audio-by-tab count, прямым запросом
-                            // к Firestore прямо здесь — см. PROJECT_CONTEXT.md.
-                            Padding(
-                                padding: getPadding(left: 4, top: 12),
-                                child: FutureBuilder<Map<String, dynamic>>(
-                                    future: _loadTextRecAudioDiagnostics(),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return Text('Загрузка диагностики Text_Recommendation/Audio...',
+                            // Dev-only diagnostics (build hash, tariff/session
+                            // state, live Firestore snapshot, notification
+                            // scheduling) — useful for reading runtime state
+                            // off a screenshot when USB/logcat isn't
+                            // available, but must never ship to real users,
+                            // so gated behind kDebugMode like the Settings
+                            // test shortcuts.
+                            if (kDebugMode) ...[
+                              Padding(
+                                  padding: getPadding(left: 4, top: 16),
+                                  child: Text(
+                                      'build ${BuildInfo.gitHash} · ${BuildInfo.buildTime}',
+                                      style: AppStyle.txtSFProDisplayLight10Gray800)),
+                              // Temporary on-screen tariff/session diagnostic —
+                              // lets the account's actual runtime state be read
+                              // off a screenshot when USB/logcat access isn't
+                              // available. See PROJECT_CONTEXT.md, the
+                              // "tariff says Орион but app won't unlock" thread.
+                              Padding(
+                                  padding: getPadding(left: 4, top: 12),
+                                  child: SelectableText(
+                                      'email: ${CurrentUser.user.email}\n'
+                                      'userId(): ${CurrentUser.repo.userId()}\n'
+                                      'currentTariff: ${CurrentUser.user.currentTariff?.name}\n'
+                                      'tariffIsOrion(): ${CurrentUser.tariffIsOrion()}\n'
+                                      'context.locale: ${context.locale} (languageCode: ${context.locale.languageCode})',
+                                      style: AppStyle.txtSFProDisplayLight10Gray800)),
+                              // Temporary: live Text_Recommendation (одна позиция
+                              // тега wrath) + Audio-by-tab count, прямым запросом
+                              // к Firestore прямо здесь — см. PROJECT_CONTEXT.md.
+                              Padding(
+                                  padding: getPadding(left: 4, top: 12),
+                                  child: FutureBuilder<Map<String, dynamic>>(
+                                      future: _loadTextRecAudioDiagnostics(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return Text('Загрузка диагностики Text_Recommendation/Audio...',
+                                              style: AppStyle.txtSFProDisplayLight10Gray800);
+                                        }
+                                        final d = snapshot.data!;
+                                        return SelectableText(
+                                            'wrath[0] doc: ${d['docId'] ?? d['textRecError']}\n'
+                                            '  title: ${d['title']}\n'
+                                            '  title_en: ${d['title_en']}\n'
+                                            '  title_es: ${d['title_es']}\n'
+                                            '  order: ${d['order']}\n'
+                                            'Audio count for tab=wrath: ${d['audioCountForTab'] ?? d['audioError']}',
                                             style: AppStyle.txtSFProDisplayLight10Gray800);
-                                      }
-                                      final d = snapshot.data!;
-                                      return SelectableText(
-                                          'wrath[0] doc: ${d['docId'] ?? d['textRecError']}\n'
-                                          '  title: ${d['title']}\n'
-                                          '  title_en: ${d['title_en']}\n'
-                                          '  title_es: ${d['title_es']}\n'
-                                          '  order: ${d['order']}\n'
-                                          'Audio count for tab=wrath: ${d['audioCountForTab'] ?? d['audioError']}',
-                                          style: AppStyle.txtSFProDisplayLight10Gray800);
-                                    })),
-                            Padding(
-                                padding: getPadding(left: 4, top: 12),
-                                child: const NotificationDiagnosticsWidget()),
+                                      })),
+                              Padding(
+                                  padding: getPadding(left: 4, top: 12),
+                                  child: const NotificationDiagnosticsWidget()),
+                            ],
                             CustomButton(
                                 height: getVerticalSize(32),
                                 width: getHorizontalSize(146),

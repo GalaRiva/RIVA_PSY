@@ -46,12 +46,15 @@ class WhatEmotionWidget extends StatelessWidget {
                 crossAxisAlignment:
                 CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'positive_and_negative_emotions'.tr(),
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle
-                        .txtSFProDisplayLight14Gray800,
+                  Expanded(
+                    child: Text(
+                      'positive_and_negative_emotions'.tr(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: AppStyle
+                          .txtSFProDisplayLight14Gray800,
+                    ),
                   ),
                   Padding(
                     padding: getPadding(

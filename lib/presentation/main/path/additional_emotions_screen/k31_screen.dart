@@ -189,11 +189,12 @@ class K31Screen extends GetWidget {
                     height: getVerticalSize(32),
                     width: getHorizontalSize(177),
                     variant: ButtonVariant.Base,
+                    textIsFitted: true,
                     onTap: () => Navigator.pop(context),
                     text: 'choosing_emotion'.tr().toUpperCase(),
                     padding: ButtonPadding.PaddingT8,
                     prefixWidget: CustomImageView(
-                      margin: getMargin(right: 12),
+                      margin: getMargin(right: 4),
                       svgPath: ImageConstant.leftArrow,
                     ),
                   ),

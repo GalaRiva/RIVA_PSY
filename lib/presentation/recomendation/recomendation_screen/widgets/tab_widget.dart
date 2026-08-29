@@ -237,15 +237,18 @@ class TabWidget extends StatelessWidget {
                 ),
                 Visibility(
                     visible: CurrentUser.user.currentTariff!.name == 'Базовый' && isStandardCheck == true,
-                    child: Padding(
-                      // Was flush with the top of the stack, directly over
-                      // this tab's own header/instruction text instead of
-                      // starting below it.
-                      padding: getPadding(top: 100),
-                      child: GoToNewTariffWidget(height: height, onSecondButtonTap: () {
+                    // Used to start 100px down, to clear this tab's own
+                    // header/instruction text — but that gap also left the
+                    // first audio card's real, working play/scrub controls
+                    // exposed and usable on the free tier. The teaser
+                    // overlay is already semi-transparent (you can see
+                    // there's real content under it), so covering the
+                    // header too is a small loss next to leaving actual
+                    // playback reachable without a subscription.
+                    child: GoToNewTariffWidget(height: height, onSecondButtonTap: () {
                       controller.tabController!.animateTo(0);
                       controller.currentTab = 0;
-                    },)))
+                    }))
 
               ],
             ),

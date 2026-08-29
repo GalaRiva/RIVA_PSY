@@ -291,12 +291,13 @@ class K32Screen extends GetWidget {
                             width: getHorizontalSize(
                               177,
                             ),
+                            textIsFitted: true,
                             onTap: () => Navigator.pop(context),
                             text: 'choosing_emotion'.tr().toUpperCase(),
                             variant: ButtonVariant.Base,
                             padding: ButtonPadding.PaddingT8,
                             prefixWidget: CustomImageView(
-                              margin: getMargin(right: 12),
+                              margin: getMargin(right: 4),
                               svgPath: ImageConstant.leftArrow,
                             ),
                           ),

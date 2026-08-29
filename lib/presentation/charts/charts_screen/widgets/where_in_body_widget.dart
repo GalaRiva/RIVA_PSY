@@ -56,12 +56,15 @@ class WhereInBodyWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'where_do_my_emotions_live_in_the_body'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800,
+                    Expanded(
+                      child: Text(
+                        'where_do_my_emotions_live_in_the_body'.tr(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle
+                            .txtSFProDisplayLight14Gray800,
+                      ),
                     ),
                     TextForSelectPeriodWidget(start: controller.dateStart, end: controller.dateEnd, controller: controller,)
                   ],
@@ -357,12 +360,15 @@ class WhereInBodyWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'where_do_my_emotions_live_in_the_body'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800,
+                      Expanded(
+                        child: Text(
+                          'where_do_my_emotions_live_in_the_body'.tr(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: AppStyle
+                              .txtSFProDisplayLight14Gray800,
+                        ),
                       ),
                       TextForSelectPeriodWidget(start: controller.dateStart, end: controller.dateEnd, controller: controller,)
                     ],

@@ -48,14 +48,19 @@ class K12Page extends GetWidget<K12Controller> {
                                 child: GetBuilder(
                                   builder: (K12Controller _controller) =>
                                       SizedBox(
-                                    height: (34 + 15) * 5,
+                                    // Was a fixed height guessed for exactly
+                                    // 5 rows ((34+15)*5) — the checkbox is
+                                    // actually 15x15, not 34, so that guess
+                                    // under-counted every row's real height
+                                    // and clipped the last option. Sizing
+                                    // to content instead means it's correct
+                                    // no matter how many options there are.
                                     width: 150,
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.list.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: List<Widget>.generate(
+                                          controller.list.length,
+                                          (int index) {
                                         return Column(
                                           children: [
                                             GestureDetector(
@@ -124,7 +129,7 @@ class K12Page extends GetWidget<K12Controller> {
                                             )
                                           ],
                                         );
-                                      },
+                                      }),
                                     ),
                                   ),
                                 ),

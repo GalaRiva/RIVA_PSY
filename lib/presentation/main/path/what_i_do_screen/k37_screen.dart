@@ -155,7 +155,7 @@ class K37Screen extends StatelessWidget {
                         textIsFitted: true,
                         padding: ButtonPadding.PaddingT8,
                         prefixWidget: CustomImageView(
-                          margin: getMargin(right: 12),
+                          margin: getMargin(right: 4),
                           svgPath: ImageConstant.leftArrow,
                         ),
                       ),
