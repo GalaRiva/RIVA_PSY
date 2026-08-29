@@ -25,6 +25,19 @@ import '../../domain/usecases/create_user.dart';
 import '../../domain/usecases/sign_in_with_apple.dart';
 
 class K2AuthController extends GetxController {
+  // Set by K2AuthScreen from route arguments — see K2Controller.contextual
+  // in the sign-up screen for why this changes post-success navigation.
+  bool contextual = false;
+
+  void _afterSignedIn(BuildContext context) {
+    if (contextual) {
+      Navigator.pop(context, true);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.splashScreen, (route) => false);
+    }
+  }
+
   bool _useEmail = true;
 
   bool get useEmail => _useEmail;
@@ -59,8 +72,7 @@ class K2AuthController extends GetxController {
           await CurrentUser.repo.setService('');
           await CurrentUser.repo.setLocalUserData(email: email);
 
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.splashScreen, (route) => false);
+          _afterSignedIn(context);
         } else {
           showMessage(context,
               title: 'Авторизация',
@@ -109,8 +121,7 @@ class K2AuthController extends GetxController {
           await CurrentUser.repo.setService('apple');
           await CurrentUser.repo.setLocalUserData(email: result.email);
 
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.splashScreen, (route) => false);
+          _afterSignedIn(context);
         }
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'apple');
@@ -135,8 +146,7 @@ class K2AuthController extends GetxController {
             await CurrentUser.repo.setService('apple');
             await CurrentUser.repo.setLocalUserData(email: result.email);
 
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.splashScreen, (route) => false);
+            _afterSignedIn(context);
           } else {
             showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
@@ -178,8 +188,7 @@ class K2AuthController extends GetxController {
             await CurrentUser.repo.setService('google');
             await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.splashScreen, (route) => false);
+            _afterSignedIn(context);
           }
         } else {
           final createUserInDB = await CreateUser().createUser(email: result.email, service: 'google');
@@ -204,8 +213,7 @@ class K2AuthController extends GetxController {
               await CurrentUser.repo.setService('google');
               await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.splashScreen, (route) => false);
+              _afterSignedIn(context);
             } else {
               showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
             }

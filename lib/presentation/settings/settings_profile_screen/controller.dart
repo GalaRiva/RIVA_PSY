@@ -102,8 +102,12 @@ class K18Controller extends GetxController {
   Future signOut(context) async {
     await FirebaseAuth.instance.signOut();
     DataSourceService.setRemoteDataSource();
+    // Signing out drops back to the anonymous state, not a forced
+    // registration screen — the app works the same way for a signed-out
+    // user as it does for someone who never registered (splashScreen ->
+    // K1Controller already handles "no Firebase Auth session" safely).
     Navigator.pushNamedAndRemoveUntil(
-        context, AppRoutes.signUp, (route) => false);
+        context, AppRoutes.splashScreen, (route) => false);
     AppRoutes.currentRoute = AppRoutes.main;
   }
 

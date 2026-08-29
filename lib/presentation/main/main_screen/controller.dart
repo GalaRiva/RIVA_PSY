@@ -14,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/shared_prefs.dart';
 import '../../initial_setup/recomendation_buy_tariff_screen/k4_screen.dart';
-import '../../initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import '../../initial_setup/send_pushes_screen/send_pushe_screen.dart';
 
 class K20Controller extends GetxController {
@@ -67,11 +66,14 @@ class K20Controller extends GetxController {
       showDialog(        useSafeArea: false,
 
           context: context, builder: (_) => SendPushesScreen());
-    else if(!CurrentUser.tariffIsOrion() && SharedPrefs.sharedPreferences.getBool('recommendation_buy_tariff' ) == null) {
-      showDialog(
-        useSafeArea: false,
-          context: context, builder: (_) => RecommendationBuyTariffScreen());
-    }
+
+    // "Тариф" recommendation popup (RecommendationBuyTariffScreen) removed
+    // from this onboarding chain by request — with registration no longer
+    // required up front, this unprompted "переходите на тариф Орион" nag
+    // right after the reminders/permissions setup no longer fits the
+    // anonymous-first flow (it lost its original purpose). Subscription
+    // itself is unaffected — reachable via Settings whenever the user
+    // actually wants it, gated by AccountRequiredSheet like any purchase.
 
     // "Напоминания о приёме лекарств" popup (PillRemindersScreen) removed
     // from this onboarding chain by request — was shown once per user via

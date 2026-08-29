@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +11,7 @@ import 'package:riva_psy/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/services/identity/local_identity_service.dart';
 import 'core/services/insights/insight_workmanager.dart';
 import 'core/services/notifications/awesome_notification_service.dart';
 import 'core/utils/color_constant.dart';
@@ -60,12 +60,17 @@ void main() async {
       }
       //initializeDateFormatting('ru_RU');
 
-      final event = await FirebaseAuth.instance.authStateChanges().first;
-      if (event == null)
-        AppRoutes.initialRoute = AppRoutes.signUp;
-      else {
-        AppRoutes.initialRoute = AppRoutes.splashScreen;
-      }
+      // Zero-friction entry: no forced registration screen anymore.
+      // A registered user (has a Firebase Auth session) goes through the
+      // splash screen exactly as before; a first-time/anonymous user gets a
+      // local UUID (offline, no server round-trip) and goes through the
+      // exact same splash screen — K1Controller.initialization() already
+      // conditionally skips its Firestore/CurrentUser sync when there's no
+      // Firebase Auth session, so it's already safe for an anonymous user.
+      // Registration itself now only happens contextually, from the
+      // subscription/backup screens (see AccountRequiredSheet).
+      await LocalIdentityService.ensureLocalId();
+      AppRoutes.initialRoute = AppRoutes.splashScreen;
     } catch (_) {
 
     }

@@ -7,7 +7,6 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
-import 'package:riva_psy/presentation/initial_setup/recomendation_buy_tariff_screen/recomendation_buy_tariff_screen.dart';
 import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_pushe_screen.dart';
 import 'controller.dart';
 import '../../../core/services/workmanager/workmanager_service.dart';
@@ -348,14 +347,9 @@ class K3Screen extends GetWidget<K3Controller> {
             useSafeArea: false,
             context: context,
             builder: (_) => SendPushesScreen());
-      else if (SharedPrefs.sharedPreferences
-              .getBool('recommendation_buy_tariff') ==
-          null) {
-        showDialog(
-            useSafeArea: false,
-            context: context,
-            builder: (_) => RecommendationBuyTariffScreen());
-      }
+      // "Тариф" recommendation popup (RecommendationBuyTariffScreen) removed
+      // from this chain by request — see the matching removal in
+      // main_screen/controller.dart's openMessages() for why.
     }
   }
 

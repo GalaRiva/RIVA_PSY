@@ -77,6 +77,7 @@ dependencies:
 
   #other
   in_app_review: ^2.0.9
+  uuid: ^3.0.7
   workmanager: ^0.6.0
   crypto: ^3.0.3
   permission_handler: ^11.3.0

@@ -13,6 +13,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
+import '../../../widgets/account_required_sheet.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_pop_button.dart';
@@ -270,6 +271,10 @@ class K13Screen extends GetWidget {
 // instead of the Stripe Payment Link now.
 Future<void> _subscribeK13(BuildContext context,
     {required String productId, required String stripeUrl}) async {
+  final hasAccount = await AccountRequiredSheet.ensure(context,
+      reason: 'account_required_subscription_reason'.tr());
+  if (!hasAccount || !context.mounted) return;
+
   if (Platform.isAndroid) {
     try {
       await GooglePlayBillingService.buy(productId);

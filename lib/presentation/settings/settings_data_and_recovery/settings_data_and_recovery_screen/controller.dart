@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/services/firebase/firebase_exception_exporter.dart';
 import '../../../../core/services/google_drive_service.dart';
 import '../../../../core/user_data/user.dart';
+import '../../../../widgets/account_required_sheet.dart';
 
 class DataAndRecoveryController extends GetxController {
   String service = 'Google Drive';
@@ -35,6 +36,14 @@ class DataAndRecoveryController extends GetxController {
   Future createServiceBackup(BuildContext context,
       {bool showErrorMessage = true}) async {
     if (service.toLowerCase() == 'google drive') {
+      // Anonymous (local-UUID-only) users have no Firebase Auth session and
+      // therefore an empty userId() by design — this used to be a dead-end
+      // error message, now it's the actual point where an account gets
+      // created, contextually, for exactly this reason.
+      final hasAccount = await AccountRequiredSheet.ensure(context,
+          reason: 'account_required_backup_reason'.tr());
+      if (!hasAccount || !context.mounted) return;
+
       if (CurrentUser.repo.userId().isEmpty) {
         // addServiceBackup() below writes to .doc(userId()) directly — an
         // empty id throws a raw "document path must be a non-empty

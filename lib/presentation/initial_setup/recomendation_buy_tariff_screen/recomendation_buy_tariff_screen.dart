@@ -12,6 +12,7 @@ import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
 import '../../../theme/app_colors.dart';
+import '../../../widgets/account_required_sheet.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -172,6 +173,10 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
 
 Future<void> _subscribeBuyTariff(BuildContext context,
     {required String productId, required String stripeUrl}) async {
+  final hasAccount = await AccountRequiredSheet.ensure(context,
+      reason: 'account_required_subscription_reason'.tr());
+  if (!hasAccount || !context.mounted) return;
+
   if (Platform.isAndroid) {
     try {
       await GooglePlayBillingService.buy(productId);

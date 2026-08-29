@@ -25,6 +25,22 @@ import '../../../strengths_quiz/quiz_flow.dart';
 class K2Controller extends GetxController {
   final _instance = FirebaseFirestore.instance;
 
+  // Set by K2Screen from route arguments when this registration was
+  // triggered mid-session (e.g. AccountRequiredSheet before a purchase or
+  // backup), not the app's cold-start flow. In that case the user is
+  // already using the app and just wants an account — the onboarding quiz
+  // would be friction, not value, so we skip it and pop back to the caller
+  // instead of restarting navigation into the splash flow.
+  bool contextual = false;
+
+  Future _afterAccountCreated(BuildContext context) async {
+    if (contextual) {
+      Navigator.pop(context, true);
+    } else {
+      await startPostRegistrationQuizFlow(context);
+    }
+  }
+
   bool _useEmail = true;
 
   bool get useEmail => _useEmail;
@@ -80,7 +96,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('');
             await CurrentUser.repo.setLocalUserData(email: email);
 
-            await startPostRegistrationQuizFlow(context);
+            await _afterAccountCreated(context);
           } else {
               showMessage(context,
                   title: 'Registration', content: createUserInDB.exceptionMessage!);
@@ -119,8 +135,12 @@ class K2Controller extends GetxController {
           await CurrentUser.repo.setService('apple');
           await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.splashScreen, (route) => false);
+          if (contextual) {
+            Navigator.pop(context, true);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, AppRoutes.splashScreen, (route) => false);
+          }
         }
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'apple');
@@ -145,7 +165,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('apple');
             await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-            await startPostRegistrationQuizFlow(context);
+            await _afterAccountCreated(context);
           } else {
             showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }
@@ -190,8 +210,12 @@ class K2Controller extends GetxController {
           await CurrentUser.repo.setService('google');
           await CurrentUser.repo.setLocalUserData(email: result.email);
 
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.splashScreen, (route) => false);
+          if (contextual) {
+            Navigator.pop(context, true);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, AppRoutes.splashScreen, (route) => false);
+          }
         }
       } else {
         final createUserInDB = await CreateUser().createUser(email: result.email, service: 'google');
@@ -217,7 +241,7 @@ class K2Controller extends GetxController {
             await CurrentUser.repo.setService('google');
             await CurrentUser.repo.setLocalUserData(email: result.email, login: result.login);
 
-            await startPostRegistrationQuizFlow(context);
+            await _afterAccountCreated(context);
           } else {
             showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
           }

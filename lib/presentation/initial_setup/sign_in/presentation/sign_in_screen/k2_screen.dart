@@ -21,6 +21,8 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey<FormState>();
+    final args = ModalRoute.of(context)?.settings.arguments;
+    controller.contextual = args is Map && args['contextual'] == true;
     return Scaffold(
         backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: true,

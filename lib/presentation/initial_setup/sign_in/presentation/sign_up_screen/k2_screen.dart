@@ -49,6 +49,9 @@ class K2Screen extends GetWidget<K2Controller> {
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey<FormState>();
+    final args = ModalRoute.of(context)?.settings.arguments;
+    final contextual = args is Map && args['contextual'] == true;
+    controller.contextual = contextual;
     return Scaffold(
         backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
@@ -128,8 +131,17 @@ class K2Screen extends GetWidget<K2Controller> {
                               borderRadius: BorderRadius.circular(16),
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(16),
-                                onTap: () => Navigator.pushNamed(
-                                    context, AppRoutes.signIn),
+                                // Contextual flow replaces (not pushes) so
+                                // there's exactly one route between the
+                                // caller and here — a single pop(true) from
+                                // the sign-in screen then resolves straight
+                                // back to AccountRequiredSheet's await.
+                                onTap: () => contextual
+                                    ? Navigator.pushReplacementNamed(
+                                        context, AppRoutes.signIn,
+                                        arguments: {'contextual': true})
+                                    : Navigator.pushNamed(
+                                        context, AppRoutes.signIn),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
