@@ -34,6 +34,7 @@ enum WorkingOutIrrationalStage {
   alternative,
   challengeDo,
   challengeThought,
+  cognitiveDistortions,
   alternativeDo,
   alternativeThought,
   recordDo,

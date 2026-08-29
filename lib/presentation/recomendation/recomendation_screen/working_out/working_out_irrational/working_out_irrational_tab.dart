@@ -13,6 +13,7 @@ import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 import 'bloc/cubit.dart';
 import 'bloc/state.dart';
 import 'pages/challenge/challenge_page.dart';
+import 'pages/cognitive_distortions/cognitive_distortions_page.dart';
 import 'pages/gratitude/gratitude_page.dart';
 import 'pages/initial_working_out/empty_initial_working_out_page.dart';
 import 'pages/initial_working_out/initial_working_out_page.dart';
@@ -103,6 +104,8 @@ class WorkingOutIrrationalTab extends StatelessWidget {
         return ChallengePage();
       case WorkingOutIrrationalStage.challengeThought:
         return ChallengePage();
+      case WorkingOutIrrationalStage.cognitiveDistortions:
+        return CognitiveDistortionsPage();
       case WorkingOutIrrationalStage.alternativeDo:
         return AlternativeRecordPage();
       case WorkingOutIrrationalStage.alternativeThought:

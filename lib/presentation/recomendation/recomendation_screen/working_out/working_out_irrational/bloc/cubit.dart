@@ -63,19 +63,22 @@ class WorkingOutIrrationalCubit extends Cubit<WorkingOutIrrationalState> {
       {String? whyThisThoughts,
       String? whyThisDo,
       String? alternativeThoughts,
-      String? alternativeDo}) {
+      String? alternativeDo,
+      List<String>? cognitiveDistortions}) {
     _currentSpentRecordModel = _currentSpentRecordModel == null
         ? SpentRecordModel(
             dayEventModel: selectedDayEventModel!,
             whyThisThoughts: whyThisThoughts ?? '',
             alternativeThoughts: alternativeThoughts ?? '',
             whyThisDo: whyThisDo ?? '',
-            alternativeDo: alternativeDo ?? '', date: DateTime.now())
+            alternativeDo: alternativeDo ?? '', date: DateTime.now(),
+            cognitiveDistortions: cognitiveDistortions)
         : _currentSpentRecordModel!.copyWith(
             whyThisDo: whyThisDo,
             whyThisThoughts: whyThisThoughts,
             alternativeDo: alternativeDo,
-            alternativeThoughts: alternativeThoughts);
+            alternativeThoughts: alternativeThoughts,
+            cognitiveDistortions: cognitiveDistortions);
   }
 
   void init() async {

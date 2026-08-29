@@ -22,9 +22,13 @@ class ChallengePage extends WorkingOutWidget {
           Padding(
               padding: const EdgeInsets.all(15.0),
               child: RecordCard(
+                // The thought branch stops first at "which pattern is this?"
+                // (cognitive distortions) — that step is specific to
+                // thoughts, not actions, so the "do" branch goes straight to
+                // recordDo as before.
                 onButtonTap: () => cubit.goToNextState(
                     cubit.state.stage == WorkingOutIrrationalStage.challengeThought
-                        ? WorkingOutIrrationalStage.recordThought
+                        ? WorkingOutIrrationalStage.cognitiveDistortions
                         : WorkingOutIrrationalStage.recordDo),
                 mode: StandardRecordCardMode(cubit.selectedDayEventModel!),
                 dataType:
