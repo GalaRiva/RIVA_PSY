@@ -55,11 +55,14 @@ class GuidedJournalsRepository {
   // recommendation logic (any track from the emotion's group tab).
   Future<String?> resolveAudioUrl(GuidedJournalTopic topic) async {
     // Uri.encodeFull, not just Uri.parse — some of these filenames carry
-    // accented characters (e.g. "Decepción.mp3"), which the rest of the
-    // app's audio URLs never had to deal with; a raw non-ASCII path isn't
+    // accented characters (e.g. "Decepción"), which the rest of the app's
+    // audio URLs never had to deal with; a raw non-ASCII path isn't
     // guaranteed to load on every platform's HTTP client.
+    // linked_audio_{lang} is stored without an extension — same convention
+    // as Audio.fileName everywhere else in the app — so it's added here,
+    // not carried in the stored path itself.
     if ((topic.linkedAudioPath ?? '').trim().isNotEmpty) {
-      return Uri.encodeFull(_r2AudioBaseUrl + topic.linkedAudioPath!);
+      return Uri.encodeFull(_r2AudioBaseUrl + topic.linkedAudioPath! + '.mp3');
     }
     if ((topic.linkedAudioTab ?? '').trim().isEmpty) return null;
     try {

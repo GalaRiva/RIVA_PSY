@@ -6,7 +6,9 @@ import 'package:riva_psy/presentation/recomendation/recomendation_screen/working
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/bloc/state.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
+import '../../../guided_journals/widgets/guided_journal_audio_player.dart';
 import 'cognitive_distortion_option.dart';
+import 'recommended_distortion_audio.dart';
 
 // Optional naming step between "Оспорить мысль" and writing out why —
 // lets the user attach standard CBT vocabulary (Beck/Burns) to the
@@ -158,6 +160,12 @@ class _CognitiveDistortionsPageState extends State<CognitiveDistortionsPage> {
                           color: ColorConstant.gray800,
                           fontStyle: FontStyle.italic),
                     ),
+                    if (selected &&
+                        RecommendedDistortionAudio.hasRecommendation(option.key))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: _RecommendedAudio(distortionKey: option.key),
+                      ),
                   ],
                 ),
               ),
@@ -165,6 +173,37 @@ class _CognitiveDistortionsPageState extends State<CognitiveDistortionsPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+// A direct, specific audio recommendation for the one or two distortions
+// that have one (currently just catastrophizing -> "Возврат в сейчас") —
+// shown once the card is checked, not for every distortion.
+class _RecommendedAudio extends StatelessWidget {
+  final String distortionKey;
+  const _RecommendedAudio({required this.distortionKey});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String?>(
+      future: RecommendedDistortionAudio.urlFor(distortionKey),
+      builder: (context, snapshot) {
+        final url = snapshot.data;
+        if (url == null || url.isEmpty) return const SizedBox.shrink();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'cognitive_distortion_recommended_audio'.tr(),
+              style: AppStyle.txtSFProDisplayLight12
+                  .copyWith(color: ColorConstant.gray800),
+            ),
+            SizedBox(height: 6),
+            GuidedJournalAudioPlayer(url: url),
+          ],
+        );
+      },
     );
   }
 }
