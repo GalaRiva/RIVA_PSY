@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,22 +11,23 @@ import 'package:riva_psy/presentation/main/path/first_thougths_screen/repository
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_audio_player.dart';
+import '../../widgets/guided_journal_page_background.dart';
 import '../../widgets/scientific_basis_sheet.dart';
 
 class GuidedJournalInsightPage extends StatefulWidget {
   const GuidedJournalInsightPage({Key? key}) : super(key: key);
 
   @override
-  State<GuidedJournalInsightPage> createState() => _GuidedJournalInsightPageState();
+  State<GuidedJournalInsightPage> createState() =>
+      _GuidedJournalInsightPageState();
 }
-
-const _kInsightBg = Color(0xFF0B1917);
 
 class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
   bool _saved = false;
   bool _saving = false;
 
-  Future<void> _saveAsDiaryEntry(String topicTitle, List<String> questions, List<String> answers) async {
+  Future<void> _saveAsDiaryEntry(
+      String topicTitle, List<String> questions, List<String> answers) async {
     setState(() => _saving = true);
     final entryText = List.generate(
       questions.length,
@@ -54,7 +53,11 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
       whatBodyParts: const [],
     ));
     await repo.updateEvent(events);
-    if (mounted) setState(() { _saving = false; _saved = true; });
+    if (mounted)
+      setState(() {
+        _saving = false;
+        _saved = true;
+      });
   }
 
   @override
@@ -64,90 +67,92 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
         final topic = state.selectedTopic;
         if (topic == null) return const SizedBox.shrink();
         final cubit = context.read<GuidedJournalsCubit>();
-        final hasImage = (topic.imageUrl ?? '').trim().isNotEmpty;
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            const ColoredBox(color: _kInsightBg),
-            if (hasImage) ...[
-              Image.network(topic.imageUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
-                child: Container(color: Colors.black.withOpacity(0.55)),
-              ),
-            ],
-            SingleChildScrollView(
-          child: Padding(
-            padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Text(topic.title, style: AppStyle.txtH1.copyWith(color: Colors.white))),
-                    if ((topic.scientificBasis ?? '').trim().isNotEmpty)
-                      InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () => ScientificBasisSheet.show(context, topic.scientificBasis!),
-                        child: Padding(
-                          padding: getPadding(all: 6),
-                          child: Icon(Icons.info_outline_rounded, color: Colors.white.withOpacity(0.85), size: 22),
+        return GuidedJournalPageBackground(
+          imageUrl: topic.imageUrl,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Text(topic.title,
+                              style: AppStyle.txtH1
+                                  .copyWith(color: Colors.white))),
+                      if ((topic.scientificBasis ?? '').trim().isNotEmpty)
+                        InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () => ScientificBasisSheet.show(
+                              context, topic.scientificBasis!),
+                          child: Padding(
+                            padding: getPadding(all: 6),
+                            child: Icon(Icons.info_outline_rounded,
+                                color: Colors.white.withOpacity(0.85),
+                                size: 22),
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-                SizedBox(height: getVerticalSize(20)),
-                Container(
-                  width: double.infinity,
-                  padding: getPadding(left: 16, right: 16, top: 18, bottom: 18),
-                  decoration: BoxDecoration(
-                    color: ColorConstant.grayLight,
-                    borderRadius: BorderRadius.circular(12),
+                    ],
                   ),
-                  child: Text(
-                    topic.insight,
-                    style: AppStyle.txtSFProDisplayLight16.copyWith(height: 1.5),
-                  ),
-                ),
-                SizedBox(height: getVerticalSize(20)),
-                if (state.resolvingAudio)
-                  Center(
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: ColorConstant.cyan700),
+                  SizedBox(height: getVerticalSize(20)),
+                  Container(
+                    width: double.infinity,
+                    padding:
+                        getPadding(left: 16, right: 16, top: 18, bottom: 18),
+                    decoration: BoxDecoration(
+                      color: ColorConstant.grayLight,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )
-                else if ((state.audioUrl ?? '').isNotEmpty)
-                  GuidedJournalAudioPlayer(url: state.audioUrl!),
-                SizedBox(height: getVerticalSize(28)),
-                CustomButton(
-                  text: (_saved ? 'guided_journal_saved_to_diary' : 'guided_journal_save_to_diary')
-                      .tr()
-                      .toUpperCase(),
-                  width: double.infinity,
-                  height: 47,
-                  fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
-                  onTap: (_saved || _saving)
-                      ? null
-                      : () => _saveAsDiaryEntry(topic.title, topic.questions, state.answers),
-                ),
-                SizedBox(height: getVerticalSize(12)),
-                CustomButton(
-                  text: 'guided_journal_back_to_library'.tr().toUpperCase(),
-                  width: double.infinity,
-                  height: 47,
-                  showBorder: false,
-                  bgColor: Colors.transparent,
-                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.85)),
-                  onTap: cubit.backToLibrary,
-                ),
-              ],
+                    child: Text(
+                      topic.insight,
+                      style:
+                          AppStyle.txtSFProDisplayLight16.copyWith(height: 1.5),
+                    ),
+                  ),
+                  SizedBox(height: getVerticalSize(20)),
+                  if (state.resolvingAudio)
+                    Center(
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: ColorConstant.cyan700),
+                      ),
+                    )
+                  else if ((state.audioUrl ?? '').isNotEmpty)
+                    GuidedJournalAudioPlayer(url: state.audioUrl!),
+                  SizedBox(height: getVerticalSize(28)),
+                  CustomButton(
+                    text: (_saved
+                            ? 'guided_journal_saved_to_diary'
+                            : 'guided_journal_save_to_diary')
+                        .tr()
+                        .toUpperCase(),
+                    width: double.infinity,
+                    height: 47,
+                    fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                    onTap: (_saved || _saving)
+                        ? null
+                        : () => _saveAsDiaryEntry(
+                            topic.title, topic.questions, state.answers),
+                  ),
+                  SizedBox(height: getVerticalSize(12)),
+                  CustomButton(
+                    text: 'guided_journal_back_to_library'.tr().toUpperCase(),
+                    width: double.infinity,
+                    height: 47,
+                    showBorder: false,
+                    bgColor: Colors.transparent,
+                    textStyle: AppStyle.txtSFProDisplayLight16
+                        .copyWith(color: Colors.white.withOpacity(0.85)),
+                    onTap: cubit.backToLibrary,
+                  ),
+                ],
+              ),
             ),
           ),
-            ),
-          ],
         );
       },
     );
