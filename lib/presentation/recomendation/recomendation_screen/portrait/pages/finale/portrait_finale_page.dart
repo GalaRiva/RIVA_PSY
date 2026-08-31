@@ -23,10 +23,14 @@ class _FinaleInsight {
 // examples (elaborated in the writing, not in the underlying claim) and
 // grounds everything else in the user's own already-written result texts
 // (see _tallyDominants below) instead of a fabricated full matrix.
-_FinaleInsight? _polarityInsight(Map<PortraitTestId, PortraitTestResultModel> byId) {
+_FinaleInsight? _polarityInsight(
+    Map<PortraitTestId, PortraitTestResultModel> byId) {
   final t4 = byId[PortraitTestId.emotionalRadar];
   final t9 = byId[PortraitTestId.trueCompass];
-  if (t4 != null && t9 != null && t4.dominantKeys.contains('C') && t9.dominantKeys.contains('C')) {
+  if (t4 != null &&
+      t9 != null &&
+      t4.dominantKeys.contains('C') &&
+      t9.dominantKeys.contains('C')) {
     return const _FinaleInsight(
       'Генеральная опора',
       'Люди — это ваш главный ресурс. Ваш радар Эмпатии (тест 4) помогает вам '
@@ -43,10 +47,14 @@ _FinaleInsight? _polarityInsight(Map<PortraitTestId, PortraitTestResultModel> by
   return null;
 }
 
-_FinaleInsight? _conflictInsight(Map<PortraitTestId, PortraitTestResultModel> byId) {
+_FinaleInsight? _conflictInsight(
+    Map<PortraitTestId, PortraitTestResultModel> byId) {
   final t1 = byId[PortraitTestId.hiddenSupports];
   final t11 = byId[PortraitTestId.attachmentStyle];
-  if (t1 != null && t11 != null && t1.dominantKeys.contains('A') && t11.dominantKeys.contains('A')) {
+  if (t1 != null &&
+      t11 != null &&
+      t1.dominantKeys.contains('A') &&
+      t11.dominantKeys.contains('A')) {
     return const _FinaleInsight(
       'Зона роста',
       'Ваш ум работает как швейцарские часы. Там, где другие теряются в хаосе, '
@@ -186,9 +194,11 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, List<PortraitTestResultModel> results) {
+  Widget _buildBody(
+      BuildContext context, List<PortraitTestResultModel> results) {
     final byId = <PortraitTestId, PortraitTestResultModel>{
-      for (final r in results) PortraitTestId.values.firstWhere((e) => e.name == r.testId): r,
+      for (final r in results)
+        PortraitTestId.values.firstWhere((e) => e.name == r.testId): r,
     };
     final tally = _tallyDominants(results);
 
@@ -222,23 +232,27 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                 Text(
                   'portrait_finale_title'.tr(),
                   textAlign: TextAlign.center,
-                  style: AppStyle.txtH1WhiteA700.copyWith(fontSize: getFontSize(26)),
+                  style: AppStyle.txtH1WhiteA700
+                      .copyWith(fontSize: getFontSize(26)),
                 ),
                 SizedBox(height: getVerticalSize(14)),
                 Text(
                   'portrait_finale_intro'.tr(),
                   textAlign: TextAlign.center,
-                  style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.8), height: 1.5),
+                  style: AppStyle.txtSFProDisplayLight16.copyWith(
+                      color: Colors.white.withOpacity(0.8), height: 1.5),
                 ),
                 SizedBox(height: getVerticalSize(26)),
                 for (final insight in insights)
                   Container(
                     margin: getMargin(bottom: 16),
-                    padding: getPadding(left: 18, top: 18, right: 18, bottom: 18),
+                    padding:
+                        getPadding(left: 18, top: 18, right: 18, bottom: 18),
                     decoration: BoxDecoration(
                       color: const Color(0xFF0E211E),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFFC9A24B).withOpacity(0.35)),
+                      border: Border.all(
+                          color: const Color(0xFFC9A24B).withOpacity(0.35)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,8 +268,9 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                           SizedBox(height: getVerticalSize(8)),
                           Text(
                             insight.body,
-                            style: AppStyle.txtSFProDisplayLight14
-                                .copyWith(color: Colors.white.withOpacity(0.85), height: 1.5),
+                            style: AppStyle.txtSFProDisplayLight14.copyWith(
+                                color: Colors.white.withOpacity(0.85),
+                                height: 1.5),
                           ),
                         ],
                       ],
@@ -264,9 +279,11 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                 if (recommendation != null)
                   Container(
                     margin: getMargin(bottom: 16),
-                    padding: getPadding(left: 18, top: 18, right: 18, bottom: 18),
+                    padding:
+                        getPadding(left: 18, top: 18, right: 18, bottom: 18),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Color(0xFF14312C), Color(0xFF1FAE7A)]),
+                      gradient: const LinearGradient(
+                          colors: [Color(0xFF14312C), Color(0xFF1FAE7A)]),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
@@ -274,26 +291,29 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                       children: [
                         Text(
                           'Рекомендуем сделать упор на это',
-                          style: AppStyle.txtSFProDisplayRegular14
-                              .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+                          style: AppStyle.txtSFProDisplayRegular14.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(height: getVerticalSize(8)),
                         Text(
                           'Ваша доминанта «${recommendation.label}» проявлялась чаще всего — '
                           'конкретное упражнение или аудио-практика для неё может дать больше, '
                           'чем что-то случайное.',
-                          style: AppStyle.txtSFProDisplayLight14
-                              .copyWith(color: Colors.white.withOpacity(0.9), height: 1.5),
+                          style: AppStyle.txtSFProDisplayLight14.copyWith(
+                              color: Colors.white.withOpacity(0.9),
+                              height: 1.5),
                         ),
                         SizedBox(height: getVerticalSize(14)),
                         CustomButton(
                           text: recommendation.ctaLabel,
                           width: double.infinity,
                           height: 47,
-                          showBorder: false,
+                          showBorder: true,
+                          borderColor: Colors.white.withOpacity(0.25),
                           bgColor: ColorConstant.cyan700.withOpacity(0.55),
                           borderRadius: 14,
-                          textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                          textStyle: AppStyle.txtSFProDisplayLight16
+                              .copyWith(color: Colors.white),
                           onTap: () => CtaActionRouter.navigate(
                             context,
                             recommendation.cta,
@@ -308,10 +328,12 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                   text: 'portrait_finale_cta'.tr(),
                   width: double.infinity,
                   height: 47,
-                  showBorder: false,
+                  showBorder: true,
+                  borderColor: Colors.white.withOpacity(0.25),
                   bgColor: ColorConstant.cyan700.withOpacity(0.55),
                   borderRadius: 14,
-                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                  textStyle: AppStyle.txtSFProDisplayLight16
+                      .copyWith(color: Colors.white),
                   onTap: () => Navigator.pop(context),
                 ),
               ],

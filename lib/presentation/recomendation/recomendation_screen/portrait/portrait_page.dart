@@ -47,7 +47,8 @@ class _PortraitPageState extends State<PortraitPage> {
   @override
   void initState() {
     super.initState();
-    final shown = SharedPrefs.sharedPreferences.getBool(_kOnboardingShownKey) ?? false;
+    final shown =
+        SharedPrefs.sharedPreferences.getBool(_kOnboardingShownKey) ?? false;
     _showOnboarding = !shown;
     _loaded = true;
   }
@@ -60,7 +61,8 @@ class _PortraitPageState extends State<PortraitPage> {
   @override
   Widget build(BuildContext context) {
     if (!_loaded) return const SizedBox.shrink();
-    if (_showOnboarding) return _PortraitOnboarding(onContinue: _dismissOnboarding);
+    if (_showOnboarding)
+      return _PortraitOnboarding(onContinue: _dismissOnboarding);
 
     return BlocProvider(
       create: (_) => PortraitCubit(),
@@ -70,7 +72,8 @@ class _PortraitPageState extends State<PortraitPage> {
         // K70Controller.immersiveMode.
         listener: (context, state) {
           if (Get.isRegistered<K70Controller>()) {
-            Get.find<K70Controller>().setImmersiveMode(state.stage != PortraitStage.library);
+            Get.find<K70Controller>()
+                .setImmersiveMode(state.stage != PortraitStage.library);
           }
         },
         builder: (context, state) {
@@ -101,7 +104,8 @@ class _PortraitOnboarding extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.blur_circular_rounded, color: const Color(0xFFC9A24B), size: getSize(64)),
+          Icon(Icons.blur_circular_rounded,
+              color: const Color(0xFFC9A24B), size: getSize(64)),
           SizedBox(height: getVerticalSize(20)),
           Text(
             'portrait_intro_title'.tr(),
@@ -109,13 +113,15 @@ class _PortraitOnboarding extends StatelessWidget {
             style: AppStyle.txtH1WhiteA700.copyWith(fontSize: getFontSize(24)),
           ),
           SizedBox(height: getVerticalSize(14)),
-          for (final sentence in _splitSentences('portrait_onboarding_body'.tr()))
+          for (final sentence
+              in _splitSentences('portrait_onboarding_body'.tr()))
             Padding(
               padding: getPadding(bottom: 14),
               child: Text(
                 sentence,
                 textAlign: TextAlign.center,
-                style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.75), height: 1.5),
+                style: AppStyle.txtSFProDisplayLight16.copyWith(
+                    color: Colors.white.withOpacity(0.75), height: 1.5),
               ),
             ),
           SizedBox(height: getVerticalSize(14)),
@@ -123,10 +129,12 @@ class _PortraitOnboarding extends StatelessWidget {
             text: 'portrait_intro_cta'.tr().toUpperCase(),
             width: double.infinity,
             height: 47,
-            showBorder: false,
+            showBorder: true,
+            borderColor: Colors.white.withOpacity(0.25),
             bgColor: ColorConstant.cyan700.withOpacity(0.55),
             borderRadius: 14,
-            textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+            textStyle:
+                AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
             onTap: onContinue,
           ),
         ],

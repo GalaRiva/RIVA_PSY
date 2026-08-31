@@ -21,7 +21,11 @@ class CustomButton extends StatelessWidget {
       this.textStyle,
       this.centralWidget,
       this.textIsFitted = false,
-      this.standardPadding, this.showBorder = true, this.minHeight, this.borderRadius});
+      this.standardPadding,
+      this.showBorder = true,
+      this.minHeight,
+      this.borderRadius,
+      this.borderColor});
 
   ButtonShape? shape;
 
@@ -29,6 +33,13 @@ class CustomButton extends StatelessWidget {
   // `shape`-driven default (~3px), but a few screens want a softer,
   // more rounded look without changing every CustomButton in the app.
   final double? borderRadius;
+
+  // Per-instance border color/opacity override — the `showBorder` default
+  // is a hard solid white 1px edge, too stark for a "translucent glass"
+  // fill on a flat (non-varied) background, where alpha blending alone
+  // can't read as translucent (it's pixel-identical to a solid color over
+  // a uniform backdrop) — a soft edge is the substitute visual cue.
+  final Color? borderColor;
 
   final Widget? centralWidget;
   final bool textIsFitted;
@@ -91,7 +102,9 @@ class CustomButton extends StatelessWidget {
         constraints: minHeight != null
             ? BoxConstraints(minHeight: minHeight!, maxHeight: minHeight! * 2.2)
             : null,
-        padding: minHeight != null ? getPadding(top: 6, bottom: 6, left: 6, right: 6) : null,
+        padding: minHeight != null
+            ? getPadding(top: 6, bottom: 6, left: 6, right: 6)
+            : null,
         decoration: _buildTextButtonStyle(),
         child: _buildButtonWithOrWithoutIcon(),
       ),
@@ -149,7 +162,9 @@ class CustomButton extends StatelessWidget {
       // has been silently rendering as translucent white instead of its
       // intended color for as long as this line existed.
       color: bgColor ?? _setColor(),
-      border: !showBorder ?   null  :    Border.all(color: Colors.white, width: 1),
+      border: !showBorder
+          ? null
+          : Border.all(color: borderColor ?? Colors.white, width: 1),
       boxShadow: [
         BoxShadow(
             color: ColorConstant.fromHex('#5F6B80').withOpacity(0.2),
@@ -249,7 +264,8 @@ class CustomButton extends StatelessWidget {
   }
 
   _setBorderRadius() {
-    if (borderRadius != null) return BorderRadius.circular(getHorizontalSize(borderRadius!));
+    if (borderRadius != null)
+      return BorderRadius.circular(getHorizontalSize(borderRadius!));
     switch (shape) {
       case ButtonShape.Square:
         return BorderRadius.circular(0);

@@ -23,7 +23,8 @@ class PortraitResultPage extends StatelessWidget {
       builder: (context, state) {
         final result = state.lastResult;
         final id = state.selectedTestId;
-        if (result == null || id == null) return const ColoredBox(color: _kProjectionBg);
+        if (result == null || id == null)
+          return const ColoredBox(color: _kProjectionBg);
         final def = portraitTestDefinitions[id]!;
         final view = buildPortraitResultView(def, result);
         final isShadow = kPortraitShadowTestIds.contains(id);
@@ -39,14 +40,16 @@ class PortraitResultPage extends StatelessWidget {
                   Padding(
                     padding: getPadding(bottom: 8),
                     child: Container(
-                      padding: getPadding(left: 10, top: 4, right: 10, bottom: 4),
+                      padding:
+                          getPadding(left: 10, top: 4, right: 10, bottom: 4),
                       decoration: BoxDecoration(
                         color: ColorConstant.cyan700.withOpacity(0.18),
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Text(
                         'portrait_hybrid_badge'.tr(),
-                        style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.cyan700),
+                        style: AppStyle.txtSFProDisplayRegular11
+                            .copyWith(color: ColorConstant.cyan700),
                       ),
                     ),
                   ),
@@ -56,11 +59,13 @@ class PortraitResultPage extends StatelessWidget {
                   Padding(
                     padding: getPadding(bottom: 16),
                     child: Container(
-                      padding: getPadding(left: 14, top: 12, right: 14, bottom: 12),
+                      padding:
+                          getPadding(left: 14, top: 12, right: 14, bottom: 12),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.06),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white.withOpacity(0.10)),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.10)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,45 +73,55 @@ class PortraitResultPage extends StatelessWidget {
                           if (isShadow)
                             Text(
                               'portrait_shadow_disclaimer'.tr(),
-                              style: AppStyle.txtSFProDisplayLight12
-                                  .copyWith(color: Colors.white.withOpacity(0.7), height: 1.4),
+                              style: AppStyle.txtSFProDisplayLight12.copyWith(
+                                  color: Colors.white.withOpacity(0.7),
+                                  height: 1.4),
                             ),
-                          if (isShadow && def.requiresDisclaimer) SizedBox(height: getVerticalSize(8)),
+                          if (isShadow && def.requiresDisclaimer)
+                            SizedBox(height: getVerticalSize(8)),
                           if (def.requiresDisclaimer)
                             Text(
                               kPortraitAttachmentDisclaimer,
-                              style: AppStyle.txtSFProDisplayLight12
-                                  .copyWith(color: Colors.white.withOpacity(0.7), height: 1.4),
+                              style: AppStyle.txtSFProDisplayLight12.copyWith(
+                                  color: Colors.white.withOpacity(0.7),
+                                  height: 1.4),
                             ),
                         ],
                       ),
                     ),
                   ),
                 Text(view.light,
-                    style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.92), height: 1.5)),
+                    style: AppStyle.txtSFProDisplayLight16.copyWith(
+                        color: Colors.white.withOpacity(0.92), height: 1.5)),
                 SizedBox(height: getVerticalSize(16)),
                 Text(view.shadow,
-                    style: AppStyle.txtSFProDisplayLight14.copyWith(color: Colors.white.withOpacity(0.7), height: 1.5)),
+                    style: AppStyle.txtSFProDisplayLight14.copyWith(
+                        color: Colors.white.withOpacity(0.7), height: 1.5)),
                 SizedBox(height: getVerticalSize(24)),
                 CustomButton(
                   text: view.ctaLabel,
                   width: double.infinity,
                   height: 47,
-                  showBorder: false,
+                  showBorder: true,
+                  borderColor: Colors.white.withOpacity(0.25),
                   bgColor: ColorConstant.cyan700.withOpacity(0.55),
                   borderRadius: 14,
-                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
-                  onTap: () => CtaActionRouter.navigate(context, view.cta, audioLabel: view.ctaLabel),
+                  textStyle: AppStyle.txtSFProDisplayLight16
+                      .copyWith(color: Colors.white),
+                  onTap: () => CtaActionRouter.navigate(context, view.cta,
+                      audioLabel: view.ctaLabel),
                 ),
                 SizedBox(height: getVerticalSize(12)),
                 CustomButton(
                   text: 'portrait_back_to_library'.tr().toUpperCase(),
                   width: double.infinity,
                   height: 47,
-                  showBorder: false,
+                  showBorder: true,
+                  borderColor: Colors.white.withOpacity(0.25),
                   bgColor: ColorConstant.cyan700.withOpacity(0.55),
                   borderRadius: 14,
-                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                  textStyle: AppStyle.txtSFProDisplayLight16
+                      .copyWith(color: Colors.white),
                   onTap: () => _backToLibrary(context, id),
                 ),
               ],
@@ -125,7 +140,8 @@ class PortraitResultPage extends StatelessWidget {
     final isLastFreeTest =
         kPortraitNumberedOrder.indexOf(id) == kPortraitFreeTestCount - 1;
     if (isLastFreeTest && !CurrentUser.tariffIsOrion()) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => const PortraitPaywallPage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => const PortraitPaywallPage()));
     }
   }
 }
