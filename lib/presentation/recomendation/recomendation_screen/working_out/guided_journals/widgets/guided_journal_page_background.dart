@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // Shared full-bleed background for every "Хлебные крошки" screen past the
@@ -20,7 +21,12 @@ class GuidedJournalPageBackground extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         const ColoredBox(color: kGuidedJournalPageBg),
-        if (hasImage) Image.network(imageUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+        if (hasImage)
+          CachedNetworkImage(
+            imageUrl: imageUrl!,
+            fit: BoxFit.cover,
+            errorWidget: (_, __, ___) => const SizedBox.shrink(),
+          ),
         child,
       ],
     );

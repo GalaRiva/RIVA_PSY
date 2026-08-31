@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -44,10 +45,11 @@ class GuidedJournalTopicCard extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 if (hasImage)
-                  Image.network(
-                    imageUrl!,
+                  CachedNetworkImage(
+                    imageUrl: imageUrl!,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _fallbackGradient(),
+                    placeholder: (_, __) => _fallbackGradient(),
+                    errorWidget: (_, __, ___) => _fallbackGradient(),
                   )
                 else
                   _fallbackGradient(),
