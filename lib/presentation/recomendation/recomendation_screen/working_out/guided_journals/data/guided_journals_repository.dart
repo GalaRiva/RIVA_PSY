@@ -45,6 +45,7 @@ class GuidedJournalsRepository {
           scientificBasis: data['scientific_basis'] == null
               ? null
               : _localized(data['scientific_basis'] as Map<String, dynamic>?, langCode),
+          imageUrl: data['image_url'] as String?,
         );
       }).toList();
     } catch (_) {

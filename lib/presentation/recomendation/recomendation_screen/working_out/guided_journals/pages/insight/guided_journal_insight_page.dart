@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,8 @@ class GuidedJournalInsightPage extends StatefulWidget {
   @override
   State<GuidedJournalInsightPage> createState() => _GuidedJournalInsightPageState();
 }
+
+const _kInsightBg = Color(0xFF0B1917);
 
 class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
   bool _saved = false;
@@ -60,7 +64,19 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
         final topic = state.selectedTopic;
         if (topic == null) return const SizedBox.shrink();
         final cubit = context.read<GuidedJournalsCubit>();
-        return SingleChildScrollView(
+        final hasImage = (topic.imageUrl ?? '').trim().isNotEmpty;
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            const ColoredBox(color: _kInsightBg),
+            if (hasImage) ...[
+              Image.network(topic.imageUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
+                child: Container(color: Colors.black.withOpacity(0.55)),
+              ),
+            ],
+            SingleChildScrollView(
           child: Padding(
             padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
             child: Column(
@@ -69,14 +85,14 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: Text(topic.title, style: AppStyle.txtH1)),
+                    Expanded(child: Text(topic.title, style: AppStyle.txtH1.copyWith(color: Colors.white))),
                     if ((topic.scientificBasis ?? '').trim().isNotEmpty)
                       InkWell(
                         borderRadius: BorderRadius.circular(20),
                         onTap: () => ScientificBasisSheet.show(context, topic.scientificBasis!),
                         child: Padding(
                           padding: getPadding(all: 6),
-                          child: Icon(Icons.info_outline_rounded, color: ColorConstant.cyan700, size: 22),
+                          child: Icon(Icons.info_outline_rounded, color: Colors.white.withOpacity(0.85), size: 22),
                         ),
                       ),
                   ],
@@ -124,12 +140,14 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                   height: 47,
                   showBorder: false,
                   bgColor: Colors.transparent,
-                  textStyle: AppStyle.txtSFProDisplayLight16DeepPurple,
+                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.85)),
                   onTap: cubit.backToLibrary,
                 ),
               ],
             ),
           ),
+            ),
+          ],
         );
       },
     );
