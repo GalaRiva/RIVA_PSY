@@ -6,6 +6,7 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../../core/services/datasource_service.dart';
 import '../../../../../../core/utils/audio_cover_map.dart';
 import '../../../../../../widgets/fullscreen_audio_player_screen.dart';
@@ -87,10 +88,17 @@ class _HeroAudioCarouselState extends State<HeroAudioCarousel> {
   Future<void> _loadDurations() async {
     final list = <Duration?>[];
     for (var item in widget.audios) {
+      // Known ahead of time (Audio.duration_ms, precomputed once and
+      // stored in Firestore) — skip the network probe entirely.
+      if (item.knownDuration != null) {
+        list.add(item.knownDuration);
+        continue;
+      }
       try {
         if (DataSourceService.dataSourceIsRemote()) {
-          list.add(await widget.controller.audioInstance
-              .setUrl(item.audioAsset, initialPosition: Duration.zero, preload: true));
+          list.add(await widget.controller.audioInstance.setAudioSource(
+              await AudioCacheManager.sourceFor(item.audioAsset),
+              initialPosition: Duration.zero, preload: true));
         } else {
           list.add(await widget.controller.audioInstance.setAudioSource(
               AudioSource.file(item.audioAsset),
@@ -136,7 +144,8 @@ class _HeroAudioCarouselState extends State<HeroAudioCarousel> {
       _activePlayIndex = _focusedIndex;
       _elapsed = Duration.zero;
       if (DataSourceService.dataSourceIsRemote()) {
-        await widget.controller.audioInstance.setUrl(asset, initialPosition: Duration.zero);
+        await widget.controller.audioInstance.setAudioSource(
+            await AudioCacheManager.sourceFor(asset), initialPosition: Duration.zero);
       } else {
         await widget.controller.audioInstance
             .setAudioSource(AudioSource.file(asset), initialPosition: Duration.zero);

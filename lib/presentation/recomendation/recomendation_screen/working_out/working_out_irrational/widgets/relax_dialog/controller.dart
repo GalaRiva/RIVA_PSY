@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../../core/models/audio/audio.dart';
 import '../../../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../../../core/services/datasource_service.dart';
 
 class RelaxDialogController extends GetxController {
@@ -37,7 +38,8 @@ class RelaxDialogController extends GetxController {
               '.' +
               e.format
               : '${(await getApplicationDocumentsDirectory()).path}/${e
-              .folder}/${e.fileName}.${e.format}'));
+              .folder}/${e.fileName}.${e.format}',
+          knownDuration: e.localizedDuration('ru')));
     }
     return list;
   }
@@ -45,11 +47,16 @@ class RelaxDialogController extends GetxController {
   Future<List<Duration?>> durations(List<AudioCardModel> audios) async {
     final List<Duration?> list = [];
     for (var item in audios) {
-      print(item.audioAsset.replaceAll(' ', '%20'));
+      // Known ahead of time (Audio.duration_ms, precomputed once and
+      // stored in Firestore) — skip the network probe entirely.
+      if (item.knownDuration != null) {
+        list.add(item.knownDuration);
+        continue;
+      }
       try {
         if (DataSourceService.dataSourceIsRemote()) {
-          list.add(await audioInstance.setUrl(
-              item.audioAsset.replaceAll(' ', '%20'),
+          list.add(await audioInstance.setAudioSource(
+              await AudioCacheManager.sourceFor(item.audioAsset.replaceAll(' ', '%20')),
               initialPosition: Duration.zero, preload: true));
         } else
           list.add(await audioInstance.setAudioSource(

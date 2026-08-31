@@ -225,7 +225,15 @@ class TabWidget extends StatelessWidget {
                           ),
                         ),
                         Visibility(
-                          visible:tab.audioAssets() != null,
+                          // `tab.audioAssets()` returns a Future, which is
+                          // never null — this check always evaluated true,
+                          // but still fired a brand-new Firestore query
+                          // (thrown away unread) on every rebuild, including
+                          // every seek-slider drag tick (see
+                          // AudioCardWidget's onChange -> controller.update()
+                          // below). The actual empty/loading states are
+                          // already handled by the ternary right underneath.
+                          visible: true,
                             child: Padding(
                           padding: getPadding(top: 23,right: 16, left: 16),
                           child:

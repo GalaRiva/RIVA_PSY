@@ -3,6 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../../core/services/datasource_service.dart';
 import '../../../../../../core/utils/size_utils.dart';
 import '../../../../../../widgets/audio_card_widget.dart';
@@ -43,7 +44,9 @@ class AudioContainerWidget extends StatelessWidget {
           playFun: (val) async {
             changeAudioIndex(index);
             if(DataSourceService.dataSourceIsRemote()) {
-              await audioPlayer.setUrl(audioCardModel.audioAsset, initialPosition: val);
+              await audioPlayer.setAudioSource(
+                  await AudioCacheManager.sourceFor(audioCardModel.audioAsset),
+                  initialPosition: val);
             } else
               await audioPlayer.setAudioSource(AudioSource.file(audioCardModel.audioAsset), initialPosition: val);
 

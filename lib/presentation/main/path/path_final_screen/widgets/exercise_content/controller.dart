@@ -167,7 +167,8 @@ class ExerciseContentController extends GetxController {
           mainAudios.add(AudioCardModel(
               audio.localizedName(langCode),
               await _audioPath(audio, langCode),
-              ruTitle: audio.name));
+              ruTitle: audio.name,
+              knownDuration: audio.localizedDuration(langCode)));
         }
         if (additionalEmotions != null) {
           for (var i = 0; i < additionalEmotions!.length; i++) {
@@ -182,7 +183,8 @@ class ExerciseContentController extends GetxController {
               additionalAudios.add(AudioCardModel(
                   audio.localizedName(langCode),
                   await _audioPath(audio, langCode),
-                  ruTitle: audio.name));
+                  ruTitle: audio.name,
+                  knownDuration: audio.localizedDuration(langCode)));
             }
           }
         }
@@ -196,7 +198,8 @@ class ExerciseContentController extends GetxController {
       print('[EXERCISE-DIAG] mainAudios empty, tab fallback for "$mainEmotionRuName" -> tab="$tab"');
       if (tab != null) {
         for (var audio in audios.where((a) => a.tab == tab)) {
-          mainAudios.add(AudioCardModel(audio.localizedName(langCode), await _audioPath(audio, langCode), ruTitle: audio.name));
+          mainAudios.add(AudioCardModel(audio.localizedName(langCode), await _audioPath(audio, langCode),
+              ruTitle: audio.name, knownDuration: audio.localizedDuration(langCode)));
         }
       }
     }
@@ -213,7 +216,8 @@ class ExerciseContentController extends GetxController {
                   .map((e) => e.title.toLowerCase())
                   .contains(localizedTitle.toLowerCase());
           if (!alreadyAdded) {
-            additionalAudios.add(AudioCardModel(localizedTitle, await _audioPath(audio, langCode), ruTitle: audio.name));
+            additionalAudios.add(AudioCardModel(localizedTitle, await _audioPath(audio, langCode),
+                ruTitle: audio.name, knownDuration: audio.localizedDuration(langCode)));
           }
         }
       }
