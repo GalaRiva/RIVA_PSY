@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/models/event_model.dart';
@@ -68,6 +69,7 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
         if (topic == null) return const SizedBox.shrink();
         final cubit = context.read<GuidedJournalsCubit>();
         return GuidedJournalPageBackground(
+          imageUrl: topic.imageUrl,
           child: SingleChildScrollView(
             child: Padding(
               padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
@@ -136,10 +138,14 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                             topic.title, topic.questions, state.answers),
                   ),
                   SizedBox(height: getVerticalSize(12)),
-                  GlassButton(
+                  CustomButton(
                     text: 'guided_journal_back_to_library'.tr().toUpperCase(),
+                    width: double.infinity,
                     height: 47,
-                    accent: Colors.white,
+                    showBorder: false,
+                    bgColor: Colors.transparent,
+                    textStyle: AppStyle.txtSFProDisplayLight16
+                        .copyWith(color: Colors.white.withOpacity(0.85)),
                     onTap: cubit.backToLibrary,
                   ),
                 ],
