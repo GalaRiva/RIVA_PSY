@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,8 +93,22 @@ class _QuestionBodyState extends State<_QuestionBody> {
                     .copyWith(color: Colors.white.withOpacity(0.75)),
               ),
               SizedBox(height: getVerticalSize(10)),
-              Text(widget.question,
-                  style: AppStyle.txtH2.copyWith(color: Colors.white)),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    width: double.infinity,
+                    padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+                    decoration: BoxDecoration(
+                      color: ColorConstant.cyan700.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(widget.question,
+                        style: AppStyle.txtH2.copyWith(color: Colors.white)),
+                  ),
+                ),
+              ),
               SizedBox(height: getVerticalSize(20)),
               TextFormField(
                 controller: answerController,
