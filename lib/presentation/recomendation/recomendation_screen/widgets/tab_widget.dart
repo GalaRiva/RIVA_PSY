@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../core/user_data/user.dart';
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
@@ -99,11 +100,20 @@ class TabWidget extends StatelessWidget {
             playFun: (val) async {
 
               if(DataSourceService.dataSourceIsRemote()) {
-                await controller.audioInstance.setUrl(assets[i].audioAsset, initialPosition: val);
+                await controller.audioInstance.setAudioSource(
+                    await AudioCacheManager.sourceFor(assets[i].audioAsset),
+                    initialPosition: val);
               } else
                 await controller.audioInstance.setAudioSource(AudioSource.file(assets[i].audioAsset), initialPosition: val);
 
               await controller.audioInstance.play();
+
+              // Warm the next track's cache in the background while this
+              // one plays — matches how Spotify preloads the next queued
+              // song, so advancing to it doesn't hit a network wait.
+              if (DataSourceService.dataSourceIsRemote() && i + 1 < assets.length) {
+                unawaited(AudioCacheManager.prefetch(assets[i + 1].audioAsset));
+              }
             },
             stopFun: () async {
               await controller.audioInstance.pause();
