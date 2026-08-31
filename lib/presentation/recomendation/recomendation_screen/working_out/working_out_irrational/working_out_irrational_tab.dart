@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/user_data/user.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/pages/alternative/alternative_page.dart';
@@ -20,7 +19,6 @@ import 'pages/initial_working_out/empty_initial_working_out_page.dart';
 import 'pages/initial_working_out/initial_working_out_page.dart';
 import 'widgets/dialog_records_not_enough.dart';
 import '../../../../../theme/app_colors.dart';
-import '../../controller.dart';
 
 class WorkingOutIrrationalTab extends StatelessWidget {
 
@@ -48,13 +46,6 @@ class WorkingOutIrrationalTab extends StatelessWidget {
             return false;
           },
           builder: (_, state) => body(state, context), listener: ( context, state) {
-            // Tells K70Screen to hide its top tab bar + bottom nav while
-            // the user is past the initial "start" screen — see
-            // K70Controller.immersiveMode.
-            if (Get.isRegistered<K70Controller>()) {
-              Get.find<K70Controller>().setImmersiveMode(
-                  state.stage != WorkingOutIrrationalStage.initialStage);
-            }
             if(dayEventsIsEmpty && !dialogOpened) {
               dialogOpened = true;
 
