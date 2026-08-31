@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -11,10 +13,12 @@ import 'package:riva_psy/core/services/audio/audio_cache_manager.dart';
 class GuidedJournalAudioPlayer extends StatefulWidget {
   final String url;
 
-  const GuidedJournalAudioPlayer({Key? key, required this.url}) : super(key: key);
+  const GuidedJournalAudioPlayer({Key? key, required this.url})
+      : super(key: key);
 
   @override
-  State<GuidedJournalAudioPlayer> createState() => _GuidedJournalAudioPlayerState();
+  State<GuidedJournalAudioPlayer> createState() =>
+      _GuidedJournalAudioPlayerState();
 }
 
 class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
@@ -24,7 +28,9 @@ class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
   @override
   void initState() {
     super.initState();
-    AudioCacheManager.sourceFor(widget.url).then((source) => _player.setAudioSource(source)).catchError((_) {
+    AudioCacheManager.sourceFor(widget.url)
+        .then((source) => _player.setAudioSource(source))
+        .catchError((_) {
       if (mounted) setState(() => _loadFailed = true);
       return null;
     });
@@ -46,50 +52,60 @@ class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
   Widget build(BuildContext context) {
     if (_loadFailed) return const SizedBox.shrink();
 
-    return Container(
-      padding: getPadding(left: 16, right: 16, top: 12, bottom: 12),
-      decoration: BoxDecoration(
-        color: ColorConstant.grayLight,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: StreamBuilder<PlayerState>(
-        stream: _player.playerStateStream,
-        builder: (context, snapshot) {
-          final playing = snapshot.data?.playing ?? false;
-          return Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  playing ? Icons.pause_circle_filled_rounded : Icons.play_circle_fill_rounded,
-                  color: ColorConstant.cyan700,
-                  size: 40,
-                ),
-                onPressed: () => playing ? _player.pause() : _player.play(),
-              ),
-              SizedBox(width: getHorizontalSize(8)),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('guided_journal_audio_title'.tr(), style: AppStyle.txtSFProDisplayLight14Gray800),
-                    SizedBox(height: 4),
-                    StreamBuilder<Duration>(
-                      stream: _player.positionStream,
-                      builder: (context, posSnapshot) {
-                        final position = posSnapshot.data ?? Duration.zero;
-                        final total = _player.duration ?? Duration.zero;
-                        return Text(
-                          '${_format(position)} / ${_format(total)}',
-                          style: AppStyle.txtSFProDisplayLight12.copyWith(color: ColorConstant.gray800),
-                        );
-                      },
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: getPadding(left: 16, right: 16, top: 12, bottom: 12),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.78),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: StreamBuilder<PlayerState>(
+            stream: _player.playerStateStream,
+            builder: (context, snapshot) {
+              final playing = snapshot.data?.playing ?? false;
+              return Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      playing
+                          ? Icons.pause_circle_filled_rounded
+                          : Icons.play_circle_fill_rounded,
+                      color: ColorConstant.cyan700,
+                      size: 40,
                     ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
+                    onPressed: () => playing ? _player.pause() : _player.play(),
+                  ),
+                  SizedBox(width: getHorizontalSize(8)),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('guided_journal_audio_title'.tr(),
+                            style: AppStyle.txtSFProDisplayLight14Gray800),
+                        SizedBox(height: 4),
+                        StreamBuilder<Duration>(
+                          stream: _player.positionStream,
+                          builder: (context, posSnapshot) {
+                            final position = posSnapshot.data ?? Duration.zero;
+                            final total = _player.duration ?? Duration.zero;
+                            return Text(
+                              '${_format(position)} / ${_format(total)}',
+                              style: AppStyle.txtSFProDisplayLight12
+                                  .copyWith(color: ColorConstant.gray800),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

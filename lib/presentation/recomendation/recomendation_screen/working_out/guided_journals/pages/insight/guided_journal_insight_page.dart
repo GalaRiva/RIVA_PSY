@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,18 +99,24 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                     ],
                   ),
                   SizedBox(height: getVerticalSize(20)),
-                  Container(
-                    width: double.infinity,
-                    padding:
-                        getPadding(left: 16, right: 16, top: 18, bottom: 18),
-                    decoration: BoxDecoration(
-                      color: ColorConstant.grayLight,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      topic.insight,
-                      style:
-                          AppStyle.txtSFProDisplayLight16.copyWith(height: 1.5),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        width: double.infinity,
+                        padding: getPadding(
+                            left: 16, right: 16, top: 18, bottom: 18),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.78),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          topic.insight,
+                          style: AppStyle.txtSFProDisplayLight16
+                              .copyWith(height: 1.5),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: getVerticalSize(20)),
@@ -133,8 +141,9 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                     width: double.infinity,
                     height: 47,
                     showBorder: false,
-                    bgColor: Colors.transparent,
-                    textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.cyan700),
+                    bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                    borderRadius: 14,
+                    textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                     onTap: (_saved || _saving)
                         ? null
                         : () => _saveAsDiaryEntry(
@@ -146,9 +155,10 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                     width: double.infinity,
                     height: 47,
                     showBorder: false,
-                    bgColor: Colors.transparent,
+                    bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                    borderRadius: 14,
                     textStyle: AppStyle.txtSFProDisplayLight16
-                        .copyWith(color: Colors.white.withOpacity(0.85)),
+                        .copyWith(color: Colors.white),
                     onTap: cubit.backToLibrary,
                   ),
                 ],
