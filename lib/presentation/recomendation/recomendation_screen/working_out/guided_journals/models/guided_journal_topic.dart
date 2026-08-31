@@ -10,6 +10,7 @@ class GuidedJournalTopic {
   final String insight;
   final String? linkedAudioTab;
   final String? linkedAudioPath; // already the current-locale value
+  final String? scientificBasis;
 
   const GuidedJournalTopic({
     required this.id,
@@ -18,5 +19,6 @@ class GuidedJournalTopic {
     required this.insight,
     this.linkedAudioTab,
     this.linkedAudioPath,
+    this.scientificBasis,
   });
 }

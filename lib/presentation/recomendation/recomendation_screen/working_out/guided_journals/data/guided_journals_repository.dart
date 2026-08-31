@@ -42,6 +42,9 @@ class GuidedJournalsRepository {
           insight: _localized(data['insight'] as Map<String, dynamic>?, langCode),
           linkedAudioTab: data['linked_audio_tab'] as String?,
           linkedAudioPath: data['linked_audio_$langCode'] as String?,
+          scientificBasis: data['scientific_basis'] == null
+              ? null
+              : _localized(data['scientific_basis'] as Map<String, dynamic>?, langCode),
         );
       }).toList();
     } catch (_) {

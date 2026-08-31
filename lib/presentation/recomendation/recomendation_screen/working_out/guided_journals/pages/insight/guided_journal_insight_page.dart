@@ -11,6 +11,7 @@ import 'package:riva_psy/presentation/main/path/first_thougths_screen/repository
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_audio_player.dart';
+import '../../widgets/scientific_basis_sheet.dart';
 
 class GuidedJournalInsightPage extends StatefulWidget {
   const GuidedJournalInsightPage({Key? key}) : super(key: key);
@@ -65,7 +66,21 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(topic.title, style: AppStyle.txtH1),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Text(topic.title, style: AppStyle.txtH1)),
+                    if ((topic.scientificBasis ?? '').trim().isNotEmpty)
+                      InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () => ScientificBasisSheet.show(context, topic.scientificBasis!),
+                        child: Padding(
+                          padding: getPadding(all: 6),
+                          child: Icon(Icons.info_outline_rounded, color: ColorConstant.cyan700, size: 22),
+                        ),
+                      ),
+                  ],
+                ),
                 SizedBox(height: getVerticalSize(20)),
                 Container(
                   width: double.infinity,

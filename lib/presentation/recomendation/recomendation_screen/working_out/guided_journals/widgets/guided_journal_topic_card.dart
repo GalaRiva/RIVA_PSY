@@ -9,8 +9,9 @@ import 'package:riva_psy/core/app_export.dart';
 class GuidedJournalTopicCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final VoidCallback? onInfoTap;
 
-  const GuidedJournalTopicCard({Key? key, required this.title, required this.onTap})
+  const GuidedJournalTopicCard({Key? key, required this.title, required this.onTap, this.onInfoTap})
       : super(key: key);
 
   @override
@@ -54,6 +55,15 @@ class GuidedJournalTopicCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if (onInfoTap != null)
+                InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: onInfoTap,
+                  child: Padding(
+                    padding: getPadding(all: 6),
+                    child: Icon(Icons.info_outline_rounded, color: Colors.white.withOpacity(0.85), size: 20),
+                  ),
+                ),
               Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.85)),
             ],
           ),

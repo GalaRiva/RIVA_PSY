@@ -6,6 +6,7 @@ import 'package:riva_psy/core/app_export.dart';
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_topic_card.dart';
+import '../../widgets/scientific_basis_sheet.dart';
 
 class GuidedJournalLibraryPage extends StatelessWidget {
   const GuidedJournalLibraryPage({Key? key}) : super(key: key);
@@ -47,6 +48,9 @@ class GuidedJournalLibraryPage extends StatelessWidget {
                       child: GuidedJournalTopicCard(
                         title: topic.title,
                         onTap: () => cubit.selectTopic(topic),
+                        onInfoTap: (topic.scientificBasis ?? '').trim().isEmpty
+                            ? null
+                            : () => ScientificBasisSheet.show(context, topic.scientificBasis!),
                       ),
                     )),
               ],
