@@ -205,4 +205,38 @@ class AwesomeNotificationService extends NotificationService {
       ),
     );
   }
+
+  /// One-off notification for the "Мой портрет" 24h test-unlock gate —
+  /// fires exactly at `anchor + 24h`. Reuses the already-registered
+  /// 'scheduled' channel (see scheduleInsightNotification above) rather than
+  /// a dedicated 'portrait' channel — channel registration here is tied to
+  /// the pill-reminder workmanager flow (see workmanager_service.dart),
+  /// which isn't guaranteed to have run for a user who never set a pill
+  /// reminder, so a new channel could silently never register.
+  Future schedulePortraitUnlockNotification({required DateTime anchor}) async {
+    final target = anchor.add(const Duration(hours: 24));
+    if (target.isBefore(DateTime.now())) return;
+    final id = ('portrait_unlock_${target.toIso8601String()}').hashCode & 0x7FFFFFFF;
+    await AwesomeNotifications().createNotification(
+      schedule: NotificationCalendar(
+        year: target.year,
+        month: target.month,
+        day: target.day,
+        hour: target.hour,
+        minute: target.minute,
+        repeats: false,
+        allowWhileIdle: true,
+      ),
+      content: NotificationContent(
+        id: id,
+        channelKey: 'scheduled',
+        title: 'RIVA PSY',
+        body: 'Ваша новая грань готова 💎',
+        wakeUpScreen: true,
+        category: NotificationCategory.Reminder,
+        color: const Color(0xFF2A5C55),
+        notificationLayout: NotificationLayout.BigText,
+      ),
+    );
+  }
 }

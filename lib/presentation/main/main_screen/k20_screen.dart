@@ -416,6 +416,7 @@ class K20Screen extends GetWidget<K20Controller> {
                               right: 74,
                             ),
                             variant: ButtonVariant.OutlineBluegray60014,
+                            borderRadius: 12,
                           ),
                         ),
                       ),
@@ -438,6 +439,7 @@ class K20Screen extends GetWidget<K20Controller> {
                         // second-most-important action.
                         bgColor: ColorConstant.cyan700,
                         textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+                        borderRadius: 12,
                       ),
                     ],
                   ),

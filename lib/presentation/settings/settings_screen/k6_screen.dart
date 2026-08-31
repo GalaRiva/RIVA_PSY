@@ -15,6 +15,8 @@ import '../../consultation/consultation_screen.dart';
 import '../../../core/services/insights/insight_workmanager.dart';
 import '../../../core/services/insights/insights_repo.dart';
 import '../../../core/services/rating/rating_request_service.dart';
+import '../../recomendation/recomendation_screen/portrait/data/portrait_repo.dart';
+import '../../../core/utils/shared_prefs.dart';
 
 class K6Screen extends GetWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -186,6 +188,60 @@ class K6Screen extends GetWidget {
                               // registration now triggers — keep this entry
                               // point for quick on-device testing without
                               // needing a fresh account each time.
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () async {
+                                  await PortraitRepo().debugForceFillAll();
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Все 12 тестов «Проекция Я» + бонус заполнены (доминанта А), гейты открыты.'),
+                                  ));
+                                },
+                                title: '🧪 Portrait force-fill (temp)',
+                                svgIcon: ImageConstant.imgUser,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () async {
+                                  await PortraitRepo().debugClearAll();
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Все результаты «Проекция Я» сброшены — можно проходить тесты с нуля.'),
+                                  ));
+                                },
+                                title: '🧪 Portrait clear (temp)',
+                                svgIcon: ImageConstant.imgUser,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () async {
+                                  await SharedPrefs.sharedPreferences.setBool('portrait_onboarding_shown', false);
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('Онбординг «Проекция Я» сброшен — покажется заново при следующем открытии.'),
+                                  ));
+                                },
+                                title: '🧪 Portrait onboarding reset (temp)',
+                                svgIcon: ImageConstant.imgUser,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () async {
+                                  await PortraitRepo().debugCompleteNextTest();
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('+1 тест засчитан — новая группа звёзд должна открыться.'),
+                                  ));
+                                },
+                                title: '🧪 Portrait +1 test (temp)',
+                                svgIcon: ImageConstant.imgUser,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
                               CardSettingsButtonWidget(
                                 context,
                                 onTap: () => startPostRegistrationQuizFlow(context),

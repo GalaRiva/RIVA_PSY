@@ -21,9 +21,14 @@ class CustomButton extends StatelessWidget {
       this.textStyle,
       this.centralWidget,
       this.textIsFitted = false,
-      this.standardPadding, this.showBorder = true, this.minHeight});
+      this.standardPadding, this.showBorder = true, this.minHeight, this.borderRadius});
 
   ButtonShape? shape;
+
+  // Per-instance corner radius override — most call sites share the
+  // `shape`-driven default (~3px), but a few screens want a softer,
+  // more rounded look without changing every CustomButton in the app.
+  final double? borderRadius;
 
   final Widget? centralWidget;
   final bool textIsFitted;
@@ -244,6 +249,7 @@ class CustomButton extends StatelessWidget {
   }
 
   _setBorderRadius() {
+    if (borderRadius != null) return BorderRadius.circular(getHorizontalSize(borderRadius!));
     switch (shape) {
       case ButtonShape.Square:
         return BorderRadius.circular(0);

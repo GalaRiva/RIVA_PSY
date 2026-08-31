@@ -8,6 +8,7 @@ import 'package:riva_psy/presentation/recomendation/recomendation_screen/working
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/ui/working_out_screen.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/portrait/portrait_page.dart';
 
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';
@@ -58,6 +59,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
       controller.currentTab = data['first'] ?? 0;
       controller.currentTabSecond = data['second'] ?? 0;
       initialTab = data['initialTab'] ?? 0;
+      controller.workingOutInitialTab = data['workingOutTab'];
     } else {
       controller.currentTab = 0;
       controller.currentTabSecond = 0;
@@ -84,7 +86,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
     return MultiBlocProvider(
       providers: [
         BlocProvider<WorkingOutCubit>(
-          create: (_) => WorkingOutCubit(this),
+          create: (_) => WorkingOutCubit(this, initialTab: controller.workingOutInitialTab),
         ),
         BlocProvider<WorkingOutIrrationalCubit>(
           create: (_) => WorkingOutIrrationalCubit()..init(),
@@ -162,9 +164,10 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
             body: CustomTabBar(
               tabs: [
                 ExercisesTabBody(controller: controller),
-                WorkingOutScreen()
+                WorkingOutScreen(),
+                const PortraitPage(),
               ],
-              labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr()],
+              labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr(), 'portrait_tab'.tr()],
               controller: pageController,
             ),
           ),

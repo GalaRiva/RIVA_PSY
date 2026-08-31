@@ -35,6 +35,17 @@ const Map<String, String> audioCoverAssets = {
   'Хорошее для себя': 'assets/images/audio_covers/good_for_myself.jpg',
   'Чувство вины': 'assets/images/audio_covers/sense_of_guilt.jpg',
   'Шторм гнева': 'assets/images/audio_covers/storm_of_anger.jpg',
+  // "Портрет" tracks (see PROJECT_CONTEXT.md §63) — covers matched by their
+  // Firestore Audio.name field, not by the source image filenames (one of
+  // the 7 source files was named "Тормоз Прокрастинация.png", confirmed
+  // against the live Firestore doc to be the cover for "Право на паузу").
+  'Снятие брони': 'assets/images/audio_covers/removing_armor.jpg',
+  'Право на паузу': 'assets/images/audio_covers/right_to_pause.jpg',
+  'Охлаждение реактора': 'assets/images/audio_covers/reactor_cooling.jpg',
+  'Восстановление контура': 'assets/images/audio_covers/contour_restoration.jpg',
+  'Снятие обвинений': 'assets/images/audio_covers/dropping_charges.jpg',
+  'Возврат в сейчас': 'assets/images/audio_covers/return_to_present.jpg',
+  'Сброс кэша': 'assets/images/audio_covers/cache_reset.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {

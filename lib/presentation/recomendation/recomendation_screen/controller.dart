@@ -66,6 +66,11 @@ class K70Controller extends GetxController {
   int currentTab = 0;
   int currentTabSecond = 0;
   int panicTab = 1;
+  // Set from route arguments (see K70Screen.didChangeDependencies) when a
+  // CTA from "Мой портрет" deep-links into a specific WorkingOutScreen
+  // sub-tab (Оспорить мысль/Счастье в фокусе/Желания/Guided Journals) —
+  // consumed once by WorkingOutCubit's initial TabController index.
+  int? workingOutInitialTab;
 
   bool loading = true;
   int? currentAudioIndex;

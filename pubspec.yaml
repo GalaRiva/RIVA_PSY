@@ -141,8 +141,11 @@ flutter:
     - assets/images/event_images/
     - assets/images/quiz/
     - assets/videos/
+    - assets/videos/projection/
     - assets/fonts/
-  fonts: 
+  shaders:
+    - shaders/projection_orb.frag
+  fonts:
     - family: Akrobat
       fonts: 
         - asset: assets/fonts/AkrobatBold.ttf

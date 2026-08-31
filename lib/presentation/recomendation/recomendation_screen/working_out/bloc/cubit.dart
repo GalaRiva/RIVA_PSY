@@ -9,9 +9,14 @@ import '../../../../../core/user_data/user.dart';
 class WorkingOutCubit extends Cubit<WorkingOutState> {
   final TickerProvider tickerProvider;
 
-  WorkingOutCubit(this.tickerProvider)
+  WorkingOutCubit(this.tickerProvider, {int? initialTab})
       : super(WorkingOutState()) {
-    tabController = TabController(length: 4, vsync: tickerProvider);
+    tabController = TabController(
+      length: 4,
+      vsync: tickerProvider,
+      initialIndex: initialTab ?? 0,
+    );
+    if (initialTab != null) currentTab = initialTab;
   }
 
   bool get showContent => CurrentUser.tariffIsOrion();

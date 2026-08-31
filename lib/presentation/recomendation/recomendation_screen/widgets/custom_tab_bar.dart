@@ -53,7 +53,7 @@ class _CustomTabBarState extends State<CustomTabBar>
           Padding(
             padding: EdgeInsets.only(top: 11),
             child: SizedBox(
-              height: 46,
+              height: 56,
               width: size.width,
               child: Stack(
                 alignment: Alignment.bottomCenter,
@@ -62,13 +62,13 @@ class _CustomTabBarState extends State<CustomTabBar>
                     children: List.generate(
                         widget.labels.length,
                         (index) => SizedBox(
-                            height: 46,
+                            height: 56,
                             width: labelWidthWithoutPadding,
                             child: Center(
                                 child: InkWell(
                               onTap: () => animate(index),
                               child: Container(
-                                height: 46,
+                                height: 56,
                                 width: labelWidth,
                                 decoration: BoxDecoration(
                                   color: ColorConstant.fromHex('#C5D2D2'),
@@ -90,11 +90,11 @@ class _CustomTabBarState extends State<CustomTabBar>
                       child: SlideTransition(
                         position: _animationLabel,
                         child: SizedBox(
-                          height: 46,
+                          height: 56,
                           width: labelWidthWithoutPadding,
                           child: Center(
                             child: Container(
-                              height: 46,
+                              height: 56,
                               width: labelWidth,
                               decoration: BoxDecoration(
                                   color: ColorConstant.cyan700,
@@ -123,12 +123,12 @@ class _CustomTabBarState extends State<CustomTabBar>
                     children: List.generate(
                         widget.labels.length,
                         (index) => SizedBox(
-                            height: 46,
+                            height: 56,
                             width: labelWidthWithoutPadding,
                             child: Center(
                                 child: IgnorePointer(
                               child: Container(
-                                height: 46,
+                                height: 56,
                                 width: labelWidth,
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: Center(
@@ -136,7 +136,8 @@ class _CustomTabBarState extends State<CustomTabBar>
                                     fit: BoxFit.scaleDown,
                                     child: Text(
                                       widget.labels[index],
-                                      maxLines: 1,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
                                       style: AppStyle.txtSFProDisplayLight14
                                           .copyWith(
                                               color: currentPos == index
