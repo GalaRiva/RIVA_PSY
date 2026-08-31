@@ -95,7 +95,7 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
         BlocProvider<HappinessInFocusCubit>(
             create: (_) => HappinessInFocusCubit()),
       ],
-      child: Scaffold(
+      child: GetBuilder<K70Controller>(builder: (_) => Scaffold(
         body: SafeArea(
           // Was a SingleChildScrollView wrapping a SizedBox pinned to
           // exactly one screen's height — the title/divider/heading/CTA
@@ -176,11 +176,12 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
                 'portrait_tab'.tr()
               ],
               controller: pageController,
+              showTabs: !controller.immersiveMode,
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(),
-      ),
+        bottomNavigationBar: controller.immersiveMode ? null : CustomBottomBar(),
+      )),
     );
   }
 }

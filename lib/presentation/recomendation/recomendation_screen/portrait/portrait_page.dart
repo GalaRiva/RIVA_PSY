@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../../core/utils/shared_prefs.dart';
+import '../controller.dart';
 import 'bloc/portrait_cubit.dart';
 import 'bloc/portrait_state.dart';
 import 'pages/library/portrait_library_page.dart';
@@ -62,7 +64,15 @@ class _PortraitPageState extends State<PortraitPage> {
 
     return BlocProvider(
       create: (_) => PortraitCubit(),
-      child: BlocBuilder<PortraitCubit, PortraitState>(
+      child: BlocConsumer<PortraitCubit, PortraitState>(
+        // Tells K70Screen to hide its top tab bar + bottom nav while the
+        // user is inside a test question/result screen — see
+        // K70Controller.immersiveMode.
+        listener: (context, state) {
+          if (Get.isRegistered<K70Controller>()) {
+            Get.find<K70Controller>().setImmersiveMode(state.stage != PortraitStage.library);
+          }
+        },
         builder: (context, state) {
           switch (state.stage) {
             case PortraitStage.question:

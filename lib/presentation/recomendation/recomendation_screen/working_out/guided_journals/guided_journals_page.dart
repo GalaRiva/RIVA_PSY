@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/user_data/user.dart';
 import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 
+import '../../controller.dart';
 import 'bloc/guided_journals_cubit.dart';
 import 'bloc/guided_journals_state.dart';
 import 'pages/insight/guided_journal_insight_page.dart';
@@ -21,7 +23,15 @@ class GuidedJournalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => GuidedJournalsCubit(),
-      child: BlocBuilder<GuidedJournalsCubit, GuidedJournalsState>(
+      child: BlocConsumer<GuidedJournalsCubit, GuidedJournalsState>(
+        // Tells K70Screen to hide its top tab bar + bottom nav while the
+        // user is inside a question/insight screen, so the exercise gets
+        // the full height — see K70Controller.immersiveMode.
+        listener: (context, state) {
+          if (Get.isRegistered<K70Controller>()) {
+            Get.find<K70Controller>().setImmersiveMode(state.stage != GuidedJournalStage.library);
+          }
+        },
         builder: (context, state) {
           if (!CurrentUser.tariffIsOrion()) {
             return GoToNewTariffWidget(goToFreeRecommendation: false);

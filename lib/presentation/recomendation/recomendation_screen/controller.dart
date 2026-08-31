@@ -74,6 +74,22 @@ class K70Controller extends GetxController {
 
   bool loading = true;
   int? currentAudioIndex;
+
+  // Set by a nested module (Guided Journals/Проекция Я/etc.) when the user
+  // leaves that module's own library/browsing screen and enters a
+  // question/step screen — K70Screen listens to this to hide its own top
+  // tab bar + bottom nav so the exercise gets the full screen. Reset to
+  // false either by that same module (back to its library) or by
+  // CustomTabBar itself when the user switches to a different top-level
+  // tab (so a mid-exercise tab left behind doesn't leave stale hidden
+  // chrome for whichever tab the user switches to next).
+  bool immersiveMode = false;
+
+  void setImmersiveMode(bool value) {
+    if (immersiveMode == value) return;
+    immersiveMode = value;
+    update();
+  }
   double getTabHeight() {
     switch (currentTab) {
       case 0:
