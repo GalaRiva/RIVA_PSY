@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
 
-import '../../../../portrait/widgets/glass_button.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
+
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_page_background.dart';
@@ -115,12 +116,16 @@ class _QuestionBodyState extends State<_QuestionBody> {
                 ),
               ),
               SizedBox(height: getVerticalSize(24)),
-              GlassButton(
+              CustomButton(
                 text: (widget.isLast
                         ? 'guided_journal_finish'.tr()
                         : 'continue'.tr())
                     .toUpperCase(),
+                width: double.infinity,
                 height: 47,
+                showBorder: false,
+                bgColor: Colors.transparent,
+                textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.cyan700),
                 onTap: () => cubit.answerAndContinue(answerController.text),
               ),
             ],

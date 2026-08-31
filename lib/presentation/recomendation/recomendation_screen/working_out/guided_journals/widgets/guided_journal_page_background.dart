@@ -1,12 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 // Shared full-bleed background for every "Хлебные крошки" screen past the
-// library (question + insight) — the topic's own cover image, softly
-// blurred, with a dark scrim for text contrast. A light touch (sigma 6),
-// not the strong blur an initial pass used — the source artwork is
-// already somewhat soft, so a heavy blur on top of it read as mushy.
+// library (question + insight) — the topic's own cover image, shown as-is:
+// no blur, no darkening scrim. Per explicit feedback, the image should
+// render unmodified; content on top handles its own legibility instead of
+// the background being dimmed for it.
 const kGuidedJournalPageBg = Color(0xFF0B1917);
 
 class GuidedJournalPageBackground extends StatelessWidget {
@@ -22,13 +20,7 @@ class GuidedJournalPageBackground extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         const ColoredBox(color: kGuidedJournalPageBg),
-        if (hasImage) ...[
-          Image.network(imageUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Container(color: Colors.black.withOpacity(0.55)),
-          ),
-        ],
+        if (hasImage) Image.network(imageUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
         child,
       ],
     );

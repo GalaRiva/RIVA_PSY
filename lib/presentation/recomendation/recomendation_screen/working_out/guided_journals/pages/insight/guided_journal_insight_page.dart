@@ -8,7 +8,6 @@ import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/models/event_model.dart';
 import 'package:riva_psy/presentation/main/path/first_thougths_screen/repository.dart';
 
-import '../../../../portrait/widgets/glass_button.dart';
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_audio_player.dart';
@@ -125,13 +124,17 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                   else if ((state.audioUrl ?? '').isNotEmpty)
                     GuidedJournalAudioPlayer(url: state.audioUrl!),
                   SizedBox(height: getVerticalSize(28)),
-                  GlassButton(
+                  CustomButton(
                     text: (_saved
                             ? 'guided_journal_saved_to_diary'
                             : 'guided_journal_save_to_diary')
                         .tr()
                         .toUpperCase(),
+                    width: double.infinity,
                     height: 47,
+                    showBorder: false,
+                    bgColor: Colors.transparent,
+                    textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.cyan700),
                     onTap: (_saved || _saving)
                         ? null
                         : () => _saveAsDiaryEntry(
