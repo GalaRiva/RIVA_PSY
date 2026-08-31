@@ -68,7 +68,6 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
         if (topic == null) return const SizedBox.shrink();
         final cubit = context.read<GuidedJournalsCubit>();
         return GuidedJournalPageBackground(
-          imageUrl: topic.imageUrl,
           child: SingleChildScrollView(
             child: Padding(
               padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
@@ -132,7 +131,9 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                         .toUpperCase(),
                     width: double.infinity,
                     height: 47,
-                    fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
+                    bgColor: ColorConstant.cyan700,
+                    fontStyle: ButtonFontStyle.White16,
+                    borderRadius: 14,
                     onTap: (_saved || _saving)
                         ? null
                         : () => _saveAsDiaryEntry(

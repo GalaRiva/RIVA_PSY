@@ -31,7 +31,6 @@ class GuidedJournalQuestionPage extends StatelessWidget {
           questionNumber: state.questionIndex + 1,
           totalQuestions: topic.questions.length,
           isLast: state.questionIndex + 1 == topic.questions.length,
-          imageUrl: topic.imageUrl,
         );
       },
     );
@@ -44,7 +43,6 @@ class _QuestionBody extends StatefulWidget {
   final int questionNumber;
   final int totalQuestions;
   final bool isLast;
-  final String? imageUrl;
 
   const _QuestionBody({
     Key? key,
@@ -53,7 +51,6 @@ class _QuestionBody extends StatefulWidget {
     required this.questionNumber,
     required this.totalQuestions,
     required this.isLast,
-    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -74,7 +71,6 @@ class _QuestionBodyState extends State<_QuestionBody> {
   Widget build(BuildContext context) {
     final cubit = context.read<GuidedJournalsCubit>();
     return GuidedJournalPageBackground(
-      imageUrl: widget.imageUrl,
       child: SingleChildScrollView(
         child: Padding(
           padding: getPadding(left: 16, right: 16, top: 4, bottom: 40),
@@ -124,6 +120,7 @@ class _QuestionBodyState extends State<_QuestionBody> {
                 height: 47,
                 variant: ButtonVariant.Cyan,
                 fontStyle: ButtonFontStyle.White16,
+                borderRadius: 14,
                 onTap: () => cubit.answerAndContinue(answerController.text),
               ),
             ],
