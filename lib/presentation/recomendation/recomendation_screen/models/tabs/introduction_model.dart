@@ -34,10 +34,11 @@ class IntroductionModel extends NegativeEmotionsModelTab {
         // identifying which track structurally (to pin it first), not
         // deciding what to show.
         if(audio.tab == 'introduction') {
+          final duration = audio.localizedDuration(langCode);
           if(audio.name == 'Введение'){
-            audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath));
+            audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
           } else
-            audios.add(AudioCardModel(audio.localizedName(langCode), filePath));
+            audios.add(AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
         }
       } catch (_) {
         print (_);

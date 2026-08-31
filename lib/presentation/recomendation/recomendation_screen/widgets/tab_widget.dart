@@ -60,18 +60,29 @@ class TabWidget extends StatelessWidget {
     Future<List<Duration?>> _durations (List<AudioCardModel> assets) async {
       final List<Duration?> list = [];
       for (var item in assets) {
+        // Known ahead of time (Audio.duration_ms, precomputed once and
+        // stored in Firestore) — skip the network probe entirely. This is
+        // the common case for every track already in the catalog; only a
+        // brand-new track added without a duration backfill falls through
+        // to the live probe below.
+        if (item.knownDuration != null) {
+          list.add(item.knownDuration);
+          continue;
+        }
         try {
           if (DataSourceService.dataSourceIsRemote()) {
-            list.add(await controller.audioInstance.setUrl(
-                item.audioAsset, initialPosition: Duration.zero, preload: true));
+            list.add(await controller.audioInstance.setAudioSource(
+                await AudioCacheManager.sourceFor(item.audioAsset),
+                initialPosition: Duration.zero, preload: true));
           } else
             list.add(await controller.audioInstance.setAudioSource(
                 AudioSource.file(item.audioAsset),
                 initialPosition: Duration.zero));
         } catch (_) {
           try {
-            list.add(await controller.audioInstance.setUrl(
-                item.audioAsset, initialPosition: Duration.zero));
+            list.add(await controller.audioInstance.setAudioSource(
+                await AudioCacheManager.sourceFor(item.audioAsset),
+                initialPosition: Duration.zero));
           } catch (_) {
             print('error load - ${item.audioAsset}');
             list.add(Duration.zero);

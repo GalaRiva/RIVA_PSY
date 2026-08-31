@@ -30,7 +30,8 @@ class MeditationModel extends NegativeEmotionsModelTab{
           filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
         }
         if(audio.tab == 'meditation')
-          audios.add(AudioCardModel(audio.localizedName(langCode), filePath));
+          audios.add(AudioCardModel(audio.localizedName(langCode), filePath,
+              knownDuration: audio.localizedDuration(langCode)));
       }catch (_) {
         print (_);
 

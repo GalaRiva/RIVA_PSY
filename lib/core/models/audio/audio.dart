@@ -16,8 +16,17 @@ class Audio {
   final String? nameEs;
   final String? fileNameEn;
   final String? nameEn;
+  // Precomputed once (ffprobe, run against the R2-hosted file) and stored
+  // here instead of asked for over the network on every app open — see
+  // PROJECT_CONTEXT.md: the negative-emotion tabs used to probe every
+  // track's duration live via a sequential setUrl() per card, which is
+  // what actually made those tabs feel frozen on a cold start.
+  final int? durationMs;
+  final int? durationMsEn;
+  final int? durationMsEs;
 
-  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.emotions, {this.fileNameEs, this.nameEs, this.fileNameEn, this.nameEn});
+  Audio(this.fileName, this.folder, this.name, this.format, this.tab, this.emotions,
+      {this.fileNameEs, this.nameEs, this.fileNameEn, this.nameEn, this.durationMs, this.durationMsEn, this.durationMsEs});
 
   factory Audio.fromJson(Map<String, dynamic> json) {
     return Audio(
@@ -31,6 +40,9 @@ class Audio {
         nameEs: json['name_es'] as String?,
         fileNameEn: json['fileName_en'] as String?,
         nameEn: json['name_en'] as String?,
+        durationMs: (json['duration_ms'] as num?)?.toInt(),
+        durationMsEn: (json['duration_ms_en'] as num?)?.toInt(),
+        durationMsEs: (json['duration_ms_es'] as num?)?.toInt(),
     );
   }
 
@@ -45,6 +57,15 @@ class Audio {
     if (langCode == 'es' && (fileNameEs ?? '').trim().isNotEmpty) return fileNameEs!;
     if (langCode == 'en' && (fileNameEn ?? '').trim().isNotEmpty) return fileNameEn!;
     return fileName;
+  }
+
+  Duration? localizedDuration(String langCode) {
+    final ms = langCode == 'es'
+        ? (durationMsEs ?? durationMs)
+        : langCode == 'en'
+            ? (durationMsEn ?? durationMs)
+            : durationMs;
+    return ms == null ? null : Duration(milliseconds: ms);
   }
 
   Map<String, dynamic> toJson() {

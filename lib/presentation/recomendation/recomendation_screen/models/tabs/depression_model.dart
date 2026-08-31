@@ -37,10 +37,11 @@ class DepressionModel extends NegativeEmotionsModelTab{
            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
          }
          if(audio.tab == 'depression') {
+           final duration = audio.localizedDuration(langCode);
            if(audio.name == 'Введение'){
-             audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath));
+             audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
            } else
-             audios.add(AudioCardModel(audio.localizedName(langCode), filePath));
+             audios.add(AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
          }
        } catch (_) {
          print (_);
