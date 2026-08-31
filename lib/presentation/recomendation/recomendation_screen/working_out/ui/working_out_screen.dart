@@ -5,7 +5,6 @@ import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/cubit.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/bloc/state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/desires/desires_page.dart';
-import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/guided_journals/guided_journals_page.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/ui/happiness_in_focus_page.dart';
 import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 
@@ -78,9 +77,6 @@ class WorkingOutScreen extends StatelessWidget {
                           Tab(
                             text: 'desires'.tr(),
                           ),
-                          Tab(
-                            text: 'breadcrumbs_exercise'.tr(),
-                          ),
                         ],
                       ),
                     ),
@@ -100,10 +96,6 @@ class WorkingOutScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: DesiresPage(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 18),
-                            child: GuidedJournalsPage(),
                           ),
                     ]),
                   )

@@ -8,6 +8,7 @@ import 'package:riva_psy/presentation/recomendation/recomendation_screen/working
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_bloc.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/happiness_in_focus/bloc/happiness_in_focus_state.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/ui/working_out_screen.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/guided_journals/guided_journals_page.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/portrait/portrait_page.dart';
 
 import '../../../../core/utils/color_constant.dart';
@@ -165,9 +166,15 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
               tabs: [
                 ExercisesTabBody(controller: controller),
                 WorkingOutScreen(),
+                const GuidedJournalsPage(),
                 const PortraitPage(),
               ],
-              labels: ['cope_with_an_emotion'.tr(), 'gaining'.tr(), 'portrait_tab'.tr()],
+              labels: [
+                'cope_with_an_emotion'.tr(),
+                'gaining'.tr(),
+                'breadcrumbs_exercise'.tr(),
+                'portrait_tab'.tr()
+              ],
               controller: pageController,
             ),
           ),

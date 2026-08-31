@@ -12,7 +12,7 @@ class WorkingOutCubit extends Cubit<WorkingOutState> {
   WorkingOutCubit(this.tickerProvider, {int? initialTab})
       : super(WorkingOutState()) {
     tabController = TabController(
-      length: 4,
+      length: 3,
       vsync: tickerProvider,
       initialIndex: initialTab ?? 0,
     );
