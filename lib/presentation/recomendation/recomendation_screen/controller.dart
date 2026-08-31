@@ -90,6 +90,23 @@ class K70Controller extends GetxController {
     immersiveMode = value;
     update();
   }
+
+  // The K70 top-level CustomTabBar's own PageView position (0=Справиться с
+  // эмоцией, 1=Обретение, 2=Хлебные крошки, 3=Проекция Я) — distinct from
+  // `currentTab` above, which tracks a different, older TabController.
+  // Kept in sync purely from CustomTabBar.onPageChanged, so it never
+  // depends on any nested module's own stage — used to hide the bottom
+  // nav bar while "Обретение" is the active tab, regardless of which of
+  // its own sub-exercises/stages the user is on (a simpler, lower-risk
+  // alternative to per-stage immersive mode for that section — see
+  // PROJECT_CONTEXT.md).
+  int activeTopLevelTab = 0;
+
+  void setActiveTopLevelTab(int index) {
+    if (activeTopLevelTab == index) return;
+    activeTopLevelTab = index;
+    update();
+  }
   double getTabHeight() {
     switch (currentTab) {
       case 0:

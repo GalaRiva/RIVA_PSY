@@ -51,6 +51,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
   void initState() {
     super.initState();
     _tabKeys = List.generate(widget.labels.length, (_) => GlobalKey());
+    currentPos = widget.controller.initialPage;
+    if (Get.isRegistered<K70Controller>()) {
+      Get.find<K70Controller>().setActiveTopLevelTab(currentPos);
+    }
   }
 
   @override
@@ -109,6 +113,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
             controller: widget.controller,
             onPageChanged: (pos) {
               setState(() => currentPos = pos);
+              if (Get.isRegistered<K70Controller>()) {
+                Get.find<K70Controller>().setActiveTopLevelTab(pos);
+              }
               WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToTab(pos));
             },
             children: widget.tabs,

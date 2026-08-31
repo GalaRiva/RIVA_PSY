@@ -40,7 +40,7 @@ class WorkingOutScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: getPadding(top: 30),
+                    padding: getPadding(top: 10),
                     child: SizedBox(
                       height: getVerticalSize(50),
                       width: MediaQuery
@@ -86,15 +86,15 @@ class WorkingOutScreen extends StatelessWidget {
                         controller: cubit.tabController,
                         children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 18),
+                        padding: const EdgeInsets.only(top: 6),
                         child: WorkingOutIrrationalTab(),
                       ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 18),
+                            padding: const EdgeInsets.only(top: 6),
                             child: HappinessInFocusPage(),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 18),
+                            padding: const EdgeInsets.only(top: 6),
                             child: DesiresPage(),
                           ),
                     ]),

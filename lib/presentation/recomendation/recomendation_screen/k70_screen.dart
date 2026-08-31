@@ -180,7 +180,12 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
             ),
           ),
         ),
-        bottomNavigationBar: controller.immersiveMode ? null : CustomBottomBar(),
+        // "Обретение" (index 1) always hides the bottom nav while active,
+        // regardless of which of its own sub-exercises the user is on —
+        // simpler and lower-risk than per-stage immersive mode for that
+        // section (see PROJECT_CONTEXT.md for why that approach was
+        // reverted there).
+        bottomNavigationBar: (controller.immersiveMode || controller.activeTopLevelTab == 1) ? null : CustomBottomBar(),
       )),
     );
   }
