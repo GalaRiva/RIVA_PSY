@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
-import 'package:riva_psy/widgets/custom_button.dart';
 
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/models/event_model.dart';
 import 'package:riva_psy/presentation/main/path/first_thougths_screen/repository.dart';
 
+import '../../../../portrait/widgets/glass_button.dart';
 import '../../bloc/guided_journals_cubit.dart';
 import '../../bloc/guided_journals_state.dart';
 import '../../widgets/guided_journal_audio_player.dart';
@@ -123,31 +123,23 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                   else if ((state.audioUrl ?? '').isNotEmpty)
                     GuidedJournalAudioPlayer(url: state.audioUrl!),
                   SizedBox(height: getVerticalSize(28)),
-                  CustomButton(
+                  GlassButton(
                     text: (_saved
                             ? 'guided_journal_saved_to_diary'
                             : 'guided_journal_save_to_diary')
                         .tr()
                         .toUpperCase(),
-                    width: double.infinity,
                     height: 47,
-                    bgColor: ColorConstant.cyan700,
-                    fontStyle: ButtonFontStyle.White16,
-                    borderRadius: 14,
                     onTap: (_saved || _saving)
                         ? null
                         : () => _saveAsDiaryEntry(
                             topic.title, topic.questions, state.answers),
                   ),
                   SizedBox(height: getVerticalSize(12)),
-                  CustomButton(
+                  GlassButton(
                     text: 'guided_journal_back_to_library'.tr().toUpperCase(),
-                    width: double.infinity,
                     height: 47,
-                    showBorder: false,
-                    bgColor: Colors.transparent,
-                    textStyle: AppStyle.txtSFProDisplayLight16
-                        .copyWith(color: Colors.white.withOpacity(0.85)),
+                    accent: Colors.white,
                     onTap: cubit.backToLibrary,
                   ),
                 ],

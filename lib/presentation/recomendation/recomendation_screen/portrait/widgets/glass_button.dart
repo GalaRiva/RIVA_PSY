@@ -11,7 +11,7 @@ import 'package:riva_psy/core/app_export.dart';
 // treatment instead of each screen inventing its own button style.
 class GlassButton extends StatelessWidget {
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color accent;
   final double height;
 
