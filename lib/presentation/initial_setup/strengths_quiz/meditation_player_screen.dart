@@ -6,6 +6,7 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/audio/audio.dart';
+import '../../../core/services/audio/audio_cache_manager.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/glass_card.dart';
 
@@ -51,7 +52,7 @@ class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
       final fileName = audio.localizedFileName(langCode);
       final source =
           'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/$fileName.${audio.format}';
-      final duration = await _player.setUrl(source);
+      final duration = await _player.setAudioSource(await AudioCacheManager.sourceFor(source));
       _player.positionStream.listen((p) {
         if (mounted) setState(() => _position = p);
       });

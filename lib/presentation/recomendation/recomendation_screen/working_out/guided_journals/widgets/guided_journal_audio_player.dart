@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/services/audio/audio_cache_manager.dart';
 
 // Deliberately minimal — a single optional track on the insight screen,
 // not a scrubbable list like AudioCardWidget (which is built around a
@@ -23,7 +24,7 @@ class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
   @override
   void initState() {
     super.initState();
-    _player.setUrl(widget.url).catchError((_) {
+    AudioCacheManager.sourceFor(widget.url).then((source) => _player.setAudioSource(source)).catchError((_) {
       if (mounted) setState(() => _loadFailed = true);
       return null;
     });
