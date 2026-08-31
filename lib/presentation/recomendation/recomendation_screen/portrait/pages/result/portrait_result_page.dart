@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../../../core/models/portrait/portrait_test_definitions.dart';
 import '../../../../../../core/user_data/user.dart';
@@ -9,7 +10,6 @@ import '../../bloc/portrait_cubit.dart';
 import '../../bloc/portrait_state.dart';
 import '../../cta_action_router.dart';
 import '../../data/portrait_result_builder.dart';
-import '../../widgets/glass_button.dart';
 import '../paywall/portrait_paywall_page.dart';
 
 const _kProjectionBg = Color(0xFF0B1917);
@@ -88,17 +88,25 @@ class PortraitResultPage extends StatelessWidget {
                 Text(view.shadow,
                     style: AppStyle.txtSFProDisplayLight14.copyWith(color: Colors.white.withOpacity(0.7), height: 1.5)),
                 SizedBox(height: getVerticalSize(24)),
-                GlassButton(
+                CustomButton(
                   text: view.ctaLabel,
+                  width: double.infinity,
                   height: 47,
-                  accent: const Color(0xFF2A5C55),
+                  showBorder: false,
+                  bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                  borderRadius: 14,
+                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                   onTap: () => CtaActionRouter.navigate(context, view.cta, audioLabel: view.ctaLabel),
                 ),
                 SizedBox(height: getVerticalSize(12)),
-                GlassButton(
+                CustomButton(
                   text: 'portrait_back_to_library'.tr().toUpperCase(),
+                  width: double.infinity,
                   height: 47,
-                  accent: Colors.white,
+                  showBorder: false,
+                  bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                  borderRadius: 14,
+                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                   onTap: () => _backToLibrary(context, id),
                 ),
               ],

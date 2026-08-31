@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../../../core/models/portrait/portrait_test_definitions.dart';
 import '../../../../../../core/models/portrait/portrait_test_result_model.dart';
 import '../../cta_action.dart';
 import '../../cta_action_router.dart';
 import '../../data/portrait_repo.dart';
-import '../../widgets/glass_button.dart';
 import '../../widgets/projection_orb.dart';
 
 class _FinaleInsight {
@@ -286,10 +286,14 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                               .copyWith(color: Colors.white.withOpacity(0.9), height: 1.5),
                         ),
                         SizedBox(height: getVerticalSize(14)),
-                        GlassButton(
+                        CustomButton(
                           text: recommendation.ctaLabel,
+                          width: double.infinity,
                           height: 47,
-                          accent: const Color(0xFF1FAE7A),
+                          showBorder: false,
+                          bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                          borderRadius: 14,
+                          textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                           onTap: () => CtaActionRouter.navigate(
                             context,
                             recommendation.cta,
@@ -300,9 +304,14 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                     ),
                   ),
                 SizedBox(height: getVerticalSize(10)),
-                GlassButton(
+                CustomButton(
                   text: 'portrait_finale_cta'.tr(),
-                  accent: const Color(0xFF1FAE7A),
+                  width: double.infinity,
+                  height: 47,
+                  showBorder: false,
+                  bgColor: ColorConstant.cyan700.withOpacity(0.55),
+                  borderRadius: 14,
+                  textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                   onTap: () => Navigator.pop(context),
                 ),
               ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../../core/utils/shared_prefs.dart';
 import '../controller.dart';
@@ -11,7 +12,6 @@ import 'bloc/portrait_state.dart';
 import 'pages/library/portrait_library_page.dart';
 import 'pages/question/portrait_question_page.dart';
 import 'pages/result/portrait_result_page.dart';
-import 'widgets/glass_button.dart';
 
 const _kOnboardingShownKey = 'portrait_onboarding_shown';
 
@@ -119,7 +119,16 @@ class _PortraitOnboarding extends StatelessWidget {
               ),
             ),
           SizedBox(height: getVerticalSize(14)),
-          GlassButton(text: 'portrait_intro_cta'.tr().toUpperCase(), onTap: onContinue),
+          CustomButton(
+            text: 'portrait_intro_cta'.tr().toUpperCase(),
+            width: double.infinity,
+            height: 47,
+            showBorder: false,
+            bgColor: ColorConstant.cyan700.withOpacity(0.55),
+            borderRadius: 14,
+            textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
+            onTap: onContinue,
+          ),
         ],
       ),
     );
