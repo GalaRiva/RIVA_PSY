@@ -22,90 +22,133 @@ import 'post_audio_checkin_sheet.dart';
 
 import '../../../../../widgets/go_to_new_tariff_widget.dart';
 
-class TabWidget extends StatelessWidget {
+class TabWidget extends StatefulWidget {
   final bool? isStandardCheck;
   final NegativeEmotionsModelTab tab;
   final K70Controller controller;
   final double height;
   final bool? enableScroll;
 
-   TabWidget(
+  const TabWidget(
       {Key? key,
       required this.tab,
       required this.controller,
       required this.height, this.enableScroll = true, this.isStandardCheck = true})
       : super(key: key);
 
+  @override
+  State<TabWidget> createState() => _TabWidgetState();
+}
+
+class _TabWidgetState extends State<TabWidget> {
   List<Widget> _audios = [];
   int? audioLength;
 
   @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  @override
+  void didUpdateWidget(covariant TabWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // `tab` is always one of K70Controller's own stable singleton fields
+    // (introductionModel/meditationModel/depressionModel/a NegativeTab from
+    // NegativeEmotionsModel) — this only fires if a call site ever swaps in
+    // a genuinely different tab for an existing Element, which doesn't
+    // happen today, but guards against silently keeping stale data if it
+    // ever does.
+    if (!identical(oldWidget.tab, widget.tab)) {
+      _audios = [];
+      audioLength = null;
+      _load();
+    }
+  }
+
+  // tab.audioAssets() re-runs a fresh Firestore query every single call
+  // (see IntroductionModel etc.) with no orderBy — nothing guarantees two
+  // separate calls return the docs in the same order. This used to call
+  // it four separate times per build (once per item here, once for
+  // audioLength, once for each card's title, once again inside playFun),
+  // so the duration list built in one pass could end up matched against
+  // a differently-ordered asset list from a later pass — a track's
+  // "00:00" (or another track's) duration landing on the wrong card.
+  // Fetching once and threading the same resolved list through
+  // everything below removes the reordering window entirely.
+  //
+  // Loaded once in initState (not on every build()) — this used to live
+  // directly in a StatelessWidget's build() with the result cached on a
+  // mutable instance field, which Flutter is free to discard and recreate
+  // on any ancestor rebuild (this call site sits under K70Controller's own
+  // GetBuilder, which rebuilds on every controller.update() — tab
+  // switches, tariff changes, anything). Each rebuild silently restarted
+  // the fetch from scratch, and if a new rebuild landed before the
+  // previous fetch resolved, its result was written onto an
+  // already-discarded widget instance and never shown — the tab could
+  // spin forever under any moderately active rebuild cadence. A
+  // StatefulWidget's State survives ancestor rebuilds, so this now runs
+  // exactly once per real mount.
+  Future<void> _load() async {
+    final assets = await widget.tab.audioAssets();
+    if (assets == null || !mounted) return;
+    final widgets = await _audiosFun(assets);
+    if (!mounted) return;
+    setState(() {
+      _audios = widgets;
+    });
+  }
+
+  Future<List<Duration?>> _durations(List<AudioCardModel> assets) async {
+    final List<Duration?> list = [];
+    for (var item in assets) {
+      // Known ahead of time (Audio.duration_ms, precomputed once and
+      // stored in Firestore) — skip the network probe entirely. This is
+      // the common case for every track already in the catalog; only a
+      // brand-new track added without a duration backfill falls through
+      // to the live probe below.
+      list.add(item.knownDuration ?? await AudioCacheManager.probeDuration(item.audioAsset));
+    }
+    return list;
+  }
+
+  Future<List<Widget>> _audiosFun(List<AudioCardModel> assets) async {
+    List<Widget> list = [];
+
+    List<Duration?> dur = await _durations(assets);
+    audioLength = assets.length;
+    for (int i = 0; i < audioLength!; i++) {
+      list.add(AudioCardWidget(
+        text: assets[i].title,
+        maxDuration: dur[i] ?? Duration(seconds: 0),
+        track: AppAudioTrack.forUrl(
+          assets[i].audioAsset,
+          title: assets[i].title,
+          nextUrl: i + 1 < assets.length ? assets[i + 1].audioAsset : null,
+        ),
+        onNaturalCompletion: widget.tab is MeditationModel
+            ? () {
+                if (!PostAudioCheckinGate.canShow) return;
+                PostAudioCheckinGate.markShown();
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) => PostAudioCheckinSheet(trackTitle: assets[i].title),
+                );
+              }
+            : null,
+      ));
+    }
+
+    return list;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // tab.audioAssets() re-runs a fresh Firestore query every single call
-    // (see IntroductionModel etc.) with no orderBy — nothing guarantees two
-    // separate calls return the docs in the same order. This used to call
-    // it four separate times per build (once per item here, once for
-    // audioLength, once for each card's title, once again inside playFun),
-    // so the duration list built in one pass could end up matched against
-    // a differently-ordered asset list from a later pass — a track's
-    // "00:00" (or another track's) duration landing on the wrong card.
-    // Fetching once and threading the same resolved list through
-    // everything below removes the reordering window entirely.
-    Future<List<Duration?>> _durations (List<AudioCardModel> assets) async {
-      final List<Duration?> list = [];
-      for (var item in assets) {
-        // Known ahead of time (Audio.duration_ms, precomputed once and
-        // stored in Firestore) — skip the network probe entirely. This is
-        // the common case for every track already in the catalog; only a
-        // brand-new track added without a duration backfill falls through
-        // to the live probe below.
-        list.add(item.knownDuration ?? await AudioCacheManager.probeDuration(item.audioAsset));
-      }
-      return list;
-    }
-    Future<List<Widget>> _audiosFun (List<AudioCardModel> assets) async {
-      List<Widget> list = [];
-
-      List<Duration?> dur = await _durations(assets);
-      audioLength = assets.length;
-       for (int i = 0; i < audioLength!; i++) {
-          list.add(AudioCardWidget(
-                text: assets[i].title,
-                maxDuration: dur[i] ?? Duration(seconds: 0),
-            track: AppAudioTrack.forUrl(
-              assets[i].audioAsset,
-              title: assets[i].title,
-              nextUrl: i + 1 < assets.length ? assets[i + 1].audioAsset : null,
-            ),
-            onNaturalCompletion: tab is MeditationModel
-                ? () {
-                    if (!PostAudioCheckinGate.canShow) return;
-                    PostAudioCheckinGate.markShown();
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => PostAudioCheckinSheet(trackTitle: assets[i].title),
-                    );
-                  }
-                : null,
-            ));
-
-        }
-
-      return list;
-    }
-
-    if(audioLength != _audios.length) {
-      tab.audioAssets().then((assets) {
-        if (assets != null)
-          _audiosFun(assets).then((value) {
-            _audios = value;
-            controller.update();
-          });
-      });
-
-    }
+    final tab = widget.tab;
+    final controller = widget.controller;
+    final isStandardCheck = widget.isStandardCheck;
 
     return GetBuilder(
       builder: (K70Controller _c) => Container(
@@ -128,12 +171,19 @@ class TabWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   (tab.titleImage() ?? '').startsWith('assets/')
-                                    ? Image.asset(
-                                        tab.titleImage()!,
-                                        height: getVerticalSize(100),
-                                        width: getHorizontalSize(60),
-                                        fit: BoxFit.contain,
-                                      )
+                                    ? ((tab.titleImage() ?? '').endsWith('.svg')
+                                        ? SvgPicture.asset(
+                                            tab.titleImage()!,
+                                            height: getVerticalSize(100),
+                                            width: getHorizontalSize(60),
+                                            fit: BoxFit.contain,
+                                          )
+                                        : Image.asset(
+                                            tab.titleImage()!,
+                                            height: getVerticalSize(100),
+                                            width: getHorizontalSize(60),
+                                            fit: BoxFit.contain,
+                                          ))
                                     : DataSourceService.dataSourceIsRemote() ? SvgPicture.network(
                                     tab.titleImage() ?? '',
                                     height: getVerticalSize(100),

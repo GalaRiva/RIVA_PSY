@@ -8,6 +8,7 @@ import 'models/tabs/negative_emotions_model.dart';
 import 'models/tabs/depression_model.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../core/services/datasource_service.dart';
 import '../../../../core/utils/size_utils.dart';
 
 class K70Controller extends GetxController {
@@ -17,9 +18,19 @@ class K70Controller extends GetxController {
   Future initNegativeEmotions () async {
     negativeEmotionsModel = NegativeEmotionsModel(this);
     await negativeEmotionsModel!.getTabBodies().then((value) => negativeEmotionsModel!.tabBodies = value);
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
-    depressionModel.imageTitle = appDocPath + '/' + 'tabs_images/depression.svg';
+    // Local-data-source mode pre-downloads tab icons into app documents —
+    // this override only makes sense there. In remote mode (the normal
+    // case) it left `imageTitle` pointing at a local filesystem path that
+    // tab_widget.dart then handed to SvgPicture.network (since remote mode
+    // always prefers the network branch there), which threw "No host
+    // specified in URI ..." on every build and kept the Депрессия tab's
+    // header broken. Leaving DepressionModel's own asset-bundled default
+    // (ImageConstant.depressionImage) in place for remote mode fixes that.
+    if (!DataSourceService.dataSourceIsRemote()) {
+      final Directory appDocDir = await getApplicationDocumentsDirectory();
+      final String appDocPath = appDocDir.path;
+      depressionModel.imageTitle = appDocPath + '/' + 'tabs_images/depression.svg';
+    }
   }
 
   Future init (TickerProvider ticker) async {
