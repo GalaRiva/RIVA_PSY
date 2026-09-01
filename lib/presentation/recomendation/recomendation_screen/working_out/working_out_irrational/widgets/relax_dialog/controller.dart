@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../../core/models/audio/audio.dart';
@@ -9,14 +8,6 @@ import '../../../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../../../core/services/datasource_service.dart';
 
 class RelaxDialogController extends GetxController {
-  int currentAudioIndex = 0;
-
-  AudioPlayer audioInstance = AudioPlayer(
-      audioLoadConfiguration: AudioLoadConfiguration(
-          androidLoadControl: AndroidLoadControl(
-
-          )));
-
   Future<List<AudioCardModel>> loadAudios() async {
     var collectionAudio =
         (await FirebaseFirestore.instance.collection('Audio').where(
@@ -48,23 +39,10 @@ class RelaxDialogController extends GetxController {
     final List<Duration?> list = [];
     for (var item in audios) {
       // Known ahead of time (Audio.duration_ms, precomputed once and
-      // stored in Firestore) — skip the network probe entirely.
-      if (item.knownDuration != null) {
-        list.add(item.knownDuration);
-        continue;
-      }
-      try {
-        if (DataSourceService.dataSourceIsRemote()) {
-          list.add(await audioInstance.setAudioSource(
-              await AudioCacheManager.sourceFor(item.audioAsset.replaceAll(' ', '%20')),
-              initialPosition: Duration.zero, preload: true));
-        } else
-          list.add(await audioInstance.setAudioSource(
-              AudioSource.file(item.audioAsset),
-              initialPosition: Duration.zero));
-      } catch (_) {
-        list.add(null);
-      }
+      // stored in Firestore) — skip the network probe entirely. Falls
+      // back to a one-off, disposable-player probe for the rare track
+      // without one.
+      list.add(item.knownDuration ?? await AudioCacheManager.probeDuration(item.audioAsset.replaceAll(' ', '%20')));
     }
 
     return list;

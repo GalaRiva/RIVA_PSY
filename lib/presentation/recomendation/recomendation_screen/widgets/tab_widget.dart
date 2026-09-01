@@ -1,32 +1,26 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:just_audio/just_audio.dart';
 
 import '../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../core/services/audio/app_audio_track.dart';
 import '../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../core/user_data/user.dart';
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
-import '../../../../../theme/app_decoration.dart';
 import '../../../../../theme/app_style.dart';
-import '../../../../../widgets/custom_image_view.dart';
 import '../../../../core/services/audio/post_audio_checkin_gate.dart';
 import '../../../../core/services/datasource_service.dart';
 import '../controller.dart';
-import '../models/audio_model.dart';
 import '../models/tabs/medetation_model.dart';
 import '../models/tabs/negative_emotion_tabs/negative_emotions_tab.dart';
 import '../../../../widgets/audio_card_widget.dart';
 import 'post_audio_checkin_sheet.dart';
-import 'package:audio_session/audio_session.dart';
 
 import '../../../../../widgets/go_to_new_tariff_widget.dart';
-import '../../../../core/services/negative_emotion_tabs.dart';
 
 class TabWidget extends StatelessWidget {
   final bool? isStandardCheck;
@@ -65,71 +59,24 @@ class TabWidget extends StatelessWidget {
         // the common case for every track already in the catalog; only a
         // brand-new track added without a duration backfill falls through
         // to the live probe below.
-        if (item.knownDuration != null) {
-          list.add(item.knownDuration);
-          continue;
-        }
-        try {
-          if (DataSourceService.dataSourceIsRemote()) {
-            list.add(await controller.audioInstance.setAudioSource(
-                await AudioCacheManager.sourceFor(item.audioAsset),
-                initialPosition: Duration.zero, preload: true));
-          } else
-            list.add(await controller.audioInstance.setAudioSource(
-                AudioSource.file(item.audioAsset),
-                initialPosition: Duration.zero));
-        } catch (_) {
-          try {
-            list.add(await controller.audioInstance.setAudioSource(
-                await AudioCacheManager.sourceFor(item.audioAsset),
-                initialPosition: Duration.zero));
-          } catch (_) {
-            print('error load - ${item.audioAsset}');
-            list.add(Duration.zero);
-          }
-        }
+        list.add(item.knownDuration ?? await AudioCacheManager.probeDuration(item.audioAsset));
       }
       return list;
     }
     Future<List<Widget>> _audiosFun (List<AudioCardModel> assets) async {
       List<Widget> list = [];
 
-      controller.audioInstance = AudioPlayer();
-      final session = await AudioSession.instance;
-      await session.configure(AudioSessionConfiguration.speech());
       List<Duration?> dur = await _durations(assets);
       audioLength = assets.length;
        for (int i = 0; i < audioLength!; i++) {
           list.add(AudioCardWidget(
-            index: i,
                 text: assets[i].title,
-                onChange: (Duration duration) {
-                  controller.audioInstance.seek(duration);
-                  controller.update();
-                },
                 maxDuration: dur[i] ?? Duration(seconds: 0),
-            playFun: (val) async {
-
-              if(DataSourceService.dataSourceIsRemote()) {
-                await controller.audioInstance.setAudioSource(
-                    await AudioCacheManager.sourceFor(assets[i].audioAsset),
-                    initialPosition: val);
-              } else
-                await controller.audioInstance.setAudioSource(AudioSource.file(assets[i].audioAsset), initialPosition: val);
-
-              await controller.audioInstance.play();
-
-              // Warm the next track's cache in the background while this
-              // one plays — matches how Spotify preloads the next queued
-              // song, so advancing to it doesn't hit a network wait.
-              if (DataSourceService.dataSourceIsRemote() && i + 1 < assets.length) {
-                unawaited(AudioCacheManager.prefetch(assets[i + 1].audioAsset));
-              }
-            },
-            stopFun: () async {
-              await controller.audioInstance.pause();
-            },
-            loadFun: () async {}, audioInstance: controller.audioInstance, currentAudioIndex: () => controller.currentAudioIndex ?? 0, changeCurrentAudioIndex: (int index) { controller.currentAudioIndex = index; },
+            track: AppAudioTrack.forUrl(
+              assets[i].audioAsset,
+              title: assets[i].title,
+              nextUrl: i + 1 < assets.length ? assets[i + 1].audioAsset : null,
+            ),
             onNaturalCompletion: tab is MeditationModel
                 ? () {
                     if (!PostAudioCheckinGate.canShow) return;

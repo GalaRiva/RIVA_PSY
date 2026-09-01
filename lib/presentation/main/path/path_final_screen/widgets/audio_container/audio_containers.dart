@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 
 import '../../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../../core/services/audio/audio_cache_manager.dart';
-import '../../../../../../core/services/datasource_service.dart';
 import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/size_utils.dart';
 import 'audio_container_widget.dart';
-import '../exercise_content/controller.dart';
 
 class AudioContainers extends StatefulWidget {
   final List<AudioCardModel> audios;
   final int startIndex;
-  final ExerciseContentController controller;
-  const AudioContainers({Key? key, required this.audios, this.startIndex = 0, required this.controller}) : super(key: key);
+  const AudioContainers({Key? key, required this.audios, this.startIndex = 0}) : super(key: key);
 
   @override
   State<AudioContainers> createState() => _AudioContainersState();
@@ -33,23 +29,10 @@ class _AudioContainersState extends State<AudioContainers> {
     final List<Duration?> list = [];
     for (var item in widget.audios) {
       // Known ahead of time (Audio.duration_ms, precomputed once and
-      // stored in Firestore) — skip the network probe entirely.
-      if (item.knownDuration != null) {
-        list.add(item.knownDuration);
-        continue;
-      }
-      try {
-        if (DataSourceService.dataSourceIsRemote()) {
-          list.add(await widget.controller.audioInstance.setAudioSource(
-              await AudioCacheManager.sourceFor(item.audioAsset),
-              initialPosition: Duration.zero, preload: true));
-        } else
-          list.add(await widget.controller.audioInstance.setAudioSource(
-              AudioSource.file(item.audioAsset),
-              initialPosition: Duration.zero));
-      } catch (_) {
-        list.add(null);
-      }
+      // stored in Firestore) — skip the network probe entirely. Falls
+      // back to a one-off, disposable-player probe (not the shared
+      // AppAudioService) for the rare track without one.
+      list.add(item.knownDuration ?? await AudioCacheManager.probeDuration(item.audioAsset));
     }
 
     return list;
@@ -58,7 +41,6 @@ class _AudioContainersState extends State<AudioContainers> {
   @override
   Widget build(BuildContext context) {
     final audios = widget.audios;
-    final controller = widget.controller;
 
     // Must match AudioContainerWidget's per-row height (103) or later rows
     // in this Wrap get clipped.
@@ -80,7 +62,10 @@ class _AudioContainersState extends State<AudioContainers> {
           return Padding(
             padding: getPadding( left: 10, right: 10),
             child: Wrap(
-              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(audioCardModel: audios[index], index: widget.startIndex + index, audioPlayer: controller.audioInstance, maxDuration: (snapshot.data)?[index] ?? Duration.zero, currentAudioIndex: () => controller.currentAudioIndex, update: () => controller.update(), changeAudioIndex: (int index) { controller.currentAudioIndex = index; },)),
+              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(
+                audioCardModel: audios[index],
+                maxDuration: (snapshot.data)?[index] ?? Duration.zero,
+              )),
             ),
           );
         },

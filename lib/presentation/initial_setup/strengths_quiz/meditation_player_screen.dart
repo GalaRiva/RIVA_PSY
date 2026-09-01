@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/core/services/audio/app_audio_service.dart';
+import 'package:riva_psy/core/services/audio/app_audio_track.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/audio/audio.dart';
-import '../../../core/services/audio/audio_cache_manager.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/glass_card.dart';
 
 // Standalone single-track player for the quiz bridge's "Конгруэнтность
-// сердца" recommendation — deliberately not built on K70Controller/
-// AudioCardWidget, which assume a whole tab's worth of tracks and a shared
-// list-index state this one-off screen doesn't have.
+// сердца" recommendation — plays through the shared AppAudioService like
+// every other screen now, instead of owning its own AudioPlayer.
 class MeditationPlayerScreen extends StatefulWidget {
   final void Function(BuildContext context) onContinue;
 
@@ -24,13 +23,9 @@ class MeditationPlayerScreen extends StatefulWidget {
 }
 
 class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
-  final _player = AudioPlayer();
   bool _loading = true;
   bool _failed = false;
-  String _title = '';
-  Duration _duration = Duration.zero;
-  Duration _position = Duration.zero;
-  bool _playing = false;
+  AppAudioTrack? _track;
 
   @override
   void initState() {
@@ -52,32 +47,19 @@ class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
       final fileName = audio.localizedFileName(langCode);
       final source =
           'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/$fileName.${audio.format}';
-      final duration = await _player.setAudioSource(await AudioCacheManager.sourceFor(source));
-      _player.positionStream.listen((p) {
-        if (mounted) setState(() => _position = p);
-      });
-      _player.playerStateStream.listen((s) {
-        if (mounted) setState(() => _playing = s.playing);
-      });
+      final track = AppAudioTrack.forUrl(source, title: audio.localizedName(langCode));
       if (!mounted) return;
       setState(() {
-        _title = audio.localizedName(langCode);
-        _duration = duration ?? Duration.zero;
+        _track = track;
         _loading = false;
       });
-      _player.play();
+      await AppAudioService.instance.play(track);
     } catch (e) {
       if (mounted) setState(() {
         _loading = false;
         _failed = true;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
   }
 
   String _fmt(Duration d) {
@@ -146,61 +128,76 @@ class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          _loading
-                              ? '…'
-                              : _failed
-                                  ? 'network_error_try_later'.tr()
-                                  : _title,
-                          textAlign: TextAlign.center,
-                          style: AppStyle.txtH1.copyWith(fontSize: getFontSize(19)),
+                        ValueListenableBuilder<AppAudioState>(
+                          valueListenable: AppAudioService.instance.state,
+                          builder: (context, audioState, _) {
+                            final track = _track;
+                            final isMine = track != null && audioState.isCurrent(track.id);
+                            final position = isMine ? audioState.position : Duration.zero;
+                            final duration = isMine ? audioState.duration : Duration.zero;
+                            final playing = isMine && audioState.playing;
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  _loading
+                                      ? '…'
+                                      : _failed
+                                          ? 'network_error_try_later'.tr()
+                                          : track?.title ?? '',
+                                  textAlign: TextAlign.center,
+                                  style: AppStyle.txtH1.copyWith(fontSize: getFontSize(19)),
+                                ),
+                                if (!_loading && !_failed) ...[
+                                  SizedBox(height: getVerticalSize(18)),
+                                  SliderTheme(
+                                    data: SliderTheme.of(context).copyWith(
+                                      trackHeight: 3,
+                                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+                                    ),
+                                    child: Slider(
+                                      value: position.inSeconds
+                                          .toDouble()
+                                          .clamp(0.0, duration.inSeconds.toDouble()),
+                                      min: 0,
+                                      max: duration.inSeconds.toDouble() > 0
+                                          ? duration.inSeconds.toDouble()
+                                          : 1,
+                                      activeColor: ColorConstant.cyan700,
+                                      inactiveColor: ColorConstant.cyan700.withOpacity(0.2),
+                                      onChanged: (v) => AppAudioService.instance.seek(Duration(seconds: v.toInt())),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(_fmt(position), style: AppStyle.txtSFProDisplayRegular11Gray800),
+                                      Text(_fmt(duration), style: AppStyle.txtSFProDisplayRegular11Gray800),
+                                    ],
+                                  ),
+                                  SizedBox(height: getVerticalSize(10)),
+                                  GestureDetector(
+                                    onTap: () => AppAudioService.instance.togglePlayPause(),
+                                    child: Container(
+                                      width: getSize(56),
+                                      height: getSize(56),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: ColorConstant.cyan700,
+                                      ),
+                                      child: Icon(
+                                        playing ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                                        color: Colors.white,
+                                        size: getSize(30),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            );
+                          },
                         ),
-                        if (!_loading && !_failed) ...[
-                          SizedBox(height: getVerticalSize(18)),
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              trackHeight: 3,
-                              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
-                            ),
-                            child: Slider(
-                              value: _position.inSeconds
-                                  .toDouble()
-                                  .clamp(0.0, _duration.inSeconds.toDouble()),
-                              min: 0,
-                              max: _duration.inSeconds.toDouble() > 0
-                                  ? _duration.inSeconds.toDouble()
-                                  : 1,
-                              activeColor: ColorConstant.cyan700,
-                              inactiveColor: ColorConstant.cyan700.withOpacity(0.2),
-                              onChanged: (v) => _player.seek(Duration(seconds: v.toInt())),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(_fmt(_position), style: AppStyle.txtSFProDisplayRegular11Gray800),
-                              Text(_fmt(_duration), style: AppStyle.txtSFProDisplayRegular11Gray800),
-                            ],
-                          ),
-                          SizedBox(height: getVerticalSize(10)),
-                          GestureDetector(
-                            onTap: () => _playing ? _player.pause() : _player.play(),
-                            child: Container(
-                              width: getSize(56),
-                              height: getSize(56),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorConstant.cyan700,
-                              ),
-                              child: Icon(
-                                _playing ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                                color: Colors.white,
-                                size: getSize(30),
-                              ),
-                            ),
-                          ),
-                        ],
                         SizedBox(height: getVerticalSize(18)),
                         CustomButton(
                           height: getVerticalSize(48),

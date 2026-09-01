@@ -6,6 +6,8 @@ import 'package:crypto/crypto.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../datasource_service.dart';
+
 // Local disk cache for R2-streamed audio — first play streams the file
 // while simultaneously writing it to disk (just_audio's own
 // LockCachingAudioSource); every later play of the same URL is served
@@ -84,6 +86,27 @@ class AudioCacheManager {
     } catch (_) {
       // Best-effort only — a failed prefetch just means the next track
       // loads over the network like it always did.
+    }
+  }
+
+  /// Reads a track's duration without playing it and without touching
+  /// AppAudioService's shared "now playing" state — a short-lived,
+  /// immediately-disposed player just for this. Only needed as a fallback
+  /// for a track with no precomputed `Audio.duration_ms`/`knownDuration`;
+  /// most of the catalog already has that, so this rarely actually hits
+  /// the network in practice. Still goes through `sourceFor` so a real
+  /// play of the same track right after doesn't re-download it.
+  static Future<Duration?> probeDuration(String urlOrPath) async {
+    final player = AudioPlayer();
+    try {
+      final source = DataSourceService.dataSourceIsRemote()
+          ? await sourceFor(urlOrPath)
+          : AudioSource.file(urlOrPath);
+      return await player.setAudioSource(source, preload: true);
+    } catch (_) {
+      return null;
+    } finally {
+      unawaited(player.dispose());
     }
   }
 

@@ -13,15 +13,24 @@ class AppAudioTrack {
   final String? coverAsset;
   final String? coverUrl;
 
+  // Optional — when a screen knows what comes after this track in its own
+  // list, AppAudioService.play() warms this URL's disk cache in the
+  // background once this track starts, so advancing to it doesn't hit a
+  // network wait (same idea as Spotify preloading the next queued song).
+  final String? nextUrl;
+
   const AppAudioTrack({
     required this.id,
     required this.url,
     required this.title,
     this.coverAsset,
     this.coverUrl,
+    this.nextUrl,
   });
 
-  factory AppAudioTrack.forUrl(String url, {required String title, String? coverAsset, String? coverUrl}) {
-    return AppAudioTrack(id: url, url: url, title: title, coverAsset: coverAsset, coverUrl: coverUrl);
+  factory AppAudioTrack.forUrl(String url,
+      {required String title, String? coverAsset, String? coverUrl, String? nextUrl}) {
+    return AppAudioTrack(
+        id: url, url: url, title: title, coverAsset: coverAsset, coverUrl: coverUrl, nextUrl: nextUrl);
   }
 }

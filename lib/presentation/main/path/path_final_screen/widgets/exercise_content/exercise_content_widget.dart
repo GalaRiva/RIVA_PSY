@@ -135,7 +135,6 @@ class ExerciseContentWidget extends StatelessWidget {
                   padding: getPadding(top: 12, bottom: 20),
                   child: HeroAudioCarousel(
                     audios: controller.mainAudios,
-                    controller: controller,
                     accentColor: accentColor,
                   ),
                 ),
@@ -204,7 +203,7 @@ class ExerciseContentWidget extends StatelessWidget {
                   ),
                   Padding(
                     padding: getPadding(top: 12),
-                    child: AudioContainers(audios: controller.additionalAudios, controller: controller, startIndex: controller.mainAudios.length,),
+                    child: AudioContainers(audios: controller.additionalAudios, startIndex: controller.mainAudios.length,),
                   ),
                 ],
                     ),

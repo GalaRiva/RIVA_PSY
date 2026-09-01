@@ -1,16 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/working_out_irrational/widgets/relax_dialog/controller.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../../../../../../../core/models/audio/audio.dart';
 import '../../../../../../../core/models/audio/audio_card_model.dart';
-import '../../../../../../../core/services/datasource_service.dart';
 import '../../../../../../main/path/path_final_screen/widgets/audio_container/audio_container_widget.dart';
 import '../../../../../../../theme/app_icons.dart';
 
@@ -92,30 +87,23 @@ class RelaxDialog extends StatelessWidget {
                                           child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
                                     );
                                   }
-                                  return GetBuilder(
-                                    builder: (RelaxDialogController _c) => Container(
-                                      height: getVerticalSize(80 * audios.length.toDouble()),
-                                      width: size.width - 60,
-                                      color:  ColorConstant.grayLight,
-                                      child:  Wrap(
-                                        children: List<Widget>.generate(
-                                          audios.length, (index) =>
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                                              child: FittedBox(
-                                                  fit: BoxFit.scaleDown ,
-                                                  child:AudioContainerWidget(
-                                                    audioCardModel: audios[index],
-                                                    index: index,
-                                                    audioPlayer: controller.audioInstance,
-                                                    maxDuration: (snapshot.data)?[index] ??
-                                                        Duration.zero,
-                                                    currentAudioIndex: () => controller.currentAudioIndex,
-                                                    update: (){
-                                                      controller.update();
-                                                    }, changeAudioIndex: (int index) {controller.currentAudioIndex = index;  },)),
-                                            ),
-                                        ),
+                                  return Container(
+                                    height: getVerticalSize(80 * audios.length.toDouble()),
+                                    width: size.width - 60,
+                                    color:  ColorConstant.grayLight,
+                                    child:  Wrap(
+                                      children: List<Widget>.generate(
+                                        audios.length, (index) =>
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                                            child: FittedBox(
+                                                fit: BoxFit.scaleDown ,
+                                                child:AudioContainerWidget(
+                                                  audioCardModel: audios[index],
+                                                  maxDuration: (snapshot.data)?[index] ??
+                                                      Duration.zero,
+                                                )),
+                                          ),
                                       ),
                                     ),
                                   );

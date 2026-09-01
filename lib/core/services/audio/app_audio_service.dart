@@ -4,6 +4,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 
+import '../datasource_service.dart';
 import 'app_audio_track.dart';
 import 'audio_cache_manager.dart';
 
@@ -63,6 +64,13 @@ class AppAudioService {
 
   final ValueNotifier<AppAudioState> state = ValueNotifier(const AppAudioState());
 
+  // Fires the id of whichever track just played through to its natural
+  // end — a separate channel from `state` so a widget can react to "my
+  // track finished" without re-deriving it from a playing/position diff
+  // (e.g. the post-audio check-in prompt some screens show once).
+  final _completedController = StreamController<String>.broadcast();
+  Stream<String> get onCompleted => _completedController.stream;
+
   AudioPlayer get _p {
     final existing = _player;
     if (existing != null) return existing;
@@ -82,9 +90,11 @@ class AppAudioService {
     player.playerStateStream.listen((playerState) {
       state.value = state.value.copyWith(playing: playerState.playing);
       if (playerState.processingState == ProcessingState.completed) {
+        final completedId = state.value.track?.id;
         player.seek(Duration.zero);
         player.pause();
         state.value = state.value.copyWith(playing: false, position: Duration.zero);
+        if (completedId != null) _completedController.add(completedId);
       }
     });
     player.positionStream.listen((pos) {
@@ -107,9 +117,14 @@ class AppAudioService {
       return;
     }
     state.value = AppAudioState(track: track, playing: false, position: initialPosition ?? Duration.zero);
-    final source = await AudioCacheManager.sourceFor(track.url);
+    final source = DataSourceService.dataSourceIsRemote()
+        ? await AudioCacheManager.sourceFor(track.url)
+        : AudioSource.file(track.url);
     await player.setAudioSource(source, initialPosition: initialPosition ?? Duration.zero);
     await player.play();
+    if (track.nextUrl != null && DataSourceService.dataSourceIsRemote()) {
+      unawaited(AudioCacheManager.prefetch(track.nextUrl!));
+    }
   }
 
   Future<void> pause() => _p.pause();

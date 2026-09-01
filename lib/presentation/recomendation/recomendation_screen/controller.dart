@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'models/tabs/introduction_model.dart';
 import 'models/tabs/medetation_model.dart';
 import 'models/tabs/negative_emotions_model.dart';
@@ -12,20 +11,6 @@ import 'package:path_provider/path_provider.dart';
 import '../../../../core/utils/size_utils.dart';
 
 class K70Controller extends GetxController {
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    audioInstance.dispose();
-  }
-
-  @override
-  // TODO: implement onDelete
-  InternalFinalCallback<void> get onDelete {
-    audioInstance.dispose();
-    return super.onDelete;
-  }
 
   NegativeEmotionsModel? negativeEmotionsModel;
 
@@ -49,17 +34,6 @@ class K70Controller extends GetxController {
   final meditationModel = MeditationModel();
   final depressionModel = DepressionModel();
 
-
-  late AudioPlayer audioInstance = AudioPlayer(
-    audioLoadConfiguration: AudioLoadConfiguration(
-      androidLoadControl: AndroidLoadControl(
-        maxBufferDuration: Duration(seconds: 300),
-        bufferForPlaybackDuration: Duration(seconds: 5),
-        bufferForPlaybackAfterRebufferDuration: Duration(seconds: 10),
-      )
-    )
-  );
-
   TabController? tabController;
   TabController? tabControllerSecond;
 
@@ -73,7 +47,6 @@ class K70Controller extends GetxController {
   int? workingOutInitialTab;
 
   bool loading = true;
-  int? currentAudioIndex;
 
   // Set by a nested module (Guided Journals/Проекция Я/etc.) when the user
   // leaves that module's own library/browsing screen and enters a

@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../core/models/audio/audio.dart';
@@ -14,21 +12,6 @@ import 'package:path_provider/path_provider.dart';
 
 class ExerciseContentController extends GetxController {
   ExerciseContentController();
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    audioInstance.dispose();
-  }
-
-  int currentAudioIndex = 0;
-
-  AudioPlayer audioInstance = AudioPlayer(
-      audioLoadConfiguration: AudioLoadConfiguration(
-          androidLoadControl: AndroidLoadControl(
-
-  )));
 
   List<AudioCardModel> mainAudios = [];
   EventModel? mainEmotion;
@@ -124,15 +107,6 @@ class ExerciseContentController extends GetxController {
   }
 
   Future getAudios() async {
-    audioInstance = AudioPlayer(
-
-        audioLoadConfiguration: AudioLoadConfiguration(
-            androidLoadControl: AndroidLoadControl(
-              maxBufferDuration: Duration(seconds: 300),
-              bufferForPlaybackDuration: Duration(seconds: 5),
-              bufferForPlaybackAfterRebufferDuration: Duration(seconds: 10),
-            )
-        ));
     mainAudios = [];
     final langCode = await _currentLangCode();
     var collectionAudio =

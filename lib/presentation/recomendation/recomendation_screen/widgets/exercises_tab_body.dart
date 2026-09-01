@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/widgets/tab_widget.dart';
 
+import '../../../../core/services/audio/app_audio_service.dart';
 import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/size_utils.dart';
-import '../../../../theme/app_decoration.dart';
 import '../controller.dart';
 
 class ExercisesTabBody extends StatelessWidget {
@@ -30,9 +30,8 @@ class ExercisesTabBody extends StatelessWidget {
                   controller:  controller.tabController,
                   isScrollable: true,
                   onTap: (val) async {
-                    controller.currentAudioIndex = null;
                     controller.currentTab = val;
-                    if(controller.audioInstance.playing)await controller.audioInstance.pause();
+                    await AppAudioService.instance.pause();
                     controller.update();
                   },
                   indicatorColor: ColorConstant.fromHex('#1499A1'),
@@ -100,10 +99,9 @@ class ExercisesTabBody extends StatelessWidget {
                                   controller:  controller.tabControllerSecond,
                                   isScrollable: true,
                                   onTap: (val) async {
-                                    controller.currentAudioIndex = null;
                                     controller.currentTabSecond =
                                         val;
-                                    if(controller.audioInstance.playing) await controller.audioInstance.pause();
+                                    await AppAudioService.instance.pause();
 
                                     controller.update();
                                   },
