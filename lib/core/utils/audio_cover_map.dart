@@ -57,6 +57,9 @@ String? audioCoverAsset(String? ruTitle) {
 // — same lookup pattern as audioCoverAssets above.
 final Map<String, WidgetBuilder> animatedAudioCovers = {
   'Сердце': (context) => const HeartCongruenceCover(),
+  // Actual Firestore Audio.name for the meditation-tab track (confirmed via
+  // a live query) — 'Сердце' above is kept in case another doc uses it.
+  'Конгруэнтность сердца': (context) => const HeartCongruenceCover(),
 };
 
 WidgetBuilder? animatedAudioCoverBuilder(String? ruTitle) {

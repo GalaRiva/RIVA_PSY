@@ -7,6 +7,7 @@ import 'package:riva_psy/core/services/audio/app_audio_track.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/audio/audio.dart';
+import '../../../core/utils/audio_cover_map.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/glass_card.dart';
 
@@ -47,7 +48,12 @@ class _MeditationPlayerScreenState extends State<MeditationPlayerScreen> {
       final fileName = audio.localizedFileName(langCode);
       final source =
           'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/$fileName.${audio.format}';
-      final track = AppAudioTrack.forUrl(source, title: audio.localizedName(langCode));
+      final track = AppAudioTrack.forUrl(
+        source,
+        title: audio.localizedName(langCode),
+        coverAsset: audioCoverAsset(audio.name),
+        coverBuilder: animatedAudioCoverBuilder(audio.name),
+      );
       if (!mounted) return;
       setState(() {
         _track = track;

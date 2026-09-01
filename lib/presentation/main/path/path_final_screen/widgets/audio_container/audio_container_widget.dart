@@ -3,6 +3,7 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/services/audio/app_audio_track.dart';
 
 import '../../../../../../core/models/audio/audio_card_model.dart';
+import '../../../../../../core/utils/audio_cover_map.dart';
 import '../../../../../../core/utils/size_utils.dart';
 import '../../../../../../widgets/audio_card_widget.dart';
 
@@ -27,7 +28,11 @@ class AudioContainerWidget extends StatelessWidget {
       child: Center(
         child: AudioCardWidget(
           text: audioCardModel.title,
-          track: AppAudioTrack.forUrl(audioCardModel.audioAsset, title: audioCardModel.title),
+          track: AppAudioTrack.forUrl(
+            audioCardModel.audioAsset,
+            title: audioCardModel.title,
+            coverAsset: audioCoverAsset(audioCardModel.ruTitle),
+          ),
           maxDuration: maxDuration,
         ),
       ),

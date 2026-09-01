@@ -9,6 +9,7 @@ import '../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../core/services/audio/app_audio_track.dart';
 import '../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../core/user_data/user.dart';
+import '../../../../../core/utils/audio_cover_map.dart';
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
@@ -124,6 +125,8 @@ class _TabWidgetState extends State<TabWidget> {
         track: AppAudioTrack.forUrl(
           assets[i].audioAsset,
           title: assets[i].title,
+          coverAsset: audioCoverAsset(assets[i].ruTitle),
+          coverBuilder: animatedAudioCoverBuilder(assets[i].ruTitle),
           nextUrl: i + 1 < assets.length ? assets[i + 1].audioAsset : null,
         ),
         onNaturalCompletion: widget.tab is MeditationModel

@@ -16,6 +16,8 @@ import 'core/services/insights/insight_workmanager.dart';
 import 'core/services/notifications/awesome_notification_service.dart';
 import 'core/utils/color_constant.dart';
 import 'theme/app_theme.dart';
+import 'widgets/fullscreen_audio_player_screen.dart';
+import 'widgets/mini_player_bar.dart';
 
 void main() async {
 
@@ -95,6 +97,7 @@ class MyApp extends StatelessWidget {
     },
       child: MaterialApp(
         navigatorKey: navigatorKey,
+        navigatorObservers: [FullscreenAudioPlayerRouteObserver()],
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
@@ -119,7 +122,15 @@ class MyApp extends StatelessWidget {
         builder: (context, child) => MediaQuery.withClampedTextScaling(
           minScaleFactor: 0.9,
           maxScaleFactor: 1.2,
-          child: child!,
+          // MiniPlayerBar mounted once here (not per-screen) so it floats
+          // above whatever route is active app-wide, driven purely by
+          // AppAudioService.state — see its own doc comment for why.
+          child: Stack(
+            children: [
+              child!,
+              const MiniPlayerBar(),
+            ],
+          ),
         ),
       ),
     );

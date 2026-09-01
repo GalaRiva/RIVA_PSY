@@ -36,9 +36,9 @@ class IntroductionModel extends NegativeEmotionsModelTab {
         if(audio.tab == 'introduction') {
           final duration = audio.localizedDuration(langCode);
           if(audio.name == 'Введение'){
-            audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
+            audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
           } else
-            audios.add(AudioCardModel(audio.localizedName(langCode), filePath, knownDuration: duration));
+            audios.add(AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
         }
       } catch (_) {
         print (_);

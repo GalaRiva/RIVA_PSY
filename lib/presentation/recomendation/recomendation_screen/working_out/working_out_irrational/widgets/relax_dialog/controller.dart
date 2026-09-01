@@ -30,6 +30,7 @@ class RelaxDialogController extends GetxController {
               e.format
               : '${(await getApplicationDocumentsDirectory()).path}/${e
               .folder}/${e.fileName}.${e.format}',
+          ruTitle: e.name,
           knownDuration: e.localizedDuration('ru')));
     }
     return list;

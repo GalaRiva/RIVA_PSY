@@ -31,7 +31,7 @@ class MeditationModel extends NegativeEmotionsModelTab{
         }
         if(audio.tab == 'meditation')
           audios.add(AudioCardModel(audio.localizedName(langCode), filePath,
-              knownDuration: audio.localizedDuration(langCode)));
+              ruTitle: audio.name, knownDuration: audio.localizedDuration(langCode)));
       }catch (_) {
         print (_);
 

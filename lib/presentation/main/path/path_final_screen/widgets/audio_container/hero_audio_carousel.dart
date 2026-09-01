@@ -83,6 +83,7 @@ class _HeroAudioCarouselState extends State<HeroAudioCarousel> {
       Navigator.push(
         context,
         MaterialPageRoute(
+          settings: const RouteSettings(name: FullscreenAudioPlayerScreen.routeName),
           builder: (_) => FullscreenAudioPlayerScreen(
             title: widget.audios[_focusedIndex].title,
             cover: _cover(_focusedIndex),

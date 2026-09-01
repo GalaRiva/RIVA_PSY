@@ -22,8 +22,42 @@ class FullscreenAudioPlayerScreen extends StatefulWidget {
     required this.accentColor,
   }) : super(key: key);
 
+  // Read by MiniPlayerBar (mounted globally in MaterialApp.builder) so it
+  // hides itself while this screen is on top — otherwise the mini bar would
+  // float redundantly over the player it's a shortcut to.
+  static final ValueNotifier<bool> isOpen = ValueNotifier(false);
+
+  // Both push call sites (MiniPlayerBar, HeroAudioCarousel) tag their
+  // MaterialPageRoute with this name so RouteObserver below can recognize
+  // it — the route-level signal is the source of truth; the State's own
+  // initState/dispose (below) set the same flag as a belt-and-suspenders
+  // duplicate, in case a future call site pushes this screen without going
+  // through the observer path.
+  static const routeName = 'fullscreen-audio-player';
+
   @override
   State<FullscreenAudioPlayerScreen> createState() => _FullscreenAudioPlayerScreenState();
+}
+
+// Registered on MaterialApp(navigatorObservers: [...]) in main.dart — tracks
+// from OUTSIDE the routed subtree whether this screen is the one currently
+// pushed, independent of MiniPlayerBar's own position in the tree (it's a
+// Stack sibling of the Navigator, not a descendant of it).
+class FullscreenAudioPlayerRouteObserver extends NavigatorObserver {
+  void _setOpen(Route route, bool value) {
+    if (route.settings.name == FullscreenAudioPlayerScreen.routeName) {
+      FullscreenAudioPlayerScreen.isOpen.value = value;
+    }
+  }
+
+  @override
+  void didPush(Route route, Route? previousRoute) => _setOpen(route, true);
+
+  @override
+  void didPop(Route route, Route? previousRoute) => _setOpen(route, false);
+
+  @override
+  void didRemove(Route route, Route? previousRoute) => _setOpen(route, false);
 }
 
 class _FullscreenAudioPlayerScreenState extends State<FullscreenAudioPlayerScreen> {
@@ -32,6 +66,7 @@ class _FullscreenAudioPlayerScreenState extends State<FullscreenAudioPlayerScree
   @override
   void initState() {
     super.initState();
+    FullscreenAudioPlayerScreen.isOpen.value = true;
     // Whatever track was current when this screen opened finishing —
     // close back out to the compact control row, matching the old
     // behavior when this owned its own player/completion listener.
@@ -43,6 +78,7 @@ class _FullscreenAudioPlayerScreenState extends State<FullscreenAudioPlayerScree
 
   @override
   void dispose() {
+    FullscreenAudioPlayerScreen.isOpen.value = false;
     _completedSub?.cancel();
     super.dispose();
   }
