@@ -88,7 +88,7 @@ class AudioTrackSheet extends StatelessWidget {
               }
               final url = snapshot.data;
               if (url == null) return const SizedBox.shrink();
-              return GuidedJournalAudioPlayer(url: url);
+              return GuidedJournalAudioPlayer(url: url, title: title);
             },
           ),
           SizedBox(height: getVerticalSize(12)),

@@ -2,45 +2,27 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:riva_psy/core/app_export.dart';
-import 'package:riva_psy/core/services/audio/audio_cache_manager.dart';
+import 'package:riva_psy/core/services/audio/app_audio_service.dart';
+import 'package:riva_psy/core/services/audio/app_audio_track.dart';
 
 // Deliberately minimal — a single optional track on the insight screen,
 // not a scrubbable list like AudioCardWidget (which is built around a
 // shared player instance + index bookkeeping for a whole tab's track
 // list). One play/pause button and a progress bar is all this needs.
-class GuidedJournalAudioPlayer extends StatefulWidget {
+//
+// Plays through the app-wide AppAudioService instead of owning its own
+// player — starting this track stops whatever else was playing anywhere
+// else in the app, and vice versa (tapping play elsewhere while this is
+// playing pauses this one). Trades away the old eager preload-on-open
+// (which let the total duration show before the user tapped play) for
+// that shared-state correctness — the duration now only appears once
+// playback actually starts.
+class GuidedJournalAudioPlayer extends StatelessWidget {
   final String url;
+  final String? title;
 
-  const GuidedJournalAudioPlayer({Key? key, required this.url})
-      : super(key: key);
-
-  @override
-  State<GuidedJournalAudioPlayer> createState() =>
-      _GuidedJournalAudioPlayerState();
-}
-
-class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
-  final _player = AudioPlayer();
-  bool _loadFailed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    AudioCacheManager.sourceFor(widget.url)
-        .then((source) => _player.setAudioSource(source))
-        .catchError((_) {
-      if (mounted) setState(() => _loadFailed = true);
-      return null;
-    });
-  }
-
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
-  }
+  const GuidedJournalAudioPlayer({Key? key, required this.url, this.title}) : super(key: key);
 
   String _format(Duration d) {
     final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
@@ -50,8 +32,7 @@ class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loadFailed) return const SizedBox.shrink();
-
+    final track = AppAudioTrack.forUrl(url, title: title ?? 'guided_journal_audio_title'.tr());
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: BackdropFilter(
@@ -62,41 +43,40 @@ class _GuidedJournalAudioPlayerState extends State<GuidedJournalAudioPlayer> {
             color: Colors.white.withOpacity(0.78),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: StreamBuilder<PlayerState>(
-            stream: _player.playerStateStream,
-            builder: (context, snapshot) {
-              final playing = snapshot.data?.playing ?? false;
+          child: ValueListenableBuilder<AppAudioState>(
+            valueListenable: AppAudioService.instance.state,
+            builder: (context, audioState, _) {
+              final isMine = audioState.isCurrent(track.id);
+              final playing = isMine && audioState.playing;
+              final position = isMine ? audioState.position : Duration.zero;
+              final total = isMine ? audioState.duration : Duration.zero;
               return Row(
                 children: [
                   IconButton(
                     icon: Icon(
-                      playing
-                          ? Icons.pause_circle_filled_rounded
-                          : Icons.play_circle_fill_rounded,
+                      playing ? Icons.pause_circle_filled_rounded : Icons.play_circle_fill_rounded,
                       color: ColorConstant.cyan700,
                       size: 40,
                     ),
-                    onPressed: () => playing ? _player.pause() : _player.play(),
+                    onPressed: () {
+                      final service = AppAudioService.instance;
+                      if (isMine) {
+                        service.togglePlayPause();
+                      } else {
+                        service.play(track);
+                      }
+                    },
                   ),
                   SizedBox(width: getHorizontalSize(8)),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('guided_journal_audio_title'.tr(),
-                            style: AppStyle.txtSFProDisplayLight14Gray800),
+                        Text('guided_journal_audio_title'.tr(), style: AppStyle.txtSFProDisplayLight14Gray800),
                         SizedBox(height: 4),
-                        StreamBuilder<Duration>(
-                          stream: _player.positionStream,
-                          builder: (context, posSnapshot) {
-                            final position = posSnapshot.data ?? Duration.zero;
-                            final total = _player.duration ?? Duration.zero;
-                            return Text(
-                              '${_format(position)} / ${_format(total)}',
-                              style: AppStyle.txtSFProDisplayLight12
-                                  .copyWith(color: ColorConstant.gray800),
-                            );
-                          },
+                        Text(
+                          '${_format(position)} / ${_format(total)}',
+                          style: AppStyle.txtSFProDisplayLight12.copyWith(color: ColorConstant.gray800),
                         ),
                       ],
                     ),
