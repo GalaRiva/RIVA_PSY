@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>408583851820-2a7lqc5p2upkas97j6j85uo4vsmclbhf.apps.googleusercontent.com</string>
+	<string>7653326357-gjtpe6q3a0chqt5usv3rgvq2n2478hmp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.408583851820-2a7lqc5p2upkas97j6j85uo4vsmclbhf</string>
+	<string>com.googleusercontent.apps.7653326357-gjtpe6q3a0chqt5usv3rgvq2n2478hmp</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>408583851820-4tihc6let75tktn02gu260qtgh1s349p.apps.googleusercontent.com</string>
+	<string>7653326357-5e75t7qjdl9rjrgf4dmvn35vacamp3l0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCcSAMOzyDlfD0sDKZSgD_-Vs_VHLIqDaQ</string>
+	<string>AIzaSyCktiBdjXSFmyysElB5mlqK72FSBOXfvrQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>408583851820</string>
+	<string>7653326357</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.rigel.psy</string>
+	<string>com.riva.psy</string>
 	<key>PROJECT_ID</key>
-	<string>rigel-psy</string>
+	<string>rigel-psy-9361c</string>
 	<key>STORAGE_BUCKET</key>
-	<string>rigel-psy.appspot.com</string>
+	<string>rigel-psy-9361c.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:408583851820:ios:2c0d86ec5f1222e4f8e689</string>
+	<string>1:7653326357:ios:945bedb29f1bf0cd20581c</string>
 </dict>
 </plist>
