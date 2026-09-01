@@ -15,37 +15,49 @@ import 'package:path_provider/path_provider.dart';
 class IntroductionModel extends NegativeEmotionsModelTab {
 
   Future<List<AudioCardModel>?> audioAssets () async {
-    final prefs = await SharedPreferences.getInstance();
-    final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
-    var collection = await FirebaseFirestore.instance.collection('Audio').where('tab' , isEqualTo: 'introduction').get();
-    final audios = <AudioCardModel>[];
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
-    for (var item in collection.docs) {
-      try {
-        final audio = Audio.fromJson(item.data());
-        final fileName = audio.localizedFileName(langCode);
-        String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
-        if(DataSourceService.dataSourceIsRemote()) {
-          filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
-        }
-        // `audio.name == 'Введение'` intentionally compares the raw
-        // Firestore (Russian) field, not the localized display name — it's
-        // identifying which track structurally (to pin it first), not
-        // deciding what to show.
-        if(audio.tab == 'introduction') {
-          final duration = audio.localizedDuration(langCode);
-          if(audio.name == 'Введение'){
-            audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
-          } else
-            audios.add(AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
-        }
-      } catch (_) {
-        print (_);
+    // No top-level try/catch here used to mean: if the Firestore query,
+    // SharedPreferences, or path_provider call below ever threw (network
+    // hiccup, permission rule, etc.), the exception propagated straight out
+    // of this Future with no diagnostic trace, and — since TabWidget's
+    // _load() awaits this with no catch of its own — the tab's spinner just
+    // spun forever with nothing in the logs to explain why. Matches
+    // NegativeEmotionsModel._audioAssets()'s existing try/catch shape.
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+      var collection = await FirebaseFirestore.instance.collection('Audio').where('tab' , isEqualTo: 'introduction').get();
+      final audios = <AudioCardModel>[];
+      final Directory appDocDir = await getApplicationDocumentsDirectory();
+      final String appDocPath = appDocDir.path;
+      for (var item in collection.docs) {
+        try {
+          final audio = Audio.fromJson(item.data());
+          final fileName = audio.localizedFileName(langCode);
+          String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
+          if(DataSourceService.dataSourceIsRemote()) {
+            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
+          }
+          // `audio.name == 'Введение'` intentionally compares the raw
+          // Firestore (Russian) field, not the localized display name — it's
+          // identifying which track structurally (to pin it first), not
+          // deciding what to show.
+          if(audio.tab == 'introduction') {
+            final duration = audio.localizedDuration(langCode);
+            if(audio.name == 'Введение'){
+              audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
+            } else
+              audios.add(AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
+          }
+        } catch (_) {
+          print (_);
 
+        }
       }
+      return audios;
+    } catch (e) {
+      print('[AUDIO-DIAG] IntroductionModel.audioAssets() failed: $e');
+      return [];
     }
-    return audios;
   }
 
   @override

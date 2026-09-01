@@ -14,32 +14,39 @@ import 'package:path_provider/path_provider.dart';
 class MeditationModel extends NegativeEmotionsModelTab{
 
   Future<List<AudioCardModel>?> audioAssets () async {
+    // See IntroductionModel.audioAssets() for why this outer try/catch
+    // exists — without it, a thrown exception here (network, Firestore
+    // rule, etc.) left the tab's spinner running forever with no trace.
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+      var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo:'meditation').get();
+      final audios = <AudioCardModel>[];
+      final Directory appDocDir = await getApplicationDocumentsDirectory();
+      final String appDocPath = appDocDir.path;
+      for (var item in collection.docs) {
+        try {
+          final audio = Audio.fromJson(item.data());
+          final fileName = audio.localizedFileName(langCode);
+          String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
+          if(DataSourceService.dataSourceIsRemote()) {
+            filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
+          }
+          if(audio.tab == 'meditation')
+            audios.add(AudioCardModel(audio.localizedName(langCode), filePath,
+                ruTitle: audio.name, knownDuration: audio.localizedDuration(langCode)));
+        }catch (_) {
+          print (_);
 
-    final prefs = await SharedPreferences.getInstance();
-    final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
-    var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo:'meditation').get();
-    final audios = <AudioCardModel>[];
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
-    for (var item in collection.docs) {
-      try {
-        final audio = Audio.fromJson(item.data());
-        final fileName = audio.localizedFileName(langCode);
-        String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
-        if(DataSourceService.dataSourceIsRemote()) {
-          filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
         }
-        if(audio.tab == 'meditation')
-          audios.add(AudioCardModel(audio.localizedName(langCode), filePath,
-              ruTitle: audio.name, knownDuration: audio.localizedDuration(langCode)));
-      }catch (_) {
-        print (_);
+
 
       }
-
-
+      return audios;
+    } catch (e) {
+      print('[AUDIO-DIAG] MeditationModel.audioAssets() failed: $e');
+      return [];
     }
-    return audios;
   }
 
   @override

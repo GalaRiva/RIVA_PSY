@@ -22,34 +22,44 @@ class DepressionModel extends NegativeEmotionsModelTab{
 
 
    Future<List<AudioCardModel>?> audioAssets () async {
+     // See IntroductionModel.audioAssets() for why this outer try/catch
+     // exists. Worth noting here specifically: the where+orderBy combo below
+     // needs a Firestore composite index — if that index is ever missing or
+     // gets deleted, this query throws FAILED_PRECONDITION on every call,
+     // and without this catch that exception had nowhere to go, so the tab
+     // just spun forever with no diagnostic trace.
+     try {
+       final prefs = await SharedPreferences.getInstance();
+       final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
+       var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo: 'depression').orderBy('order').get();
+       final audios = <AudioCardModel>[];
+       final String appDocPath = (await getApplicationDocumentsDirectory()).path;
+       for (var item in collection.docs) {
+         try {
+           final audio = Audio.fromJson(item.data());
+           final fileName = audio.localizedFileName(langCode);
+           String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
+           if(DataSourceService.dataSourceIsRemote()) {
+             filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
+           }
+           if(audio.tab == 'depression') {
+             final duration = audio.localizedDuration(langCode);
+             if(audio.name == 'Введение'){
+               audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
+             } else
+               audios.add(AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
+           }
+         } catch (_) {
+           print (_);
+         }
 
-     final prefs = await SharedPreferences.getInstance();
-     final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
-     var collection = await FirebaseFirestore.instance.collection('Audio').where('tab', isEqualTo: 'depression').orderBy('order').get();
-     final audios = <AudioCardModel>[];
-     final String appDocPath = (await getApplicationDocumentsDirectory()).path;
-     for (var item in collection.docs) {
-       try {
-         final audio = Audio.fromJson(item.data());
-         final fileName = audio.localizedFileName(langCode);
-         String filePath = appDocPath + '/' + '${audio.folder}/${fileName}.${audio.format}';
-         if(DataSourceService.dataSourceIsRemote()) {
-           filePath = 'https://pub-cd14ca249f1e4d4fbfb07ca99a7efe6d.r2.dev/audio/' + fileName + '.' + audio.format;
-         }
-         if(audio.tab == 'depression') {
-           final duration = audio.localizedDuration(langCode);
-           if(audio.name == 'Введение'){
-             audios.insert(0, AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
-           } else
-             audios.add(AudioCardModel(audio.localizedName(langCode), filePath, ruTitle: audio.name, knownDuration: duration));
-         }
-       } catch (_) {
-         print (_);
+
        }
-
-
+       return audios;
+     } catch (e) {
+       print('[AUDIO-DIAG] DepressionModel.audioAssets() failed: $e');
+       return [];
      }
-     return audios;
    }
 
 
