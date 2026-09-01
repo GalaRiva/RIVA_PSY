@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:riva_psy/core/app_export.dart';
 
+import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../widgets/custom_button.dart';
 
@@ -96,7 +98,10 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
     super.initState();
     _tick();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
-    GooglePlayBillingService.queryProduct(GooglePlayBillingService.yearlyProductId).then((p) {
+    final priceQuery = Platform.isIOS
+        ? AppleBillingService.queryProduct(AppleBillingService.yearlyProductId)
+        : GooglePlayBillingService.queryProduct(GooglePlayBillingService.yearlyProductId);
+    priceQuery.then((p) {
       if (mounted) setState(() => _product = p);
     });
   }
@@ -124,10 +129,17 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
   Future<void> _onBuy(BuildContext context) async {
     setState(() => _purchasing = true);
     try {
-      await GooglePlayBillingService.buy(
-        GooglePlayBillingService.yearlyProductId,
-        useWelcomeOffer: _offerActive,
-      );
+      if (Platform.isIOS) {
+        await AppleBillingService.buy(
+          AppleBillingService.yearlyProductId,
+          useWelcomeOffer: _offerActive,
+        );
+      } else {
+        await GooglePlayBillingService.buy(
+          GooglePlayBillingService.yearlyProductId,
+          useWelcomeOffer: _offerActive,
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

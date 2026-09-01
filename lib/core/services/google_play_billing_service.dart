@@ -38,6 +38,13 @@ class GooglePlayBillingService {
   /// updates so a purchase that completes after the app was backgrounded
   /// (payment sheet, bank confirmation) is still picked up and verified.
   static void startListening() {
+    // Guard added alongside AppleBillingService.startListening() being
+    // wired in next to this same call (k20_screen.dart) — without it, both
+    // services would subscribe to the same shared
+    // InAppPurchase.purchaseStream on every platform, so a single purchase
+    // would get handed to both services' _onPurchaseUpdate, each calling
+    // the wrong store's verification Cloud Function for it.
+    if (!Platform.isAndroid) return;
     if (_subscription != null) return;
     _subscription = _iap.purchaseStream.listen(
       _onPurchaseUpdate,

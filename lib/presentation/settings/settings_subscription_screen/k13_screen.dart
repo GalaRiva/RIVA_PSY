@@ -10,6 +10,7 @@ import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
+import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
@@ -266,18 +267,23 @@ class K13Screen extends GetWidget {
   }
 }
 
-// Same Android-vs-rest split as go_to_new_tariff_widget.dart's _subscribe —
-// see GooglePlayBillingService for why Android goes through Play Billing
-// instead of the Stripe Payment Link now.
+// Same Android/iOS-vs-rest split as go_to_new_tariff_widget.dart's
+// _subscribe — see GooglePlayBillingService/AppleBillingService for why
+// Android/iOS go through native store billing instead of the Stripe
+// Payment Link now.
 Future<void> _subscribeK13(BuildContext context,
     {required String productId, required String stripeUrl}) async {
   final hasAccount = await AccountRequiredSheet.ensure(context,
       reason: 'account_required_subscription_reason'.tr());
   if (!hasAccount || !context.mounted) return;
 
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || Platform.isIOS) {
     try {
-      await GooglePlayBillingService.buy(productId);
+      if (Platform.isAndroid) {
+        await GooglePlayBillingService.buy(productId);
+      } else {
+        await AppleBillingService.buy(productId);
+      }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

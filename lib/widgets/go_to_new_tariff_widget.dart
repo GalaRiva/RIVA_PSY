@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riva_psy/core/app_export.dart';
 
+import '../core/services/apple_billing_service.dart';
 import '../core/services/google_play_billing_service.dart';
 import '../core/user_data/user.dart';
 import '../core/utils/subscription_links.dart';
@@ -113,13 +114,18 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
 // Android buys through Google Play Billing (see GooglePlayBillingService for
 // why — Stripe's "alternative payment system" registration in Play Console
 // requires a registered company, which this account doesn't have yet).
-// Non-Android platforms keep the original Stripe Payment Link, which is
-// still how the future PWA/website checkout is meant to work.
+// iOS goes through AppleBillingService for the same reason. Non-Android/iOS
+// platforms keep the original Stripe Payment Link, which is still how the
+// future PWA/website checkout is meant to work.
 Future<void> _subscribe(BuildContext context,
     {required String productId, required String stripeUrl}) async {
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || Platform.isIOS) {
     try {
-      await GooglePlayBillingService.buy(productId);
+      if (Platform.isAndroid) {
+        await GooglePlayBillingService.buy(productId);
+      } else {
+        await AppleBillingService.buy(productId);
+      }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

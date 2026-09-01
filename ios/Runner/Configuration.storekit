@@ -1,0 +1,114 @@
+{
+  "identifier" : "eb773543-282f-4a7e-b3d1-79d25ecfa448",
+  "nonRenewingSubscriptions" : [],
+  "products" : [],
+  "settings" : {
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "ru_RU",
+    "_storefront" : "RUS",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "af198926-e3a9-426c-a181-72007c4a191e",
+      "localizations" : [],
+      "name" : "Orion",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "5.90",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "a3a300a6-dd81-49c5-9a40-2c480f5d1ea7",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Полный доступ ко всем разделам приложения — ежемесячно",
+              "displayName" : "Орион — месяц",
+              "locale" : "ru_RU"
+            }
+          ],
+          "productID" : "riva_psy_orion_monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Orion Monthly",
+          "subscriptionGroupID" : "af198926-e3a9-426c-a181-72007c4a191e",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "69.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "2c6fa2f3-b744-40b4-a02e-4b5b8314335e",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Полный доступ ко всем разделам приложения — на год",
+              "displayName" : "Орион — год",
+              "locale" : "ru_RU"
+            }
+          ],
+          "productID" : "riva_psy_orion_yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Orion Yearly",
+          "subscriptionGroupID" : "af198926-e3a9-426c-a181-72007c4a191e",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

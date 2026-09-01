@@ -8,6 +8,7 @@ import 'package:riva_psy/presentation/initial_setup/send_pushes_screen/send_push
 import 'package:riva_psy/widgets/custom_button.dart';
 import 'package:riva_psy/widgets/custom_text_form_field.dart';
 
+import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
@@ -177,9 +178,13 @@ Future<void> _subscribeBuyTariff(BuildContext context,
       reason: 'account_required_subscription_reason'.tr());
   if (!hasAccount || !context.mounted) return;
 
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || Platform.isIOS) {
     try {
-      await GooglePlayBillingService.buy(productId);
+      if (Platform.isAndroid) {
+        await GooglePlayBillingService.buy(productId);
+      } else {
+        await AppleBillingService.buy(productId);
+      }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

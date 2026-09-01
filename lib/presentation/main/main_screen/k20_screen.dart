@@ -18,6 +18,7 @@ import '../../../core/models/emotional_state_model.dart';
 import '../../../core/user_data/user.dart';
 import 'dart:ui';
 import '../../../core/models/day_event_model.dart';
+import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/services/in_app_update_service.dart';
 
@@ -66,6 +67,7 @@ class K20Screen extends GetWidget<K20Controller> {
     // somewhere the app reaches on every launch so a purchase completed
     // while the app was backgrounded still gets picked up and verified.
     GooglePlayBillingService.startListening();
+    AppleBillingService.startListening();
     return Builder(
       builder: (context) {
         return Scaffold(
