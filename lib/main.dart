@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:riva_psy/core/db/hive_db.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
 import 'package:riva_psy/providers/language_provider.dart';
@@ -54,6 +55,21 @@ void main() async {
       HttpOverrides.global = MyHttpOverrides();
       SharedPreferences.getInstance().then((value) => SharedPrefs.setSharedPreferences = value);
       await HiveDB.initDB();
+      // Lock-screen/notification playback controls for AppAudioService's
+      // shared player — must run before any AudioPlayer is created (it
+      // isn't yet; that's lazy on first play()), and before runApp() per
+      // the package's own contract. Android only for now — iOS needs its
+      // own Info.plist/entitlements pass, batched separately (see
+      // project_ios_work_deferred memory). Requires MainActivity to extend
+      // FlutterFragmentActivity (see MainActivity.kt) — without that this
+      // silently breaks every AppAudioService.play() call.
+      if (!Platform.isIOS) {
+        await JustAudioBackground.init(
+          androidNotificationChannelId: 'com.riva_psy.app.channel.audio',
+          androidNotificationChannelName: 'Аудио',
+          androidNotificationOngoing: true,
+        );
+      }
       final notificationService = AwesomeNotificationService();
       notificationService.setListeners();
       if (!Platform.isIOS) {

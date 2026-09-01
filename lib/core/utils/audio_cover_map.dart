@@ -46,6 +46,10 @@ const Map<String, String> audioCoverAssets = {
   'Снятие обвинений': 'assets/images/audio_covers/dropping_charges.jpg',
   'Возврат в сейчас': 'assets/images/audio_covers/return_to_present.jpg',
   'Сброс кэша': 'assets/images/audio_covers/cache_reset.jpg',
+  // The actual Midjourney art for this meditation (same image the welcome
+  // quiz's own MeditationPlayerScreen uses as its background) — preferred
+  // by the user over the generated HeartCongruenceCover animation.
+  'Конгруэнтность сердца': 'assets/images/quiz/love.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {
@@ -57,9 +61,6 @@ String? audioCoverAsset(String? ruTitle) {
 // — same lookup pattern as audioCoverAssets above.
 final Map<String, WidgetBuilder> animatedAudioCovers = {
   'Сердце': (context) => const HeartCongruenceCover(),
-  // Actual Firestore Audio.name for the meditation-tab track (confirmed via
-  // a live query) — 'Сердце' above is kept in case another doc uses it.
-  'Конгруэнтность сердца': (context) => const HeartCongruenceCover(),
 };
 
 WidgetBuilder? animatedAudioCoverBuilder(String? ruTitle) {

@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../datasource_service.dart';
 import 'app_audio_track.dart';
@@ -105,6 +109,41 @@ class AppAudioService {
     });
   }
 
+  // MediaItem.artUri only accepts file://, http(s):// or content:// — a
+  // bundled Flutter asset (coverAsset) isn't directly reachable by the
+  // native notification renderer under any of those, so it's copied once
+  // to a real file on first use and reused from there. Keyed by asset
+  // path, not track id, since the same cover asset is reused across many
+  // tracks (e.g. shared emotion art).
+  static final Map<String, Uri> _assetArtCache = {};
+
+  Future<Uri?> _artUriFor(AppAudioTrack track) async {
+    final coverUrl = track.coverUrl;
+    if (coverUrl != null && coverUrl.isNotEmpty) {
+      return Uri.tryParse(coverUrl);
+    }
+    final asset = track.coverAsset;
+    if (asset == null || asset.isEmpty) return null;
+    final cached = _assetArtCache[asset];
+    if (cached != null) return cached;
+    try {
+      final data = await rootBundle.load(asset);
+      final dir = await getTemporaryDirectory();
+      final dot = asset.lastIndexOf('.');
+      final ext = dot == -1 ? '.jpg' : asset.substring(dot);
+      final file = File('${dir.path}/media_item_art_${asset.hashCode}$ext');
+      if (!await file.exists()) {
+        await file.writeAsBytes(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+      }
+      final uri = Uri.file(file.path);
+      _assetArtCache[asset] = uri;
+      return uri;
+    } catch (_) {
+      // No lock-screen art for this track — playback itself is unaffected.
+      return null;
+    }
+  }
+
   /// Starts playing [track]. If it's already the current track, this just
   /// resumes/seeks instead of reloading it. Otherwise it replaces whatever
   /// was playing — a new track always stops the previous one, since only
@@ -117,9 +156,19 @@ class AppAudioService {
       return;
     }
     state.value = AppAudioState(track: track, playing: false, position: initialPosition ?? Duration.zero);
+    // Tags the platform audio source with a MediaItem — this is what
+    // just_audio_background reads to populate the lock-screen/notification
+    // media session (title + art); without it the notification would show
+    // with no metadata at all.
+    final mediaItem = MediaItem(
+      id: track.id,
+      title: track.title,
+      album: 'RIVA PSY',
+      artUri: await _artUriFor(track),
+    );
     final source = DataSourceService.dataSourceIsRemote()
-        ? await AudioCacheManager.sourceFor(track.url)
-        : AudioSource.file(track.url);
+        ? await AudioCacheManager.sourceFor(track.url, tag: mediaItem)
+        : AudioSource.file(track.url, tag: mediaItem);
     await player.setAudioSource(source, initialPosition: initialPosition ?? Duration.zero);
     await player.play();
     if (track.nextUrl != null && DataSourceService.dataSourceIsRemote()) {

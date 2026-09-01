@@ -44,13 +44,13 @@ class AudioCacheManager {
   /// `AudioPlayer.setAudioSource()` in place of `setUrl(url)`. Touches the
   /// cache file's mtime if it already exists, so an already-cached track
   /// counts as freshly used for LRU purposes even on a cold app start.
-  static Future<LockCachingAudioSource> sourceFor(String url) async {
+  static Future<LockCachingAudioSource> sourceFor(String url, {dynamic tag}) async {
     final file = await _fileFor(url);
     if (await file.exists()) {
       unawaited(file.setLastModified(DateTime.now()).catchError((_) {}));
     }
     unawaited(_enforceLimit());
-    return LockCachingAudioSource(Uri.parse(url), cacheFile: file);
+    return LockCachingAudioSource(Uri.parse(url), cacheFile: file, tag: tag);
   }
 
   /// Opportunistically downloads [url] straight to its cache slot, without
