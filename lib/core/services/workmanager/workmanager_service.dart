@@ -45,7 +45,9 @@ class WorkManagerService {
         final dur = _getTimeRemaining(date);
         workmanagerModel.duration = dur;
         print('dur $dur');
-        await notificationService.init(workmanagerModel);
+        // Channels are registered once at app startup now (see
+        // AwesomeNotificationService.initializeOnce(), called from
+        // main.dart) — no per-call initialize() needed here anymore.
         try {
           await notificationService.showNotification(workmanagerModel, dur);
         } catch (e) {

@@ -71,6 +71,11 @@ void main() async {
         );
       }
       final notificationService = AwesomeNotificationService();
+      // Must run before anything else touches AwesomeNotifications (e.g.
+      // WorkManagerService().initService(), called next from
+      // K1Controller.initialization() on every launch) — see
+      // initializeOnce()'s own doc comment for the hang this fixes.
+      await notificationService.initializeOnce();
       notificationService.setListeners();
       if (!Platform.isIOS) {
         await registerNightlyInsightTask().catchError((_) {});

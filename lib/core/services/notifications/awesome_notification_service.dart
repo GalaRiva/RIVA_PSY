@@ -143,31 +143,55 @@ class AwesomeNotificationService extends NotificationService {
         onDismissActionReceivedMethod:
             NotificationController.onDismissActionReceivedMethod);
   }
-  Future init (WorkManagerModel workManagerModel) async {
-    final _channelKey = workManagerModel.pillName.isNotEmpty ? 'open' :
-    'scheduled';
 
-    await AwesomeNotifications().initialize('resource://drawable/ic_stat_notify', [
-      // notification icon
-      NotificationChannel(
-        channelGroupKey: 'reminders',
-        channelKey: _channelKey,
-        channelName: 'RIVA PSY',
-        channelDescription: 'Notification channel for RIVA PSY',
-        channelShowBadge: true,
-        importance: NotificationImportance.High,
-        enableVibration: true,
-        defaultColor: const Color(0xFF2A5C55),
-      ),
-    ], channelGroups: [
-      // The channel above references channelGroupKey 'reminders', but no
-      // NotificationChannelGroup with that key was ever registered — the
-      // channelGroups param here was simply never passed.
-      NotificationChannelGroup(
-        channelGroupKey: 'reminders',
-        channelGroupName: 'Напоминания',
-      ),
-    ]);
+  /// Call once, early (main.dart, before setListeners()) — registers both
+  /// channels this app ever uses ('open' for pill reminders, 'scheduled'
+  /// for diary/insight/portrait-unlock notifications) up front.
+  ///
+  /// Previously there was no app-startup initialize() call at all — the
+  /// only place that called AwesomeNotifications().initialize() was here,
+  /// but keyed to a *single* channel decided by whatever WorkManagerModel
+  /// happened to trigger it, and only reached via WorkManagerService
+  /// .initService(), which calls cancelAllSchedules() *before* it. On a
+  /// fresh install with no reminders/pills yet, that loop never runs at
+  /// all, so cancelAllSchedules() was the first-ever call into an
+  /// uninitialized plugin. On iOS specifically, that platform-channel call
+  /// never completes (no crash, no error — the awaiting Future just never
+  /// resolves), hanging the "Далее" button on the very first onboarding
+  /// screen that reaches it. Initializing unconditionally at app start
+  /// removes the ordering dependency entirely.
+  Future<void> initializeOnce() async {
+    await AwesomeNotifications().initialize(
+      'resource://drawable/ic_stat_notify',
+      [
+        NotificationChannel(
+          channelGroupKey: 'reminders',
+          channelKey: 'open',
+          channelName: 'RIVA PSY',
+          channelDescription: 'Notification channel for RIVA PSY',
+          channelShowBadge: true,
+          importance: NotificationImportance.High,
+          enableVibration: true,
+          defaultColor: const Color(0xFF2A5C55),
+        ),
+        NotificationChannel(
+          channelGroupKey: 'reminders',
+          channelKey: 'scheduled',
+          channelName: 'RIVA PSY',
+          channelDescription: 'Notification channel for RIVA PSY',
+          channelShowBadge: true,
+          importance: NotificationImportance.High,
+          enableVibration: true,
+          defaultColor: const Color(0xFF2A5C55),
+        ),
+      ],
+      channelGroups: [
+        NotificationChannelGroup(
+          channelGroupKey: 'reminders',
+          channelGroupName: 'Напоминания',
+        ),
+      ],
+    );
   }
 
   Future canselAllSchedules () async {
