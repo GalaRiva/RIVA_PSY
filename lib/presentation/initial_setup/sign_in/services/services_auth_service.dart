@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart' ;
@@ -21,17 +22,29 @@ class ServicesAuthService {
   // tell those apart from a single test round instead of guessing blind.
   String? lastError;
 
-  // Reverted from google_sign_in 7.x (Credential Manager) back to the
-  // classic 6.x native Google Sign-In SDK. Credential Manager's
-  // "[16] Account reauth failed" turned out to be a confirmed, unfixable
-  // (from our side) instability in Google's own Play Services component —
-  // see https://github.com/flutter/flutter/issues/184918, closed by a
-  // Flutter maintainer as "not_planned" with the same package version,
-  // same error, same working config. The old SDK doesn't go through
-  // Credential Manager at all, so it isn't exposed to that bug.
-  // Shared across ServicesAuthService and GoogleDriveService like the old
-  // per-instance API required — each feature gets its own GoogleSignIn
-  // instance with the scopes it needs, no shared initialization step.
+  // Tried google_sign_in 7.x (Credential Manager on Android / new SDK on
+  // iOS) again 2026-09-04 specifically to fix a real iOS crash inside
+  // FLTGoogleSignInPlugin.signInWithCompletion: (confirmed via an on-device
+  // crash log — not a hang, a watchdog-killed relaunch that looked like one)
+  // on 5.x. Reverted back to 6.x within the hour: Android's Credential
+  // Manager failed a real sign-in attempt (GetCredentialResponse error from
+  // the framework, before any account picker UI ever appeared) which
+  // google_sign_in mapped to a generic "canceled" exception, silently
+  // swallowing the real reason (diagnostic showed "[diag] null"). Same
+  // failure class as the original "[16] Account reauth failed" that caused
+  // the first 7.x -> 6.x revert (see https://github.com/flutter/flutter/issues/184918,
+  // closed not_planned) — the old SDK doesn't go through Credential Manager
+  // at all, so 6.x isn't exposed to it. Checked for a newer google_sign_in_android
+  // patch and a signing-cert mismatch as possible causes — neither panned
+  // out (already on the latest google_sign_in_android; profile build uses
+  // the same release-signed cert 6.x used successfully). Test device was
+  // MIUI (Xiaomi), which is known to be more aggressive about breaking
+  // Google Play Services integrations than stock Android — worth retrying
+  // on a non-MIUI device before assuming this is unfixable again. The iOS
+  // crash is a still-open, separate problem; don't re-attempt 7.x to fix it
+  // without first checking whether Google has since released a
+  // 6.x-compatible google_sign_in_ios patch, or whether a
+  // non-Credential-Manager alternative exists.
   static final GoogleSignIn _googleSignIn = GoogleSignIn(
     // Web (client_type 3) OAuth client from android/app/google-services.json
     // — needed so Firebase's signInWithCredential has an audience to
@@ -88,47 +101,66 @@ class ServicesAuthService {
 
   Future<bool> authWithApple() async {
     // To prevent replay attacks with the credential returned from Apple, we
-    // include a nonce in the credential request. When signing in in with
-    // Firebase, the nonce in the id token returned by Apple, is expected to
-    // match the sha256 hash of `rawNonce`.
+    // include a nonce in the credential request. The nonce in the identity
+    // token returned by Apple is expected to match the sha256 hash of
+    // `rawNonce`.
     final rawNonce = _generateNonce();
     final nonce = _sha256ofString(rawNonce);
 
     try {
       // Request credential for the currently signed in Apple account.
       final appleCredential = await SignInWithApple.getAppleIDCredential(
-        webAuthenticationOptions: Platform.isIOS ? null :  WebAuthenticationOptions(clientId: 'com.riva.app', redirectUri: Uri.parse('https://living-beryl-class.glitch.me/callbacks/sign_in_with_apple')),
+        webAuthenticationOptions: Platform.isIOS
+            ? null
+            : WebAuthenticationOptions(
+                clientId: 'com.riva.psy.signin',
+                redirectUri: Uri.parse(
+                    'https://rigel-psy-9361c.firebaseapp.com/__/auth/handler'),
+              ),
         scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
-
-        nonce: Platform.isIOS ? nonce : null,
+        nonce: nonce,
       );
 
-      print(appleCredential.authorizationCode);
+      // Firebase's own signInWithCredential("apple.com") reliably rejects a
+      // verifiably genuine, correctly-signed Apple identityToken on this
+      // project (confirmed 2026-09-05 by independently checking the token's
+      // RS256 signature against Apple's published JWKS by hand — valid).
+      // Rather than block sign-in on Firebase fixing that, a Cloud Function
+      // (verifyAppleIdentityToken) does the same verification itself and
+      // mints a Firebase custom token, which takes a different code path.
+      final callable =
+          FirebaseFunctions.instance.httpsCallable('verifyAppleIdentityToken');
+      final result = await callable.call<Map<String, dynamic>>({
+        'identityToken': appleCredential.identityToken,
+        'rawNonce': rawNonce,
+      });
+      final customToken = result.data['customToken'] as String;
 
-      // Create an `OAuthCredential` from the credential returned by Apple.
-      final oauthCredential = OAuthProvider("apple.com").credential(
-        idToken: appleCredential.identityToken,
-        rawNonce: rawNonce,
-        accessToken: Platform.isIOS ? null : appleCredential.authorizationCode,
-
-      );
-
-      // Sign in the user with Firebase. If the nonce we generated earlier does
-      // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       final authResult =
-      await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-
-      final displayName =
-          '${appleCredential.givenName} ${appleCredential.familyName}';
-      final userEmail = '${appleCredential.email}';
+          await FirebaseAuth.instance.signInWithCustomToken(customToken);
       _appleUser = authResult.user;
       return true;
+    } on FirebaseFunctionsException catch (exception) {
+      print(exception);
+      lastError = 'code=${exception.code} message=${exception.message} '
+          'plugin=cloud_functions';
+      return false;
+    } on FirebaseAuthException catch (exception) {
+      print(exception);
+      // Default toString() is just "[plugin/code] message" — code and
+      // message are already exactly that, but spelling them out
+      // separately (plus any stack trace Firebase attaches) rules out
+      // there being more detail hiding behind a truncated dialog before
+      // concluding the client genuinely has nothing more to show.
+      lastError = 'code=${exception.code} message=${exception.message} '
+          'plugin=${exception.plugin}';
+      return false;
     } catch (exception) {
       print(exception);
-      lastError = exception.toString();
+      lastError = '${exception.runtimeType}: ${exception.toString()}';
       return false;
     }
   }

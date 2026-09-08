@@ -12,24 +12,20 @@ class _WhatsNextBlock {
 
 const List<_WhatsNextBlock> _whatsNext = [
   _WhatsNextBlock(
-    'Тесты 7–9: Анатомия защитных механизмов',
-    'Исследуем, почему вы стремитесь всё контролировать, где корень «лени» '
-        '(прокрастинации) и о чём на самом деле кричит ваш гнев.',
+    'portrait_paywall_next1_title',
+    'portrait_paywall_next1_body',
   ),
   _WhatsNextBlock(
-    'Тест 9: Ваш истинный компас',
-    'Определим персональную иерархию ценностей по методике ACT, чтобы '
-        'перестать сливать энергию на чужие цели.',
+    'portrait_paywall_next2_title',
+    'portrait_paywall_next2_body',
   ),
   _WhatsNextBlock(
-    'Тесты 10–12: Отношения, оптимизм и хронобиология',
-    'Раскроем ваш стиль привязанности без ярлыков, стиль взгляда в будущее '
-        'и настроим режим под ваши биоритмы.',
+    'portrait_paywall_next3_title',
+    'portrait_paywall_next3_body',
   ),
   _WhatsNextBlock(
-    'Финал: Финальный синтез',
-    'Алгоритм объединит все 12 тестов в персональную карту вашей психики с '
-        'поиском скрытых пересечений и точек роста.',
+    'portrait_paywall_next4_title',
+    'portrait_paywall_next4_body',
   ),
 ];
 
@@ -41,10 +37,10 @@ class _Benefit {
 }
 
 const List<_Benefit> _benefits = [
-  _Benefit(Icons.spa_rounded, 'Снятие вины за усталость', 'Легализация отдыха без самоедства и мысленной жвачки о делах.'),
-  _Benefit(Icons.radar_rounded, 'Управление триггерами', 'Понимание, почему вы взрываетесь или замираете, ещё до того, как реакция захватит тело.'),
-  _Benefit(Icons.self_improvement_rounded, 'Отказ от гиперконтроля', 'Снижение мышечного спазма и фонового напряжения за счёт возврата доверия к миру.'),
-  _Benefit(Icons.headphones_rounded, 'Персональные аудио-практики', '7 специализированных соматических сессий: «Снятие брони», «Право на паузу», «Охлаждение реактора» и другие.'),
+  _Benefit(Icons.spa_rounded, 'portrait_paywall_benefit1_title', 'portrait_paywall_benefit1_desc'),
+  _Benefit(Icons.radar_rounded, 'portrait_paywall_benefit2_title', 'portrait_paywall_benefit2_desc'),
+  _Benefit(Icons.self_improvement_rounded, 'portrait_paywall_benefit3_title', 'portrait_paywall_benefit3_desc'),
+  _Benefit(Icons.headphones_rounded, 'portrait_paywall_benefit4_title', 'portrait_paywall_benefit4_desc'),
 ];
 
 // Copy taken verbatim from the approved master-plan (PROJECT_CONTEXT.md
@@ -88,7 +84,7 @@ class PortraitPaywallPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      block.title,
+                      block.title.tr(),
                       style: AppStyle.txtSFProDisplayRegular14.copyWith(
                         color: const Color(0xFFC9A24B),
                         fontWeight: FontWeight.w700,
@@ -96,7 +92,7 @@ class PortraitPaywallPage extends StatelessWidget {
                     ),
                     SizedBox(height: getVerticalSize(4)),
                     Text(
-                      block.body,
+                      block.body.tr(),
                       style: AppStyle.txtSFProDisplayRegular14
                           .copyWith(color: Colors.white.withOpacity(0.75), height: 1.4),
                     ),
@@ -128,12 +124,12 @@ class PortraitPaywallPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            b.title,
+                            b.title.tr(),
                             style: AppStyle.txtSFProDisplayRegular14
                                 .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
                           ),
                           Text(
-                            b.desc,
+                            b.desc.tr(),
                             style: AppStyle.txtSFProDisplayRegular11.copyWith(color: Colors.white.withOpacity(0.65)),
                           ),
                         ],

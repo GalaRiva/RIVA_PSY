@@ -28,7 +28,7 @@ class DayEventWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: getVerticalSize(30),
+            height: getVerticalSize(36),
             alignment: Alignment.topCenter,
 
             decoration: BoxDecoration(
@@ -40,21 +40,31 @@ class DayEventWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: getPadding(left: 6),
-                    child: Text(
-                      (dayEventModels.first.date ?? DateTime.now())!.weekday.dayInText() +
-                          ' ' +
-                          (dayEventModels.first.date ?? DateTime.now())!.day.toString() +
-                          ' ' +
-                          (dayEventModels.first.date ?? DateTime.now())!.month.monthInText() +
-                          ' ' +
-                          (dayEventModels.first.date ?? DateTime.now())!.year.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtSFProDisplayLight11.copyWith(
-                        letterSpacing: getHorizontalSize(
-                          0.44,
+                  // Was unconstrained (no Expanded/Flexible) — with nothing
+                  // to shrink it, the date text rendered at its full natural
+                  // width and ran straight into "Редактировать" with no gap
+                  // at all (spaceBetween only adds space when there's room
+                  // left over, and here there wasn't). Expanded bounds it to
+                  // whatever's actually left, so `overflow: ellipsis` can do
+                  // its job instead of the two just colliding.
+                  Expanded(
+                    child: Padding(
+                      padding: getPadding(left: 6),
+                      child: Text(
+                        (dayEventModels.first.date ?? DateTime.now())!.weekday.dayInText() +
+                            ' ' +
+                            (dayEventModels.first.date ?? DateTime.now())!.day.toString() +
+                            ' ' +
+                            (dayEventModels.first.date ?? DateTime.now())!.month.monthInText() +
+                            ' ' +
+                            (dayEventModels.first.date ?? DateTime.now())!.year.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle.txtSFProDisplayLight11.copyWith(
+                          fontSize: getFontSize(12),
+                          letterSpacing: getHorizontalSize(
+                            0.44,
+                          ),
                         ),
                       ),
                     ),

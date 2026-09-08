@@ -12,7 +12,11 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: getVerticalSize(12),
+        // Was 12 — far too short for the label text, which Stack's default
+        // hard-edge clipping then cut off (e.g. "Регистрация" on the sign-in
+        // screen showed only its top half). Tall enough for a normal label
+        // plus the divider padding below it.
+        height: getVerticalSize(34),
         width: getHorizontalSize(328),
         margin: margin ?? getMargin(top: 39),
         child: Stack(

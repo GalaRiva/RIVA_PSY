@@ -51,7 +51,9 @@ class K2Screen extends GetWidget<K2Controller> {
     final key = GlobalKey<FormState>();
     final args = ModalRoute.of(context)?.settings.arguments;
     final contextual = args is Map && args['contextual'] == true;
+    final goToMainOnSuccess = args is Map && args['goToMainOnSuccess'] == true;
     controller.contextual = contextual;
+    controller.goToMainOnSuccess = goToMainOnSuccess;
     return Scaffold(
         backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
@@ -66,7 +68,7 @@ class K2Screen extends GetWidget<K2Controller> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                            padding: getPadding(top: 64),
+                            padding: getPadding(top: 20),
                             child: Divider(
                                 height: getVerticalSize(1),
                                 thickness: getVerticalSize(1),
@@ -77,13 +79,6 @@ class K2Screen extends GetWidget<K2Controller> {
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH1)),
-                        Padding(
-                            padding: getPadding(top: 10, right: 29),
-                            child: Text(
-                                'we_use_email'.tr(),
-                                maxLines: null,
-                                textAlign: TextAlign.left,
-                                style: AppStyle.txtH2)),
                         Padding(
                           padding: getPadding(top: 26, bottom: 10),
                           child: SizedBox(
@@ -139,7 +134,10 @@ class K2Screen extends GetWidget<K2Controller> {
                                 onTap: () => contextual
                                     ? Navigator.pushReplacementNamed(
                                         context, AppRoutes.signIn,
-                                        arguments: {'contextual': true})
+                                        arguments: {
+                                            'contextual': true,
+                                            'goToMainOnSuccess': goToMainOnSuccess,
+                                          })
                                     : Navigator.pushNamed(
                                         context, AppRoutes.signIn),
                                 child: Container(
@@ -454,7 +452,13 @@ class K2Screen extends GetWidget<K2Controller> {
     if (key.currentState!.validate() && checkbox == true && checkbox1 == true) {
       final String? number =
           controller.useEmail ? null : group889Controller.text;
-      final String? email = controller.useEmail ? emailController.text : null;
+      // See the matching comment in sign_in_screen/k2_screen.dart: this raw
+      // text also becomes the Firestore Users doc id, and iOS's default
+      // keyboard auto-capitalizes its first letter, which then can never
+      // match the lowercase request.auth.token.email the security rules
+      // check — permanent permission-denied for that account. Normalize once
+      // here, at the boundary.
+      final String? email = controller.useEmail ? emailController.text.trim().toLowerCase() : null;
       await controller.createNewUser(
           context, group887Controller.text, passwordController.text,
           email: email, number: number);

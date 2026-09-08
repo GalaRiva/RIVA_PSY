@@ -21,9 +21,9 @@ import FirebaseCore
                   with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
           SharedPreferencesPlugin.register(
                       with: registry.registrar(forPlugin: "io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin")!)
-                
+
             }
-      
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
     

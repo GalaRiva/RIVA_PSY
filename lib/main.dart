@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +23,8 @@ import 'widgets/fullscreen_audio_player_screen.dart';
 import 'widgets/mini_player_bar.dart';
 
 void main() async {
-
+    final _mainSw = Stopwatch()..start();
+    print('[STARTUP-DIAG] main() entered at ${DateTime.now()}');
     WidgetsFlutterBinding.ensureInitialized();
     if(!Platform.isIOS)
     SystemChrome.setPreferredOrientations([
@@ -50,54 +53,19 @@ void main() async {
     }
 
     await EasyLocalization.ensureInitialized();
-    await Firebase.initializeApp();
-    try {
-      HttpOverrides.global = MyHttpOverrides();
-      SharedPreferences.getInstance().then((value) => SharedPrefs.setSharedPreferences = value);
-      await HiveDB.initDB();
-      // Lock-screen/notification playback controls for AppAudioService's
-      // shared player — must run before any AudioPlayer is created (it
-      // isn't yet; that's lazy on first play()), and before runApp() per
-      // the package's own contract. Android only for now — iOS needs its
-      // own Info.plist/entitlements pass, batched separately (see
-      // project_ios_work_deferred memory). Requires MainActivity to extend
-      // FlutterFragmentActivity (see MainActivity.kt) — without that this
-      // silently breaks every AppAudioService.play() call.
-      if (!Platform.isIOS) {
-        await JustAudioBackground.init(
-          androidNotificationChannelId: 'com.riva_psy.app.channel.audio',
-          androidNotificationChannelName: 'Аудио',
-          androidNotificationOngoing: true,
-        );
-      }
-      final notificationService = AwesomeNotificationService();
-      // Must run before anything else touches AwesomeNotifications (e.g.
-      // WorkManagerService().initService(), called next from
-      // K1Controller.initialization() on every launch) — see
-      // initializeOnce()'s own doc comment for the hang this fixes.
-      await notificationService.initializeOnce();
-      notificationService.setListeners();
-      if (!Platform.isIOS) {
-        await registerNightlyInsightTask().catchError((_) {});
-        registerGratitudeNudgeTask().catchError((_) {});
-      }
-      //initializeDateFormatting('ru_RU');
+    print('[STARTUP-DIAG] after EasyLocalization.ensureInitialized: ${_mainSw.elapsedMilliseconds}ms');
+    print('[STARTUP-DIAG] total before runApp: ${_mainSw.elapsedMilliseconds}ms');
 
-      // Zero-friction entry: no forced registration screen anymore.
-      // A registered user (has a Firebase Auth session) goes through the
-      // splash screen exactly as before; a first-time/anonymous user gets a
-      // local UUID (offline, no server round-trip) and goes through the
-      // exact same splash screen — K1Controller.initialization() already
-      // conditionally skips its Firestore/CurrentUser sync when there's no
-      // Firebase Auth session, so it's already safe for an anonymous user.
-      // Registration itself now only happens contextually, from the
-      // subscription/backup screens (see AccountRequiredSheet).
-      await LocalIdentityService.ensureLocalId();
-      AppRoutes.initialRoute = AppRoutes.splashScreen;
-    } catch (_) {
-
-    }
-
+    // Firebase/Hive/audio/notifications used to all run here, awaited,
+    // before runApp() — nothing could paint until every one of them
+    // finished, which showed as a black flash between the native
+    // LaunchScreen and K1Screen's own splash UI. K1Screen doesn't touch any
+    // of them to render its first frame (just a local asset image + an
+    // animation), so there's nothing stopping runApp() from happening
+    // immediately and letting that work happen afterwards, in the
+    // background, behind the already-visible splash screen instead of a
+    // blank one. See bootstrapApp() below — it now runs from
+    // K1Controller.initialization() instead.
       runApp(EasyLocalization(
           supportedLocales: [Locale('ru', 'RU'), Locale('en', 'US'), Locale('es', 'ES')],
           path: 'assets/translations', // <-- change the path of the translation files
@@ -107,9 +75,84 @@ void main() async {
     //runApp( MyApp());
 }
 
+bool _appBootstrapped = false;
+
+// Everything main() used to await before runApp() — see its own comment
+// above for why it moved. Called from K1Controller.initialization(), which
+// already needs Firebase/Hive/notifications ready before its own logic
+// runs, so this is awaited there before anything else. Guarded to run only
+// once per app process: K1Controller.initialization() (and therefore this)
+// can run again later in the same session if the user gets routed back
+// through the splash screen (e.g. from enterPasswordScreen) — re-running
+// Firebase.initializeApp()/HiveDB.initDB() a second time would throw.
+Future<void> bootstrapApp() async {
+  if (_appBootstrapped) return;
+  _appBootstrapped = true;
+  final _sw = Stopwatch()..start();
+  await Firebase.initializeApp();
+  print('[STARTUP-DIAG] after Firebase.initializeApp: ${_sw.elapsedMilliseconds}ms');
+  FirebaseAuth.instance.authStateChanges().listen((user) {
+    print('[AUTHSTATE-DIAG] authStateChanges: uid=${user?.uid} email=${user?.email} at ${DateTime.now()}');
+  });
+  print('[AUTHSTATE-DIAG] initial currentUser at app start: ${FirebaseAuth.instance.currentUser?.uid}');
+  try {
+    HttpOverrides.global = MyHttpOverrides();
+    SharedPrefs.setSharedPreferences = await SharedPreferences.getInstance();
+    await HiveDB.initDB();
+    print('[STARTUP-DIAG] after HiveDB.initDB: ${_sw.elapsedMilliseconds}ms');
+    // Lock-screen/notification playback controls for AppAudioService's
+    // shared player — must run before any AudioPlayer is created (it
+    // isn't yet; that's lazy on first play()), and before runApp() per
+    // the package's own contract. The androidNotification* params are
+    // ignored on iOS (that side is driven by UIBackgroundModes: audio in
+    // Info.plist instead) but the call itself must still run there too —
+    // it's what registers the shared player with MPNowPlayingInfoCenter/
+    // Control Center. Requires MainActivity to extend FlutterFragmentActivity
+    // on Android (see MainActivity.kt) — without that this silently breaks
+    // every AppAudioService.play() call there.
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'com.riva_psy.app.channel.audio',
+      androidNotificationChannelName: 'Аудио',
+      androidNotificationOngoing: true,
+    );
+    print('[STARTUP-DIAG] after JustAudioBackground.init: ${_sw.elapsedMilliseconds}ms');
+    final notificationService = AwesomeNotificationService();
+    // Must run before anything else touches AwesomeNotifications (e.g.
+    // WorkManagerService().initService(), called right after this returns
+    // in K1Controller.initialization()) — see initializeOnce()'s own doc
+    // comment for the hang this fixes.
+    await notificationService.initializeOnce();
+    print('[STARTUP-DIAG] after notificationService.initializeOnce: ${_sw.elapsedMilliseconds}ms');
+    notificationService.setListeners();
+    // Nothing anywhere ever cleared the home-screen badge count, so it
+    // only ever grew — every delivered notification is "read" the moment
+    // the user opens the app at all, badge or no, so clearing it on every
+    // launch is the correct behavior here (not just once on first read).
+    AwesomeNotifications().resetGlobalBadge();
+    if (!Platform.isIOS) {
+      await registerNightlyInsightTask().catchError((_) {});
+      registerGratitudeNudgeTask().catchError((_) {});
+    }
+    //initializeDateFormatting('ru_RU');
+
+    // Zero-friction entry: no forced registration screen anymore.
+    // A registered user (has a Firebase Auth session) goes through the
+    // splash screen exactly as before; a first-time/anonymous user gets a
+    // local UUID (offline, no server round-trip) and goes through the
+    // exact same splash screen — K1Controller.initialization() already
+    // conditionally skips its Firestore/CurrentUser sync when there's no
+    // Firebase Auth session, so it's already safe for an anonymous user.
+    // Registration itself now only happens contextually, from the
+    // subscription/backup screens (see AccountRequiredSheet).
+    await LocalIdentityService.ensureLocalId();
+  } catch (_) {}
+  print('[STARTUP-DIAG] bootstrapApp total: ${_sw.elapsedMilliseconds}ms');
+}
+
 class MyApp extends StatelessWidget {
 
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LanguageProvider>(create: (BuildContext context) {
@@ -133,7 +176,7 @@ class MyApp extends StatelessWidget {
         title: 'RIVA PSY',
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.initialRoute ,
-        routes: AppRoutes.routes,
+        onGenerateRoute: AppRoutes.onGenerateRoute,
         // Most screens use fixed-size containers around text (getSize()-based,
         // scaled to screen dimensions, not to font size) — at large OS
         // accessibility text-scale settings that overflows and clips text

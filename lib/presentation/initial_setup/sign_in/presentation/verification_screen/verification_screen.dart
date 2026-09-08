@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../widgets/custom_button.dart';
@@ -20,7 +21,7 @@ class VerificationScreen extends StatelessWidget {
         children:[ CustomTextFormField(
           focusNode: FocusNode(),
           controller: controller.smsController,
-          hintText: "СМС",
+          hintText: 'sms_code_hint'.tr(),
           margin: getMargin(top: 16),
           maxLength: 16,
           variant: TextFormFieldVariant
@@ -29,12 +30,12 @@ class VerificationScreen extends StatelessWidget {
           fontStyle: TextFormFieldFontStyle
               .SFProDisplayRegular14,
           validator: (text) {
-            if(text!.trim() == "") return "Заполните поле";
+            if(text!.trim() == "") return 'fill_the_field'.tr();
           },),
           CustomButton(
               height: getVerticalSize(32),
               width: getHorizontalSize(178),
-              text: "Далее".toUpperCase(),
+              text: 'continue'.tr().toUpperCase(),
               margin:
               getMargin(top: 80),
               variant: ButtonVariant

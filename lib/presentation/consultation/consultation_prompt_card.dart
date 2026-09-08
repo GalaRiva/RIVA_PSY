@@ -17,18 +17,17 @@ class ConsultationPromptCard extends StatelessWidget {
         context,
         MaterialPageRoute(builder: (_) => const ConsultationScreen()),
       ),
+      // Was a solid-white card with the same drop shadow as the practices
+      // panel above it — same visual weight, so it read as another primary
+      // content block instead of the secondary, footer-level nudge it
+      // actually is. A soft tint + thin border (no shadow) keeps it
+      // legible and tappable without competing.
       child: Container(
-        padding: getPadding(left: 18, top: 16, right: 14, bottom: 16),
+        padding: getPadding(left: 18, top: 14, right: 14, bottom: 14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ColorConstant.cyan700.withOpacity(0.06),
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: ColorConstant.cardShadow.withOpacity(0.25),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          border: Border.all(color: ColorConstant.cyan700.withOpacity(0.14), width: 1),
         ),
         child: Row(
           children: [

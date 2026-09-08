@@ -30,7 +30,16 @@ class ConsultationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomAppBar(widget: CustomPopButton(text: 'consultation_screen_title'.tr())),
+              CustomAppBar(
+                widget: CustomPopButton(text: 'consultation_screen_title'.tr()),
+                // CustomAppBar's own default margin (top: 39) is meant for
+                // screens with no other top padding of their own — this
+                // screen already has SafeArea + top: 12, so stacking both
+                // pushed the title noticeably low. A smaller explicit
+                // margin here doesn't touch that shared default for any
+                // other screen using CustomAppBar.
+                margin: getMargin(top: 8),
+              ),
               SizedBox(height: getVerticalSize(24)),
               Expanded(
                 child: SingleChildScrollView(

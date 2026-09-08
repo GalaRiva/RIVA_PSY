@@ -1,4 +1,5 @@
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../../../core/models/calendar/month_model.dart';
@@ -48,7 +49,7 @@ class WorkingOutCalendarPage extends GetWidget {
                             padding: getPadding(
                               top: 39,
                             ),
-                            child: CustomPopButton(text: 'Рекомендации',)
+                            child: CustomPopButton(text: 'recommendations'.tr(),)
                         ),
                         Padding(
                           padding: getPadding(
@@ -185,7 +186,7 @@ class WorkingOutCalendarPage extends GetWidget {
                             onTap: () async {
                               controller.popWithData(context);
                             },
-                            text: "сохранить".toUpperCase(),
+                            text: 'save'.tr().toUpperCase(),
                             padding: ButtonPadding.PaddingT8,
                             margin: getMargin(top: 90),
                             alignment: Alignment.center),
@@ -193,7 +194,7 @@ class WorkingOutCalendarPage extends GetWidget {
                             height: getVerticalSize(32),
                             width: getHorizontalSize(186),
                             onTap: () => Navigator.pop(context),
-                            text: "отмена".toUpperCase(),
+                            text: 'cancel'.tr().toUpperCase(),
                             padding: ButtonPadding.PaddingT8,
                             alignment: Alignment.center),
                       ],

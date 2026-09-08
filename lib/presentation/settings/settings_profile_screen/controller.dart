@@ -15,6 +15,7 @@ import '../../../core/utils/color_constant.dart';
 import '../../../core/utils/size_utils.dart';
 import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_message_box.dart';
+import '../../initial_setup/sign_in/services/services_auth_service.dart';
 import 'text_field_formatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../core/db/firebase_firestore/data/repository.dart';
@@ -119,7 +120,11 @@ class K18Controller extends GetxController {
             Color lineColor = ColorConstant.fromHex('#3B3B4A');
             return GetBuilder(
               builder: (K18Controller _c) => CustomMessageBox(
-                height: 200,
+                // Was 200 — too tight for the title + current-login hint +
+                // input field + divider + Cancel/Save button row, which
+                // overflowed the fixed-height box (see CustomMessageBox)
+                // and left everything cramped/overlapping.
+                height: 280,
                 title: 'profile'.tr(),
                 content: Center(
                   child: Column(
@@ -137,35 +142,41 @@ class K18Controller extends GetxController {
                             fontFamily: 'Manrope'),
                       ),
                       Padding(
-                        padding: getPadding(top: 20),
-                        child: SizedBox(
-                          height: getVerticalSize(17),
-                          child: TextFormField(
-                            inputFormatters: [TextInputLoginFormatter()],
-                            onFieldSubmitted: (text) {
-                              if (text.isEmpty)
-                                lineColor = Colors.red;
-                              else {
-                                lineColor = ColorConstant.fromHex('#3B3B4A');
-                                Navigator.pop(context, text);
-                              }
-                              controller.update();
-                            },
-                            textAlign: TextAlign.center,
-                            maxLength: 20,
-                            style: TextStyle(
-                                color: ColorConstant.fromHex('#3B3B4A'),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300,
-                                fontFamily: 'Manrope'),
-                            decoration: InputDecoration(
-                                hintText: CurrentUser.user.login,
-                                counterText: "",
-                                border: OutlineInputBorder(
-                                    gapPadding: 0,
-                                    borderSide: BorderSide.none)),
-                            controller: controller.loginController,
-                          ),
+                        padding: getPadding(top: 20, left: 24, right: 24),
+                        // Was wrapped in a fixed `SizedBox(height: 17)` — too
+                        // tight for 14sp text to render without clipping
+                        // descenders (е.g. "р"/"у" tails cut off, reading as
+                        // mangled/different letters). Sized naturally now,
+                        // with isDense + a small contentPadding to stay
+                        // compact instead of pulling in TextFormField's
+                        // normal (much taller) default padding.
+                        child: TextFormField(
+                          inputFormatters: [TextInputLoginFormatter()],
+                          onFieldSubmitted: (text) {
+                            if (text.isEmpty)
+                              lineColor = Colors.red;
+                            else {
+                              lineColor = ColorConstant.fromHex('#3B3B4A');
+                              Navigator.pop(context, text);
+                            }
+                            controller.update();
+                          },
+                          textAlign: TextAlign.center,
+                          maxLength: 20,
+                          style: TextStyle(
+                              color: ColorConstant.fromHex('#3B3B4A'),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'Manrope'),
+                          decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(vertical: getVerticalSize(6)),
+                              hintText: CurrentUser.user.login,
+                              counterText: "",
+                              border: OutlineInputBorder(
+                                  gapPadding: 0,
+                                  borderSide: BorderSide.none)),
+                          controller: controller.loginController,
                         ),
                       ),
                       Padding(
@@ -318,5 +329,203 @@ class K18Controller extends GetxController {
               ),
             );
           });
+
+  Future<bool?> _showDeleteAccountConfirmDialog(BuildContext context) =>
+      showDialog<bool>(
+          context: context,
+          builder: (context) => CustomMessageBox(
+                height: 170,
+                title: 'delete_account'.tr(),
+                content: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: getPadding(left: 16, right: 16, top: 16),
+                        child: Text(
+                          'delete_account_confirm_body'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'Manrope'),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomButton(
+                                text: 'cancel'.tr(),
+                                variant: ButtonVariant.White,
+                                onTap: () => Navigator.pop(context, false),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: CustomButton(
+                                text: 'delete_account_confirm_cta'.tr(),
+                                variant: ButtonVariant.White,
+                                onTap: () => Navigator.pop(context, true),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ));
+
+  Future<String?> _promptPasswordForDeletion(BuildContext context) {
+    final passwordController = TextEditingController();
+    return showDialog<String>(
+        context: context,
+        builder: (context) => CustomMessageBox(
+              height: 170,
+              title: 'delete_account'.tr(),
+              content: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: getPadding(left: 16, right: 16, top: 16),
+                      child: Text(
+                        'delete_account_enter_password'.tr(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: 'Manrope'),
+                      ),
+                    ),
+                    Padding(
+                      padding: getPadding(left: 16, right: 16, top: 12),
+                      child: TextFormField(
+                        controller: passwordController,
+                        obscureText: true,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: ColorConstant.fromHex('#3B3B4A'),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: 'Manrope'),
+                        decoration: InputDecoration(
+                            counterText: "",
+                            border: OutlineInputBorder(
+                                gapPadding: 0, borderSide: BorderSide.none)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              text: 'cancel'.tr(),
+                              variant: ButtonVariant.White,
+                              onTap: () => Navigator.pop(context),
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: CustomButton(
+                              text: 'ok'.tr(),
+                              variant: ButtonVariant.White,
+                              onTap: () =>
+                                  Navigator.pop(context, passwordController.text),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ));
+  }
+
+  void _showSimpleError(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+            CustomMessageBox(title: 'profile'.tr(), content: message));
+  }
+
+  Future<bool> _reauthenticateForDeletion(BuildContext context) async {
+    final authService = CurrentUser.repo.authService;
+    if (authService == 'apple') {
+      return await ServicesAuthService().authWithApple();
+    } else if (authService == 'google') {
+      return await ServicesAuthService().authWithGoogle();
+    }
+    final password = await _promptPasswordForDeletion(context);
+    if (password == null || password.trim().isEmpty) return false;
+    final email = _authInstance.currentUser?.email ?? '';
+    if (email.isEmpty) return false;
+    try {
+      final credential =
+          EmailAuthProvider.credential(email: email, password: password);
+      await _authInstance.currentUser!.reauthenticateWithCredential(credential);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<void> _performAccountDeletion(User user) async {
+    await FireStoreRepositoryImpl()
+        .deleteAccountData(userId: CurrentUser.repo.userId());
+    await user.delete();
+  }
+
+  // App Store Guideline 5.1.1(v): since Sign in with Apple is offered, the
+  // account and its data must be deletable from inside the app, not only via
+  // support. Firebase requires a *recent* sign-in for currentUser.delete() —
+  // re-running the same provider's sign-in flow (rather than
+  // reauthenticateWithCredential for Apple, whose native credential
+  // verification Firebase itself rejects — see authWithApple's own comment)
+  // refreshes that recency for the same account before retrying.
+  Future<void> deleteAccount(BuildContext context) async {
+    final confirmed = await _showDeleteAccountConfirmDialog(context);
+    if (confirmed != true) return;
+
+    final user = _authInstance.currentUser;
+    if (user == null) return;
+
+    try {
+      await _performAccountDeletion(user);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        final reauthed = await _reauthenticateForDeletion(context);
+        final freshUser = _authInstance.currentUser;
+        if (!reauthed || freshUser == null) {
+          _showSimpleError(context, 'delete_account_failed'.tr());
+          return;
+        }
+        try {
+          await _performAccountDeletion(freshUser);
+        } catch (_) {
+          _showSimpleError(context, 'delete_account_failed'.tr());
+          return;
+        }
+      } else {
+        _showSimpleError(context, 'delete_account_failed'.tr());
+        return;
+      }
+    } catch (_) {
+      _showSimpleError(context, 'delete_account_failed'.tr());
+      return;
+    }
+
+    CurrentUser.reset();
+    DataSourceService.setRemoteDataSource();
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRoutes.splashScreen, (route) => false);
+    AppRoutes.currentRoute = AppRoutes.main;
+  }
 
 }

@@ -1,11 +1,11 @@
 <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3.22824 9.88992V1.39602C3.22824 0.896376 3.61685 0.452243 4.17201 0.452243H13.9983C14.4979 0.452243 14.9421 0.84086 14.9421 1.39602V17.8842C14.9421 18.3838 14.5535 18.828 13.9983 18.828H6.55919" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3.78153 3.78177H14.8847" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M9.05794 11.0001C7.67005 11.0001 6.55973 9.88976 6.55973 8.50186V7.94671C6.55973 6.55881 7.67005 5.4485 9.05794 5.4485C10.4458 5.4485 11.5561 6.55881 11.5561 7.94671V8.50186C11.5561 9.88976 10.4458 11.0001 9.05794 11.0001Z" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M4.89202 15.441H14.8849" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M8.77876 17.1077H10.4442" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.66826 2.11701H10.4441" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M2.12167 15.9963V10.6668C2.12167 10.3892 2.34373 10.1671 2.62131 10.1671C3.89817 10.1671 4.89746 11.1664 4.89746 12.4433V16.2739C4.89746 16.6625 5.00848 17.0511 5.28606 17.3287L6.78499 19.2717C7.00705 19.5493 7.1736 19.9379 7.1736 20.3265V21.5479" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M0.451998 21.5469V10.1662C0.451998 8.72277 0.95164 7.27936 1.83989 6.11353L3.22779 4.33702" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M6.55973 12.6648H12.1113C12.722 12.6648 13.2216 13.1644 13.2216 13.7751" stroke="#1499A2" stroke-width="0.9" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.22824 9.88992V1.39602C3.22824 0.896376 3.61685 0.452243 4.17201 0.452243H13.9983C14.4979 0.452243 14.9421 0.84086 14.9421 1.39602V17.8842C14.9421 18.3838 14.5535 18.828 13.9983 18.828H6.55919" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.78153 3.78177H14.8847" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.05794 11.0001C7.67005 11.0001 6.55973 9.88976 6.55973 8.50186V7.94671C6.55973 6.55881 7.67005 5.4485 9.05794 5.4485C10.4458 5.4485 11.5561 6.55881 11.5561 7.94671V8.50186C11.5561 9.88976 10.4458 11.0001 9.05794 11.0001Z" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.89202 15.441H14.8849" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.77876 17.1077H10.4442" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.66826 2.11701H10.4441" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.12167 15.9963V10.6668C2.12167 10.3892 2.34373 10.1671 2.62131 10.1671C3.89817 10.1671 4.89746 11.1664 4.89746 12.4433V16.2739C4.89746 16.6625 5.00848 17.0511 5.28606 17.3287L6.78499 19.2717C7.00705 19.5493 7.1736 19.9379 7.1736 20.3265V21.5479" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M0.451998 21.5469V10.1662C0.451998 8.72277 0.95164 7.27936 1.83989 6.11353L3.22779 4.33702" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.55973 12.6648H12.1113C12.722 12.6648 13.2216 13.1644 13.2216 13.7751" stroke="#1499A2" stroke-width="0.7" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:riva_psy/core/utils/emotion_in_day_event_extension.dart';
 
 import '../../../../../../core/models/day_event_model.dart';
 import '../../../../../../core/utils/color_constant.dart';
@@ -45,36 +44,13 @@ class ExerciseContentWidget extends StatelessWidget {
       child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-    Padding(
-    padding: getPadding(
-      top: 34,
-      left: 10,
-      right: 10,
-    ),
-    child: Text(
-    'you_are_feeling'.tr(),
-    overflow: TextOverflow.ellipsis,
-    textAlign: TextAlign.left,
-    style: AppStyle
-        .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
-    ),
-    ),
+        // "Вы испытываете:" + the raw category label ("Негативные") were
+        // removed here — the emotion pill right below already names the
+        // specific emotion directly, and a preceding "you are feeling" /
+        // category-name pair was redundant with it, just extra text before
+        // getting to the actual content.
         Padding(
-          padding: getPadding(
-            top: 34,
-            left: 10,
-            right: 10,
-          ),
-          child: Text(
-            dayEvent.emotionInDayEvent!.getEmotionType().tr(),
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.left,
-            style: AppStyle
-                .txtSFProDisplayLight14Cyan700a0,
-          ),
-        ),
-        Padding(
-          padding: getPadding(top: 18,
+          padding: getPadding(top: 34,
             left: 10,
             right: 10,),
           // Same size/shape as the "Выговориться" card above (glassCard,
@@ -103,116 +79,130 @@ class ExerciseContentWidget extends StatelessWidget {
             ),
           ),
         ),
+        // "Practices" section — was a bare header + carousel + dropdown
+        // floating loose on the page background, one of several
+        // same-weight blocks stacked with no visual grouping. One enclosing
+        // glass panel (same family as the emotion-pill card above it) gives
+        // it a defined boundary, so the page reads as "input card" then
+        // "practices card" instead of six unrelated pieces in a row.
         Padding(
-          padding: getPadding(
-            top: 19,
-            left: 10,
-            right: 10,
-          ),
-          child: Text(
-            'how_to_live_through'.tr(args: [dayEvent.whatEmotion![0].localizedName.toLowerCase()]),
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.left,
-            style: AppStyle
-                .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-        Padding(padding: getPadding(top: 12),
-        child: FutureBuilder(
-          future: controller.ensureAudiosLoaded(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: SizedBox(
-                  width: 50,
-                    height: 50,
-                    child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
-              );
-            }
-            return Column(children: [
-              if (controller.mainAudios.isNotEmpty)
-                Padding(
-                  padding: getPadding(top: 12, bottom: 20),
-                  child: HeroAudioCarousel(
-                    audios: controller.mainAudios,
-                    accentColor: accentColor,
-                  ),
+          padding: getPadding(top: 19, left: 10, right: 10),
+          child: Container(
+            width: double.infinity,
+            padding: getPadding(all: 14),
+            decoration: AppDecoration.glassCard,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'how_to_live_through'.tr(args: [dayEvent.whatEmotion![0].localizedName.toLowerCase()]),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: AppStyle
+                      .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
                 ),
-              Visibility(
-                  visible: dayEvent.whatEmotion!.length > 1,
-                  child: Theme(
-                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      tilePadding: getPadding(top: 20, left: 10, right: 10),
-                      childrenPadding: EdgeInsets.zero,
-                      expandedAlignment: Alignment.centerLeft,
-                      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                      iconColor: ColorConstant.cyan700,
-                      collapsedIconColor: ColorConstant.cyan700,
-                      title: Text(
-                        'additional_emotions_short'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                children: [
-                  Padding(
-                      padding: getPadding(
-                        top: 18,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: SizedBox(
-                        height: getVerticalSize(90),
-                        width: size.width,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: PageScrollPhysics(),
-                            itemCount: controller.additionalEmotions?.length ?? 0, itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: getPadding(right: 12),
-                            child: EventCard(
-                              emotionMood: moodForKey(
-                                  controller.additionalEmotions![index].identity,
-                                  categoryMood),
-                              model: controller.additionalEmotions![index],
-                              cardHeight: 44, isSelect: false,
-                              cardWidth: size.width / 2.4,
-                              useShadowStyle: true,
-                            ),
-                          );
-
-                        }
+                FutureBuilder(
+                  future: controller.ensureAudiosLoaded(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Padding(
+                        padding: getPadding(top: 20, bottom: 20),
+                        child: Center(
+                          child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
                         ),
-                      )
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      top: 18,
-                      left: 10,
-                      right: 10,
-                    ),
-                    child: Text(
-                      'how_to_live_through_additional_emotions'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800a0,
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(top: 12),
-                    child: AudioContainers(audios: controller.additionalAudios, startIndex: controller.mainAudios.length,),
-                  ),
-                ],
-                    ),
-                  ))
+                      );
+                    }
+                    return Column(children: [
+                      if (controller.mainAudios.isNotEmpty)
+                        Padding(
+                          padding: getPadding(top: 12, bottom: 8),
+                          child: HeroAudioCarousel(
+                            audios: controller.mainAudios,
+                            accentColor: accentColor,
+                          ),
+                        ),
+                      Visibility(
+                          visible: dayEvent.whatEmotion!.length > 1,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              tilePadding: getPadding(top: 8, left: 0, right: 0),
+                              childrenPadding: EdgeInsets.zero,
+                              expandedAlignment: Alignment.centerLeft,
+                              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                              iconColor: ColorConstant.cyan700,
+                              collapsedIconColor: ColorConstant.cyan700,
+                              title: Text(
+                                'additional_emotions_short'.tr(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle
+                                    .txtSFProDisplayLight14Gray800a0.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                        children: [
+                          Padding(
+                              padding: getPadding(
+                                top: 18,
+                                left: 0,
+                                right: 0,
+                              ),
+                              child: SizedBox(
+                                height: getVerticalSize(90),
+                                width: size.width,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: PageScrollPhysics(),
+                                    itemCount: controller.additionalEmotions?.length ?? 0, itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: getPadding(right: 12),
+                                    child: EventCard(
+                                      emotionMood: moodForKey(
+                                          controller.additionalEmotions![index].identity,
+                                          categoryMood),
+                                      model: controller.additionalEmotions![index],
+                                      cardHeight: 44, isSelect: false,
+                                      cardWidth: size.width / 2.4,
+                                      useShadowStyle: true,
+                                    ),
+                                  );
 
-            ],);
-          },
+                                }
+                                ),
+                              )
+                          ),
+                          Padding(
+                            padding: getPadding(
+                              top: 18,
+                              left: 0,
+                              right: 0,
+                            ),
+                            child: Text(
+                              'how_to_live_through_additional_emotions'.tr(),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: AppStyle
+                                  .txtSFProDisplayLight14Gray800a0,
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(top: 12),
+                            child: AudioContainers(audios: controller.additionalAudios, startIndex: controller.mainAudios.length,),
+                          ),
+                        ],
+                            ),
+                          ))
+
+                    ],);
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
-        )
       ],
     ),
     );

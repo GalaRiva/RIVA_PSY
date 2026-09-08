@@ -16,6 +16,9 @@
 # Backup files left over from manual edits
 *.bak
 
+# Flutter crash reports left in the repo root after a bad run
+/flutter_*.log
+
 # Platform build output not covered by the root /build/ rule above
 /android/build/
 /android/app/release/

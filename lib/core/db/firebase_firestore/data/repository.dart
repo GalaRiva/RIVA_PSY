@@ -281,4 +281,16 @@ class FireStoreRepositoryImpl extends FireStoreRepository {
       return false;
     }
   }
+
+  @override
+  Future<void> deleteAccountData({required String userId}) async {
+    if (userId.isEmpty) return;
+    final userDoc = instance.collection(_userCollection).doc(userId);
+    final backups = await userDoc.collection(_userBackupsCollection).get();
+    for (final backup in backups.docs) {
+      await backup.reference.delete();
+    }
+    await userDoc.delete();
+    await instance.collection(_userDataCollection).doc(userId).delete();
+  }
 }

@@ -100,8 +100,13 @@ class _PortraitOnboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(color: Color(0xFF0B1917)),
-      padding: getPadding(left: 24, right: 24, top: 40, bottom: 32),
-      child: Column(
+      // No scroll view here before — on a shorter screen (or with a longer
+      // translation) the title/body/button just overflowed off the bottom,
+      // under K70Screen's own bottom nav, with no way to reach them.
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: getPadding(left: 24, right: 24, top: 40, bottom: 32),
+          child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.blur_circular_rounded,
@@ -138,6 +143,8 @@ class _PortraitOnboarding extends StatelessWidget {
             onTap: onContinue,
           ),
         ],
+          ),
+        ),
       ),
     );
   }

@@ -165,14 +165,14 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
             body: CustomTabBar(
               tabs: [
                 ExercisesTabBody(controller: controller),
-                WorkingOutScreen(),
                 const GuidedJournalsPage(),
+                WorkingOutScreen(),
                 const PortraitPage(),
               ],
               labels: [
                 'cope_with_an_emotion'.tr(),
-                'gaining'.tr(),
                 'breadcrumbs_exercise'.tr(),
+                'gaining'.tr(),
                 'portrait_tab'.tr()
               ],
               controller: pageController,
@@ -180,12 +180,12 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
             ),
           ),
         ),
-        // "Обретение" (index 1) always hides the bottom nav while active,
+        // "Обретение" (index 2) always hides the bottom nav while active,
         // regardless of which of its own sub-exercises the user is on —
         // simpler and lower-risk than per-stage immersive mode for that
         // section (see PROJECT_CONTEXT.md for why that approach was
         // reverted there).
-        bottomNavigationBar: (controller.immersiveMode || controller.activeTopLevelTab == 1) ? null : CustomBottomBar(),
+        bottomNavigationBar: (controller.immersiveMode || controller.activeTopLevelTab == 2) ? null : CustomBottomBar(),
       )),
     );
   }

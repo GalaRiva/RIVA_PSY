@@ -60,7 +60,7 @@ class K39Screen extends GetWidget {
                                padding: getPadding(
                                  left: 15,
                                  right: 10,
-                                 top: 39,
+                                 top: 20,
                                ),
                                child: Text(
                                  'current_emotion'.tr(),
@@ -71,7 +71,7 @@ class K39Screen extends GetWidget {
                              ),
                              Padding(
                                padding: getPadding(
-                                 top: 12,
+                                 top: 8,
                                  left: 10,
                                  right: 10,
                                ),
@@ -108,12 +108,21 @@ class K39Screen extends GetWidget {
                                child: ScreenBodyWidget(isNegative: dayEventModel.emotionInDayEvent == EmotionInDayEvent.NEGATIVE, dayEventModel: dayEventModel,)
                              ),
                              if (context.locale.languageCode == 'ru')
+                               // More top clearance than before (20 -> 40) —
+                               // enough of a gap that this reads as a
+                               // separate, secondary footer nudge, not the
+                               // next block in the same "practices" section.
                                Padding(
-                                 padding: getPadding(left: 16, right: 16, top: 20),
+                                 padding: getPadding(left: 16, right: 16, top: 40),
                                  child: const ConsultationPromptCard(),
                                ),
+                             // Was 140, then 220 — still not enough on some
+                             // devices: the last emotion card kept ending up
+                             // partly underneath the floating "ЗАВЕРШИТЬ
+                             // ПРАКТИКУ" button even after scrolling all the
+                             // way down.
                              SizedBox(
-                               height: getVerticalSize(140),
+                               height: getVerticalSize(280),
                              )
                            ],
                          ),
@@ -124,12 +133,14 @@ class K39Screen extends GetWidget {
             child: Padding(
               padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
               child: CustomButton(
-                height: getVerticalSize(32),
+                height: getVerticalSize(40),
                 // 'finish_practice' ("Завершить практику" / "Finish the
                 // practice") runs longer than the old "Готово" — a fixed
                 // 148 clipped it. Width now tracks the screen instead.
                 width: MediaQuery.of(context).size.width - getHorizontalSize(52),
-                variant: ButtonVariant.Base,
+                bgColor: ColorConstant.cyan700,
+                showShadow: false,
+                textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                 textIsFitted: true,
                 text: 'finish_practice'.tr().toUpperCase(),
                 onTap: () async {

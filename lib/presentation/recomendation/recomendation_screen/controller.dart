@@ -38,7 +38,16 @@ class K70Controller extends GetxController {
    negativeEmotionsModel ??= NegativeEmotionsModel(this);
    tabControllerSecond = TabController(length: negativeEmotionsModel!.tabs.length, vsync: ticker, initialIndex: currentTabSecond);
 
-   update();
+   // init() runs from K70Screen.didChangeDependencies(), i.e. during that
+   // screen's mount/build. K70Controller is a shared Get.put() singleton,
+   // so if another widget holding a GetBuilder<K70Controller> (the mini
+   // player bar) is still mid-build in the same frame — e.g. navigating to
+   // a new screen while the mini player is showing — a synchronous
+   // update() here hits "setState() called during build" and crashes.
+   // Deferring the notification to after this frame is safe: tabController/
+   // tabControllerSecond are already set above, synchronously, before this
+   // screen's own build() runs.
+   WidgetsBinding.instance.addPostFrameCallback((_) => update());
   }
 
   final introductionModel = IntroductionModel();
@@ -76,7 +85,7 @@ class K70Controller extends GetxController {
   }
 
   // The K70 top-level CustomTabBar's own PageView position (0=Справиться с
-  // эмоцией, 1=Обретение, 2=Хлебные крошки, 3=Проекция Я) — distinct from
+  // эмоцией, 1=Хлебные крошки, 2=Обретение, 3=Проекция Я) — distinct from
   // `currentTab` above, which tracks a different, older TabController.
   // Kept in sync purely from CustomTabBar.onPageChanged, so it never
   // depends on any nested module's own stage — used to hide the bottom

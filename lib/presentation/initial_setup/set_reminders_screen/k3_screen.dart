@@ -14,12 +14,24 @@ import '../../../core/user_data/user.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
 
 import '../../../theme/app_colors.dart';
+import '../../../main.dart';
 
 class K3Screen extends GetWidget<K3Controller> {
   final controller = Get.put(K3Controller());
   int quantity = 1;
 
-  K3Screen({Key? key}) : super(key: key);
+  // Navigator.canPop(context) was used to tell the two ways this screen
+  // gets reached apart (a dismissible dialog vs. the sole route on the
+  // stack after verification) — see onTapColumnten's own comment. That
+  // turned out unreliable: showDialog() pushes onto the ROOT navigator by
+  // default, but canPop(context) from inside the dialog's own content
+  // resolves the NEAREST Navigator, which isn't guaranteed to be the same
+  // one — so it could read "can't pop" even while shown as a dialog,
+  // making "Далее" fall through to the splashScreen-redirect branch
+  // instead of just closing the dialog. Explicit and unambiguous instead.
+  final bool isDialog;
+
+  K3Screen({Key? key, this.isDialog = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -336,17 +348,49 @@ class K3Screen extends GetWidget<K3Controller> {
     }
     await CurrentUser.repo.setLocalUserData(reminderTime: quantity);
     SharedPrefs.sharedPreferences.setBool('set_reminders', true);
-    Navigator.pop(context);
+
+    // Reached two ways: as a dismissible dialog (Settings, MainScreen's
+    // openMessages()) — where popping just the dialog is correct — and as
+    // the post-verification onboarding step, pushed via
+    // pushNamedAndRemoveUntil(setRemindersScreen, (route) => false), which
+    // makes this screen the ONLY route on the stack, where popping does
+    // nothing and a redirect to the splash screen is needed instead. Was
+    // decided via Navigator.canPop(context), which turned out unreliable
+    // for the dialog case (see isDialog's own doc comment) — using the
+    // explicit flag instead.
+    if (isDialog) {
+      Navigator.pop(context);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.splashScreen, (route) => false);
+    }
+
     if (continu) {
       // Always continues to the OS notification-permission ask next, even
       // if "Не уведомлять" was picked here — that permission also covers
       // insight nudges, pill reminders, etc., not just diary reminders, so
       // skipping it here would risk losing it for those too.
-      if (SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
-        showDialog(
-            useSafeArea: false,
-            context: context,
-            builder: (_) => SendPushesScreen());
+      //
+      // Must run AFTER the pop/redirect above, not before: when isDialog is
+      // true, showDialog() here would have pushed SendPushesScreen on TOP
+      // of this screen's own dialog route, and the Navigator.pop(context)
+      // right after would then pop that freshly-pushed SendPushesScreen
+      // route instead of this one (LIFO) — leaving this dialog stuck on
+      // screen with no visible effect from tapping "Далее" at all
+      // (confirmed on-device 2026-09-07). Using MyApp.navigatorKey's own
+      // context instead of this screen's `context` sidesteps the *other*
+      // failure mode this ordering used to risk — this screen's context
+      // being unmounted by the redirect branch above by the time
+      // showDialog runs.
+      if (SharedPrefs.sharedPreferences.getBool('send_pushes') == null) {
+        final rootContext = MyApp.navigatorKey.currentContext;
+        if (rootContext != null) {
+          showDialog(
+              useSafeArea: false,
+              context: rootContext,
+              builder: (_) => SendPushesScreen());
+        }
+      }
       // "Тариф" recommendation popup (RecommendationBuyTariffScreen) removed
       // from this chain by request — see the matching removal in
       // main_screen/controller.dart's openMessages() for why.

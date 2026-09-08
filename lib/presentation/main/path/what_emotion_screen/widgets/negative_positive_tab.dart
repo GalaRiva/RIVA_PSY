@@ -49,8 +49,8 @@ class NegativePositiveTab extends StatelessWidget {
                         padding:  EdgeInsets.only(bottom: index == displayList.length - 1 ? 40 : 20),
                         child: EventCard(
                           cardWidth: size.width / 2 - 30,
-                          iconSizeOverride: 108, useShadowStyle: true, borderRadiusOverride: 16,
-                          fontSizeOverride: 18,
+                          iconSizeOverride: 92, useShadowStyle: true, borderRadiusOverride: 16,
+                          fontSizeOverride: 13,
                           // number 1 = the negative emotions tag, 2 = positive
                           // (see K27Repo.getTag) — same widget renders both.
                           emotionMood: number == 1

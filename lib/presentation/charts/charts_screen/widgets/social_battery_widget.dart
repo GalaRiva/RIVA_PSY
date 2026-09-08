@@ -9,6 +9,7 @@ import '../../../../theme/app_colors.dart';
 import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_detail_sheet.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
+import '../../../../widgets/empty_state_widget.dart';
 
 /// "Трекер социальной батарейки" — a capsule gauge for the current charge
 /// level, plus a mood line chart with an alone/social split background and
@@ -67,10 +68,7 @@ class _SocialBatteryWidgetState extends State<SocialBatteryWidget> with SingleTi
           ),
           SizedBox(height: getVerticalSize(16)),
           if (result.isEmpty)
-            Padding(
-              padding: getPadding(top: 24, bottom: 24),
-              child: Text('social_battery_empty'.tr(), textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight14),
-            )
+            EmptyStateWidget(icon: Icons.battery_charging_full_rounded, title: 'social_battery_empty'.tr())
           else ...[
             _buildGauge(result.currentLevel),
             SizedBox(height: getVerticalSize(20)),

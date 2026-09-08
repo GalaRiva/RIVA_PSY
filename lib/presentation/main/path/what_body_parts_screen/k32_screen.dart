@@ -40,7 +40,6 @@ class K32Screen extends GetWidget {
         child: SizedBox(
           width: size.width,
           child: Stack(            alignment: Alignment.bottomCenter,
-
             children: [
               SingleChildScrollView(
                 child: Padding(
@@ -55,7 +54,7 @@ class K32Screen extends GetWidget {
                     children: [
                       Padding(
                         padding: getPadding(
-                          top: 39,
+                          top: 20,
                         ),
                         child: Text(
                           'current_emotion'.tr(),
@@ -66,7 +65,7 @@ class K32Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 12,
+                          top: 8,
                         ),
                         child: Divider(
                           height: getVerticalSize(
@@ -80,17 +79,33 @@ class K32Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 14,
+                          top: 10,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              'what_was_happening_with_body'.tr(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtH1,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: getPadding(right: 4),
+                                    child: Icon(Icons.chevron_left_rounded,
+                                        size: getSize(32), color: ColorConstant.gray800),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'what_was_happening_with_body'.tr(),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width - 32,
@@ -106,7 +121,7 @@ class K32Screen extends GetWidget {
                                 hintText: 'find_body_part'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 28,
+                                  top: 16,
                                   right: 16,
                                 ),
                                 suffix: Container(
@@ -151,7 +166,7 @@ class K32Screen extends GetWidget {
                                 hintText: 'add_body_part'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 25,
+                                  top: 14,
                                   right: 16,
                                 ),
                                 suffix: Container(
@@ -275,41 +290,15 @@ class K32Screen extends GetWidget {
         child: Padding(
           padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
           child: GetBuilder(
-                    builder: (K32Controller _c) => Container(
-                      width: double.maxFinite,
-
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomButton(
-                            height: getVerticalSize(
-                              32,
-                            ),
-                            width: getHorizontalSize(
-                              177,
-                            ),
-                            textIsFitted: true,
-                            onTap: () => Navigator.pop(context),
-                            text: 'choosing_emotion'.tr().toUpperCase(),
-                            variant: ButtonVariant.Base,
-                            padding: ButtonPadding.PaddingT8,
-                            prefixWidget: CustomImageView(
-                              margin: getMargin(right: 4),
-                              svgPath: ImageConstant.leftArrow,
-                            ),
-                          ),
-                          CustomButton(
-                            height: getVerticalSize(
-                              32,
-                            ),
+                    builder: (K32Controller _c) => CustomButton(
+                            height: getVerticalSize(40),
                             bgColor: ColorConstant.cyan700,
+                            showBorder: false,
+                            borderRadius: 14,
+                            glossy: true,
+                            showShadow: false,
                             textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
-                            width: getHorizontalSize(
-                              140,
-                            ),
+                            width: MediaQuery.of(context).size.width - 32,
                             onTap: controller
                                 .currentEventList.isNotEmpty
                                 ? () {
@@ -342,10 +331,7 @@ class K32Screen extends GetWidget {
                             margin: getMargin(
                               bottom: 10,
                             ),
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
                   ),
                 ),
               ),

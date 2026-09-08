@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/models/event_model.dart';
 import '../../../core/utils/color_constant.dart';
 import '../../../core/utils/size_utils.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/app_decoration.dart';
 import '../../../theme/app_style.dart';
 import '../../../widgets/custom_image_view.dart';
@@ -37,7 +38,14 @@ class EventCard extends StatelessWidget {
   // across the app. Left null keeps that exact existing look everywhere;
   // only screens that explicitly pass this get rounder corners.
   final double? borderRadiusOverride;
-  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood, this.useShadowStyle = false, this.borderRadiusOverride}) : super(key: key);
+  // Opt-in per call site (place/person/event picker screens) — soft
+  // neomorphism instead of either the flat bordered look or useShadowStyle's
+  // single drop shadow: the card is the same near-white as the page
+  // background (AppColors.background) with a light shadow on one side and a
+  // darker one on the other, so it reads as gently raised off the page
+  // rather than a distinct bordered/shadowed box sitting on top of it.
+  final bool neomorphic;
+  const EventCard({Key? key, required this.model, this.onTap, this.suffix = '', this.cardHeight = 150, this.iconColor, required this.isSelect, this.textIsFitted, this.cardWidth, this.iconSizeOverride, this.fontSizeOverride, this.emotionMood, this.useShadowStyle = false, this.borderRadiusOverride, this.neomorphic = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +78,15 @@ class EventCard extends StatelessWidget {
           cardWidth ?? width
         ,
         decoration: BoxDecoration(
-          color: ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),
+          color: neomorphic
+              ? AppColors.background
+              : ColorConstant.fromHex('#F6F5F6').withOpacity(0.77),
           borderRadius: BorderRadius.circular(
             getHorizontalSize(
               borderRadiusOverride ?? 3,
             ),
         ),
-          border: useShadowStyle
+          border: (neomorphic || useShadowStyle)
               ? (isSelect
                   ? Border.all(color: ColorConstant.cyan700, width: 2)
                   : null)
@@ -85,20 +95,39 @@ class EventCard extends StatelessWidget {
                       ? ColorConstant.cyan700
                       : ColorConstant.fromHex('#403875').withOpacity(0.22),
                   width: 1),
-          boxShadow: useShadowStyle ? [
-            BoxShadow(
-              // Was a flat blueGray6001 4 shadow regardless of selection —
-              // useShadowStyle cards had no persistent selected look at
-              // all (no border either), so a tap only flashed the InkWell
-              // ripple and then looked identical to unselected again.
-              color: isSelect
-                  ? ColorConstant.cyan700.withOpacity(0.35)
-                  : ColorConstant.blueGray60014,
-              spreadRadius: getHorizontalSize(isSelect ? 1 : 2),
-              blurRadius: getHorizontalSize(isSelect ? 8 : 2),
-              offset: Offset(0, isSelect ? 3 : 5),
-            ),
-          ] : null,
+          boxShadow: neomorphic
+              ? [
+                  // Light source top-left: a near-white highlight there and
+                  // a soft gray shadow on the opposite (bottom-right) side —
+                  // the classic soft-UI "raised" pair, both fairly tight/low
+                  // opacity so it reads as gentle depth, not a floating card.
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.9),
+                    blurRadius: getHorizontalSize(10),
+                    offset: Offset(getHorizontalSize(-5), getHorizontalSize(-5)),
+                  ),
+                  BoxShadow(
+                    color: ColorConstant.gray800.withOpacity(0.16),
+                    blurRadius: getHorizontalSize(10),
+                    offset: Offset(getHorizontalSize(5), getHorizontalSize(5)),
+                  ),
+                ]
+              : useShadowStyle
+                  ? [
+                      BoxShadow(
+                        // Was a flat blueGray6001 4 shadow regardless of selection —
+                        // useShadowStyle cards had no persistent selected look at
+                        // all (no border either), so a tap only flashed the InkWell
+                        // ripple and then looked identical to unselected again.
+                        color: isSelect
+                            ? ColorConstant.cyan700.withOpacity(0.35)
+                            : ColorConstant.blueGray60014,
+                        spreadRadius: getHorizontalSize(isSelect ? 1 : 2),
+                        blurRadius: getHorizontalSize(isSelect ? 8 : 2),
+                        offset: Offset(0, isSelect ? 3 : 5),
+                      ),
+                    ]
+                  : null,
       ),
         padding: EdgeInsets.all(4),
         child: Column(
@@ -155,7 +184,7 @@ class EventCard extends StatelessWidget {
             maxLines: 3,
             style: AppStyle
                 .txtSFProDisplayLight11Gray800
-                .copyWith(fontSize: getFontSize(fontSizeOverride ?? 15))
+                .copyWith(fontSize: getFontSize(fontSizeOverride ?? 13))
         ),
       );
     else return Text(

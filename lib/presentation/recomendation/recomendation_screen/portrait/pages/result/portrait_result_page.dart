@@ -81,7 +81,7 @@ class PortraitResultPage extends StatelessWidget {
                             SizedBox(height: getVerticalSize(8)),
                           if (def.requiresDisclaimer)
                             Text(
-                              kPortraitAttachmentDisclaimer,
+                              kPortraitAttachmentDisclaimer.tr(),
                               style: AppStyle.txtSFProDisplayLight12.copyWith(
                                   color: Colors.white.withOpacity(0.7),
                                   height: 1.4),

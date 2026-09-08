@@ -16,13 +16,22 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="YRO-k0-Ey4">
+                            <!-- Same launch background as Android (bg_native.png):
+                                 teal-green fill, hand + star line art, RIVA PSY
+                                 logo — was a small centered placeholder image on
+                                 a plain white background, not matching Android's
+                                 launch screen at all. scaleAspectFill + edge
+                                 constraints instead of center so it covers the
+                                 whole screen the same way. -->
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" clipsToBounds="YES" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="YRO-k0-Ey4">
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.4" green="0.7568627451" blue="0.7411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1a2-6s-vTC"/>
-                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4X2-HB-R7a"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2bQ-3c-9pL"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="7fR-8d-1mN"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="9hS-4e-6qT"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="3jU-5f-2rV"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -32,6 +41,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="168" height="185"/>
+        <image name="LaunchImage" width="360" height="812"/>
     </resources>
 </document>

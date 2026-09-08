@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -24,7 +25,7 @@ class EnterPasswordScreen extends GetWidget<EnterPasswordController> {
               child: Column(
                   children: [
                     SizedBox(height: size.height / 2 - 60,),
-                    Text("Введите пароль",
+                    Text('enter_password_prompt'.tr(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle

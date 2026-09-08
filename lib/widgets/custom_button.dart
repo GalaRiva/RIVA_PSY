@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
-import 'custom_text.dart';
-
 class CustomButton extends StatelessWidget {
   CustomButton(
       {this.shape,
@@ -23,9 +21,16 @@ class CustomButton extends StatelessWidget {
       this.textIsFitted = false,
       this.standardPadding,
       this.showBorder = true,
+      this.showShadow = true,
       this.minHeight,
       this.borderRadius,
-      this.borderColor});
+      this.borderColor,
+      this.glossy = false});
+
+  // Opt-in soft highlight overlay (top-to-bottom white gradient, faded out
+  // by ~45% down) on top of a solid bgColor — a "glass/glossy" sheen for
+  // buttons that want the 3D look, without switching to a translucent fill.
+  final bool glossy;
 
   ButtonShape? shape;
 
@@ -51,6 +56,13 @@ class CustomButton extends StatelessWidget {
   ButtonVariant? variant;
 
   final bool showBorder;
+
+  // Opt-out for the default drop shadow in `_buildTextButtonStyle` — every
+  // CustomButton gets one unconditionally, which reads fine on a plain
+  // background but pools into a visible gray "panel" behind a floating
+  // pill CTA sitting close to colorful/glowing content (e.g. the emotion
+  // picker's glowing selection circles) or the bottom nav bar.
+  final bool showShadow;
 
   ButtonFontStyle? fontStyle;
   TextStyle? textStyle;
@@ -106,7 +118,15 @@ class CustomButton extends StatelessWidget {
             ? getPadding(top: 6, bottom: 6, left: 6, right: 6)
             : null,
         decoration: _buildTextButtonStyle(),
-        child: _buildButtonWithOrWithoutIcon(),
+        clipBehavior: glossy ? Clip.antiAlias : Clip.none,
+        child: glossy
+            ? Stack(
+                children: [
+                  _buildButtonWithOrWithoutIcon(),
+                  const Positioned.fill(child: _GlossOverlay()),
+                ],
+              )
+            : _buildButtonWithOrWithoutIcon(),
       ),
     );
   }
@@ -133,18 +153,27 @@ class CustomButton extends StatelessWidget {
   }
 
   _getCentralWidget() {
+    // Was CustomText, which re-runs easy_localization's tr() internally —
+    // but every CustomButton call site already resolves its own `.tr()`
+    // before passing `text:` in, so that second lookup was always looking
+    // up already-translated text as if it were a key (e.g. tr("СОХРАНИТЬ")
+    // after 'save'.tr().toUpperCase() already ran). tr() silently falls
+    // back to the input when the key isn't found, so this was harmless in
+    // practice, but it spammed "Localization key [...] not found" warnings
+    // on every button render — confirmed via a full-codebase audit that no
+    // CustomButton call site depends on this second resolution.
     return Center(
       child: centralWidget ??
           (textIsFitted
               ? FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: CustomText(
+                  child: Text(
                     text ?? "",
                     textAlign: TextAlign.center,
                     style: textStyle ?? _setFontStyle(),
                   ),
                 )
-              : CustomText(
+              : Text(
                   text ?? "",
                   textAlign: TextAlign.center,
                   style: textStyle ?? _setFontStyle(),
@@ -165,12 +194,14 @@ class CustomButton extends StatelessWidget {
       border: !showBorder
           ? null
           : Border.all(color: borderColor ?? Colors.white, width: 1),
-      boxShadow: [
-        BoxShadow(
-            color: ColorConstant.fromHex('#5F6B80').withOpacity(0.2),
-            offset: Offset(0, 6),
-            blurRadius: 5)
-      ],
+      boxShadow: !showShadow
+          ? null
+          : [
+              BoxShadow(
+                  color: ColorConstant.fromHex('#5F6B80').withOpacity(0.2),
+                  offset: Offset(0, 6),
+                  blurRadius: 5)
+            ],
     );
   }
 
@@ -270,9 +301,17 @@ class CustomButton extends StatelessWidget {
       case ButtonShape.Square:
         return BorderRadius.circular(0);
       default:
+        // Was 3.0 — barely rounded, and every screen that didn't pass its
+        // own explicit borderRadius (the majority of "plain" buttons app-
+        // wide, e.g. the Путь wizard's back/continue row) fell back to this
+        // near-square corner while screens that DID set one directly (the
+        // pill-shaped CTAs, radius 100) looked nothing alike. 12 matches
+        // the main screen's own CustomButton radius (k20_screen.dart) —
+        // unifying the *default* look without touching any screen that
+        // already specifies its own radius explicitly.
         return BorderRadius.circular(
           getHorizontalSize(
-            3.00,
+            12.00,
           ),
         );
     }
@@ -401,6 +440,31 @@ class CustomButton extends StatelessWidget {
           ),
         );
     }
+  }
+}
+
+// Decorative-only overlay — IgnorePointer keeps it from ever intercepting
+// the tap meant for CustomButton's own GestureDetector.
+class _GlossOverlay extends StatelessWidget {
+  const _GlossOverlay();
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white.withOpacity(0.38),
+              Colors.white.withOpacity(0.0),
+            ],
+            stops: const [0.0, 0.22],
+          ),
+        ),
+      ),
+    );
   }
 }
 

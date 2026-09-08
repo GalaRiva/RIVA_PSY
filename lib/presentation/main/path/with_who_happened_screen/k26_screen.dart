@@ -41,7 +41,6 @@ class K26Screen extends GetWidget {
           width: size.width,
           child: Stack(
             alignment: Alignment.bottomCenter,
-
             children: [
               SingleChildScrollView(
                 child: Padding(
@@ -57,7 +56,7 @@ class K26Screen extends GetWidget {
                     children: [
                       Padding(
                         padding: getPadding(
-                          top: 39,
+                          top: 20,
                         ),
                         child: Text(
                           'current_emotion'.tr(),
@@ -68,7 +67,7 @@ class K26Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 12,
+                          top: 8,
                         ),
                         child: Divider(
                           height: getVerticalSize(
@@ -82,17 +81,33 @@ class K26Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 14,
+                          top: 10,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              'with_whom_it_happened'.tr(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtH1,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: getPadding(right: 4),
+                                    child: Icon(Icons.chevron_left_rounded,
+                                        size: getSize(32), color: ColorConstant.gray800),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'with_whom_it_happened'.tr(),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width - 32,
@@ -107,7 +122,7 @@ class K26Screen extends GetWidget {
                                 hintText: 'find_person'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 28,
+                                  top: 16,
                                   right: 16,
                                 ),
                                 suffix: Container(
@@ -136,7 +151,7 @@ class K26Screen extends GetWidget {
                                 hintText: 'add_person'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 25,
+                                  top: 14,
                                   right: 16,
                                 ),
                                 onSubmit: (t)async {
@@ -203,7 +218,7 @@ class K26Screen extends GetWidget {
                             ),
                             Padding(
                                 padding: getPadding(
-                                  top: 42,
+                                  top: 24,
                                 ),
                                 child: Center(
                                   child: SizedBox(
@@ -221,8 +236,8 @@ class K26Screen extends GetWidget {
                                           child: EventCard(
                                             cardWidth:
                                             size.width / 2 - 30,
-                                            iconSizeOverride: 60, useShadowStyle: true, borderRadiusOverride: 16,
-                                            fontSizeOverride: 18,
+                                            iconSizeOverride: 50, neomorphic: true, borderRadiusOverride: 16,
+                                            fontSizeOverride: 16,
                                             model: el, onTap: () {
                                                 controller.whoDidHappen = el;
                                                 controller.update();
@@ -271,35 +286,14 @@ class K26Screen extends GetWidget {
                 child: Padding(
                   padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: GetBuilder(
-                      builder: (K26Controller _c) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomButton(
-                              variant: ButtonVariant.Base,
-                              height: getVerticalSize(
-                                32,
-                              ),
-                              width: getHorizontalSize(
-                                177,
-                              ),
-                              textIsFitted: true,
-                              onTap: () => Navigator.pop(context),
-                              text: 'choosing_place'.tr().toUpperCase(),
-                              padding: ButtonPadding.PaddingT8,
-                              prefixWidget: CustomImageView(
-                                margin: getMargin(right: 4),
-                                svgPath: ImageConstant.leftArrow,
-                              ),
-                            ),
-                            CustomButton(
-                              height: getVerticalSize(
-                                32,
-                              ),
-                              width: getHorizontalSize(
-                                140,
-                              ),
+                      builder: (K26Controller _c) => CustomButton(
+                              height: getVerticalSize(40),
+                              width: MediaQuery.of(context).size.width - 32,
                               bgColor: ColorConstant.cyan700,
+                              showBorder: false,
+                              borderRadius: 14,
+                              glossy: true,
+                              showShadow: false,
                               textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
 
                               onTap: controller.currentEventList.isNotEmpty
@@ -325,12 +319,10 @@ class K26Screen extends GetWidget {
                               margin: getMargin(
                                 bottom: 10,
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                            ),
                     ),
-                  ),
+                ),
+              ),
 
             ],
           ),

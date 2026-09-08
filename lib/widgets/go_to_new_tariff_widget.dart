@@ -129,7 +129,7 @@ Future<void> _subscribe(BuildContext context,
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Не удалось начать покупку: $e')),
+          SnackBar(content: Text('purchase_start_failed'.tr(namedArgs: {'error': '$e'}))),
         );
       }
     }

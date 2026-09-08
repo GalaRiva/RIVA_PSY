@@ -108,24 +108,12 @@ class WhatEmotionWidget extends StatelessWidget {
             top: 30,
             right: 20
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'what_emotions_am_I_feeling'.tr(),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: AppStyle
-                    .txtSFProDisplayLight14Gray800,
-              ),
-              Text(
-                "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: AppStyle.txtSFProDisplayLight10
-                    .copyWith(color: ColorConstant.cyan700),
-              ),
-            ],
+          child: Text(
+            'what_emotions_am_I_feeling'.tr(),
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.left,
+            style: AppStyle
+                .txtSFProDisplayLight14Gray800,
           ),
           ),
               // "Эмоциональное облако" (2026-08-10): a physics-driven bubble

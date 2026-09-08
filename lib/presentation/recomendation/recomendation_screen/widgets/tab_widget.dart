@@ -157,13 +157,22 @@ class _TabWidgetState extends State<TabWidget> {
       builder: (K70Controller _c) => Container(
            // height: getVerticalSize(height),
             width: size.width,
-            color: ColorConstant.grayLight,
             child: Stack(
               children: [
             Padding(
                   padding: getPadding(top: 16),
                   child: SingleChildScrollView(
-                    child: Column(
+                    // Fill only moved here, from the outer Container — that
+                    // one has no fixed height and TabBarView forces it to
+                    // fill the whole tab page, so its gray color used to
+                    // paint all the way to the bottom of the screen even
+                    // when this tab's actual content (a handful of tracks)
+                    // was much shorter, leaving a bare gray strip below the
+                    // last track. A Container sized to the real content
+                    // (inside the scroll view) only colors what's there.
+                    child: Container(
+                      color: ColorConstant.grayLight,
+                      child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Visibility(
@@ -263,6 +272,7 @@ class _TabWidgetState extends State<TabWidget> {
                         SizedBox(height: 20,)
                       ],
                 ),
+                    ),
                   ),
                 ),
                 Visibility(

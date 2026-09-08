@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' ;
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/string_extension.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
@@ -37,19 +37,19 @@ class K6Screen extends GetWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                                padding: getPadding(top: 64),
+                                padding: getPadding(top: 30),
                                 child: Divider(
                                     height: getVerticalSize(1),
                                     thickness: getVerticalSize(1),
                                     color: ColorConstant.gray50)),
                             Padding(
-                                padding: getPadding(top: 25),
-                                child: Text("Настройки",
+                                padding: getPadding(top: 16),
+                                child: Text('settings'.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
                             SizedBox(
-                              height: getVerticalSize(78),
+                              height: getVerticalSize(24),
                             ),
                             CardSettingsButtonWidget(
                               context,
@@ -67,11 +67,59 @@ class K6Screen extends GetWidget {
                               height: getVerticalSize(21),
                             ),
                             CardSettingsButtonWidget(context,
-                                onTap: () => onTapRowrefresh(context),
-                                title: 'about_app',
-                                svgIcon: ImageConstant.imgRefresh,
+                                onTap: () => Navigator.pushNamed(
+                                    context, AppRoutes.reminders),
+                                title: 'reminders',
+                                svgIcon: ImageConstant.imgClockGray800,
                                 controller: controller,
                                 svgSize: 24),
+                            Visibility(
+                                child: CardSettingsButtonWidget(context,
+                                    onTap: () async =>
+                                        await controller.onTapPill(
+                                            context,
+                                            GlobalKey<
+                                                ScaffoldMessengerState>()),
+                                    title: 'apoinment_reminders',
+                                    svgIcon: ImageConstant.imgPill,
+                                    controller: controller,
+                                    svgSize: 24,
+                                    height: 53)),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => onTapRowclose(context),
+                              title: 'subscription',
+                              svgIcon: ImageConstant.imgHeart,
+                              controller: controller,
+                              svgSize: 20,
+                            ),
+                            SizedBox(
+                              height: getVerticalSize(21),
+                            ),
+                            if (context.locale.languageCode == 'ru')
+                              CardSettingsButtonWidget(
+                                context,
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const ConsultationScreen())),
+                                title: 'consultation_menu_item',
+                                svgIcon: ImageConstant.imgConsultation,
+                                controller: controller,
+                                svgSize: 24,
+                              ),
+                            SizedBox(
+                              height: getVerticalSize(21),
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => Navigator.pushNamed(
+                                  context, AppRoutes.selectLanguage),
+                              title: 'language',
+                              svgIcon: ImageConstant.imgUser,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
                             GetBuilder(
                               builder: (K6Controller _c) => CardSettingsButtonWidget(context,
                                   onTap: () => controller.password
@@ -89,30 +137,32 @@ class K6Screen extends GetWidget {
                             ),
                             CardSettingsButtonWidget(
                               context,
+                              onTap: () => launchUrl(
+                                  Uri.parse('mailto:support@rivapsy.com')),
+                              title: 'write_to_us',
+                              svgIcon: ImageConstant.imgMail,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => onTapRowrefresh(context),
+                              title: 'about_app',
+                              svgIcon: ImageConstant.imgRefresh,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
                               onTap: () =>
                                   controller.onTapDataAndRecovery(context),
                               title: 'data_and_recovery',
                               svgIcon: ImageConstant.imgClip,
                               controller: controller,
-                              svgSize: 20,
+                              svgSize: 24,
                             ),
                             SizedBox(
-                              height: getVerticalSize(21),
-                            ),
-                            Visibility(
-                                child: CardSettingsButtonWidget(context,
-                                    onTap: () async =>
-                                        await controller.onTapPill(
-                                            context,
-                                            GlobalKey<
-                                                ScaffoldMessengerState>()),
-                                    title: 'apoinment_reminders',
-                                    svgIcon: ImageConstant.imgPill,
-                                    controller: controller,
-                                    svgSize: 24,
-                                    height: 53)),
-                            SizedBox(
-                              height: getVerticalSize(21),
+                              height: getVerticalSize(40),
                             ),
                             CardSettingsButtonWidget(
                               context,
@@ -130,56 +180,6 @@ class K6Screen extends GetWidget {
                               controller: controller,
                               svgSize: 24,
                             ),
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => launchUrl(
-                                  Uri.parse('mailto:support@rivapsy.com')),
-                              title: 'write_to_us',
-                              svgIcon: ImageConstant.imgMail,
-                              controller: controller,
-                              svgSize: 24,
-                            ),
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => Navigator.pushNamed(
-                                  context, AppRoutes.reminders),
-                              title: 'reminders',
-                              svgIcon: ImageConstant.imgClockGray800,
-                              controller: controller,
-                              svgSize: 24,
-                            ),
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => onTapRowclose(context),
-                              title: 'subscription',
-                              svgIcon: ImageConstant.imgClose,
-                              controller: controller,
-                              svgSize: 24,
-                            ),
-                            SizedBox(
-                              height: getVerticalSize(40),
-                            ),
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => Navigator.pushNamed(
-                                  context, AppRoutes.selectLanguage),
-                              title: 'language',
-                              svgIcon: ImageConstant.imgUser,
-                              controller: controller,
-                              svgSize: 24,
-                            ),
-                            if (context.locale.languageCode == 'ru')
-                              CardSettingsButtonWidget(
-                                context,
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => const ConsultationScreen())),
-                                title: 'consultation_menu_item',
-                                svgIcon: ImageConstant.imgConsultation,
-                                controller: controller,
-                                svgSize: 24,
-                              ),
                             // Dev-only entry points — kept for quick
                             // on-device testing, but must never ship visible
                             // to real users, so gated behind kDebugMode.
@@ -255,7 +255,7 @@ class K6Screen extends GetWidget {
                                 onTap: () => showDialog(
                                     useSafeArea: false,
                                     context: context,
-                                    builder: (_) => K3Screen()),
+                                    builder: (_) => K3Screen(isDialog: true)),
                                 title: '🧪 Reminders test (temp)',
                                 svgIcon: ImageConstant.imgUser,
                                 controller: controller,

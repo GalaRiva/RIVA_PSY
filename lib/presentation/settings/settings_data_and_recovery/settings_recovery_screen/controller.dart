@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 import 'package:riva_psy/core/db/firebase_firestore/models/backup_model.dart';
 import 'package:riva_psy/core/db/hive_db.dart';
@@ -33,13 +34,13 @@ class RecoveryController extends GetxController {
         await fireStoreRepo.deleteBackupFromFireStore(data);
         showDialog(context: context,
             builder: (context) =>
-                CustomMessageBox(title: 'Восстановление резервной копии',
-                    content: 'Резервная копия была удалена'));
+                CustomMessageBox(title: 'backup_recovery_title'.tr(),
+                    content: 'backup_deleted'.tr()));
       } else {
         showDialog(context: context,
             builder: (context) =>
-                CustomMessageBox(title: 'Восстановление резервной копии',
-                    content: 'Ошибка, не удалось удалить резервную копию'));
+                CustomMessageBox(title: 'backup_recovery_title'.tr(),
+                    content: 'backup_delete_error'.tr()));
 
       }
       update();
@@ -47,8 +48,8 @@ class RecoveryController extends GetxController {
     } catch (_) {
       showDialog(context: context,
           builder: (context) =>
-              CustomMessageBox(title: 'Восстановление резервной копии',
-                  content: 'Ошибка, не удалось удалить резервную копию'));
+              CustomMessageBox(title: 'backup_recovery_title'.tr(),
+                  content: 'backup_delete_error'.tr()));
     }
   }
 
@@ -67,7 +68,7 @@ class RecoveryController extends GetxController {
             if(value == null) {
 
               //await fireStoreRepo.deleteBackupFromFireStore(data);
-              showDialog(context: context, builder: (context) => CustomMessageBox(title: 'Восстановление резервной копии', content: 'Данной резервной копии нет на диске'));
+              showDialog(context: context, builder: (context) => CustomMessageBox(title: 'backup_recovery_title'.tr(), content: 'backup_not_found_on_disk'.tr()));
 
             }
             else
@@ -79,7 +80,7 @@ class RecoveryController extends GetxController {
                     showDialog(
                         context: context,
                         builder: (context) => CustomMessageBox(
-                            title: 'Восстановление резервной копии',
+                            title: 'backup_recovery_title'.tr(),
                             height: getVerticalSize(180),
                             content: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +88,7 @@ class RecoveryController extends GetxController {
                                 Padding(
                                   padding: getPadding(left: 40, right: 40),
                                   child: Text(
-                                    'Версия от ${data.date_time} успешно востановлена',
+                                    'backup_restored_success'.tr(namedArgs: {'date': '${data.date_time}'}),
                                     style:
                                         AppStyle.txtSFProDisplayLight14Gray800,
                                     textAlign: TextAlign.center,
@@ -103,7 +104,7 @@ class RecoveryController extends GetxController {
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  text: "ок".toUpperCase(),
+                                  text: 'ok'.tr().toUpperCase(),
                                 ),
                               ],
                             )));

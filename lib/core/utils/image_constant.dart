@@ -36,6 +36,8 @@ class ImageConstant {
 
   static String imgPill = 'assets/images/pill.svg';
 
+  static String imgHeart = 'assets/images/img_heart.svg';
+
   static String imgConsultation = 'assets/images/consultation_icon.svg';
 
   static String imgSmallLogo = 'assets/images/riva_logo_mark_white.png';

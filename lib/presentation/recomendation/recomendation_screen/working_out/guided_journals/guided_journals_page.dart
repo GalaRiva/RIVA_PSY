@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:riva_psy/core/user_data/user.dart';
-import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 
 import '../../controller.dart';
 import 'bloc/guided_journals_cubit.dart';
@@ -14,8 +12,11 @@ import 'pages/question/guided_journal_question_page.dart';
 // "Хлебные крошки" — guided journals: a library of emotional themes, each
 // walked through as one question per screen, ending in a short insight
 // (+ optional audio). 4th exercise in "Обретение", alongside
-// WorkingOutIrrationalTab/HappinessInFocusPage/DesiresPage — same
-// self-contained BlocProvider + own tariff gate as DesiresPage.
+// WorkingOutIrrationalTab/HappinessInFocusPage/DesiresPage. Unlike those
+// three, the library itself is always browsable — only the first
+// kGuidedJournalFreeTopicCount topics are free, the rest are gated per-card
+// (see GuidedJournalLibraryPage/GuidedJournalTopicCard), not behind one
+// screen-wide paywall.
 class GuidedJournalsPage extends StatelessWidget {
   const GuidedJournalsPage({Key? key}) : super(key: key);
 
@@ -33,9 +34,6 @@ class GuidedJournalsPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (!CurrentUser.tariffIsOrion()) {
-            return GoToNewTariffWidget(goToFreeRecommendation: false);
-          }
           switch (state.stage) {
             case GuidedJournalStage.question:
               return const GuidedJournalQuestionPage();

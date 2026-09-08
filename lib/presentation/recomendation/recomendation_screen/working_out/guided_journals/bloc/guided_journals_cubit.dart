@@ -55,4 +55,16 @@ class GuidedJournalsCubit extends Cubit<GuidedJournalsState> {
   void backToLibrary() {
     emit(GuidedJournalsState.library(state.topics));
   }
+
+  // Question screen's only way out — it has no other exit control (see
+  // guided_journal_question_page.dart). Mirrors PortraitCubit.previousQuestion:
+  // steps back a question, or exits to the library from the first one.
+  void previousQuestion() {
+    if (state.questionIndex == 0) {
+      backToLibrary();
+      return;
+    }
+    final answers = [...state.answers];
+    emit(state.copyWith(answers: answers, questionIndex: state.questionIndex - 1));
+  }
 }

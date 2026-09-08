@@ -56,13 +56,10 @@ class AdmissionScheduleWidget extends StatelessWidget {
         text: 'add_medication_intake_schedule'.tr().toUpperCase(),
         width: getHorizontalSize(315),
         alignment: Alignment.center,
-        height: getVerticalSize(32),
-        suffixWidget: CustomImageView(
-          svgPath: ImageConstant.imgVector46,
-          width: getHorizontalSize(4),
-          margin: getMargin(left: 10),
-          height: getVerticalSize(8),
-        ),
+        // Was a fixed 32 — with the app-wide font-size boost this two-word-
+        // -per-line Russian label no longer fit on one line and got clipped
+        // instead of wrapping visibly. Tall enough for 2 lines now.
+        height: getVerticalSize(56),
       ),
     );
   }

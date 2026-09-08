@@ -51,4 +51,12 @@ abstract class FireStoreRepository {
 
   Future<bool> createPostInFirestoreDatabase ({required String selectedCollection,
     required String docPath, required Map<String, dynamic> content});
+
+  // App Store Guideline 5.1.1(v): an account created via Sign in with Apple
+  // must be deletable from within the app, not just via support. Removes the
+  // Firestore-side data tied to userId() (the Users doc, its Backups
+  // subcollection, and the UsersData doc) — the Firebase Auth user itself is
+  // deleted separately by the caller, since that call needs the live
+  // FirebaseAuth.currentUser reference, not just the id string.
+  Future<void> deleteAccountData ({required String userId});
 }

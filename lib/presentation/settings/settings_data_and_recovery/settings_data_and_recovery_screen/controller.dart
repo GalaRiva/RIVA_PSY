@@ -65,7 +65,7 @@ class DataAndRecoveryController extends GetxController {
         final backup = BackupModel(
             fileId,
             '${now.day} ${now.month.monthInText()} ${now.year} г. ${now.hour.timeFormatted()}:${now.minute.timeFormatted()}',
-            'Записей: $records',
+            'records_count_label'.tr(namedArgs: {'count': '$records'}),
             service,
             'riva_psy_backup_from_${now.toIso8601String()}');
         try {
@@ -74,15 +74,13 @@ class DataAndRecoveryController extends GetxController {
           showDialog(
               context: context,
               builder: (context) => CustomMessageBox(
-                  title: 'Данные и восстановление',
-                  content:
-                      'Вы успешно добавили резервную копию приложения в свой $service'));
+                  title: 'data_recovery_title'.tr(),
+                  content: 'backup_added_success'.tr(namedArgs: {'service': service})));
         } catch (_) {
           FirebaseExceptionExporter.exportException(_);
           if (showErrorMessage)
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    'An error occurred, please check your internet connection or try again later\nError details - $_')));
+                content: Text('network_error_try_later'.tr())));
         }
         update();
       } catch (_) {
@@ -90,7 +88,7 @@ class DataAndRecoveryController extends GetxController {
         print(_);
         if (showErrorMessage)
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('An unexpected error occurred\nError details - $_')));
+              SnackBar(content: Text('network_error_try_later'.tr())));
       }
     }
   }

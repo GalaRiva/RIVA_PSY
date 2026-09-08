@@ -77,8 +77,8 @@ class NeutralTab extends StatelessWidget {
                             padding:  EdgeInsets.only(bottom: index == positiveList.length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
-                              iconSizeOverride: 108, useShadowStyle: true, borderRadiusOverride: 16,
-                              fontSizeOverride: 18,
+                              iconSizeOverride: 92, useShadowStyle: true, borderRadiusOverride: 16,
+                              fontSizeOverride: 13,
                               emotionMood: EmotionMood.positive,
                               isSelect: controller.contain(positiveList[index]),
                               model: positiveList[index], onTap: () {
@@ -100,8 +100,8 @@ class NeutralTab extends StatelessWidget {
                             padding:  EdgeInsets.only(bottom: index == negativeList.length - 1 ? 40 : 20),
                             child: EventCard(
                               cardWidth: (MediaQuery.of(context).size.width - 32) / 2 - 30,
-                              iconSizeOverride: 108, useShadowStyle: true, borderRadiusOverride: 16,
-                              fontSizeOverride: 18,
+                              iconSizeOverride: 92, useShadowStyle: true, borderRadiusOverride: 16,
+                              fontSizeOverride: 13,
                               emotionMood: EmotionMood.negative,
                               isSelect: controller.contain(negativeList[index]),
                               model: negativeList[index], onTap: () {

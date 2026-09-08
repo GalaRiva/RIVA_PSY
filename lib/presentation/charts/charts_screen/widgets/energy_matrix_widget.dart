@@ -9,6 +9,7 @@ import '../../../../theme/app_colors.dart';
 import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_detail_sheet.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
+import '../../../../widgets/empty_state_widget.dart';
 
 /// "Матрица Энергии" — quadrant scatter of context tags (who/what/where),
 /// positioned by average valence (X) and average arousal (Y). Bubbles are
@@ -256,14 +257,7 @@ class _EnergyMatrixWidgetState extends State<EnergyMatrixWidget> with SingleTick
           ),
           SizedBox(height: getVerticalSize(16)),
           if (widget.points.isEmpty)
-            Padding(
-              padding: getPadding(top: 24, bottom: 24),
-              child: Text(
-                'energy_matrix_empty'.tr(),
-                textAlign: TextAlign.center,
-                style: AppStyle.txtSFProDisplayLight14,
-              ),
-            )
+            EmptyStateWidget(icon: Icons.scatter_plot_rounded, title: 'energy_matrix_empty'.tr())
           else ...[
             AspectRatio(aspectRatio: _canvasWidth / _canvasHeight, child: _buildQuadrant()),
             SizedBox(height: getVerticalSize(20)),

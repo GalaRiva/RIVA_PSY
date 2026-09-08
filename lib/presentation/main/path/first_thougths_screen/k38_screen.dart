@@ -38,7 +38,7 @@ class K38Screen extends GetWidget {
                     children: [
                       Padding(
                         padding: getPadding(
-                          top: 39,
+                          top: 20,
                         ),
                         child: Text(
                           'current_emotion'.tr(),
@@ -49,7 +49,7 @@ class K38Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 12,
+                          top: 8,
                         ),
                         child: Divider(
                           height: getVerticalSize(
@@ -66,12 +66,28 @@ class K38Screen extends GetWidget {
                           left: 1,
                           top: 15,
                         ),
-                        child: Text(
-                          'first_thoughts_in_situation'.tr(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtH1,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              behavior: HitTestBehavior.opaque,
+                              child: Padding(
+                                padding: getPadding(right: 4),
+                                child: Icon(Icons.chevron_left_rounded,
+                                    size: getSize(32), color: ColorConstant.gray800),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'first_thoughts_in_situation'.tr(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -118,35 +134,15 @@ class K38Screen extends GetWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomButton(
-                        height: getVerticalSize(
-                          32,
-                        ),
-                        width: getHorizontalSize(
-                          159,
-                        ),
-                        variant: ButtonVariant.Base,
-                        textIsFitted: true,
-                        onTap: ()=>Navigator.pop(context),
-                        text: 'what_did_I_do'.tr().toUpperCase(),
-                        padding: ButtonPadding.PaddingT8,
-                        prefixWidget: CustomImageView(
-                          margin: getMargin(right: 4),
-                          svgPath: ImageConstant.leftArrow,
-                        ),
-                      ),
-                      CustomButton(
-                        height: getVerticalSize(
-                          32,
-                        ),
-                        width: getHorizontalSize(
-                          140,
-                        ),
-                        variant: ButtonVariant.Base,
+                  child: CustomButton(
+                        height: getVerticalSize(40),
+                        width: MediaQuery.of(context).size.width - 32,
+                        bgColor: ColorConstant.cyan700,
+                        showBorder: false,
+                        borderRadius: 14,
+                        glossy: true,
+                        showShadow: false,
+                        textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                         onTap: () async {
                           dayEventModel.firstThoughts = fieldController.text;
                           dayEventModel.date = DateTime.now();
@@ -154,8 +150,6 @@ class K38Screen extends GetWidget {
                         },
                         text: 'save'.tr().toUpperCase(),
                       ),
-                    ],
-                  ),
                 ),
               ),
             ],

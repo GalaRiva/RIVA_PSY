@@ -53,7 +53,7 @@ class K37Screen extends StatelessWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 39,
+                          top: 20,
                         ),
                         child: Text(
                           'current_emotion'.tr(),
@@ -64,7 +64,7 @@ class K37Screen extends StatelessWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 12,
+                          top: 8,
                         ),
                         child: Divider(
                           height: getVerticalSize(
@@ -79,13 +79,29 @@ class K37Screen extends StatelessWidget {
                       Padding(
                         padding: getPadding(
                           left: 1,
-                          top: 14,
+                          top: 10,
                         ),
-                        child: Text(
-                          'what_did_I_do'.tr(),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtH1,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              behavior: HitTestBehavior.opaque,
+                              child: Padding(
+                                padding: getPadding(right: 4),
+                                child: Icon(Icons.chevron_left_rounded,
+                                    size: getSize(32), color: ColorConstant.gray800),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'what_did_I_do'.tr(),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -132,41 +148,15 @@ class K37Screen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
-                  child: Row(
-                    // Was spaceEvenly (reserves equal gaps at both outer
-                    // edges too) with a 171-wide back button — too narrow
-                    // for the Spanish "EMOCIONES EN EL CUERPO" label even
-                    // with textIsFitted scaling it down, so it visually
-                    // crowded into the "SIGUIENTE" button next to it.
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomButton(
-                        height: getVerticalSize(
-                          32,
-                        ),
-                        width: getHorizontalSize(
-                          195,
-                        ),
-                        variant: ButtonVariant.Base,
-
-                        onTap: ()=>Navigator.pop(context),
-                        text: 'emotions_in_body'.tr().toUpperCase(),
-                        textIsFitted: true,
-                        padding: ButtonPadding.PaddingT8,
-                        prefixWidget: CustomImageView(
-                          margin: getMargin(right: 4),
-                          svgPath: ImageConstant.leftArrow,
-                        ),
-                      ),
-                      CustomButton(
-                        height: getVerticalSize(
-                          32,
-                        ),
-                        width: getHorizontalSize(
-                          125,
-                        ),
-                        variant: ButtonVariant.Base,
+                  child: CustomButton(
+                        height: getVerticalSize(40),
+                        width: MediaQuery.of(context).size.width - 32,
+                        bgColor: ColorConstant.cyan700,
+                        showBorder: false,
+                        borderRadius: 14,
+                        glossy: true,
+                        showShadow: false,
+                        textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                         text: 'continue'.tr().toUpperCase(),
                         onTap: () async {
 
@@ -175,8 +165,6 @@ class K37Screen extends StatelessWidget {
                           Navigator.pushNamed(context, AppRoutes.first_thougths, arguments: dayEventModel.copyWith(whatIDo: fieldController.text));
                         },
                       ),
-                    ],
-                  ),
                 ),
               ),
 

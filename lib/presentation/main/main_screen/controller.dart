@@ -18,6 +18,19 @@ import '../../initial_setup/send_pushes_screen/send_pushe_screen.dart';
 
 class K20Controller extends GetxController {
 
+  // Guards the one-time "show onboarding messages" Timer in k20_screen.dart
+  // — build() there re-runs on every GetBuilder<K20Controller> update (mood
+  // slider drag, emotion chip tap, etc.), and without this flag each
+  // re-run scheduled its own fresh 2-second Timer that also called
+  // openMessages(). If the user hadn't finished the reminders dialog yet
+  // (set_reminders still null) by the time a second/third Timer fired,
+  // openMessages() showed ANOTHER K3Screen dialog stacked on top of the
+  // one already open — tapping "Далее" only popped the top one, revealing
+  // an identical dialog underneath, which looked exactly like the button
+  // doing nothing (confirmed via repeated random reminder-time generation
+  // in the on-device log, one per stacked dialog's own "Далее" tap).
+  bool messagesTimerScheduled = false;
+
   Rx<bool> canView = false.obs;
 
   double sliderValue = 5;
@@ -61,7 +74,7 @@ class K20Controller extends GetxController {
       showDialog(
           useSafeArea: false,
 
-          context: context, builder: (_) => K3Screen());
+          context: context, builder: (_) => K3Screen(isDialog: true));
    else if (SharedPrefs.sharedPreferences.getBool('send_pushes') == null)
       showDialog(        useSafeArea: false,
 

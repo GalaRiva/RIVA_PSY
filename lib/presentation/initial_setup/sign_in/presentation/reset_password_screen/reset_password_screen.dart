@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/presentation/initial_setup/sign_in/presentation/reset_password_screen/controller.dart';
 
 import '../../../../../core/utils/color_constant.dart';
@@ -52,7 +53,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           color: ColorConstant.gray50)),
                   Padding(
                       padding: getPadding(top: 26),
-                      child: Text("Восстановить пароль",
+                      child: Text('reset_password_page_title'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle.txtH1)),
@@ -60,7 +61,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       padding: getPadding(top: 48),
                       child: SizedBox(
                         width: getVerticalSize(243),
-                        child: Text("Введите почту, которую указывали при регистрации",
+                        child: Text('reset_password_email_hint'.tr(),
                             textAlign: TextAlign.left,
                             style: AppStyle
                                 .txtSFProDisplayLight16),
@@ -71,7 +72,11 @@ class ResetPasswordScreen extends StatelessWidget {
                     children: [
                       Padding(
                           padding: getPadding(top: 15),
-                          child: Text("На ${controller.useEmail ? 'эту почту' : 'этот номер'} отправим код-подтверждение",
+                          child: Text('reset_password_code_info'.tr(namedArgs: {
+                                'target': controller.useEmail
+                                    ? 'reset_password_target_email'.tr()
+                                    : 'reset_password_target_phone'.tr(),
+                              }),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle
@@ -93,9 +98,9 @@ class ResetPasswordScreen extends StatelessWidget {
                             maxLength: 16,
                             counterText: '',
                             validator: (text) {
-                              if(text!.trim() == "") return "Заполните поле";
+                              if(text!.trim() == "") return 'fill_the_field'.tr();
                               else if (text!.trim().length != 16) {
-                                return 'Пожалуйста введите верный формат номера телефона';
+                                return 'reset_password_invalid_phone_format'.tr();
                               }
                             },
                             textInputAction:
@@ -118,11 +123,11 @@ class ResetPasswordScreen extends StatelessWidget {
                             counterText: '',
                             validator: (text) {
                               if (text!.trim() == "")
-                                return "Заполните поле";
+                                return 'fill_the_field'.tr();
                               else if (!RegExp(
                                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                   .hasMatch(text)) {
-                                return 'Пожалуйста введите верный формат вашей почты';
+                                return 'reset_password_invalid_email_format'.tr();
                               }
                             },
                             textInputAction:
@@ -215,7 +220,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       ),
                       variant: ButtonVariant.Base,
                       onTap: () => Navigator.pop(context),
-                      text: "отменить".toUpperCase(),
+                      text: 'cancel'.tr().toUpperCase(),
                       margin: getMargin(
                       ),
                       alignment: Alignment.topCenter,
@@ -229,7 +234,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       ),
                       variant: ButtonVariant.Base,
                       onTap: () async => controller.onConfirm(key),
-                      text: "Сохранить".toUpperCase(),
+                      text: 'save'.tr().toUpperCase(),
                       margin: getMargin(
                         left: 13,
                       ),

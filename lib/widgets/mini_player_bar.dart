@@ -24,7 +24,7 @@ class MiniPlayerBar extends StatelessWidget {
   bool _hiddenForK70() {
     if (!Get.isRegistered<K70Controller>()) return false;
     final c = Get.find<K70Controller>();
-    return c.immersiveMode || c.activeTopLevelTab == 1;
+    return c.immersiveMode || c.activeTopLevelTab == 2;
   }
 
   String _fmtRemaining(Duration position, Duration duration) {

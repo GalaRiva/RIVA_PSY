@@ -31,17 +31,9 @@ _FinaleInsight? _polarityInsight(
       t9 != null &&
       t4.dominantKeys.contains('C') &&
       t9.dominantKeys.contains('C')) {
-    return const _FinaleInsight(
-      'Генеральная опора',
-      'Люди — это ваш главный ресурс. Ваш радар Эмпатии (тест 4) помогает вам '
-          'считывать чужое состояние за секунду и создавать вокруг себя '
-          'пространство, где люди чувствуют себя услышанными. Это же качество '
-          'отвечает и за то, куда ведёт ваш истинный компас (тест 9): вы снова и '
-          'снова выбираете связь и близость важнее собственной выгоды. Но именно '
-          'эта чувствительность быстрее всего сажает вашу Социальную батарейку — '
-          'вы отдаёте раньше, чем успеваете заметить, что устали. Ваша главная '
-          'задача на ближайшее время — не становиться холоднее, а научиться '
-          'защищать своё сердце, не закрывая его.',
+    return _FinaleInsight(
+      'portrait_finale_polarity_title'.tr(),
+      'portrait_finale_polarity_body'.tr(),
     );
   }
   return null;
@@ -55,17 +47,9 @@ _FinaleInsight? _conflictInsight(
       t11 != null &&
       t1.dominantKeys.contains('A') &&
       t11.dominantKeys.contains('A')) {
-    return const _FinaleInsight(
-      'Зона роста',
-      'Ваш ум работает как швейцарские часы. Там, где другие теряются в хаосе, '
-          'вы почти всегда находите структуру, логику, ясный следующий шаг — это '
-          'опора, которая выручала вас снова и снова (тест 1). Но в отношениях '
-          'вами иногда руководит совсем другой голос — тревога и страх потери '
-          '(тест 11). Логика, которая работает почти везде, не умеет успокоить '
-          'сердце, когда речь идёт о близком человеке — и это не поломка, а '
-          'просто другой язык, на котором говорит эта часть вас. Приглашение '
-          'здесь простое: позволить себе быть уязвимым(ой) не только умом, но и '
-          'чувствами — рацио не обязано разбираться со всем в одиночку.',
+    return _FinaleInsight(
+      'portrait_finale_conflict_title'.tr(),
+      'portrait_finale_conflict_body'.tr(),
     );
   }
   return null;
@@ -108,15 +92,16 @@ List<_DominantTally> _tallyDominants(List<PortraitTestResultModel> results) {
     for (final k in r.dominantKeys) {
       final dom = def.dominants[k];
       if (dom == null) continue;
-      final existing = map[dom.label];
+      final label = dom.label.tr();
+      final existing = map[label];
       if (existing != null) {
         existing.count++;
       } else {
-        map[dom.label] = _DominantTally(
-          label: dom.label,
-          light: dom.light,
+        map[label] = _DominantTally(
+          label: label,
+          light: dom.light.tr(),
           cta: dom.cta,
-          ctaLabel: dom.ctaLabel,
+          ctaLabel: dom.ctaLabel.tr(),
           count: 1,
         );
       }
@@ -137,28 +122,23 @@ _FinaleInsight _personalitySummary(List<_DominantTally> tally) {
   }
   final top = tally.take(3).toList();
   final buffer = StringBuffer();
-  buffer.write(
-    'За эти 12 тестов сложилась довольно цельная картина. Чаще всего в вас '
-    'побеждает ${top[0].label.toLowerCase()}: ${_firstSentence(top[0].light)}',
-  );
+  buffer.write('portrait_finale_summary_intro'.tr(namedArgs: {
+    'dominant': top[0].label.toLowerCase(),
+    'sentence': _firstSentence(top[0].light),
+  }));
   if (top.length > 1) {
-    buffer.write(
-      ' Рядом с этим заметно проявляется ${top[1].label.toLowerCase()} — '
-      '${_firstSentence(top[1].light).toLowerCase()}',
-    );
+    buffer.write('portrait_finale_summary_second'.tr(namedArgs: {
+      'dominant': top[1].label.toLowerCase(),
+      'sentence': _firstSentence(top[1].light).toLowerCase(),
+    }));
   }
   if (top.length > 2) {
-    buffer.write(
-      ' И третья опора, на которую вы тоже регулярно опираетесь — это '
-      '${top[2].label.toLowerCase()}.',
-    );
+    buffer.write('portrait_finale_summary_third'.tr(namedArgs: {
+      'dominant': top[2].label.toLowerCase(),
+    }));
   }
-  buffer.write(
-    ' Ни одна из этих черт не описывает вас целиком — вы шире любого теста. '
-    'Но именно эта комбинация чаще всего определяет, как вы принимаете решения, '
-    'восстанавливаетесь и выстраиваете отношения с людьми вокруг.',
-  );
-  return _FinaleInsight('Ваша проекция', buffer.toString());
+  buffer.write('portrait_finale_summary_closing'.tr());
+  return _FinaleInsight('portrait_finale_summary_title'.tr(), buffer.toString());
 }
 
 class PortraitFinalePage extends StatefulWidget {
@@ -290,15 +270,14 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Рекомендуем сделать упор на это',
+                          'portrait_finale_recommendation_title'.tr(),
                           style: AppStyle.txtSFProDisplayRegular14.copyWith(
                               color: Colors.white, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(height: getVerticalSize(8)),
                         Text(
-                          'Ваша доминанта «${recommendation.label}» проявлялась чаще всего — '
-                          'конкретное упражнение или аудио-практика для неё может дать больше, '
-                          'чем что-то случайное.',
+                          'portrait_finale_recommendation_body'
+                              .tr(namedArgs: {'dominant': recommendation.label}),
                           style: AppStyle.txtSFProDisplayLight14.copyWith(
                               color: Colors.white.withOpacity(0.9),
                               height: 1.5),

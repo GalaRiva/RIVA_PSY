@@ -1,11 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
-
-import '../../../../theme/app_style.dart';
-import '../../../../widgets/custom_text_form_field.dart';
-import '../../../../theme/app_icons.dart';
 
 class RetractableContainerWidget extends StatefulWidget {
   final EdgeInsetsGeometry padding;
@@ -58,13 +52,40 @@ class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
       parent: slideController,
       curve: Curves.linear,
     ));
+
+    // Visibility below stays mounted until the reverse animation actually
+    // finishes (not just until wasTapped flips) — otherwise collapsing
+    // unmounts the FadeTransition/SlideTransition on the same frame the
+    // reverse animation starts, and the block just snaps shut instead of
+    // animating closed.
+    fadeController.addStatusListener(_handleFadeStatusChange);
+  }
+
+  void _handleFadeStatusChange(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed ||
+        status == AnimationStatus.completed) {
+      if (mounted) setState(() {});
+    }
   }
 
   @override
   void dispose() {
+    fadeController.removeStatusListener(_handleFadeStatusChange);
     fadeController.dispose();
     slideController.dispose();
     super.dispose();
+  }
+
+  void _toggle() {
+    if (wasTapped) {
+      fadeController.reverse();
+      slideController.reverse();
+    } else {
+      fadeController.forward();
+      slideController.forward();
+    }
+    setState(() => wasTapped = !wasTapped);
+    widget.update?.call();
   }
 
   @override
@@ -74,110 +95,77 @@ class _RetractableContainerWidgetState extends State<RetractableContainerWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.title,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.left,
-            style: AppStyle.txtSFProDisplayLight16,
-          ),
-          Visibility(
-              visible: widget.subtitle != null,
-              child: Padding(
-                padding: getPadding(top: 10),
-                child: Text(widget.subtitle ?? '',
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtSFProDisplayLight12),
-              )),
-          Padding(
-              padding: getPadding(left: 3, top: 16),
-              child: Stack(alignment: Alignment.centerLeft, children: [
-                IgnorePointer(
-                  ignoring: !wasTapped,
-                  child: CustomTextFormField(
-                    focusNode: FocusNode(),
-                    controller: widget.textController,
-                    hintText: widget.hintText,
-                    margin: getMargin(top: 16),
-                    isObscureText: true,
-                    maxLength: 26,
-                    variant: TextFormFieldVariant.UnderLineWhiteA700,
-                    counterText: '',
-                    fontStyle: TextFormFieldFontStyle.SFProDisplayRegular14,
-                    validator: (text) {
-                      if (text!.trim() != "") {
-                        if (text!.trim().length < 8) {
-                          return 'password_length_min'.tr();
-                        } else if (text!.trim().length > 26) {
-                          return 'password_length_max'.tr();
-                        } else if (!_isPasswordCompliant(text)) {
-                          return 'password_complexity'.tr();
-                        }
-                      }
-                    },
+          InkWell(
+            // Whole row tappable (title + masked value + icon), not just a
+            // small "Изменить" link — matches the login row above it. The
+            // password-rules subtitle only shows once actually expanded
+            // (below) — it was cluttering the summary row before, for a
+            // rule that only matters while typing a new one.
+            onTap: _toggle,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.title,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle.txtSFProDisplayLight16,
+                      ),
+                      Padding(
+                        padding: getPadding(top: 8),
+                        child: Text(
+                          // Collapsed state used to render the real
+                          // (disabled) text field here with an empty hint —
+                          // visually a blank, seemingly-broken line with
+                          // nothing to read or tap. A masked placeholder
+                          // reads instead as "there is a password set, tap
+                          // to change it" — the actual editable fields still
+                          // only appear once expanded, below.
+                          '••••••••',
+                          style: AppStyle.txtSFProDisplayRegular14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () async {
-                      if (wasTapped) {
-                        fadeController.reverse();
-                        slideController.reverse();
-                        wasTapped = !wasTapped;
-                      } else {
-                        wasTapped = !wasTapped;
-                        fadeController.forward();
-                        slideController.forward();
-                      }
-                      widget.update!();
-                    },
-                    child: Padding(
-                        padding: getPadding(bottom: 1),
-                        child: wasTapped
-                            ? Icon(
-                                AppIcons.x,
-                                color: ColorConstant.deepPurple600,
-                                size: getVerticalSize(20),
-                              )
-                            : Text('change'.tr(),
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: AppStyle
-                                    .txtSFProDisplayLight12Deeppurple600
-                                    .copyWith(
-                                        decoration: TextDecoration.underline))),
-                  ),
-                )
-              ])),
+                Icon(
+                  wasTapped ? Icons.close : Icons.edit_outlined,
+                  color: ColorConstant.cyan700,
+                  size: getSize(20),
+                ),
+              ],
+            ),
+          ),
           Visibility(
-              visible: wasTapped,
+              visible: wasTapped || fadeController.status != AnimationStatus.dismissed,
               child: FadeTransition(
                   opacity: fadeController,
                   child: Padding(
                     padding: getPadding(top: 16),
                     child: SlideTransition(
                         position: slideAnimation,
-                        child: widget.child(widget.textController.text)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (widget.subtitle != null)
+                              Padding(
+                                padding: getPadding(bottom: 12),
+                                child: Text(widget.subtitle!,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtSFProDisplayLight12
+                                        .copyWith(
+                                            color: ColorConstant.gray500)),
+                              ),
+                            widget.child(widget.textController.text),
+                          ],
+                        )),
                   )))
         ],
       ),
     );
   }
-}
-
-bool _isPasswordCompliant(String password) {
-  bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-  if (hasUppercase) {
-    bool hasDigits = password.contains(RegExp(r'[0-9]'));
-    if (hasDigits) {
-      bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-      if (hasLowercase) {
-        bool hasSpecialCharacters =
-            password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-        return hasSpecialCharacters;
-      }
-    }
-  }
-
-  return false;
 }

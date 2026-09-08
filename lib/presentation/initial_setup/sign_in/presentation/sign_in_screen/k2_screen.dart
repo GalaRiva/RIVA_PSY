@@ -23,6 +23,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
     final key = GlobalKey<FormState>();
     final args = ModalRoute.of(context)?.settings.arguments;
     controller.contextual = args is Map && args['contextual'] == true;
+    controller.goToMainOnSuccess = args is Map && args['goToMainOnSuccess'] == true;
     return Scaffold(
         backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: true,
@@ -227,7 +228,14 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
     if (key.currentState!.validate()) {
       final String? _number =
       controller.useEmail ? null : number.text;
-      final String? email = controller.useEmail ? mail.text : null;
+      // Firebase Auth normalizes email casing internally, but this raw
+      // string is also used as-is as the Firestore Users doc id — iOS's
+      // default keyboard auto-capitalizes the first letter of this field,
+      // and a capitalized id then never matches the lowercase
+      // request.auth.token.email the security rules compare against,
+      // causing permanent (non-retryable) permission-denied on every read/
+      // write for that account. Normalize here, once, at the boundary.
+      final String? email = controller.useEmail ? mail.text.trim().toLowerCase() : null;
 
       await controller.auth(context, password.text, number: _number, email: email);
     }

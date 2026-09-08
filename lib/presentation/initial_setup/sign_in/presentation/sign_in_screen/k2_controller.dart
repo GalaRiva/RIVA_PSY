@@ -29,8 +29,15 @@ class K2AuthController extends GetxController {
   // in the sign-up screen for why this changes post-success navigation.
   bool contextual = false;
 
+  // See K2Controller.goToMainOnSuccess in the sign-up screen for why this
+  // exists — same reasoning applies here.
+  bool goToMainOnSuccess = false;
+
   void _afterSignedIn(BuildContext context) {
-    if (contextual) {
+    if (contextual && goToMainOnSuccess) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.main, (route) => false);
+    } else if (contextual) {
       Navigator.pop(context, true);
     } else {
       Navigator.pushNamedAndRemoveUntil(
@@ -75,33 +82,32 @@ class K2AuthController extends GetxController {
           _afterSignedIn(context);
         } else {
           showMessage(context,
-              title: 'Авторизация',
+              title: 'auth_error_title'.tr(),
               content: signInResult.exceptionMessage!);
         }
 
       /*if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.WrongData) {
         showMessage(context,
-            title: 'Авторизация', content: 'Неверный логин или пароль');
+            title: 'auth_error_title'.tr(), content: 'Неверный логин или пароль');
       }
       if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.NotExist) {
         showMessage(context,
-            title: 'Авторизация',
+            title: 'auth_error_title'.tr(),
             content: 'Данного пользователя не существует');
       }
       if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.Exception) {
         showMessage(context,
-            title: 'Авторизация',
+            title: 'auth_error_title'.tr(),
             content: userStateCheck.exceptionMessage!);
       }*/
     } catch (e) {
       print(e);
       showMessage(context,
-          title: 'Авторизация',
-          content:
-              'An unexpected error occurred, please check your internet connection or try again later');
+          title: 'auth_error_title'.tr(),
+          content: 'network_error_try_later'.tr());
     }
   }
 
@@ -116,7 +122,7 @@ class K2AuthController extends GetxController {
             .getAndSetRemoteDataLocally(
             result.userId!, email: result.email, login: result.login);
         if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-          showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
+          showMessage(context, title: 'auth_error_title'.tr(), content: dataSetResult.exceptionMessage!);
         } else {
           await CurrentUser.repo.setService('apple');
           await CurrentUser.repo.setLocalUserData(email: result.email);
@@ -148,18 +154,18 @@ class K2AuthController extends GetxController {
 
             _afterSignedIn(context);
           } else {
-            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'auth_error_title'.tr(), content: dataSetResult.exceptionMessage!);
           }
         } else {
           showMessage(context,
-              title: 'Registration', content: createUserInDB.exceptionMessage!);
+              title: 'auth_error_title'.tr(), content: createUserInDB.exceptionMessage!);
 
         }
 
       }
 
     } else {
-      showMessage(context, title: 'Registration', content: result.exceptionMessage!);
+      showMessage(context, title: 'auth_error_title'.tr(), content: result.exceptionMessage!);
     }
     } catch (e) {
       // Same safety net as authWithGoogle below: an uncaught FirebaseException
@@ -167,7 +173,7 @@ class K2AuthController extends GetxController {
       // on this screen with no feedback after a "successful" Apple auth.
       print(e);
       showMessage(context,
-          title: 'Registration', content: 'network_error_try_later'.tr());
+          title: 'auth_error_title'.tr(), content: 'network_error_try_later'.tr());
     }
   }
 
@@ -182,7 +188,7 @@ class K2AuthController extends GetxController {
               .getAndSetRemoteDataLocally(
               result.userId!, email: result.email, login: result.login);
           if (dataSetResult.firebaseResultStatus == FirebaseResultStatus.Error) {
-            showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
+            showMessage(context, title: 'auth_error_title'.tr(), content: dataSetResult.exceptionMessage!);
           }
           else {
             await CurrentUser.repo.setService('google');
@@ -215,18 +221,18 @@ class K2AuthController extends GetxController {
 
               _afterSignedIn(context);
             } else {
-              showMessage(context, title: 'Registration', content: dataSetResult.exceptionMessage!);
+              showMessage(context, title: 'auth_error_title'.tr(), content: dataSetResult.exceptionMessage!);
             }
           } else {
             showMessage(context,
-                title: 'Registration', content: createUserInDB.exceptionMessage!);
+                title: 'auth_error_title'.tr(), content: createUserInDB.exceptionMessage!);
 
           }
 
         }
 
       } else {
-        showMessage(context, title: 'Registration', content: result.exceptionMessage!);
+        showMessage(context, title: 'auth_error_title'.tr(), content: result.exceptionMessage!);
       }
     } catch (e) {
       // Safety net: any uncaught exception from the chain above (e.g. a
@@ -235,7 +241,7 @@ class K2AuthController extends GetxController {
       // auth into nowhere". Always surface something instead of swallowing.
       print(e);
       showMessage(context,
-          title: 'Registration', content: 'network_error_try_later'.tr());
+          title: 'auth_error_title'.tr(), content: 'network_error_try_later'.tr());
     }
   }
 }

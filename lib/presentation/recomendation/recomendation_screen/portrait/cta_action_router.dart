@@ -20,7 +20,7 @@ class CtaActionRouter {
 
       case CtaActionType.desiresScreen:
         Navigator.pushNamed(context, AppRoutes.recommendations,
-            arguments: {'initialTab': 1, 'workingOutTab': 2});
+            arguments: {'initialTab': 2, 'workingOutTab': 2});
         break;
 
       case CtaActionType.challengeThought:
@@ -28,12 +28,12 @@ class CtaActionRouter {
         // No separate "challenge an action" screen exists — both CTA
         // flavors open the same "Оспорить мысль" exercise.
         Navigator.pushNamed(context, AppRoutes.recommendations,
-            arguments: {'initialTab': 1, 'workingOutTab': 0});
+            arguments: {'initialTab': 2, 'workingOutTab': 0});
         break;
 
       case CtaActionType.happinessInFocus:
         Navigator.pushNamed(context, AppRoutes.recommendations,
-            arguments: {'initialTab': 1, 'workingOutTab': 1});
+            arguments: {'initialTab': 2, 'workingOutTab': 1});
         break;
 
       case CtaActionType.audioTrack:

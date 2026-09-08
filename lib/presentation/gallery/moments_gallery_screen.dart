@@ -8,6 +8,7 @@ import 'package:riva_psy/widgets/custom_app_bar.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/custom_pop_button.dart';
 import 'package:riva_psy/widgets/emotion_color_blob.dart';
+import 'package:riva_psy/widgets/empty_state_widget.dart';
 import '../../theme/app_colors.dart';
 
 class MomentsGalleryScreen extends StatefulWidget {
@@ -70,13 +71,7 @@ class _MomentsGalleryScreenState extends State<MomentsGalleryScreen> {
                     ),
                   )
                 else if (moments.isEmpty)
-                  Padding(
-                    padding: getPadding(top: 20),
-                    child: Text(
-                      'moments_gallery_empty'.tr(),
-                      style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800),
-                    ),
-                  )
+                  EmptyStateWidget(icon: Icons.photo_outlined, title: 'moments_gallery_empty'.tr())
                 else
                   Wrap(
                     spacing: 12,

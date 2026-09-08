@@ -45,10 +45,12 @@ class TextForSelectPeriodWidget extends StatelessWidget {
                 "${start.day.timeFormatted()}.${start.month.timeFormatted()}.${start.year}-${end.day.timeFormatted()}.${end.month.timeFormatted()}.${end.year}",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            // Was fontSize 20 — twice the size of the other card headers
-            // (txtSFProDisplayLight14Gray800, size 14) it sits next to,
-            // making it look out of place rather than just "readable".
-            style: AppStyle.txtSFProDisplayLight10.copyWith(fontSize: getFontSize(14)),
+            // Was fontSize 14 (see below for the 20->14 history) — with the
+            // app-wide getFontSize() legibility boost added later, 14 here
+            // read as too large again next to the 14 card title it sits
+            // beside (this string is much longer, so the size difference
+            // is more noticeable than on the title). Dialed back to 11.
+            style: AppStyle.txtSFProDisplayLight10.copyWith(fontSize: getFontSize(11)),
           ),
           CustomImageView(
             svgPath: ImageConstant.rightArrow,

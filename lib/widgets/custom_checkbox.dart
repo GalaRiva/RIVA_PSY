@@ -102,9 +102,13 @@ class CustomCheckbox extends StatelessWidget {
         },
         checkColor: ColorConstant.fromHex("#1499A1"),
         activeColor: Colors.transparent,
+        // Was a white border — invisible against the light "quiet luxury"
+        // background these checkboxes actually sit on (registration's
+        // consent checkboxes), so the box itself couldn't be seen until
+        // checked.
         side: MaterialStateBorderSide.resolveWith(
           (states) => BorderSide(
-            color: Colors.white
+            color: ColorConstant.gray500
           ),
         ),
         visualDensity: VisualDensity(

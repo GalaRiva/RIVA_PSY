@@ -52,7 +52,7 @@ class K22Screen extends GetWidget {
                     children: [
                       Padding(
                         padding: getPadding(
-                          top: 39,
+                          top: 20,
                         ),
                         child: Text(
                           'current_emotion'.tr(),
@@ -63,7 +63,7 @@ class K22Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 12,
+                          top: 8,
                         ),
                         child: Divider(
                           height: getVerticalSize(
@@ -77,17 +77,33 @@ class K22Screen extends GetWidget {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 14,
+                          top: 10,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              'what_happened'.tr(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtH1,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: getPadding(right: 4),
+                                    child: Icon(Icons.chevron_left_rounded,
+                                        size: getSize(32), color: ColorConstant.gray800),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'what_happened'.tr(),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width - 32,
@@ -102,7 +118,7 @@ class K22Screen extends GetWidget {
                                 hintText: 'find_event'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 28,
+                                  top: 16,
                                   right: 16,
                                 ),
                                 suffix: Container(
@@ -131,7 +147,7 @@ class K22Screen extends GetWidget {
                                 hintText: 'add_event'.tr(),
                                 variant: SearchViewVariant.FillGray200,
                                 margin: getMargin(
-                                  top: 25,
+                                  top: 14,
                                   right: 16,
                                 ),
                                 onSubmit: (text) async{
@@ -196,7 +212,7 @@ class K22Screen extends GetWidget {
                             ),
                             Padding(
                                 padding: getPadding(
-                                  top: 42,
+                                  top: 24,
                                 ),
                                 child: Center(
                                   child: SizedBox(
@@ -217,9 +233,9 @@ class K22Screen extends GetWidget {
                                                 controller.update();
                                               }, isSelect: controller.contain(el),
                                                                                       cardWidth: size.width / 2 -30,
-                                                                                      iconSizeOverride: 60,
-                                                                                      fontSizeOverride: 18,
-                                                                                      useShadowStyle: true,
+                                                                                      iconSizeOverride: 50,
+                                                                                      fontSizeOverride: 16,
+                                                                                      neomorphic: true,
                                                                                       borderRadiusOverride: 16,
                                                                                       ),
                                             ))
@@ -261,16 +277,16 @@ class K22Screen extends GetWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: getPadding(top: 14, bottom: 10),
+                  padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                   child: GetBuilder(
                     builder: (K22Controller _c) => CustomButton(
-                      height: getVerticalSize(
-                        32,
-                      ),
-                      width: getHorizontalSize(
-                        178,
-                      ),
+                      height: getVerticalSize(40),
+                      width: MediaQuery.of(context).size.width - 32,
                       bgColor: ColorConstant.cyan700,
+                      showShadow: false,
+                      showBorder: false,
+                      borderRadius: 14,
+                      glossy: true,
                       textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                       onTap: controller.currentEventList.isNotEmpty
                           ? () {

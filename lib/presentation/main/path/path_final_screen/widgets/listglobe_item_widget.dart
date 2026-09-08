@@ -69,11 +69,16 @@ class ListglobeItemWidget extends StatelessWidget {
                 fit: BoxFit.contain,
               ) : Container(),
             ),
+            // Was padded top:27/bottom:27 on top of the Container's own
+            // 23px top/bottom padding — that left only ~18px of vertical
+            // room for a 14sp line inside the 118-tall card, clipping the
+            // text (visible on some devices/font-scale settings, all rows
+            // uniformly since every row shares this same layout). The Row
+            // already centers its children vertically on its own —  no need
+            // for this padding to also try to.
             Padding(
               padding: getPadding(
                 left: 23,
-                top: 27,
-                bottom: 27,
               ),
               child: Text(
                 title,

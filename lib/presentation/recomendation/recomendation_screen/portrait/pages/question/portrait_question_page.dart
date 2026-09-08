@@ -8,14 +8,17 @@ import '../../../../../../core/models/portrait/portrait_test_definitions.dart';
 import '../../bloc/portrait_cubit.dart';
 import '../../bloc/portrait_state.dart';
 
-// Cyrillic labels, matching the source ТЗ's own А/Б/В/Г option lettering —
-// Latin A/B/C/D was shown here originally, but Latin "B" and Cyrillic "В"
-// are visual homoglyphs at different alphabet positions (Latin B = 2nd,
-// Cyrillic В = 3rd), which caused a real mis-tap during on-device testing:
-// a user reading "B" as Cyrillic landed on dominant B (2nd, Latin) while
-// intending dominant C (3rd, "В"). dominantKey values themselves ('A'..'D')
-// are unchanged — only this on-screen label changed.
-const List<String> _kLetters = ['А', 'Б', 'В', 'Г'];
+// Cyrillic labels for Russian, matching the source ТЗ's own А/Б/В/Г option
+// lettering — Latin A/B/C/D was shown here originally, but Latin "B" and
+// Cyrillic "В" are visual homoglyphs at different alphabet positions (Latin
+// B = 2nd, Cyrillic В = 3rd), which caused a real mis-tap during on-device
+// testing: a user reading "B" as Cyrillic landed on dominant B (2nd, Latin)
+// while intending dominant C (3rd, "В"). dominantKey values themselves
+// ('A'..'D') are unchanged — only this on-screen label changed, and only for
+// Russian — English/Spanish never had the homoglyph problem, so they keep
+// the plain Latin letters.
+const List<String> _kLettersRu = ['А', 'Б', 'В', 'Г'];
+const List<String> _kLettersLatin = ['A', 'B', 'C', 'D'];
 
 const _kProjectionBg = Color(0xFF0B1917);
 
@@ -30,6 +33,8 @@ class PortraitQuestionPage extends StatelessWidget {
         if (id == null) return const ColoredBox(color: _kProjectionBg);
         final def = portraitTestDefinitions[id]!;
         final question = def.questions[state.questionIndex];
+        final letters =
+            context.locale.languageCode == 'ru' ? _kLettersRu : _kLettersLatin;
 
         return ColoredBox(
           color: _kProjectionBg,
@@ -57,14 +62,14 @@ class PortraitQuestionPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: getVerticalSize(10)),
-                Text(question.text, style: AppStyle.txtH2.copyWith(color: Colors.white)),
+                Text(question.text.tr(), style: AppStyle.txtH2.copyWith(color: Colors.white)),
                 SizedBox(height: getVerticalSize(20)),
                 for (var i = 0; i < question.options.length; i++)
                   Padding(
                     padding: getPadding(bottom: 12),
                     child: _OptionCard(
-                      letter: _kLetters[i],
-                      text: question.options[i].text,
+                      letter: letters[i],
+                      text: question.options[i].text.tr(),
                       onTap: () {
                         HapticFeedback.selectionClick();
                         context.read<PortraitCubit>().answer(question.options[i].dominantKey);

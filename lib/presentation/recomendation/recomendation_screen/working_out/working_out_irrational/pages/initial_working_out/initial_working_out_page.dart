@@ -70,12 +70,12 @@ class InitialWorkingOutPage extends WorkingOutWidget {
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(
                       'please_remember'.tr(),
-                      style: AppStyle.txtSFProDisplayLight12,
+                      style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
                     ),
                   ),
                   Text(
                     'recommended_to_take_per_day'.tr(),
-                    style: AppStyle.txtSFProDisplayLight12,
+                    style: AppStyle.txtSFProDisplayLight12.copyWith(fontSize: getFontSize(14)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 10),

@@ -29,8 +29,19 @@ class WorkingOutScreen extends StatelessWidget {
             // PROJECT_CONTEXT.md for the bug this replaced: DesiresPage had
             // no gate of its own and showContent was defined but unused).
             if (!cubit.showContent) {
-              return GoToNewTariffWidget(
-                goToFreeRecommendation: false,
+              // Same teaser pattern as the audio tabs (see tab_widget.dart):
+              // the real tab bar renders behind a semi-transparent
+              // GoToNewTariffWidget instead of the widget replacing
+              // everything outright, so the screen isn't just a flat block.
+              // The tab bodies themselves stay unbuilt here — each is its
+              // own multi-stage flow with its own tariff gate already, so
+              // there's no safe static "preview" of them to show, unlike a
+              // simple content list.
+              return Stack(
+                children: [
+                  _buildTabBar(cubit, context, interactive: false),
+                  GoToNewTariffWidget(goToFreeRecommendation: false),
+                ],
               );
             }
 
@@ -39,48 +50,7 @@ class WorkingOutScreen extends StatelessWidget {
               width: size.width,
               child: Column(
                 children: [
-                  Padding(
-                    padding: getPadding(top: 10),
-                    child: SizedBox(
-                      height: getVerticalSize(50),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      child: TabBar(
-                        dividerHeight: 0,
-                        controller: cubit.tabController,
-                        isScrollable: true,
-                        tabAlignment: TabAlignment.center,
-                        onTap: (val) async {
-                          cubit.currentTab = val;
-                        },
-                        indicatorColor: ColorConstant.fromHex('#1499A1'),
-                        unselectedLabelColor: ColorConstant.gray800,
-                        labelStyle: TextStyle(
-                          color: ColorConstant.gray800,
-                          fontSize: getFontSize(
-                            14,
-                          ),
-                          fontFamily: 'Manrope',
-                          fontWeight: FontWeight.w300,
-                        ),
-                        indicatorSize: TabBarIndicatorSize.label,
-                        labelColor: ColorConstant.cyan700,
-                        tabs: [
-                          Tab(
-                            text: 'work_out_irrational'.tr(),
-                          ),
-                          Tab(
-                          text: 'prestige_in_focus'.tr(),
-                        ),
-                          Tab(
-                            text: 'desires'.tr(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _buildTabBar(cubit, context, interactive: true),
                   Expanded(
                     child: TabBarView(
                         controller: cubit.tabController,
@@ -104,6 +74,50 @@ class WorkingOutScreen extends StatelessWidget {
             );
           }
 
+    );
+  }
+
+  Widget _buildTabBar(WorkingOutCubit cubit, BuildContext context, {required bool interactive}) {
+    return Padding(
+      padding: getPadding(top: 10),
+      child: SizedBox(
+        height: getVerticalSize(50),
+        width: MediaQuery.of(context).size.width,
+        child: TabBar(
+          dividerHeight: 0,
+          controller: cubit.tabController,
+          isScrollable: true,
+          tabAlignment: TabAlignment.center,
+          onTap: interactive
+              ? (val) async {
+                  cubit.currentTab = val;
+                }
+              : null,
+          indicatorColor: ColorConstant.fromHex('#1499A1'),
+          unselectedLabelColor: ColorConstant.gray800,
+          labelStyle: TextStyle(
+            color: ColorConstant.gray800,
+            fontSize: getFontSize(
+              14,
+            ),
+            fontFamily: 'Manrope',
+            fontWeight: FontWeight.w300,
+          ),
+          indicatorSize: TabBarIndicatorSize.label,
+          labelColor: ColorConstant.cyan700,
+          tabs: [
+            Tab(
+              text: 'work_out_irrational'.tr(),
+            ),
+            Tab(
+              text: 'prestige_in_focus'.tr(),
+            ),
+            Tab(
+              text: 'desires'.tr(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

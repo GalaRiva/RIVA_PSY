@@ -169,3 +169,71 @@ firebase deploy --only functions
 в приложении — смотреть `firebase functions:log` на предмет вызовов
 `verifyAndroidPurchase`, и `Users/{doc id}` в Firestore на предмет
 `tariff: "Орион"`.
+
+# App Store Server Notifications → Firestore tariff sync
+
+`verifyApplePurchase` (выше) обновляет тариф только один раз — в момент,
+когда приложение само его вызывает сразу после покупки. Всё, что происходит
+**после** этого (продление подписки, отмена через настройки iPhone вместо
+приложения, возврат денег, окончание льготного периода после сбоя оплаты) —
+приложение может вообще не узнать, если пользователь его не откроет.
+`appleServerNotificationsProd` / `appleServerNotificationsSandbox` — это
+настоящий вебхук: Apple сама стучится на этот URL при каждом таком событии,
+независимо от того, открыто ли приложение.
+
+## Как находит нужного пользователя
+
+В отличие от Stripe-вебхука, тут нет email — только `originalTransactionId`
+подписки. Поэтому `verifyApplePurchase` теперь при каждой проверке чека
+сохраняет `apple_original_transaction_id` в документ `Users` — именно по
+этому полю `appleServerNotificationsProd/Sandbox` потом находит, кому
+применить новый тариф. Если пользователь ни разу не проходил проверку через
+`verifyApplePurchase` (например, тестовая подписка появилась только через
+Sandbox без реального похода в приложение) — событие уйдёт в
+`UnmatchedStripePayments` на ручной разбор (то же имя коллекции, что и для
+Stripe/Android — это исторически сложившееся название, использующееся для
+всех источников одинаково, не только Stripe).
+
+## Перед деплоем
+
+1. Секретов не требуется — проверка подписи идёт по открытому корневому
+   сертификату Apple (уже лежит в `functions/certs/`), без всяких ключей.
+2. Установить зависимости, если ещё не сделано:
+   ```bash
+   cd functions
+   npm install
+   ```
+
+## Деплой
+
+```bash
+firebase deploy --only functions:appleServerNotificationsProd,functions:appleServerNotificationsSandbox
+```
+После деплоя в выводе будут два URL вида:
+```
+https://us-central1-rigel-psy-9361c.cloudfunctions.net/appleServerNotificationsProd
+https://us-central1-rigel-psy-9361c.cloudfunctions.net/appleServerNotificationsSandbox
+```
+
+## Регистрация в App Store Connect
+
+App Store Connect → RIVA PSY → **Информация о приложении** → раздел
+**"Уведомления сервера App Store"**:
+- **URL-адрес рабочего сервера** → `appleServerNotificationsProd`
+- **URL-адрес сервера Sandbox** → `appleServerNotificationsSandbox`
+
+(Именно два разных URL, не один — каждая функция проверяет подпись только
+для своего окружения, поэтому Sandbox-уведомление, отправленное на
+Prod-адрес, будет отклонено как невалидное, и наоборот — это ожидаемо.)
+
+## Проверка
+
+В том же разделе App Store Connect есть кнопка отправки тестового
+уведомления (или `requestTestNotification()` из App Store Server API) —
+после отправки смотреть `firebase functions:log` на предмет
+`appleServerNotifications: received` с `notificationType: "TEST"`. Для
+проверки на реальном сценарии — оформить тестовую Sandbox-подписку в
+TestFlight, дождаться автопродления (Sandbox продлевает подписки ускоренно,
+не раз в месяц/год, а за несколько минут) и проверить `firebase
+functions:log` на `notificationType: "DID_RENEW"`, а `Users/{doc id}` — на
+обновившуюся `tariff_is_end`.

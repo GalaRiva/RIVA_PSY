@@ -11,6 +11,7 @@ class GuidedJournalTopicCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback? onInfoTap;
   final String? imageUrl;
+  final bool locked;
 
   const GuidedJournalTopicCard({
     Key? key,
@@ -18,6 +19,7 @@ class GuidedJournalTopicCard extends StatelessWidget {
     required this.onTap,
     this.onInfoTap,
     this.imageUrl,
+    this.locked = false,
   }) : super(key: key);
 
   @override
@@ -54,7 +56,9 @@ class GuidedJournalTopicCard extends StatelessWidget {
                 else
                   _fallbackGradient(),
                 // Bottom scrim so the title/icons stay legible over any
-                // artwork, regardless of how light or busy it is.
+                // artwork, regardless of how light or busy it is. A locked
+                // card gets a stronger, even scrim on top — reads as "dimmed/
+                // unavailable" rather than just a darker photo.
                 DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -65,6 +69,7 @@ class GuidedJournalTopicCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (locked) DecoratedBox(decoration: BoxDecoration(color: Colors.black.withOpacity(0.35))),
                 Padding(
                   padding: getPadding(left: 20, right: 16, bottom: 14),
                   child: Align(
@@ -75,22 +80,26 @@ class GuidedJournalTopicCard extends StatelessWidget {
                           child: Text(
                             title,
                             style: AppStyle.txtSFProDisplayLight16.copyWith(
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(locked ? 0.75 : 1),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        if (onInfoTap != null)
-                          InkWell(
-                            borderRadius: BorderRadius.circular(20),
-                            onTap: onInfoTap,
-                            child: Padding(
-                              padding: getPadding(all: 6),
-                              child:
-                                  Icon(Icons.info_outline_rounded, color: Colors.white.withOpacity(0.9), size: 20),
+                        if (locked)
+                          Icon(Icons.lock_rounded, color: Colors.white.withOpacity(0.85), size: 20)
+                        else ...[
+                          if (onInfoTap != null)
+                            InkWell(
+                              borderRadius: BorderRadius.circular(20),
+                              onTap: onInfoTap,
+                              child: Padding(
+                                padding: getPadding(all: 6),
+                                child: Icon(Icons.info_outline_rounded,
+                                    color: Colors.white.withOpacity(0.9), size: 20),
+                              ),
                             ),
-                          ),
-                        Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.9)),
+                          Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.9)),
+                        ],
                       ],
                     ),
                   ),

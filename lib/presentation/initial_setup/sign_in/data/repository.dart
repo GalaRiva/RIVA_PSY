@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:riva_psy/core/models/tariff_model.dart';
 import 'package:riva_psy/core/models/user_data_model.dart';
 import 'package:riva_psy/core/services/firebase/firebase_auth_exception_handler.dart';
@@ -126,12 +127,12 @@ class SignInDataRepository extends SignInDomainRepository {
         return FirebaseSignInResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
             exceptionMessage:
-                'Проверьте правильность введённого вами кода или попробуйте позднее');
+                'reset_code_invalid'.tr());
     } on FirebaseAuthException catch (e) {
       return FirebaseSignInResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
           exceptionMessage:
-              'Проверьте правильность введённого вами кода или попробуйте позднее');
+              'reset_code_invalid'.tr());
     }
   }
 
@@ -403,7 +404,7 @@ class SignInDataRepository extends SignInDomainRepository {
         print('[TARIFF-DIAG] userId is empty, aborting');
         return FirebaseDataResult(
             firebaseResultStatus: FirebaseResultStatus.Error,
-            exceptionMessage: 'Error saving data, please try again.');
+            exceptionMessage: 'error_saving_data_try_again'.tr());
 
       }
     // Same retry-on-permission-denied race as checkUserState above — this
@@ -455,7 +456,7 @@ class SignInDataRepository extends SignInDomainRepository {
             print('[TARIFF-DIAG] Users/"$userId" create write failed after $attempt attempt(s): $e');
             return FirebaseDataResult(
                 firebaseResultStatus: FirebaseResultStatus.Error,
-                exceptionMessage: 'Error saving profile, please try again.');
+                exceptionMessage: 'error_saving_data_try_again'.tr());
           }
           print('[AUTH-DIAG] Users create denied (attempt $attempt/$maxAttempts), retrying in ${retryDelay.inMilliseconds}ms: $e');
           await Future.delayed(retryDelay);
@@ -476,7 +477,7 @@ class SignInDataRepository extends SignInDomainRepository {
       print('[TARIFF-DIAG] EXCEPTION in getAndSetRemoteUserLocally("$userId"): $e\n$st');
       return FirebaseDataResult(
           firebaseResultStatus: FirebaseResultStatus.Error,
-          exceptionMessage: 'Error saving data, please try again.\n[diag] $e');
+          exceptionMessage: 'error_saving_data_try_again'.tr() + '\n[diag] $e');
     }
   }
 }

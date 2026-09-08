@@ -63,7 +63,12 @@ class K13Screen extends GetWidget {
                                     Padding(
                                         padding:
                                             getPadding(left: 39, bottom: 1),
-                                        child: Text(CurrentUser.user.currentTariff!.name,
+                                        child: Text(
+                                            context.locale.languageCode == 'ru'
+                                                ? CurrentUser.user.currentTariff!.name
+                                                : context.locale.languageCode == 'es'
+                                                    ? CurrentUser.user.currentTariff!.nameInEs
+                                                    : CurrentUser.user.currentTariff!.nameInEn,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: AppStyle
@@ -287,7 +292,7 @@ Future<void> _subscribeK13(BuildContext context,
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Не удалось начать покупку: $e')),
+          SnackBar(content: Text('purchase_start_failed'.tr(namedArgs: {'error': '$e'}))),
         );
       }
     }

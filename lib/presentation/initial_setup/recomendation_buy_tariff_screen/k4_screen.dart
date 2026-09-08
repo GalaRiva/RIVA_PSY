@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
@@ -40,7 +41,7 @@ class K4Screen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(alignment: Alignment.centerLeft,
-                              child: Text("Подписка",
+                              child: Text('subscription'.tr(),
                                   overflow: TextOverflow
                                       .ellipsis,
                                   textAlign: TextAlign.left,
@@ -55,7 +56,7 @@ class K4Screen extends StatelessWidget {
                       Padding(padding: getPadding(
                           top: 10, right: 5),
                           child: Text(
-                              "Помощь и поддержка могут потребоваться  в любой момент\n\nПолучайте полный доступ к рекомендациям, сессиям, аналитике, упражнениям весь год.\n\nЗаботьтесь о себе\n\nКачественная помощь днем и ночью",
+                              'tariff_promo_body'.tr(),
                               maxLines: null,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtH2)),
@@ -66,7 +67,7 @@ class K4Screen extends StatelessWidget {
                       CustomButton(
                           height: getVerticalSize(32),
                           width: getHorizontalSize(178),
-                          text: "пробный период (14 дней)".toUpperCase(),
+                          text: 'trial_period_14_days'.tr().toUpperCase(),
                           margin: getMargin(
                               top: 14, bottom: 6),
                           variant: ButtonVariant
@@ -77,7 +78,7 @@ class K4Screen extends StatelessWidget {
                       CustomButton(
                           height: getVerticalSize(32),
                           width: getHorizontalSize(178),
-                          text: "подписаться".toUpperCase(),
+                          text: 'subscribe_action'.tr().toUpperCase(),
                           margin: getMargin(
                               top: 14, bottom: 6),
                           variant: ButtonVariant

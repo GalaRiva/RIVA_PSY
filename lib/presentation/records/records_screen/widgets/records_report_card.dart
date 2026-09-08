@@ -65,7 +65,7 @@ class RecordsReportCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'summary_report'.tr(),
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xFF1A1C1E)),
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Color(0xFF1A1C1E)),
                   ),
                 ),
               ],
@@ -73,7 +73,7 @@ class RecordsReportCard extends StatelessWidget {
             SizedBox(height: getVerticalSize(6)),
             Text(
               'summary_report_intro'.tr(),
-              style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.4),
+              style: const TextStyle(fontSize: 14, color: Colors.black54, height: 1.4),
             ),
             SizedBox(height: getVerticalSize(14)),
             GestureDetector(
@@ -91,7 +91,7 @@ class RecordsReportCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${_fmt(controller.reportDateStart)} — ${_fmt(controller.reportDateEnd)}',
-                        style: TextStyle(fontSize: 13, color: AppColors.primary, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 15, color: AppColors.primary, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.primary),
@@ -115,7 +115,7 @@ class RecordsReportCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'send_summary_report'.tr(),
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
                   ),
                 ),
               ),

@@ -56,9 +56,15 @@ class K20Screen extends GetWidget<K20Controller> {
     final _repo = K20Repo();
     final _dayEventsRepo = K39Repo();
     final controller = Get.put(K20Controller());
-    Timer(Duration(seconds: 2), () async{
-      await controller.openMessages(context);
-    });
+    // Guarded so this Timer (and the dialog it can open) only ever gets
+    // scheduled once per controller lifetime — see messagesTimerScheduled's
+    // own doc comment for the dialog-stacking bug this fixes.
+    if (!controller.messagesTimerScheduled) {
+      controller.messagesTimerScheduled = true;
+      Timer(Duration(seconds: 2), () async {
+        await controller.openMessages(context);
+      });
+    }
     // Fire-and-forget — InAppUpdateService itself guards against running
     // more than once per app session (this build() re-runs on every
     // GetBuilder update, same as the openMessages() Timer above).

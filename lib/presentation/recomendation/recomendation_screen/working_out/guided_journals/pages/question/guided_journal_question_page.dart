@@ -84,13 +84,25 @@ class _QuestionBodyState extends State<_QuestionBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'guided_journal_question_progress'.tr(args: [
-                  '${widget.questionNumber}',
-                  '${widget.totalQuestions}'
-                ]),
-                style: AppStyle.txtSFProDisplayLight12
-                    .copyWith(color: Colors.white.withOpacity(0.75)),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => cubit.previousQuestion(),
+                    child: Padding(
+                      padding: getPadding(right: 8, top: 4, bottom: 4),
+                      child: Icon(Icons.arrow_back_rounded,
+                          size: getSize(20), color: Colors.white.withOpacity(0.7)),
+                    ),
+                  ),
+                  Text(
+                    'guided_journal_question_progress'.tr(args: [
+                      '${widget.questionNumber}',
+                      '${widget.totalQuestions}'
+                    ]),
+                    style: AppStyle.txtSFProDisplayLight12
+                        .copyWith(color: Colors.white.withOpacity(0.75)),
+                  ),
+                ],
               ),
               SizedBox(height: getVerticalSize(10)),
               ClipRRect(

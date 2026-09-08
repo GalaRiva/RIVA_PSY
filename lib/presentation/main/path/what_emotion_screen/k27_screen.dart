@@ -22,6 +22,18 @@ class K27Screen extends GetWidget {
   final List<EmotionInDayEvent>? emotionsTypes;
   final Function(DayEventModel dayEvent, List<EventModel> events, EmotionInDayEvent emotionCategory)? onSave;
 
+  // Tab(text:) alone let "Негативные"/"Позитивные"/"Нейтральные" overflow
+  // their third-of-the-bar width and clip (no ellipsis, just cut) inside the
+  // TabBar's fixed height — a plain Text there doesn't shrink on its own.
+  // FittedBox scales the label down just enough to fit, keeping it on one
+  // line instead of wrapping (wrapping a tab label to 2 lines reads oddly).
+  Widget _tabLabel(String text) => Tab(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(text, textAlign: TextAlign.center),
+        ),
+      );
+
   List<Widget> _tabs (){
     final List<Widget> tabs = [];
     if(emotionsTypes != null) {
@@ -38,13 +50,14 @@ class K27Screen extends GetWidget {
             text = 'neutral'.tr();
             break;
         }
-        tabs.add( Tab(text: text));
+        tabs.add(_tabLabel(text));
       }
     } else {
       return [
-        Tab(text: 'negative'.tr()),
-        Tab(text: 'positive'.tr()),
-        Tab(text: 'neutral'.tr()),];
+        _tabLabel('negative'.tr()),
+        _tabLabel('positive'.tr()),
+        _tabLabel('neutral'.tr()),
+      ];
     }
     return tabs;
   }
@@ -85,7 +98,17 @@ class K27Screen extends GetWidget {
       backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Stack(
+        // Every other Path screen wraps its Stack in a SizedBox with an
+        // explicit height/width — this one didn't, and it's the only one
+        // whose scrollable content is a NestedScrollView rather than a
+        // plain SingleChildScrollView. Without a definite height handed
+        // down explicitly, NestedScrollView sizes itself oddly inside a
+        // Stack instead of filling the viewport, which threw off where the
+        // floating button row actually ended up anchoring.
+        child: SizedBox(
+          height: size.height,
+          width: size.width,
+          child: Stack(
           alignment: Alignment.bottomCenter,
 
           children: [
@@ -108,7 +131,7 @@ class K27Screen extends GetWidget {
                   children: [
                     Padding(
                       padding: getPadding(
-                        top: 39,
+                        top: 20,
                       ),
                       child: Text(
                         'current_emotion'.tr(),
@@ -119,7 +142,7 @@ class K27Screen extends GetWidget {
                     ),
                     Padding(
                       padding: getPadding(
-                        top: 12,
+                        top: 8,
                       ),
                       child: Divider(
                         height: getVerticalSize(
@@ -132,11 +155,28 @@ class K27Screen extends GetWidget {
                       ),
                     ),
                     Container(height: 14,),
-                    Text(
-                      'which_emotion_felt'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtH1,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          behavior: HitTestBehavior.opaque,
+                          child: Padding(
+                            padding: getPadding(right: 4),
+                            child: Icon(Icons.chevron_left_rounded,
+                                size: getSize(32), color: ColorConstant.gray800),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'which_emotion_felt'.tr(),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 32,
@@ -151,7 +191,7 @@ class K27Screen extends GetWidget {
                         hintText: 'find_emotion'.tr(),
                         variant: SearchViewVariant.FillGray200,
                         margin: getMargin(
-                          top: 28,
+                          top: 16,
                           right: 16,
                         ),
                         suffix: Container(
@@ -180,7 +220,7 @@ class K27Screen extends GetWidget {
                         hintText: 'add_emotion'.tr(),
                         variant: SearchViewVariant.FillGray200,
                         margin: getMargin(
-                          top: 25,
+                          top: 14,
                           right: 16,
                         ),
                         onSubmit:(text) async{
@@ -320,39 +360,15 @@ class K27Screen extends GetWidget {
               child: Padding(
                 padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
                 child: GetBuilder(
-                  builder: (K27Controller _c) => Container(
-                    width: double.maxFinite,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomButton(
-                          height: getVerticalSize(
-                            32,
-                          ),
-                          width: getHorizontalSize(
-                            177,
-                          ),
-                          textIsFitted: true,
-                          onTap: () => Navigator.pop(context),
-                          text: 'choosing_person'.tr().toUpperCase(),
-                          variant: ButtonVariant.Base,
-
-                          padding: ButtonPadding.PaddingT8,
-                          prefixWidget: CustomImageView(
-                            margin: getMargin(right: 4),
-                            svgPath: ImageConstant.leftArrow,
-                          ),
-                        ),
-                        GetBuilder(
+                  builder: (K27Controller _c) => GetBuilder(
                           builder: (K27Controller _c) => CustomButton(
-                            height: getVerticalSize(
-                              32,
-                            ),
-                            width: getHorizontalSize(
-                              140,
-                            ),
+                            height: getVerticalSize(40),
+                            width: MediaQuery.of(context).size.width - 32,
         bgColor: ColorConstant.cyan700,
+        showBorder: false,
+        borderRadius: 14,
+        glossy: true,
+        showShadow: false,
                             textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                             onTap: controller.getCurrentListByNumber(controller.currentTab).isNotEmpty
                                 ? () async {
@@ -404,14 +420,12 @@ class K27Screen extends GetWidget {
                               bottom: 10,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
+                        ),
                 ),
               ),
             ),
           ],
+        ),
         ),
       ),
       bottomNavigationBar: CustomBottomBar(

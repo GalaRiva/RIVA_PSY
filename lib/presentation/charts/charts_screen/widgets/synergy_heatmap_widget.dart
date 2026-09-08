@@ -8,6 +8,7 @@ import '../../../../theme/app_colors.dart';
 import '../../../../widgets/ambient_bloom_card.dart';
 import '../../../../widgets/dashboard_detail_sheet.dart';
 import '../../../../widgets/dashboard_insight_card.dart';
+import '../../../../widgets/empty_state_widget.dart';
 
 /// "Тепловая карта синергии" — cross-tab of two context dimensions
 /// (activity/place/person), cell color = average mood in that combination.
@@ -129,10 +130,7 @@ class _SynergyHeatmapWidgetState extends State<SynergyHeatmapWidget> {
           _buildTensionToggle(),
           SizedBox(height: getVerticalSize(16)),
           if (result.isEmpty)
-            Padding(
-              padding: getPadding(top: 24, bottom: 24),
-              child: Text('heatmap_empty'.tr(), textAlign: TextAlign.center, style: AppStyle.txtSFProDisplayLight14),
-            )
+            EmptyStateWidget(icon: Icons.grid_on_rounded, title: 'heatmap_empty'.tr())
           else ...[
             _buildGrid(result),
             SizedBox(height: getVerticalSize(20)),

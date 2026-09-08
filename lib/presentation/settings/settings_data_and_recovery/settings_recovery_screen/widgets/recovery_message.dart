@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/utils/size_utils.dart';
 
@@ -66,7 +67,7 @@ class RecoveryMessage {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          text: "отменить".toUpperCase(),
+                          text: 'cancel'.tr().toUpperCase(),
                         ),
                         SizedBox(
                           width: getVerticalSize(10),
@@ -81,7 +82,7 @@ class RecoveryMessage {
                           onTap: () {
                             onConfirm();
                           },
-                          text: "Восстановить".toUpperCase(),
+                          text: 'restore_action'.tr().toUpperCase(),
                         ),
                       ],
                     )

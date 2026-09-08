@@ -51,40 +51,58 @@ class WishesDetailDialog extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Material(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1),
-              borderRadius: BorderRadius.circular(3),
-              color: ColorConstant.darkBg,
-            ),
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Align(alignment: Alignment.topRight, child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(AppIcons.x, color: ColorConstant.blueGray400, size: 20,)),),
-                SizedBox(height: 10,),
-                Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
-                SizedBox(height: 10,),
-                if(subtitles[index].isNotEmpty)
-                  Padding(padding: EdgeInsets.only(bottom: 10), child: Text(
-                      subtitles[index].tr(), style: AppStyle.txtSFProDisplayLight12Gray800,
-                  ),),
-                _buildImage(images[index], ratios[index]),
-                SizedBox(height: 20,),
+        child: ConstrainedBox(
+          // The recommendation text varies a lot in length across the 5
+          // desire types (index 4's is the longest — see subtitles/content
+          // above), and this Column had no scroll ancestor at all: on a
+          // shorter screen a long entry pushed the button row past the
+          // visible area entirely, rendering the buttons overlapping
+          // whatever was behind the dialog instead of "not fitting"
+          // visibly. Capping height + scrolling the content keeps the
+          // buttons reachable regardless of how long the text is.
+          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.85),
+          child: Material(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 1),
+                borderRadius: BorderRadius.circular(3),
+                color: ColorConstant.darkBg,
+              ),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Align(alignment: Alignment.topRight, child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(AppIcons.x, color: ColorConstant.blueGray400, size: 20,)),),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 10,),
+                          Text('desires'.tr().toUpperCase(), style: AppStyle.txtSFProDisplayLight16,),
+                          SizedBox(height: 10,),
+                          if(subtitles[index].isNotEmpty)
+                            Padding(padding: EdgeInsets.only(bottom: 10), child: Text(
+                                subtitles[index].tr(), style: AppStyle.txtSFProDisplayLight12Gray800,
+                            ),),
+                          _buildImage(images[index], ratios[index]),
+                          SizedBox(height: 20,),
+                          content(context)[index],
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Row(children: [
+                    Expanded(child: CustomButton(text: 'start'.tr().toUpperCase(), onTap: onStart,)),
+                    SizedBox(width: 10,),
+                    Expanded(child: CustomButton(text: 'continue'.tr().toUpperCase(), onTap: onNext,)),
 
-                content(context)[index],
-                SizedBox(height: 20,),
-
-                Row(children: [
-                  Expanded(child: CustomButton(text: 'start'.tr().toUpperCase(), onTap: onStart,)),
-                  SizedBox(width: 10,),
-                  Expanded(child: CustomButton(text: 'continue'.tr().toUpperCase(), onTap: onNext,)),
-
-                ],)
-              ],
+                  ],)
+                ],
+              ),
             ),
           ),
         ),

@@ -155,15 +155,43 @@ class K39Controller extends GetxController {
                   left: 10,
                   right: 10,
                 ),
-                child: Padding(
-                  padding: getPadding(top: 140),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: VoiceButton(
-                      currentState: _c.currentState,
-                      controller: _c,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: getPadding(top: 140),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: VoiceButton(
+                          currentState: _c.currentState,
+                          controller: _c,
+                        ),
+                      ),
                     ),
-                  ),
+                    // This full-screen scrim has no other dismiss affordance
+                    // besides tapping the small VoiceButton card above — on
+                    // iOS there's no system back gesture to fall back on
+                    // (WillPopScope only catches an *underlying route's*
+                    // pop, which doesn't apply here since this Overlay isn't
+                    // itself a route), so a mistap anywhere else looked like
+                    // there was no way out at all. An explicit close button
+                    // makes that always possible regardless of platform.
+                    Positioned(
+                      top: getVerticalSize(50),
+                      right: getHorizontalSize(10),
+                      child: GestureDetector(
+                        onTap: () => _stopRecording(controller, context),
+                        child: Container(
+                          padding: getPadding(all: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.15),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.close_rounded,
+                              color: Colors.white, size: getSize(22)),
+                        ),
+                      ),
+                    ),
+                  ],
                 )),
           ),
         ),

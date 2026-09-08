@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -13,6 +14,25 @@ import 'offline_translations.dart';
 
 const String nightlyInsightTaskName = 'nightlyInsightAnalysis';
 const String gratitudeNudgeTaskName = 'spontaneousGratitudeNudge';
+
+// Mirrors AwesomeNotificationService.initializeOnce()'s own lookup — that
+// one is the foreground registration for the same 'reminders' channel
+// group, this is the background-isolate (WorkManager) registration for it.
+// Both were hardcoded Russian originally; the foreground one was fixed
+// first and this copy was missed, leaving the Android system Settings
+// entry for this channel group stuck in Russian for EN/ES users whenever
+// this background isolate ran first.
+const Map<String, String> _reminderChannelGroupNameByLanguage = {
+  'ru': 'Напоминания',
+  'en': 'Reminders',
+  'es': 'Recordatorios',
+};
+
+String _localizedReminderChannelGroupName() {
+  final languageCode =
+      Platform.localeName.split(RegExp('[_-]')).first.toLowerCase();
+  return _reminderChannelGroupNameByLanguage[languageCode] ?? 'Reminders';
+}
 
 /// Runs in a separate background isolate spawned by the native WorkManager
 /// plugin (not a plain `compute()` isolate) — that isolate does get a real
@@ -62,7 +82,7 @@ Future<void> _runNightlyInsightAnalysis() async {
   ], channelGroups: [
     NotificationChannelGroup(
       channelGroupKey: 'reminders',
-      channelGroupName: 'Напоминания',
+      channelGroupName: _localizedReminderChannelGroupName(),
     ),
   ]);
   final batch = await InsightEngine().run();
@@ -92,7 +112,7 @@ Future<void> _runGratitudeNudge() async {
   ], channelGroups: [
     NotificationChannelGroup(
       channelGroupKey: 'reminders',
-      channelGroupName: 'Напоминания',
+      channelGroupName: _localizedReminderChannelGroupName(),
     ),
   ]);
   final translations = await OfflineTranslations.load();

@@ -18,7 +18,7 @@ Widget dayEventBodyWidget(DayEventModel dayEventModel, bool isNotFirst) {
   final _style = TextStyle(
     color: ColorConstant.deepPurple600,
     fontSize: getFontSize(
-      9,
+      11,
     ),
     fontFamily: 'Manrope',
     fontWeight: FontWeight.w400,

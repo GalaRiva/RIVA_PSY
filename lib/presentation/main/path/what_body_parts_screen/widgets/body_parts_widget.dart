@@ -108,7 +108,7 @@ class BodyPartWidget extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: AppStyle.txtSFProDisplayLight16,
+                    style: AppStyle.txtSFProDisplayLight16.copyWith(fontSize: getFontSize(13)),
                   ),
                 ),
               ),

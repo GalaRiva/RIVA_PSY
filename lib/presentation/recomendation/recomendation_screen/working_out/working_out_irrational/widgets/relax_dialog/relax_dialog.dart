@@ -111,7 +111,7 @@ class RelaxDialog extends StatelessWidget {
                           },
                         ),
                       ),
-                      CustomButton(text: 'OK', height: 47, onTap: () => Navigator.pop(context),)
+                      CustomButton(text: 'ok'.tr().toUpperCase(), height: 47, onTap: () => Navigator.pop(context),)
 
                     ],
                   ),

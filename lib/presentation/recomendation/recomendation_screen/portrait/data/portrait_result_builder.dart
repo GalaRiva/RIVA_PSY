@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../../../../core/models/portrait/portrait_test_definitions.dart';
 import '../../../../../core/models/portrait/portrait_test_result_model.dart';
 import '../cta_action.dart';
@@ -36,10 +38,10 @@ PortraitResultView buildPortraitResultView(
   if (keys.length == 1) {
     final d = def.dominants[keys.first]!;
     return PortraitResultView(
-      title: d.label,
-      light: d.light,
-      shadow: d.shadow,
-      ctaLabel: d.ctaLabel,
+      title: d.label.tr(),
+      light: d.light.tr(),
+      shadow: d.shadow.tr(),
+      ctaLabel: d.ctaLabel.tr(),
       cta: d.cta,
       isHybrid: false,
     );
@@ -51,15 +53,16 @@ PortraitResultView buildPortraitResultView(
   final b = def.dominants[keys[1]]!;
 
   return PortraitResultView(
-    title: 'Уникальный синтез: ${a.label} и ${b.label}',
-    light: 'В вас удивительным образом сочетаются две мощные опоры. С одной '
-        'стороны, ${_lowerFirst(a.light)} С другой стороны, ${_lowerFirst(b.light)} '
-        'Это делает вашу психику невероятно гибкой.',
-    shadow: 'Однако этот синтез создает уникальное внутреннее напряжение. Вам '
-        'приходится балансировать: ${_lowerFirst(a.shadow)} Но при этом '
-        '${_lowerFirst(b.shadow)} Вы тратите много сил на то, чтобы примирить '
-        'эти две части себя.',
-    ctaLabel: ctaSource.ctaLabel,
+    title: 'portrait_hybrid_title'.tr(namedArgs: {'a': a.label.tr(), 'b': b.label.tr()}),
+    light: 'portrait_hybrid_light'.tr(namedArgs: {
+      'a': _lowerFirst(a.light.tr()),
+      'b': _lowerFirst(b.light.tr()),
+    }),
+    shadow: 'portrait_hybrid_shadow'.tr(namedArgs: {
+      'a': _lowerFirst(a.shadow.tr()),
+      'b': _lowerFirst(b.shadow.tr()),
+    }),
+    ctaLabel: ctaSource.ctaLabel.tr(),
     cta: ctaSource.cta,
     isHybrid: true,
   );

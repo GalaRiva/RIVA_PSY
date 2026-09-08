@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -118,7 +119,7 @@ class MessageBoxWithCentralIcon {
               fit: BoxFit.scaleDown,
               child: Column(
                 children: [
-                  Text('${time} | Что принимаем: ${pillName}'),
+                  Text('pill_reminder_taking_label'.tr(namedArgs: {'time': '$time', 'pill': '$pillName'})),
                   CustomImageView(
                     height: getHorizontalSize(129),
                     width: getVerticalSize(82),
@@ -130,13 +131,13 @@ class MessageBoxWithCentralIcon {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomButton(
-                          text: 'ПРИНЯТО',
+                          text: 'taken_action'.tr().toUpperCase(),
                           onTap: () async => await _onConfirmTap(),
                           width: getHorizontalSize(127),
                           height: getVerticalSize(32)),
                       SizedBox(width: getHorizontalSize(16),),
                       CustomButton(
-                          text: 'ПОЗЖЕ',
+                          text: 'later_action'.tr().toUpperCase(),
                           onTap: () async => await _onCancelTap(),
                           width: getHorizontalSize(127),
                           height: getVerticalSize(32)),

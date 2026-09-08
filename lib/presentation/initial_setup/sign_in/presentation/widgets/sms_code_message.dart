@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
@@ -17,7 +18,7 @@ CustomMessageBox smsCodeMessage<T>(BuildContext context,
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Введите код, который пришел Вам в письме',
+          Text('enter_code_from_email'.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtSFProDisplayLight14),
@@ -39,7 +40,7 @@ CustomMessageBox smsCodeMessage<T>(BuildContext context,
                       maxLength: 6,
                       counterText: '',
                       validator: (text) {
-                        if (text!.trim() == "") return "Заполните поле";
+                        if (text!.trim() == "") return 'fill_the_field'.tr();
                       },
                       textInputAction: TextInputAction.done),
                 ),
@@ -60,7 +61,7 @@ CustomMessageBox smsCodeMessage<T>(BuildContext context,
                   ),
                   variant: ButtonVariant.Base,
                   onTap: () => Navigator.pop(context),
-                  text: "отменить".toUpperCase(),
+                  text: 'cancel'.tr().toUpperCase(),
                   alignment: Alignment.topCenter,
                 ),
                 CustomButton(
@@ -74,7 +75,7 @@ CustomMessageBox smsCodeMessage<T>(BuildContext context,
                   onTap: () async {
                      onConfirm(smsController.text);
                   },
-                  text: "ОК".toUpperCase(),
+                  text: 'ok'.tr().toUpperCase(),
                   margin: getMargin(left: 13),
                   alignment: Alignment.topCenter,
                 ),

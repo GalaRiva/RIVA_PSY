@@ -5,6 +5,7 @@ import 'package:riva_psy/core/services/insights/insights_repo.dart';
 import 'package:riva_psy/core/utils/color_constant.dart';
 import 'package:riva_psy/core/utils/size_utils.dart';
 import 'package:riva_psy/theme/app_style.dart';
+import 'package:riva_psy/widgets/empty_state_widget.dart';
 
 Color _categoryColor(String category) {
   if (category == 'missed_dose') return ColorConstant.fromHex('#E8E4F3');
@@ -76,9 +77,10 @@ class _InsightSectionState extends State<InsightSection> {
         if (_batch.isEmpty)
           _card(
             color: Colors.white,
-            child: Text(
-              'insights_empty'.tr(),
-              style: AppStyle.txtSFProDisplayLight12.copyWith(color: ColorConstant.gray800),
+            child: EmptyStateWidget(
+              icon: Icons.lightbulb_outline_rounded,
+              title: 'insights_empty'.tr(),
+              padding: EdgeInsets.zero,
             ),
           ),
         ..._batch.map((insight) => Padding(

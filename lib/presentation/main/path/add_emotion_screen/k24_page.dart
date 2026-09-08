@@ -151,7 +151,7 @@ class K24Page extends GetWidget {
 
                           Padding(
                             padding: getPadding(
-                              top: 39,
+                              top: 20,
                             ),
                             child: Text(
                               'places_and_activities'.tr(),

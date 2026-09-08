@@ -20,6 +20,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/services/negative_emotion_tabs.dart';
 import '../../../core/services/firebase/firebase_cloud_storage.dart';
 import '../sign_in/domain/usecases/get_and_set_remote_data_locally.dart';
+import '../strengths_quiz/quiz_flow.dart';
+import '../../../main.dart';
+
+// Local, device-only "have we ever shown the onboarding quiz" flag —
+// distinct from quiz_flow.dart's own _quizOneTimeFlag, which is a
+// server-side Firestore flag only ever written for a signed-in user
+// (`if (userId.isNotEmpty)`). Anonymous users — the app's default since it
+// stopped forcing registration at first launch — would never trip that one,
+// which is exactly why the quiz stopped showing at all: registration (the
+// only place that used to trigger it) became optional. This flag fires
+// once per install, for any user, registered or not.
+const String _onboardingQuizShownPrefsKey = 'strengths_quiz_onboarding_shown_v1';
 
 class K1Controller extends GetxController {
   bool loading = false;
@@ -44,8 +56,15 @@ class K1Controller extends GetxController {
               Navigator.pushNamedAndRemoveUntil(
                   context, AppRoutes.enterPasswordScreen, (route) => false);
             } else {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.main, (route) => false);
+              final prefs = await SharedPreferences.getInstance();
+              final alreadyShownQuiz = prefs.getBool(_onboardingQuizShownPrefsKey) ?? false;
+              if (!alreadyShownQuiz) {
+                await prefs.setBool(_onboardingQuizShownPrefsKey, true);
+                if (context.mounted) await startPostRegistrationQuizFlow(context);
+              } else if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.main, (route) => false);
+              }
             }
 
 
@@ -54,6 +73,12 @@ class K1Controller extends GetxController {
   void initialization(BuildContext context) async {
     AppRoutes.notificationScreenIsInitial = false;
     try {
+      // Firebase/Hive/audio/notifications init — moved here from main()
+      // so K1Screen's splash UI can paint immediately instead of behind a
+      // black gap. Everything below needs it ready first (FirebaseAuth,
+      // CurrentUser.init() which reads Hive, AwesomeNotifications via
+      // WorkManagerService).
+      await bootstrapApp();
       WorkManagerService().initService();
 
       if(await FirebaseAuth.instance.authStateChanges().first != null) {

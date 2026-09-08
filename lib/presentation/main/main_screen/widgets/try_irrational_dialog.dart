@@ -94,7 +94,7 @@ class TryIrrationalDialog extends StatelessWidget {
                                 Navigator.pushNamed(
                                     context,
                                     AppRoutes.recommendations,
-                                    arguments: {'initialTab': 1}
+                                    arguments: {'initialTab': 2}
                                 );
 
                               }

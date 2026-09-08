@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/models/day_event_model.dart';
@@ -48,25 +49,25 @@ class RecordTextButton extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Запись ${dayEventModel.date!.format(
+                              Text('${'diary_entry_label'.tr()} ${dayEventModel.date!.format(
                                 'dd.MM.yy  hh:mm',
                               )}', style: AppStyle.txtSFProDisplayLight16Cyan700,),
                               SizedBox(
                                 height: 30,
                               ),
-                              _recordRow(title: 'Что произошло', dayEventVariable: [Text(
+                              _recordRow(title: 'diary_what_happened'.tr(), dayEventVariable: [Text(
                                 dayEventModel.whatHappened!.localizedName,
                                 style: _style,
                               )]),
-                              _recordRow(title: 'Где произошло', dayEventVariable: [Text(
+                              _recordRow(title: 'diary_where_happened'.tr(), dayEventVariable: [Text(
                                 dayEventModel.whereHappened!.localizedName,
                                 style: _style,
                               )]),
-                              _recordRow(title: 'С кем произошло', dayEventVariable: [Text(
+                              _recordRow(title: 'diary_who_with'.tr(), dayEventVariable: [Text(
                                 dayEventModel.whoDidItHappen!.localizedName,
                                 style: _style,
                               )]),
-                              _recordRow(title: 'Какую эмоцию испытал', dayEventVariable: [
+                              _recordRow(title: 'diary_emotion_felt'.tr(), dayEventVariable: [
                                 Text(
                                   dayEventModel.whatEmotion!.first.localizedName,
                                   style: _style,
@@ -104,23 +105,23 @@ class RecordTextButton extends StatelessWidget {
                                   '(' + dayEventModel.emotionIntensity.toString() + ')',
                                   style: _style,
                                 ),]),
-                              _recordRow(title: 'Что происходит с телом', dayEventVariable: [Text(
+                              _recordRow(title: 'diary_body_reaction'.tr(), dayEventVariable: [Text(
                                 dayEventModel.whatBodyParts!.first.bodyPartsModel.localizedBodyPart,
                                 style: _style,
                               )]),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
-                                child: Text('Что я делал', style: AppStyle.txtSFProDisplayLight14Gray800,),
+                                child: Text('diary_what_i_did'.tr(), style: AppStyle.txtSFProDisplayLight14Gray800,),
                               ),
                               Text('"${dayEventModel.whatIDo ?? ''}"', style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(color: ColorConstant.fromHex('#7C8B88')), maxLines: 3, overflow: TextOverflow.ellipsis,),
                               _divider(),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
-                                child: Text('Первые мысли в ситуации', style: AppStyle.txtSFProDisplayLight14Gray800,),
+                                child: Text('diary_first_thoughts'.tr(), style: AppStyle.txtSFProDisplayLight14Gray800,),
                               ),
                               Text('"${dayEventModel.firstThoughts ?? ''}"', style: AppStyle.txtSFProDisplayLight14Gray800.copyWith(color: ColorConstant.fromHex('#7C8B88')), maxLines: 3, overflow: TextOverflow.ellipsis,),
                               SizedBox(height: 33,),
-                              CustomButton(text: 'ОК', onTap: () => Navigator.pop(context), height: 47, bgColor: Colors.white.withOpacity(0.44), fontStyle: ButtonFontStyle.DeepPurple16,)
+                              CustomButton(text: 'ok'.tr().toUpperCase(), onTap: () => Navigator.pop(context), height: 47, bgColor: Colors.white.withOpacity(0.44), fontStyle: ButtonFontStyle.DeepPurple16,)
                             ],
                           ),
                         ),
@@ -131,7 +132,7 @@ class RecordTextButton extends StatelessWidget {
           }
         },
         child: Row(
-          children: [Text('Запись ${dayEventModel.date!.format('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Cyan700,), SizedBox(width: 5,) ,CustomImageView(
+          children: [Text('${'diary_entry_label'.tr()} ${dayEventModel.date!.format('dd.MM.yy')}', style: AppStyle.txtSFProDisplayLight16Cyan700,), SizedBox(width: 5,) ,CustomImageView(
               svgPath: ImageConstant
                   .rightArrow,
               color: ColorConstant.cyan700,

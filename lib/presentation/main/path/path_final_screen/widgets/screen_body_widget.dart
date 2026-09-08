@@ -26,6 +26,16 @@ class ScreenBodyWidget extends StatelessWidget {
     );
   }
 
+  // Bundled replacements for tags whose Firestore-sourced icon isn't set —
+  // kept in sync with NegativeEmotionsModel.getTabBodies's own
+  // localImageOverrides so this "choose an emotion" list uses the same
+  // artwork as the audio-category tabs for the same three emotions.
+  static const _localImageOverrides = {
+    'wrath': ImageConstant.recommendationsWrath,
+    'resentment': ImageConstant.recommendationsResentment,
+    'sorrow': ImageConstant.recommendationsSorrow,
+  };
+
   Widget ifIsNegative () {
     final paths = NegativeEmotionTabs.tabs.map((e) => PathToNewScreenModel({
       'first': 2,
@@ -37,16 +47,19 @@ class ScreenBodyWidget extends StatelessWidget {
       child: Wrap(
         spacing: getVerticalSize(15),
         direction: Axis.vertical,
-        children: paths
-            .map((e) => ListglobeItemWidget(e.title,
-                params: e.param,
-                svgFile: !DataSourceService.dataSourceIsRemote()
-                    ? File(e.svgIcon)
-                    : null,
-                svgUrl: DataSourceService.dataSourceIsRemote()
-                    ? e.svgIcon
-                    : null))
-            .toList(),
+        children: List.generate(paths.length, (i) {
+          final e = paths[i];
+          final overridePath = _localImageOverrides[NegativeEmotionTabs.tabs[i].tag];
+          return ListglobeItemWidget(e.title,
+              params: e.param,
+              svgPath: overridePath,
+              svgFile: overridePath == null && !DataSourceService.dataSourceIsRemote()
+                  ? File(e.svgIcon)
+                  : null,
+              svgUrl: overridePath == null && DataSourceService.dataSourceIsRemote()
+                  ? e.svgIcon
+                  : null);
+        }),
       ),
     );
   }

@@ -82,7 +82,7 @@ class K61Screen extends GetWidget{
                       // capsule, not a hard line.
                       indicator: BoxDecoration(
                         color: AppColors.primary.withOpacity(0.10),
-                        borderRadius: BorderRadius.circular(100),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       indicatorSize: TabBarIndicatorSize.tab,
                       dividerColor: Colors.transparent,

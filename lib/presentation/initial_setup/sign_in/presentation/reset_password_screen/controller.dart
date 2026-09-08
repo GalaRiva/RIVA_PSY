@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/utils/show_custom_message.dart';
 import 'package:riva_psy/core/utils/string_extension.dart';
@@ -39,7 +40,7 @@ class ResetPasswordController extends GetxController {
 
   Future onConfirm (GlobalKey <FormState> key) async {
     if(key.currentState!.validate()) {
-       _resetPassword(email.text);
+       _resetPassword(email.text.trim().toLowerCase());
     }
   }
   Future _resetPassword(String email) async {
@@ -48,17 +49,16 @@ class ResetPasswordController extends GetxController {
       final FirebaseResult result = await SendResetCodeToEmail().sendResetCodeToEmail(email);
       if(result.firebaseResultStatus == FirebaseResultStatus.Success) {
         Navigator.pop(context);
-        showMessage(context, title: 'Восстановление пароля', content: 'Вам был выслано письмо на указанную почту');
+        showMessage(context, title: 'reset_password_dialog_title'.tr(), content: 'reset_password_email_sent'.tr());
 
 
       } else {
-        showMessage(context, title: 'Восстановление пароля', content: result.exceptionMessage!);
+        showMessage(context, title: 'reset_password_dialog_title'.tr(), content: result.exceptionMessage!);
       }
     } catch (_) {
       print(_);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              'Error, please check your internet connection or try again later')));
+          content: Text('network_error_try_later'.tr())));
     }
   }
 
@@ -69,11 +69,11 @@ class ResetPasswordController extends GetxController {
         error = false;
         Navigator.pop(context);
 
-          showMessage(context, title: 'Восстановление пароля', content: 'Вам был выслано письмо на указанную почту');
+          showMessage(context, title: 'reset_password_dialog_title'.tr(), content: 'reset_password_email_sent'.tr());
 
 
       } else {
-        showMessage(context, title: 'Восстановление пароля', content: verifyResult.exceptionMessage!);
+        showMessage(context, title: 'reset_password_dialog_title'.tr(), content: verifyResult.exceptionMessage!);
 
       }
     }, error: error));

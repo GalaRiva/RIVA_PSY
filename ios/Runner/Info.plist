@@ -37,6 +37,14 @@
 				<string>com.googleusercontent.apps.408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.7653326357-gjtpe6q3a0chqt5usv3rgvq2n2478hmp</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
@@ -55,6 +63,8 @@
 	<string>Мы хотим испольовать камеру для того что бы отправлять отчёты об ошибках и предложения пользователей - разработчикам</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>необходимо получить данное разрешение для нормального функционирования приложения</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>необходимо получить данное разрешение для нормального функционирования приложения</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Приложению необходим доступ к микрофону, что бы пользователи могли записывать свои переживания и сохранять их</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -63,6 +73,7 @@
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
@@ -70,6 +81,8 @@
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>

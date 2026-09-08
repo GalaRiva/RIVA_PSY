@@ -134,7 +134,8 @@ class AppleBillingService {
         await CurrentUser.repo.setLocalUserData(
           currentTariff: TariffModel(
             name: 'Орион',
-            nameInEn: 'Oreon',
+            nameInEn: 'Orion',
+            nameInEs: 'Orion',
             endDate: DateTime.parse(tariffIsEnd),
             description: '',
             cost: 0,

@@ -29,6 +29,7 @@ class K16Controller {
           description: e.description,
           cost: e.cost,
           nameInEn: e.nameInEn,
+          nameInEs: e.nameInEs,
           trial: e.trial,
           advantages: e.advantages)).toList();
       if (await _fireStoreRepo.canActivatePromo(promo: promoModel)) {

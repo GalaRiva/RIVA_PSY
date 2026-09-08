@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,20 +134,35 @@ class _PortraitTestCard extends StatelessWidget {
       padding: getPadding(bottom: 12),
       child: GestureDetector(
         onTap: locked && cadenceLocked ? null : onTap,
-        child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: BackdropFilter(
+            // Frosted glass, not a flat fill — same treatment as the
+            // question box in "Хлебные крошки" (BackdropFilter blur over a
+            // translucent tint), which is what that module's cards actually
+            // look like, not the plain opaque fill this had before.
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
           padding: getPadding(left: 16, top: 14, right: 16, bottom: 14),
           decoration: BoxDecoration(
             color: done
-                ? const Color(0xFF14312C)
+                ? const Color(0xFF14312C).withOpacity(0.55)
                 : locked
                     ? Colors.white.withOpacity(0.04)
                     : Colors.white.withOpacity(0.07),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: done
-                  ? const Color(0xFFC9A24B).withOpacity(0.5)
-                  : Colors.white.withOpacity(0.10),
-            ),
+            // No border — GuidedJournalTopicCard ("Хлебные крошки") has
+            // none either, just fill + shadow defining the edge. A visible
+            // outline read as a mismatched, harder-edged style next to it.
+            // Same drop shadow as GuidedJournalTopicCard so both modules'
+            // primary tappable cards read as the same visual family.
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.18),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
           child: Row(
             children: [
@@ -178,7 +195,7 @@ class _PortraitTestCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            def.title,
+                            def.title.tr(),
                             style: AppStyle.txtSFProDisplayRegular14.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -229,7 +246,16 @@ class _PortraitTestCard extends StatelessWidget {
                   ],
                 ),
               ),
+              // Same tap affordance as GuidedJournalTopicCard's chevron —
+              // only on cards a tap actually does something for (cadence
+              // lock has no tap handler at all, see onTap above).
+              if (!(locked && cadenceLocked)) ...[
+                SizedBox(width: getHorizontalSize(4)),
+                Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.5)),
+              ],
             ],
+          ),
+            ),
           ),
         ),
       ),

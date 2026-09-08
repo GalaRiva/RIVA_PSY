@@ -55,9 +55,21 @@ class AwesomeNotificationService extends NotificationService {
           '${workManagerModel.hour}:${workManagerModel.minute.timeFormatted()}'
     };
     final nudgeText = await _regularityNudgeText(workManagerModel.pillName);
+    final translations = await OfflineTranslations.load();
     final now = DateTime.now();
     int length = now.difference(workManagerModel.end).inDays.abs();
     if(now.isAfter(workManagerModel.end)) length = 0;
+    // 'unlimited'-duration pills (see duration_selector.dart) store end as
+    // start+100 years as a "no real end" sentinel — fed straight into this
+    // one-notification-per-day loop, that meant ~36,500 createNotification()
+    // calls in a single burst on every app launch, which was hanging/OOM-
+    // killing the app (confirmed via device crash logs: iOS jetsam-killed
+    // the process for excessive memory after thousands of rapid-fire
+    // 'create'/'not create' debugPrints). Bounded courses (7/14/30 days)
+    // never approach this cap; the schedule re-runs on every launch anyway,
+    // so an open-ended course still stays reminders-ahead in practice.
+    const maxScheduleDays = 60;
+    if (length > maxScheduleDays) length = maxScheduleDays;
     for(int i = 0; i < length; i++) {
       final date = DateTime.now().add(workManagerModel.duration).add(Duration(days: i, ));
       if(true) {
@@ -101,8 +113,11 @@ class AwesomeNotificationService extends NotificationService {
               body: OfflineTranslations.toSentenceLines(workManagerModel.pillName != ''
                   ? (i == 0 && nudgeText != null
                       ? nudgeText
-                      : 'Пора принять: ${workManagerModel.pillName}')
-                  : 'Как проходит день? Запиши, чтобы запомнить. Мы напоминаем для точной диагностики Вашего состояния'),
+                      : OfflineTranslations.tr(translations,
+                          'pill_reminder_notification_body',
+                          {'pill': workManagerModel.pillName}))
+                  : OfflineTranslations.tr(
+                      translations, 'general_checkin_notification_body')),
               payload: _payload,
               wakeUpScreen: true,
               category: NotificationCategory.Reminder,
@@ -113,7 +128,8 @@ class AwesomeNotificationService extends NotificationService {
                 ? [
                     NotificationActionButton(
                       key: "open",
-                      label: "Открыть 💊",
+                      label: OfflineTranslations.tr(
+                          translations, 'notification_action_open'),
                     ),
                   ]
                 : null);
@@ -161,6 +177,25 @@ class AwesomeNotificationService extends NotificationService {
   /// screen that reaches it. Initializing unconditionally at app start
   /// removes the ordering dependency entirely.
   Future<void> initializeOnce() async {
+    // Runs before runApp(EasyLocalization(...)) in main.dart — before the
+    // very first Flutter frame — so `.tr()` has no widget tree to resolve
+    // against yet, same reasoning as everywhere else in this file. Was
+    // loading and JSON-parsing the entire (1000+ line) translations file
+    // via OfflineTranslations.load() just for this one short string, adding
+    // avoidable latency to the app's slowest-to-improve startup window
+    // (confirmed on-device 2026-09-06: a new black/blank flash appeared
+    // between the native launch screen and Flutter's first frame right
+    // after this was added). A 3-way inline lookup gets the same string
+    // without the file read.
+    const channelGroupNameByLanguage = {
+      'ru': 'Напоминания',
+      'en': 'Reminders',
+      'es': 'Recordatorios',
+    };
+    final languageCode =
+        Platform.localeName.split(RegExp('[_-]')).first.toLowerCase();
+    final channelGroupName =
+        channelGroupNameByLanguage[languageCode] ?? 'Reminders';
     await AwesomeNotifications().initialize(
       'resource://drawable/ic_stat_notify',
       [
@@ -188,7 +223,7 @@ class AwesomeNotificationService extends NotificationService {
       channelGroups: [
         NotificationChannelGroup(
           channelGroupKey: 'reminders',
-          channelGroupName: 'Напоминания',
+          channelGroupName: channelGroupName,
         ),
       ],
     );
@@ -241,6 +276,7 @@ class AwesomeNotificationService extends NotificationService {
     final target = anchor.add(const Duration(hours: 24));
     if (target.isBefore(DateTime.now())) return;
     final id = ('portrait_unlock_${target.toIso8601String()}').hashCode & 0x7FFFFFFF;
+    final translations = await OfflineTranslations.load();
     await AwesomeNotifications().createNotification(
       schedule: NotificationCalendar(
         year: target.year,
@@ -255,7 +291,8 @@ class AwesomeNotificationService extends NotificationService {
         id: id,
         channelKey: 'scheduled',
         title: 'RIVA PSY',
-        body: 'Ваша новая грань готова 💎',
+        body: OfflineTranslations.tr(
+            translations, 'portrait_unlock_notification_body'),
         wakeUpScreen: true,
         category: NotificationCategory.Reminder,
         color: const Color(0xFF2A5C55),

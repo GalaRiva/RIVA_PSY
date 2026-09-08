@@ -13,12 +13,11 @@ import '../../../../widgets/emotion_color_blob.dart';
 import 'controller.dart';
 import '../../../../theme/app_colors.dart';
 
-// Rewritten from scratch (was a Stack/Align/nested-Padding layout that
-// developed an unexplained large gap above "Эмоция сейчас" that survived
-// a clean uninstall+reinstall and didn't match any padding value actually
-// in the code) — this version is a plain Column: a scrollable content
-// area on top, a fixed button row pinned to the bottom underneath it, no
-// Stack/Positioned/Align involved in placing either.
+// Back to Stack/Align (floating button row over the scrollable content) to
+// match every other Path screen — an earlier version used a plain Column
+// specifically to dodge an unexplained gap above "Эмоция сейчас" that
+// showed up here, but the floating layout is the one actually wanted; if
+// that old gap reappears, it needs its own real fix, not a different layout.
 class K31Screen extends GetWidget {
   final DayEventModel? dayEvent;
   final EmotionInDayEvent? category;
@@ -49,10 +48,10 @@ class K31Screen extends GetWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Column(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            Expanded(
-              child: SingleChildScrollView(
+              SingleChildScrollView(
                 padding: getPadding(left: 15, right: 16, top: 16, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,10 +71,26 @@ class K31Screen extends GetWidget {
                     ),
                     Padding(
                       padding: getPadding(top: 18),
-                      child: Text(
-                        'which_emotion_felt'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyle.txtH1,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            behavior: HitTestBehavior.opaque,
+                            child: Padding(
+                              padding: getPadding(right: 4),
+                              child: Icon(Icons.chevron_left_rounded,
+                                  size: getSize(32), color: ColorConstant.gray800),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'which_emotion_felt'.tr(),
+                              overflow: TextOverflow.ellipsis,
+                              style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
@@ -165,7 +180,21 @@ class K31Screen extends GetWidget {
                                   controller.update();
                                 }
                               },
-                              cardWidth: size.width / 2 - 22,
+                              // Was `size.width / 2 - 22` — with this
+                              // screen's real left+right padding (getPadding
+                              // 15+16, itself scaled up on wider-than-Figma
+                              // screens) the two cards' declared widths plus
+                              // the 12 of runSpacing came within ~1px of the
+                              // actually available width. Any rounding this
+                              // close and Wrap has no choice but to drop the
+                              // second card to its own line — every card
+                              // rendered full-width, one per row, instead of
+                              // two side by side. Deriving cardWidth from the
+                              // real available width (with this row's own
+                              // padding+spacing subtracted first) instead of
+                              // a flat screen-width fraction leaves real
+                              // margin instead of a razor's edge.
+                              cardWidth: (MediaQuery.of(context).size.width - 31 - 12) / 2 - 8,
                               cardHeight: 44,
                               useShadowStyle: true,
                               borderRadiusOverride: 16,
@@ -178,30 +207,19 @@ class K31Screen extends GetWidget {
                   ],
                 ),
               ),
-            ),
-            Padding(
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
               padding: getPadding(left: 16, top: 14, bottom: 10, right: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomButton(
-                    height: getVerticalSize(32),
-                    width: getHorizontalSize(177),
-                    variant: ButtonVariant.Base,
-                    textIsFitted: true,
-                    onTap: () => Navigator.pop(context),
-                    text: 'choosing_emotion'.tr().toUpperCase(),
-                    padding: ButtonPadding.PaddingT8,
-                    prefixWidget: CustomImageView(
-                      margin: getMargin(right: 4),
-                      svgPath: ImageConstant.leftArrow,
-                    ),
-                  ),
-                  CustomButton(
-                    height: getVerticalSize(32),
-                    width: getHorizontalSize(140),
-                    variant: ButtonVariant.Base,
+              child: CustomButton(
+                    height: getVerticalSize(40),
+                    width: MediaQuery.of(context).size.width - 32,
+                    bgColor: ColorConstant.cyan700,
+                    showBorder: false,
+                    borderRadius: 14,
+                    glossy: true,
+                    showShadow: false,
+                    textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                     onTap: () {
                       controller.showEmotionIntensityDialog(
                           context,
@@ -212,8 +230,7 @@ class K31Screen extends GetWidget {
                     },
                     text: 'continue'.tr().toUpperCase(),
                   ),
-                ],
-              ),
+            ),
             ),
           ],
         ),

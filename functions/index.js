@@ -4,6 +4,11 @@ const logger = require('firebase-functions/logger');
 const admin = require('firebase-admin');
 const Stripe = require('stripe');
 const { google } = require('googleapis');
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const { jwtVerify, createRemoteJWKSet } = require('jose');
+const { SignedDataVerifier, Environment: AppleEnvironment } = require('@apple/app-store-server-library');
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -57,7 +62,7 @@ async function logUnmatched(reason, details) {
   });
 }
 
-async function applyTariff(docId, tariffName, tariffEndIso, stripeCustomerId) {
+async function applyTariff(docId, tariffName, tariffEndIso, stripeCustomerId, appleOriginalTransactionId) {
   const fields = {
     tariff: tariffName,
     tariff_is_end: tariffEndIso,
@@ -69,8 +74,17 @@ async function applyTariff(docId, tariffName, tariffEndIso, stripeCustomerId) {
   if (stripeCustomerId) {
     fields.stripe_customer_id = stripeCustomerId;
   }
+  // Same idea as stripe_customer_id, but for Apple: verifyApplePurchase
+  // stamps this the first time a given subscription's receipt is verified,
+  // so appleServerNotifications (a true webhook — Apple calling us, not the
+  // client) can later find the right Users doc from nothing but the
+  // originalTransactionId in a renewal/refund/expiry event, with no email
+  // or Firebase Auth session involved at all.
+  if (appleOriginalTransactionId) {
+    fields.apple_original_transaction_id = appleOriginalTransactionId;
+  }
   await db.collection('Users').doc(docId).set(fields, { merge: true });
-  logger.info('Applied tariff', { docId, tariffName, tariffEndIso, stripeCustomerId });
+  logger.info('Applied tariff', { docId, tariffName, tariffEndIso, stripeCustomerId, appleOriginalTransactionId });
 }
 
 /**
@@ -81,7 +95,7 @@ async function applyTariff(docId, tariffName, tariffEndIso, stripeCustomerId) {
  * access to a paying customer — both worse than a short manual-review
  * delay.
  */
-async function resolveAndApplyTariff(email, tariffName, tariffEndIso, stripeCustomerId, eventMeta) {
+async function resolveAndApplyTariff(email, tariffName, tariffEndIso, stripeCustomerId, eventMeta, appleOriginalTransactionId) {
   const docs = await findUserDocs(email);
 
   if (docs.length === 0) {
@@ -100,7 +114,42 @@ async function resolveAndApplyTariff(email, tariffName, tariffEndIso, stripeCust
     return;
   }
 
-  await applyTariff(docs[0].id, tariffName, tariffEndIso, stripeCustomerId);
+  await applyTariff(docs[0].id, tariffName, tariffEndIso, stripeCustomerId, appleOriginalTransactionId);
+}
+
+/**
+ * The appleServerNotifications counterpart to resolveAndApplyTariff — Apple
+ * calls this webhook server-to-server with no Firebase Auth session and no
+ * email, only the subscription's originalTransactionId, so the user has to
+ * be found by that instead. Same no-guessing policy as the email path: 0 or
+ * >1 matches goes to manual review rather than risking the wrong account.
+ */
+async function resolveAndApplyTariffByAppleTransaction(originalTransactionId, tariffName, tariffEndIso, eventMeta) {
+  const snap = await db
+    .collection('Users')
+    .where('apple_original_transaction_id', '==', originalTransactionId)
+    .get();
+
+  if (snap.size === 0) {
+    // Expected the first time a *fresh install/account* renews before it's
+    // ever had a verifyApplePurchase() call stamp this field — not
+    // necessarily an error, just nothing to update yet.
+    await logUnmatched('no_match', { originalTransactionId, tariffName, tariffEndIso, ...eventMeta });
+    return;
+  }
+
+  if (snap.size > 1) {
+    await logUnmatched('multiple_matches', {
+      originalTransactionId,
+      tariffName,
+      tariffEndIso,
+      matchedDocIds: snap.docs.map((d) => d.id),
+      ...eventMeta,
+    });
+    return;
+  }
+
+  await applyTariff(snap.docs[0].id, tariffName, tariffEndIso);
 }
 
 function isoFromUnixSeconds(unixSeconds) {
@@ -501,12 +550,295 @@ exports.verifyApplePurchase = onCall(
       throw new HttpsError('failed-precondition', 'Срок подписки истёк.');
     }
 
+    // Stamped on the Users doc below so appleServerNotifications (a true
+    // server-to-server webhook, with no email or auth session available)
+    // can find this same user later for renewals/refunds/expiry it learns
+    // about independently of the app ever calling this function again.
+    const originalTransactionId = latest.original_transaction_id;
+
     const email = request.auth.token.email;
     await resolveAndApplyTariff(email, ORION_TARIFF_NAME, expiryTimeIso, null, {
       source: 'app_store',
       productId,
-    });
+    }, originalTransactionId);
 
     return { tariff: ORION_TARIFF_NAME, tariffIsEnd: expiryTimeIso };
   }
+);
+
+// Firebase's built-in signInWithCredential("apple.com") reliably rejects a
+// verifiably genuine, correctly-signed Apple identityToken with
+// invalid-credential / "Invalid OAuth response from apple.com" on this
+// project (confirmed 2026-09-05: independently decoded the token and
+// verified its RS256 signature against Apple's own published JWKS by hand —
+// signature valid, aud/nonce/exp all correct — yet Firebase's own
+// verification still rejects it). Filed with Firebase support, but rather
+// than block Apple Sign-In on their fix, this function does the same
+// verification ourselves and mints a Firebase custom token instead, which
+// takes a completely different code path from the broken one.
+const APPLE_JWKS = createRemoteJWKSet(new URL('https://appleid.apple.com/auth/keys'));
+// Native iOS/Android sign-in uses the app's own bundle id as audience;
+// the web-redirect fallback (webAuthenticationOptions) uses the Services ID.
+const APPLE_AUDIENCES = ['com.riva.psy', 'com.riva.psy.signin'];
+
+exports.verifyAppleIdentityToken = onCall(
+  { region: 'us-central1' },
+  async (request) => {
+    const { identityToken, rawNonce } = request.data || {};
+    if (!identityToken || typeof identityToken !== 'string') {
+      throw new HttpsError('invalid-argument', 'identityToken обязателен.');
+    }
+    if (!rawNonce || typeof rawNonce !== 'string') {
+      throw new HttpsError('invalid-argument', 'rawNonce обязателен.');
+    }
+
+    let payload;
+    try {
+      const verified = await jwtVerify(identityToken, APPLE_JWKS, {
+        issuer: 'https://appleid.apple.com',
+        audience: APPLE_AUDIENCES,
+      });
+      payload = verified.payload;
+    } catch (err) {
+      logger.warn('verifyAppleIdentityToken: token verification failed', {
+        error: err.message,
+      });
+      throw new HttpsError('unauthenticated', 'Не удалось проверить данные Apple.');
+    }
+
+    const expectedNonce = crypto.createHash('sha256').update(rawNonce).digest('hex');
+    if (payload.nonce !== expectedNonce) {
+      logger.warn('verifyAppleIdentityToken: nonce mismatch', { sub: payload.sub });
+      throw new HttpsError('unauthenticated', 'Не удалось проверить данные Apple.');
+    }
+
+    const email = payload.email;
+    if (!email) {
+      throw new HttpsError(
+        'failed-precondition',
+        'Apple не передал email для этого аккаунта.'
+      );
+    }
+
+    // Reuse the existing Firebase Auth user if this email already has one
+    // (e.g. previously signed up via Google) rather than minting a second,
+    // colliding account — Firebase Auth enforces unique emails across all
+    // users regardless of provider, and the app's own Firestore user
+    // profiles are already keyed by "<email> <service>" independently of
+    // the Auth uid, so sharing one underlying Auth account across
+    // providers for the same email is exactly the existing app-level model.
+    let userRecord;
+    try {
+      userRecord = await admin.auth().getUserByEmail(email);
+    } catch (err) {
+      if (err.code !== 'auth/user-not-found') throw err;
+      userRecord = await admin.auth().createUser({
+        email,
+        emailVerified: payload.email_verified === true || payload.email_verified === 'true',
+      });
+    }
+
+    const customToken = await admin.auth().createCustomToken(userRecord.uid);
+    logger.info('verifyAppleIdentityToken: issued custom token', {
+      uid: userRecord.uid,
+      sub: payload.sub,
+    });
+    return { customToken, email };
+  }
+);
+
+/**
+ * App Store Server Notifications V2 — Apple calls this URL itself (real
+ * server-to-server webhook, no client involved) on subscription lifecycle
+ * events: renewals, expirations, refunds, billing-retry grace periods, etc.
+ * Complements verifyApplePurchase (which only runs once, right after a
+ * purchase, because the app calls it) by keeping tariff_is_end accurate for
+ * everything that happens *after* that — a renewal the app never opens
+ * again to observe, a refund, a family-sharing revocation, or a user who
+ * cancels via iPhone Settings instead of inside the app.
+ *
+ * The app's bundle id (com.riva.psy) is not enough on its own to find the
+ * right Users doc — there's no email or Firebase Auth session on an
+ * incoming webhook. Apple's transaction payload does reliably carry
+ * originalTransactionId, which is why verifyApplePurchase stamps
+ * apple_original_transaction_id on the Users doc on every receipt
+ * verification — see that function and resolveAndApplyTariffByAppleTransaction.
+ *
+ * Registered as TWO separate Cloud Functions/URLs (below), matching how
+ * App Store Connect itself asks for a production URL and a separate
+ * Sandbox URL under Информация о приложении → "Уведомления сервера App
+ * Store" — each SignedDataVerifier is bound to one environment at
+ * construction time (see the library's own docs for why), so this avoids
+ * needing to guess the environment from unverified data before knowing
+ * which verifier to even try.
+ */
+
+// The app's own numeric Apple ID (App Store Connect → Информация о
+// приложении → "Apple ID", not any per-subscription id) — required by
+// SignedDataVerifier for the Production environment only; Sandbox omits it.
+const APP_APPLE_ID = 6809211171;
+const APP_BUNDLE_ID = 'com.riva.psy';
+
+// Apple Root CA - G3 (https://www.apple.com/certificateauthority/), the
+// root that App Store Server Notifications' certificate chain leads back
+// to. DER-encoded, bundled at deploy time — see functions/certs/README.md
+// for where this came from and how to refresh it.
+const appleRootCertificates = [
+  fs.readFileSync(path.join(__dirname, 'certs', 'AppleRootCA-G3.cer')),
+];
+
+function makeAppleNotificationVerifier(environment) {
+  return new SignedDataVerifier(
+    appleRootCertificates,
+    true, // enableOnlineChecks — also checks certificate revocation + expiry
+    environment,
+    APP_BUNDLE_ID,
+    environment === AppleEnvironment.PRODUCTION ? APP_APPLE_ID : undefined
+  );
+}
+
+const appleNotificationVerifierProd = makeAppleNotificationVerifier(AppleEnvironment.PRODUCTION);
+const appleNotificationVerifierSandbox = makeAppleNotificationVerifier(AppleEnvironment.SANDBOX);
+
+// notificationType values where the subscription is active (or should still
+// be treated as such) right now.
+const APPLE_ACTIVE_NOTIFICATION_TYPES = new Set(['SUBSCRIBED', 'DID_RENEW']);
+// notificationType values where the subscription has definitively ended.
+const APPLE_TERMINATED_NOTIFICATION_TYPES = new Set([
+  'EXPIRED',
+  'GRACE_PERIOD_EXPIRED',
+  'REFUND',
+  'REVOKE',
+]);
+
+async function handleAppleServerNotification(verifier, req, res) {
+  const signedPayload = req.body && req.body.signedPayload;
+  if (!signedPayload || typeof signedPayload !== 'string') {
+    logger.warn('appleServerNotifications: request missing signedPayload');
+    res.status(400).send('missing signedPayload');
+    return;
+  }
+
+  let notification;
+  try {
+    notification = await verifier.verifyAndDecodeNotification(signedPayload);
+  } catch (err) {
+    // Signature/chain/bundle-id/environment check failed — reject before
+    // touching Firestore at all, same reasoning as stripeWebhook's
+    // signature check: this is what stops a forged request from granting
+    // itself a free tariff.
+    logger.error('appleServerNotifications: notification verification failed', {
+      error: err.message,
+    });
+    res.status(400).send('invalid signature');
+    return;
+  }
+
+  const notificationType = notification.notificationType;
+  const subtype = notification.subtype;
+  const environment = notification.data && notification.data.environment;
+  const signedTransactionInfo = notification.data && notification.data.signedTransactionInfo;
+
+  logger.info('appleServerNotifications: received', {
+    notificationType,
+    subtype,
+    environment,
+    notificationUUID: notification.notificationUUID,
+  });
+
+  // TEST notifications ("Send Test Notification" in App Store Connect, or
+  // requestTestNotification()) and a few other types carry no transaction
+  // data — nothing to apply, just acknowledge so Apple doesn't retry.
+  if (!signedTransactionInfo) {
+    res.status(200).send('ok');
+    return;
+  }
+
+  let transaction;
+  try {
+    transaction = await verifier.verifyAndDecodeTransaction(signedTransactionInfo);
+  } catch (err) {
+    logger.error('appleServerNotifications: transaction verification failed', {
+      error: err.message,
+      notificationType,
+    });
+    res.status(400).send('invalid transaction signature');
+    return;
+  }
+
+  const originalTransactionId = transaction.originalTransactionId;
+  const expiresDate = transaction.expiresDate; // unix ms, or undefined for non-subscription types
+  if (!originalTransactionId) {
+    logger.warn('appleServerNotifications: transaction has no originalTransactionId', { notificationType });
+    res.status(200).send('ok');
+    return;
+  }
+
+  const eventMeta = {
+    source: 'app_store_server_notification',
+    notificationType,
+    subtype,
+    environment,
+    productId: transaction.productId,
+    notificationUUID: notification.notificationUUID,
+  };
+
+  try {
+    const isGraceBillingRetry = notificationType === 'DID_FAIL_TO_RENEW' && subtype === 'GRACE_PERIOD';
+
+    if (APPLE_ACTIVE_NOTIFICATION_TYPES.has(notificationType) || isGraceBillingRetry) {
+      // A billing-retry grace period still counts as active — Apple's own
+      // guidance is to keep access on through GRACE_PERIOD_EXPIRED, using
+      // this same expiresDate (which Apple extends to cover the grace
+      // window) rather than cutting access at the first missed charge.
+      if (!expiresDate) {
+        logger.error('appleServerNotifications: no expiresDate on an active-type notification', eventMeta);
+      } else {
+        await resolveAndApplyTariffByAppleTransaction(
+          originalTransactionId,
+          ORION_TARIFF_NAME,
+          new Date(expiresDate).toISOString(),
+          eventMeta
+        );
+      }
+    } else if (
+      APPLE_TERMINATED_NOTIFICATION_TYPES.has(notificationType) ||
+      (notificationType === 'DID_FAIL_TO_RENEW' && !isGraceBillingRetry)
+    ) {
+      await resolveAndApplyTariffByAppleTransaction(
+        originalTransactionId,
+        BASE_TARIFF_NAME,
+        BASE_TARIFF_END_ISO,
+        eventMeta
+      );
+    }
+    // Everything else (DID_CHANGE_RENEWAL_STATUS, DID_CHANGE_RENEWAL_PREF,
+    // OFFER_REDEEMED, PRICE_INCREASE, CONSUMPTION_REQUEST, RENEWAL_EXTENDED,
+    // REFUND_DECLINED, ...) doesn't change whether the subscription is
+    // active right now — acknowledged (so Apple stops retrying) but no
+    // tariff write.
+
+    res.status(200).send('ok');
+  } catch (err) {
+    logger.error('appleServerNotifications: error applying tariff', {
+      error: err.message,
+      stack: err.stack,
+      ...eventMeta,
+    });
+    // Non-2xx makes Apple retry this notification later — appropriate for a
+    // transient failure (e.g. a Firestore hiccup), since
+    // resolveAndApplyTariffByAppleTransaction is safe to run again for the
+    // same event.
+    res.status(500).send('internal error');
+  }
+}
+
+exports.appleServerNotificationsProd = onRequest(
+  { region: 'us-central1' },
+  (req, res) => handleAppleServerNotification(appleNotificationVerifierProd, req, res)
+);
+
+exports.appleServerNotificationsSandbox = onRequest(
+  { region: 'us-central1' },
+  (req, res) => handleAppleServerNotification(appleNotificationVerifierSandbox, req, res)
 );

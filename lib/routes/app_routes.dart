@@ -211,4 +211,63 @@ static const String enterPasswordScreen = '/enter_password_screen';
 
 
   };
+
+  // The "Путь" (day-event creation) wizard's 9 screens — a single linear
+  // flow, one step after another. Everything else in the app keeps the
+  // platform-default MaterialPageRoute transition (iOS: system slide with
+  // parallax); these get a shorter, gentler slide+fade instead, so 9
+  // near-identical screens in a row read as one continuous flow advancing
+  // a step at a time rather than each one feeling like a fresh page load.
+  static const Set<String> _wizardRoutes = {
+    whatHappened,
+    whereHappened,
+    withWhoHappened,
+    whatEmotion,
+    additionalEmotions,
+    what_body_parts,
+    what_i_do,
+    first_thougths,
+    path_final,
+  };
+
+  // Replaces the `routes:` table as MaterialApp's route generator so every
+  // pushNamed/pushNamedAndRemoveUntil call site keeps working unchanged
+  // (arguments and route names still flow through RouteSettings exactly as
+  // before) while wizard screens get `_WizardPageRoute` instead of the
+  // default MaterialPageRoute.
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    final builder = routes[settings.name];
+    if (builder == null) return null;
+    if (_wizardRoutes.contains(settings.name)) {
+      return _WizardPageRoute(settings: settings, builder: builder);
+    }
+    return MaterialPageRoute(settings: settings, builder: builder);
+  }
+}
+
+class _WizardPageRoute<T> extends PageRouteBuilder<T> {
+  _WizardPageRoute({required RouteSettings settings, required WidgetBuilder builder})
+      : super(
+          settings: settings,
+          // Slightly longer and symmetrically eased (was easeOutCubic/
+          // easeInCubic, a sharper snap-then-settle) — easeInOutCubic ramps
+          // gently at both ends, no abrupt start, reading as softer.
+          transitionDuration: const Duration(milliseconds: 260),
+          reverseTransitionDuration: const Duration(milliseconds: 260),
+          pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            // Smaller fractional offset (6% of width, was 8%) — not a
+            // full-width slide — reads as "the same flow settling into
+            // place", not "a new page arriving from off-screen".
+            final incoming = CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic, reverseCurve: Curves.easeInOutCubic);
+            final outgoing = CurvedAnimation(parent: secondaryAnimation, curve: Curves.easeInOutCubic, reverseCurve: Curves.easeInOutCubic);
+            return SlideTransition(
+              position: Tween<Offset>(begin: const Offset(0.06, 0), end: Offset.zero).animate(incoming),
+              child: SlideTransition(
+                position: Tween<Offset>(begin: Offset.zero, end: const Offset(-0.06, 0)).animate(outgoing),
+                child: FadeTransition(opacity: incoming, child: child),
+              ),
+            );
+          },
+        );
 }

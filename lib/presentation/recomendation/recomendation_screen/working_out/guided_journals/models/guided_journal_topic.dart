@@ -1,3 +1,9 @@
+// First N topics (by Firestore `order`, i.e. list position) are free for
+// every user; the rest — and anything appended to the library later, since
+// new topics land with a higher `order` — need an active Orion subscription.
+// Mirrors kPortraitFreeTestCount's role in portrait_test_definitions.dart.
+const int kGuidedJournalFreeTopicCount = 10;
+
 // One row of GuidedJournals/{topic_id} in Firestore, already resolved to
 // the current locale — see GuidedJournalsRepository for the raw shape
 // (title/questions/insight are {ru,en,es} maps, linked_audio_{lang} are

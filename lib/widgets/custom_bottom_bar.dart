@@ -12,27 +12,27 @@ class CustomBottomBar extends StatelessWidget {
     BottomMenuModel(
       icon: ImageConstant.imgSearchGray800,
       type: BottomBarEnum.Searchgray800,
-      size: 15
+      size: 20
     ),
     BottomMenuModel(
       icon: ImageConstant.imgCalendar,
       type: BottomBarEnum.Calendar,
-      size: 16
+      size: 21
     ),
     BottomMenuModel(
       icon: ImageConstant.imgArrowright,
       type: BottomBarEnum.Arrowright,
-      size: 32
+      size: 34
     ),
     BottomMenuModel(
       icon: ImageConstant.imgVectorGray800,
       type: BottomBarEnum.Vectorgray800,
-      size: 18
+      size: 23
     ),
     BottomMenuModel(
       icon: ImageConstant.imgSettings,
       type: BottomBarEnum.Settings,
-      size: 16
+      size: 21
     )
   ];
 
