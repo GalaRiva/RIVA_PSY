@@ -46,15 +46,28 @@ class ListglobeItemWidget extends StatelessWidget {
               width: getHorizontalSize(
                 51,
               ),
-              child: svgPath != null ? CustomImageView(
-                svgPath: svgPath,
-                height: getVerticalSize(
-                  71,
-                ),
-                width: getHorizontalSize(
-                  51,
-                ),
-              ) : svgFile != null ? SvgPicture.file(
+              // CustomImageView's `svgPath` always renders via
+              // SvgPicture.asset regardless of the file's real extension —
+              // the wrath/resentment/sorrow overrides (screen_body_widget.dart)
+              // are bundled .png files, not .svg, so routing them through
+              // CustomImageView silently rendered nothing (an SVG parser
+              // fed PNG bytes). Image.asset for anything not ending in
+              // .svg, matching the same branch tab_widget.dart already
+              // uses for these same override assets elsewhere.
+              child: svgPath != null
+                  ? (svgPath!.endsWith('.svg')
+                      ? CustomImageView(
+                          svgPath: svgPath,
+                          height: getVerticalSize(71),
+                          width: getHorizontalSize(51),
+                        )
+                      : Image.asset(
+                          svgPath!,
+                          height: getVerticalSize(71),
+                          width: getHorizontalSize(51),
+                          fit: BoxFit.contain,
+                        ))
+                  : svgFile != null ? SvgPicture.file(
                 svgFile!,
                 height: getVerticalSize(100),
                 width: getHorizontalSize(60),

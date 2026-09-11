@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart' ;
@@ -124,30 +123,30 @@ class ServicesAuthService {
         nonce: nonce,
       );
 
-      // Firebase's own signInWithCredential("apple.com") reliably rejects a
-      // verifiably genuine, correctly-signed Apple identityToken on this
-      // project (confirmed 2026-09-05 by independently checking the token's
-      // RS256 signature against Apple's published JWKS by hand — valid).
-      // Rather than block sign-in on Firebase fixing that, a Cloud Function
-      // (verifyAppleIdentityToken) does the same verification itself and
-      // mints a Firebase custom token, which takes a different code path.
-      final callable =
-          FirebaseFunctions.instance.httpsCallable('verifyAppleIdentityToken');
-      final result = await callable.call<Map<String, dynamic>>({
-        'identityToken': appleCredential.identityToken,
-        'rawNonce': rawNonce,
-      });
-      final customToken = result.data['customToken'] as String;
+      // Was routed through a Cloud Function (verifyAppleIdentityToken) that
+      // independently verified the identity token and minted a Firebase
+      // custom token instead — Firebase's own signInWithCredential("apple.com")
+      // was reliably rejecting a verifiably genuine, correctly-signed Apple
+      // identityToken on this project (confirmed 2026-09-05 by hand-checking
+      // the token's RS256 signature against Apple's published JWKS — valid).
+      // Firebase Auth support (2026-09-10) identified the actual cause: the
+      // credential needs Apple's authorizationCode passed as `accessToken` —
+      // without it, Firebase's own backend-to-Apple validation call can't
+      // complete. Back to the standard signInWithCredential path with that
+      // included. If this regresses, the Cloud Function + signInWithCustomToken
+      // path above (see git history around 2026-09-05) is the known-working
+      // fallback — verifyAppleIdentityToken is still deployed, just unused
+      // by this method for now.
+      final oauthCredential = OAuthProvider('apple.com').credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: rawNonce,
+        accessToken: appleCredential.authorizationCode,
+      );
 
       final authResult =
-          await FirebaseAuth.instance.signInWithCustomToken(customToken);
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       _appleUser = authResult.user;
       return true;
-    } on FirebaseFunctionsException catch (exception) {
-      print(exception);
-      lastError = 'code=${exception.code} message=${exception.message} '
-          'plugin=cloud_functions';
-      return false;
     } on FirebaseAuthException catch (exception) {
       print(exception);
       // Default toString() is just "[plugin/code] message" — code and

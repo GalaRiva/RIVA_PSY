@@ -434,6 +434,12 @@ class K20Screen extends GetWidget<K20Controller> {
                           Navigator.pushNamed(context, AppRoutes.whatHappened, arguments: DayEventModel().copyWith(howDoYouFeel: controller.sliderValue.round(), showInCharts: true));
                           },
                         text: 'complete_path'.tr().toUpperCase(),
+                        // Was clipping/wrapping badly for longer
+                        // translations (e.g. Spanish "COMPLETAR EL CAMINO")
+                        // inside the tight 68px side margins, with no
+                        // shrink-to-fit — textIsFitted lets it scale down to
+                        // stay on one line instead.
+                        textIsFitted: true,
                         margin: getMargin(
                           left: 68,
                           top: 14,

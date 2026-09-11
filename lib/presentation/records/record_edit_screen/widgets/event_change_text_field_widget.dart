@@ -16,17 +16,19 @@ class EventChangeTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: getMargin(
-        top: 30,
+        top: 16,
       ),
       padding: getPadding(
-        left: 6,
-        top: 12,
-        right: 6,
-        bottom: 12,
+        left: 16,
+        top: 16,
+        right: 16,
+        bottom: 16,
       ),
-      decoration:
-      AppDecoration.outlineBluegray60014.copyWith(
-        borderRadius: BorderRadiusStyle.customBorderBL3,
+      // Same white rounded-card treatment as EventChangeWidget/Profile —
+      // was a thin, asymmetrically-rounded outline box.
+      decoration: AppDecoration.outlineBluegray80014.copyWith(
+        borderRadius: BorderRadiusStyle.roundedBorder3,
+        color: Colors.white,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -37,11 +39,9 @@ class EventChangeTextFieldWidget extends StatelessWidget {
             title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: AppStyle.txtSFProDisplayLight11Gray800
-                .copyWith(
-              letterSpacing: getHorizontalSize(
-                0.44,
-              ),
+            style: AppStyle.txtSFProDisplayLight16.copyWith(
+              fontWeight: FontWeight.w600,
+              color: ColorConstant.gray800,
             ),
           ),
           Padding(

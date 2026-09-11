@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/color_constant.dart';
 import '../../../../core/utils/image_constant.dart';
 import '../../../../core/utils/size_utils.dart';
 import '../../../../theme/app_decoration.dart';
@@ -32,17 +33,22 @@ class EventChangeWidget extends StatelessWidget {
     final _changeToAfter = _changeToParts.length > 1 ? _changeToParts[1].trimLeft() : '';
     return Container(
       margin: getMargin(
-        top: 30,
+        top: 16,
       ),
       padding: getPadding(
-        left: 6,
-        top: 12,
-        right: 6,
-        bottom: 12,
+        left: 16,
+        top: 16,
+        right: 16,
+        bottom: 16,
       ),
-      decoration:
-      AppDecoration.outlineBluegray60014.copyWith(
-        borderRadius: BorderRadiusStyle.customBorderBL3,
+      // Was a thin, asymmetrically-rounded outline box (customBorderBL3) —
+      // same white rounded-card treatment as the Profile screen redesign,
+      // for consistency and so the (now bigger) title reads as a real
+      // section header sitting in its own card, not cramped text in a
+      // bordered strip.
+      decoration: AppDecoration.outlineBluegray80014.copyWith(
+        borderRadius: BorderRadiusStyle.roundedBorder3,
+        color: Colors.white,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -53,11 +59,9 @@ class EventChangeWidget extends StatelessWidget {
             title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: AppStyle.txtSFProDisplayLight11Gray800
-                .copyWith(
-              letterSpacing: getHorizontalSize(
-                0.44,
-              ),
+            style: AppStyle.txtSFProDisplayLight16.copyWith(
+              fontWeight: FontWeight.w600,
+              color: ColorConstant.gray800,
             ),
           ),
           Padding(

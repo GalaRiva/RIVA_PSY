@@ -94,13 +94,29 @@ class _QuestionBodyState extends State<_QuestionBody> {
                           size: getSize(20), color: Colors.white.withOpacity(0.7)),
                     ),
                   ),
-                  Text(
-                    'guided_journal_question_progress'.tr(args: [
-                      '${widget.questionNumber}',
-                      '${widget.totalQuestions}'
-                    ]),
-                    style: AppStyle.txtSFProDisplayLight12
-                        .copyWith(color: Colors.white.withOpacity(0.75)),
+                  Expanded(
+                    child: Text(
+                      'guided_journal_question_progress'.tr(args: [
+                        '${widget.questionNumber}',
+                        '${widget.totalQuestions}'
+                      ]),
+                      style: AppStyle.txtSFProDisplayLight12
+                          .copyWith(color: Colors.white.withOpacity(0.75)),
+                    ),
+                  ),
+                  // The back arrow only steps back one question at a time
+                  // (or to the library from question 1) — no quick, obvious
+                  // way to bail out of the exercise entirely mid-flow while
+                  // the bottom nav is hidden (immersive mode). A plain close
+                  // affordance next to it, same destination as "back to
+                  // library" but immediate from any question.
+                  GestureDetector(
+                    onTap: () => cubit.backToLibrary(),
+                    child: Padding(
+                      padding: getPadding(left: 8, top: 4, bottom: 4),
+                      child: Icon(Icons.close_rounded,
+                          size: getSize(22), color: Colors.white.withOpacity(0.7)),
+                    ),
                   ),
                 ],
               ),

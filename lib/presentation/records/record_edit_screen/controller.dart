@@ -23,7 +23,16 @@ import 'package:permission_handler/permission_handler.dart';
 class K52Controller extends GetxController {
   final DayEventModel dayEventModel;
 
-  K52Controller(this.dayEventModel);
+  // The text fields below only ever received the record's existing
+  // whatIDo/firstThoughts as `hintText` (a placeholder, gone the moment
+  // you type anything) — the actual TextEditingControllers started empty.
+  // Editing meant retyping the whole thing from memory; typing anything at
+  // all silently discarded the original text on Save instead of amending
+  // it. Seeding the controllers with the real content here fixes both.
+  K52Controller(this.dayEventModel) {
+    whatIDoController.text = dayEventModel.whatIDo ?? '';
+    firstThoughtsController.text = dayEventModel.firstThoughts ?? '';
+  }
 
   final AudioPlayer _voiceNotePlayer = AudioPlayer();
   bool isPlayingVoiceNote = false;
@@ -100,8 +109,8 @@ class K52Controller extends GetxController {
     emotionAddController = TextEditingController();
     bodyPartsSearchController = TextEditingController();
     bodyPartsAddController = TextEditingController();
-    whatIDoController = TextEditingController();
-    firstThoughtsController = TextEditingController();
+    whatIDoController = TextEditingController(text: dayEventModel.whatIDo ?? '');
+    firstThoughtsController = TextEditingController(text: dayEventModel.firstThoughts ?? '');
     selectedBodyParts = [];
   }
 

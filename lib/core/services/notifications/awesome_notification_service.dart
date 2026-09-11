@@ -5,6 +5,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:googleapis/gkebackup/v1.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:riva_psy/core/services/notifications/notification_service.dart';
 import 'package:riva_psy/core/utils/date_extension.dart';
 
@@ -186,14 +187,20 @@ class AwesomeNotificationService extends NotificationService {
     // (confirmed on-device 2026-09-06: a new black/blank flash appeared
     // between the native launch screen and Flutter's first frame right
     // after this was added). A 3-way inline lookup gets the same string
-    // without the file read.
+    // without the file read. The language itself still follows the user's
+    // actual in-app choice (see OfflineTranslations.load) via the
+    // SharedPreferences 'locale' key — that's a single cheap platform-channel
+    // read, not the JSON parse that caused the startup delay.
     const channelGroupNameByLanguage = {
       'ru': 'Напоминания',
       'en': 'Reminders',
       'es': 'Recordatorios',
     };
-    final languageCode =
-        Platform.localeName.split(RegExp('[_-]')).first.toLowerCase();
+    final prefs = await SharedPreferences.getInstance();
+    final savedLocale = prefs.getString('locale');
+    final languageCode = (savedLocale?.split(RegExp('[_-]')).first ??
+            Platform.localeName.split(RegExp('[_-]')).first)
+        .toLowerCase();
     final channelGroupName =
         channelGroupNameByLanguage[languageCode] ?? 'Reminders';
     await AwesomeNotifications().initialize(

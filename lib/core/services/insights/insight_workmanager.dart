@@ -12,8 +12,13 @@ import 'insight_engine.dart';
 import 'insight_notifier.dart';
 import 'offline_translations.dart';
 
-const String nightlyInsightTaskName = 'nightlyInsightAnalysis';
-const String gratitudeNudgeTaskName = 'spontaneousGratitudeNudge';
+// Reverse-DNS form because iOS's BGTaskScheduler identifies a task by this
+// exact string — it must match both the identifier registered natively in
+// AppDelegate.swift and the one listed in Info.plist's
+// BGTaskSchedulerPermittedIdentifiers. Android doesn't care about the
+// format, so the same constants are reused there for one source of truth.
+const String nightlyInsightTaskName = 'com.riva.psy.nightlyInsightAnalysis';
+const String gratitudeNudgeTaskName = 'com.riva.psy.gratitudeNudge';
 
 // Mirrors AwesomeNotificationService.initializeOnce()'s own lookup — that
 // one is the foreground registration for the same 'reminders' channel
@@ -92,6 +97,17 @@ Future<void> _runNightlyInsightAnalysis() async {
   // AwesomeNotificationService._regularityNudgeText) instead of always
   // waiting for the next foreground app-open/pill-save to do it.
   await WorkManagerService().initService();
+  // iOS's BGProcessingTask is a one-off request, unlike Android's periodic
+  // WorkManager job — it does not repeat on its own, so each run has to
+  // book the next one itself before returning.
+  if (Platform.isIOS) {
+    await Workmanager().registerProcessingTask(
+      'nightlyInsightAnalysisTask',
+      nightlyInsightTaskName,
+      initialDelay: _delayUntilNext(2, 30),
+      constraints: Constraints(networkType: NetworkType.not_required, requiresCharging: true),
+    );
+  }
 }
 
 /// Fires one random text from the `gratitude_nudge_template_1..30` pool as a
@@ -135,16 +151,31 @@ Future<void> _runGratitudeNudge() async {
   );
 }
 
-/// Registers the nightly analysis job (Android only for now — iOS background
-/// task timing isn't controllable the same way and isn't wired up yet).
-/// `frequency: 24h` + `requiresCharging: true` means Android will run this
-/// roughly once a day, but only whenever the charging constraint happens to
-/// be satisfied within that window — this is a best-effort schedule, not a
-/// guaranteed exact clock time (an Android WorkManager platform constraint,
-/// not a bug in this code).
+/// Registers the nightly analysis job. On Android this is a periodic
+/// WorkManager job: `frequency: 24h` + `requiresCharging: true` means
+/// Android will run this roughly once a day, but only whenever the charging
+/// constraint happens to be satisfied within that window — a best-effort
+/// schedule, not a guaranteed exact clock time (an Android WorkManager
+/// platform constraint, not a bug in this code). iOS has no periodic
+/// equivalent that supports `requiresCharging`, so it uses a one-off
+/// BGProcessingTask instead, re-booked by `_runNightlyInsightAnalysis`
+/// itself after each run — also best-effort: iOS decides the actual run
+/// time based on the device being idle/charging and the app's usage
+/// pattern, and can delay or skip a run entirely. The task identifier must
+/// exactly match what's registered in AppDelegate.swift and listed in
+/// Info.plist's BGTaskSchedulerPermittedIdentifiers.
 Future<void> registerNightlyInsightTask() async {
   final workmanager = Workmanager();
   await workmanager.initialize(insightCallbackDispatcher, isInDebugMode: false);
+  if (Platform.isIOS) {
+    await workmanager.registerProcessingTask(
+      'nightlyInsightAnalysisTask',
+      nightlyInsightTaskName,
+      initialDelay: _delayUntilNext(2, 30),
+      constraints: Constraints(networkType: NetworkType.not_required, requiresCharging: true),
+    );
+    return;
+  }
   await workmanager.registerPeriodicTask(
     'nightlyInsightAnalysisTask',
     nightlyInsightTaskName,
@@ -155,13 +186,25 @@ Future<void> registerNightlyInsightTask() async {
   );
 }
 
-/// Registers the spontaneous-gratitude nudge job (Android only, same
-/// reasoning as the nightly job). Roughly every 2 days, no charging
-/// constraint since these are meant to land during normal daytime use, not
-/// overnight. `registerNightlyInsightTask` must run first in `main.dart` so
+/// Registers the spontaneous-gratitude nudge job. On Android this is a
+/// periodic WorkManager job, roughly every 2 days, no charging constraint
+/// since these are meant to land during normal daytime use, not overnight.
+/// On iOS this maps to a BGAppRefreshTask via `registerPeriodicTask` — the
+/// `frequency` here is ignored by the plugin on iOS (it's fixed natively in
+/// AppDelegate.swift instead) and the actual timing is scheduled by iOS
+/// based on the app's usage pattern, not a fixed 48h clock.
+/// `registerNightlyInsightTask` must run first in `main.dart` so
 /// `Workmanager().initialize(...)` has already been called with the shared
 /// dispatcher above.
 Future<void> registerGratitudeNudgeTask() async {
+  if (Platform.isIOS) {
+    await Workmanager().registerPeriodicTask(
+      gratitudeNudgeTaskName,
+      gratitudeNudgeTaskName,
+      initialDelay: Duration(hours: 6 + Random().nextInt(36)),
+    );
+    return;
+  }
   await Workmanager().registerPeriodicTask(
     'spontaneousGratitudeNudgeTask',
     gratitudeNudgeTaskName,

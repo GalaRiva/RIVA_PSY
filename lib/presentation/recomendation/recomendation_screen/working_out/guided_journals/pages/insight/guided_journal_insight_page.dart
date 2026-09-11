@@ -96,6 +96,20 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                                 size: 22),
                           ),
                         ),
+                      // This page's only exits used to be the two full-width
+                      // buttons below — no way out visible without reading
+                      // them, and the bottom nav stays hidden here
+                      // (immersive mode). Same destination as "К другим
+                      // темам", just immediately reachable from the top.
+                      InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: cubit.backToLibrary,
+                        child: Padding(
+                          padding: getPadding(all: 6),
+                          child: Icon(Icons.close_rounded,
+                              color: Colors.white.withOpacity(0.85), size: 22),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: getVerticalSize(20)),

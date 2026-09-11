@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -63,9 +61,16 @@ class K12Controller extends GetxController {
         CurrentUser.user.reminderTimeInStr.removeLast();
       }
     } else {
+      // Was a fully random hour/minute per reminder (Random().nextInt(20/59))
+      // — no relation to actual waking hours, so a reminder could land at
+      // 5am with no way to predict or want that. Fixed, spread-through-the-
+      // day defaults instead — the user can still drag each one to a
+      // different time afterward (see ListtimeItemWidget), this only
+      // affects what a newly added reminder starts at.
+      const defaultHours = [17, 9, 13, 20];
       while (lastNotifications.length != quantity) {
-        var hour = Random().nextInt(20);
-        var minutes = Random().nextInt(59);
+        var hour = defaultHours[lastNotifications.length % defaultHours.length];
+        var minutes = 0;
         lastNotifications.add(K12NotificationModel(
             hour: hour,
             minutes: minutes,

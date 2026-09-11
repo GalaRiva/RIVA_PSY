@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:riva_psy/core/utils/date_extension.dart';
 
 import '../../../core/user_data/user.dart';
 import '../../../widgets/custom_app_bar.dart';
@@ -134,20 +133,6 @@ class K12Page extends GetWidget<K12Controller> {
                                   ),
                                 ),
                               ),
-                              Visibility(
-                                  visible: controller.date.month ==
-                                          DateTime.now().month &&
-                                      controller.date.year ==
-                                          DateTime.now().year,
-                                  child: Padding(
-                                    padding: getPadding(top: 10),
-                                    child: Text(
-                                        "${'you_can_refuse'.tr()} ${controller.date.day.toString()} ${(controller.date.month + 1).monthInText()} ${controller.date.year.toString()} ",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            AppStyle.txtSFProDisplayLight12),
-                                  )),
                               Padding(
                                 padding: getPadding(top: 22),
                                 child: Visibility(
@@ -176,6 +161,35 @@ class K12Page extends GetWidget<K12Controller> {
                                               index: index,
                                             );
                                           }),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // Was no way at all to turn general reminders
+                              // off from this screen — only picking a lower
+                              // "N times per day" count, one tap at a time.
+                              // A direct cancel action instead of just
+                              // vaguely promising one (removed above).
+                              GetBuilder(
+                                builder: (K12Controller _c) => Visibility(
+                                  visible: (controller.notificationList ?? []).isNotEmpty,
+                                  child: Padding(
+                                    padding: getPadding(top: 24),
+                                    child: Center(
+                                      child: InkWell(
+                                        onTap: () async {
+                                          for (var item in controller.list) item.selected = false;
+                                          await controller.generateNewNotifications(
+                                              0, controller.notificationList ?? []);
+                                          controller.update();
+                                        },
+                                        child: Text(
+                                          'cancel_notifications'.tr(),
+                                          textAlign: TextAlign.center,
+                                          style: AppStyle.txtSFProDisplayLight12Deeppurple600
+                                              .copyWith(color: Colors.red, decoration: TextDecoration.underline),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

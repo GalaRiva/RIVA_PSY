@@ -129,10 +129,13 @@ Future<void> bootstrapApp() async {
     // the user opens the app at all, badge or no, so clearing it on every
     // launch is the correct behavior here (not just once on first read).
     AwesomeNotifications().resetGlobalBadge();
-    if (!Platform.isIOS) {
-      await registerNightlyInsightTask().catchError((_) {});
-      registerGratitudeNudgeTask().catchError((_) {});
-    }
+    // iOS runs the same two jobs via BGTaskScheduler instead of Android
+    // WorkManager (see insight_workmanager.dart) — requires the task
+    // identifiers to be registered in AppDelegate.swift/Info.plist before
+    // this runs, which is why registration must not be skipped on iOS
+    // anymore.
+    await registerNightlyInsightTask().catchError((_) {});
+    registerGratitudeNudgeTask().catchError((_) {});
     //initializeDateFormatting('ru_RU');
 
     // Zero-friction entry: no forced registration screen anymore.

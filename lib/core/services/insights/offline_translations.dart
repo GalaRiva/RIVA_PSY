@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Reads the bundled translation JSON directly instead of going through
 /// easy_localization's `.tr()`. That call resolves through
@@ -19,17 +20,20 @@ class OfflineTranslations {
   };
 
   static Future<Map<String, dynamic>> load() async {
-    // Was reading the SharedPreferences 'locale' key that main.dart seeds
-    // once on first launch — that's a permanent snapshot (see main.dart's
-    // comment on why: it's meant to behave like a deliberate in-app choice),
-    // so a user who changes their *phone's* system language afterward kept
-    // getting notifications in whatever language the phone had on day one
-    // (confirmed 2026-09-05: Spanish-locale phone still got a Russian
-    // reminder). Reading Platform.localeName instead tracks the phone's
-    // current language every time a notification is scheduled — dart:io's
-    // Platform works from any isolate, including the background one this
-    // also runs from, same as before.
-    final languageCode = Platform.localeName.split(RegExp('[_-]')).first.toLowerCase();
+    // The SharedPreferences 'locale' key is the app's actual language
+    // choice: main.dart seeds it once from the phone's system language on
+    // first launch, and LanguagesPage/EasyLocalization.setLocale() overwrites
+    // it every time the user picks a language in-app (see
+    // EasyLocalizationController._saveLocale). So reading it here means
+    // notifications default to the phone's language and then follow
+    // whatever the user explicitly chose in the app — which is what should
+    // happen. Falling back to Platform.localeName only covers the
+    // never-actually-happens case of this running before main.dart's seed.
+    final prefs = await SharedPreferences.getInstance();
+    final savedLocale = prefs.getString('locale');
+    final languageCode = (savedLocale?.split(RegExp('[_-]')).first ??
+            Platform.localeName.split(RegExp('[_-]')).first)
+        .toLowerCase();
     final localeTag = _supportedByLanguageCode[languageCode] ?? 'en-US';
     try {
       final jsonStr = await rootBundle.loadString('assets/translations/$localeTag.json');
