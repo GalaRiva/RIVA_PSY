@@ -438,8 +438,14 @@ class K20Screen extends GetWidget<K20Controller> {
                         // translations (e.g. Spanish "COMPLETAR EL CAMINO")
                         // inside the tight 68px side margins, with no
                         // shrink-to-fit — textIsFitted lets it scale down to
-                        // stay on one line instead.
+                        // stay on one line instead. That alone still let the
+                        // shrunk text sit flush against the button's own
+                        // edge (no internal padding existed for this),
+                        // reported as "touching the edges" for Spanish —
+                        // standardPadding adds real breathing room inside
+                        // the button, independent of the external margin.
                         textIsFitted: true,
+                        standardPadding: getPadding(left: 16, right: 16),
                         margin: getMargin(
                           left: 68,
                           top: 14,

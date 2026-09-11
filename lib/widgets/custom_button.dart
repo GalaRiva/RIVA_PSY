@@ -114,9 +114,17 @@ class CustomButton extends StatelessWidget {
         constraints: minHeight != null
             ? BoxConstraints(minHeight: minHeight!, maxHeight: minHeight! * 2.2)
             : null,
-        padding: minHeight != null
-            ? getPadding(top: 6, bottom: 6, left: 6, right: 6)
-            : null,
+        // standardPadding is an opt-in internal gap between the button's
+        // edge and its (possibly FittedBox-shrunk) text/icon content — was
+        // declared but never actually applied anywhere, so every call site
+        // relied solely on the external `margin` for spacing, which shrinks
+        // the button's own width rather than adding breathing room inside
+        // it. No existing call site passes it, so wiring it in here changes
+        // nothing anywhere it isn't explicitly used.
+        padding: standardPadding ??
+            (minHeight != null
+                ? getPadding(top: 6, bottom: 6, left: 6, right: 6)
+                : null),
         decoration: _buildTextButtonStyle(),
         clipBehavior: glossy ? Clip.antiAlias : Clip.none,
         child: glossy
