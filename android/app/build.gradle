@@ -99,6 +99,16 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Was resolving transitively to 1.12.0 (pulled in by a plugin, not
+    // declared here) — Play Console flags BottomSheetDialog/SideSheetDialog
+    // in that version for calling deprecated Window.setStatusBarColor/
+    // setNavigationBarColor internally (material-components-android #4732).
+    // Not guaranteed fixed here since the Views-based library is now in
+    // maintenance mode (Google's all-in on Compose as of I/O 2026), but
+    // pinning to the latest release is the only thing worth trying on our
+    // side — Gradle picks the highest requested version by default, so this
+    // wins over whatever older version any plugin requests.
+    implementation 'com.google.android.material:material:1.14.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
