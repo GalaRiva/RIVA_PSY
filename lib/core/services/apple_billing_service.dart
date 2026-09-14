@@ -122,10 +122,15 @@ class AppleBillingService {
     try {
       final callable = FirebaseFunctions.instance.httpsCallable('verifyApplePurchase');
       final result = await callable.call<Map<String, dynamic>>({
-        // in_app_purchase_storekit populates this with the base64-encoded
-        // App Store receipt (legacy verifyReceipt format), not a StoreKit 2
-        // JWS — the Cloud Function verifies against Apple's verifyReceipt
-        // endpoint accordingly.
+        // in_app_purchase_storekit defaults to StoreKit 2 (_useStoreKit2 =
+        // true in that package), so this is the transaction's signed JWS
+        // representation, not a legacy base64 App Store receipt — confirmed
+        // 2026-09-14 after the legacy verifyReceipt-based Cloud Function
+        // consistently rejected it as malformed (status 21002) on every
+        // purchase attempt. The Cloud Function verifies it the same way
+        // appleServerNotifications verifies Apple's own webhook payloads
+        // (SignedDataVerifier from @apple/app-store-server-library), not
+        // against the old verifyReceipt endpoint.
         'receiptData': purchase.verificationData.serverVerificationData,
         'productId': purchase.productID,
       });

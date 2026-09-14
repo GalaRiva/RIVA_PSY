@@ -433,32 +433,6 @@ exports.verifyAndroidPurchase = onCall(
   }
 );
 
-// App-Specific Shared Secret from App Store Connect -> Apps -> RIVA PSY ->
-// Subscriptions -> App-Specific Shared Secret ("Manage" / "View"). This is
-// the only credential Apple's *legacy* verifyReceipt endpoint needs — no
-// API key file or JWT signing, unlike the newer App Store Server API.
-// in_app_purchase_storekit (the client plugin) still populates
-// PurchaseDetails.verificationData with a legacy base64 receipt, not a
-// StoreKit 2 signed transaction, so this endpoint is the correct match for
-// what the client actually sends.
-const APPLE_SHARED_SECRET = defineSecret('APPLE_SHARED_SECRET');
-
-const APPLE_VERIFY_RECEIPT_PRODUCTION_URL = 'https://buy.itunes.apple.com/verifyReceipt';
-const APPLE_VERIFY_RECEIPT_SANDBOX_URL = 'https://sandbox.itunes.apple.com/verifyReceipt';
-
-async function callAppleVerifyReceipt(url, receiptData, sharedSecret) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      'receipt-data': receiptData,
-      password: sharedSecret,
-      'exclude-old-transactions': true,
-    }),
-  });
-  return res.json();
-}
-
 /**
  * Verifies an App Store purchase server-side and applies the Orion tariff
  * — the iOS-native counterpart to verifyAndroidPurchase above, used for
@@ -467,19 +441,24 @@ async function callAppleVerifyReceipt(url, receiptData, sharedSecret) {
  * the client side.
  *
  * Never trusts the client's own claim of having purchased something — the
- * receipt is just base64 data the client could resend or forge, so the
- * only source of truth is Apple's own verifyReceipt response.
+ * receipt is just signed data the client could resend or forge, so the
+ * only source of truth is Apple's own signature on it.
  *
- * NOT YET DEPLOYABLE: needs the APPLE_SHARED_SECRET secret set
- * (`firebase functions:secrets:set APPLE_SHARED_SECRET`) with the value
- * from App Store Connect before this can be deployed — see this file's
- * comment above the constant for exactly where to find it. Also needs the
- * riva_psy_orion_monthly/riva_psy_orion_yearly subscription products to
- * actually exist in App Store Connect first, or every verifyReceipt call
- * will just come back with no matching line item.
+ * receiptData here is a StoreKit 2 signed transaction (a JWS string) —
+ * in_app_purchase_storekit defaults to StoreKit 2 (`_useStoreKit2 = true`
+ * in that package), so PurchaseDetails.verificationData.serverVerificationData
+ * is the transaction's JWS representation, not the legacy base64 App Store
+ * receipt this function used to expect (confirmed 2026-09-14: sending that
+ * JWS to the legacy /verifyReceipt endpoint as 'receipt-data' got a
+ * consistent, 100%-reproducible status 21002 "malformed receipt-data" for
+ * every purchase, both products — not a flake). Verified the same way
+ * appleServerNotifications already verifies Apple's own webhook payloads:
+ * appleNotificationVerifierProd/Sandbox (below), via the official
+ * @apple/app-store-server-library — no App Store Connect API key needed
+ * for this, just the same bundled Apple root certificate already in use.
  */
 exports.verifyApplePurchase = onCall(
-  { secrets: [APPLE_SHARED_SECRET], region: 'us-central1' },
+  { region: 'us-central1' },
   async (request) => {
     if (!request.auth || !request.auth.token.email) {
       throw new HttpsError('unauthenticated', 'Требуется вход в приложение.');
@@ -492,60 +471,43 @@ exports.verifyApplePurchase = onCall(
       throw new HttpsError('invalid-argument', 'productId обязателен.');
     }
 
-    const sharedSecret = APPLE_SHARED_SECRET.value();
-    let body;
+    // Try Production first, fall back to Sandbox — mirrors the old status
+    // 21007 handling (a Sandbox transaction fails Production verification
+    // because the environment doesn't match, and vice versa), just done as
+    // a verifier swap instead of an endpoint swap.
+    let transaction;
     try {
-      body = await callAppleVerifyReceipt(
-        APPLE_VERIFY_RECEIPT_PRODUCTION_URL,
-        receiptData,
-        sharedSecret
-      );
-      // Status 21007: a sandbox receipt was sent to the production
-      // endpoint — Apple's own documented way of telling test purchases
-      // apart from real ones without the client having to know which
-      // environment it's running in (StoreKit Testing / TestFlight both
-      // produce sandbox receipts).
-      if (body.status === 21007) {
-        body = await callAppleVerifyReceipt(
-          APPLE_VERIFY_RECEIPT_SANDBOX_URL,
-          receiptData,
-          sharedSecret
-        );
+      transaction = await appleNotificationVerifierProd.verifyAndDecodeTransaction(receiptData);
+    } catch (prodErr) {
+      try {
+        transaction = await appleNotificationVerifierSandbox.verifyAndDecodeTransaction(receiptData);
+      } catch (sandboxErr) {
+        logger.error('verifyApplePurchase: transaction verification failed in both environments', {
+          prodError: prodErr.message,
+          sandboxError: sandboxErr.message,
+          productId,
+          email: request.auth.token.email,
+        });
+        throw new HttpsError('failed-precondition', 'Не удалось проверить покупку через App Store.');
       }
-    } catch (err) {
-      logger.error('Apple verifyReceipt request failed', { error: err.message, productId });
-      throw new HttpsError('internal', 'Не удалось проверить покупку через App Store.');
     }
 
-    if (body.status !== 0) {
-      logger.warn('verifyApplePurchase: non-zero status', {
-        status: body.status,
-        productId,
-        email: request.auth.token.email,
+    if (transaction.productId !== productId) {
+      logger.error('verifyApplePurchase: productId mismatch', {
+        expected: productId,
+        actual: transaction.productId,
       });
-      throw new HttpsError(
-        'failed-precondition',
-        `Покупка не подтверждена App Store (статус: ${body.status}).`
-      );
+      throw new HttpsError('failed-precondition', 'Товар не совпадает с ожидаемым.');
     }
 
-    // latest_receipt_info holds every transaction in the receipt — pick
-    // the one for this product with the furthest-out expiry, since a
-    // renewed subscription's receipt contains its own purchase history
-    // too.
-    const entries = (body.latest_receipt_info || []).filter(
-      (entry) => entry.product_id === productId
-    );
-    const latest = entries.sort(
-      (a, b) => Number(b.expires_date_ms) - Number(a.expires_date_ms)
-    )[0];
-    if (!latest || !latest.expires_date_ms) {
-      logger.error('verifyApplePurchase: no matching line item', { productId, status: body.status });
+    const expiresDate = transaction.expiresDate; // unix ms
+    if (!expiresDate) {
+      logger.error('verifyApplePurchase: no expiresDate on transaction', { productId });
       throw new HttpsError('internal', 'Не удалось определить дату окончания подписки.');
     }
 
-    const expiryTimeIso = new Date(Number(latest.expires_date_ms)).toISOString();
-    if (Date.now() > Number(latest.expires_date_ms)) {
+    const expiryTimeIso = new Date(expiresDate).toISOString();
+    if (Date.now() > expiresDate) {
       logger.warn('verifyApplePurchase: subscription already expired', { productId, expiryTimeIso });
       throw new HttpsError('failed-precondition', 'Срок подписки истёк.');
     }
@@ -554,7 +516,7 @@ exports.verifyApplePurchase = onCall(
     // server-to-server webhook, with no email or auth session available)
     // can find this same user later for renewals/refunds/expiry it learns
     // about independently of the app ever calling this function again.
-    const originalTransactionId = latest.original_transaction_id;
+    const originalTransactionId = transaction.originalTransactionId;
 
     const email = request.auth.token.email;
     await resolveAndApplyTariff(email, ORION_TARIFF_NAME, expiryTimeIso, null, {
