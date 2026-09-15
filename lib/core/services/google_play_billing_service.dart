@@ -57,6 +57,18 @@ class GooglePlayBillingService {
     _subscription = null;
   }
 
+  /// Same reasoning as AppleBillingService.restorePurchases() — re-delivers
+  /// past purchases through the shared purchaseStream, already handled by
+  /// _onPurchaseUpdate via PurchaseStatus.restored. Not strictly required
+  /// by Play the way Apple requires it, but wired up for symmetry so the
+  /// same "Restore purchases" button works on both platforms.
+  static Future<void> restorePurchases() async {
+    if (!Platform.isAndroid) {
+      throw Exception('Восстановление покупок доступно только на Android.');
+    }
+    await _iap.restorePurchases();
+  }
+
   /// Read-only price lookup for display (e.g. the quiz paywall showing the
   /// regular price before a purchase is attempted) — doesn't buy anything.
   ///

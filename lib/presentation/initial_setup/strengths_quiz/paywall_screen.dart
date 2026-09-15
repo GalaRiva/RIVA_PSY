@@ -10,6 +10,7 @@ import 'package:riva_psy/core/app_export.dart';
 import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/subscription_terms_disclosure.dart';
 
 class _Bullet {
   final IconData icon;
@@ -422,6 +423,10 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
                                 ),
                               ),
                             ],
+                            SubscriptionTermsDisclosure(
+                              textColor: Colors.white.withOpacity(0.5),
+                              linkColor: Colors.white.withOpacity(0.85),
+                            ),
                             SizedBox(height: getVerticalSize(10)),
                             GestureDetector(
                               onTap: _purchasing ? null : () => widget.onDone(context),

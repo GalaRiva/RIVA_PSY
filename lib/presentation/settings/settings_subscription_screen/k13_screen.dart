@@ -18,6 +18,7 @@ import '../../../widgets/account_required_sheet.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_message_box.dart';
 import '../../../widgets/custom_pop_button.dart';
+import '../../../widgets/subscription_terms_disclosure.dart';
 import 'controller.dart';
 import '../../../theme/app_colors.dart';
 // ignore_for_file: must_be_immutable
@@ -169,6 +170,51 @@ class K13Screen extends GetWidget {
                                             margin: getMargin(
                                                 top: 6, right: 7, bottom: 6))
                                       ]))),
+                              // Required by App Store Review Guideline 3.1.1
+                              // for any restorable in-app purchase — also
+                              // wired up on Android for symmetry (Play
+                              // doesn't strictly require it the same way).
+                              // Web/desktop users buy via the Stripe Payment
+                              // Link instead, which has no "restore" concept
+                              // (the purchase is already tied to their
+                              // email), so this only shows on mobile.
+                              Visibility(
+                                visible: Platform.isAndroid || Platform.isIOS,
+                                child: GestureDetector(
+                                    onTap: () => onTapRestorePurchases(context),
+                                    child: Container(
+                                        margin: getMargin(top: 1),
+                                        padding: getPadding(
+                                            left: 6, top: 8, right: 6, bottom: 8),
+                                        decoration: AppDecoration
+                                            .outlineBluegray80014
+                                            .copyWith(
+                                            color: ColorConstant.grayLight,
+
+                                            borderRadius: BorderRadiusStyle
+                                                    .roundedBorder3),
+                                        child: Row(children: [
+                                          CustomImageView(
+                                              svgPath: ImageConstant.imgRefreshGray800,
+                                              height: getSize(20),
+                                              width: getSize(20)),
+                                          Padding(
+                                              padding: getPadding(left: 17),
+                                              child: Text('restore_purchases'.tr(),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: AppStyle
+                                                      .txtSFProDisplayLight16)),
+                                          Spacer(),
+                                          CustomImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowrightGray700,
+                                              height: getVerticalSize(8),
+                                              width: getHorizontalSize(4),
+                                              margin: getMargin(
+                                                  top: 6, right: 7, bottom: 6))
+                                        ]))),
+                              ),
                               CustomButton(
                                   width: getHorizontalSize(146),
                                   text: 'settings'.tr().toUpperCase(),
@@ -247,6 +293,7 @@ class K13Screen extends GetWidget {
                     stripeUrl: yearlyPaymentLinkUrl);
               },
             ),
+            const SubscriptionTermsDisclosure(),
           ],
         ),
       ),
@@ -269,6 +316,32 @@ class K13Screen extends GetWidget {
 
   onTaptf(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.settings);
+  }
+
+  // Fires the store-appropriate restorePurchases() call — the actual
+  // entitlement update (if anything is found) arrives asynchronously via
+  // the same purchaseStream _onPurchaseUpdate already listens to, so this
+  // can only confirm the *check* started, not that a subscription was
+  // actually found and restored.
+  onTapRestorePurchases(BuildContext context) async {
+    try {
+      if (Platform.isAndroid) {
+        await GooglePlayBillingService.restorePurchases();
+      } else {
+        await AppleBillingService.restorePurchases();
+      }
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('restore_purchases_started'.tr())),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('restore_purchases_failed'.tr(namedArgs: {'error': '$e'}))),
+        );
+      }
+    }
   }
 }
 

@@ -14,6 +14,7 @@ import '../../../core/user_data/user.dart';
 import '../../../core/utils/subscription_links.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/account_required_sheet.dart';
+import '../../../widgets/subscription_terms_disclosure.dart';
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
@@ -151,6 +152,7 @@ class RecommendationBuyTariffScreen extends StatelessWidget {
                     stripeUrl: yearlyPaymentLinkUrl);
               },
             ),
+            const SubscriptionTermsDisclosure(),
           ],
         ),
       ),

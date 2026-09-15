@@ -56,6 +56,24 @@ class AppleBillingService {
     _subscription = null;
   }
 
+  /// Required by App Store Review Guideline 3.1.1 for any restorable IAP —
+  /// re-delivers the user's past transactions through the same
+  /// purchaseStream startListening() already subscribes to, each arriving
+  /// with PurchaseStatus.restored, which _onPurchaseUpdate already routes
+  /// through the exact same _verifyOnServer() path as a fresh purchase. No
+  /// separate handling needed here — this just asks StoreKit to replay
+  /// what the user already owns.
+  ///
+  /// Throws on failure (e.g. StoreKit unavailable) — callers show that as a
+  /// message. A "nothing to restore" case is not an error: it simply
+  /// results in no purchases arriving on the stream.
+  static Future<void> restorePurchases() async {
+    if (!Platform.isIOS) {
+      throw Exception('Восстановление покупок доступно только на iOS.');
+    }
+    await _iap.restorePurchases();
+  }
+
   /// Read-only price lookup for display — doesn't buy anything.
   static Future<ProductDetails?> queryProduct(String productId) async {
     if (!Platform.isIOS) return null;

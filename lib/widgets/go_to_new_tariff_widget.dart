@@ -10,6 +10,7 @@ import '../core/services/google_play_billing_service.dart';
 import '../core/user_data/user.dart';
 import '../core/utils/subscription_links.dart';
 import 'custom_button.dart';
+import 'subscription_terms_disclosure.dart';
 import '../theme/app_icons.dart';
 
 class GoToNewTariffWidget extends StatelessWidget {
@@ -79,6 +80,7 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
                 alignment: Alignment.center,
               ),
+              const SubscriptionTermsDisclosure(),
               if(goToFreeRecommendation)
               CustomButton(
                 height: getVerticalSize(
