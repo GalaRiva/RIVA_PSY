@@ -98,6 +98,15 @@ const Map<String, String> audioCoverAssets = {
   'Дыхание': 'assets/images/audio_covers/meditation_breathing.jpg',
   'Расслабление зажимов': 'assets/images/audio_covers/meditation_releasing_tension.jpg',
   'Регулятор громкости': 'assets/images/audio_covers/panic_volume_regulator.jpg',
+  // New "Справиться с эмоцией" tracks added alongside the 6 new Guided
+  // Journals topics (2026-09-15) — linked to breakup_grief/search_for_meaning/
+  // relationship_patterns/loneliness. The breakup RU file was originally a
+  // byte-identical duplicate of the loneliness RU file (real bug, caught via
+  // MD5); user re-recorded/replaced it, both tracks confirmed distinct now.
+  'Время, не сила воли': 'assets/images/audio_covers/sorrow_time_not_willpower.jpg',
+  'Один момент': 'assets/images/audio_covers/lostness_one_moment.jpg',
+  'Знакомое — не значит правильное': 'assets/images/audio_covers/lostness_familiar_patterns.jpg',
+  'Не сломан(а)': 'assets/images/audio_covers/loneliness_not_broken.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {

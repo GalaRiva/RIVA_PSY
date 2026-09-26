@@ -18,6 +18,7 @@
 	<array>
 		<string>en</string>
 		<string>ru</string>
+		<string>es</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>riva-psy</string>
@@ -52,23 +53,18 @@
 	<string>408583851820-d1m3evieiu0ttbnt15gp3m2j9j0dqpn9.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Мы хотим иметь возможность отправлять файлы формата pdf по bluetooth</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Мы хотим испольовать камеру для того что бы отправлять отчёты об ошибках и предложения пользователей - разработчикам</string>
+	<string>RIVA PSY does not use the camera. This text is required by a system component and no camera access is requested.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>необходимо получить данное разрешение для нормального функционирования приложения</string>
+	<string>RIVA PSY does not use your location. This text is required by a system component and no location access is requested.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>необходимо получить данное разрешение для нормального функционирования приложения</string>
+	<string>RIVA PSY does not use your location. This text is required by a system component and no location access is requested.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>RIVA PSY does not use Bluetooth. This text is required by a system component and no Bluetooth access is requested.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Приложению необходим доступ к микрофону, что бы пользователи могли записывать свои переживания и сохранять их</string>
+	<string>RIVA PSY uses the microphone so you can record voice notes about your feelings and save them in your journal.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Мы хотим испольовать галерею для того что бы отправлять отчёты об ошибках и предложения пользователей - разработчикам</string>
+	<string>RIVA PSY accesses your photo library only when you choose to attach an image to a report or a note.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -76,7 +72,6 @@
 		<string>audio</string>
 		<string>fetch</string>
 		<string>processing</string>
-		<string>remote-notification</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>

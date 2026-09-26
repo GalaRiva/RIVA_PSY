@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
     duration: const Duration(milliseconds: 1100),
   )..repeat(reverse: true);
 
-  bool get _offerActive => _quizCompletedAt != null && _remaining > Duration.zero;
+  bool get _offerActive => !Platform.isIOS && _quizCompletedAt != null && _remaining > Duration.zero;
 
   @override
   void initState() {

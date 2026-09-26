@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+import '../../../widgets/medical_disclaimer.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../../../core/models/quiz/strength_trait.dart';
-import '../../../core/services/rating/rating_request_service.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/glass_card.dart';
 
@@ -26,37 +25,14 @@ class QuizResultScreen extends StatefulWidget {
 }
 
 class _QuizResultScreenState extends State<QuizResultScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Let the user actually read and feel the result before the native
-    // review dialog can appear over it.
-    Future.delayed(const Duration(milliseconds: 1800), () async {
-      if (!mounted) return;
-      final outcome = await RatingRequestService.maybeRequestReview();
-      if (!kDebugMode || !mounted) return;
-      // Debug-only visibility — sideloaded/debug installs never actually
-      // show the native dialog, so this is the only way to confirm the
-      // call fired and see why it did or didn't.
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('🧪 Rating request: ${_debugLabel(outcome)}'),
-      ));
-    });
-  }
-
-  String _debugLabel(RatingRequestOutcome outcome) {
-    switch (outcome) {
-      case RatingRequestOutcome.requested:
-        return 'вызван requestReview()';
-      case RatingRequestOutcome.skippedMaxCount:
-        return 'пропущен — исчерпан лимит вызовов за всё время';
-      case RatingRequestOutcome.skippedInterval:
-        return 'пропущен — ещё не прошло 90 дней с прошлого вызова';
-      case RatingRequestOutcome.skippedUnavailable:
-        return 'пропущен — API недоступен на этом устройстве';
-    }
-  }
-
+  // Used to call RatingRequestService.maybeRequestReview() here — the very
+  // first result a brand-new user sees during onboarding, before they've
+  // used the app for anything real. Apple rejected the app under Guideline
+  // 5.6.3 ("only ask for a rating after the user has sufficiently engaged
+  // with the app") over exactly this. The request now lives in
+  // RatingRequestService.recordPracticeCompleted(), called from K39Screen's
+  // "Завершить практику" after a real coping exercise is actually
+  // finished a few times over — not here.
   @override
   Widget build(BuildContext context) {
     final trait = widget.trait;
@@ -97,7 +73,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         height: 1.5,
                       ),
                     ),
-                    SizedBox(height: getVerticalSize(22)),
+                    SizedBox(height: getVerticalSize(14)),
+                    MedicalDisclaimer(textColor: ColorConstant.gray800, compact: true),
+                    SizedBox(height: getVerticalSize(10)),
                     CustomButton(
                       height: getVerticalSize(48),
                       width: double.infinity,

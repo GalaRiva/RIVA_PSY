@@ -1,0 +1,6 @@
+"NSMicrophoneUsageDescription" = "RIVA PSY usa el micrófono para que puedas grabar notas de voz sobre lo que sientes y guardarlas en tu diario.";
+"NSPhotoLibraryUsageDescription" = "RIVA PSY accede a tu galería solo cuando eliges adjuntar una imagen a un informe o una nota.";
+"NSCameraUsageDescription" = "RIVA PSY no usa la cámara. Este texto lo exige un componente del sistema y no se solicita acceso a la cámara.";
+"NSLocationWhenInUseUsageDescription" = "RIVA PSY no usa tu ubicación. Este texto lo exige un componente del sistema y no se solicita acceso a la ubicación.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "RIVA PSY no usa tu ubicación. Este texto lo exige un componente del sistema y no se solicita acceso a la ubicación.";
+"NSBluetoothAlwaysUsageDescription" = "RIVA PSY no usa Bluetooth. Este texto lo exige un componente del sistema y no se solicita acceso a Bluetooth.";

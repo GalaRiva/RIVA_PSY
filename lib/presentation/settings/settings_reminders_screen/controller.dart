@@ -67,7 +67,11 @@ class K12Controller extends GetxController {
       // day defaults instead — the user can still drag each one to a
       // different time afterward (see ListtimeItemWidget), this only
       // affects what a newly added reminder starts at.
-      const defaultHours = [17, 9, 13, 20];
+      // Narrowed further to sit inside 14:00-17:59 — 9/13/20 from the first
+      // pass at this fix were still outside the "after half an active day"
+      // window this is meant to respect, same as K3Screen's onboarding
+      // generator (_generateReminderTime).
+      const defaultHours = [14, 16, 15, 17];
       while (lastNotifications.length != quantity) {
         var hour = defaultHours[lastNotifications.length % defaultHours.length];
         var minutes = 0;

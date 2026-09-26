@@ -100,7 +100,15 @@ class CustomButton extends StatelessWidget {
   }
 
   _buildButtonWidget() {
-    return GestureDetector(
+    // VoiceOver/TalkBack: a bare GestureDetector isn't announced as a
+    // button, so every CustomButton in the app was invisible to screen
+    // readers. Label = the visible text.
+    return Semantics(
+      button: true,
+      enabled: onTap != null,
+      label: text,
+      excludeSemantics: text != null,
+      child: GestureDetector(
       onTap: onTap,
       child: Container(
         margin: margin ?? EdgeInsets.zero,
@@ -136,7 +144,7 @@ class CustomButton extends StatelessWidget {
               )
             : _buildButtonWithOrWithoutIcon(),
       ),
-    );
+    ));
   }
 
   _buildButtonWithOrWithoutIcon() {

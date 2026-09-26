@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import '../../../widgets/plan_price_builder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -268,10 +269,10 @@ class K13Screen extends GetWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomButton(
+            PlanPriceBuilder(productId: GooglePlayBillingService.monthlyProductId, yearly: false, fallbackText: 'subscribe_monthly'.tr().toUpperCase(), builder: (t) => CustomButton(
               height: getVerticalSize(54),
               width: double.maxFinite,
-              text: 'subscribe_monthly'.tr().toUpperCase(),
+              text: t,
               textIsFitted: true,
               onTap: () async {
                 Navigator.pop(context);
@@ -279,12 +280,12 @@ class K13Screen extends GetWidget {
                     productId: GooglePlayBillingService.monthlyProductId,
                     stripeUrl: monthlyPaymentLinkUrl);
               },
-            ),
+            )),
             SizedBox(height: getVerticalSize(12)),
-            CustomButton(
+            PlanPriceBuilder(productId: GooglePlayBillingService.yearlyProductId, yearly: true, fallbackText: 'subscribe_yearly'.tr().toUpperCase(), builder: (t) => CustomButton(
               height: getVerticalSize(54),
               width: double.maxFinite,
-              text: 'subscribe_yearly'.tr().toUpperCase(),
+              text: t,
               textIsFitted: true,
               onTap: () async {
                 Navigator.pop(context);
@@ -292,7 +293,7 @@ class K13Screen extends GetWidget {
                     productId: GooglePlayBillingService.yearlyProductId,
                     stripeUrl: yearlyPaymentLinkUrl);
               },
-            ),
+            )),
             const SubscriptionTermsDisclosure(),
           ],
         ),

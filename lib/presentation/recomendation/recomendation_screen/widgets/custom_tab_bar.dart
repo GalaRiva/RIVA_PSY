@@ -115,6 +115,15 @@ class _CustomTabBarState extends State<CustomTabBar> {
               setState(() => currentPos = pos);
               if (Get.isRegistered<K70Controller>()) {
                 Get.find<K70Controller>().setActiveTopLevelTab(pos);
+                // animate() above already resets this for a tap-driven page
+                // change, but onPageChanged fires for ANY page change,
+                // including ones triggered elsewhere (e.g. a nested
+                // exercise popping back and jumping this PageController
+                // directly, bypassing animate()) — those left immersiveMode
+                // stuck true on whichever tab the user landed on, hiding
+                // both the tab row and the bottom nav with no visible way
+                // back short of restarting the app.
+                Get.find<K70Controller>().setImmersiveMode(false);
               }
               WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToTab(pos));
             },

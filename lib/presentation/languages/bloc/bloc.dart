@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 import 'package:riva_psy/providers/language_provider.dart';
+import '../../../core/services/negative_emotion_tabs.dart';
+import '../../recomendation/recomendation_screen/controller.dart';
 import 'language_model.dart';
 
 part 'event.dart';
@@ -48,8 +50,25 @@ class LanguagesBloc extends Bloc<LanguagesEvent, LanguagesState> {
   _select (_Select value) async {
     _selected = _languages.firstWhere((element) => element.code == value.languageModel.code);
     final locale = Locale(_selected!.code, _countryCodes[_selected!.code] ?? _selected!.code.toUpperCase());
-    EasyLocalization.of(value.context)?.setLocale(locale);
+    await EasyLocalization.of(value.context)?.setLocale(locale);
     value.context.read<LanguageProvider>().changeLocale(locale);
+
+    // "Справиться с эмоцией" tab labels (NegativeEmotionTabs.tabs) and
+    // track titles (NegativeEmotionsModel, held on K70Controller) are both
+    // built once and cached for the rest of the app session — neither
+    // re-reads on its own when the language changes here, so they'd stay
+    // frozen in whatever language was active when first built until a
+    // full app restart. Force both to rebuild against the locale just set
+    // above (context.locale is already updated at this point).
+    if (value.context.mounted) {
+      await NegativeEmotionTabs.getTabs(value.context);
+    }
+    if (Get.isRegistered<K70Controller>()) {
+      final k70 = Get.find<K70Controller>();
+      k70.negativeEmotionsModel = null;
+      await k70.initNegativeEmotions();
+      k70.update();
+    }
 
     emit(LanguagesState.initial(locales: _languages, selected: _selected));
 

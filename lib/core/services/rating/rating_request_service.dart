@@ -12,15 +12,41 @@ enum RatingRequestOutcome {
 }
 
 /// Triggers the native App Store / Google Play in-app review prompt after a
-/// warm moment (the strengths-quiz result screen), throttled locally since
-/// neither platform reports whether the dialog actually appeared or what the
-/// user chose — see [maybeRequestReview] for the exact rules.
+/// warm moment, throttled locally since neither platform reports whether the
+/// dialog actually appeared or what the user chose — see
+/// [maybeRequestReview] for the exact rules.
+///
+/// Was called from the strengths-quiz result screen — the very first thing
+/// a brand-new user sees during onboarding, before they've used the app for
+/// anything real. Apple rejected this under Guideline 5.6.3 ("only ask for
+/// a rating after the user has sufficiently engaged with the app").
+/// [recordPracticeCompleted] now gates the call behind actually finishing a
+/// real coping exercise (K39Screen's "Завершить практику"/"Finish the
+/// practice" — mood check-in through a completed Path), and only once
+/// that's happened a few times, not on the very first one either.
 class RatingRequestService {
   static const _lastRequestKey = 'rating_request_last_timestamp';
   static const _requestCountKey = 'rating_request_count';
+  static const _practicesCompletedKey = 'rating_practices_completed';
 
   static const _minInterval = Duration(days: 90);
   static const _maxLifetimeRequests = 4;
+  // Ask only once the user has actually finished a real coping exercise a
+  // few times over — not on the very first one, which could still just be
+  // curiosity rather than the app having proven its value yet.
+  static const _minPracticesBeforeAsking = 3;
+
+  /// Call once each time the user finishes a real coping exercise (not
+  /// onboarding). Increments the local engagement count and, once it's
+  /// past the threshold, defers to the same throttle [maybeRequestReview]
+  /// always enforced (interval/lifetime cap) before actually asking.
+  static Future<RatingRequestOutcome> recordPracticeCompleted() async {
+    final prefs = await SharedPreferences.getInstance();
+    final completed = (prefs.getInt(_practicesCompletedKey) ?? 0) + 1;
+    await prefs.setInt(_practicesCompletedKey, completed);
+    if (completed < _minPracticesBeforeAsking) return RatingRequestOutcome.skippedInterval;
+    return maybeRequestReview();
+  }
 
   /// Calls the native review prompt if the local throttle allows it.
   /// Always records the attempt (not a confirmed display — the platform
@@ -55,5 +81,6 @@ class RatingRequestService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_lastRequestKey);
     await prefs.remove(_requestCountKey);
+    await prefs.remove(_practicesCompletedKey);
   }
 }

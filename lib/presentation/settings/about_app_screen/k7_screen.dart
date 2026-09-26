@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../widgets/medical_disclaimer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
@@ -112,7 +113,10 @@ class K7Screen extends StatelessWidget {
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1)),
                             Padding(
-                                padding: getPadding(left: 4, top: 82),
+                                padding: getPadding(left: 4, top: 16),
+                                child: const MedicalDisclaimer()),
+                            Padding(
+                                padding: getPadding(left: 4, top: 40),
                                 child: DropTextWidget(model: controller.termsOfUse,)),
                             Padding(
                                 padding: getPadding(left: 4, top: 96),

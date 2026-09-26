@@ -2,11 +2,33 @@ import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
+import '../../main.dart';
 import '../models/tariff_model.dart';
 import '../user_data/user.dart';
+
+// See AppleBillingService's copy of this for why it exists — both
+// purchase-outcome branches below used to only print(), leaving a stream-
+// reported failure (as opposed to buy()'s own synchronous failures, which
+// _onBuy's try/catch already surfaces) completely invisible to the user.
+void _showBillingSnackBar(String message) {
+  final context = MyApp.navigatorKey.currentContext;
+  if (context == null) return;
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+
+// See AppleBillingService's copy of this — FirebaseException.toString()
+// appends '\n\n$stackTrace' whenever one is attached, so interpolating a
+// caught error directly ('$e') dumped the whole trace into the SnackBar.
+String _billingErrorText(Object e) {
+  if (e is FirebaseException) return '[${e.plugin}/${e.code}] ${e.message}';
+  return e.toString();
+}
 
 /// Google Play Billing purchase flow for the Orion subscription — the
 /// Android-native replacement for the Stripe external-payment-link buttons
@@ -148,6 +170,8 @@ class GooglePlayBillingService {
           break;
         case PurchaseStatus.error:
           print('[BILLING] purchase error: ${purchase.error}');
+          _showBillingSnackBar(
+              'purchase_verification_failed'.tr(namedArgs: {'error': '${purchase.error}'}));
           break;
         case PurchaseStatus.purchased:
         case PurchaseStatus.restored:
@@ -204,6 +228,7 @@ class GooglePlayBillingService {
       // start) rather than silently dropping it long-term, but out of
       // scope for this first pass.
       print('[BILLING] server verification failed: $e');
+      _showBillingSnackBar('purchase_verification_failed'.tr(namedArgs: {'error': _billingErrorText(e)}));
     }
   }
 }

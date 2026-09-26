@@ -1,4 +1,5 @@
   import 'package:easy_localization/easy_localization.dart';
+import '../../../../widgets/medical_disclaimer.dart';
 import 'package:get/get.dart' hide Trans;
 import 'widgets/screen_body_widget.dart';
 
@@ -13,6 +14,7 @@ import 'widgets/voice_button.dart';
 import 'widgets/exercise_content/controller.dart';
 import 'controller.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../../core/services/rating/rating_request_service.dart';
 import '../../../consultation/consultation_prompt_card.dart';
 
 class K39Screen extends GetWidget {
@@ -107,6 +109,10 @@ class K39Screen extends GetWidget {
                                ),
                                child: ScreenBodyWidget(isNegative: dayEventModel.emotionInDayEvent == EmotionInDayEvent.NEGATIVE, dayEventModel: dayEventModel,)
                              ),
+                             Padding(
+                               padding: getPadding(left: 16, right: 16, top: 24),
+                               child: const MedicalDisclaimer(compact: true),
+                             ),
                              if (context.locale.languageCode == 'ru')
                                // More top clearance than before (20 -> 40) —
                                // enough of a gap that this reads as a
@@ -148,6 +154,12 @@ class K39Screen extends GetWidget {
                   Navigator.pushNamedAndRemoveUntil(
                       context, AppRoutes.main, (route) => false);
                   controller.deleteAllController();
+                  // Fire-and-forget: this is the app's real coping-exercise
+                  // completion, not onboarding — see RatingRequestService
+                  // for why the old onboarding-quiz call site was rejected
+                  // by Apple (Guideline 5.6.3). Not awaited since the user
+                  // has already navigated away by this point.
+                  RatingRequestService.recordPracticeCompleted();
                 },
               ),
             ),

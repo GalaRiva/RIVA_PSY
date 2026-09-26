@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:riva_psy/core/services/notifications/flutter_local_notification_service.dart';
 import 'package:riva_psy/core/services/notifications/notification_service.dart';
 import 'package:riva_psy/core/user_data/user.dart';
+import 'package:riva_psy/core/utils/date_extension.dart';
 import 'package:riva_psy/core/utils/shared_prefs.dart';
 import 'package:riva_psy/presentation/settings/settings_pills/repository.dart';
 import 'package:workmanager/workmanager.dart';
@@ -104,7 +107,39 @@ class WorkManagerService {
     }
   }
 
+  // Self-healing migration for the general "how's your day" check-in
+  // reminder: both places that used to generate its time (K3Screen's
+  // onboarding step, K12Controller's settings-screen "add a reminder")
+  // picked a fully random hour at some point in this app's history, so a
+  // device that went through either path before the corresponding fix
+  // shipped can still have a stored time sitting outside the intended
+  // 14:00-17:59 window (e.g. 5am) with nothing left to ever correct it —
+  // neither generator re-runs on its own once a time is already saved.
+  // Runs on every launch (initService already does, via the splash
+  // screen) and is a no-op once every stored time is in-window, so it's
+  // safe to leave in permanently rather than gating it behind a one-shot
+  // flag. Only touches reminderTimeInStr (the general check-in), never
+  // pill reminder times — those are a real medication schedule the user
+  // set on purpose and must never be silently moved.
+  Future<void> _fixOutOfWindowReminderTimes() async {
+    final current = await CurrentUser.repo.getReminderTimeInStr();
+    if (current.isEmpty) return;
+    bool changed = false;
+    final fixed = current.map((t) {
+      final hour = int.tryParse(t.substring(0, 2));
+      if (hour != null && hour >= 14 && hour < 18) return t;
+      changed = true;
+      final newHour = 14 + Random().nextInt(4);
+      final newMinute = Random().nextInt(60);
+      return '${newHour.timeFormatted()}:${newMinute.timeFormatted()}';
+    }).toList();
+    if (changed) {
+      await CurrentUser.repo.setLocalUserData(reminderTimeInStr: fixed);
+    }
+  }
+
   Future<List<Map<String, dynamic>>> _getReminders () async {
+    await _fixOutOfWindowReminderTimes();
     final list = await CurrentUser.repo.getReminderTimeInStr();
     List<Map<String, dynamic>> time = list.map((e) => {
       'hour': int.parse(e[0]+e[1]),

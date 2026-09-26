@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:riva_psy/core/app_export.dart';
@@ -143,6 +144,7 @@ class CustomBottomBar extends StatelessWidget {
               final isSelected = index == selectedIndex;
               final isCenter = index == 2;
               return _BottomBarItem(
+                label: const ['recommendations', 'records', 'home', 'charts', 'settings'][index].tr(),
                 icon: bottomMenuList[index].icon,
                 iconSize: bottomMenuList[index].size,
                 isSelected: isSelected,
@@ -166,8 +168,11 @@ class _BottomBarItem extends StatelessWidget {
   final bool isSelected;
   final bool isCenter;
   final VoidCallback onTap;
+  // Spoken by VoiceOver/TalkBack — the items are icon-only.
+  final String label;
 
   const _BottomBarItem({
+    required this.label,
     required this.icon,
     required this.iconSize,
     required this.isSelected,
@@ -176,7 +181,15 @@ class _BottomBarItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        selected: isSelected,
+        label: label,
+        excludeSemantics: true,
+        child: _buildItem(context),
+      );
+
+  Widget _buildItem(BuildContext context) {
     if (isCenter) {
       return GestureDetector(
         onTap: onTap,

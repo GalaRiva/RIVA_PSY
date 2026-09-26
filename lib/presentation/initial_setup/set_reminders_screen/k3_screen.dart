@@ -400,10 +400,16 @@ class K3Screen extends GetWidget<K3Controller> {
   _generateReminderTime() async {
     var lastNotifications = <String>[];
 
-    while (lastNotifications.length != quantity)
-      lastNotifications.add((Random().nextInt(20)).timeFormatted() +
+    // Was Random().nextInt(20) for the hour — uniform over 0-19, so this
+    // "how's your day" check-in could (and did) land at 5am, while the
+    // person was still asleep. Narrowed to the 14:00-17:59 window: well
+    // past the middle of an active day, still comfortably before evening.
+    while (lastNotifications.length != quantity) {
+      final time = (14 + Random().nextInt(4)).timeFormatted() +
           ':' +
-          (Random().nextInt(59)).timeFormatted());
+          (Random().nextInt(60)).timeFormatted();
+      if (!lastNotifications.contains(time)) lastNotifications.add(time);
+    }
     CurrentUser.repo.setLocalUserData(reminderTimeInStr: lastNotifications);
     await WorkManagerService().initService();
   }

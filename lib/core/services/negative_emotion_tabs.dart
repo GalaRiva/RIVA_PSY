@@ -31,6 +31,13 @@ class NegativeEmotionTabs {
   }
 
   static Future getTabs (BuildContext context) async {
+    // Was never cleared before repopulating — harmless on the one call
+    // this used to get (splash, once per cold start), but calling this a
+    // second time (e.g. after a language change) just appended a second
+    // copy of every tab rather than replacing the first, leaving whichever
+    // language loaded first "stuck" at the low indices the UI actually
+    // reads from.
+    tabs.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String appDocPath = (await getApplicationDocumentsDirectory()).path;
     try {

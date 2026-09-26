@@ -1,8 +1,6 @@
 import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 import 'package:riva_psy/core/models/tariff_model.dart';
 import 'package:riva_psy/core/user_data/user_repo.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
 
 import '../models/user_model.dart';
 
@@ -30,17 +28,13 @@ class CurrentUser extends UserModel {
   static final repo = UserRepo();
 
   static Future init() async {
-    if(Platform.isIOS) {
-      var status = await Permission.storage.status;
-      if (status.isDenied) {
-        // You can request multiple permissions at once.
-        Map<Permission, PermissionStatus> statuses = await [
-          Permission.storage,
-          Permission.camera,
-        ].request();
-        print(statuses[Permission.storage]);
-      }
-    }
+    // Used to ask for storage + camera permission here on every iOS
+    // launch. Camera isn't used anywhere in the app (only the photo
+    // gallery picker is) and "storage" isn't a permission on iOS at all,
+    // so this was an unexplained permission prompt at startup — the kind
+    // of thing App Review flags (5.1.1: permission requests must relate
+    // to a feature the user is actually using). Gallery access is now
+    // requested by image_picker itself, at the moment it's needed.
     repo.authService = await repo.getService();
     user.login = await repo.getLogin();
     user.password = await repo.getPass();

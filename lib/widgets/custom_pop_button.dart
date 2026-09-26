@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/widgets/custom_image_view.dart';
 
@@ -19,7 +20,11 @@ class CustomPopButton extends StatelessWidget {
         onPop == null ? onWillPop = true : { onWillPop = false, onPop!()};
         return onWillPop;
       },
-      child: InkWell(
+      child: Semantics(
+        button: true,
+        label: 'back'.tr(),
+        excludeSemantics: true,
+        child: InkWell(
         onTap: () => Navigator.pop(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -53,6 +58,6 @@ class CustomPopButton extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

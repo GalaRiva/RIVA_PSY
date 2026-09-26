@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'medical_disclaimer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -33,11 +36,12 @@ class SubscriptionTermsDisclosure extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'subscription_terms_disclosure'.tr(),
+            (Platform.isIOS ? 'subscription_terms_disclosure' : 'subscription_terms_disclosure_android').tr(),
             textAlign: TextAlign.center,
             style: AppStyle.txtSFProDisplayRegular11.copyWith(color: resolvedTextColor),
           ),
           SizedBox(height: getVerticalSize(6)),
+          MedicalDisclaimer(textColor: resolvedTextColor, compact: true),
           Wrap(
             alignment: WrapAlignment.center,
             children: [

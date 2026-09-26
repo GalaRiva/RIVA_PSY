@@ -2,10 +2,38 @@ import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+import '../../main.dart';
 import '../models/tariff_model.dart';
 import '../user_data/user.dart';
+
+// Both purchase-outcome branches below used to only print() — a purchase
+// that arrives via the stream (as opposed to buy()'s own synchronous
+// failures, which _onBuy's try/catch already surfaces) could fail
+// server-side verification or come back as PurchaseStatus.error with
+// nothing visible to the user at all: tapping "Subscribe" would just
+// appear to do nothing. Surfaces both cases as a SnackBar on whatever
+// screen is currently on top, via the app's root navigator — this class
+// has no BuildContext of its own (it's a static service, not a widget).
+void _showBillingSnackBar(String message) {
+  final context = MyApp.navigatorKey.currentContext;
+  if (context == null) return;
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+
+// FirebaseException.toString() appends '\n\n$stackTrace' whenever a stack
+// trace is attached (see firebase_core_platform_interface's own source) —
+// interpolating the caught error directly ('$e') was dumping that whole
+// trace into the user-facing SnackBar text along with the real message.
+// Pull just the clean "[code] message" part for anything that carries one.
+String _billingErrorText(Object e) {
+  if (e is FirebaseException) return '[${e.plugin}/${e.code}] ${e.message}';
+  return e.toString();
+}
 
 /// App Store (StoreKit) purchase flow for the Orion subscription — the
 /// iOS-native replacement for the Stripe external-payment-link buttons
@@ -32,6 +60,17 @@ class AppleBillingService {
 
   static final InAppPurchase _iap = InAppPurchase.instance;
   static StreamSubscription<List<PurchaseDetails>>? _subscription;
+
+  // StoreKit re-delivers stale/expired transactions (e.g. an old Sandbox
+  // subscription that can't be cancelled) through purchaseStream on every
+  // app start. Those must not pop an error SnackBar on whatever screen the
+  // user happens to be on — errors are only shown for a purchase/restore the
+  // user actually started a moment ago.
+  static DateTime? _userActionUntil;
+  static bool get _userInitiated =>
+      _userActionUntil != null && DateTime.now().isBefore(_userActionUntil!);
+  static void _markUserAction() =>
+      _userActionUntil = DateTime.now().add(const Duration(minutes: 10));
 
   /// Call once, early (e.g. app start) — starts listening for purchase
   /// updates so a purchase that completes after the app was backgrounded
@@ -71,6 +110,7 @@ class AppleBillingService {
     if (!Platform.isIOS) {
       throw Exception('Восстановление покупок доступно только на iOS.');
     }
+    _markUserAction();
     await _iap.restorePurchases();
   }
 
@@ -101,6 +141,7 @@ class AppleBillingService {
 
     final selected = response.productDetails.first;
     final purchaseParam = PurchaseParam(productDetails: selected);
+    _markUserAction();
     await _iap.buyNonConsumable(purchaseParam: purchaseParam);
     // Result arrives asynchronously via purchaseStream -> _onPurchaseUpdate,
     // not as a return value from buyNonConsumable() itself.
@@ -113,6 +154,10 @@ class AppleBillingService {
           break;
         case PurchaseStatus.error:
           print('[BILLING-iOS] purchase error: ${purchase.error}');
+          if (_userInitiated) {
+            _showBillingSnackBar(
+                'purchase_verification_failed'.tr(namedArgs: {'error': '${purchase.error}'}));
+          }
           break;
         case PurchaseStatus.purchased:
         case PurchaseStatus.restored:
@@ -125,8 +170,18 @@ class AppleBillingService {
       // canceled) or StoreKit keeps redelivering it as unfinished on every
       // app start — completing it here regardless of whether server
       // verification succeeded, same reasoning as the Android side.
+      // Wrapped in try/catch — this wasn't awaited-but-unguarded before,
+      // so a failure here (observed: a stale/expired transaction stuck in
+      // StoreKit's queue kept getting redelivered on every buy() attempt)
+      // would throw past this whole loop uncaught, skipping completion
+      // for every other purchase still left in `purchases` and leaving no
+      // record of why finishing it never actually happened.
       if (purchase.pendingCompletePurchase) {
-        await _iap.completePurchase(purchase);
+        try {
+          await _iap.completePurchase(purchase);
+        } catch (e) {
+          print('[BILLING-iOS] completePurchase failed for ${purchase.productID}: $e');
+        }
       }
     }
   }
@@ -174,6 +229,9 @@ class AppleBillingService {
       // start) rather than silently dropping it long-term, but out of
       // scope for this first pass.
       print('[BILLING-iOS] server verification failed: $e');
+      if (_userInitiated) {
+        _showBillingSnackBar('purchase_verification_failed'.tr(namedArgs: {'error': _billingErrorText(e)}));
+      }
     }
   }
 }

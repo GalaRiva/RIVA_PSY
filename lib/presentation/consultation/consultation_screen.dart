@@ -7,6 +7,7 @@ import '../../theme/app_colors.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_pop_button.dart';
+import '../../widgets/medical_disclaimer.dart';
 
 // Set this to the real public Cal.com booking page once it exists
 // (Play Console-style Phase 1: cal.com account, Stripe, availability, and
@@ -121,6 +122,7 @@ class ConsultationScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500, height: 1.4),
               ),
+              const MedicalDisclaimer(compact: true),
             ],
           ),
         ),

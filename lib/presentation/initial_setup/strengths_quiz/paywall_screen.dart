@@ -44,14 +44,29 @@ const Color _ctaEmerald = Color(0xFF1FAE7A);
 // in_app_purchase_android itself uses internally to extract currency
 // symbols, just run in reverse (extract the number, not the symbol).
 String? _discountedPriceText(ProductDetails product) {
-  final match = RegExp(r'[\d.,]+').firstMatch(product.price);
-  if (match == null) return null;
-  final numPart = match.group(0)!;
+  // [\d.,] alone stops at the first character that isn't a digit/dot/
+  // comma — but a thousands separator is often a plain or non-breaking
+  // space (e.g. Russian "4 990,00 ₽"), so this matched only the leading
+  // "4" and spliced the discounted amount in right after it, corrupting
+  // the whole string into garbage like "1497.00 990,00 ₽" instead of
+  // replacing the number. Including whitespace in the class captures the
+  // full number; the trim below then drops any leading/trailing space the
+  // greedy class also swallowed (e.g. the space before "₽"), so that
+  // space isn't lost from the rebuilt string.
+  final raw = RegExp(r'[\d.,\s ]+').firstMatch(product.price);
+  if (raw == null) return null;
+  var start = raw.start;
+  var end = raw.end;
+  bool isSpace(String c) => c == ' ' || c == ' ';
+  while (end > start && isSpace(product.price[end - 1])) end--;
+  while (start < end && isSpace(product.price[start])) start++;
+  if (start >= end) return null;
+  final numPart = product.price.substring(start, end);
   final usesComma = numPart.lastIndexOf(',') > numPart.lastIndexOf('.');
   final discounted = product.rawPrice * 0.3;
   final formatted =
       usesComma ? discounted.toStringAsFixed(2).replaceAll('.', ',') : discounted.toStringAsFixed(2);
-  return product.price.replaceRange(match.start, match.end, formatted);
+  return product.price.replaceRange(start, end, formatted);
 }
 
 // Phase 7 — the welcome-offer paywall. The 24h countdown is anchored to
@@ -92,7 +107,11 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
     duration: const Duration(milliseconds: 1100),
   )..repeat(reverse: true);
 
-  bool get _offerActive => _remaining > Duration.zero;
+  // The 70% welcome discount only exists on Google Play. On iOS the purchase
+  // always goes through the regular App Store price (see
+  // AppleBillingService.buy), so showing a strikethrough price / timer there
+  // would advertise a discount that is never charged (Guideline 2.3.1 / 3.1.2).
+  bool get _offerActive => !Platform.isIOS && _remaining > Duration.zero;
 
   @override
   void initState() {
@@ -141,14 +160,24 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
           useWelcomeOffer: _offerActive,
         );
       }
+      // Was an unconditional widget.onDone(context) here regardless of
+      // outcome — buy() only *starts* the purchase (the native StoreKit/
+      // Play sheet, and the actual result, both arrive asynchronously
+      // afterward via the purchase stream), so navigating away immediately
+      // raced that sheet's presentation and could dismiss/prevent it
+      // before it ever appeared on screen. Only leave this screen here on
+      // a genuine failure (nothing to wait for); a successful start leaves
+      // the user on the paywall so the native sheet can actually show.
     } catch (e) {
+      // Also no longer navigates away here — the SnackBar below would
+      // have been dismissed before it was ever visible otherwise. The
+      // user can retry, or leave via the existing "Skip" action.
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _purchasing = false);
     }
-    widget.onDone(context);
   }
 
   @override
@@ -254,87 +283,106 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'quiz_paywall_price_regular_label'.tr(),
-                                              style: AppStyle.txtSFProDisplayRegular11.copyWith(
-                                                color: Colors.white.withOpacity(0.55),
+                                        // Was unbounded Columns sized purely by their own
+                                        // content inside a spaceEvenly Row — nothing capped
+                                        // the discounted-price side's width, so a wide price
+                                        // string (some locales/currencies run noticeably
+                                        // wider than "1497.00 ₽") plus the "-70%" pill next
+                                        // to it could run straight off the right edge of the
+                                        // screen instead of wrapping or shrinking. Expanded
+                                        // gives each side a real bound to fit inside.
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'quiz_paywall_price_regular_label'.tr(),
+                                                style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                                                  color: Colors.white.withOpacity(0.55),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(height: getVerticalSize(4)),
-                                            Text(
-                                              _product!.price,
-                                              style: AppStyle.txtSFProDisplayRegular14.copyWith(
-                                                color: _hotRed,
-                                                fontSize: getFontSize(19),
-                                                fontWeight: FontWeight.w700,
-                                                decoration: TextDecoration.lineThrough,
-                                                decorationColor: _hotRed,
-                                                decorationThickness: 2.4,
+                                              SizedBox(height: getVerticalSize(4)),
+                                              Text(
+                                                _product!.price,
+                                                style: AppStyle.txtSFProDisplayRegular14.copyWith(
+                                                  color: _hotRed,
+                                                  fontSize: getFontSize(19),
+                                                  fontWeight: FontWeight.w700,
+                                                  decoration: TextDecoration.lineThrough,
+                                                  decorationColor: _hotRed,
+                                                  decorationThickness: 2.4,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                         Container(
                                           width: 1,
                                           height: getVerticalSize(38),
                                           color: Colors.white.withOpacity(0.15),
                                         ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'quiz_paywall_price_discounted_label'.tr(),
-                                              style: AppStyle.txtSFProDisplayRegular11.copyWith(
-                                                color: Colors.white.withOpacity(0.7),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'quiz_paywall_price_discounted_label'.tr(),
+                                                style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                                                  color: Colors.white.withOpacity(0.7),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(height: getVerticalSize(4)),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _discountedPriceText(_product!) ?? _product!.price,
-                                                  style: AppStyle.txtH1WhiteA700.copyWith(
-                                                    fontSize: getFontSize(36),
-                                                    fontWeight: FontWeight.w800,
-                                                    shadows: [
-                                                      Shadow(
-                                                        color: const Color(0xFFC9A24B).withOpacity(0.55),
-                                                        blurRadius: 18,
+                                              SizedBox(height: getVerticalSize(4)),
+                                              FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      _discountedPriceText(_product!) ?? _product!.price,
+                                                      style: AppStyle.txtH1WhiteA700.copyWith(
+                                                        fontSize: getFontSize(36),
+                                                        fontWeight: FontWeight.w800,
+                                                        shadows: [
+                                                          Shadow(
+                                                            color: const Color(0xFFC9A24B).withOpacity(0.55),
+                                                            blurRadius: 18,
+                                                          ),
+                                                          Shadow(
+                                                            color: _ctaEmerald.withOpacity(0.35),
+                                                            blurRadius: 24,
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Shadow(
-                                                        color: _ctaEmerald.withOpacity(0.35),
-                                                        blurRadius: 24,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(width: getHorizontalSize(8)),
-                                                Container(
-                                                  padding: getPadding(
-                                                      left: 8, top: 3, right: 8, bottom: 3),
-                                                  decoration: BoxDecoration(
-                                                    color: _urgencyBordo,
-                                                    borderRadius: BorderRadius.circular(100),
-                                                  ),
-                                                  child: Text(
-                                                    '−70%',
-                                                    style: AppStyle.txtSFProDisplayRegular11.copyWith(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.w700,
                                                     ),
-                                                  ),
+                                                    SizedBox(width: getHorizontalSize(8)),
+                                                    Container(
+                                                      padding: getPadding(
+                                                          left: 8, top: 3, right: 8, bottom: 3),
+                                                      decoration: BoxDecoration(
+                                                        color: _urgencyBordo,
+                                                        borderRadius: BorderRadius.circular(100),
+                                                      ),
+                                                      child: Text(
+                                                        '−70%',
+                                                        style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     )
                                   : Center(
                                       child: Text(
-                                        _product!.price,
-                                        style: AppStyle.txtH1WhiteA700.copyWith(fontSize: getFontSize(28)),
+                                        Platform.isIOS
+                                            ? 'quiz_paywall_plain_price'.tr(namedArgs: {'price': _product!.price})
+                                            : _product!.price,
+                                        textAlign: TextAlign.center,
+                                        style: AppStyle.txtH1WhiteA700.copyWith(fontSize: getFontSize(Platform.isIOS ? 22 : 28)),
                                       ),
                                     ),
                             if (_offerActive) ...[
@@ -405,7 +453,7 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.bolt_rounded, color: Colors.white, size: 20),
                                 ),
-                                text: (_purchasing ? '…' : 'quiz_paywall_cta'.tr()).toUpperCase(),
+                                text: (_purchasing ? '…' : (Platform.isIOS ? 'quiz_paywall_cta_plain' : 'quiz_paywall_cta').tr()).toUpperCase(),
                                 variant: ButtonVariant.Cyan,
                                 fontStyle: ButtonFontStyle.White16,
                                 onTap: _purchasing ? null : () => _onBuy(context),
@@ -433,7 +481,7 @@ class _QuizPaywallScreenState extends State<QuizPaywallScreen> with SingleTicker
                               child: Padding(
                                 padding: getPadding(top: 4, bottom: 4),
                                 child: Text(
-                                  'quiz_paywall_skip'.tr(),
+                                  (Platform.isIOS ? 'quiz_paywall_skip_plain' : 'quiz_paywall_skip').tr(),
                                   textAlign: TextAlign.center,
                                   style: AppStyle.txtSFProDisplayRegular14
                                       .copyWith(color: Colors.white.withOpacity(0.5)),

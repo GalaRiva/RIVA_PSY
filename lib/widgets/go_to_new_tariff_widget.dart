@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'plan_price_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,37 +50,37 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
               SizedBox(height: 20,),
               SvgPicture.asset(ImageConstant.tariffImage, width: 140,),
       SizedBox(height: 20,),
-      CustomButton(
+      PlanPriceBuilder(productId: GooglePlayBillingService.monthlyProductId, yearly: false, fallbackText: 'subscribe_monthly'.tr().toUpperCase(), builder: (t) => CustomButton(
                 height: getVerticalSize(
                   54,
                 ),
                 width: getHorizontalSize(
                   288,
                 ),
-                text: 'subscribe_monthly'.tr().toUpperCase(),
+                text: t,
                 textIsFitted: true,
                 onTap: () => _subscribe(context,
                     productId: GooglePlayBillingService.monthlyProductId,
                     stripeUrl: monthlyPaymentLinkUrl),
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
                 alignment: Alignment.center,
-              ),
+              )),
       SizedBox(height: 12,),
-      CustomButton(
+      PlanPriceBuilder(productId: GooglePlayBillingService.yearlyProductId, yearly: true, fallbackText: 'subscribe_yearly'.tr().toUpperCase(), builder: (t) => CustomButton(
                 height: getVerticalSize(
                   54,
                 ),
                 width: getHorizontalSize(
                   288,
                 ),
-                text: 'subscribe_yearly'.tr().toUpperCase(),
+                text: t,
                 textIsFitted: true,
                 onTap: () => _subscribe(context,
                     productId: GooglePlayBillingService.yearlyProductId,
                     stripeUrl: yearlyPaymentLinkUrl),
                 fontStyle: ButtonFontStyle.SFProDisplayRegular12Cyan700,
                 alignment: Alignment.center,
-              ),
+              )),
               const SubscriptionTermsDisclosure(),
               if(goToFreeRecommendation)
               CustomButton(
