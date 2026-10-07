@@ -1254,3 +1254,6 @@ Firestore: новое поле `GuidedJournals/{topic_id}.image_url` (плоск
 - Removed unused SF Pro Display fonts (declared in pubspec but never referenced; shipped in both iOS and Android bundles). RU label "Диагностика состояния" -> "Анализ состояния" (EN/ES were already neutral).
 - Open risks noted (not changed): NSAllowsArbitraryLoads=true in Info.plist (no http:// URLs found in lib; reviewer may ask for justification), UIBackgroundModes remote-notification (FCM in use).
 - Info.plist: removed NSAllowsArbitraryLoads (no http:// in code or Firestore content; old VPS replaced by R2) and remote-notification background mode (no server-side push sender in functions/ or plans; local reminders only).
+
+## 73. Audio 8-14 (2026-10-07)
+Added 7 audio tracks (RU/EN/ES, files in R2 audio/{lostness,guilt,disgust,en/*,es/{perdida,culpa,asco}}) as Audio docs lostness__{vozvrashchenie_kontakta,pravo_na_bessilie,opora_v_nevesomosti,otkrytoe_prostranstvo}, guilt__otkrytaya_dver, disgust__{anatomiya_granicy,svet_skvoz_ten}. Disgust tab had no audio before. Covers (600x600 jpg) are bundled in assets/images/audio_covers + audio_cover_map.dart => visible only from build 70. Open: RU track 9 (243s vs EN/ES ~130s) may be an outdated file.

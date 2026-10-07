@@ -107,6 +107,15 @@ const Map<String, String> audioCoverAssets = {
   'Один момент': 'assets/images/audio_covers/lostness_one_moment.jpg',
   'Знакомое — не значит правильное': 'assets/images/audio_covers/lostness_familiar_patterns.jpg',
   'Не сломан(а)': 'assets/images/audio_covers/loneliness_not_broken.jpg',
+  // Tracks 8-14 added 2026-10-07 (lostness / guilt / disgust
+  // tabs) — covers assigned by mood match against 7 Midjourney abstracts.
+  'Возвращение контакта': 'assets/images/audio_covers/lostness_returning_contact.jpg',
+  'Право на бессилие': 'assets/images/audio_covers/lostness_right_to_powerlessness.jpg',
+  'Опора в невесомости': 'assets/images/audio_covers/lostness_support_in_weightlessness.jpg',
+  'Открытая дверь': 'assets/images/audio_covers/guilt_open_door.jpg',
+  'Открытое пространство': 'assets/images/audio_covers/lostness_open_space.jpg',
+  'Анатомия границы': 'assets/images/audio_covers/disgust_anatomy_of_boundary.jpg',
+  'Свет сквозь тень': 'assets/images/audio_covers/disgust_light_through_shadow.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {
