@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:riva_psy/core/services/insights/insight_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/models/insight_model.dart';
 import 'package:riva_psy/core/services/insights/insights_repo.dart';
@@ -94,6 +95,14 @@ class _InsightSectionState extends State<InsightSection> {
                       insight.templateKey.tr(namedArgs: insight.namedArgs),
                       style: AppStyle.txtSFProDisplayLight12.copyWith(color: ColorConstant.gray800),
                     ),
+                    if (kPillInsightCategories.contains(insight.category)) ...[
+                      SizedBox(height: getVerticalSize(6)),
+                      Text(
+                        'insight_pill_footer'.tr(),
+                        style: AppStyle.txtSFProDisplayLight11
+                            .copyWith(color: ColorConstant.gray800.withOpacity(0.7)),
+                      ),
+                    ],
                     SizedBox(height: getVerticalSize(8)),
                     if (insight.feedback == null)
                       Row(

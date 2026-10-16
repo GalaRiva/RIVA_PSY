@@ -19,15 +19,46 @@ typedef _EmitFixed = Future<void> Function(String category, String exactTemplate
 /// listed here (or the fixed-template ones like body_awareness) don't use
 /// variant pools.
 const Map<String, int> _templateVariantCounts = {
-  'insight_regularity_template': 20,
-  'insight_anxiety_reduction_template': 20,
-  'insight_missed_dose_template': 10,
-  'insight_emotion_template': 10,
-  'insight_monthly_template': 10,
+  // Medication-related pools were rewritten neutrally (observation, not
+  // effect) in 2026-10: 8/8/6/6 distinct variants. The old, longer key
+  // ranges still exist in the translation files (filled with the same
+  // neutral texts) only so insights stored earlier keep rendering.
+  'insight_regularity_template': 8,
+  'insight_anxiety_reduction_template': 8,
+  'insight_missed_dose_template': 2,
+  'insight_emotion_template': 6,
+  'insight_monthly_template': 6,
   'insight_invitation_template': 24,
   'insight_unlock_template': 10,
 };
 final _random = Random();
+
+/// Insight categories that talk about medication — these always get the
+/// "observation, not proof; decide about medication with your doctor"
+/// footer wherever they are shown.
+const Set<String> kPillInsightCategories = {
+  'regularity',
+  'anxiety_reduction',
+  'specific_emotion',
+  'monthly_retrospective',
+  'body_awareness',
+  'missed_dose',
+};
+
+/// Minimum data before any before/after comparison (and its percentages) is
+/// shown: with fewer entries a "drop of N%" is just noise presented as fact.
+const int _minEntriesPerPeriod = 10;
+const int _minDistinctDaysPerPeriod = 7;
+const int _minDaysSinceStart = 21;
+
+int _distinctDays(List<DayEventModel> list) =>
+    list.where((e) => e.date != null).map((e) => DateTime(e.date!.year, e.date!.month, e.date!.day)).toSet().length;
+
+bool _enoughForComparison(List<DayEventModel> before, List<DayEventModel> after) =>
+    before.length >= _minEntriesPerPeriod &&
+    after.length >= _minEntriesPerPeriod &&
+    _distinctDays(before) >= _minDistinctDaysPerPeriod &&
+    _distinctDays(after) >= _minDistinctDaysPerPeriod;
 
 String _pickTemplateKey(String baseKey) {
   final count = _templateVariantCounts[baseKey] ?? 10;
@@ -118,10 +149,6 @@ class InsightEngine {
     return false;
   }
 
-  bool _isScheduledOn(PillModel pill, DateTime date) {
-    final d = _dateOnly(date);
-    return !d.isBefore(_dateOnly(pill.startDate)) && !d.isAfter(_dateOnly(pill.endDate));
-  }
 
   /// Runs the correlation checks and stores any newly generated insights.
   /// Returns exactly the insights created by this call (its "batch") — every
@@ -173,9 +200,10 @@ class InsightEngine {
       await _checkMonthlyRetrospective(pill, events, emit);
       await _checkBodySymptoms(pill, events, emitFixed);
     }
-    if (pills.isNotEmpty) {
-      await _checkMissedDoseYesterday(pills, events, emit);
-    }
+    // The "missed dose yesterday + mood dip" insight was removed on purpose:
+    // it tied a mood change to skipping a dose and invited catching up,
+    // which is medical advice we must not give. (Its translation keys stay
+    // only so previously stored insights still render, now neutrally.)
     await _checkPositiveInvitation(events, emit);
     await _checkContextUnlock(events, translations, emit);
     return batch;
@@ -198,7 +226,7 @@ class InsightEngine {
       streak++;
       cursor = cursor.subtract(const Duration(days: 1));
     }
-    if (streak < 4) return;
+    if (streak < 7) return;
 
     final now = _dateOnly(DateTime.now());
     final windowStart = now.subtract(Duration(days: streak));
@@ -214,12 +242,12 @@ class InsightEngine {
         .map(_moodScore)
         .whereType<double>()
         .toList();
-    if (windowScores.length < 2 || baselineScores.length < 2) return;
+    if (windowScores.length < 5 || baselineScores.length < 5) return;
 
     final windowAvg = windowScores.reduce((a, b) => a + b) / windowScores.length;
     final baselineAvg = baselineScores.reduce((a, b) => a + b) / baselineScores.length;
     final delta = windowAvg - baselineAvg;
-    if (delta <= 0.3) return;
+    if (delta <= 0.5) return;
 
     await emit('regularity', 'insight_regularity_template',
         {'pill': pill.name, 'days': '$streak', 'delta': delta.toStringAsFixed(1)});
@@ -228,11 +256,11 @@ class InsightEngine {
   Future<void> _checkAnxietyReduction(PillModel pill, List<DayEventModel> events, _Emit emit) async {
     if (!pill.actual()) return;
     final daysSinceStart = DateTime.now().difference(pill.startDate).inDays;
-    if (daysSinceStart < 14) return;
+    if (daysSinceStart < _minDaysSinceStart) return;
 
     final before = events.where((e) => e.date != null && e.date!.isBefore(pill.startDate)).toList();
     final after = events.where((e) => e.date != null && !e.date!.isBefore(pill.startDate)).toList();
-    if (before.length < 5 || after.length < 5) return;
+    if (!_enoughForComparison(before, after)) return;
 
     final beforeRate = before.where(_hasDistress).length / before.length;
     final afterRate = after.where(_hasDistress).length / after.length;
@@ -247,11 +275,11 @@ class InsightEngine {
       PillModel pill, List<DayEventModel> events, Map<String, dynamic> translations, _Emit emit) async {
     if (!pill.actual()) return;
     final daysSinceStart = DateTime.now().difference(pill.startDate).inDays;
-    if (daysSinceStart < 14) return;
+    if (daysSinceStart < _minDaysSinceStart) return;
 
     final before = events.where((e) => e.date != null && e.date!.isBefore(pill.startDate)).toList();
     final after = events.where((e) => e.date != null && !e.date!.isBefore(pill.startDate)).toList();
-    if (before.length < 5 || after.length < 5) return;
+    if (!_enoughForComparison(before, after)) return;
 
     for (final entry in _trackedEmotions.entries) {
       final key = entry.key;
@@ -293,12 +321,12 @@ class InsightEngine {
         .map(_moodScore)
         .whereType<double>()
         .toList();
-    if (last30Scores.length < 5 || prev30Scores.length < 5) return;
+    if (last30Scores.length < 10 || prev30Scores.length < 10) return;
 
     final last30Avg = last30Scores.reduce((a, b) => a + b) / last30Scores.length;
     final prev30Avg = prev30Scores.reduce((a, b) => a + b) / prev30Scores.length;
     final delta = last30Avg - prev30Avg;
-    if (delta <= 0.3) return;
+    if (delta <= 0.5) return;
 
     int takenCount = 0;
     for (final a in pill.adoptions) {
@@ -319,11 +347,11 @@ class InsightEngine {
   Future<void> _checkBodySymptoms(PillModel pill, List<DayEventModel> events, _EmitFixed emitFixed) async {
     if (!pill.actual()) return;
     final daysSinceStart = DateTime.now().difference(pill.startDate).inDays;
-    if (daysSinceStart < 14) return;
+    if (daysSinceStart < _minDaysSinceStart) return;
 
     final before = events.where((e) => e.date != null && e.date!.isBefore(pill.startDate)).toList();
     final after = events.where((e) => e.date != null && !e.date!.isBefore(pill.startDate)).toList();
-    if (before.length < 5 || after.length < 5) return;
+    if (!_enoughForComparison(before, after)) return;
 
     for (final entry in _trackedBodySymptoms.entries) {
       final symptomKey = entry.key;
@@ -334,44 +362,6 @@ class InsightEngine {
 
       await emitFixed('body_awareness', entry.value, {'pill': pill.name});
       return;
-    }
-  }
-
-  Future<void> _checkMissedDoseYesterday(
-      List<PillModel> pills, List<DayEventModel> events, _Emit emit) async {
-    final today = _dateOnly(DateTime.now());
-    final yesterday = today.subtract(const Duration(days: 1));
-
-    for (final pill in pills) {
-      if (!_isScheduledOn(pill, yesterday) || pill.hoursOfTakingPills.isEmpty) continue;
-
-      final missedYesterday = pill.hoursOfTakingPills.any((t) {
-        for (final a in pill.adoptions) {
-          if (_sameDay(a.adoptionDate, yesterday) && a.adoptionTimes.contains(t)) return false;
-        }
-        return true;
-      });
-      if (!missedYesterday) continue;
-
-      final todayEvents = events.where((e) => e.date != null && _sameDay(e.date!, today)).toList();
-      if (todayEvents.isEmpty) continue;
-      final todayScore = _moodScore(todayEvents.first);
-      if (todayScore == null) continue;
-
-      final recentScores = events
-          .where((e) =>
-              e.date != null &&
-              e.date!.isBefore(today) &&
-              !e.date!.isBefore(today.subtract(const Duration(days: 14))))
-          .map(_moodScore)
-          .whereType<double>()
-          .toList();
-      if (recentScores.length < 3) continue;
-
-      final baselineAvg = recentScores.reduce((a, b) => a + b) / recentScores.length;
-      if (todayScore >= baselineAvg - 1.5) continue;
-
-      await emit('missed_dose', 'insight_missed_dose_template', {'pill': pill.name});
     }
   }
 

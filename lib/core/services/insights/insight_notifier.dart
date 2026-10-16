@@ -1,5 +1,6 @@
 import '../../models/insight_model.dart';
 import '../notifications/awesome_notification_service.dart';
+import 'insight_engine.dart';
 import 'insight_popup_store.dart';
 import 'offline_translations.dart';
 
@@ -23,7 +24,12 @@ class InsightNotifier {
       body = OfflineTranslations.tr(
           translations, 'insight_notification_many_body', {'count': '${batch.length}'});
     }
-    await InsightPopupStore.save(title, body);
-    await AwesomeNotificationService().scheduleInsightNotification(title: title, body: body);
+    // Medication-related observations always carry the "not proof, ask your
+    // doctor" line, in the notification/popup too.
+    final withFooter = batch.any((i) => kPillInsightCategories.contains(i.category))
+        ? '$body\n\n${OfflineTranslations.tr(translations, 'insight_pill_footer')}'
+        : body;
+    await InsightPopupStore.save(title, withFooter);
+    await AwesomeNotificationService().scheduleInsightNotification(title: title, body: withFooter);
   }
 }
