@@ -28,6 +28,10 @@ import '../../../widgets/inner_shadow.dart';
 import '../../../widgets/pressable_scale.dart';
 import '../../../widgets/spark_burst.dart';
 import '../../../widgets/welcome_offer_banner.dart';
+import '../../initial_setup/onboarding/first_steps_checklist.dart';
+import '../../../widgets/reengagement_hook.dart';
+import '../../initial_setup/onboarding/check_in_nudge_card.dart';
+import '../../initial_setup/onboarding/next_step_card.dart';
 import '../../../widgets/gratitude_nudge_popup.dart';
 import '../../../widgets/insight_popup.dart';
 import '../../../core/models/event_model.dart';
@@ -95,6 +99,9 @@ class K20Screen extends GetWidget<K20Controller> {
                       const GratitudeNudgePopup(),
                       const InsightPopup(),
                       const WelcomeOfferBanner(),
+                      const ReengagementHook(),
+                      const NextStepCard(),
+                      const CheckInNudgeCard(),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -461,6 +468,7 @@ class K20Screen extends GetWidget<K20Controller> {
                         textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                         borderRadius: 12,
                       ),
+                      const FirstStepsChecklist(),
                     ],
                   ),
                 ),

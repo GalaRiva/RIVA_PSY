@@ -41,7 +41,7 @@ class SubscriptionTermsDisclosure extends StatelessWidget {
             style: AppStyle.txtSFProDisplayRegular11.copyWith(color: resolvedTextColor),
           ),
           SizedBox(height: getVerticalSize(6)),
-          MedicalDisclaimer(textColor: resolvedTextColor, compact: true),
+          MedicalDisclaimer(textColor: resolvedTextColor, compact: true, showHelpline: false),
           Wrap(
             alignment: WrapAlignment.center,
             children: [

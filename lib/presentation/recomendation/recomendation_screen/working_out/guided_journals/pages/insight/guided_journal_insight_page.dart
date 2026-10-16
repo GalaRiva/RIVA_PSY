@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import '../../../../../../../widgets/helpline_link.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -174,6 +175,14 @@ class _GuidedJournalInsightPageState extends State<GuidedJournalInsightPage> {
                     textStyle: AppStyle.txtSFProDisplayLight16
                         .copyWith(color: Colors.white),
                     onTap: cubit.backToLibrary,
+                  ),
+                  // Shown on every topic for now (heavy ones: breakup,
+                  // loneliness, guilt, regret, resentment) — the insight
+                  // is the end of the exercise, so it never interrupts the
+                  // writing.
+                  SizedBox(height: getVerticalSize(14)),
+                  Center(
+                    child: HelplineLink(color: Colors.white.withOpacity(0.8), center: true),
                   ),
                 ],
               ),

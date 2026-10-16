@@ -20,7 +20,7 @@ const String _quizOneTimeFlag = 'strengths_quiz';
 // personalization data differs (no leading trait, but the welcome-offer
 // countdown still applies — the discount isn't gated on having answered
 // questions, just on being a brand-new account).
-Future<void> startPostRegistrationQuizFlow(BuildContext context) async {
+Future<void> startPostRegistrationQuizFlow(BuildContext context, {bool skipBridge = false}) async {
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -38,6 +38,14 @@ Future<void> startPostRegistrationQuizFlow(BuildContext context) async {
                       builder: (_) => QuizResultScreen(
                         trait: top.isNotEmpty ? top.first : StrengthTrait.curiosity,
                         onContinue: (resultCtx) {
+                          // After the onboarding first practice the
+                          // heart-meditation bridge would be a second
+                          // practice in a row — go straight to the paywall.
+                          if (skipBridge) {
+                            _showPaywall(resultCtx,
+                                leadingTrait: top.isNotEmpty ? top.first : null);
+                            return;
+                          }
                           Navigator.pushReplacement(
                             resultCtx,
                             MaterialPageRoute(

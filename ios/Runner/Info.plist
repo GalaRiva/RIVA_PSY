@@ -67,6 +67,15 @@
 	<string>RIVA PSY accesses your photo library only when you choose to attach an image to a report or a note.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Required by just_audio's LockCachingAudioSource: the app plays remote
+	     tracks through a loopback HTTP proxy (http://127.0.0.1:<port>), which
+	     ATS blocks without this exception. Removing it in build 69 broke
+	     playback of every non-downloaded track on iOS (duration 0:00). -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../onboarding/onboarding_flow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/services/negative_emotion_tabs.dart';
 import '../../../core/services/firebase/firebase_cloud_storage.dart';
 import '../sign_in/domain/usecases/get_and_set_remote_data_locally.dart';
-import '../strengths_quiz/quiz_flow.dart';
 import '../../../main.dart';
 
 // Local, device-only "have we ever shown the onboarding quiz" flag —
@@ -60,7 +60,7 @@ class K1Controller extends GetxController {
               final alreadyShownQuiz = prefs.getBool(_onboardingQuizShownPrefsKey) ?? false;
               if (!alreadyShownQuiz) {
                 await prefs.setBool(_onboardingQuizShownPrefsKey, true);
-                if (context.mounted) await startPostRegistrationQuizFlow(context);
+                if (context.mounted) await startOnboardingFlow(context);
               } else if (context.mounted) {
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.main, (route) => false);

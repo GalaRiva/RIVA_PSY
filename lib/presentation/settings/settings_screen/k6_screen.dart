@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
+import '../../../core/utils/crisis_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
@@ -141,6 +142,14 @@ class K6Screen extends GetWidget {
                                   Uri.parse('mailto:support@rivapsy.com')),
                               title: 'write_to_us',
                               svgIcon: ImageConstant.imgMail,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => openHelplines(context),
+                              title: 'helpline_settings',
+                              svgIcon: ImageConstant.imgHeart,
                               controller: controller,
                               svgSize: 24,
                             ),

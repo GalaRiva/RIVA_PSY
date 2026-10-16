@@ -307,4 +307,38 @@ class AwesomeNotificationService extends NotificationService {
       ),
     );
   }
+
+  /// One-off "day 2" follow-up for the personalized onboarding: tomorrow
+  /// 11:00, worded around what the person said was hardest (key
+  /// `onb_followup_<concernKey>`, falling back to `onb_followup_generic`).
+  /// Reuses the 'scheduled' channel like the other one-off notifications.
+  Future scheduleFirstStepFollowUp({required String concernKey}) async {
+    final now = DateTime.now();
+    final target = DateTime(now.year, now.month, now.day, 11, 0).add(const Duration(days: 1));
+    final translations = await OfflineTranslations.load();
+    final bodyKey = translations.containsKey('onb_followup_$concernKey')
+        ? 'onb_followup_$concernKey'
+        : 'onb_followup_generic';
+    await AwesomeNotifications().createNotification(
+      schedule: NotificationCalendar(
+        year: target.year,
+        month: target.month,
+        day: target.day,
+        hour: target.hour,
+        minute: target.minute,
+        repeats: false,
+        allowWhileIdle: true,
+      ),
+      content: NotificationContent(
+        id: 'onb_followup_day2'.hashCode & 0x7FFFFFFF,
+        channelKey: 'scheduled',
+        title: 'RIVA PSY',
+        body: OfflineTranslations.tr(translations, bodyKey),
+        wakeUpScreen: true,
+        category: NotificationCategory.Reminder,
+        color: const Color(0xFF2A5C55),
+        notificationLayout: NotificationLayout.BigText,
+      ),
+    );
+  }
 }
