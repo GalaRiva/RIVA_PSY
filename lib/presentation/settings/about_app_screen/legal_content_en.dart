@@ -13,7 +13,9 @@ Using the App, including creating an account, constitutes full acceptance of the
         '''The services are intended exclusively for individuals over 18 years of age. If you do not meet this requirement, you must not use the App or website.'''
       ]),
       DropTextModel('3. Purpose of the Service', <String>[
-        '''RIVA PSY gives Users access to self-awareness and emotional wellbeing features, including: a personal journal (SMER entries — situation, thoughts, emotions, body, actions), emotional-state charts and analysis, personal voice recordings, psychoeducational recommendations and exercises, and guided audio meditations.'''
+        '''RIVA PSY gives Users access to self-awareness and emotional wellbeing features, including: a personal journal (SMER entries — situation, thoughts, emotions, body, actions), emotional-state charts and analysis, personal voice recordings, psychoeducational recommendations and exercises, and guided audio meditations.
+
+The App brings together approaches from several schools of psychology (CBT, DBT, rational emotive therapy, emotional-imagery therapy, body-oriented therapy, art therapy and others): the same problem can be worked on with different methods, and the User chooses what works best for them. The App is educational: it does not treat or diagnose, and it does not replace a psychotherapist.'''
       ]),
       DropTextModel('4. Nature of the Service — Important Mental Health Notice', <String>[
         '''RIVA PSY does not provide professional medical, psychological, or psychiatric services. The App is intended for relatively healthy individuals with no physical or mental health issues posing a life-threatening risk to themselves or others. RIVA does not guarantee any specific therapeutic outcome, and a mismatch between the result obtained and the User's expectations does not constitute grounds for a claim of inadequate service.

@@ -33,7 +33,29 @@
 ## 1. Продукт
 
 - **Переименование Rigel PSY → RIVA PSY ВЫПОЛНЕНО в коде (2026-07-22)**: bundle ID/applicationId, отображаемое имя, имя Dart-пакета в pubspec.yaml, все текстовые упоминания в UI/уведомлениях/юридических текстах/README, домен в текстах договоров (rigelpsy.ru → rivapsy.com). Подробности, что именно поменяно и что осталось сделать вручную (Firebase-консоль, GitHub-репозиторий, Apple/Google регистрация identifiers) — см. §7 ниже.
-- Суть приложения: дневник эмоций по принципу СМЭР (Ситуация-Мысли-Эмоции-Реакция), КПТ-упражнения, аудио-рекомендации по группам эмоций, графики/аналитика состояния, платная подписка.
+- Суть приложения: дневник эмоций по принципу СМЭР (Ситуация-Мысли-Эмоции-Реакция), упражнения из разных методов психологии (см. §1.1), аудио-рекомендации по группам эмоций, графики/аналитика состояния, платная подписка.
+
+### 1.1 Позиционирование (обновлено 2026-10-16)
+
+Раньше приложение описывалось как «основанное на DBT/КПТ» — это неточно. **Главное отличие продукта: с одной и той же проблемой можно работать РАЗНЫМИ методами психологии, и человек выбирает тот, что подходит ему лучше.** В приложении собраны подходы: КПТ, DBT, рационально-эмоциональная терапия, эмоционально-образная терапия, телесно-ориентированная терапия, арт-терапия и другие.
+
+Приложение образовательное: не лечит, не ставит диагнозы, не заменяет психотерапевта. Эти оговорки не удалять и не ослаблять (`medical_disclaimer`, юридические тексты, App Review notes). Не обещать результат («вылечит», «поможет избавиться»). Не называть методы и упражнения, которых в приложении нет.
+
+Конкретные упоминания метода уместны там, где речь о научной базе одного упражнения/теста (ACT в «Истинном компасе», таксономия искажений мышления по Бэку/Бёрнсу, `scientific_basis` у тем «Хлебных крошек») — их не менять.
+
+**RU (коротко):** Одна проблема — разные методы психологии: КПТ, DBT, эмоционально-образная и телесно-ориентированная терапия, арт-терапия. Выберите то, что подходит вам.
+
+**RU (полно):** Главное отличие RIVA PSY — с одной и той же проблемой можно работать разными методами. Люди разные: кому-то легче разобрать мысль логически, кому-то — через образ, ощущения в теле или рисунок. В приложении собраны подходы из нескольких направлений психологии: КПТ, DBT, рационально-эмоциональной терапии, эмоционально-образной терапии, телесно-ориентированной терапии, арт-терапии и других. Вы пробуете и выбираете то, что работает именно для вас.
+
+**ES (corto):** Un mismo problema, distintos métodos de la psicología: TCC, DBT, terapia emocional-imaginativa, corporal y arteterapia. Elige lo que mejor te funcione.
+
+**ES (completo):** Lo que hace única a RIVA PSY es que un mismo problema se puede trabajar con distintos métodos. Cada persona es diferente: a unas les ayuda analizar un pensamiento con lógica; a otras, trabajar con una imagen, con las sensaciones del cuerpo o con un dibujo. La app reúne enfoques de varias corrientes de la psicología: TCC, DBT, terapia racional emotiva, terapia emocional-imaginativa, terapia corporal, arteterapia y otras. Pruebas y eliges lo que mejor funciona para ti.
+
+**EN (short):** One problem, different psychology methods: CBT, DBT, emotional-imagery and body-oriented therapy, art therapy. Choose what works best for you.
+
+**EN (full):** What makes RIVA PSY different is that you can work on the same problem with different methods. People differ: some find it easier to examine a thought logically, others to work through an image, body sensations or drawing. The app brings together approaches from several schools of psychology: CBT, DBT, rational emotive therapy, emotional-imagery therapy, body-oriented therapy, art therapy and others. You try them and choose what works best for you.
+
+**Длина для магазинов:** «короткие» версии выше (142–152 символа) не влезают в короткое описание Google Play (80 символов), версии ≤80 и полные тексты для вставки в консоли — в `docs/store_listing_positioning.md`. Тексты в консолях Google Play / App Store Connect вручную, в репозитории они не хранятся.
 
 ## 2. Дизайн (Figma)
 

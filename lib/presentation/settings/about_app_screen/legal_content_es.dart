@@ -14,7 +14,9 @@ El uso de la Aplicación, incluida la creación de una cuenta, implica la acepta
         '''Los servicios están destinados exclusivamente a personas mayores de 18 años. Si no cumple este requisito, no debe utilizar la Aplicación ni el sitio web.'''
       ]),
       DropTextModel('3. Objeto del Servicio', <String>[
-        '''RIVA PSY proporciona al Usuario acceso a funcionalidades de autoconocimiento y bienestar emocional, incluyendo: un diario personal (registro SMER — situación, pensamientos, emociones, cuerpo, acciones), gráficos y análisis de estado emocional, grabaciones de voz personales, recomendaciones y ejercicios psicoeducativos, y meditaciones guiadas en audio.'''
+        '''RIVA PSY proporciona al Usuario acceso a funcionalidades de autoconocimiento y bienestar emocional, incluyendo: un diario personal (registro SMER — situación, pensamientos, emociones, cuerpo, acciones), gráficos y análisis de estado emocional, grabaciones de voz personales, recomendaciones y ejercicios psicoeducativos, y meditaciones guiadas en audio.
+
+La Aplicación reúne enfoques de varias corrientes de la psicología (TCC, DBT, terapia racional emotiva, terapia emocional-imaginativa, terapia corporal, arteterapia y otras): un mismo problema se puede trabajar con distintos métodos y el Usuario elige el que mejor le funciona. La Aplicación es de carácter educativo: no trata ni diagnostica y no sustituye a un psicoterapeuta.'''
       ]),
       DropTextModel('4. Naturaleza del Servicio — Aviso importante sobre salud mental', <String>[
         '''RIVA PSY no presta servicios médicos, psicológicos ni psiquiátricos profesionales. La Aplicación está dirigida a personas relativamente sanas que no presentan problemas de salud física o mental que supongan un riesgo vital para el Usuario u otras personas. RIVA no garantiza resultados terapéuticos específicos, y la falta de coincidencia entre el resultado obtenido y las expectativas del Usuario no constituye motivo de reclamación por prestación deficiente del servicio.
