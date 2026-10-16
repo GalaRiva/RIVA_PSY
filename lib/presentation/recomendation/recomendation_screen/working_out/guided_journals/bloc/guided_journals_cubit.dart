@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/services/exercise_notice.dart';
 import '../data/guided_journal_answers_store.dart';
 import '../data/guided_journals_repository.dart';
 import '../models/guided_journal_topic.dart';
@@ -18,6 +19,8 @@ class GuidedJournalsCubit extends Cubit<GuidedJournalsState> {
   }
 
   void selectTopic(GuidedJournalTopic topic) {
+    // First exercise ever -> one-time heads-up (see ExerciseNotice).
+    ExerciseNotice.maybeShow();
     emit(GuidedJournalsState(
       loading: false,
       stage: GuidedJournalStage.question,

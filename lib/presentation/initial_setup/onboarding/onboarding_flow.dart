@@ -8,6 +8,7 @@ import 'package:riva_psy/core/services/audio/app_audio_track.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/audio/audio.dart';
+import '../../../core/services/exercise_notice.dart';
 import '../../../core/services/notifications/awesome_notification_service.dart';
 import '../../../core/utils/audio_cover_map.dart';
 import '../../../theme/app_colors.dart';
@@ -132,6 +133,9 @@ class _OnboardingPracticeScreenState extends State<OnboardingPracticeScreen> {
   }
 
   Future<void> _load() async {
+    // Onboarding shows its own inline note below, so the one-time dialog
+    // must not interrupt the very first practice.
+    await ExerciseNotice.markShown();
     try {
       final prefs = await SharedPreferences.getInstance();
       final langCode = (prefs.getString('locale') ?? 'ru_RU').split('_').first;
@@ -293,6 +297,9 @@ class _OnboardingPracticeScreenState extends State<OnboardingPracticeScreen> {
                   ),
                 ),
               const Spacer(),
+              Text('onb_practice_stop_note'.tr(),
+                  textAlign: TextAlign.center,
+                  style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
               const MedicalDisclaimer(compact: true),
               SizedBox(height: getVerticalSize(8)),
               if (!_loading && (_selected != null || _failed))

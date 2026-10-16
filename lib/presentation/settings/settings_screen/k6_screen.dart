@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
-import '../../../core/utils/crisis_links.dart';
+import '../help_now_screen/help_now_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:riva_psy/core/app_export.dart';
@@ -147,7 +147,8 @@ class K6Screen extends GetWidget {
                             ),
                             CardSettingsButtonWidget(
                               context,
-                              onTap: () => openHelplines(context),
+                              onTap: () => Navigator.push(
+                                  context, MaterialPageRoute(builder: (_) => const HelpNowScreen())),
                               title: 'helpline_settings',
                               svgIcon: ImageConstant.imgHeart,
                               controller: controller,

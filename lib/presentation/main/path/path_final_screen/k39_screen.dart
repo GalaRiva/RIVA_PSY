@@ -1,5 +1,6 @@
   import 'package:easy_localization/easy_localization.dart';
 import '../../../../widgets/medical_disclaimer.dart';
+import '../../../../widgets/pause_content.dart';
 import 'package:get/get.dart' hide Trans;
 import 'widgets/screen_body_widget.dart';
 
@@ -138,7 +139,32 @@ class K39Screen extends GetWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: getPadding(left: 26, top: 14, bottom: 10, right: 26),
-              child: CustomButton(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Quiet text link, not a button: opens the pause sheet
+                  // (breathing, grounding, a person, helplines).
+                  Semantics(
+                    button: true,
+                    label: 'helpnow_k39_link'.tr(),
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => showPauseSheet(context),
+                      child: Padding(
+                        padding: getPadding(top: 4, bottom: 8),
+                        child: Text(
+                          'helpnow_k39_link'.tr(),
+                          style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                            color: ColorConstant.gray500,
+                            decoration: TextDecoration.underline,
+                            decorationColor: ColorConstant.gray500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  CustomButton(
                 height: getVerticalSize(40),
                 // 'finish_practice' ("Завершить практику" / "Finish the
                 // practice") runs longer than the old "Готово" — a fixed
@@ -161,6 +187,8 @@ class K39Screen extends GetWidget {
                   // has already navigated away by this point.
                   RatingRequestService.recordPracticeCompleted();
                 },
+              ),
+                ],
               ),
             ),
           ),

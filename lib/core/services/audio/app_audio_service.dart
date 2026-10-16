@@ -9,6 +9,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../datasource_service.dart';
+import '../exercise_notice.dart';
 import 'app_audio_track.dart';
 import 'audio_cache_manager.dart';
 
@@ -155,6 +156,8 @@ class AppAudioService {
       await player.play();
       return;
     }
+    // First exercise ever -> one-time heads-up (see ExerciseNotice).
+    unawaited(ExerciseNotice.maybeShow());
     state.value = AppAudioState(track: track, playing: false, position: initialPosition ?? Duration.zero);
     // Tags the platform audio source with a MediaItem — this is what
     // just_audio_background reads to populate the lock-screen/notification
