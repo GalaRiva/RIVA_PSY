@@ -116,6 +116,32 @@ const Map<String, String> audioCoverAssets = {
   'Открытое пространство': 'assets/images/audio_covers/lostness_open_space.jpg',
   'Анатомия границы': 'assets/images/audio_covers/disgust_anatomy_of_boundary.jpg',
   'Свет сквозь тень': 'assets/images/audio_covers/disgust_light_through_shadow.jpg',
+  // Course "Еда без автопилота" (2026-10-18) — covers from the blog art set.
+  'Что происходит перед перееданием': 'assets/images/audio_covers/program_eating_s1_chain.jpg',
+  'Выйти из цикла ограничений': 'assets/images/audio_covers/program_eating_s2_cycle.jpg',
+  'Голод, эмоция или импульс': 'assets/images/audio_covers/program_eating_s3_signals.jpg',
+  'Пережить импульс': 'assets/images/audio_covers/program_eating_s4_urge_wave.jpg',
+  'Справиться с эмоцией иначе': 'assets/images/audio_covers/program_eating_s5_emotion.jpg',
+  'Это шаг заботы о себе': 'assets/images/audio_covers/program_eating_s6_care.jpg',
+  'План на трудные ситуации': 'assets/images/audio_covers/program_eating_s7_plan.jpg',
+  'Устойчивое отношение к еде и себе': 'assets/images/audio_covers/program_eating_s8_resilience.jpg',
+  // Course "Вернуться к себе" (2026-10-21) — covers from the blog art set.
+  'Острая волна': 'assets/images/audio_covers/program_return_wave.jpg',
+  'Место для потери': 'assets/images/audio_covers/program_return_loss.jpg',
+  'Ночные мысли': 'assets/images/audio_covers/program_return_night.jpg',
+  'После срыва': 'assets/images/audio_covers/program_return_slip.jpg',
+  'Трудный вечер': 'assets/images/audio_covers/program_return_evening.jpg',
+  'Когда меня тянет к нему или к ней': 'assets/images/audio_covers/program_return_urge.jpg',
+  'Разорвать круг навязчивых мыслей': 'assets/images/audio_covers/program_return_thoughts.jpg',
+  'Вернуть себе собственную ценность': 'assets/images/audio_covers/program_return_worth.jpg',
+  'Принятие своих неудобных черт': 'assets/images/audio_covers/program_return_traits.jpg',
+  'Сострадательное «я»': 'assets/images/audio_covers/program_return_compassion.jpg',
+  'Отпустить контроль и вернуть границы': 'assets/images/audio_covers/program_return_control.jpg',
+  'Моя жизнь больше этих отношений': 'assets/images/audio_covers/program_return_life.jpg',
+  'Когда видеться неизбежно': 'assets/images/audio_covers/program_return_meeting.jpg',
+  'Ревность и сравнение': 'assets/images/audio_covers/program_return_jealousy.jpg',
+  'Новая близость': 'assets/images/audio_covers/program_return_intimacy.jpg',
+  'Сказать прямо': 'assets/images/audio_covers/program_return_direct.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {

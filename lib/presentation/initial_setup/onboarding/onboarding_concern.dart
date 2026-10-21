@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // The single "what's hardest right now" answer collected on first launch.
@@ -11,8 +12,12 @@ class OnboardingConcern {
   final String labelKey;
   final List<String> audioDocIds;
   final String? journalTopicId;
+  // Set for concerns that have a dedicated course (Обретение -> Программы):
+  // after onboarding the person lands on the Programs tab.
+  final String? courseId;
 
-  const OnboardingConcern._(this.key, this.labelKey, this.audioDocIds, this.journalTopicId);
+  const OnboardingConcern._(this.key, this.labelKey, this.audioDocIds, this.journalTopicId,
+      {this.courseId});
 
   static const anxious = OnboardingConcern._(
       'anxious', 'onb_concern_anxious', ['fear2__vozvrat_v_seychas'], 'catastrophizing');
@@ -28,8 +33,11 @@ class OnboardingConcern {
       'exhausted', 'onb_concern_exhausted', ['laziness__pravo_na_pauzu'], 'apathy_burnout');
   static const lonely = OnboardingConcern._(
       'lonely', 'onb_concern_lonely', ['loneliness__ne_sloman'], 'loneliness');
+  // Also has a course ("Вернуться к себе"); the first practice and the home
+  // "next step" journal topic stay as they were.
   static const relationships = OnboardingConcern._('relationships', 'onb_concern_relationships',
-      ['lostness__znakomoe_pravilnoe'], 'relationship_patterns');
+      ['lostness__znakomoe_pravilnoe'], 'relationship_patterns',
+      courseId: 'return_to_self');
   static const sadness = OnboardingConcern._(
       'sadness', 'onb_concern_sadness', ['sorrow__vremya_ne_sila_voli'], 'breakup_grief');
   static const lost = OnboardingConcern._(
@@ -42,6 +50,16 @@ class OnboardingConcern {
   static const unknown = OnboardingConcern._('unknown', 'onb_concern_unknown',
       ['introduction__kak_prozhivat', 'introduction__snyatie_broni'], null);
 
+  // Concerns with a full course. The first practice is the same universal
+  // one as for "не знаю" (two short practices to choose from); the course
+  // itself is where they land after the welcome flow.
+  static const eating = OnboardingConcern._('eating', 'onb_concern_eating',
+      ['introduction__kak_prozhivat', 'introduction__snyatie_broni'], null,
+      courseId: 'eating_no_autopilot');
+  static const breakup = OnboardingConcern._('breakup', 'onb_concern_breakup',
+      ['introduction__kak_prozhivat', 'introduction__snyatie_broni'], null,
+      courseId: 'return_to_self');
+
   static const List<OnboardingConcern> values = [
     anxious,
     resentment,
@@ -52,6 +70,8 @@ class OnboardingConcern {
     sadness,
     lost,
     selfDoubt,
+    eating,
+    breakup,
     unknown,
   ];
 
@@ -64,6 +84,11 @@ class OnboardingConcern {
 }
 
 class OnboardingPrefs {
+  /// Bumped whenever something the first-steps checklist depends on changes,
+  /// so the home screen can re-read it without being rebuilt.
+  static final ValueNotifier<int> changes = ValueNotifier<int>(0);
+  static void _changed() => changes.value++;
+
   static const _concernKey = 'onboarding_concern_v1';
   static const _feelingKey = 'onboarding_feeling_after_v1';
   static const _practiceDoneKey = 'onboarding_first_practice_done_v1';
@@ -75,6 +100,10 @@ class OnboardingPrefs {
   static Future<void> saveConcern(OnboardingConcern concern) async {
     final p = await SharedPreferences.getInstance();
     await p.setString(_concernKey, concern.key);
+    // A new choice means a new "next step" card for the new topic.
+    await p.remove(_nextStepDoneKey);
+    await p.remove(_nextStepDismissedKey);
+    _changed();
   }
 
   static Future<OnboardingConcern?> concern() async {
@@ -88,14 +117,18 @@ class OnboardingPrefs {
     await p.setString(_feelingKey, feeling);
   }
 
+  static Future<String?> courseToOpen() async => (await concern())?.courseId;
+
   static Future<void> markFirstPracticeDone() async {
     final p = await SharedPreferences.getInstance();
     await p.setBool(_practiceDoneKey, true);
+    _changed();
   }
 
   static Future<void> markNextStepDone() async {
     final p = await SharedPreferences.getInstance();
     await p.setBool(_nextStepDoneKey, true);
+    _changed();
   }
 
   static Future<void> dismissNextStep() async {

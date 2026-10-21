@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../../initial_setup/onboarding/onboarding_concern.dart';
 import '../../../../core/db/hive_db.dart';
 import '../../../../core/models/day_event_model.dart';
 
@@ -24,5 +25,6 @@ class K39Repo {
     for (var item in events) {
       HiveDB.setBox(item.toJson(), _eventTag);
     }
+    OnboardingPrefs.changes.value++; // first-steps checklist re-reads
   }
 }

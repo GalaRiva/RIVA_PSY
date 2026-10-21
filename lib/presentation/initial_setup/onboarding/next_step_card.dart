@@ -106,16 +106,17 @@ class _NextStepCardState extends State<NextStepCard> {
                       Text(
                           _freeOnce ? 'onb_next_step_free'.tr() : 'onb_next_step_subtitle'.tr(),
                           style: AppStyle.txtSFProDisplayRegular11Gray800),
+                      SizedBox(height: getVerticalSize(8)),
+                      // Stays on the home screen until it is done; this line says
+                      // where to find the other topics later.
+                      Text('onb_next_step_more'.tr(),
+                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
                     ],
                   ),
                 ),
-                IconButton(
-                  tooltip: 'close'.tr(),
-                  icon: Icon(Icons.close_rounded, size: getSize(18), color: ColorConstant.gray500),
-                  onPressed: () async {
-                    await OnboardingPrefs.dismissNextStep();
-                    if (mounted) setState(() => _topic = null);
-                  },
+                Padding(
+                  padding: getPadding(right: 8),
+                  child: Icon(Icons.chevron_right_rounded, color: ColorConstant.cyan700),
                 ),
               ],
             ),

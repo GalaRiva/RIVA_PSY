@@ -118,7 +118,9 @@ class HiveDBTags {
     desires,
     insights,
     guidedJournalAnswers,
-    portraitTestResults
+    portraitTestResults,
+    courseProgress,
+    courseCards
   ];
   static const events = 'events';
   static const desires = 'desires';
@@ -139,4 +141,8 @@ class HiveDBTags {
   static const insights = 'insights';
   static const guidedJournalAnswers = 'guidedJournalAnswers';
   static const portraitTestResults = 'portraitTestResults';
+  // Programs/courses (personal cards and step progress) — included in the
+  // Drive backup like the diary.
+  static const courseProgress = 'courseProgress';
+  static const courseCards = 'courseCards';
 }

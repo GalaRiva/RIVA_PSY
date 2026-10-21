@@ -11,6 +11,7 @@ import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
 import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_decoration.dart';
+import '../programs/programs_page.dart';
 import '../working_out_irrational/working_out_irrational_tab.dart';
 
 class WorkingOutScreen extends StatelessWidget {
@@ -28,20 +29,34 @@ class WorkingOutScreen extends StatelessWidget {
             // here without its own gate still can't leak paid content (see
             // PROJECT_CONTEXT.md for the bug this replaced: DesiresPage had
             // no gate of its own and showContent was defined but unused).
+            // Not subscribed: the three paid exercises still show only the
+            // teaser (defense-in-depth stays — none of their bodies is
+            // built), but the tab bar is live and the "Программы" tab is
+            // reachable, because the first steps of a course are free (each
+            // step decides for itself, see CourseScreen).
             if (!cubit.showContent) {
-              // Same teaser pattern as the audio tabs (see tab_widget.dart):
-              // the real tab bar renders behind a semi-transparent
-              // GoToNewTariffWidget instead of the widget replacing
-              // everything outright, so the screen isn't just a flat block.
-              // The tab bodies themselves stay unbuilt here — each is its
-              // own multi-stage flow with its own tariff gate already, so
-              // there's no safe static "preview" of them to show, unlike a
-              // simple content list.
-              return Stack(
-                children: [
-                  _buildTabBar(cubit, context, interactive: false),
-                  GoToNewTariffWidget(goToFreeRecommendation: false),
-                ],
+              Widget teaser() => SingleChildScrollView(
+                    child: GoToNewTariffWidget(goToFreeRecommendation: false),
+                  );
+              return Container(
+                decoration: AppDecoration.fillGray200,
+                width: size.width,
+                child: Column(
+                  children: [
+                    _buildTabBar(cubit, context, interactive: true),
+                    Expanded(
+                      child: TabBarView(
+                        controller: cubit.tabController,
+                        children: [
+                          teaser(),
+                          teaser(),
+                          teaser(),
+                          const ProgramsPage(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
 
@@ -67,6 +82,7 @@ class WorkingOutScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 6),
                             child: DesiresPage(),
                           ),
+                          const ProgramsPage(),
                     ]),
                   )
                 ],
@@ -114,6 +130,9 @@ class WorkingOutScreen extends StatelessWidget {
             ),
             Tab(
               text: 'desires'.tr(),
+            ),
+            Tab(
+              text: 'programs_tab'.tr(),
             ),
           ],
         ),

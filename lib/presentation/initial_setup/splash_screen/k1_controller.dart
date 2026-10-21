@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../onboarding/onboarding_concern.dart';
 import '../onboarding/onboarding_flow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,6 +34,10 @@ import '../../../main.dart';
 // once per install, for any user, registered or not.
 const String _onboardingQuizShownPrefsKey = 'strengths_quiz_onboarding_shown_v1';
 
+// Shown at most once per app launch (the splash route is re-entered after the
+// quiz/paywall, which must not trigger a second showing).
+bool _onboardingShownThisSession = false;
+
 class K1Controller extends GetxController {
   bool loading = false;
   bool wasInit = false;
@@ -60,7 +65,14 @@ class K1Controller extends GetxController {
               final alreadyShownQuiz = prefs.getBool(_onboardingQuizShownPrefsKey) ?? false;
               if (!alreadyShownQuiz) {
                 await prefs.setBool(_onboardingQuizShownPrefsKey, true);
+                _onboardingShownThisSession = true;
                 if (context.mounted) await startOnboardingFlow(context);
+              } else if (!_onboardingShownThisSession && await OnboardingPrefs.concern() == null) {
+                // Nothing chosen yet (closed or skipped earlier): offer the
+                // first step again on this launch — once per launch, until a
+                // concern has been picked at least once.
+                _onboardingShownThisSession = true;
+                if (context.mounted) await startOnboardingFlow(context, repeatLaunch: true);
               } else if (context.mounted) {
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.main, (route) => false);

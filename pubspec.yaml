@@ -134,12 +134,14 @@ flutter:
   assets:
     - assets/
     - assets/translations/
+    - assets/courses/
     - assets/images/
     - assets/images/desires/
 
     - assets/images/pdf/
     - assets/images/recomendations/
     - assets/images/audio_covers/
+    - assets/images/courses/
     - assets/images/event_images/
     - assets/images/quiz/
     - assets/videos/

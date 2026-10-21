@@ -468,7 +468,11 @@ class K20Screen extends GetWidget<K20Controller> {
                         textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                         borderRadius: 12,
                       ),
-                      const FirstStepsChecklist(),
+                      FirstStepsChecklist(
+                        onNoteState: () => Navigator.pushNamed(context, AppRoutes.whatHappened,
+                            arguments: DayEventModel().copyWith(
+                                howDoYouFeel: controller.sliderValue.round(), showInCharts: true)),
+                      ),
                     ],
                   ),
                 ),

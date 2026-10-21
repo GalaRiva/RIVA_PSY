@@ -4,6 +4,8 @@ import '../../../core/db/firebase_firestore/data/repository.dart';
 import '../../../core/models/quiz/strength_trait.dart';
 import '../../../core/user_data/user.dart';
 import '../../../routes/app_routes.dart';
+import '../onboarding/onboarding_concern.dart';
+import '../../recomendation/recomendation_screen/working_out/programs/data/course_repository.dart';
 import 'bridge_screen.dart';
 import 'loading_screen.dart';
 import 'meditation_player_screen.dart';
@@ -103,6 +105,26 @@ Future<void> _showPaywall(BuildContext context, {required StrengthTrait? leading
   );
 }
 
-void _goToApp(BuildContext context) {
+// Onboarding shown again on a later launch (nothing chosen yet) ends here —
+// the quiz and paywall already ran on the first launch.
+Future<void> goToAppAfterOnboarding(BuildContext context) => _goToApp(context);
+
+Future<void> _goToApp(BuildContext context) async {
+  // Someone who said "тяжело с едой" / "после расставания" lands directly on
+  // Обретение -> Программы, where their course is.
+  var courseId = await OnboardingPrefs.courseToOpen();
+  // Courses exist per language (Russian first): don't send someone to an
+  // empty Programs tab.
+  if (courseId != null && await CourseRepository().load(courseId) == null) courseId = null;
+  if (!context.mounted) return;
+  if (courseId != null) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.recommendations,
+      (route) => false,
+      arguments: {'initialTab': 2, 'workingOutTab': 3},
+    );
+    return;
+  }
   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.splashScreen, (route) => false);
 }

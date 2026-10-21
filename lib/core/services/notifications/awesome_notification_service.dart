@@ -341,4 +341,49 @@ class AwesomeNotificationService extends NotificationService {
       ),
     );
   }
+
+  /// A one-off notification at [at] with already-final text (course content
+  /// such as the night-thoughts "box" in the morning). Reuses the 'scheduled'
+  /// channel. [id] is stable so a new schedule replaces the old one.
+  Future<bool> scheduleOneOff({
+    required String idKey,
+    required DateTime at,
+    required String title,
+    required String body,
+    bool askPermission = true,
+  }) async {
+    if (at.isBefore(DateTime.now())) return false;
+    final notifications = AwesomeNotifications();
+    if (!await notifications.isNotificationAllowed()) {
+      if (!askPermission || !await notifications.requestPermissionToSendNotifications()) return false;
+    }
+    final id = idKey.hashCode & 0x7FFFFFFF;
+    await notifications.cancel(id);
+    await notifications.createNotification(
+      schedule: NotificationCalendar(
+        year: at.year,
+        month: at.month,
+        day: at.day,
+        hour: at.hour,
+        minute: at.minute,
+        second: at.second,
+        repeats: false,
+        allowWhileIdle: true,
+      ),
+      content: NotificationContent(
+        id: id,
+        channelKey: 'scheduled',
+        title: title,
+        body: body,
+        wakeUpScreen: true,
+        category: NotificationCategory.Reminder,
+        color: const Color(0xFF2A5C55),
+        notificationLayout: NotificationLayout.BigText,
+      ),
+    );
+    return true;
+  }
+
+  Future<void> cancelOneOff(String idKey) =>
+      AwesomeNotifications().cancel(idKey.hashCode & 0x7FFFFFFF);
 }

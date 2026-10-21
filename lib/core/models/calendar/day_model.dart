@@ -90,7 +90,7 @@ class DayModel extends StatelessWidget{
                       trackWidth: 3)),
               min: 0,
               max: 10,
-              initialValue: dayEventModel!.howDoYouFeel!.toDouble(),
+              initialValue: (dayEventModel!.howDoYouFeel ?? 5).toDouble(),
             ),
           ),
           Container(
