@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Long-press on the app icon: straight to the "urge to write or check"
+         tool of the program, one tap from the home screen. -->
+    <shortcut
+        android:shortcutId="urge"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_urge_short"
+        android:shortcutLongLabel="@string/shortcut_urge_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.riva_psy.app"
+            android:targetClass="com.riva_psy.app.MainActivity">
+            <extra android:name="quick_action" android:value="urge" />
+        </intent>
+    </shortcut>
+</shortcuts>

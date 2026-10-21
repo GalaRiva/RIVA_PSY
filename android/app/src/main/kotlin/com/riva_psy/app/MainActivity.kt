@@ -1,8 +1,11 @@
 package com.riva_psy.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import com.ryanheise.audioservice.AudioServiceFragmentActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 
 // AudioServiceFragmentActivity (not plain FlutterActivity/FlutterFragmentActivity)
 // — required by audio_service (which just_audio_background depends on).
@@ -27,5 +30,28 @@ class MainActivity: AudioServiceFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        pendingQuickAction = intent?.getStringExtra("quick_action")
+    }
+
+    // App-icon shortcut ("Хочется написать или проверить"): the extra is kept
+    // until Dart asks for it once ("take"), so it works from a cold start and
+    // when the app is already open.
+    private var pendingQuickAction: String? = null
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        intent.getStringExtra("quick_action")?.let { pendingQuickAction = it }
+    }
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "riva/quick").setMethodCallHandler { call, result ->
+            if (call.method == "take") {
+                result.success(pendingQuickAction)
+                pendingQuickAction = null
+            } else {
+                result.notImplemented()
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ class ImageConstant {
 
   static String imgHeart = 'assets/images/img_heart.svg';
   static String imgFootprints = 'assets/images/img_footprints.svg';
+  static String imgProgram = 'assets/images/img_program.svg';
 
   static String imgConsultation = 'assets/images/consultation_icon.svg';
 

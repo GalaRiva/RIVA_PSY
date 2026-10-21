@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">listenmebaby71_s_application17</string>
     
+    <string name="shortcut_urge_short">Хочется написать</string>
+    <string name="shortcut_urge_long">Хочется написать или проверить</string>
 </resources>

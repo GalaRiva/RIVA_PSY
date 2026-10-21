@@ -159,3 +159,14 @@ WidgetBuilder? animatedAudioCoverBuilder(String? ruTitle) {
   if (ruTitle == null) return null;
   return animatedAudioCovers[ruTitle.trim()];
 }
+
+// Wide, dark version of a program step's cover (picture on the right, room
+// for white text on the left). Only the course audios have one
+// (assets/images/step_covers/, same file names as audio_covers); anything
+// else falls back to the square cover.
+String? wideStepCover(String? audioCover) {
+  if (audioCover == null) return null;
+  final name = audioCover.split('/').last;
+  if (!name.startsWith('program_')) return audioCover;
+  return 'assets/images/step_covers/$name';
+}

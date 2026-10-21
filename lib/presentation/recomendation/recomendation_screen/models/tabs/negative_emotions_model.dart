@@ -222,6 +222,7 @@ class NegativeEmotionsModel {
         controller: controller,
         height: tabHeight,
         isStandardCheck: item.tag == 'panic' ? false : true,
+        showBreathing: item.tag == 'panic' || item.tag == 'fear2',
       ));
     }
     tabBodies = list;

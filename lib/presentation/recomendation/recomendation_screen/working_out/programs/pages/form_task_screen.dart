@@ -2,14 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/theme/app_colors.dart';
-import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:riva_psy/widgets/custom_pop_button.dart';
 
 import 'package:riva_psy/core/services/notifications/awesome_notification_service.dart';
 
 import '../data/course_progress_store.dart';
 import '../data/course_records.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // Generic form for every course task (chain, rule, emotion map, if-then…).
 // Fields come from the course JSON, so a new task type needs no new code.
@@ -162,36 +161,72 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
     if (t != null) setState(() => _time[f.id] = t);
   }
 
+  Widget _label(CourseField f) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(f.label,
+            style: AppStyle.txtSFProDisplayLight16
+                .copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600, height: 1.25)),
+        if (f.hint.isNotEmpty)
+          Padding(
+            padding: getPadding(top: 3),
+            child: Text(f.hint,
+                style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.4)),
+          ),
+      ],
+    );
+  }
+
   Widget _field(CourseField f) {
-    final label = AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, fontWeight: FontWeight.w600);
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500);
     if (f.type == 'check') {
-      return CheckboxListTile(
-        contentPadding: EdgeInsets.zero,
-        controlAffinity: ListTileControlAffinity.leading,
-        activeColor: ColorConstant.cyan700,
-        value: _check[f.id] ?? false,
-        onChanged: (v) => setState(() => _check[f.id] = v ?? false),
-        title: Text(f.label, style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800)),
+      final on = _check[f.id] ?? false;
+      return SoftCard(
+        padding: getPadding(left: 16, top: 12, right: 12, bottom: 12),
+        onTap: () => setState(() => _check[f.id] = !on),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(f.label,
+                  style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary)),
+            ),
+            Icon(on ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+                color: on ? AppColors.primary : AppColors.textSecondary, size: getSize(26)),
+          ],
+        ),
       );
     }
     if (f.type == 'scale') {
       final v = _scale[f.id] ?? 5;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${f.label}  ${v.round()}', style: label),
-          if (f.hint.isNotEmpty) Text(f.hint, style: small),
-          Slider(
-            value: v,
-            min: 0,
-            max: 10,
-            divisions: 10,
-            activeColor: ColorConstant.cyan700,
-            inactiveColor: ColorConstant.cyan700.withOpacity(0.2),
-            onChanged: (x) => setState(() => _scale[f.id] = x),
-          ),
-        ],
+      return SoftCard(
+        padding: getPadding(left: 16, top: 14, right: 12, bottom: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(child: _label(f)),
+                Text('${v.round()}',
+                    style: AppStyle.txtH1.copyWith(color: AppColors.primary, fontSize: getFontSize(30))),
+              ],
+            ),
+            SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 4,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 9),
+              ),
+              child: Slider(
+                value: v,
+                min: 0,
+                max: 10,
+                divisions: 10,
+                activeColor: AppColors.primary,
+                inactiveColor: AppColors.primary.withOpacity(0.15),
+                onChanged: (x) => setState(() => _scale[f.id] = x),
+              ),
+            ),
+          ],
+        ),
       );
     }
     if (f.type == 'time') {
@@ -199,25 +234,37 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(f.label, style: label),
-          if (f.hint.isNotEmpty) Text(f.hint, style: small),
-          SizedBox(height: getVerticalSize(6)),
+          _label(f),
+          SizedBox(height: getVerticalSize(10)),
           Align(
             alignment: Alignment.centerLeft,
-            child: OutlinedButton(
-              onPressed: () => _pickTime(f),
-              style: OutlinedButton.styleFrom(
-                shape: const StadiumBorder(),
-                side: BorderSide(color: ColorConstant.cyan700.withOpacity(0.5)),
+            child: GestureDetector(
+              onTap: () => _pickTime(f),
+              child: Container(
+                padding: getPadding(left: 18, right: 18, top: 11, bottom: 11),
+                decoration: BoxDecoration(
+                  color: t == null ? Colors.transparent : AppColors.primaryLight,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.45)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.schedule_rounded, size: getSize(18), color: AppColors.primary),
+                    SizedBox(width: getHorizontalSize(8)),
+                    Text(t == null ? 'course_pick_time'.tr() : t.format(context),
+                        style: AppStyle.txtSFProDisplayLight16
+                            .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                  ],
+                ),
               ),
-              child: Text(t == null ? 'course_pick_time'.tr() : t.format(context),
-                  style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.cyan700)),
             ),
           ),
           if (f.notifyBefore != null)
             Padding(
-              padding: getPadding(top: 4),
-              child: Text('course_time_reminder_note'.tr(namedArgs: {'min': '${f.notifyBefore}'}), style: small),
+              padding: getPadding(top: 6),
+              child: Text('course_time_reminder_note'.tr(namedArgs: {'min': '${f.notifyBefore}'}),
+                  style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
             ),
         ],
       );
@@ -226,39 +273,49 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(f.label + (f.optional ? '' : ''), style: label),
-        if (f.hint.isNotEmpty) Text(f.hint, style: small),
-        SizedBox(height: getVerticalSize(6)),
+        _label(f),
+        SizedBox(height: getVerticalSize(10)),
         TextField(
           controller: ctrl,
           minLines: 1,
-          maxLines: 4,
+          maxLines: 5,
+          style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary, height: 1.4),
+          cursorColor: AppColors.primary,
           decoration: InputDecoration(
             filled: true,
-            fillColor: ColorConstant.grayLight,
-            contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+            fillColor: AppColors.surface,
+            contentPadding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.divider)),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.primary, width: 1.4)),
           ),
         ),
         if (f.chips.isNotEmpty)
           Padding(
-            padding: getPadding(top: 6),
+            padding: getPadding(top: 10),
             child: Wrap(
-              spacing: 6,
-              runSpacing: 0,
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 for (final c in f.chips)
-                  ActionChip(
-                    label: Text(c, style: AppStyle.txtSFProDisplayRegular11),
-                    backgroundColor: Colors.white,
-                    side: BorderSide(color: ColorConstant.cyan700.withOpacity(0.25)),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       final cur = ctrl.text.trim();
                       ctrl.text = cur.isEmpty ? c : '$cur, $c';
                       ctrl.selection = TextSelection.collapsed(offset: ctrl.text.length);
                       setState(() {});
                     },
+                    child: Container(
+                      padding: getPadding(left: 12, right: 12, top: 7, bottom: 7),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLight.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Text(c,
+                          style: AppStyle.txtSFProDisplayRegular11
+                              .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                    ),
                   ),
               ],
             ),
@@ -268,35 +325,46 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+
+  Widget _buildBody(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: getPadding(left: 16, right: 16, top: 12, bottom: 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomPopButton(text: 'back'.tr()),
-              SizedBox(height: getVerticalSize(18)),
-              Text(widget.task.title, style: AppStyle.txtH1),
-              SizedBox(height: getVerticalSize(8)),
-              Text(widget.task.intro,
-                  style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, height: 1.5)),
-              SizedBox(height: getVerticalSize(18)),
-              for (final f in widget.task.fields)
-                Padding(padding: getPadding(bottom: 16), child: _field(f)),
-              SizedBox(height: getVerticalSize(6)),
-              CustomButton(
-                height: getVerticalSize(48),
-                width: double.infinity,
-                text: 'course_save'.tr().toUpperCase(),
-                variant: ButtonVariant.Cyan,
-                fontStyle: ButtonFontStyle.White16,
-                onTap: _saving ? null : _save,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: getPadding(left: 20, right: 20, top: 10, bottom: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RoundIconButton(
+                        icon: Icons.arrow_back_rounded,
+                        onTap: () => Navigator.pop(context),
+                        tooltip: 'back'.tr(),
+                        onImage: false),
+                    SizedBox(height: getVerticalSize(20)),
+                    Text(widget.task.title,
+                        style: AppStyle.txtH1
+                            .copyWith(color: AppColors.textPrimary, fontSize: getFontSize(27), height: 1.15)),
+                    SizedBox(height: getVerticalSize(10)),
+                    Text(widget.task.intro,
+                        style: AppStyle.txtSFProDisplayLight16
+                            .copyWith(color: AppColors.textPrimary.withOpacity(0.75), height: 1.55)),
+                    SizedBox(height: getVerticalSize(24)),
+                    for (final f in widget.task.fields)
+                      Padding(padding: getPadding(bottom: 22), child: _field(f)),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: getPadding(left: 20, right: 20, top: 6, bottom: 16),
+              child: CapsuleButton(label: 'course_save'.tr(), onTap: _saving ? null : _save),
+            ),
+          ],
         ),
       ),
     );

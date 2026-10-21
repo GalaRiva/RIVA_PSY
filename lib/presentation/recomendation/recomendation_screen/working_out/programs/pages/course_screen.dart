@@ -1,21 +1,27 @@
+import 'dart:io' show Platform;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/core/user_data/user.dart';
 import 'package:riva_psy/theme/app_colors.dart';
-import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:riva_psy/widgets/custom_pop_button.dart';
+import 'package:riva_psy/core/utils/audio_cover_map.dart';
+import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/medical_disclaimer.dart';
 
 import 'package:riva_psy/presentation/initial_setup/onboarding/onboarding_concern.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../data/course_progress_store.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 import 'course_audio_player.dart';
 import 'course_insights_screen.dart';
 import 'course_library_screen.dart';
 import 'course_paywall_page.dart';
 import 'course_step_screen.dart';
+import 'course_welcome_screen.dart';
 import 'screening_screen.dart';
 import 'situation_tool_screen.dart';
 
@@ -33,6 +39,9 @@ class CourseScreen extends StatefulWidget {
 
 class _CourseScreenState extends State<CourseScreen> {
   CourseProgress? _progress;
+  bool _introOpen = false;
+  // Android-only tip about the app-icon shortcut, dismissible for good.
+  bool _showShortcutHint = false;
   // The onboarding answer, used to choose which block "today" starts in.
   String? _concernKey;
 
@@ -46,6 +55,12 @@ class _CourseScreenState extends State<CourseScreen> {
 
   Future<void> _init() async {
     _concernKey = (await OnboardingPrefs.concern())?.key;
+    if (Platform.isAndroid) {
+      final prefs = await SharedPreferences.getInstance();
+      if (!(prefs.getBool('shortcut_hint_dismissed_v1') ?? false) && mounted) {
+        setState(() => _showShortcutHint = true);
+      }
+    }
     final p = await CourseProgressStore.load(_c.id);
     if (!mounted) return;
     setState(() => _progress = p);
@@ -59,8 +74,21 @@ class _CourseScreenState extends State<CourseScreen> {
         if (mounted) setState(() {});
       } else {
         Navigator.pop(context);
+        return;
       }
     }
+    await _maybeWelcome();
+  }
+
+  // The short "how it works" pages, once per program.
+  Future<void> _maybeWelcome() async {
+    if (_c.welcome.isEmpty) return;
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'course_welcome_seen_${_c.id}';
+    if (prefs.getBool(key) ?? false) return;
+    await prefs.setBool(key, true);
+    if (!mounted) return;
+    await Navigator.push(context, MaterialPageRoute(builder: (_) => CourseWelcomeScreen(course: _c)));
   }
 
   Future<void> _reload() async {
@@ -153,155 +181,329 @@ class _CourseScreenState extends State<CourseScreen> {
     if (mounted) setState(() => _progress = fresh);
   }
 
-  Widget _stateChip(CourseStepState s, bool locked) {
-    String? key;
-    if (locked) {
-      return Icon(Icons.lock_outline_rounded, size: getSize(16), color: ColorConstant.gray500);
+  IconData _toolIcon(String id) {
+    switch (id) {
+      case 'contact':
+      case 'urge':
+        return Icons.spa_outlined;
+      case 'after_contact':
+        return Icons.refresh_rounded;
+      case 'evening_plan':
+      case 'evening':
+        return Icons.nights_stay_outlined;
+      case 'meeting':
+        return Icons.people_outline_rounded;
+      case 'direct_result':
+        return Icons.chat_bubble_outline_rounded;
+      default:
+        return Icons.self_improvement_rounded;
     }
-    if (s.complete) {
-      key = 'course_state_done';
-    } else if (s.started) {
-      key = 'course_state_started';
-    }
-    if (key == null) return const SizedBox.shrink();
-    return Text(key.tr(),
-        style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.cyan700));
   }
 
+  String _label(CourseStep step) => step.number == null ? step.title : '${step.number}. ${step.title}';
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+
+  Widget _buildBody(BuildContext context) {
     final p = _progress;
-    final body = AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, height: 1.5);
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500, height: 1.4);
+    if (p == null || (!p.screened && _c.screening.isNotEmpty)) {
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    final body = AppStyle.txtSFProDisplayLight16.copyWith(color: courseSoft(false), height: 1.55);
+    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.45);
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: p == null || (!p.screened && _c.screening.isNotEmpty)
-            ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                padding: getPadding(left: 16, right: 16, top: 12, bottom: 28),
+      // The program lives inside Рекомендации, but the course is a pushed
+      // page: the app's bottom menu is shown here so there is always a way
+      // to another section or the home screen.
+      bottomNavigationBar: CustomBottomBar(),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CoverHeader(
+              coverAsset: _c.cover,
+              height: 250,
+              leftScrim: true,
+              onBack: () => Navigator.pop(context),
+              actions: [
+                PopupMenuButton<String>(
+                  tooltip: 'course_more'.tr(),
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  icon: Container(
+                    width: getSize(40),
+                    height: getSize(40),
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withOpacity(0.28)),
+                    child: Icon(Icons.more_horiz_rounded, color: Colors.white, size: getSize(22)),
+                  ),
+                  onSelected: (v) async {
+                    if (v == 'round') {
+                      _newRound();
+                    } else {
+                      final ok = await Navigator.push<bool>(
+                          context, MaterialPageRoute(builder: (_) => ScreeningScreen(course: _c)));
+                      if (ok == true) _reload();
+                    }
+                  },
+                  itemBuilder: (_) => [
+                    PopupMenuItem(value: 'round', child: Text('course_new_round'.tr())),
+                    PopupMenuItem(value: 'screen', child: Text('course_rescreen'.tr())),
+                  ],
+                ),
+              ],
+              // Text stays in the left ~60%: the bubble on the right is never covered.
+              child: FractionallySizedBox(
+                widthFactor: 0.6,
+                alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    CustomPopButton(text: 'gaining'.tr()),
-                    SizedBox(height: getVerticalSize(14)),
-                    if (_c.cover != null)
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(18),
-                        child: Image.asset(_c.cover!, height: getVerticalSize(150), width: double.infinity, fit: BoxFit.cover),
-                      ),
-                    SizedBox(height: getVerticalSize(14)),
-                    Text(_c.title, style: AppStyle.txtH1),
-                    SizedBox(height: getVerticalSize(4)),
-                    Text('course_round'.tr(namedArgs: {'n': '${p.round}'}), style: small),
-                    SizedBox(height: getVerticalSize(10)),
-                    Text(_c.intro, style: body),
-                    SizedBox(height: getVerticalSize(10)),
-                    Text(_c.paceNote, style: small),
-                    if (_c.introAudioDocId != null) ...[
-                      SizedBox(height: getVerticalSize(14)),
-                      Text('course_intro_audio'.tr(), style: small.copyWith(color: ColorConstant.cyan700)),
-                      CourseAudioPlayer(
-                          docId: _c.introAudioDocId, listened: false, onListened: () {}, showMark: false),
-                    ],
-                    SizedBox(height: getVerticalSize(18)),
-                    _todayCard(p, body, small),
-                    SizedBox(height: getVerticalSize(18)),
-                    Text('course_my_tools'.tr().toUpperCase(),
-                        style: small.copyWith(color: ColorConstant.cyan700, letterSpacing: 0.5)),
+                    MetaPill('course_round'.tr(namedArgs: {'n': '${p.round}'}), icon: Icons.autorenew_rounded),
                     SizedBox(height: getVerticalSize(8)),
-                    for (final t in _c.tools)
-                      _tile(
-                        title: t.title,
-                        subtitle: t.subtitle,
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => SituationToolScreen(course: _c, tool: t))),
-                      ),
-                    _tile(
-                      title: 'course_dynamics'.tr(),
-                      subtitle: 'course_dynamics_sub'.tr(),
-                      onTap: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => CourseInsightsScreen(course: _c))),
-                    ),
-                    _tile(
-                      title: 'course_my_library'.tr(),
-                      subtitle: '',
-                      onTap: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => CourseLibraryScreen(course: _c))),
-                    ),
-                    SizedBox(height: getVerticalSize(18)),
-                    Text('course_steps_title'.tr().toUpperCase(),
-                        style: small.copyWith(color: ColorConstant.cyan700, letterSpacing: 0.5)),
-                    SizedBox(height: getVerticalSize(8)),
-                    for (final g in _c.groups) ..._groupSection(g, p),
-                    if (_c.freeNote.isNotEmpty && !_isOrion)
-                      Padding(padding: getPadding(top: 4), child: Text(_c.freeNote, style: small)),
-                    SizedBox(height: getVerticalSize(18)),
-                    Center(
-                      child: TextButton(
-                        onPressed: _newRound,
-                        child: Text('course_new_round'.tr(),
-                            style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
-                      ),
-                    ),
-                    Center(
-                      child: TextButton(
-                        onPressed: () async {
-                          final ok = await Navigator.push<bool>(context,
-                              MaterialPageRoute(builder: (_) => ScreeningScreen(course: _c)));
-                          if (ok == true) _reload();
-                        },
-                        child: Text('course_rescreen'.tr(), style: small),
-                      ),
-                    ),
-                    const MedicalDisclaimer(compact: true),
+                    Text(_c.title,
+                        style: AppStyle.txtH1.copyWith(color: Colors.white, fontSize: getFontSize(24), height: 1.15)),
                   ],
                 ),
               ),
+            ),
+            Padding(
+              padding: getPadding(left: 20, right: 20, top: 2, bottom: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedCrossFade(
+                    duration: const Duration(milliseconds: 220),
+                    crossFadeState: _introOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                    firstChild: Text(_c.intro, maxLines: 4, overflow: TextOverflow.ellipsis, style: body),
+                    secondChild: Text(_c.intro, style: body),
+                  ),
+                  GestureDetector(
+                    onTap: () => setState(() => _introOpen = !_introOpen),
+                    behavior: HitTestBehavior.opaque,
+                    child: Padding(
+                      padding: getPadding(top: 6, bottom: 4),
+                      child: Text((_introOpen ? 'course_read_less' : 'course_read_more').tr(),
+                          style: AppStyle.txtSFProDisplayLight14
+                              .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                  if (_introOpen) ...[
+                    SizedBox(height: getVerticalSize(6)),
+                    Text(_c.paceNote, style: small),
+                  ],
+                  if (_c.introAudioDocId != null) ...[
+                    SizedBox(height: getVerticalSize(14)),
+                    CourseAudioPlayer(
+                        docId: _c.introAudioDocId, listened: false, onListened: () {}, showMark: false),
+                  ],
+                  SizedBox(height: getVerticalSize(18)),
+                  _todayCard(p),
+                  SizedBox(height: getVerticalSize(26)),
+                  SectionLabel('course_my_tools'.tr()),
+                  SizedBox(height: getVerticalSize(12)),
+                  SizedBox(
+                    height: getVerticalSize(118),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      itemCount: _c.tools.length,
+                      separatorBuilder: (_, __) => SizedBox(width: getHorizontalSize(10)),
+                      itemBuilder: (_, i) => _toolCard(_c.tools[i]),
+                    ),
+                  ),
+                  if (_showShortcutHint && _c.tools.any((t) => t.id == 'contact'))
+                    Padding(
+                      padding: getPadding(top: 12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.touch_app_rounded, size: getSize(16), color: AppColors.textSecondary),
+                          SizedBox(width: getHorizontalSize(8)),
+                          Expanded(
+                            child: Text('course_shortcut_hint'.tr(),
+                                style: AppStyle.txtSFProDisplayRegular11
+                                    .copyWith(color: AppColors.textSecondary, height: 1.45)),
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () async {
+                              final prefs = await SharedPreferences.getInstance();
+                              await prefs.setBool('shortcut_hint_dismissed_v1', true);
+                              if (mounted) setState(() => _showShortcutHint = false);
+                            },
+                            child: Padding(
+                              padding: getPadding(left: 8, top: 0, bottom: 4),
+                              child: Icon(Icons.close_rounded, size: getSize(16), color: AppColors.textSecondary),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  SizedBox(height: getVerticalSize(18)),
+                  SoftCard(
+                    padding: EdgeInsets.zero,
+                    child: Column(
+                      children: [
+                        _row(
+                          icon: Icons.show_chart_rounded,
+                          title: 'course_dynamics'.tr(),
+                          subtitle: 'course_dynamics_sub'.tr(),
+                          onTap: () => Navigator.push(
+                              context, MaterialPageRoute(builder: (_) => CourseInsightsScreen(course: _c))),
+                        ),
+                        Divider(height: 1, color: AppColors.divider, indent: getHorizontalSize(64)),
+                        _row(
+                          icon: Icons.bookmark_border_rounded,
+                          title: 'course_my_library'.tr(),
+                          subtitle: '',
+                          onTap: () => Navigator.push(
+                              context, MaterialPageRoute(builder: (_) => CourseLibraryScreen(course: _c))),
+                        ),
+                      ],
+                    ),
+                  ),
+                  for (final g in _c.groups) ..._groupSection(g, p, small),
+                  if (_c.freeNote.isNotEmpty && !_isOrion)
+                    Padding(padding: getPadding(top: 6), child: Text(_c.freeNote, style: small)),
+                  const MedicalDisclaimer(compact: true),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _todayCard(CourseProgress p, TextStyle body, TextStyle small) {
+  Widget _row({required IconData icon, required String title, required String subtitle, required VoidCallback onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: getPadding(left: 16, top: 14, right: 12, bottom: 14),
+        child: Row(
+          children: [
+            Container(
+              width: getSize(34),
+              height: getSize(34),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLight),
+              child: Icon(icon, size: getSize(18), color: AppColors.primary),
+            ),
+            SizedBox(width: getHorizontalSize(14)),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: AppStyle.txtSFProDisplayLight16
+                          .copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+                  if (subtitle.isNotEmpty)
+                    Text(subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _toolCard(CourseTool t) {
+    return SizedBox(
+      width: getHorizontalSize(148),
+      child: SoftCard(
+        padding: getPadding(left: 14, top: 14, right: 12, bottom: 12),
+        onTap: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => SituationToolScreen(course: _c, tool: t))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: getSize(34),
+              height: getSize(34),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLight),
+              child: Icon(_toolIcon(t.id), size: getSize(18), color: AppColors.primary),
+            ),
+            Text(t.title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: AppStyle.txtSFProDisplayLight14
+                    .copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600, height: 1.25)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _todayCard(CourseProgress p) {
     final next = _nextIndex();
     final last = _lastStartedIndex();
+    final step = next == null ? null : _c.steps[next];
+    final cover = step == null ? null : audioCoverAsset(step.title);
     return Container(
       width: double.infinity,
-      padding: getPadding(left: 16, top: 16, right: 16, bottom: 16),
+      padding: getPadding(left: 18, top: 18, right: 18, bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: ColorConstant.cyan700.withOpacity(0.4), width: 1.2),
+        color: AppColors.primaryLight,
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('course_today'.tr().toUpperCase(),
-              style: small.copyWith(color: ColorConstant.cyan700, letterSpacing: 0.6)),
-          SizedBox(height: getVerticalSize(6)),
-          if (next != null) ...[
-            Text(_label(_c.steps[next]),
-                style: body.copyWith(fontWeight: FontWeight.w600)),
-            SizedBox(height: getVerticalSize(2)),
-            Text('≈ ${_c.steps[next].minutes} ${'course_min'.tr()}', style: small),
-            SizedBox(height: getVerticalSize(12)),
-            CustomButton(
-              height: getVerticalSize(46),
-              width: double.infinity,
-              text: 'course_open_step'.tr().toUpperCase(),
-              variant: ButtonVariant.Cyan,
-              fontStyle: ButtonFontStyle.White16,
-              onTap: () => _openStep(next),
+          SectionLabel('course_today'.tr()),
+          SizedBox(height: getVerticalSize(10)),
+          if (step != null) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_label(step),
+                          style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary, height: 1.2)),
+                      SizedBox(height: getVerticalSize(4)),
+                      Text('≈ ${step.minutes} ${'course_min'.tr()}',
+                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                    ],
+                  ),
+                ),
+                if (cover != null)
+                  Padding(
+                    padding: getPadding(left: 12),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(cover, width: getSize(64), height: getSize(64), fit: BoxFit.cover),
+                    ),
+                  ),
+              ],
             ),
+            SizedBox(height: getVerticalSize(16)),
+            CapsuleButton(label: 'course_open_step'.tr(), onTap: () => _openStep(next!)),
           ] else
-            Text('course_all_done'.tr(), style: body),
+            Text('course_all_done'.tr(),
+                style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary, height: 1.5)),
           if (last != null && last != next)
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
                 onPressed: () => _openStep(last),
+                style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 36)),
                 child: Text('course_repeat_prev'.tr(),
-                    style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700)),
+                    style: AppStyle.txtSFProDisplayLight14
+                        .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
               ),
             ),
         ],
@@ -309,68 +511,102 @@ class _CourseScreenState extends State<CourseScreen> {
     );
   }
 
-  String _label(CourseStep step) => step.number == null ? step.title : '${step.number}. ${step.title}';
-
   // A named block of steps (the support blocks have no numbers).
-  List<Widget> _groupSection(CourseGroup g, CourseProgress p) {
+  List<Widget> _groupSection(CourseGroup g, CourseProgress p, TextStyle small) {
     final idx = [for (var i = 0; i < _c.steps.length; i++) if (_c.steps[i].groupId == g.id) i];
     if (idx.isEmpty) return const [];
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500, height: 1.4);
     return [
-      if (g.title.isNotEmpty) ...[
-        SizedBox(height: getVerticalSize(8)),
-        Text(g.title,
-            style: AppStyle.txtSFProDisplayLight16
-                .copyWith(color: ColorConstant.gray800, fontWeight: FontWeight.w700)),
-        if (g.subtitle.isNotEmpty) Padding(padding: getPadding(top: 2, bottom: 8), child: Text(g.subtitle, style: small)),
-      ],
+      SizedBox(height: getVerticalSize(28)),
+      if (g.title.isNotEmpty)
+        Text(g.title, style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary))
+      else
+        SectionLabel('course_steps_title'.tr()),
+      if (g.subtitle.isNotEmpty)
+        Padding(padding: getPadding(top: 4), child: Text(g.subtitle, style: small)),
+      SizedBox(height: getVerticalSize(12)),
       for (final i in idx) _stepTile(i, p),
     ];
   }
 
   Widget _stepTile(int i, CourseProgress p) {
     final step = _c.steps[i];
+    final state = p.step(step.id);
     final locked = !step.free && !_isOrion;
-    return _tile(
-      title: _label(step),
-      subtitle: '≈ ${step.minutes} ${'course_min'.tr()}',
-      trailing: _stateChip(p.step(step.id), locked),
-      onTap: () => _openStep(i),
+    final cover = audioCoverAsset(step.title);
+    final meta = StringBuffer('≈ ${step.minutes} ${'course_min'.tr()}');
+    if (state.complete) {
+      meta.write(' · ${'course_state_done'.tr()}');
+    } else if (state.started) {
+      meta.write(' · ${'course_state_started'.tr()}');
+    }
+    Widget thumb = ClipRRect(
+      borderRadius: BorderRadius.circular(14),
+      child: cover != null
+          ? Image.asset(cover, width: getSize(54), height: getSize(54), fit: BoxFit.cover)
+          : Container(
+              width: getSize(54),
+              height: getSize(54),
+              color: AppColors.primaryLight,
+              child: Icon(Icons.headphones_rounded, color: AppColors.primary)),
     );
-  }
-
-  Widget _tile({required String title, required String subtitle, VoidCallback? onTap, Widget? trailing}) {
+    if (locked) {
+      thumb = Opacity(opacity: 0.55, child: thumb);
+    }
     return Padding(
       padding: getPadding(bottom: 10),
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          width: double.infinity,
-          padding: getPadding(left: 16, top: 13, right: 12, bottom: 13),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: ColorConstant.cyan700.withOpacity(0.18)),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: AppStyle.txtSFProDisplayLight16
-                            .copyWith(color: ColorConstant.gray800, fontWeight: FontWeight.w600)),
-                    if (subtitle.isNotEmpty)
-                      Text(subtitle,
-                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
-                  ],
-                ),
+      child: SoftCard(
+        padding: getPadding(left: 12, top: 10, right: 14, bottom: 10),
+        onTap: () => _openStep(i),
+        child: Row(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                thumb,
+                if (step.number != null)
+                  Positioned(
+                    left: -4,
+                    top: -4,
+                    child: Container(
+                      width: getSize(22),
+                      height: getSize(22),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: state.complete ? AppColors.primary : Colors.white,
+                        border: Border.all(color: AppColors.primary.withOpacity(0.35)),
+                      ),
+                      child: state.complete
+                          ? Icon(Icons.check_rounded, size: getSize(13), color: Colors.white)
+                          : Text('${step.number}',
+                              style: AppStyle.txtSFProDisplayRegular11
+                                  .copyWith(color: AppColors.primary, fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+              ],
+            ),
+            SizedBox(width: getHorizontalSize(14)),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(step.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyle.txtSFProDisplayLight16.copyWith(
+                          color: locked ? AppColors.textSecondary : AppColors.textPrimary,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2)),
+                  SizedBox(height: getVerticalSize(3)),
+                  Text(meta.toString(),
+                      style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                ],
               ),
-              if (trailing != null) trailing else Icon(Icons.chevron_right_rounded, color: ColorConstant.cyan700),
-            ],
-          ),
+            ),
+            locked
+                ? Icon(Icons.lock_outline_rounded, size: getSize(18), color: AppColors.textSecondary)
+                : Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+          ],
         ),
       ),
     );

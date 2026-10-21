@@ -142,6 +142,7 @@ flutter:
     - assets/images/recomendations/
     - assets/images/audio_covers/
     - assets/images/courses/
+    - assets/images/step_covers/
     - assets/images/event_images/
     - assets/images/quiz/
     - assets/videos/

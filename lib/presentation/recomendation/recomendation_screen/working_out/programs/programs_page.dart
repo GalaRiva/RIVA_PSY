@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
+import 'data/course_progress_store.dart';
 import 'data/course_repository.dart';
 import 'models/course.dart';
 import 'pages/course_screen.dart';
@@ -18,13 +19,24 @@ class ProgramsPage extends StatefulWidget {
 
 class _ProgramsPageState extends State<ProgramsPage> {
   List<Course>? _courses;
+  // course id -> finished numbered steps (shown as a quiet progress line).
+  final Map<String, int> _done = {};
 
   @override
   void initState() {
     super.initState();
     CourseRepository().loadAll().then((c) {
       if (mounted) setState(() => _courses = c);
+      _loadProgress(c);
     });
+  }
+
+  Future<void> _loadProgress(List<Course> courses) async {
+    for (final c in courses) {
+      final p = await CourseProgressStore.load(c.id);
+      final done = c.steps.where((s) => s.number != null && p.step(s.id).complete).length;
+      if (mounted) setState(() => _done[c.id] = done);
+    }
   }
 
   @override
@@ -51,8 +63,11 @@ class _ProgramsPageState extends State<ProgramsPage> {
                 padding: getPadding(bottom: 12),
                 child: _CourseCard(
                   course: c,
-                  onTap: () =>
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => CourseScreen(course: c))),
+                  done: _done[c.id] ?? 0,
+                  onTap: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (_) => CourseScreen(course: c)));
+                    _loadProgress(courses);
+                  },
                 ),
               ),
         ],
@@ -65,8 +80,10 @@ class _ProgramsPageState extends State<ProgramsPage> {
 // a soft dark scrim keeps the white text legible.
 class _CourseCard extends StatelessWidget {
   final Course course;
+  final int done;
   final VoidCallback onTap;
-  const _CourseCard({Key? key, required this.course, required this.onTap}) : super(key: key);
+  const _CourseCard({Key? key, required this.course, required this.done, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +124,15 @@ class _CourseCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                  // The cover is a bubble on the right: only the left part (where
+                  // the text sits) is darkened, so the whole bubble stays bright.
                   DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.black.withOpacity(0.0), Colors.black.withOpacity(0.7)],
-                        stops: const [0.2, 1.0],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Colors.black.withOpacity(0.62), Colors.black.withOpacity(0.0)],
+                        stops: const [0.0, 0.62],
                       ),
                     ),
                   ),
@@ -125,13 +144,40 @@ class _CourseCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
+                            flex: 11,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('course_steps_count'.tr(namedArgs: {'count': '${course.steps.length}'}),
-                                    style: AppStyle.txtSFProDisplayRegular11
-                                        .copyWith(color: Colors.white.withOpacity(0.8), letterSpacing: 0.4)),
+                                Builder(builder: (_) {
+                                  final total = course.steps.where((s) => s.number != null).length;
+                                  if (done > 0 && total > 0) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('course_progress_of'.tr(namedArgs: {'done': '$done', 'total': '$total'}),
+                                            style: AppStyle.txtSFProDisplayRegular11
+                                                .copyWith(color: Colors.white.withOpacity(0.85), letterSpacing: 0.4)),
+                                        SizedBox(height: getVerticalSize(5)),
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(2),
+                                          child: SizedBox(
+                                            width: getHorizontalSize(120),
+                                            height: 3,
+                                            child: LinearProgressIndicator(
+                                              value: (done / total).clamp(0.0, 1.0),
+                                              backgroundColor: Colors.white.withOpacity(0.25),
+                                              valueColor: const AlwaysStoppedAnimation(Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return Text('course_steps_count'.tr(namedArgs: {'count': '${course.steps.length}'}),
+                                      style: AppStyle.txtSFProDisplayRegular11
+                                          .copyWith(color: Colors.white.withOpacity(0.8), letterSpacing: 0.4));
+                                }),
                                 SizedBox(height: getVerticalSize(4)),
                                 Text(course.title,
                                     maxLines: 2,
@@ -147,6 +193,7 @@ class _CourseCard extends StatelessWidget {
                               ],
                             ),
                           ),
+                          const Spacer(flex: 8),
                           Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.9)),
                         ],
                       ),

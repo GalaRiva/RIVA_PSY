@@ -4,10 +4,10 @@ import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/presentation/settings/help_now_screen/help_now_screen.dart';
 import 'package:riva_psy/theme/app_colors.dart';
 import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:riva_psy/widgets/custom_pop_button.dart';
 import 'package:riva_psy/widgets/helpline_link.dart';
 
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // Short, non-diagnostic safety questions before a course. Answers are not
 // stored anywhere — they only decide the route:
@@ -47,7 +47,9 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+
+  Widget _buildBody(BuildContext context) {
     final body = AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, height: 1.5);
     if (_showSpecialist) {
       return Scaffold(

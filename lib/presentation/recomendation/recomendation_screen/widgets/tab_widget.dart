@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -20,6 +21,7 @@ import '../models/tabs/medetation_model.dart';
 import '../models/tabs/negative_emotion_tabs/negative_emotions_tab.dart';
 import '../../../../widgets/audio_card_widget.dart';
 import 'post_audio_checkin_sheet.dart';
+import '../working_out/programs/pages/breathing_screen.dart';
 
 import '../../../../../widgets/go_to_new_tariff_widget.dart';
 
@@ -29,12 +31,15 @@ class TabWidget extends StatefulWidget {
   final K70Controller controller;
   final double height;
   final bool? enableScroll;
+  // Panic / Affect tab: a card with the 10-long-exhales breathing guide above
+  // the tracks.
+  final bool showBreathing;
 
   const TabWidget(
       {Key? key,
       required this.tab,
       required this.controller,
-      required this.height, this.enableScroll = true, this.isStandardCheck = true})
+      required this.height, this.enableScroll = true, this.isStandardCheck = true, this.showBreathing = false})
       : super(key: key);
 
   @override
@@ -233,6 +238,11 @@ class _TabWidgetState extends State<TabWidget> {
                               ),
                           ),
                         ),
+                        if (widget.showBreathing)
+                          Padding(
+                            padding: getPadding(left: 16, right: 16, top: 20),
+                            child: _BreathingCard(),
+                          ),
                         Visibility(
                           // `tab.audioAssets()` returns a Future, which is
                           // never null — this check always evaluated true,
@@ -317,6 +327,52 @@ class _TabWidgetState extends State<TabWidget> {
                   ),
               ],
             ),
+      ),
+    );
+  }
+}
+
+// Entry to the standalone breathing guide, styled like the calm cards of the
+// Programs section (white surface, soft shadow, capsule button).
+class _BreathingCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BreathingScreen())),
+      child: Container(
+        width: double.infinity,
+        padding: getPadding(left: 16, top: 16, right: 16, bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [BoxShadow(color: const Color(0xFF2A5C55).withOpacity(0.08), blurRadius: 18, offset: const Offset(0, 6))],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: getSize(48),
+              height: getSize(48),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: const Color(0xFFE4EFEA)),
+              child: Icon(Icons.air_rounded, color: const Color(0xFF2A5C55), size: getSize(26)),
+            ),
+            SizedBox(width: getHorizontalSize(14)),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('breathing_card_title'.tr(),
+                      style: AppStyle.txtSFProDisplayLight16.copyWith(
+                          color: const Color(0xFF1A1C1E), fontWeight: FontWeight.w600, height: 1.2)),
+                  SizedBox(height: getVerticalSize(3)),
+                  Text('breathing_card_sub'.tr(),
+                      style: AppStyle.txtSFProDisplayRegular11
+                          .copyWith(color: const Color(0xFF7A8287), height: 1.35)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right_rounded, color: const Color(0xFF7A8287)),
+          ],
+        ),
       ),
     );
   }

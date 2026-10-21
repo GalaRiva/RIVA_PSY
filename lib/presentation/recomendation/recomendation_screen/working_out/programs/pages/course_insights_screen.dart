@@ -3,12 +3,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/theme/app_colors.dart';
-import 'package:riva_psy/widgets/custom_button.dart';
-import 'package:riva_psy/widgets/custom_pop_button.dart';
 
 import '../data/course_progress_store.dart';
 import '../data/course_records.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // "Моя динамика": three quiet, purely descriptive views of the person's own
 // entries — a weekly check-in with a small chart, the things that repeat in
@@ -92,27 +91,45 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _title('course_dyn_week'),
-        for (final q in qs) ...[
-          Text('${q.label}  ${(_weekly[q.id] ?? 5).round()}',
-              style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
-          Slider(
-            value: _weekly[q.id] ?? 5,
-            min: 0,
-            max: 10,
-            divisions: 10,
-            activeColor: ColorConstant.cyan700,
-            inactiveColor: ColorConstant.cyan700.withOpacity(0.2),
-            onChanged: (v) => setState(() => _weekly[q.id] = v),
+        for (final q in qs)
+          Padding(
+            padding: getPadding(bottom: 10),
+            child: SoftCard(
+              padding: getPadding(left: 16, top: 12, right: 12, bottom: 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(q.label,
+                            style: AppStyle.txtSFProDisplayLight14
+                                .copyWith(color: AppColors.textPrimary, height: 1.35)),
+                      ),
+                      SizedBox(width: getHorizontalSize(10)),
+                      Text('${(_weekly[q.id] ?? 5).round()}',
+                          style: AppStyle.txtH1.copyWith(color: AppColors.primary, fontSize: getFontSize(26))),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        trackHeight: 4, thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8)),
+                    child: Slider(
+                      value: _weekly[q.id] ?? 5,
+                      min: 0,
+                      max: 10,
+                      divisions: 10,
+                      activeColor: AppColors.primary,
+                      inactiveColor: AppColors.primary.withOpacity(0.15),
+                      onChanged: (v) => setState(() => _weekly[q.id] = v),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
-        CustomButton(
-          height: getVerticalSize(44),
-          width: double.infinity,
-          text: 'course_save'.tr().toUpperCase(),
-          variant: ButtonVariant.Cyan,
-          fontStyle: ButtonFontStyle.White16,
-          onTap: _saving ? null : _saveWeekly,
-        ),
+        SizedBox(height: getVerticalSize(4)),
+        CapsuleButton(label: 'course_save'.tr(), onTap: _saving ? null : _saveWeekly),
         SizedBox(height: getVerticalSize(12)),
         if (last.length < 2)
           Text('course_dyn_chart_hint'.tr(), style: small)
@@ -299,21 +316,29 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+
+  Widget _buildBody(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: getPadding(left: 16, right: 16, top: 12, bottom: 28),
+          padding: getPadding(left: 20, right: 20, top: 10, bottom: 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomPopButton(text: 'back'.tr()),
-              SizedBox(height: getVerticalSize(18)),
-              Text('course_dynamics'.tr(), style: AppStyle.txtH1),
-              SizedBox(height: getVerticalSize(6)),
+              RoundIconButton(
+                  icon: Icons.arrow_back_rounded,
+                  onTap: () => Navigator.pop(context),
+                  tooltip: 'back'.tr(),
+                  onImage: false),
+              SizedBox(height: getVerticalSize(20)),
+              Text('course_dynamics'.tr(),
+                  style: AppStyle.txtH1.copyWith(color: AppColors.textPrimary, fontSize: getFontSize(27))),
+              SizedBox(height: getVerticalSize(8)),
               Text('course_dyn_intro'.tr(),
-                  style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, height: 1.5)),
+                  style: AppStyle.txtSFProDisplayLight16
+                      .copyWith(color: AppColors.textPrimary.withOpacity(0.75), height: 1.55)),
               _weeklySection(),
               _triggersSection(),
               _waveSection(),

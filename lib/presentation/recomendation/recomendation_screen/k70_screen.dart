@@ -185,7 +185,19 @@ class _K70ScreenState extends State<K70Screen> with TickerProviderStateMixin {
         // simpler and lower-risk than per-stage immersive mode for that
         // section (see PROJECT_CONTEXT.md for why that approach was
         // reverted there).
-        bottomNavigationBar: (controller.immersiveMode || controller.activeTopLevelTab == 2) ? null : CustomBottomBar(),
+        // "Обретение" hides the bottom nav — except its "Программы" sub-tab,
+        // which is a hub people must be able to leave (to another section or
+        // the home screen).
+        bottomNavigationBar: Builder(builder: (ctx) {
+          if (controller.immersiveMode) return const SizedBox.shrink();
+          if (controller.activeTopLevelTab != 2) return CustomBottomBar();
+          final tc = ctx.read<WorkingOutCubit>().tabController;
+          if (tc == null) return const SizedBox.shrink();
+          return AnimatedBuilder(
+            animation: tc,
+            builder: (_, __) => tc.index == 3 ? CustomBottomBar() : const SizedBox.shrink(),
+          );
+        }),
       )),
     );
   }

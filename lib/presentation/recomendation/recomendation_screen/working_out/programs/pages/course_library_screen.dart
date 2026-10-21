@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/theme/app_colors.dart';
-import 'package:riva_psy/widgets/custom_pop_button.dart';
 
 import '../data/course_plan_pdf.dart';
 import '../data/course_progress_store.dart';
 import 'chain_visual.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // "Моя библиотека": everything the person wrote in the course tasks, newest
 // first, grouped by round in the card's subtitle. Stays on the phone.
@@ -113,63 +113,71 @@ class _CourseLibraryScreenState extends State<CourseLibraryScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+
+  Widget _buildBody(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
-          padding: getPadding(left: 16, right: 16, top: 12, bottom: 12),
+          padding: getPadding(left: 20, right: 20, top: 10, bottom: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomPopButton(text: 'back'.tr()),
-              SizedBox(height: getVerticalSize(18)),
-              Text('course_my_library'.tr(), style: AppStyle.txtH1),
-              SizedBox(height: getVerticalSize(12)),
+              RoundIconButton(
+                  icon: Icons.arrow_back_rounded,
+                  onTap: () => Navigator.pop(context),
+                  tooltip: 'back'.tr(),
+                  onImage: false),
+              SizedBox(height: getVerticalSize(20)),
+              Text('course_my_library'.tr(),
+                  style: AppStyle.txtH1.copyWith(color: AppColors.textPrimary, fontSize: getFontSize(27))),
+              SizedBox(height: getVerticalSize(14)),
               if (_loaded && _cards.isEmpty)
                 Text('course_library_empty'.tr(),
-                    style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800, height: 1.5)),
+                    style: AppStyle.txtSFProDisplayLight16
+                        .copyWith(color: AppColors.textPrimary.withOpacity(0.75), height: 1.55)),
               if (_hasPlan)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton.icon(
-                    onPressed: () => CoursePlanPdf.share(widget.course,
+                Padding(
+                  padding: getPadding(bottom: 14),
+                  child: CapsuleButton(
+                    outlined: true,
+                    icon: Icons.picture_as_pdf_rounded,
+                    label: 'course_pdf_button'.tr(),
+                    onTap: () => CoursePlanPdf.share(widget.course,
                         footer: 'course_pdf_footer'.tr(), title: 'course_pdf_title'.tr()),
-                    icon: Icon(Icons.picture_as_pdf_rounded, color: ColorConstant.cyan700, size: getSize(18)),
-                    label: Text('course_pdf_button'.tr(),
-                        style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700)),
                   ),
                 ),
               Expanded(
                 child: ListView(
+                  padding: getPadding(bottom: 12),
                   children: [
                     for (final c in _cards)
                       Padding(
                         padding: getPadding(bottom: 10),
-                        child: GestureDetector(
+                        child: SoftCard(
                           onTap: () => _open(c),
-                          child: Container(
-                            width: double.infinity,
-                            padding: getPadding(left: 16, top: 14, right: 16, bottom: 14),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: ColorConstant.cyan700.withOpacity(0.2)),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(_taskFor(c.cardType)?.title ?? c.cardType,
-                                    style: AppStyle.txtSFProDisplayLight16.copyWith(
-                                        color: ColorConstant.gray800, fontWeight: FontWeight.w600)),
-                                SizedBox(height: getVerticalSize(2)),
-                                Text(
-                                    '${'course_card_round'.tr(namedArgs: {'n': '${c.round}'})} · '
-                                    '${c.createdAt.day.toString().padLeft(2, '0')}.${c.createdAt.month.toString().padLeft(2, '0')}.${c.createdAt.year}',
-                                    style: AppStyle.txtSFProDisplayRegular11
-                                        .copyWith(color: ColorConstant.gray500)),
-                              ],
-                            ),
+                          padding: getPadding(left: 16, top: 14, right: 12, bottom: 14),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(_taskFor(c.cardType)?.title ?? c.cardType,
+                                        style: AppStyle.txtSFProDisplayLight16.copyWith(
+                                            color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+                                    SizedBox(height: getVerticalSize(3)),
+                                    Text(
+                                        '${'course_card_round'.tr(namedArgs: {'n': '${c.round}'})} · '
+                                        '${c.createdAt.day.toString().padLeft(2, '0')}.${c.createdAt.month.toString().padLeft(2, '0')}.${c.createdAt.year}',
+                                        style: AppStyle.txtSFProDisplayRegular11
+                                            .copyWith(color: AppColors.textSecondary)),
+                                  ],
+                                ),
+                              ),
+                              Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+                            ],
                           ),
                         ),
                       ),

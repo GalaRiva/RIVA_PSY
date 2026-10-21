@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../../widgets/quick_action_hook.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,6 +101,7 @@ class K20Screen extends GetWidget<K20Controller> {
                       const InsightPopup(),
                       const WelcomeOfferBanner(),
                       const ReengagementHook(),
+                      const QuickActionHook(),
                       const NextStepCard(),
                       const CheckInNudgeCard(),
                       Align(

@@ -1,5 +1,6 @@
 import 'package:riva_psy/core/models/day_event_model.dart';
 import 'package:riva_psy/core/models/event_model.dart';
+import 'package:riva_psy/core/utils/image_constant.dart';
 import 'package:riva_psy/core/models/insight_model.dart';
 import 'package:riva_psy/core/services/insights/insight_engine.dart';
 import 'package:riva_psy/presentation/main/path/path_final_screen/repository.dart';
@@ -47,7 +48,7 @@ class CourseRecords {
       date: DateTime.now(),
       showInCharts: false,
       firstThoughts: '${course.title} · $stepTitle\n\n${lines.join('\n\n')}',
-      whatHappened: EventModel('${course.title} · $stepTitle', ''),
+      whatHappened: EventModel('${course.title} · $stepTitle', ImageConstant.imgProgram),
       whereHappened: EventModel(course.title, ''),
       whoDidItHappen: _blank(),
       whatEmotion: [EventModel(task.title, '')],
@@ -82,7 +83,7 @@ class CourseRecords {
       emotionIntensity: value.clamp(0, 10),
       emotionInDayEvent: kind,
       firstThoughts: [course.title, context, if (note != null) note].join(' · '),
-      whatHappened: EventModel(context, ''),
+      whatHappened: EventModel(context, ImageConstant.imgProgram),
       whereHappened: EventModel(course.title, ''),
       whoDidItHappen: _blank(),
       whatEmotion: [EventModel(record.name, '')],
@@ -96,7 +97,7 @@ class CourseRecords {
       date: DateTime.now(),
       showInCharts: false,
       firstThoughts: '${course.title} · $title\n\n$text',
-      whatHappened: EventModel('${course.title} · $title', ''),
+      whatHappened: EventModel('${course.title} · $title', ImageConstant.imgProgram),
       whereHappened: EventModel(course.title, ''),
       whoDidItHappen: _blank(),
       whatEmotion: [EventModel(title, '')],

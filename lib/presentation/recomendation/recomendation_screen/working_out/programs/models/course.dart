@@ -191,6 +191,15 @@ class ToolButton {
   ToolButton(this.label, this.action);
 }
 
+// A one-field card the person can write (or pick a ready phrase for) right on
+// a tool page, when they have not made it in the course yet.
+class InlineCard {
+  final String field;
+  final String label;
+  final List<String> chips;
+  InlineCard(this.field, this.label, this.chips);
+}
+
 class ToolPage {
   final String title;
   final String body;
@@ -203,6 +212,11 @@ class ToolPage {
   final String? scaleId;
   final String scaleLabel;
   final ScaleRecord? scaleRecord;
+  // Guided breathing circle: seconds in / out and how many breaths.
+  final int? breathIn;
+  final int? breathOut;
+  final int? breathCycles;
+  final InlineCard? inline;
   final List<ToolButton> buttons;
   final bool helpline;
 
@@ -215,6 +229,10 @@ class ToolPage {
     this.scaleId,
     this.scaleLabel = '',
     this.scaleRecord,
+    this.breathIn,
+    this.breathOut,
+    this.breathCycles,
+    this.inline,
     required this.buttons,
     required this.helpline,
   });
@@ -242,6 +260,16 @@ class ScreeningQuestion {
   ScreeningQuestion({required this.id, required this.level, required this.q});
 }
 
+// One page of the short "how this program works" introduction shown once.
+class WelcomePage {
+  final String title;
+  final String body;
+  final String icon;
+  // Shown only on Android (e.g. the app-icon shortcut, which iOS lacks here).
+  final bool androidOnly;
+  WelcomePage(this.title, this.body, this.icon, {this.androidOnly = false});
+}
+
 class Course {
   final String id;
   final int order;
@@ -266,6 +294,7 @@ class Course {
   final int maxNewPerDay;
   // Step offered first when someone answers "worse" after an audio.
   final String? calmStepId;
+  final List<WelcomePage> welcome;
 
   Course({
     required this.id,
@@ -288,6 +317,7 @@ class Course {
     required this.groups,
     required this.maxNewPerDay,
     this.calmStepId,
+    this.welcome = const [],
   });
 
   CourseGroup groupOf(CourseStep step) =>
@@ -341,6 +371,15 @@ class Course {
                 scaleLabel: pm['scale'] == null ? '' : loc((pm['scale'] as Map)['label'], lang),
                 scaleRecord: pm['scale'] == null ? null : ScaleRecord.fromJson((pm['scale'] as Map)['record'], lang),
                 timerMinutes: (pm['timer_minutes'] as num?)?.toInt(),
+                inline: pm['inline'] == null
+                    ? null
+                    : InlineCard(
+                        (pm['inline'] as Map)['field'] as String,
+                        loc((pm['inline'] as Map)['label'], lang),
+                        (((pm['inline'] as Map)['chips'] as List?) ?? []).map((c) => loc(c, lang)).toList()),
+                breathIn: pm['breath'] == null ? null : ((pm['breath'] as Map)['in'] as num?)?.toInt(),
+                breathOut: pm['breath'] == null ? null : ((pm['breath'] as Map)['out'] as num?)?.toInt(),
+                breathCycles: pm['breath'] == null ? null : ((pm['breath'] as Map)['cycles'] as num?)?.toInt(),
                 helpline: (pm['helpline'] as bool?) ?? false,
                 buttons: ((pm['buttons'] as List?) ?? [])
                     .map((b) => ToolButton(loc(b['label'], lang), b['action'] as String))
@@ -367,5 +406,9 @@ class Course {
                 .toList(),
         maxNewPerDay: (j['max_new_per_day'] as num?)?.toInt() ?? 2,
         calmStepId: j['calm_step_id'] as String?,
+        welcome: ((j['welcome'] as List?) ?? [])
+            .map((w) => WelcomePage(loc(w['title'], lang), loc(w['body'], lang), (w['icon'] as String?) ?? 'route',
+                androidOnly: (w['android_only'] as bool?) ?? false))
+            .toList(),
       );
 }
