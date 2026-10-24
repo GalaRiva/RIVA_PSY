@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import '../../initial_setup/onboarding/onboarding_flow.dart';
+import '../sources_screen/sources_screen.dart';
 import '../help_now_screen/help_now_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -166,6 +167,14 @@ class K6Screen extends GetWidget {
                                   context, MaterialPageRoute(builder: (_) => const HelpNowScreen())),
                               title: 'helpline_settings',
                               svgIcon: ImageConstant.imgHeart,
+                              controller: controller,
+                              svgSize: 24,
+                            ),
+                            CardSettingsButtonWidget(
+                              context,
+                              onTap: () => openSourcesScreen(context),
+                              title: 'src_link',
+                              svgIcon: ImageConstant.imgProgram,
                               controller: controller,
                               svgSize: 24,
                             ),

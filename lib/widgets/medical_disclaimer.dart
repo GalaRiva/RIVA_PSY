@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../core/utils/color_constant.dart';
 import '../core/utils/size_utils.dart';
+import '../presentation/settings/sources_screen/sources_screen.dart';
 import 'helpline_link.dart';
 import '../theme/app_style.dart';
 
@@ -17,9 +18,12 @@ class MedicalDisclaimer extends StatelessWidget {
   // SubscriptionTermsDisclosure): next to a pay button it would read as
   // pressure rather than care.
   final bool showHelpline;
+  // "Источники и научная основа" link (Guideline 1.4.1: citations must be
+  // easy to find). On by default everywhere the disclaimer appears.
+  final bool showSources;
 
   const MedicalDisclaimer(
-      {Key? key, this.textColor, this.compact = false, this.showHelpline = true})
+      {Key? key, this.textColor, this.compact = false, this.showHelpline = true, this.showSources = true})
       : super(key: key);
 
   @override
@@ -37,6 +41,20 @@ class MedicalDisclaimer extends StatelessWidget {
         children: [
           text,
           if (showHelpline) HelplineLink(color: color, center: compact),
+          if (showSources)
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => openSourcesScreen(context),
+              child: Padding(
+                padding: getPadding(top: 4, bottom: 4),
+                child: Text(
+                  'src_link'.tr(),
+                  textAlign: compact ? TextAlign.center : TextAlign.left,
+                  style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                      color: color, decoration: TextDecoration.underline, decorationColor: color),
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -528,85 +528,106 @@ class _CourseScreenState extends State<CourseScreen> {
     ];
   }
 
+  // A step as a cover card, like the program cards: the wide dark cover with
+  // the picture on the right, white text on the left.
   Widget _stepTile(int i, CourseProgress p) {
     final step = _c.steps[i];
     final state = p.step(step.id);
     final locked = !step.free && !_isOrion;
-    final cover = audioCoverAsset(step.title);
+    final cover = wideStepCover(audioCoverAsset(step.title));
     final meta = StringBuffer('≈ ${step.minutes} ${'course_min'.tr()}');
     if (state.complete) {
       meta.write(' · ${'course_state_done'.tr()}');
     } else if (state.started) {
       meta.write(' · ${'course_state_started'.tr()}');
     }
-    Widget thumb = ClipRRect(
-      borderRadius: BorderRadius.circular(14),
-      child: cover != null
-          ? Image.asset(cover, width: getSize(54), height: getSize(54), fit: BoxFit.cover)
-          : Container(
-              width: getSize(54),
-              height: getSize(54),
-              color: AppColors.primaryLight,
-              child: Icon(Icons.headphones_rounded, color: AppColors.primary)),
-    );
-    if (locked) {
-      thumb = Opacity(opacity: 0.55, child: thumb);
-    }
+    const white = Colors.white;
     return Padding(
-      padding: getPadding(bottom: 10),
-      child: SoftCard(
-        padding: getPadding(left: 12, top: 10, right: 14, bottom: 10),
-        onTap: () => _openStep(i),
-        child: Row(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                thumb,
-                if (step.number != null)
-                  Positioned(
-                    left: -4,
-                    top: -4,
-                    child: Container(
-                      width: getSize(22),
-                      height: getSize(22),
-                      alignment: Alignment.center,
+      padding: getPadding(bottom: 12),
+      child: Semantics(
+        button: true,
+        label: _label(step),
+        excludeSemantics: true,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: () => _openStep(i),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Container(
+                height: getVerticalSize(104),
+                decoration: BoxDecoration(
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.14), blurRadius: 10, offset: const Offset(0, 4))],
+                ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    if (cover != null)
+                      Image.asset(cover, fit: BoxFit.cover)
+                    else
+                      Container(color: const Color(0xFF16302C)),
+                    DecoratedBox(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: state.complete ? AppColors.primary : Colors.white,
-                        border: Border.all(color: AppColors.primary.withOpacity(0.35)),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.0)],
+                          stops: const [0.0, 0.62],
+                        ),
                       ),
-                      child: state.complete
-                          ? Icon(Icons.check_rounded, size: getSize(13), color: Colors.white)
-                          : Text('${step.number}',
-                              style: AppStyle.txtSFProDisplayRegular11
-                                  .copyWith(color: AppColors.primary, fontWeight: FontWeight.w700)),
                     ),
-                  ),
-              ],
-            ),
-            SizedBox(width: getHorizontalSize(14)),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(step.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppStyle.txtSFProDisplayLight16.copyWith(
-                          color: locked ? AppColors.textSecondary : AppColors.textPrimary,
-                          fontWeight: FontWeight.w600,
-                          height: 1.2)),
-                  SizedBox(height: getVerticalSize(3)),
-                  Text(meta.toString(),
-                      style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
-                ],
+                    if (locked) Container(color: Colors.black.withOpacity(0.28)),
+                    Padding(
+                      padding: getPadding(left: 14, right: 12),
+                      child: Row(
+                        children: [
+                          if (step.number != null)
+                            Container(
+                              width: getSize(28),
+                              height: getSize(28),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: state.complete ? white : Colors.transparent,
+                                border: Border.all(color: white.withOpacity(0.85), width: 1.2),
+                              ),
+                              child: state.complete
+                                  ? Icon(Icons.check_rounded, size: getSize(16), color: AppColors.primary)
+                                  : Text('${step.number}',
+                                      style: AppStyle.txtSFProDisplayRegular11
+                                          .copyWith(color: white, fontWeight: FontWeight.w700)),
+                            ),
+                          if (step.number != null) SizedBox(width: getHorizontalSize(12)),
+                          Expanded(
+                            flex: 11,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(step.title,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppStyle.txtSFProDisplayLight16
+                                        .copyWith(color: white, fontWeight: FontWeight.w600, height: 1.2)),
+                                SizedBox(height: getVerticalSize(4)),
+                                Text(meta.toString(),
+                                    style: AppStyle.txtSFProDisplayRegular11
+                                        .copyWith(color: white.withOpacity(0.82), letterSpacing: 0.3)),
+                              ],
+                            ),
+                          ),
+                          const Spacer(flex: 8),
+                          Icon(locked ? Icons.lock_outline_rounded : Icons.chevron_right_rounded,
+                              color: white.withOpacity(0.9), size: getSize(locked ? 20 : 26)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            locked
-                ? Icon(Icons.lock_outline_rounded, size: getSize(18), color: AppColors.textSecondary)
-                : Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
-          ],
+          ),
         ),
       ),
     );
