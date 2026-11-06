@@ -346,3 +346,20 @@ https://rivapsy.com/tpost/gfm4yo5xf1-depresin-posparto-cundo-acudir-al-mdico
 Замечания: (1) на главных (RU, EN, ES) в блоке «Приватно и прозрачно» фраза «эффективность приложения ещё предстоит изучить» **заменена 2026-11-06** на вариант A («У каждой темы видны источники: на чём она основана и какие у неё границы»); оговорки «Чего приложение не делает» на сценарных страницах и раздел об исследованиях на `/science` оставлены по рекомендации (решение владельца: только главная). (2) Описания части сценарных страниц длиннее 160 знаков (143–185), заголовки хорошие; сокращение по желанию. (3) Разметка статей создаётся скриптом: роботы без выполнения JavaScript её не увидят.
 
 Правка 2026-11-06: на `/science` (RU) в блоке «Исследования самого приложения» добавлено слово «Приложение» («Приложение RIVA PSY пока не оценивалось в опубликованном исследовании»); это не грамматическая ошибка, а смысловая неловкость, смысл не менялся.
+
+## Новые статьи 2026-11-06: адреса для отправки на индексацию
+Google Search Console «Проверка URL-адреса» → «Запросить индексирование», Bing «Проверка URL-адреса», Яндекс «Переобход страниц».
+- Выгорание (RU): https://rivapsy.com/tpost/n43a5usu51-vigoranie-na-rabote-chto-delat-esli-net
+- Выгорание (EN): https://rivapsy.com/tpost/29ybmycvl1-burnout-at-work-what-to-do-when-you-have
+- Выгорание (ES): https://rivapsy.com/tpost/1la8tilt61-burnout-en-el-trabajo-qu-hacer-si-no-tie
+- Паническая атака (RU): https://rivapsy.com/tpost/93ya3t5e31-panicheskaya-ataka-chto-delat-pryamo-sei
+- Паническая атака (EN): https://rivapsy.com/tpost/zoe81g3fi1-panic-attack-what-to-do-right-now-and-wh
+- Паническая атака (ES): https://rivapsy.com/tpost/ia8m51l801-ataque-de-pnico-qu-hacer-ahora-mismo-y-q
+- Написать бывшему (RU): https://rivapsy.com/tpost/lpo0kb3yr1-tyanet-napisat-bivshemu-ili-bivshei-chto
+- Написать бывшему (EN): https://rivapsy.com/tpost/m1e9bjayn1-you-want-to-text-your-ex-what-to-do-in-t
+- Написать бывшему (ES): https://rivapsy.com/tpost/34f9faarx1-te-dan-ganas-de-escribir-a-tu-ex-qu-hace
+- Заедание и вина (RU): https://rivapsy.com/tpost/6shkktxxb1-zaedanie-emotsii-i-chuvstvo-vini-posle-s
+- Заедание и вина (EN): https://rivapsy.com/tpost/72x1hh59p1-emotional-eating-and-guilt-after-a-slip
+- Заедание и вина (ES): https://rivapsy.com/tpost/peeb28bou1-comer-por-las-emociones-y-la-culpa-despu
+
+Лимит Google на ручные запросы небольшой (порядка 10 в сутки): сегодня по одному адресу на тему (RU), остальные в ближайшие дни. Карты `sitemap-feeds.xml` уже содержат все 75 статей.
