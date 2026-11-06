@@ -20,3 +20,13 @@
 | Заедание эмоций и вина («Личность») | ES | peeb28bou1 | https://rivapsy.com/tpost/peeb28bou1-comer-por-las-emociones-y-la-culpa-despu |
 
 SEO-описания 136–154 знака. Ссылки в каждой статье: Google Play (`com.riva_psy.app`), главная страница языка, страница помощи `/crisis` и три соседние статьи блога.
+
+## Обложки (загружены 2026-11-06, статьи остаются скрытыми)
+Одна обложка на тему, общая для RU/EN/ES, с описательным alt-текстом на языке статьи:
+- Выгорание: `riva-psy-psychology-app-fatigue-blurred-glitter.png`
+- Паническая атака: `riva-psy-psychology-app-panic-attack-vortex.png`
+- Желание написать бывшему: `riva-psy-psychology-app-loneliness-distant-light.png`
+- Заедание эмоций и вина: `riva-psy-psychology-app-emotional-eating-and-guilt-cracked-vessel.png`
+
+Tilda при загрузке распознала 4 картинки папки как уже использованные обложки (burnout-at-work-fading-ember, urge-to-text-your-ex-flame, grief-smoldering-path, resilience-ember-fold) и ещё longing-light-beam (по содержимому совпала с `riva_psy_9`), поэтому они не использовались повторно. Tilda обрезает имя файла на CDN до 20 знаков (`riva-psy-psychology-.png`), смысл имени остаётся в alt-тексте.
+
