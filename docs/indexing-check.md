@@ -118,10 +118,10 @@ Sitemap: https://rivapsy.com/sitemap-feeds.xml
 |---|---|---|
 | /test_my_type_of_attachment | Не опубликована, 404 | Ничего (не в карте). Если не нужна, можно удалить |
 | /page69394273.html | «Стили привязанности в отношениях», не опубликована, 404 | Ничего (не в карте) |
-| /partners_type_of_attachment | нет meta description, нет hreflang | Добавить описание (до 160 знаков) на языке страницы; hreflang между тремя версиями SOS |
-| /crisis | нет meta description, нет hreflang | Добавить описание (до 160 знаков) на языке страницы; hreflang между тремя версиями SOS |
-| /es/crisis | нет meta description, нет hreflang | Добавить описание (до 160 знаков) на языке страницы; hreflang между тремя версиями SOS |
-| /en/crisis | нет meta description, нет hreflang | Добавить описание (до 160 знаков) на языке страницы; hreflang между тремя версиями SOS |
+| /partners_type_of_attachment | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
+| /crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
+| /es/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
+| /en/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
 | /support, /soporte, /supporten, /privacy, /privacidad, /privacyen | Нет hreflang между языковыми версиями (описание есть) | Не критично; при желании связать версии hreflang |
 | Все страницы | В `<html>` нет атрибута `lang` | Низкий приоритет: язык определяется по содержимому, на ключевых страницах есть hreflang |
 | www.rivapsy.com | Отдаёт 200 как отдельный сайт (редирект www на основной адрес не включён), http на https перенаправляется правильно | Включить редирект с www в настройках домена (ниже). Пока canonical на страницах защищает от дублей |
@@ -220,7 +220,7 @@ Sitemap: https://rivapsy.com/sitemap-feeds.xml
 4. **Google Search Console:** сайт подтверждён. Добавить карту `sitemap-feeds.xml` (статьи блога) в «Sitemaps», если её там ещё нет.
 5. **Яндекс.Вебмастер не подключён** (Tilda предлагает авторизацию). Где: Настройки сайта → SEO → «Яндекс.Вебмастер».
 6. **Редирект www → без www.** Где: Настройки сайта → «Домен» (или «Ещё» → перенаправления) → включить «Редирект с www на основной адрес».
-7. **Нет meta description на трёх страницах SOS** (`/crisis`, `/es/crisis`, `/en/crisis`). Где: Страница → Настройки → SEO → «Описание». Они важные, их стоит индексировать с понятным описанием.
+7. ~~**Нет meta description на трёх страницах SOS**~~ **Сделано 2026-11-06.** (`/crisis`, `/es/crisis`, `/en/crisis`). Где: Страница → Настройки → SEO → «Описание». Они важные, их стоит индексировать с понятным описанием.
 8. **Спорные страницы в карте** (`/chiwisemagic`, `/payment`, `/partners_type_of_attachment`): Страница → Настройки → «Доступ»/SEO → «Запретить индексацию» (названия могут отличаться); после этого Tilda уберёт страницу из карты сайта.
 
 **Низкая важность**
