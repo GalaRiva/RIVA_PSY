@@ -118,10 +118,10 @@ Sitemap: https://rivapsy.com/sitemap-feeds.xml
 |---|---|---|
 | /test_my_type_of_attachment | Не опубликована, 404 | Ничего (не в карте). Если не нужна, можно удалить |
 | /page69394273.html | «Стили привязанности в отношениях», не опубликована, 404 | Ничего (не в карте) |
-| /partners_type_of_attachment | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
-| /crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
-| /es/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
-| /en/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), нет hreflang | Описание добавлено; осталось связать hreflang между тремя версиями SOS (и поменять title «Crisis», «Crisis ES», «Crisis EN») |
+| /partners_type_of_attachment | ~~нет meta description~~ (**добавлено 2026-11-06**), hreflang добавлен (**2026-11-06**) | Сделано: описание, понятный title (50–63 знака), og-заголовок и hreflang между тремя версиями SOS |
+| /crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), hreflang добавлен (**2026-11-06**) | Сделано: описание, понятный title (50–63 знака), og-заголовок и hreflang между тремя версиями SOS |
+| /es/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), hreflang добавлен (**2026-11-06**) | Сделано: описание, понятный title (50–63 знака), og-заголовок и hreflang между тремя версиями SOS |
+| /en/crisis | ~~нет meta description~~ (**добавлено 2026-11-06**), hreflang добавлен (**2026-11-06**) | Сделано: описание, понятный title (50–63 знака), og-заголовок и hreflang между тремя версиями SOS |
 | /support, /soporte, /supporten, /privacy, /privacidad, /privacyen | Нет hreflang между языковыми версиями (описание есть) | Не критично; при желании связать версии hreflang |
 | Все страницы | В `<html>` нет атрибута `lang` | Низкий приоритет: язык определяется по содержимому, на ключевых страницах есть hreflang |
 | www.rivapsy.com | Отдаёт 200 как отдельный сайт (редирект www на основной адрес не включён), http на https перенаправляется правильно | Включить редирект с www в настройках домена (ниже). Пока canonical на страницах защищает от дублей |
