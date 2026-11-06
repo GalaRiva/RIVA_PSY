@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 
 import '../../main.dart';
 import '../models/tariff_model.dart';
@@ -184,6 +185,16 @@ class AppleBillingService {
         }
       }
     }
+  }
+
+  /// Opens Apple's own "Redeem Offer Code" sheet (App Store offer codes for
+  /// In-App Purchases — the only kind of code allowed to unlock paid access on
+  /// iOS, Guideline 3.1.1). A redeemed code arrives through the normal
+  /// purchase stream and is verified on the server like any other purchase.
+  static Future<void> presentOfferCodeSheet() async {
+    final addition = InAppPurchase.instance
+        .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+    await addition.presentCodeRedemptionSheet();
   }
 
   /// Mirrors GooglePlayBillingService._verifyOnServer: server is the only

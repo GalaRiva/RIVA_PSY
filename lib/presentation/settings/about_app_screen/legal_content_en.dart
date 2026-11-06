@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'drop_text_model.dart';
 
 // Verbatim from rivapsy.com/privacyen, fetched 2026-08-02. Mirrors only
@@ -26,7 +28,7 @@ If you are experiencing a mental health emergency or having thoughts of self-har
         '''To access certain features, the User must create an account by providing a username and email address, or authenticate via Google or Apple. The User warrants that the information provided is accurate and undertakes to keep it up to date.'''
       ]),
       DropTextModel('6. Subscriptions and Payments', <String>[
-        '''Full access to certain features (including the "Обретение" module and advanced content) requires a paid subscription. Subscriptions are purchased and paid for through our website (rivapsy.com), via an external payment provider. RIVA does not process or store full financial data (see our Privacy Policy).'''
+        (Platform.isIOS ? '''Full access to certain features (including the "Обретение" module and advanced content) requires a paid subscription. In the iOS app, subscriptions are purchased and paid for through the App Store (Apple In-App Purchase) and managed in your Apple ID settings. RIVA does not process or store payment data (see our Privacy Policy).''' : '''Full access to certain features (including the "Обретение" module and advanced content) requires a paid subscription. Subscriptions are purchased and paid for through our website (rivapsy.com), via an external payment provider. RIVA does not process or store full financial data (see our Privacy Policy).''')
       ]),
       DropTextModel('7. Prohibited Use', <String>[
         '''The User agrees not to:
@@ -183,9 +185,11 @@ does not allow access to, viewing, modification, or deletion of any other files 
 
 RIVA does not perform automatic or scheduled backups without User action. The User is responsible for managing and retaining their own backups.
 
-9.5 Payments (processed via the website)
+''' + (Platform.isIOS ? '''9.5 Payments (App Store)
 
-Paid subscriptions are purchased and processed through our website (rivapsy.com), via a specialized external payment provider (currently being integrated). RIVA does not collect or store full card numbers, CVV/CVC codes, or financial credentials. RIVA only receives information about payment status, transaction ID, and payment date, in order to activate the corresponding access on the User's account.'''
+In the iOS app, paid subscriptions are purchased and processed through the App Store (Apple In-App Purchase). Apple processes the payment: RIVA does not collect or store card numbers, CVV/CVC codes, or financial credentials. RIVA only receives from Apple information about the subscription status, transaction ID and dates, in order to activate the corresponding access on the User's account.''' : '''9.5 Payments (processed via the website)
+
+Paid subscriptions are purchased and processed through our website (rivapsy.com), via a specialized external payment provider (currently being integrated). RIVA does not collect or store full card numbers, CVV/CVC codes, or financial credentials. RIVA only receives information about payment status, transaction ID, and payment date, in order to activate the corresponding access on the User's account.''')
       ]),
       DropTextModel('10. International Data Transfers', <String>[
         '''Some technology providers may process data outside the European Economic Area (EEA), including the United States. Where this occurs, RIVA will implement safeguards equivalent to those required by the GDPR (adequacy decisions, Standard Contractual Clauses, and/or additional technical measures including encryption where appropriate).'''

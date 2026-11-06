@@ -142,6 +142,9 @@ const Map<String, String> audioCoverAssets = {
   'Ревность и сравнение': 'assets/images/audio_covers/program_return_jealousy.jpg',
   'Новая близость': 'assets/images/audio_covers/program_return_intimacy.jpg',
   'Сказать прямо': 'assets/images/audio_covers/program_return_direct.jpg',
+  // New "Негативные эмоции" tracks (2026-11-04); the rest have no cover yet.
+  'Принятие себя': 'assets/images/audio_covers/neg_prinyatie_sebya.jpg',
+  'Слепое пятно': 'assets/images/audio_covers/neg_slepoe_pyatno.jpg',
 };
 
 String? audioCoverAsset(String? ruTitle) {

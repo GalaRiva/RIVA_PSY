@@ -14,6 +14,7 @@ import 'package:riva_psy/widgets/custom_button.dart';
 import '../../../core/services/apple_billing_service.dart';
 import '../../../core/services/google_play_billing_service.dart';
 import '../../../core/user_data/user.dart';
+import '../../../core/utils/release_flags.dart';
 import '../../../core/utils/subscription_links.dart';
 import '../../../widgets/account_required_sheet.dart';
 import '../../../widgets/custom_app_bar.dart';
@@ -135,6 +136,47 @@ class K13Screen extends GetWidget {
                                             margin: getMargin(
                                                 top: 6, right: 8, bottom: 6))
                                       ]))),
+                              // App Store Guideline 3.1.1: on iOS nothing may unlock paid
+                              // functionality except In-App Purchase, so the gift/promo
+                              // code entry does not exist in the iOS app.
+                              // iOS: Apple's own offer-code sheet instead of our code entry.
+                              if (Platform.isIOS && ReleaseFlags.iosAppleOfferCodeButton)
+                                GestureDetector(
+                                    onTap: () async {
+                                      try {
+                                        await AppleBillingService.presentOfferCodeSheet();
+                                      } catch (e) {
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(content: Text('purchase_start_failed'.tr(namedArgs: {'error': '$e'}))));
+                                        }
+                                      }
+                                    },
+                                    child: Container(
+                                        margin: getMargin(top: 1),
+                                        padding: getPadding(left: 6, top: 8, right: 6, bottom: 8),
+                                        decoration: AppDecoration.outlineBluegray80014.copyWith(
+                                            color: ColorConstant.grayLight,
+                                            borderRadius: BorderRadiusStyle.roundedBorder3),
+                                        child: Row(children: [
+                                          CustomImageView(
+                                              svgPath: ImageConstant.imgGrid,
+                                              height: getSize(20),
+                                              width: getSize(20)),
+                                          Padding(
+                                              padding: getPadding(left: 17),
+                                              child: Text('redeem_apple_code'.tr(),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: AppStyle.txtSFProDisplayLight16)),
+                                          Spacer(),
+                                          CustomImageView(
+                                              svgPath: ImageConstant.imgArrowrightGray700,
+                                              height: getVerticalSize(8),
+                                              width: getHorizontalSize(4),
+                                              margin: getMargin(top: 6, right: 7, bottom: 6))
+                                        ]))),
+                              if (!Platform.isIOS)
                               GestureDetector(
                                   onTap: () {
                                     onTapRowgrid(context);
@@ -302,6 +344,7 @@ class K13Screen extends GetWidget {
   }
 
   onTapRowgrid(BuildContext context) {
+    if (Platform.isIOS) return; // see the guideline 3.1.1 note above
     if(CurrentUser.tariffIsOrion()){
       showDialog(
         context: context, builder: (BuildContext context) =>

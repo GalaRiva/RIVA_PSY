@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
@@ -90,8 +91,11 @@ class K4Screen extends StatelessWidget {
                             // unreachable in practice (see main_screen/controller.dart's
                             // `false ?? ...` condition, a confirmed-dead-code bug left
                             // as-is per prior user decision) but fixed for consistency.
-                            await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
-                                mode: LaunchMode.externalApplication);
+                            // Never sends iOS users to pay outside the App Store (Guideline 3.1.1).
+                            if (!Platform.isIOS) {
+                              await launchUrl(Uri.parse(subscriptionUrlForLocale(context)),
+                                  mode: LaunchMode.externalApplication);
+                            }
                           })
                     ])),
           ),

@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /Users/{userId} {
+      allow read: if request.auth != null
+        && request.auth.token.email != null
+        && (
+          userId == request.auth.token.email ||
+          userId == request.auth.token.email + ' google' ||
+          userId == request.auth.token.email + ' apple'
+        );
+
+      allow create: if request.auth != null
+        && request.auth.token.email != null
+        && (
+          userId == request.auth.token.email ||
+          userId == request.auth.token.email + ' google' ||
+          userId == request.auth.token.email + ' apple'
+        )
+        && request.resource.data.tariff == 'Базовый';
+
+      allow update: if request.auth != null
+        && request.auth.token.email != null
+        && (
+          userId == request.auth.token.email ||
+          userId == request.auth.token.email + ' google' ||
+          userId == request.auth.token.email + ' apple'
+        )
+        && request.resource.data.tariff == resource.data.tariff
+        && request.resource.data.tariff_is_end == resource.data.tariff_is_end;
+    }
+    // Account data (email, sign-in service, legacy password hash): only its
+    // owner, same id patterns as the Users collection. Was open to every
+    // signed-in (even anonymous) user.
+    match /UsersData/{userId} {
+      allow read, write: if request.auth != null
+        && request.auth.token.email != null
+        && (
+          userId == request.auth.token.email ||
+          userId == request.auth.token.email + ' google' ||
+          userId == request.auth.token.email + ' apple'
+        );
+    }
+    match /Promo/{code} {
+      allow read: if request.auth != null;
+      allow write: if false;
+      match /ActivatedUsers/{userId} {
+        allow read, create: if request.auth != null;
+        allow update, delete: if false;
+      }
+    }
+    match /Trials/{trialName} {
+      allow read, write: if false;
+      match /users/{userId} {
+        allow read, create: if request.auth != null;
+        allow update, delete: if false;
+      }
+    }
+    match /Audio/{audioId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /Tabs/{tabId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /Tabs_Images/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /Text_Recommendation/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /GuidedJournals/{topicId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /Offers/{docId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+    match /Errors/{docId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+    match /Exceptions/{docId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'drop_text_model.dart';
 
 // Verbatim from rivapsy.com/privacidad, fetched 2026-08-02. Mirrors only
@@ -27,7 +29,7 @@ Si usted atraviesa una emergencia de salud mental o tiene pensamientos de hacers
         '''Para acceder a determinadas funciones, el Usuario deberá crear una cuenta proporcionando un nombre de usuario y una dirección de correo electrónico, o autenticarse mediante Google o Apple. El Usuario garantiza que la información proporcionada es veraz y se compromete a mantenerla actualizada.'''
       ]),
       DropTextModel('6. Suscripciones y pagos', <String>[
-        '''El acceso completo a determinadas funciones (incluyendo el módulo "Obretención" y contenidos avanzados) requiere una suscripción de pago. Las suscripciones se contratan y se pagan a través de nuestro sitio web (rivapsy.com), mediante un proveedor de pagos externo. RIVA no procesa ni almacena datos financieros completos (véase nuestra Política de Privacidad).'''
+        (Platform.isIOS ? '''El acceso completo a determinadas funciones (incluyendo el módulo "Obretención" y contenidos avanzados) requiere una suscripción de pago. En la app para iOS, las suscripciones se contratan y se pagan a través de la App Store (compras dentro de la app de Apple) y se gestionan en los ajustes de tu ID de Apple. RIVA no procesa ni almacena datos de pago (véase nuestra Política de Privacidad).''' : '''El acceso completo a determinadas funciones (incluyendo el módulo "Obretención" y contenidos avanzados) requiere una suscripción de pago. Las suscripciones se contratan y se pagan a través de nuestro sitio web (rivapsy.com), mediante un proveedor de pagos externo. RIVA no procesa ni almacena datos financieros completos (véase nuestra Política de Privacidad).''')
       ]),
       DropTextModel('7. Uso prohibido', <String>[
         '''El Usuario se compromete a no:
@@ -184,9 +186,11 @@ no permite acceder, ver, modificar ni eliminar otros archivos de la cuenta del U
 
 RIVA no realiza copias de seguridad automáticas ni periódicas sin la intervención del Usuario. El Usuario es responsable de gestionar y conservar sus propias copias de seguridad.
 
-9.5 Pagos (procesados a través del sitio web)
+''' + (Platform.isIOS ? '''9.5 Pagos (App Store)
 
-Las suscripciones de pago se contratan y procesan a través de nuestro sitio web (rivapsy.com), mediante un proveedor de pagos externo especializado (actualmente en integración). RIVA no recopila ni almacena números completos de tarjeta, códigos CVV/CVC ni credenciales financieras. RIVA únicamente recibe información sobre el estado del pago, el identificador de la transacción y la fecha del pago, con el fin de activar el acceso correspondiente en la cuenta del Usuario.'''
+En la app para iOS, las suscripciones de pago se contratan y se pagan a través de la App Store (compras dentro de la app de Apple). Apple procesa el pago: RIVA no recopila ni almacena números de tarjeta, códigos CVV/CVC ni credenciales financieras. RIVA únicamente recibe de Apple información sobre el estado de la suscripción, el identificador de la transacción y las fechas, con el fin de activar el acceso correspondiente en la cuenta del Usuario.''' : '''9.5 Pagos (procesados a través del sitio web)
+
+Las suscripciones de pago se contratan y procesan a través de nuestro sitio web (rivapsy.com), mediante un proveedor de pagos externo especializado (actualmente en integración). RIVA no recopila ni almacena números completos de tarjeta, códigos CVV/CVC ni credenciales financieras. RIVA únicamente recibe información sobre el estado del pago, el identificador de la transacción y la fecha del pago, con el fin de activar el acceso correspondiente en la cuenta del Usuario.''')
       ]),
       DropTextModel('10. Transferencias internacionales de datos', <String>[
         '''Algunos proveedores tecnológicos pueden tratar datos fuera del Espacio Económico Europeo (EEE), incluidos Estados Unidos. En tal caso, RIVA adoptará garantías equivalentes a las exigidas por el RGPD (decisiones de adecuación, Cláusulas Contractuales Tipo y/o medidas técnicas adicionales, incluido el cifrado cuando resulte apropiado).'''

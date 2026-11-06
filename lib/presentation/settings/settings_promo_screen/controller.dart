@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ class K16Controller {
   final _fireStoreRepo = FireStoreRepositoryImpl();
 
   Future submitPromo(String promo, BuildContext context) async {
+    // Never unlocks anything on iOS (App Store Guideline 3.1.1).
+    if (Platform.isIOS) return;
     //try {
 
 
