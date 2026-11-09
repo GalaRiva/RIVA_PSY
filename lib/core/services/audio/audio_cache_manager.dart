@@ -7,6 +7,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../datasource_service.dart';
+import 'audio_host_fallback.dart';
 
 // Local disk cache for R2-streamed audio — first play streams the file
 // while simultaneously writing it to disk (just_audio's own
@@ -44,13 +45,21 @@ class AudioCacheManager {
   /// `AudioPlayer.setAudioSource()` in place of `setUrl(url)`. Touches the
   /// cache file's mtime if it already exists, so an already-cached track
   /// counts as freshly used for LRU purposes even on a cold app start.
-  static Future<LockCachingAudioSource> sourceFor(String url, {dynamic tag}) async {
+  static Future<LockCachingAudioSource> sourceFor(String url,
+      {dynamic tag, String kind = 'play'}) async {
     final file = await _fileFor(url);
-    if (await file.exists()) {
+    final cached = await file.exists();
+    if (cached) {
       unawaited(file.setLastModified(DateTime.now()).catchError((_) {}));
     }
     unawaited(_enforceLimit());
-    return LockCachingAudioSource(Uri.parse(url), cacheFile: file, tag: tag);
+    // The cache slot is keyed by the original (R2) URL so a track cached
+    // from either host is a cache hit later; only a miss needs a host
+    // choice (R2, or the Firebase Storage mirror while R2 is blocked).
+    final fetchUrl =
+        cached ? url : await AudioHostFallback.resolve(url, kind: kind);
+    return LockCachingAudioSource(Uri.parse(fetchUrl),
+        cacheFile: file, tag: tag);
   }
 
   /// Opportunistically downloads [url] straight to its cache slot, without
@@ -65,9 +74,10 @@ class AudioCacheManager {
       final file = await _fileFor(url);
       if (await file.exists()) return;
       final partial = File('${file.path}.prefetch');
+      final fetchUrl = await AudioHostFallback.resolve(url, kind: 'prefetch');
       final client = HttpClient();
       try {
-        final request = await client.getUrl(Uri.parse(url));
+        final request = await client.getUrl(Uri.parse(fetchUrl));
         final response = await request.close();
         if (response.statusCode != 200) return;
         final sink = partial.openWrite();
@@ -100,7 +110,7 @@ class AudioCacheManager {
     final player = AudioPlayer();
     try {
       final source = DataSourceService.dataSourceIsRemote()
-          ? await sourceFor(urlOrPath)
+          ? await sourceFor(urlOrPath, kind: 'duration')
           : AudioSource.file(urlOrPath);
       return await player.setAudioSource(source, preload: true);
     } catch (_) {

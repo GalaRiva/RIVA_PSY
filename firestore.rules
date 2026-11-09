@@ -88,6 +88,25 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow read, update, delete: if false;
     }
+    // Anonymous usage log of the audio fallback host (no user id, no device
+    // id). Written by people who may not be signed in, so no auth check;
+    // instead: create-only, fixed field set, server timestamp, size caps,
+    // never readable from a client.
+    match /AudioFallbackEvents/{eventId} {
+      allow create: if request.resource.data.keys().hasOnly(
+            ['ts', 'path', 'kind', 'reason', 'platform', 'locale'])
+        && request.resource.data.keys().hasAll(
+            ['ts', 'path', 'kind', 'reason', 'platform', 'locale'])
+        && request.resource.data.ts == request.time
+        && request.resource.data.path is string
+        && request.resource.data.path.size() <= 200
+        && request.resource.data.kind in ['play', 'prefetch', 'duration']
+        && request.resource.data.reason in ['window', 'probe_failed']
+        && request.resource.data.platform in ['ios', 'android']
+        && request.resource.data.locale is string
+        && request.resource.data.locale.size() <= 8;
+      allow read, update, delete: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }
