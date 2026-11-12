@@ -2,125 +2,315 @@
  "id": "eating_no_autopilot",
  "order": 1,
  "languages": [
-  "ru"
+  "ru",
+  "en",
+  "es"
  ],
- "title": "Еда без автопилота",
- "subtitle": "8 практик при переедании: замечать, выдерживать импульс, справляться с эмоциями, относиться к себе без стыда",
- "intro": "Программа из 8 шагов. В каждом шаге аудио, короткое задание и мини-практики на ближайшие дни. Здесь нет диет, подсчёта калорий и борьбы с собой. Это инструмент самопомощи: он не ставит диагноз и не заменяет лечение.",
- "pace_note": "Не спешите. Если чувствуете, что нужно, повторяйте те упражнения, которые нужны: лучше закрепить одно и потом перейти к другому. Курс можно проходить с начала столько раз, сколько захочется. Это поддержка в формировании навыка, а не экзамен.",
+ "title": {
+  "ru": "Еда без автопилота",
+  "en": "Eating Without Autopilot",
+  "es": "Comer sin piloto automático"
+ },
+ "subtitle": {
+  "ru": "8 практик при переедании: замечать, выдерживать импульс, справляться с эмоциями, относиться к себе без стыда",
+  "en": "8 practices for overeating: noticing, riding out the urge, coping with emotions, treating yourself without shame",
+  "es": "8 prácticas para los atracones: observar, sostener el impulso, afrontar las emociones y tratarte sin vergüenza"
+ },
+ "intro": {
+  "ru": "Программа из 8 шагов. В каждом шаге аудио, короткое задание и мини-практики на ближайшие дни. Здесь нет диет, подсчёта калорий и борьбы с собой. Это инструмент самопомощи: он не ставит диагноз и не заменяет лечение.",
+  "en": "An 8-step program. Each step has an audio, a short task and mini-practices for the next few days. There are no diets, calorie counting or fighting yourself here. It is a self-help tool: it does not diagnose and does not replace treatment.",
+  "es": "Un programa de 8 pasos. Cada paso incluye un audio, una tarea breve y mini-prácticas para los próximos días. Aquí no hay dietas, ni cuenta de calorías, ni lucha contra ti. Es una herramienta de autoayuda: no diagnostica y no sustituye un tratamiento."
+ },
+ "pace_note": {
+  "ru": "Не спешите. Если чувствуете, что нужно, повторяйте те упражнения, которые нужны: лучше закрепить одно и потом перейти к другому. Курс можно проходить с начала столько раз, сколько захочется. Это поддержка в формировании навыка, а не экзамен.",
+  "en": "Take your time. If you feel you need to, repeat the exercises you need: it is better to settle one before moving on to the next. You can go through the course from the beginning as many times as you like. It is support in building a skill, not an exam.",
+  "es": "Sin prisa. Si lo sientes necesario, repite los ejercicios que te hagan falta: es mejor afianzar uno antes de pasar al siguiente. Puedes recorrer el curso desde el principio tantas veces como quieras. Es un apoyo para construir una habilidad, no un examen."
+ },
  "intro_audio_doc_id": null,
  "screening": [
   {
    "id": "self_harm",
    "level": "stop",
-   "q": "Бывают ли у вас мысли о том, чтобы причинить себе вред?"
+   "q": {
+    "ru": "Бывают ли у вас мысли о том, чтобы причинить себе вред?",
+    "en": "Do you ever have thoughts of harming yourself?",
+    "es": "¿Tienes a veces pensamientos de hacerte daño?"
+   }
   },
   {
    "id": "compensation",
    "level": "specialist",
-   "q": "Бывает ли у вас вызванная рвота или вы используете слабительные, мочегонные или другие средства после еды?"
+   "q": {
+    "ru": "Бывает ли у вас вызванная рвота или вы используете слабительные, мочегонные или другие средства после еды?",
+    "en": "Do you ever make yourself vomit, or use laxatives, diuretics or other means after eating?",
+    "es": "¿Te provocas a veces el vómito, o usas laxantes, diuréticos u otros medios después de comer?"
+   }
   },
   {
    "id": "starving",
    "level": "specialist",
-   "q": "Бывает ли, что после эпизодов вы голодаете, долго отказываетесь от еды или изнуряете себя нагрузками?"
+   "q": {
+    "ru": "Бывает ли, что после эпизодов вы голодаете, долго отказываетесь от еды или изнуряете себя нагрузками?",
+    "en": "Do you ever fast, go a long time without eating, or exhaust yourself with exercise after an episode?",
+    "es": "¿Ayunas a veces, pasas mucho tiempo sin comer o te agotas con ejercicio después de un episodio?"
+   }
   },
   {
    "id": "weight",
    "level": "specialist",
-   "q": "Быстро ли вы теряете вес, или страх набрать вес мешает вам есть?"
+   "q": {
+    "ru": "Быстро ли вы теряете вес, или страх набрать вес мешает вам есть?",
+    "en": "Are you losing weight quickly, or does the fear of gaining weight get in the way of eating?",
+    "es": "¿Estás perdiendo peso rápidamente, o el miedo a engordar te impide comer?"
+   }
   },
   {
    "id": "body",
    "level": "specialist",
-   "q": "Бывают ли обмороки, сильное головокружение, перебои сердца или выраженная слабость?"
+   "q": {
+    "ru": "Бывают ли обмороки, сильное головокружение, перебои сердца или выраженная слабость?",
+    "en": "Do you have fainting spells, strong dizziness, heart irregularities or marked weakness?",
+    "es": "¿Tienes desmayos, mareos intensos, palpitaciones irregulares o debilidad marcada?"
+   }
   },
   {
    "id": "medical",
    "level": "specialist",
-   "q": "У вас диабет с инсулином, беременность или вам меньше 18 лет?"
+   "q": {
+    "ru": "У вас диабет с инсулином, беременность или вам меньше 18 лет?",
+    "en": "Do you have diabetes treated with insulin, are you pregnant, or are you under 18?",
+    "es": "¿Tienes diabetes tratada con insulina, estás embarazada o tienes menos de 18 años?"
+   }
   }
  ],
  "steps": [
   {
    "id": "s1",
-   "title": "Что происходит перед перееданием",
-   "card": "Переедание редко начинается «на ровном месте». Учимся видеть цепочку событий, которая к нему ведёт, спокойно и без оценок.",
+   "title": {
+    "ru": "Что происходит перед перееданием",
+    "en": "What Happens Before Overeating",
+    "es": "Qué ocurre antes de un atracón"
+   },
+   "card": {
+    "ru": "Переедание редко начинается «на ровном месте». Учимся видеть цепочку событий, которая к нему ведёт, спокойно и без оценок.",
+    "en": "Overeating rarely starts out of nowhere. We learn to see the chain of events that leads to it, calmly and without judgment.",
+    "es": "Un atracón rara vez surge de la nada. Aprendemos a ver la cadena de acontecimientos que lleva a él, con calma y sin juzgar."
+   },
    "minutes": 9,
    "audio_doc_id": "program_eating__s1",
    "task": {
-    "title": "Одна цепочка",
+    "title": {
+     "ru": "Одна цепочка",
+     "en": "One chain",
+     "es": "Una cadena"
+    },
     "card_type": "chain",
-    "intro": "Вспомните один недавний эпизод, не самый тяжёлый. Запишите по одному слову или короткой фразе. Количество и вид еды описывать не нужно.",
+    "intro": {
+     "ru": "Вспомните один недавний эпизод, не самый тяжёлый. Запишите по одному слову или короткой фразе. Количество и вид еды описывать не нужно.",
+     "en": "Recall one recent episode, not the hardest one. Write one word or a short phrase for each part. You don't need to describe the amount or kind of food.",
+     "es": "Recuerda un episodio reciente, no el más difícil. Escribe una palabra o una frase corta en cada parte. No hace falta describir la cantidad ni el tipo de comida."
+    },
     "fields": [
      {
       "id": "situation",
-      "label": "Ситуация",
+      "label": {
+       "ru": "Ситуация",
+       "en": "Situation",
+       "es": "Situación"
+      },
       "type": "text",
-      "hint": "Где вы были, какое время дня, кто рядом",
+      "hint": {
+       "ru": "Где вы были, какое время дня, кто рядом",
+       "en": "Where you were, what time of day, who was around",
+       "es": "Dónde estabas, a qué hora del día, quién había cerca"
+      },
       "chips": [
-       "Дома вечером",
-       "На работе",
-       "Одна",
-       "С людьми",
-       "После долгого перерыва в еде"
+       {
+        "ru": "Дома вечером",
+        "en": "At home in the evening",
+        "es": "En casa por la noche"
+       },
+       {
+        "ru": "На работе",
+        "en": "At work",
+        "es": "En el trabajo"
+       },
+       {
+        "ru": "Одна",
+        "en": "Alone",
+        "es": "A solas"
+       },
+       {
+        "ru": "С людьми",
+        "en": "With people",
+        "es": "Con gente"
+       },
+       {
+        "ru": "После долгого перерыва в еде",
+        "en": "After a long gap without eating",
+        "es": "Tras un largo rato sin comer"
+       }
       ]
      },
      {
       "id": "thoughts",
-      "label": "Мысли",
+      "label": {
+       "ru": "Мысли",
+       "en": "Thoughts",
+       "es": "Pensamientos"
+      },
       "type": "text",
-      "hint": "Какие слова звучали в голове",
+      "hint": {
+       "ru": "Какие слова звучали в голове",
+       "en": "What words were in your head",
+       "es": "Qué palabras sonaban en tu cabeza"
+      },
       "chips": [
-       "Я заслужил(а)",
-       "Уже всё равно",
-       "Только чуть-чуть",
-       "Я больше не могу"
+       {
+        "ru": "Я заслужил(а)",
+        "en": "I deserve it",
+        "es": "Me lo merezco"
+       },
+       {
+        "ru": "Уже всё равно",
+        "en": "It doesn't matter anyway",
+        "es": "Ya da igual"
+       },
+       {
+        "ru": "Только чуть-чуть",
+        "en": "Just a little",
+        "es": "Solo un poquito"
+       },
+       {
+        "ru": "Я больше не могу",
+        "en": "I can't take it anymore",
+        "es": "No puedo más"
+       }
       ]
      },
      {
       "id": "emotions",
-      "label": "Эмоции",
+      "label": {
+       "ru": "Эмоции",
+       "en": "Emotions",
+       "es": "Emociones"
+      },
       "type": "text",
-      "hint": "Что вы чувствовали",
+      "hint": {
+       "ru": "Что вы чувствовали",
+       "en": "What you felt",
+       "es": "Qué sentías"
+      },
       "chips": [
-       "Тревога",
-       "Скука",
-       "Усталость",
-       "Обида",
-       "Одиночество",
-       "Злость"
+       {
+        "ru": "Тревога",
+        "en": "Anxiety",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Скука",
+        "en": "Boredom",
+        "es": "Aburrimiento"
+       },
+       {
+        "ru": "Усталость",
+        "en": "Tiredness",
+        "es": "Cansancio"
+       },
+       {
+        "ru": "Обида",
+        "en": "Resentment",
+        "es": "Resentimiento"
+       },
+       {
+        "ru": "Одиночество",
+        "en": "Loneliness",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Злость",
+        "en": "Anger",
+        "es": "Enfado"
+       }
       ]
      },
      {
       "id": "body",
-      "label": "Тело",
+      "label": {
+       "ru": "Тело",
+       "en": "Body",
+       "es": "Cuerpo"
+      },
       "type": "text",
-      "hint": "Голод, напряжение, пустота, беспокойство",
+      "hint": {
+       "ru": "Голод, напряжение, пустота, беспокойство",
+       "en": "Hunger, tension, emptiness, restlessness",
+       "es": "Hambre, tensión, vacío, inquietud"
+      },
       "chips": [
-       "Голод",
-       "Напряжение в плечах",
-       "Пустота в животе",
-       "Беспокойство в руках"
+       {
+        "ru": "Голод",
+        "en": "Hunger",
+        "es": "Hambre"
+       },
+       {
+        "ru": "Напряжение в плечах",
+        "en": "Tension in the shoulders",
+        "es": "Tensión en los hombros"
+       },
+       {
+        "ru": "Пустота в животе",
+        "en": "Emptiness in the stomach",
+        "es": "Vacío en el estómago"
+       },
+       {
+        "ru": "Беспокойство в руках",
+        "en": "Restlessness in the hands",
+        "es": "Inquietud en las manos"
+       }
       ]
      },
      {
       "id": "impulse",
-      "label": "Импульс",
+      "label": {
+       "ru": "Импульс",
+       "en": "Urge",
+       "es": "Impulso"
+      },
       "type": "text",
-      "hint": "Каким было желание поесть: слабым, настойчивым, очень сильным"
+      "hint": {
+       "ru": "Каким было желание поесть: слабым, настойчивым, очень сильным",
+       "en": "How strong the wish to eat was: weak, insistent, very strong",
+       "es": "Cómo era el deseo de comer: débil, insistente, muy fuerte"
+      }
      },
      {
       "id": "action",
-      "label": "Действие",
+      "label": {
+       "ru": "Действие",
+       "en": "Action",
+       "es": "Acción"
+      },
       "type": "text",
-      "hint": "Только факт, без подробностей"
+      "hint": {
+       "ru": "Только факт, без подробностей",
+       "en": "Just the fact, no details",
+       "es": "Solo el hecho, sin detalles"
+      }
      },
      {
       "id": "consequences",
-      "label": "Последствия",
+      "label": {
+       "ru": "Последствия",
+       "en": "Aftermath",
+       "es": "Consecuencias"
+      },
       "type": "text",
-      "hint": "Что было сразу после и через час"
+      "hint": {
+       "ru": "Что было сразу после и через час",
+       "en": "What happened right after and an hour later",
+       "es": "Qué pasó justo después y una hora más tarde"
+      }
      }
     ],
     "visual": "chain"
@@ -128,43 +318,95 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Пометка момента",
-     "body": "Когда заметите тягу к еде, отметьте для себя одно слово: что вы сейчас чувствуете. Без оценки. Достаточно 2–3 раз за неделю."
+     "title": {
+      "ru": "Пометка момента",
+      "en": "Marking the moment",
+      "es": "Marcar el momento"
+     },
+     "body": {
+      "ru": "Когда заметите тягу к еде, отметьте для себя одно слово: что вы сейчас чувствуете. Без оценки. Достаточно 2–3 раз за неделю.",
+      "en": "When you notice a pull toward food, note a single word for yourself: what are you feeling right now? No judging. 2–3 times a week is enough.",
+      "es": "Cuando notes el impulso de comer, anota para ti una sola palabra: ¿qué sientes ahora? Sin juzgar. Basta con 2 o 3 veces por semana."
+     }
     },
     {
      "id": "m2",
-     "title": "Где было немного пространства",
-     "body": "Посмотрите на свою цепочку. В каком месте было хотя бы немного выбора? Это не упрёк, а поиск места для маленького шага."
+     "title": {
+      "ru": "Где было немного пространства",
+      "en": "Where there was a little room",
+      "es": "Dónde hubo un poco de espacio"
+     },
+     "body": {
+      "ru": "Посмотрите на свою цепочку. В каком месте было хотя бы немного выбора? Это не упрёк, а поиск места для маленького шага.",
+      "en": "Look at your chain. Where was there at least a little choice? This is not a reproach, but a search for a place for a small step.",
+      "es": "Mira tu cadena. ¿En qué punto hubo al menos un poco de elección? No es un reproche, sino buscar un lugar para un pequeño paso."
+     }
     }
    ],
    "free": true
   },
   {
    "id": "s2",
-   "title": "Выйти из цикла ограничений",
-   "card": "Строгие пищевые правила и долгие перерывы в еде часто готовят почву для переедания. Разбираемся, как работает этот круг и как из него выходить.",
+   "title": {
+    "ru": "Выйти из цикла ограничений",
+    "en": "Breaking the Restriction Cycle",
+    "es": "Salir del ciclo de restricciones"
+   },
+   "card": {
+    "ru": "Строгие пищевые правила и долгие перерывы в еде часто готовят почву для переедания. Разбираемся, как работает этот круг и как из него выходить.",
+    "en": "Strict food rules and long gaps without eating often set the stage for overeating. We look at how this cycle works and how to step out of it.",
+    "es": "Las reglas estrictas sobre la comida y los largos periodos sin comer suelen preparar el terreno para un atracón. Vemos cómo funciona este círculo y cómo salir de él."
+   },
    "minutes": 9,
    "audio_doc_id": "program_eating__s2",
    "task": {
-    "title": "Смягчить одно правило",
+    "title": {
+     "ru": "Смягчить одно правило",
+     "en": "Soften one rule",
+     "es": "Suavizar una regla"
+    },
     "card_type": "rule",
-    "intro": "Выберите одно пищевое правило, после нарушения которого появляется мысль «всё испорчено», и запишите более гибкую формулировку.",
+    "intro": {
+     "ru": "Выберите одно пищевое правило, после нарушения которого появляется мысль «всё испорчено», и запишите более гибкую формулировку.",
+     "en": "Choose one food rule that, once broken, brings the thought “everything is ruined,” and write a more flexible wording.",
+     "es": "Elige una regla sobre la comida que, al romperla, trae el pensamiento «todo está estropeado», y escribe una versión más flexible."
+    },
     "fields": [
      {
       "id": "rule",
-      "label": "Правило",
+      "label": {
+       "ru": "Правило",
+       "en": "Rule",
+       "es": "Regla"
+      },
       "type": "text",
-      "hint": "Например: «С понедельника начинаю», «Никакого сладкого»"
+      "hint": {
+       "ru": "Например: «С понедельника начинаю», «Никакого сладкого»",
+       "en": "For example: “I start on Monday,” “No sweets at all”",
+       "es": "Por ejemplo: «Empiezo el lunes», «Nada de dulces»"
+      }
      },
      {
       "id": "soft",
-      "label": "Мягкая версия",
+      "label": {
+       "ru": "Мягкая версия",
+       "en": "Softer version",
+       "es": "Versión más amable"
+      },
       "type": "text",
-      "hint": "Не новое правило, а более доброжелательное отношение"
+      "hint": {
+       "ru": "Не новое правило, а более доброжелательное отношение",
+       "en": "Not a new rule, but a kinder attitude",
+       "es": "No una regla nueva, sino una actitud más amable"
+      }
      },
      {
       "id": "next_meal",
-      "label": "Следующий приём пищи после эпизода: в обычное время",
+      "label": {
+       "ru": "Следующий приём пищи после эпизода: в обычное время",
+       "en": "Next meal after an episode: at the usual time",
+       "es": "Próxima comida tras un episodio: a la hora habitual"
+      },
       "type": "check"
      }
     ]
@@ -172,55 +414,139 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Долгие перерывы",
-     "body": "Подумайте, в какие части дня у вас обычно бывают долгие перерывы в еде. Это размышление на один раз, не ежедневный учёт."
+     "title": {
+      "ru": "Долгие перерывы",
+      "en": "Long gaps",
+      "es": "Largos periodos sin comer"
+     },
+     "body": {
+      "ru": "Подумайте, в какие части дня у вас обычно бывают долгие перерывы в еде. Это размышление на один раз, не ежедневный учёт.",
+      "en": "Think about which parts of the day usually bring long gaps without eating. This is a one-time reflection, not daily tracking.",
+      "es": "Piensa en qué momentos del día sueles pasar mucho tiempo sin comer. Es una reflexión de una sola vez, no un registro diario."
+     }
     }
    ],
    "free": true
   },
   {
    "id": "s3",
-   "title": "Голод, эмоция или импульс",
-   "card": "Желание поесть может говорить о голоде, об эмоции, об усталости или обо всём сразу. Учимся слушать эти сигналы, не деля их на «правильные» и «неправильные».",
+   "title": {
+    "ru": "Голод, эмоция или импульс",
+    "en": "Hunger, Emotion, or Urge",
+    "es": "Hambre, emoción o impulso"
+   },
+   "card": {
+    "ru": "Желание поесть может говорить о голоде, об эмоции, об усталости или обо всём сразу. Учимся слушать эти сигналы, не деля их на «правильные» и «неправильные».",
+    "en": "The wish to eat can point to hunger, an emotion, tiredness, or all of them at once. We learn to listen to these signals without sorting them into “right” and “wrong.”",
+    "es": "El deseo de comer puede hablar de hambre, de una emoción, de cansancio o de todo a la vez. Aprendemos a escuchar estas señales sin dividirlas en «correctas» e «incorrectas»."
+   },
    "minutes": 9,
    "audio_doc_id": "program_eating__s3",
    "task": {
-    "title": "Три вопроса перед едой",
+    "title": {
+     "ru": "Три вопроса перед едой",
+     "en": "Three questions before eating",
+     "es": "Tres preguntas antes de comer"
+    },
     "card_type": "three_questions",
-    "intro": "Один раз за неделю, перед едой или при желании поесть, задайте себе три вопроса. Голод это сигнал поесть: если голодны, поешьте.",
+    "intro": {
+     "ru": "Один раз за неделю, перед едой или при желании поесть, задайте себе три вопроса. Голод это сигнал поесть: если голодны, поешьте.",
+     "en": "Once during the week, before eating or when you want to eat, ask yourself three questions. Hunger is a signal to eat: if you are hungry, eat.",
+     "es": "Una vez durante la semana, antes de comer o cuando te den ganas de comer, hazte tres preguntas. El hambre es una señal para comer: si tienes hambre, come."
+    },
     "fields": [
      {
       "id": "hunger",
-      "label": "Где голод по шкале 0–10?",
+      "label": {
+       "ru": "Где голод по шкале 0–10?",
+       "en": "Where is my hunger on a 0–10 scale?",
+       "es": "¿Dónde está mi hambre en una escala de 0 a 10?"
+      },
       "type": "scale",
-      "hint": "Это внимание к телу, а не правило",
+      "hint": {
+       "ru": "Это внимание к телу, а не правило",
+       "en": "This is attention to the body, not a rule",
+       "es": "Es atención al cuerpo, no una regla"
+      },
       "record": {
-       "name": "Голод",
+       "name": {
+        "ru": "Голод",
+        "en": "Hunger",
+        "es": "Hambre"
+       },
        "kind": "neutral"
       }
      },
      {
       "id": "feeling",
-      "label": "Что я чувствую?",
+      "label": {
+       "ru": "Что я чувствую?",
+       "en": "What am I feeling?",
+       "es": "¿Qué siento?"
+      },
       "type": "text",
       "chips": [
-       "Усталость",
-       "Тревога",
-       "Скуку",
-       "Напряжение",
-       "Радость"
+       {
+        "ru": "Усталость",
+        "en": "Tiredness",
+        "es": "Cansancio"
+       },
+       {
+        "ru": "Тревога",
+        "en": "Anxiety",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Скуку",
+        "en": "Boredom",
+        "es": "Aburrimiento"
+       },
+       {
+        "ru": "Напряжение",
+        "en": "Tension",
+        "es": "Tensión"
+       },
+       {
+        "ru": "Радость",
+        "en": "Joy",
+        "es": "Alegría"
+       }
       ]
      },
      {
       "id": "need",
-      "label": "Что мне сейчас нужно?",
+      "label": {
+       "ru": "Что мне сейчас нужно?",
+       "en": "What do I need right now?",
+       "es": "¿Qué necesito ahora?"
+      },
       "type": "text",
-      "hint": "Поесть, отдохнуть, поговорить, выйти на воздух…",
+      "hint": {
+       "ru": "Поесть, отдохнуть, поговорить, выйти на воздух…",
+       "en": "To eat, rest, talk, get some fresh air…",
+       "es": "Comer, descansar, hablar, tomar el aire…"
+      },
       "chips": [
-       "Поесть",
-       "Отдохнуть",
-       "Поговорить с кем-то",
-       "Выйти на воздух"
+       {
+        "ru": "Поесть",
+        "en": "To eat",
+        "es": "Comer"
+       },
+       {
+        "ru": "Отдохнуть",
+        "en": "To rest",
+        "es": "Descansar"
+       },
+       {
+        "ru": "Поговорить с кем-то",
+        "en": "To talk to someone",
+        "es": "Hablar con alguien"
+       },
+       {
+        "ru": "Выйти на воздух",
+        "en": "To get some fresh air",
+        "es": "Salir a tomar el aire"
+       }
       ]
      }
     ]
@@ -228,52 +554,136 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Три вопроса",
-     "body": "Если захочется, повторите эти три вопроса ещё несколько раз за неделю. Не нужно делать это перед каждой едой."
+     "title": {
+      "ru": "Три вопроса",
+      "en": "Three questions",
+      "es": "Tres preguntas"
+     },
+     "body": {
+      "ru": "Если захочется, повторите эти три вопроса ещё несколько раз за неделю. Не нужно делать это перед каждой едой.",
+      "en": "If you feel like it, repeat these three questions a few more times during the week. You don't need to do it before every meal.",
+      "es": "Si te apetece, repite estas tres preguntas algunas veces más durante la semana. No hace falta hacerlo antes de cada comida."
+     }
     }
    ],
    "free": false
   },
   {
    "id": "s4",
-   "title": "Пережить импульс",
-   "card": "Когда желание есть становится очень сильным, кажется, что выбора нет. Учимся создавать паузу между импульсом и действием, без борьбы с собой.",
+   "title": {
+    "ru": "Пережить импульс",
+    "en": "Riding the Urge",
+    "es": "Sobrellevar el impulso"
+   },
+   "card": {
+    "ru": "Когда желание есть становится очень сильным, кажется, что выбора нет. Учимся создавать паузу между импульсом и действием, без борьбы с собой.",
+    "en": "When the wish to eat becomes very strong, it feels as if there is no choice. We learn to create a pause between the urge and the action, without fighting yourself.",
+    "es": "Cuando el deseo de comer se vuelve muy fuerte, parece que no hay elección. Aprendemos a crear una pausa entre el impulso y la acción, sin luchar contra ti."
+   },
    "minutes": 10,
    "audio_doc_id": "program_eating__s4",
    "task": {
-    "title": "Карточка паузы",
+    "title": {
+     "ru": "Карточка паузы",
+     "en": "Pause card",
+     "es": "Tarjeta de pausa"
+    },
     "card_type": "pause_card",
-    "intro": "Составьте карточку для сильного импульса. Она появится на экране «Сильный импульс».",
+    "intro": {
+     "ru": "Составьте карточку для сильного импульса. Она появится на экране «Сильный импульс».",
+     "en": "Make a card for a strong urge. It will appear on the “Strong urge” screen.",
+     "es": "Crea una tarjeta para un impulso fuerte. Aparecerá en la pantalla «Impulso fuerte»."
+    },
     "fields": [
      {
       "id": "phrase",
-      "label": "Фраза",
+      "label": {
+       "ru": "Фраза",
+       "en": "Phrase",
+       "es": "Frase"
+      },
       "type": "text",
-      "default": "Я замечаю мысль, что…"
+      "default": {
+       "ru": "Я замечаю мысль, что…",
+       "en": "I notice the thought that…",
+       "es": "Noto el pensamiento de que…"
+      }
      },
      {
       "id": "action1",
-      "label": "Действие 1",
+      "label": {
+       "ru": "Действие 1",
+       "en": "Action 1",
+       "es": "Acción 1"
+      },
       "type": "text",
-      "hint": "Что реально доступно дома",
+      "hint": {
+       "ru": "Что реально доступно дома",
+       "en": "What is actually available at home",
+       "es": "Qué tienes realmente a mano en casa"
+      },
       "chips": [
-       "Выйти на воздух",
-       "Умыться прохладной водой",
-       "Написать кому-то",
-       "Включить музыку",
-       "Сменить комнату"
+       {
+        "ru": "Выйти на воздух",
+        "en": "Get some fresh air",
+        "es": "Salir a tomar el aire"
+       },
+       {
+        "ru": "Умыться прохладной водой",
+        "en": "Wash your face with cool water",
+        "es": "Lavarte la cara con agua fresca"
+       },
+       {
+        "ru": "Написать кому-то",
+        "en": "Message someone",
+        "es": "Escribir a alguien"
+       },
+       {
+        "ru": "Включить музыку",
+        "en": "Put on some music",
+        "es": "Poner música"
+       },
+       {
+        "ru": "Сменить комнату",
+        "en": "Change rooms",
+        "es": "Cambiar de habitación"
+       }
       ]
      },
      {
       "id": "action2",
-      "label": "Действие 2",
+      "label": {
+       "ru": "Действие 2",
+       "en": "Action 2",
+       "es": "Acción 2"
+      },
       "type": "text",
-      "hint": "Что реально доступно на работе",
+      "hint": {
+       "ru": "Что реально доступно на работе",
+       "en": "What is actually available at work",
+       "es": "Qué tienes realmente a mano en el trabajo"
+      },
       "chips": [
-       "Выйти на несколько минут",
-       "Выпить воды",
-       "Написать кому-то",
-       "Сделать несколько медленных выдохов"
+       {
+        "ru": "Выйти на несколько минут",
+        "en": "Step outside for a few minutes",
+        "es": "Salir unos minutos"
+       },
+       {
+        "ru": "Выпить воды",
+        "en": "Drink some water",
+        "es": "Beber agua"
+       },
+       {
+        "ru": "Написать кому-то",
+        "en": "Message someone",
+        "es": "Escribir a alguien"
+       },
+       {
+        "ru": "Сделать несколько медленных выдохов",
+        "en": "Take a few slow exhales",
+        "es": "Hacer unas cuantas exhalaciones lentas"
+       }
       ]
      }
     ]
@@ -281,89 +691,217 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Репетиция",
-     "body": "Раз в неделю, в спокойный момент, пройдите кнопку «Сильный импульс», чтобы потренироваться, пока он не сильный."
+     "title": {
+      "ru": "Репетиция",
+      "en": "Rehearsal",
+      "es": "Ensayo"
+     },
+     "body": {
+      "ru": "Раз в неделю, в спокойный момент, пройдите кнопку «Сильный импульс», чтобы потренироваться, пока он не сильный.",
+      "en": "Once a week, at a calm moment, go through the “Strong urge” button to practise while it isn't strong.",
+      "es": "Una vez por semana, en un momento tranquilo, recorre el botón «Impulso fuerte» para practicar mientras el impulso no es fuerte."
+     }
     }
    ],
    "free": false
   },
   {
    "id": "s5",
-   "title": "Справиться с эмоцией иначе",
-   "card": "Еда может утешать, и в этом нет ничего плохого. Но когда она единственный способ справиться с чувствами, становится тесно. Расширяем набор способов.",
+   "title": {
+    "ru": "Справиться с эмоцией иначе",
+    "en": "Coping With Emotions Differently",
+    "es": "Afrontar la emoción de otra manera"
+   },
+   "card": {
+    "ru": "Еда может утешать, и в этом нет ничего плохого. Но когда она единственный способ справиться с чувствами, становится тесно. Расширяем набор способов.",
+    "en": "Food can comfort, and there is nothing wrong with that. But when it is the only way to cope with feelings, things get tight. We widen the set of ways.",
+    "es": "La comida puede consolar, y no tiene nada de malo. Pero cuando es la única manera de afrontar lo que sientes, todo se vuelve estrecho. Ampliamos el abanico de maneras."
+   },
    "minutes": 10,
    "audio_doc_id": "program_eating__s5",
    "task": {
-    "title": "Карта эмоций",
+    "title": {
+     "ru": "Карта эмоций",
+     "en": "Emotion map",
+     "es": "Mapa de emociones"
+    },
     "card_type": "emotion_map",
-    "intro": "Выберите 2–3 эмоции, которые чаще всего бывают перед перееданием, и для каждой два действия: дома и вне дома.",
+    "intro": {
+     "ru": "Выберите 2–3 эмоции, которые чаще всего бывают перед перееданием, и для каждой два действия: дома и вне дома.",
+     "en": "Choose 2–3 emotions that most often come before overeating, and for each one two actions: at home and away from home.",
+     "es": "Elige 2 o 3 emociones que aparecen con más frecuencia antes de un atracón y, para cada una, dos acciones: en casa y fuera de casa."
+    },
     "fields": [
      {
       "id": "e1",
-      "label": "Эмоция 1",
+      "label": {
+       "ru": "Эмоция 1",
+       "en": "Emotion 1",
+       "es": "Emoción 1"
+      },
       "type": "text",
       "chips": [
-       "Тревога",
-       "Скука",
-       "Усталость",
-       "Обида",
-       "Одиночество",
-       "Злость"
+       {
+        "ru": "Тревога",
+        "en": "Anxiety",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Скука",
+        "en": "Boredom",
+        "es": "Aburrimiento"
+       },
+       {
+        "ru": "Усталость",
+        "en": "Tiredness",
+        "es": "Cansancio"
+       },
+       {
+        "ru": "Обида",
+        "en": "Resentment",
+        "es": "Resentimiento"
+       },
+       {
+        "ru": "Одиночество",
+        "en": "Loneliness",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Злость",
+        "en": "Anger",
+        "es": "Enfado"
+       }
       ]
      },
      {
       "id": "e1_home",
-      "label": "Дома",
+      "label": {
+       "ru": "Дома",
+       "en": "At home",
+       "es": "En casa"
+      },
       "type": "text",
-      "hint": "Что поможет"
+      "hint": {
+       "ru": "Что поможет",
+       "en": "What would help",
+       "es": "Qué te ayudaría"
+      }
      },
      {
       "id": "e1_away",
-      "label": "Вне дома",
+      "label": {
+       "ru": "Вне дома",
+       "en": "Away from home",
+       "es": "Fuera de casa"
+      },
       "type": "text",
-      "hint": "Что поможет"
+      "hint": {
+       "ru": "Что поможет",
+       "en": "What would help",
+       "es": "Qué te ayudaría"
+      }
      },
      {
       "id": "e2",
-      "label": "Эмоция 2",
+      "label": {
+       "ru": "Эмоция 2",
+       "en": "Emotion 2",
+       "es": "Emoción 2"
+      },
       "type": "text",
       "chips": [
-       "Тревога",
-       "Скука",
-       "Усталость",
-       "Обида",
-       "Одиночество",
-       "Злость"
+       {
+        "ru": "Тревога",
+        "en": "Anxiety",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Скука",
+        "en": "Boredom",
+        "es": "Aburrimiento"
+       },
+       {
+        "ru": "Усталость",
+        "en": "Tiredness",
+        "es": "Cansancio"
+       },
+       {
+        "ru": "Обида",
+        "en": "Resentment",
+        "es": "Resentimiento"
+       },
+       {
+        "ru": "Одиночество",
+        "en": "Loneliness",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Злость",
+        "en": "Anger",
+        "es": "Enfado"
+       }
       ]
      },
      {
       "id": "e2_home",
-      "label": "Дома",
+      "label": {
+       "ru": "Дома",
+       "en": "At home",
+       "es": "En casa"
+      },
       "type": "text",
-      "hint": "Что поможет"
+      "hint": {
+       "ru": "Что поможет",
+       "en": "What would help",
+       "es": "Qué te ayudaría"
+      }
      },
      {
       "id": "e2_away",
-      "label": "Вне дома",
+      "label": {
+       "ru": "Вне дома",
+       "en": "Away from home",
+       "es": "Fuera de casa"
+      },
       "type": "text",
-      "hint": "Что поможет"
+      "hint": {
+       "ru": "Что поможет",
+       "en": "What would help",
+       "es": "Qué te ayudaría"
+      }
      },
      {
       "id": "e3",
-      "label": "Эмоция 3",
+      "label": {
+       "ru": "Эмоция 3",
+       "en": "Emotion 3",
+       "es": "Emoción 3"
+      },
       "type": "text",
-      "hint": "Если хотите",
+      "hint": {
+       "ru": "Если хотите",
+       "en": "If you like",
+       "es": "Si quieres"
+      },
       "optional": true
      },
      {
       "id": "e3_home",
-      "label": "Дома",
+      "label": {
+       "ru": "Дома",
+       "en": "At home",
+       "es": "En casa"
+      },
       "type": "text",
       "optional": true
      },
      {
       "id": "e3_away",
-      "label": "Вне дома",
+      "label": {
+       "ru": "Вне дома",
+       "en": "Away from home",
+       "es": "Fuera de casa"
+      },
       "type": "text",
       "optional": true
      }
@@ -372,43 +910,99 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Назови чувство",
-     "body": "Раз в день, когда вспомните, назовите про себя, что вы сейчас чувствуете. Одним словом. Это тренировка, не обязанность."
+     "title": {
+      "ru": "Назови чувство",
+      "en": "Name the feeling",
+      "es": "Ponle nombre al sentimiento"
+     },
+     "body": {
+      "ru": "Раз в день, когда вспомните, назовите про себя, что вы сейчас чувствуете. Одним словом. Это тренировка, не обязанность.",
+      "en": "Once a day, when you remember, say to yourself what you are feeling right now. In one word. It is practice, not an obligation.",
+      "es": "Una vez al día, cuando te acuerdes, dite qué estás sintiendo ahora. En una sola palabra. Es entrenamiento, no una obligación."
+     }
     },
     {
      "id": "m2",
-     "title": "Коробка помощи",
-     "body": "Идеи, что можно сделать вместо еды, когда хочется, чтобы стало легче: выйти на воздух, умыться прохладной водой, позвонить близкому, включить музыку, сменить комнату, подышать у окна, написать пару строк. Выберите свои."
+     "title": {
+      "ru": "Коробка помощи",
+      "en": "Help box",
+      "es": "Caja de ayuda"
+     },
+     "body": {
+      "ru": "Идеи, что можно сделать вместо еды, когда хочется, чтобы стало легче: выйти на воздух, умыться прохладной водой, позвонить близкому, включить музыку, сменить комнату, подышать у окна, написать пару строк. Выберите свои.",
+      "en": "Ideas for what you can do instead of eating when you want to feel better: get some fresh air, wash your face with cool water, call someone close, put on music, change rooms, breathe by the window, write a couple of lines. Choose your own.",
+      "es": "Ideas de lo que puedes hacer en lugar de comer cuando quieres sentirte mejor: salir a tomar el aire, lavarte la cara con agua fresca, llamar a alguien cercano, poner música, cambiar de habitación, respirar junto a la ventana, escribir un par de líneas. Elige las tuyas."
+     }
     }
    ],
    "free": false
   },
   {
    "id": "s6",
-   "title": "Это шаг заботы о себе",
-   "card": "После эпизода часто приходят вина и жёсткие мысли о себе. Они делают только тяжелее. Учимся отвечать себе иначе и делать следующий полезный шаг. Можно слушать сразу после эпизода.",
+   "title": {
+    "ru": "Это шаг заботы о себе",
+    "en": "Without Shame After Overeating",
+    "es": "Sin vergüenza después de un atracón"
+   },
+   "card": {
+    "ru": "После эпизода часто приходят вина и жёсткие мысли о себе. Они делают только тяжелее. Учимся отвечать себе иначе и делать следующий полезный шаг. Можно слушать сразу после эпизода.",
+    "en": "After an episode, guilt and harsh thoughts about yourself often arrive. They only make things heavier. We learn to answer ourselves differently and take the next helpful step. You can listen right after an episode.",
+    "es": "Después de un episodio suelen llegar la culpa y pensamientos duros sobre ti. Solo lo hacen todo más pesado. Aprendemos a respondernos de otra manera y a dar el siguiente paso útil. Puedes escuchar este audio justo después de un episodio."
+   },
    "minutes": 10,
    "audio_doc_id": "program_eating__s6",
    "always_available": true,
    "task": {
-    "title": "Фраза поддержки",
+    "title": {
+     "ru": "Фраза поддержки",
+     "en": "Support phrase",
+     "es": "Frase de apoyo"
+    },
     "card_type": "support",
-    "intro": "Выберите или напишите одну фразу поддержки себе и отметьте время следующего обычного приёма пищи. Она появится на экране «Была ситуация».",
+    "intro": {
+     "ru": "Выберите или напишите одну фразу поддержки себе и отметьте время следующего обычного приёма пищи. Она появится на экране «Была ситуация».",
+     "en": "Choose or write one supportive phrase for yourself and mark the time of your next regular meal. It will appear on the “It happened” screen.",
+     "es": "Elige o escribe una frase de apoyo para ti y marca la hora de tu próxima comida habitual. Aparecerá en la pantalla «Ya pasó»."
+    },
     "fields": [
      {
       "id": "phrase",
-      "label": "Фраза",
+      "label": {
+       "ru": "Фраза",
+       "en": "Phrase",
+       "es": "Frase"
+      },
       "type": "text",
-      "hint": "Реалистичная, не «я прекрасен(а)»",
+      "hint": {
+       "ru": "Реалистичная, не «я прекрасен(а)»",
+       "en": "Realistic, not “I'm wonderful”",
+       "es": "Realista, no «soy maravillosa/o»"
+      },
       "chips": [
-       "Мне тяжело, и это пройдёт",
-       "Один эпизод — это не всё",
-       "Я могу вернуться к обычному питанию со следующего приёма пищи"
+       {
+        "ru": "Мне тяжело, и это пройдёт",
+        "en": "This is hard, and it will pass",
+        "es": "Esto es difícil, y pasará"
+       },
+       {
+        "ru": "Один эпизод — это не всё",
+        "en": "One episode is not everything",
+        "es": "Un episodio no lo es todo"
+       },
+       {
+        "ru": "Я могу вернуться к обычному питанию со следующего приёма пищи",
+        "en": "I can return to regular eating from my next meal",
+        "es": "Puedo volver a comer con normalidad desde la próxima comida"
+       }
       ]
      },
      {
       "id": "next_meal",
-      "label": "Следующий обычный приём пищи — во сколько?",
+      "label": {
+       "ru": "Следующий обычный приём пищи — во сколько?",
+       "en": "Next regular meal: what time?",
+       "es": "Próxima comida habitual: ¿a qué hora?"
+      },
       "type": "text"
      }
     ]
@@ -416,119 +1010,251 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Письмо себе",
-     "body": "Если хочется, напишите пять строк: что бы вы сказали близкому человеку, оказавшемуся в такой ситуации. Если добрые слова к себе даются тяжело, можно писать нейтрально, как факты."
+     "title": {
+      "ru": "Письмо себе",
+      "en": "A letter to yourself",
+      "es": "Una carta para ti"
+     },
+     "body": {
+      "ru": "Если хочется, напишите пять строк: что бы вы сказали близкому человеку, оказавшемуся в такой ситуации. Если добрые слова к себе даются тяжело, можно писать нейтрально, как факты.",
+      "en": "If you like, write five lines: what you would say to someone close to you in this situation. If kind words to yourself are hard, you can write neutrally, as facts.",
+      "es": "Si te apetece, escribe cinco líneas: lo que le dirías a una persona cercana que estuviera en esta situación. Si las palabras amables hacia ti cuestan, puedes escribir en tono neutro, como hechos."
+     }
     }
    ],
    "free": false
   },
   {
    "id": "s7",
-   "title": "План на трудные ситуации",
-   "card": "Трудные ситуации повторяются. Значит, к ним можно подготовиться заранее. Составляем личный план «если — то» для своих триггеров.",
+   "title": {
+    "ru": "План на трудные ситуации",
+    "en": "A Plan for Difficult Situations",
+    "es": "Un plan para situaciones difíciles"
+   },
+   "card": {
+    "ru": "Трудные ситуации повторяются. Значит, к ним можно подготовиться заранее. Составляем личный план «если — то» для своих триггеров.",
+    "en": "Difficult situations repeat. That means you can prepare for them in advance. We make a personal “if — then” plan for your triggers.",
+    "es": "Las situaciones difíciles se repiten. Por tanto, puedes prepararte con antelación. Creamos un plan personal de «si… entonces» para tus desencadenantes."
+   },
    "minutes": 11,
    "audio_doc_id": "program_eating__s7",
    "task": {
-    "title": "Четыре плана «если — то»",
+    "title": {
+     "ru": "Четыре плана «если — то»",
+     "en": "Four “if — then” plans",
+     "es": "Cuatro planes «si… entonces»"
+    },
     "card_type": "if_then",
-    "intro": "Для каждой ситуации запишите, что вы сделаете. Планы не содержат правил «не есть после…».",
+    "intro": {
+     "ru": "Для каждой ситуации запишите, что вы сделаете. Планы не содержат правил «не есть после…».",
+     "en": "For each situation, write what you will do. The plans contain no rules like “don't eat after…”.",
+     "es": "Para cada situación, escribe qué harás. Los planes no incluyen reglas del tipo «no comer después de…»."
+    },
     "fields": [
      {
       "id": "if1",
-      "label": "Если… (обычный триггер)",
+      "label": {
+       "ru": "Если… (обычный триггер)",
+       "en": "If… (everyday trigger)",
+       "es": "Si… (desencadenante habitual)"
+      },
       "type": "text",
-      "hint": "Например: «Если я прихожу домой уставшей/уставшим…»"
+      "hint": {
+       "ru": "Например: «Если я прихожу домой уставшей/уставшим…»",
+       "en": "For example: “If I get home tired…”",
+       "es": "Por ejemplo: «Si llego a casa cansado/a…»"
+      }
      },
      {
       "id": "then1",
-      "label": "То я…",
+      "label": {
+       "ru": "То я…",
+       "en": "Then I…",
+       "es": "Entonces yo…"
+      },
       "type": "text"
      },
      {
       "id": "if2",
-      "label": "Если… (эмоциональный триггер)",
+      "label": {
+       "ru": "Если… (эмоциональный триггер)",
+       "en": "If… (emotional trigger)",
+       "es": "Si… (desencadenante emocional)"
+      },
       "type": "text"
      },
      {
       "id": "then2",
-      "label": "То я…",
+      "label": {
+       "ru": "То я…",
+       "en": "Then I…",
+       "es": "Entonces yo…"
+      },
       "type": "text"
      },
      {
       "id": "if3",
-      "label": "Если… (сильный импульс)",
+      "label": {
+       "ru": "Если… (сильный импульс)",
+       "en": "If… (strong urge)",
+       "es": "Si… (impulso fuerte)"
+      },
       "type": "text"
      },
      {
       "id": "then3",
-      "label": "То я…",
+      "label": {
+       "ru": "То я…",
+       "en": "Then I…",
+       "es": "Entonces yo…"
+      },
       "type": "text",
-      "hint": "Например: «открою карточку паузы»"
+      "hint": {
+       "ru": "Например: «открою карточку паузы»",
+       "en": "For example: “I'll open the pause card”",
+       "es": "Por ejemplo: «abriré la tarjeta de pausa»"
+      }
      },
      {
       "id": "if4",
-      "label": "Если… (эпизод уже случился)",
+      "label": {
+       "ru": "Если… (эпизод уже случился)",
+       "en": "If… (an episode has already happened)",
+       "es": "Si… (ya ha ocurrido un episodio)"
+      },
       "type": "text"
      },
      {
       "id": "then4",
-      "label": "То я…",
+      "label": {
+       "ru": "То я…",
+       "en": "Then I…",
+       "es": "Entonces yo…"
+      },
       "type": "text",
-      "hint": "Например: «поем в обычное время и открою «Была ситуация»»"
+      "hint": {
+       "ru": "Например: «поем в обычное время и открою «Была ситуация»»",
+       "en": "For example: “I'll eat at the usual time and open ‘It happened’”",
+       "es": "Por ejemplo: «comeré a la hora habitual y abriré ‘Ya pasó’»"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Фразы для застолий",
-     "body": "Заранее выберите 2–3 фразы на случай «Съешь ещё»: «Спасибо, мне достаточно», «Позже, если захочу», «С удовольствием, положите немного». Можно придумать свои."
+     "title": {
+      "ru": "Фразы для застолий",
+      "en": "Phrases for the table",
+      "es": "Frases para la mesa"
+     },
+     "body": {
+      "ru": "Заранее выберите 2–3 фразы на случай «Съешь ещё»: «Спасибо, мне достаточно», «Позже, если захочу», «С удовольствием, положите немного». Можно придумать свои.",
+      "en": "Choose 2–3 phrases in advance for the “Have some more” moment: “Thank you, I've had enough,” “Later, if I feel like it,” “Gladly, just a small portion.” You can invent your own.",
+      "es": "Elige de antemano 2 o 3 frases para el momento de «Toma un poco más»: «Gracias, ya tengo suficiente», «Luego, si me apetece», «Con gusto, ponme un poquito». Puedes inventar las tuyas."
+     }
     }
    ],
    "free": false
   },
   {
    "id": "s8",
-   "title": "Устойчивое отношение к еде и себе",
-   "card": "Подводим итоги: какие навыки уже есть, как замечать ранние признаки ухудшения и куда двигаться дальше. Восстановление не требует идеальности.",
+   "title": {
+    "ru": "Устойчивое отношение к еде и себе",
+    "en": "A Sustainable Relationship with Food and Yourself",
+    "es": "Una relación sostenible con la comida y contigo misma"
+   },
+   "card": {
+    "ru": "Подводим итоги: какие навыки уже есть, как замечать ранние признаки ухудшения и куда двигаться дальше. Восстановление не требует идеальности.",
+    "en": "We take stock: which skills you already have, how to notice early signs that things are getting harder, and where to go next. Recovery does not require perfection.",
+    "es": "Hacemos balance: qué habilidades ya tienes, cómo notar las señales tempranas de que se vuelve más difícil y hacia dónde seguir. La recuperación no exige perfección."
+   },
    "minutes": 10,
    "audio_doc_id": "program_eating__s8",
    "task": {
-    "title": "План устойчивости",
+    "title": {
+     "ru": "План устойчивости",
+     "en": "Resilience plan",
+     "es": "Plan de estabilidad"
+    },
     "card_type": "resilience",
-    "intro": "Соберите свой план поддержки.",
+    "intro": {
+     "ru": "Соберите свой план поддержки.",
+     "en": "Put together your own support plan.",
+     "es": "Reúne tu propio plan de apoyo."
+    },
     "fields": [
      {
       "id": "signs",
-      "label": "Ранние признаки, что становится тяжелее",
+      "label": {
+       "ru": "Ранние признаки, что становится тяжелее",
+       "en": "Early signs that things are getting harder",
+       "es": "Señales tempranas de que se vuelve más difícil"
+      },
       "type": "text",
-      "hint": "2–3 признака"
+      "hint": {
+       "ru": "2–3 признака",
+       "en": "2–3 signs",
+       "es": "2 o 3 señales"
+      }
      },
      {
       "id": "actions",
-      "label": "Что я делаю, когда замечаю их",
+      "label": {
+       "ru": "Что я делаю, когда замечаю их",
+       "en": "What I do when I notice them",
+       "es": "Qué hago cuando las noto"
+      },
       "type": "text",
-      "hint": "2–3 действия"
+      "hint": {
+       "ru": "2–3 действия",
+       "en": "2–3 actions",
+       "es": "2 o 3 acciones"
+      }
      },
      {
       "id": "value",
-      "label": "Ради чего мне это важно",
+      "label": {
+       "ru": "Ради чего мне это важно",
+       "en": "What this matters to me for",
+       "es": "Para qué es importante esto para mí"
+      },
       "type": "text",
-      "hint": "Одна ценность, не связанная с весом"
+      "hint": {
+       "ru": "Одна ценность, не связанная с весом",
+       "en": "One value not connected to weight",
+       "es": "Un valor que no tenga que ver con el peso"
+      }
      },
      {
       "id": "contact",
-      "label": "Кому или куда я обращусь за помощью",
+      "label": {
+       "ru": "Кому или куда я обращусь за помощью",
+       "en": "Who or where I will turn to for help",
+       "es": "A quién o adónde acudiré para pedir ayuda"
+      },
       "type": "text",
-      "hint": "Близкий человек, специалист, служба помощи"
+      "hint": {
+       "ru": "Близкий человек, специалист, служба помощи",
+       "en": "A close person, a specialist, a helpline",
+       "es": "Una persona cercana, un especialista, una línea de ayuda"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Проверка опоры",
-     "body": "Раз в несколько недель перечитайте свой план и карточки. Что работает? Что хочется обновить? Если ранние признаки стали частыми, подумайте о консультации специалиста."
+     "title": {
+      "ru": "Проверка опоры",
+      "en": "Checking your support",
+      "es": "Revisar tu apoyo"
+     },
+     "body": {
+      "ru": "Раз в несколько недель перечитайте свой план и карточки. Что работает? Что хочется обновить? Если ранние признаки стали частыми, подумайте о консультации специалиста.",
+      "en": "Once every few weeks, reread your plan and cards. What works? What do you want to update? If the early signs have become frequent, consider a consultation with a specialist.",
+      "es": "Una vez cada pocas semanas, relee tu plan y tus tarjetas. ¿Qué funciona? ¿Qué quieres actualizar? Si las señales tempranas se han vuelto frecuentes, plantéate una consulta con un especialista."
+     }
     }
    ],
    "free": false
@@ -537,65 +1263,153 @@
  "tools": [
   {
    "id": "urge",
-   "title": "Сильный импульс",
-   "subtitle": "Когда очень хочется поесть прямо сейчас",
+   "title": {
+    "ru": "Сильный импульс",
+    "en": "Strong urge",
+    "es": "Impulso fuerte"
+   },
+   "subtitle": {
+    "ru": "Когда очень хочется поесть прямо сейчас",
+    "en": "When you really want to eat right now",
+    "es": "Cuando tienes muchas ganas de comer ahora mismo"
+   },
    "pages": [
     {
-     "title": "Остановитесь на минуту",
-     "body": "Поставьте ступни на пол. Сделайте выдох чуть длиннее вдоха. Желание поесть сильное, но оно меняется. Ничего не нужно побеждать.",
+     "title": {
+      "ru": "Остановитесь на минуту",
+      "en": "Stop for a minute",
+      "es": "Detente un minuto"
+     },
+     "body": {
+      "ru": "Поставьте ступни на пол. Сделайте выдох чуть длиннее вдоха. Желание поесть сильное, но оно меняется. Ничего не нужно побеждать.",
+      "en": "Put your feet on the floor. Make your exhale a little longer than your inhale. The wish to eat is strong, but it changes. There is nothing to win.",
+      "es": "Apoya los pies en el suelo. Haz que la exhalación sea un poco más larga que la inhalación. El deseo de comer es fuerte, pero cambia. No hay nada que vencer."
+     },
      "scale": {
       "id": "before",
-      "label": "Сила желания поесть сейчас, 0–10",
+      "label": {
+       "ru": "Сила желания поесть сейчас, 0–10",
+       "en": "Strength of the wish to eat right now, 0–10",
+       "es": "Intensidad del deseo de comer ahora, de 0 a 10"
+      },
       "record": {
-       "name": "Желание поесть",
+       "name": {
+        "ru": "Желание поесть",
+        "en": "Wish to eat",
+        "es": "Deseo de comer"
+       },
        "kind": "negative"
       }
      }
     },
     {
-     "title": "Назовите мысль",
-     "body": "Скажите про себя: «Я замечаю мысль, что…» и закончите фразу. Мысль это не приказ.",
+     "title": {
+      "ru": "Назовите мысль",
+      "en": "Name the thought",
+      "es": "Nombra el pensamiento"
+     },
+     "body": {
+      "ru": "Скажите про себя: «Я замечаю мысль, что…» и закончите фразу. Мысль это не приказ.",
+      "en": "Say to yourself: “I notice the thought that…” and finish the sentence. A thought is not an order.",
+      "es": "Dite: «Noto el pensamiento de que…» y termina la frase. Un pensamiento no es una orden."
+     },
      "show_card": "pause_card:phrase",
      "inline": {
       "field": "phrase",
-      "label": "Моя фраза для паузы",
+      "label": {
+       "ru": "Моя фраза для паузы",
+       "en": "My phrase for the pause",
+       "es": "Mi frase para la pausa"
+      },
       "chips": [
-       "Я замечаю мысль, что…",
-       "Это мысль, а не факт",
-       "Импульс меняется, я могу подождать"
+       {
+        "ru": "Я замечаю мысль, что…",
+        "en": "I notice the thought that…",
+        "es": "Noto el pensamiento de que…"
+       },
+       {
+        "ru": "Это мысль, а не факт",
+        "en": "It's a thought, not a fact",
+        "es": "Es un pensamiento, no un hecho"
+       },
+       {
+        "ru": "Импульс меняется, я могу подождать",
+        "en": "The urge changes, I can wait",
+        "es": "El impulso cambia, puedo esperar"
+       }
       ]
      }
     },
     {
-     "title": "Ваша карточка паузы",
-     "body": "Если голодны, поешьте спокойно, сидя. Если дело в эмоции, можно сделать одно из своих действий.",
+     "title": {
+      "ru": "Ваша карточка паузы",
+      "en": "Your pause card",
+      "es": "Tu tarjeta de pausa"
+     },
+     "body": {
+      "ru": "Если голодны, поешьте спокойно, сидя. Если дело в эмоции, можно сделать одно из своих действий.",
+      "en": "If you are hungry, eat calmly, sitting down. If it is about an emotion, you can do one of your actions.",
+      "es": "Si tienes hambre, come con calma, sentado/a. Si se trata de una emoción, puedes hacer una de tus acciones."
+     },
      "show_card": "pause_card:action1,action2",
      "show_card_fallback": "Здесь появятся ваши действия после шага 4."
     },
     {
-     "title": "Подождать немного?",
-     "body": "Если хочется, можно отложить решение на 10 минут и потом вернуться к нему. Это необязательно.",
+     "title": {
+      "ru": "Подождать немного?",
+      "en": "Wait a little?",
+      "es": "¿Esperar un poco?"
+     },
+     "body": {
+      "ru": "Если хочется, можно отложить решение на 10 минут и потом вернуться к нему. Это необязательно.",
+      "en": "If you like, you can put the decision off for 10 minutes and come back to it. This is optional.",
+      "es": "Si quieres, puedes aplazar la decisión 10 minutos y volver a ella después. Es opcional."
+     },
      "timer_minutes": 10
     },
     {
-     "title": "Как вы сейчас?",
-     "body": "Иногда импульс слабеет, иногда нет. Оба варианта нормальны. Если вы поели больше, чем хотели, это не конец.",
+     "title": {
+      "ru": "Как вы сейчас?",
+      "en": "How are you now?",
+      "es": "¿Cómo estás ahora?"
+     },
+     "body": {
+      "ru": "Иногда импульс слабеет, иногда нет. Оба варианта нормальны. Если вы поели больше, чем хотели, это не конец.",
+      "en": "Sometimes the urge weakens, sometimes it doesn't. Both are fine. If you ate more than you wanted, it is not the end.",
+      "es": "A veces el impulso se debilita y a veces no. Ambas cosas son normales. Si comiste más de lo que querías, no es el final."
+     },
      "buttons": [
       {
-       "label": "Стало легче",
+       "label": {
+        "ru": "Стало легче",
+        "en": "It got easier",
+        "es": "Ha mejorado"
+       },
        "action": "close"
       },
       {
-       "label": "Я поел(а), и это тоже информация",
+       "label": {
+        "ru": "Я поел(а), и это тоже информация",
+        "en": "I ate, and that is information too",
+        "es": "Comí, y eso también es información"
+       },
        "action": "tool:after"
       }
      ],
      "helpline": true,
      "scale": {
       "id": "after",
-      "label": "Сила желания теперь, 0–10",
+      "label": {
+       "ru": "Сила желания теперь, 0–10",
+       "en": "Strength of the wish now, 0–10",
+       "es": "Intensidad del deseo ahora, de 0 a 10"
+      },
       "record": {
-       "name": "Желание поесть",
+       "name": {
+        "ru": "Желание поесть",
+        "en": "Wish to eat",
+        "es": "Deseo de comer"
+       },
        "kind": "negative"
       }
      }
@@ -604,34 +1418,86 @@
   },
   {
    "id": "after",
-   "title": "Была ситуация",
-   "subtitle": "Если переедание уже произошло",
+   "title": {
+    "ru": "Была ситуация",
+    "en": "It happened",
+    "es": "Ya pasó"
+   },
+   "subtitle": {
+    "ru": "Если переедание уже произошло",
+    "en": "If overeating has already happened",
+    "es": "Si el atracón ya ha ocurrido"
+   },
    "pages": [
     {
-     "title": "Вы здесь, и это уже шаг",
-     "body": "Сделайте медленный выдох. Почувствуйте опору под собой: стул, пол. Это был эпизод, а не оценка вас как человека."
+     "title": {
+      "ru": "Вы здесь, и это уже шаг",
+      "en": "You are here, and that is already a step",
+      "es": "Estás aquí, y eso ya es un paso"
+     },
+     "body": {
+      "ru": "Сделайте медленный выдох. Почувствуйте опору под собой: стул, пол. Это был эпизод, а не оценка вас как человека.",
+      "en": "Take a slow exhale. Feel the support beneath you: the chair, the floor. This was an episode, not a verdict on you as a person.",
+      "es": "Exhala despacio. Siente el apoyo bajo ti: la silla, el suelo. Fue un episodio, no un juicio sobre ti como persona."
+     }
     },
     {
-     "title": "Фраза поддержки",
-     "body": "Прочитайте её про себя.",
+     "title": {
+      "ru": "Фраза поддержки",
+      "en": "Support phrase",
+      "es": "Frase de apoyo"
+     },
+     "body": {
+      "ru": "Прочитайте её про себя.",
+      "en": "Read it silently to yourself.",
+      "es": "Léela en silencio, para ti."
+     },
      "show_card": "support:phrase",
      "inline": {
       "field": "phrase",
-      "label": "Моя фраза поддержки",
+      "label": {
+       "ru": "Моя фраза поддержки",
+       "en": "My support phrase",
+       "es": "Mi frase de apoyo"
+      },
       "chips": [
-       "Мне тяжело, и это пройдёт",
-       "Один эпизод — это не всё",
-       "Я могу вернуться к обычному питанию со следующего приёма пищи"
+       {
+        "ru": "Мне тяжело, и это пройдёт",
+        "en": "This is hard, and it will pass",
+        "es": "Esto es difícil, y pasará"
+       },
+       {
+        "ru": "Один эпизод — это не всё",
+        "en": "One episode is not everything",
+        "es": "Un episodio no lo es todo"
+       },
+       {
+        "ru": "Я могу вернуться к обычному питанию со следующего приёма пищи",
+        "en": "I can return to regular eating from my next meal",
+        "es": "Puedo volver a comer con normalidad desde la próxima comida"
+       }
       ]
      }
     },
     {
-     "title": "Следующий приём пищи",
-     "body": "В обычное время. Без наказания и без пропусков, чтобы «исправить». Разбор цепочки можно оставить на потом, когда станет спокойнее.\n\nЕсли после эпизодов вы вызываете рвоту или голодаете, обратитесь к специалисту.",
+     "title": {
+      "ru": "Следующий приём пищи",
+      "en": "Next meal",
+      "es": "Próxima comida"
+     },
+     "body": {
+      "ru": "В обычное время. Без наказания и без пропусков, чтобы «исправить». Разбор цепочки можно оставить на потом, когда станет спокойнее.\n\nЕсли после эпизодов вы вызываете рвоту или голодаете, обратитесь к специалисту.",
+      "en": "At the usual time. No punishment and no skipping to “make up for it.” Going through the chain can wait until you feel calmer.\n\nIf after episodes you make yourself vomit or fast, please reach out to a specialist.",
+      "es": "A la hora habitual. Sin castigo y sin saltarte comidas para «compensar». Revisar la cadena puede esperar a que estés más tranquilo/a.\n\nSi después de los episodios te provocas el vómito o ayunas, por favor acude a un especialista."
+     },
      "helpline": true,
      "buttons": [
       {
-       "label": "Готово",
+       "label": {
+        "ru": "Готово",
+        "en": "Done",
+        "es": "Hecho"
+       },
        "action": "close"
       }
      ]
@@ -639,30 +1505,58 @@
    ]
   }
  ],
- "free_note": "Первые два шага бесплатны. Остальные шаги открываются с подпиской Orion. Инструменты «Сильный импульс» и «Была ситуация», опрос безопасности и страница помощи всегда бесплатны.",
+ "free_note": {
+  "ru": "Первые два шага бесплатны. Остальные шаги открываются с подпиской Orion. Инструменты «Сильный импульс» и «Была ситуация», опрос безопасности и страница помощи всегда бесплатны.",
+  "en": "The first two steps are free. The other steps open with an Orion subscription. The “Strong urge” and “It happened” tools, the safety questions and the help page are always free.",
+  "es": "Los dos primeros pasos son gratis. Los demás se abren con la suscripción Orion. Las herramientas «Impulso fuerte» y «Ya pasó», las preguntas de seguridad y la página de ayuda son siempre gratuitas."
+ },
  "cover": "assets/images/courses/eating_no_autopilot.jpg",
  "weekly": [
   {
    "id": "distress",
-   "label": "Насколько тяжело мне было вокруг еды на этой неделе?",
+   "label": {
+    "ru": "Насколько тяжело мне было вокруг еды на этой неделе?",
+    "en": "How hard was it around food this week?",
+    "es": "¿Cómo de difícil fue esta semana en torno a la comida?"
+   },
    "record": {
-    "name": "Тяжесть вокруг еды",
+    "name": {
+     "ru": "Тяжесть вокруг еды",
+     "en": "Difficulty around food",
+     "es": "Dificultad con la comida"
+    },
     "kind": "negative"
    }
   },
   {
    "id": "control",
-   "label": "Как часто было ощущение потери контроля?",
+   "label": {
+    "ru": "Как часто было ощущение потери контроля?",
+    "en": "How often did you feel a loss of control?",
+    "es": "¿Con qué frecuencia sentiste pérdida de control?"
+   },
    "record": {
-    "name": "Потеря контроля над едой",
+    "name": {
+     "ru": "Потеря контроля над едой",
+     "en": "Loss of control over eating",
+     "es": "Pérdida de control al comer"
+    },
     "kind": "negative"
    }
   },
   {
    "id": "pause",
-   "label": "Насколько удавалось сделать паузу?",
+   "label": {
+    "ru": "Насколько удавалось сделать паузу?",
+    "en": "How well were you able to pause?",
+    "es": "¿Hasta qué punto lograste hacer una pausa?"
+   },
    "record": {
-    "name": "Умение сделать паузу",
+    "name": {
+     "ru": "Умение сделать паузу",
+     "en": "Ability to pause",
+     "es": "Capacidad de hacer una pausa"
+    },
     "kind": "positive"
    }
   }

@@ -62,7 +62,7 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
         context: 'course_dynamics'.tr(),
         record: rec,
         value: (_weekly[q.id] ?? 5).round(),
-        note: 'раз в неделю',
+        note: 'course_note_weekly'.tr(),
       );
     }
     await _reload();

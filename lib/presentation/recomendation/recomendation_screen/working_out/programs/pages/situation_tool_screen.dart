@@ -84,7 +84,11 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
           context: widget.tool.title,
           record: rec,
           value: v.round(),
-          note: id == 'before' ? 'до паузы' : id == 'after' ? 'после паузы' : null,
+          note: id == 'before'
+              ? 'course_note_before_pause'.tr()
+              : id == 'after'
+                  ? 'course_note_after_pause'.tr()
+                  : null,
         );
       }
     }
