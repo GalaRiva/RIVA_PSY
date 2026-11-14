@@ -1,92 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/theme/app_colors.dart';
 
-import '../theme/app_icons.dart';
-
-/// Replaces CustomMessageBox for the "how to live through this emotion"
-/// popups (SelectButtonWidget, under the audio players on the negative-
-/// emotions tabs) — CustomMessageBox itself is shared across ~25 other
-/// call sites (subscription dialogs, error messages, etc.), so redesigning
-/// it directly would have touched all of them. This is a standalone
-/// widget instead, purpose-built for a short instructional paragraph:
-/// rounded card, soft shadow, generous line height and a real heading
-/// style instead of the flat cyan header bar + 14px black text.
+/// The "how to live through this emotion" popup (SelectButtonWidget, on the
+/// negative-emotions tabs). A calm white card with a soft shadow: a green
+/// title, a round close button, and the text as short paragraphs (one per
+/// sentence) with generous line height.
+///
+/// Wrapped in its own transparent [Material]: `showDialog` gives the content no
+/// Material ancestor, and the close button's ink splash needs one (in debug
+/// builds its absence is a red "No Material widget found" error screen).
 class ExerciseInstructionDialog extends StatelessWidget {
   final String title;
   final String content;
 
-  const ExerciseInstructionDialog(
-      {Key? key, required this.title, required this.content})
-      : super(key: key);
+  const ExerciseInstructionDialog({Key? key, required this.title, required this.content}) : super(key: key);
+
+  List<String> get _paragraphs =>
+      content.split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty && e != '.').toList();
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: getHorizontalSize(340),
-          maxHeight: size.height * 0.72,
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: ColorConstant.whiteA700,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: ColorConstant.cyan700.withOpacity(0.18),
-                blurRadius: 30,
-                spreadRadius: 2,
-                offset: const Offset(0, 10),
-              ),
-            ],
+    final paragraphs = _paragraphs;
+    return Material(
+      type: MaterialType.transparency,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: getHorizontalSize(340),
+            maxHeight: size.height * 0.72,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: getPadding(top: 26, left: 26, right: 16, bottom: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: AppStyle.txtH1.copyWith(
-                          color: ColorConstant.cyan700,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () => Navigator.pop(context),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Icon(
-                          AppIcons.x,
-                          size: getSize(16),
-                          color: ColorConstant.gray800,
-                        ),
-                      ),
-                    ),
-                  ],
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withOpacity(0.16),
+                  blurRadius: 32,
+                  offset: const Offset(0, 12),
                 ),
-              ),
-              Flexible(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: getPadding(left: 26, right: 26, top: 12, bottom: 28),
-                  child: Text(
-                    content,
-                    style: AppStyle.txtSFProDisplayLight16.copyWith(
-                      color: ColorConstant.gray800,
-                      height: 1.65,
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: getPadding(top: 22, left: 24, right: 14, bottom: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            title,
+                            style: AppStyle.txtH1.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: getFontSize(22),
+                              height: 1.2,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: getHorizontalSize(8)),
+                      Semantics(
+                        button: true,
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            width: 44,
+                            height: 44,
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLight),
+                              child: Icon(Icons.close_rounded, size: 18, color: AppColors.primary),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: getPadding(left: 24, right: 24, top: 8, bottom: 26),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (final p in paragraphs)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              p,
+                              style: AppStyle.txtSFProDisplayLight16.copyWith(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w400,
+                                height: 1.55,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
