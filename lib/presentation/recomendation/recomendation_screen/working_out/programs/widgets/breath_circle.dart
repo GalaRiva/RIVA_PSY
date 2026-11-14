@@ -137,7 +137,7 @@ class _BreathCircleState extends State<BreathCircle> with SingleTickerProviderSt
           ),
           SizedBox(height: getVerticalSize(12)),
           Text('${_running || _done ? _cycle.clamp(0, widget.cycles) : 0} / ${widget.cycles}',
-              style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, letterSpacing: 0.6)),
+              style: courseCaption().copyWith(color: AppColors.textSecondary, letterSpacing: 0.6)),
           SizedBox(height: getVerticalSize(14)),
           SizedBox(
             width: getHorizontalSize(190),

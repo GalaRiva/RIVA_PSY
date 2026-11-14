@@ -9,6 +9,9 @@ abstract class AppColors {
   static const Color background = Color(0xFFF9FAFA);
   static const Color surface = Color(0xFFFFFFFF);
 
+  /// Slightly warm off-white for lists of practices (white cards sit on it).
+  static const Color screenWarm = Color(0xFFF6F4F0);
+
   static const Color textPrimary = Color(0xFF1A1C1E);
   static const Color textSecondary = Color(0xFF7A8287);
 

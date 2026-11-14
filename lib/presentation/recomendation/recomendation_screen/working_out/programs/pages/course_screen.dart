@@ -8,13 +8,16 @@ import 'package:riva_psy/theme/app_colors.dart';
 import 'package:riva_psy/core/utils/audio_cover_map.dart';
 import 'package:riva_psy/widgets/custom_bottom_bar.dart';
 import 'package:riva_psy/widgets/medical_disclaimer.dart';
+import 'package:riva_psy/widgets/pressable_scale.dart';
 
 import 'package:riva_psy/presentation/initial_setup/onboarding/onboarding_concern.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/course_progress_store.dart';
+import '../data/course_flow.dart';
 import '../models/course.dart';
+import '../widgets/course_sheets.dart';
 import '../widgets/course_ui.dart';
 import 'course_audio_player.dart';
 import 'course_insights_screen.dart';
@@ -43,17 +46,39 @@ class _CourseScreenState extends State<CourseScreen> {
   bool _showShortcutHint = false;
   // The onboarding answer, used to choose which block "today" starts in.
   String? _concernKey;
+  // Support blocks start folded; the ones the person opened stay open.
+  final Set<String> _openGroups = {};
+  // A one-time "start here" hint on the Today card.
+  bool _hintSeen = true;
+  final _scroll = ScrollController();
+  // The floating "urge" button appears once the person scrolls past the Today
+  // card; at the top the main button must not be covered.
+  bool _urgeVisible = false;
 
   Course get _c => widget.course;
 
   @override
   void initState() {
     super.initState();
+    _scroll.addListener(() {
+      final v = _scroll.hasClients && _scroll.offset > getVerticalSize(280);
+      if (v != _urgeVisible && mounted) setState(() => _urgeVisible = v);
+    });
     _init();
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
   }
 
   Future<void> _init() async {
     _concernKey = (await OnboardingPrefs.concern())?.key;
+    final hintPrefs = await SharedPreferences.getInstance();
+    if (!(hintPrefs.getBool('course_today_hint_seen_${_c.id}') ?? false) && mounted) {
+      setState(() => _hintSeen = false);
+    }
     if (Platform.isAndroid) {
       final prefs = await SharedPreferences.getInstance();
       if (!(prefs.getBool('shortcut_hint_dismissed_v1') ?? false) && mounted) {
@@ -105,23 +130,24 @@ class _CourseScreenState extends State<CourseScreen> {
       await Navigator.push(context, MaterialPageRoute(builder: (_) => const CoursePaywallPage()));
       return;
     }
-    if (!p.canOpen(step.id, alwaysAvailable: step.alwaysAvailable, maxPerDay: _c.maxNewPerDay)) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          content: Text((_c.maxNewPerDay == 1 ? 'course_limit_one' : 'course_limit').tr()),
-          actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text('helpnow_notice_ok'.tr()))],
-        ),
-      );
+    if (stepBlockedByPace(_c, p, step)) {
+      // Not a refusal: why, when it opens, and one reminder.
+      await showTomorrowSheet(context: context, course: _c, step: step);
       return;
     }
     p.markOpened(step.id, alwaysAvailable: step.alwaysAvailable);
     await CourseProgressStore.save(_c.id, p);
+    if (!_hintSeen) {
+      _hintSeen = true;
+      SharedPreferences.getInstance().then((x) => x.setBool('course_today_hint_seen_${_c.id}', true));
+    }
     if (!mounted) return;
-    await Navigator.push(
+    // The step page answers with the index of the next step when the person
+    // taps "Next step" there.
+    final next = await Navigator.push<int>(
         context, MaterialPageRoute(builder: (_) => CourseStepScreen(course: _c, step: step, index: index)));
-    _reload();
+    await _reload();
+    if (next != null && mounted) _openStep(next);
   }
 
   // The block "today" works in: where the person last started something,
@@ -210,26 +236,29 @@ class _CourseScreenState extends State<CourseScreen> {
     if (p == null || (!p.screened && _c.screening.isNotEmpty)) {
       return Scaffold(
         backgroundColor: AppColors.background,
-        body: const Center(child: CircularProgressIndicator()),
+        body: const CourseSkeleton(),
       );
     }
     final body = AppStyle.txtSFProDisplayLight16.copyWith(color: courseSoft(false), height: 1.55);
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.45);
+    final small = courseCaption().copyWith(color: AppColors.textSecondary, height: 1.45);
     final nextIdx = _nextIndex();
+    final urge = urgeTool(_c);
     return Scaffold(
       backgroundColor: AppColors.background,
       // The program lives inside Рекомендации, but the course is a pushed
       // page: the app's bottom menu is shown here so there is always a way
       // to another section or the home screen.
       bottomNavigationBar: CustomBottomBar(),
-      body: SingleChildScrollView(
+      body: Stack(children: [
+        Positioned.fill(child: SingleChildScrollView(
+        controller: _scroll,
         padding: EdgeInsets.zero,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CoverHeader(
               coverAsset: _c.cover,
-              height: 250,
+              height: 214,
               leftScrim: true,
               onBack: () => Navigator.pop(context),
               actions: [
@@ -301,7 +330,10 @@ class _CourseScreenState extends State<CourseScreen> {
                   SectionLabel('course_my_tools'.tr()),
                   SizedBox(height: getVerticalSize(12)),
                   SizedBox(
-                    height: getVerticalSize(118),
+                    // Grows with the system font (capped at 1.3 like the rest of the
+                    // page), so a three-line tool name never overflows its card.
+                    height: getVerticalSize(130) +
+                        (MediaQuery.textScalerOf(context).scale(1.0).clamp(1.0, 1.3) - 1.0) * getVerticalSize(90),
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       clipBehavior: Clip.none,
@@ -320,7 +352,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           SizedBox(width: getHorizontalSize(8)),
                           Expanded(
                             child: Text('course_shortcut_hint'.tr(),
-                                style: AppStyle.txtSFProDisplayRegular11
+                                style: courseCaption()
                                     .copyWith(color: AppColors.textSecondary, height: 1.45)),
                           ),
                           GestureDetector(
@@ -371,15 +403,38 @@ class _CourseScreenState extends State<CourseScreen> {
                       onPressed: _openInfo,
                       icon: Icon(Icons.info_outline_rounded, size: getSize(16), color: AppColors.textSecondary),
                       label: Text('course_important'.tr(),
-                          style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.textSecondary)),
+                          style: AppStyle.txtSFProDisplayLight14.copyWith(color: courseMuted(false))),
                     ),
                   ),
+                  // Room for the floating "urge" button above the bottom menu.
+                  SizedBox(height: getVerticalSize(70)),
                 ],
               ),
             ),
           ],
         ),
-      ),
+      )),
+        if (urge != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: getVerticalSize(14),
+            child: Center(
+              child: AnimatedOpacity(
+                opacity: _urgeVisible ? 1 : 0,
+                duration: const Duration(milliseconds: 220),
+                child: IgnorePointer(
+                  ignoring: !_urgeVisible,
+                  child: UrgePill(
+                    label: urge.title,
+                    onTap: () => Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => SituationToolScreen(course: _c, tool: urge))),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ]),
     );
   }
 
@@ -409,7 +464,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     Text(subtitle,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                        style: courseCaption().copyWith(color: AppColors.textSecondary)),
                 ],
               ),
             ),
@@ -422,7 +477,7 @@ class _CourseScreenState extends State<CourseScreen> {
 
   Widget _toolCard(CourseTool t) {
     return SizedBox(
-      width: getHorizontalSize(148),
+      width: getHorizontalSize(156),
       child: SoftCard(
         padding: getPadding(left: 14, top: 14, right: 12, bottom: 12),
         onTap: () => Navigator.push(
@@ -474,7 +529,7 @@ class _CourseScreenState extends State<CourseScreen> {
       borderRadius: BorderRadius.circular(28),
       child: Container(
         width: double.infinity,
-        constraints: BoxConstraints(minHeight: getVerticalSize(330)),
+        constraints: BoxConstraints(minHeight: getVerticalSize(290)),
         decoration: BoxDecoration(
           color: const Color(0xFF16302C),
           boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.14), blurRadius: 18, offset: const Offset(0, 8))],
@@ -508,21 +563,33 @@ class _CourseScreenState extends State<CourseScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(pill.toString(),
-                        style: AppStyle.txtSFProDisplayRegular11
+                        style: courseCaption()
                             .copyWith(color: white, letterSpacing: 1.2, fontWeight: FontWeight.w600)),
                   ),
-                  SizedBox(height: getVerticalSize(104)),
+                  SizedBox(height: getVerticalSize(48)),
                   Text(step.title,
                       style: AppStyle.txtH1.copyWith(
-                          color: white, fontSize: getFontSize(28), fontWeight: FontWeight.w300, height: 1.15)),
+                          color: white, fontSize: getFontSize(26), fontWeight: FontWeight.w300, height: 1.15)),
                   if (step.card.isNotEmpty) ...[
                     SizedBox(height: getVerticalSize(10)),
                     Text(step.card,
-                        maxLines: 3,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyle.txtSFProDisplayLight14.copyWith(color: white.withOpacity(0.86), height: 1.45)),
                   ],
                   SizedBox(height: getVerticalSize(20)),
+                  if (!_hintSeen)
+                    Padding(
+                      padding: getPadding(bottom: 10),
+                      child: Row(
+                        children: [
+                          Icon(Icons.arrow_downward_rounded, size: getSize(16), color: white.withOpacity(0.85)),
+                          SizedBox(width: getHorizontalSize(6)),
+                          Text('course_start_here'.tr(),
+                              style: courseCaption().copyWith(color: white.withOpacity(0.9), fontWeight: FontWeight.w600)),
+                        ],
+                      ),
+                    ),
                   Semantics(
                     button: true,
                     label: 'course_open_step'.tr(),
@@ -576,14 +643,52 @@ class _CourseScreenState extends State<CourseScreen> {
   List<Widget> _groupSection(CourseGroup g, CourseProgress p, TextStyle small, int? nextIdx) {
     final idx = [for (var i = 0; i < _c.steps.length; i++) if (_c.steps[i].groupId == g.id) i];
     if (idx.isEmpty) return const [];
+    // With a numbered path present, the support blocks fold away so the path is
+    // what stands out; their title and subtitle stay, so they are easy to find.
+    final foldable = !g.numbered && _c.groups.any((x) => x.numbered);
+    final open = !foldable || _openGroups.contains(g.id);
+    final header = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (g.title.isNotEmpty)
+          Text(g.title, style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary))
+        else
+          SectionLabel('course_steps_title'.tr()),
+        if (g.subtitle.isNotEmpty) Padding(padding: getPadding(top: 4), child: Text(g.subtitle, style: small)),
+      ],
+    );
     return [
       SizedBox(height: getVerticalSize(38)),
-      if (g.title.isNotEmpty)
-        Text(g.title, style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary))
+      if (foldable)
+        Semantics(
+          button: true,
+          expanded: open,
+          label: g.title,
+          excludeSemantics: true,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () => setState(() => open ? _openGroups.remove(g.id) : _openGroups.add(g.id)),
+            child: Padding(
+              padding: getPadding(top: 4, bottom: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: header),
+                  SizedBox(width: getHorizontalSize(10)),
+                  AnimatedRotation(
+                    turns: open ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 220),
+                    child: Icon(Icons.expand_more_rounded, color: courseMuted(false), size: getSize(26)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
       else
-        SectionLabel('course_steps_title'.tr()),
-      if (g.subtitle.isNotEmpty)
-        Padding(padding: getPadding(top: 4), child: Text(g.subtitle, style: small)),
+        header,
+      if (!open) SizedBox(height: getVerticalSize(4)),
+      if (open) ...[
       if (g.numbered)
         Builder(builder: (_) {
           final done = idx.where((i) => p.step(_c.steps[i].id).complete).length;
@@ -610,6 +715,7 @@ class _CourseScreenState extends State<CourseScreen> {
         }),
       SizedBox(height: getVerticalSize(16)),
       for (final i in idx) _stepTile(i, p, isNext: i == nextIdx),
+      ],
     ];
   }
 
@@ -636,11 +742,14 @@ class _CourseScreenState extends State<CourseScreen> {
         button: true,
         label: _label(step),
         excludeSemantics: true,
-        child: Material(
+        child: PressableScale(
+          minScale: 0.98,
+          onTap: () => _openStep(i),
+          child: Material(
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(18),
-            onTap: () => _openStep(i),
+            onTap: null,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: Container(
@@ -693,7 +802,7 @@ class _CourseScreenState extends State<CourseScreen> {
                               child: state.complete
                                   ? Icon(Icons.check_rounded, size: getSize(16), color: AppColors.primary)
                                   : Text('${step.number}',
-                                      style: AppStyle.txtSFProDisplayRegular11
+                                      style: courseCaption()
                                           .copyWith(color: white, fontWeight: FontWeight.w700)),
                             ),
                           if (step.number != null) SizedBox(width: getHorizontalSize(12)),
@@ -710,7 +819,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                 if (meta.isNotEmpty) ...[
                                   SizedBox(height: getVerticalSize(4)),
                                   Text(meta,
-                                      style: AppStyle.txtSFProDisplayRegular11
+                                      style: courseCaption()
                                           .copyWith(color: white.withOpacity(0.82), letterSpacing: 0.3)),
                                 ],
                               ],
@@ -727,6 +836,7 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
             ),
           ),
+        ),
         ),
         ),
       ),
@@ -781,7 +891,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       if (_c.paceNote.isNotEmpty) ...[
                         SizedBox(height: getVerticalSize(12)),
                         Text(_c.paceNote,
-                            style: AppStyle.txtSFProDisplayRegular11
+                            style: courseCaption()
                                 .copyWith(color: AppColors.textSecondary, height: 1.5)),
                       ],
                     ],

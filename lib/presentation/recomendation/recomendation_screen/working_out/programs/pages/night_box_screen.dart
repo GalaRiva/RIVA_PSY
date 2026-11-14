@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/course_progress_store.dart';
 import '../data/course_records.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 const _bg = Color(0xFF0B1917);
 const _accent = Color(0xFF7FBDBA);
@@ -202,7 +203,7 @@ class _NightBoxScreenState extends State<NightBoxScreen> {
   @override
   Widget build(BuildContext context) {
     final body = AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white70, height: 1.5);
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: Colors.white54, height: 1.4);
+    final small = courseCaption().copyWith(color: Colors.white54, height: 1.4);
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context, _resolvedAny);

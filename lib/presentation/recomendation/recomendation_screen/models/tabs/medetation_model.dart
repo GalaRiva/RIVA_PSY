@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,5 +61,5 @@ class MeditationModel extends NegativeEmotionsModelTab{
   String? titleImage() =>null;
 
   @override
-  String? titleText() =>null;
+  String? titleText() => 'quiz_bridge_headphones_note'.tr();
 }

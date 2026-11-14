@@ -1,9 +1,7 @@
-import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../../../../../core/models/audio/audio_card_model.dart';
@@ -15,11 +13,12 @@ import '../../../../../core/utils/color_constant.dart';
 import '../../../../../core/utils/size_utils.dart';
 import '../../../../../theme/app_style.dart';
 import '../../../../core/services/audio/post_audio_checkin_gate.dart';
-import '../../../../core/services/datasource_service.dart';
 import '../controller.dart';
 import '../models/tabs/medetation_model.dart';
 import '../models/tabs/negative_emotion_tabs/negative_emotions_tab.dart';
-import '../../../../widgets/audio_card_widget.dart';
+import '../../../../widgets/soft_audio_card.dart';
+import 'glass_panel.dart';
+import '../../../../theme/app_colors.dart';
 import 'post_audio_checkin_sheet.dart';
 import '../working_out/programs/pages/breathing_screen.dart';
 
@@ -124,7 +123,7 @@ class _TabWidgetState extends State<TabWidget> {
     List<Duration?> dur = await _durations(assets);
     audioLength = assets.length;
     for (int i = 0; i < audioLength!; i++) {
-      list.add(AudioCardWidget(
+      list.add(SoftAudioCard(
         text: assets[i].title,
         maxDuration: dur[i] ?? Duration(seconds: 0),
         track: AppAudioTrack.forUrl(
@@ -176,72 +175,45 @@ class _TabWidgetState extends State<TabWidget> {
                     // last track. A Container sized to the real content
                     // (inside the scroll view) only colors what's there.
                     child: Container(
-                      color: ColorConstant.grayLight,
+                      color: AppColors.screenWarm,
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: tab.titleImage() != null && tab.titleText() != null,
-                          child: Padding(
-                            // More air around the picture and the short line
-                            // (the long breathing instruction it used to hold
-                            // is now just "listen with headphones").
-                            padding: getPadding(left: 20, right: 20, top: 20, bottom: 16),
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  (tab.titleImage() ?? '').startsWith('assets/')
-                                    ? ((tab.titleImage() ?? '').endsWith('.svg')
-                                        ? SvgPicture.asset(
-                                            tab.titleImage()!,
-                                            height: getVerticalSize(100),
-                                            width: getHorizontalSize(60),
-                                            fit: BoxFit.contain,
-                                          )
-                                        : Image.asset(
-                                            tab.titleImage()!,
-                                            height: getVerticalSize(100),
-                                            width: getHorizontalSize(60),
-                                            fit: BoxFit.contain,
-                                          ))
-                                    : DataSourceService.dataSourceIsRemote() ? SvgPicture.network(
-                                    tab.titleImage() ?? '',
-                                    height: getVerticalSize(100),
-                                    placeholderBuilder: (context) {
-                                      return Center(child: CircularProgressIndicator(color: ColorConstant.cyan700,));
-                                    },
-                                    width: getHorizontalSize(60),
-                                    fit: BoxFit.contain,
-                                  ) : SvgPicture.file(
-                                    File(tab.titleImage() ?? ''),
-                                    height: getVerticalSize(100),
-                                    width: getHorizontalSize(60),
-                                    fit: BoxFit.contain,
-                                  ),
-                                  SizedBox(width: getHorizontalSize(18),),
-                                  // No fixed height here — was clipping
-                                  // translations longer than the Russian
-                                  // original (e.g. Spanish "Termina cada
-                                  // ejercicio..."). The Row/Column above
-                                  // grows to fit instead.
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    width: size.width - getHorizontalSize(158),
-                                    child: Text(
-                                      tab.titleText() ?? '',
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtSFProDisplayMedium9.copyWith(
-                                          fontSize: 15,
-                                          height: 1.5,
-                                          color: ColorConstant.fromHex('#3B3B4A'),
-                                        fontWeight: FontWeight.w400
+                        if (tab.titleText() != null && (tab.titleText() ?? '').isNotEmpty)
+                          Padding(
+                            // A calm one-line hint instead of the big picture
+                            // with a floating caption ("listen with headphones").
+                            padding: getPadding(left: 16, right: 16, top: 12, bottom: 4),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                constraints: BoxConstraints(minHeight: getVerticalSize(44)),
+                                padding: getPadding(left: 16, right: 20, top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.headphones_rounded, color: Colors.white, size: getSize(24)),
+                                    SizedBox(width: getHorizontalSize(10)),
+                                    Flexible(
+                                      child: Text(
+                                        tab.titleText() ?? '',
+                                        style: AppStyle.txtSFProDisplayMedium9.copyWith(
+                                          fontSize: getFontSize(15),
+                                          height: 1.3,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
-                                  )
-                                ],
+                                  ],
+                                ),
                               ),
+                            ),
                           ),
-                        ),
                         if (widget.showBreathing)
                           Padding(
                             padding: getPadding(left: 16, right: 16, top: 28),
@@ -258,31 +230,20 @@ class _TabWidgetState extends State<TabWidget> {
                           // already handled by the ternary right underneath.
                           visible: true,
                             child: Padding(
-                          padding: getPadding(top: 36, right: 16, left: 16),
+                          padding: getPadding(top: 16, right: 16, left: 16),
                           child:
-                          _audios.isEmpty ? Center(child: CircularProgressIndicator(color: ColorConstant.cyan700,),) :  Wrap(
-                              direction: Axis.vertical,
-                              spacing: getVerticalSize(40),
+                          _audios.isEmpty ? Center(child: CircularProgressIndicator(color: ColorConstant.cyan700,),) :  Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: _audios,
                             ),
 
                         )),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Visibility(
-                              visible: tab.buttons() != null,
-                              child: Padding(
-                                padding: getPadding(left: 16, right: 16, top: 44),
-                                child: SizedBox(
-                                  width: size.width - 32,
-                                  child: Wrap(
-                                    spacing: 8,
-                                    alignment: WrapAlignment.spaceAround,
-                            children: (tab.buttons() ?? []).map((e) => Padding(padding: EdgeInsets.only(bottom: 8), child: e,)).toList(),
+                        if ((tab.buttons() ?? []).isNotEmpty)
+                          EmotionGlassPanel(
+                            title: 'how_to_live_through_emotions'.tr(),
+                            illustration: tab.titleImage(),
+                            children: tab.buttons() ?? [],
                           ),
-                                ),
-                              )),
-                        ),
                         SizedBox(height: 40,)
                       ],
                 ),

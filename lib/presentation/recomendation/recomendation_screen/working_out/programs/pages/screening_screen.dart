@@ -174,7 +174,7 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
                     Padding(
                       padding: getPadding(bottom: 8),
                       child: Text('$answered / $total',
-                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
+                          style: courseCaption().copyWith(color: ColorConstant.gray500)),
                     ),
                   CustomButton(
                     height: getVerticalSize(50),
@@ -214,7 +214,7 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('$index / $total',
-                style: AppStyle.txtSFProDisplayRegular11
+                style: courseCaption()
                     .copyWith(color: ColorConstant.cyan700, letterSpacing: 0.6)),
             SizedBox(height: getVerticalSize(6)),
             Text(q.q, style: body.copyWith(height: 1.45)),

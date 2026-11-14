@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // A saved "chain" card drawn as a chain of nodes (situation -> thoughts ->
 // feelings -> body -> urge -> action -> after) so the person can literally
@@ -36,7 +37,7 @@ class ChainVisual extends StatelessWidget {
                           color: ColorConstant.cyan700,
                         ),
                         child: Text('${i + 1}',
-                            style: AppStyle.txtSFProDisplayRegular11.copyWith(color: Colors.white)),
+                            style: courseCaption().copyWith(color: Colors.white)),
                       ),
                       if (i != nodes.length - 1)
                         Expanded(
@@ -52,7 +53,7 @@ class ChainVisual extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(nodes[i].label,
-                            style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
+                            style: courseCaption().copyWith(color: ColorConstant.gray500)),
                         Text(values[nodes[i].id]!,
                             style: AppStyle.txtSFProDisplayLight16
                                 .copyWith(color: ColorConstant.gray800, height: 1.35)),

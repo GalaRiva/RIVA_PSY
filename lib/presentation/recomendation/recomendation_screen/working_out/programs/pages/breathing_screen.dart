@@ -40,7 +40,7 @@ class BreathingScreen extends StatelessWidget {
                 Center(child: const BreathCircle(inhale: 4, exhale: 6, cycles: 10)),
                 SizedBox(height: getVerticalSize(22)),
                 Text('breathing_dizzy_note'.tr(),
-                    style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.5)),
+                    style: courseCaption().copyWith(color: AppColors.textSecondary, height: 1.5)),
                 const HelplineLink(),
               ],
             ),

@@ -80,7 +80,7 @@ class _CourseLibraryScreenState extends State<CourseLibraryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(f.label,
-                            style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
+                            style: courseCaption().copyWith(color: ColorConstant.gray500)),
                         Text(card.values[f.id] == '1' ? '✓' : card.values[f.id]!,
                             style: AppStyle.txtSFProDisplayLight16.copyWith(color: ColorConstant.gray800)),
                       ],
@@ -171,7 +171,7 @@ class _CourseLibraryScreenState extends State<CourseLibraryScreen> {
                                     Text(
                                         '${'course_card_round'.tr(namedArgs: {'n': '${c.round}'})} · '
                                         '${c.createdAt.day.toString().padLeft(2, '0')}.${c.createdAt.month.toString().padLeft(2, '0')}.${c.createdAt.year}',
-                                        style: AppStyle.txtSFProDisplayRegular11
+                                        style: courseCaption()
                                             .copyWith(color: AppColors.textSecondary)),
                                   ],
                                 ),

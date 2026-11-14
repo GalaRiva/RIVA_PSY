@@ -5,10 +5,14 @@ import 'package:riva_psy/core/services/notifications/awesome_notification_servic
 import 'package:riva_psy/presentation/settings/help_now_screen/help_now_screen.dart';
 import 'package:riva_psy/theme/app_colors.dart';
 import 'package:riva_psy/core/utils/audio_cover_map.dart';
+import 'package:riva_psy/core/user_data/user.dart';
 
+import '../data/course_flow.dart';
 import '../data/course_progress_store.dart';
 import '../models/course.dart';
+import '../widgets/course_sheets.dart';
 import 'course_audio_player.dart';
+import 'situation_tool_screen.dart';
 import 'course_checkin.dart';
 import 'form_task_screen.dart';
 import 'night_box_screen.dart';
@@ -33,8 +37,13 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
   CourseProgress? _progress;
   final _scroll = ScrollController();
   final _taskKey = GlobalKey();
+  final _audioKey = GlobalKey();
   // Soft glow around the task card after the audio ends.
   bool _glow = false;
+  // Soft glow around the player when the big button says "listen".
+  bool _audioGlow = false;
+  // The step description is shown as three lines, opened on request.
+  bool _descOpen = false;
 
   @override
   void dispose() {
@@ -94,6 +103,42 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     if (saved == true) {
       _state.taskDone = true;
       await _persist();
+      await _showDone();
+    }
+  }
+
+  // "Step complete": a calm moment with the next step offered. Only when both
+  // the audio and the task are done.
+  Future<void> _showDone() async {
+    final p = _progress;
+    final c = widget.course;
+    if (p == null || !mounted || !_state.complete) return;
+    final i = nextStepIndexAfter(c, p, widget.index);
+    final n = i == null ? null : c.steps[i];
+    await showStepDoneSheet(
+      context: context,
+      course: c,
+      next: n,
+      nextBlocked: n != null && stepBlockedByPace(c, p, n),
+      nextLocked: n != null && !n.free && !CurrentUser.tariffIsOrion(),
+      onOpenNext: () {
+        if (i != null && mounted) Navigator.pop(context, i);
+      },
+    );
+  }
+
+  // The big button says "listen": bring the player into view and let it glow.
+  Future<void> _focusAudio() async {
+    final ctx = _audioKey.currentContext;
+    if (ctx == null) return;
+    await Scrollable.ensureVisible(ctx,
+        duration: const Duration(milliseconds: 450), curve: Curves.easeInOut, alignment: 0.2);
+    for (var i = 0; i < 2 && mounted; i++) {
+      setState(() => _audioGlow = true);
+      await Future.delayed(const Duration(milliseconds: 600));
+      if (!mounted) return;
+      setState(() => _audioGlow = false);
+      await Future.delayed(const Duration(milliseconds: 400));
     }
   }
 
@@ -137,8 +182,8 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     );
   }
 
-  // Three short segments under the intro — Audio, Task, Days — that fill in as
-  // the person goes, so the order of the page is visible at a glance.
+  // Three short segments — Audio, Task, Days — that fill in as the person goes,
+  // so the order of the page is visible at a glance.
   Widget _parts(bool dark) {
     final accent = courseAccent(dark);
     final step = widget.step;
@@ -147,23 +192,41 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(2),
-                child: Container(height: 4, color: done ? accent : courseMuted(dark).withOpacity(0.28)),
+              SizedBox(
+                height: 4,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: done ? 1 : 0),
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeOutCubic,
+                  builder: (_, v, __) => ClipRRect(
+                    borderRadius: BorderRadius.circular(2),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(child: Container(color: courseMuted(dark).withOpacity(0.25))),
+                        Positioned.fill(
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: v,
+                            child: Container(color: accent),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: getVerticalSize(7)),
               Row(
                 children: [
                   if (done) ...[
-                    Icon(Icons.check_circle_rounded, size: getSize(14), color: accent),
+                    Icon(Icons.check_circle_rounded, size: getSize(15), color: accent),
                     SizedBox(width: getHorizontalSize(4)),
                   ],
                   Flexible(
                     child: Text(key.tr(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppStyle.txtSFProDisplayRegular11
-                            .copyWith(color: done ? courseText(dark) : courseMuted(dark), letterSpacing: 0.2)),
+                        style: courseCaption().copyWith(color: done ? courseText(dark) : courseMuted(dark))),
                   ),
                 ],
               ),
@@ -183,16 +246,24 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     );
   }
 
+  // "Urgent help" / "I do not feel safe": quiet, but with a comfortable touch
+  // target (about 48 px high), since these are the safety links.
   Widget _help(bool dark) {
     final color = courseMuted(dark);
     Widget link(String key) => GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpNowScreen())),
-          child: Padding(
-            padding: getPadding(top: 6, bottom: 6, right: 16),
-            child: Text(key.tr(),
-                style: AppStyle.txtSFProDisplayRegular11
-                    .copyWith(color: color, decoration: TextDecoration.underline, decorationColor: color)),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: getPadding(right: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                widthFactor: 1,
+                child: Text(key.tr(),
+                    style: courseCaption().copyWith(color: color, decoration: TextDecoration.underline, decorationColor: color)),
+              ),
+            ),
           ),
         );
     return Wrap(children: [link('course_urgent_help'), link('course_unsafe')]);
@@ -239,6 +310,78 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     );
   }
 
+  // The big button at the bottom always says the one next thing to do.
+  Widget _bottomBar(bool dark) {
+    final c = widget.course;
+    final p = _progress!;
+    final s = _state;
+    final next = nextStepIndexAfter(c, p, widget.index);
+    final String label;
+    final IconData icon;
+    final VoidCallback onTap;
+    if (!s.audioDone) {
+      label = 'course_cta_listen';
+      icon = Icons.headphones_rounded;
+      onTap = _focusAudio;
+    } else if (!s.taskDone) {
+      label = 'course_task_open';
+      icon = Icons.edit_outlined;
+      onTap = _openTask;
+    } else if (next != null) {
+      label = 'course_next_step';
+      icon = Icons.arrow_forward_rounded;
+      onTap = () => Navigator.pop(context, next);
+    } else {
+      label = 'course_cta_done';
+      icon = Icons.check_rounded;
+      onTap = () => Navigator.pop(context);
+    }
+    final urge = urgeTool(c);
+    final accent = courseAccent(dark);
+    return Container(
+      decoration: BoxDecoration(
+        color: dark ? kNightBg : AppColors.background,
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(dark ? 0.35 : 0.07), blurRadius: 18, offset: const Offset(0, -4))],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: getPadding(left: 20, right: 20, top: 12, bottom: 12),
+          child: Row(
+            children: [
+              if (urge != null) ...[
+                Semantics(
+                  button: true,
+                  label: urge.title,
+                  excludeSemantics: true,
+                  child: Tooltip(
+                    message: urge.title,
+                    child: Material(
+                      color: Colors.transparent,
+                      shape: CircleBorder(side: BorderSide(color: accent.withOpacity(0.55))),
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () => Navigator.push(
+                            context, MaterialPageRoute(builder: (_) => SituationToolScreen(course: c, tool: urge))),
+                        child: SizedBox(
+                          width: getVerticalSize(52),
+                          height: getVerticalSize(52),
+                          child: Icon(Icons.spa_outlined, color: accent, size: getSize(24)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: getHorizontalSize(12)),
+              ],
+              Expanded(child: CapsuleButton(label: label.tr(), icon: icon, dark: dark, onTap: onTap)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final step = widget.step;
@@ -250,11 +393,13 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
         ? 'course_step_of'.tr(namedArgs: {'n': '${step.number}', 'total': '$numbered'})
         : widget.course.groupOf(step).title;
     final taskDone = _progress != null && _state.taskDone;
+    final longDesc = step.card.length > 120;
     return CourseTextScale(
         child: Scaffold(
       backgroundColor: dark ? kNightBg : AppColors.background,
-      body: SafeArea(top: false, child: _progress == null
-          ? const Center(child: CircularProgressIndicator())
+      bottomNavigationBar: _progress == null ? null : _bottomBar(dark),
+      body: SafeArea(top: false, bottom: false, child: _progress == null
+          ? CourseSkeleton(dark: dark)
           : SingleChildScrollView(
               controller: _scroll,
               padding: EdgeInsets.zero,
@@ -279,9 +424,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                             MetaPill(pillText),
                             SizedBox(height: getVerticalSize(10)),
                           ],
-                          // The step number is in the pill above, not in the title:
-                          // the page's own sections used to number themselves "1. 2. 3."
-                          // too, which read as two competing sequences.
+                          // The step number is in the pill above, not in the title.
                           Text(step.title,
                               style: AppStyle.txtH1.copyWith(
                                   color: Colors.white, fontSize: getFontSize(28), fontWeight: FontWeight.w300, height: 1.15)),
@@ -290,34 +433,63 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                     ),
                   ),
                   Padding(
-                    padding: getPadding(left: 20, right: 20, top: 4, bottom: 32),
+                    padding: getPadding(left: 20, right: 20, top: 4, bottom: 28),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(step.card, style: body),
+                        // The description: three lines, the rest on request, so the
+                        // player is in view without scrolling.
+                        Text(step.card,
+                            maxLines: _descOpen ? null : 3,
+                            overflow: _descOpen ? TextOverflow.visible : TextOverflow.ellipsis,
+                            style: body),
+                        if (longDesc)
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => setState(() => _descOpen = !_descOpen),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(minHeight: 44),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: 1,
+                                child: Text((_descOpen ? 'course_read_less' : 'course_read_more').tr(),
+                                    style: AppStyle.txtSFProDisplayLight14
+                                        .copyWith(color: accent, fontWeight: FontWeight.w600)),
+                              ),
+                            ),
+                          ),
                         if (dark) ...[
                           SizedBox(height: getVerticalSize(10)),
                           Text('course_night_sleep_hint'.tr(),
-                              style: AppStyle.txtSFProDisplayRegular11
-                                  .copyWith(color: courseMuted(dark), height: 1.45)),
+                              style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
                         ],
-                        SizedBox(height: getVerticalSize(24)),
+                        SizedBox(height: getVerticalSize(18)),
                         _parts(dark),
-                        SizedBox(height: getVerticalSize(30)),
+                        SizedBox(height: getVerticalSize(26)),
                         SectionLabel('course_part_audio'.tr(), dark: dark),
                         SizedBox(height: getVerticalSize(10)),
-                        CourseAudioPlayer(
-                          docId: step.audioDocId,
-                          listened: _state.audioDone,
-                          dark: dark,
-                          onListened: () {
-                            _state.audioDone = true;
-                            _persist();
-                          },
-                          onFinished: _onAudioFinished,
+                        AnimatedContainer(
+                          key: _audioKey,
+                          duration: const Duration(milliseconds: 350),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(22),
+                            boxShadow: _audioGlow
+                                ? [BoxShadow(color: accent.withOpacity(0.40), blurRadius: 24, spreadRadius: 2)]
+                                : const [],
+                          ),
+                          child: CourseAudioPlayer(
+                            docId: step.audioDocId,
+                            listened: _state.audioDone,
+                            dark: dark,
+                            onListened: () {
+                              _state.audioDone = true;
+                              _persist();
+                            },
+                            onFinished: _onAudioFinished,
+                          ),
                         ),
                         _help(dark),
-                        SizedBox(height: getVerticalSize(32)),
+                        SizedBox(height: getVerticalSize(28)),
                         SectionLabel('course_part_task'.tr(), dark: dark),
                         SizedBox(height: getVerticalSize(10)),
                         AnimatedContainer(
@@ -360,27 +532,24 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                               if (taskDone)
                                 Padding(
                                   padding: getPadding(top: 8),
-                                  child: Text('course_task_done'.tr(),
-                                      style: AppStyle.txtSFProDisplayRegular11.copyWith(color: accent)),
+                                  child: Text('course_task_done'.tr(), style: courseCaption().copyWith(color: accent)),
                                 ),
                             ],
                           ),
                         ),
                         ),
                         if (step.micro.isNotEmpty) ...[
-                          SizedBox(height: getVerticalSize(32)),
+                          SizedBox(height: getVerticalSize(30)),
                           SectionLabel('course_part_days'.tr(), dark: dark),
                           SizedBox(height: getVerticalSize(4)),
                           Text('course_micro_hint'.tr(),
-                              style: AppStyle.txtSFProDisplayRegular11
-                                  .copyWith(color: courseMuted(dark), height: 1.45)),
+                              style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
                           SizedBox(height: getVerticalSize(12)),
                           for (final m in step.micro) _micro(m, dark),
                         ],
                         SizedBox(height: getVerticalSize(18)),
                         Text('course_step_hint'.tr(),
-                            style: AppStyle.txtSFProDisplayRegular11
-                                .copyWith(color: courseMuted(dark), height: 1.45)),
+                            style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
                       ],
                     ),
                   ),

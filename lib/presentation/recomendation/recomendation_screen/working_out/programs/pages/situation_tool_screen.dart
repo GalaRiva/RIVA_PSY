@@ -223,7 +223,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                     .copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
             SizedBox(height: getVerticalSize(4)),
             Text('course_inline_hint'.tr(),
-                style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.4)),
+                style: courseCaption().copyWith(color: AppColors.textSecondary, height: 1.4)),
             SizedBox(height: getVerticalSize(12)),
             Wrap(
               spacing: 8,
@@ -453,7 +453,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                     child: Text(widget.tool.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppStyle.txtSFProDisplayRegular11
+                        style: courseCaption()
                             .copyWith(color: AppColors.textSecondary, letterSpacing: 0.4)),
                   ),
                   IconButton(
@@ -523,7 +523,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                               context, MaterialPageRoute(builder: (_) => const HelpNowScreen())),
                           style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 32)),
                           child: Text('helpline_settings'.tr(),
-                              style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                              style: courseCaption().copyWith(color: AppColors.textSecondary)),
                         ),
                       ],
                     ],

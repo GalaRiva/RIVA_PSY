@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 import 'package:riva_psy/widgets/go_to_new_tariff_widget.dart';
+import '../widgets/course_ui.dart';
 
 // Shown when a locked (non-free) course step is opened without Orion. Same
 // dark template as the journals/portrait paywalls — no discount, no timer.
@@ -63,7 +64,7 @@ class CoursePaywallPage extends StatelessWidget {
                               style: AppStyle.txtSFProDisplayRegular14
                                   .copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
                           Text((b[2] as String).tr(),
-                              style: AppStyle.txtSFProDisplayRegular11
+                              style: courseCaption()
                                   .copyWith(color: Colors.white.withOpacity(0.65))),
                         ],
                       ),

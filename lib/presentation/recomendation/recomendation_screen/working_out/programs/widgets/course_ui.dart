@@ -12,7 +12,13 @@ const Color kNightAccent = Color(0xFF7FBDBA);
 
 Color courseText(bool dark) => dark ? Colors.white : AppColors.textPrimary;
 Color courseSoft(bool dark) => dark ? Colors.white70 : AppColors.textPrimary.withOpacity(0.78);
-Color courseMuted(bool dark) => dark ? Colors.white54 : AppColors.textSecondary;
+// Quiet text, but readable: AppColors.textSecondary (#7A8287) is only about 3.7:1
+// on the page background; this is about 5.6:1 (the 4.5:1 minimum for small text).
+Color courseMuted(bool dark) => dark ? Colors.white60 : const Color(0xFF5B6469);
+
+// The smallest text of the Programs screens. It used to be 11 (hard to read,
+// especially in Spanish); 13 is the floor now.
+TextStyle courseCaption() => AppStyle.txtSFProDisplayRegular11.copyWith(fontSize: getFontSize(13), height: 1.35);
 Color courseAccent(bool dark) => dark ? kNightAccent : AppColors.primary;
 
 class SoftCard extends StatelessWidget {
@@ -120,7 +126,7 @@ class SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text.toUpperCase(),
-        style: AppStyle.txtSFProDisplayRegular11
+        style: courseCaption()
             .copyWith(color: courseMuted(dark), letterSpacing: 1.1, fontWeight: FontWeight.w600));
   }
 }
@@ -312,7 +318,11 @@ class MetaPill extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[Icon(icon, size: getSize(13), color: Colors.white), SizedBox(width: getHorizontalSize(5))],
-          Text(text, style: AppStyle.txtSFProDisplayRegular11.copyWith(color: Colors.white)),
+          // Flexible: a long label (e.g. a block name in Spanish) shortens instead of
+          // running out of the pill.
+          Flexible(
+              child: Text(text,
+                  maxLines: 2, overflow: TextOverflow.ellipsis, style: courseCaption().copyWith(color: Colors.white))),
         ],
       ),
     );
@@ -330,5 +340,111 @@ class CourseTextScale extends StatelessWidget {
     final mq = MediaQuery.of(context);
     final scale = mq.textScaler.scale(1.0).clamp(0.9, 1.3).toDouble();
     return MediaQuery(data: mq.copyWith(textScaler: TextScaler.linear(scale)), child: child);
+  }
+}
+
+// A quiet placeholder while a Programs screen loads, in place of a spinner on a
+// blank page: the outline of what is coming, gently pulsing.
+class CourseSkeleton extends StatefulWidget {
+  final bool dark;
+  const CourseSkeleton({Key? key, this.dark = false}) : super(key: key);
+
+  @override
+  State<CourseSkeleton> createState() => _CourseSkeletonState();
+}
+
+class _CourseSkeletonState extends State<CourseSkeleton> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100));
+
+  @override
+  void initState() {
+    super.initState();
+    _c.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final still = MediaQuery.of(context).disableAnimations;
+    final base = widget.dark ? Colors.white.withOpacity(0.08) : AppColors.divider;
+    Widget box(double h, {double? w, double r = 16}) => Container(
+          height: getVerticalSize(h),
+          width: w,
+          decoration: BoxDecoration(color: base, borderRadius: BorderRadius.circular(r)),
+        );
+    final body = Padding(
+      padding: getPadding(left: 20, right: 20, top: 90),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          box(34, w: getHorizontalSize(220)),
+          SizedBox(height: getVerticalSize(26)),
+          box(14),
+          SizedBox(height: getVerticalSize(10)),
+          box(14, w: getHorizontalSize(260)),
+          SizedBox(height: getVerticalSize(34)),
+          box(200, r: 28),
+          SizedBox(height: getVerticalSize(26)),
+          box(100, r: 20),
+        ],
+      ),
+    );
+    if (still) return body;
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (_, child) => Opacity(opacity: 0.55 + 0.45 * _c.value, child: child),
+      child: body,
+    );
+  }
+}
+
+// The one tool that matters in the worst moment, always within reach: a small
+// capsule floating above the page.
+class UrgePill extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  const UrgePill({Key? key, required this.label, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: Material(
+        color: AppColors.surface,
+        elevation: 6,
+        shadowColor: AppColors.primary.withOpacity(0.25),
+        shape: StadiumBorder(side: BorderSide(color: AppColors.primary.withOpacity(0.25))),
+        child: InkWell(
+          customBorder: const StadiumBorder(),
+          onTap: onTap,
+          child: Container(
+            height: getVerticalSize(48),
+            padding: getPadding(left: 16, right: 20),
+            constraints: BoxConstraints(maxWidth: getHorizontalSize(300)),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.spa_outlined, color: AppColors.primary, size: getSize(20)),
+                SizedBox(width: getHorizontalSize(8)),
+                Flexible(
+                  child: Text(label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyle.txtSFProDisplayLight14
+                          .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

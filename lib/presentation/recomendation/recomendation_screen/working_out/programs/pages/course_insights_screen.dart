@@ -77,14 +77,14 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
   Widget _title(String key) => Padding(
         padding: getPadding(top: 22, bottom: 8),
         child: Text(key.tr().toUpperCase(),
-            style: AppStyle.txtSFProDisplayRegular11
+            style: courseCaption()
                 .copyWith(color: ColorConstant.cyan700, letterSpacing: 0.5)),
       );
 
   Widget _weeklySection() {
     final qs = widget.course.weekly;
     if (qs.isEmpty) return const SizedBox.shrink();
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500);
+    final small = courseCaption().copyWith(color: ColorConstant.gray500);
     final history = _of('weekly').reversed.toList(); // oldest first
     final last = history.length > 12 ? history.sublist(history.length - 12) : history;
     return Column(
@@ -191,7 +191,7 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
   // per field, and lists what repeats.
   Widget _triggersSection() {
     final chains = _of('chain');
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500);
+    final small = courseCaption().copyWith(color: ColorConstant.gray500);
     if (chains.length < 3) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,7 +282,7 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
 
   Widget _waveSection() {
     final waves = _of('wave');
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500);
+    final small = courseCaption().copyWith(color: ColorConstant.gray500);
     if (waves.length < 3) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,

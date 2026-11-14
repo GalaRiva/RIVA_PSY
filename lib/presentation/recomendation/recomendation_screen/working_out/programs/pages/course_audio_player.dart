@@ -145,7 +145,7 @@ class _CourseAudioPlayerState extends State<CourseAudioPlayer> {
   @override
   Widget build(BuildContext context) {
     final dark = widget.dark;
-    final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: courseMuted(dark));
+    final small = courseCaption().copyWith(color: courseMuted(dark));
     if (_loading) {
       return const SizedBox(height: 24, child: Center(child: LinearProgressIndicator()));
     }

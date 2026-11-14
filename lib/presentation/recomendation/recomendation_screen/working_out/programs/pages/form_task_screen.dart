@@ -172,7 +172,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
           Padding(
             padding: getPadding(top: 3),
             child: Text(f.hint,
-                style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.4)),
+                style: courseCaption().copyWith(color: AppColors.textSecondary, height: 1.4)),
           ),
       ],
     );
@@ -264,7 +264,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
             Padding(
               padding: getPadding(top: 6),
               child: Text('course_time_reminder_note'.tr(namedArgs: {'min': '${f.notifyBefore}'}),
-                  style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
+                  style: courseCaption().copyWith(color: AppColors.textSecondary)),
             ),
         ],
       );
@@ -313,7 +313,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: Text(c,
-                          style: AppStyle.txtSFProDisplayRegular11
+                          style: courseCaption()
                               .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
                     ),
                   ),

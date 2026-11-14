@@ -4,7 +4,10 @@ import '../../../../../../core/models/audio/audio_card_model.dart';
 import '../../../../../../core/services/audio/audio_cache_manager.dart';
 import '../../../../../../core/utils/color_constant.dart';
 import '../../../../../../core/utils/size_utils.dart';
-import 'audio_container_widget.dart';
+import '../../../../../../core/services/audio/app_audio_track.dart';
+import '../../../../../../core/utils/audio_cover_map.dart';
+import '../../../../../../theme/app_colors.dart';
+import '../../../../../../widgets/soft_audio_card.dart';
 
 class AudioContainers extends StatefulWidget {
   final List<AudioCardModel> audios;
@@ -42,28 +45,36 @@ class _AudioContainersState extends State<AudioContainers> {
   Widget build(BuildContext context) {
     final audios = widget.audios;
 
-    // Must match AudioContainerWidget's per-row height (103) or later rows
-    // in this Wrap get clipped.
+    // Natural height: the soft cards grow with their titles, so there is no
+    // fixed row height to keep in lockstep any more.
     return Container(
-      height: getVerticalSize(103 * audios.length.toDouble()),
       width: size.width,
-      color:  ColorConstant.fromHex('#E7EAEA'),
+      color: AppColors.screenWarm,
       child: FutureBuilder(
         future: _durationsFuture,
         builder: (context, AsyncSnapshot<List<Duration?>>snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return Center(
-              child: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
+              child: Padding(
+                padding: getPadding(top: 24, bottom: 24),
+                child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(color: ColorConstant.cyan700,)),
+              ),
             );
           }
           return Padding(
-            padding: getPadding( left: 10, right: 10),
-            child: Wrap(
-              children: List<Widget>.generate(audios.length, (index) => AudioContainerWidget(
-                audioCardModel: audios[index],
+            padding: getPadding(left: 12, right: 12, top: 12, bottom: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List<Widget>.generate(audios.length, (index) => SoftAudioCard(
+                text: audios[index].title,
+                track: AppAudioTrack.forUrl(
+                  audios[index].audioAsset,
+                  title: audios[index].title,
+                  coverAsset: audioCoverAsset(audios[index].ruTitle),
+                ),
                 maxDuration: (snapshot.data)?[index] ?? Duration.zero,
               )),
             ),

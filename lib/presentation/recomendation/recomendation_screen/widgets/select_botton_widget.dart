@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:riva_psy/widgets/custom_button.dart';
+import 'glass_panel.dart';
 
-import '../../../../../core/utils/color_constant.dart';
-import '../../../../../theme/app_style.dart';
 import '../../../../../widgets/exercise_instruction_dialog.dart';
-import '../../../../core/utils/size_utils.dart';
 
 class SelectButtonWidget extends StatefulWidget {
   final String title;
@@ -24,10 +20,9 @@ class _SelectButtonWState extends State<SelectButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return  CustomButton( text: widget.title.toUpperCase(),
-        width: size.width / 2 - 40,
-        minHeight: getVerticalSize(30),
-        bgColor: opened ? ColorConstant.blueGray20001 : Colors.white.withOpacity(0.24),
+    return GlassChip(
+        text: widget.title,
+        pressed: opened,
         onTap: () {
         setState(() {
           opened = !opened;
@@ -44,11 +39,6 @@ class _SelectButtonWState extends State<SelectButtonWidget> {
             });
           });
         },
-        //bgColor: Colors.white,
-        textStyle: AppStyle.txtSFProDisplayRegular12.copyWith(
-            fontWeight: FontWeight.w600,
-            color: opened ? ColorConstant.whiteA700 : ColorConstant.deepPurple600
-        ),);
+    );
   }
 }
-

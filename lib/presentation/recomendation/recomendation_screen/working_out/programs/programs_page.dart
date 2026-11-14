@@ -6,6 +6,7 @@ import 'data/course_progress_store.dart';
 import 'data/course_repository.dart';
 import 'models/course.dart';
 import 'pages/course_screen.dart';
+import 'widgets/course_ui.dart';
 
 // "Программы" inside Обретение: the list of courses. A course is a guided,
 // repeatable skill-training path (audio + tasks + tools), not a one-off
@@ -56,7 +57,7 @@ class _ProgramsPageState extends State<ProgramsPage> {
             const Center(child: CircularProgressIndicator())
           else if (courses.isEmpty)
             Text('programs_empty'.tr(),
-                style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500))
+                style: courseCaption().copyWith(color: ColorConstant.gray500))
           else
             for (final c in courses)
               Padding(
@@ -156,7 +157,7 @@ class _CourseCard extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text('course_progress_of'.tr(namedArgs: {'done': '$done', 'total': '$total'}),
-                                            style: AppStyle.txtSFProDisplayRegular11
+                                            style: courseCaption()
                                                 .copyWith(color: Colors.white.withOpacity(0.85), letterSpacing: 0.4)),
                                         SizedBox(height: getVerticalSize(5)),
                                         ClipRRect(
@@ -175,7 +176,7 @@ class _CourseCard extends StatelessWidget {
                                     );
                                   }
                                   return Text('course_steps_count'.tr(namedArgs: {'count': '${course.steps.length}'}),
-                                      style: AppStyle.txtSFProDisplayRegular11
+                                      style: courseCaption()
                                           .copyWith(color: Colors.white.withOpacity(0.8), letterSpacing: 0.4));
                                 }),
                                 SizedBox(height: getVerticalSize(6)),
