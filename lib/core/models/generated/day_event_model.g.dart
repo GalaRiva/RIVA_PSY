@@ -24,7 +24,12 @@ DayEventModel _$DayEventModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       emotionIntensity: json['emotionIntensity'] as int? ?? 10,
       whatIDo: json['whatIDo'] as String?,
-whatBodyParts: (json['whatBodyParts'] as List<dynamic>).map((e) => K32Model.fromJson(e)).toList(),
+// An entry saved from the main screen (state slider + quick emotion chip)
+// has no body zones, so this is null in storage. It used to be cast to a
+// non-null List here, which threw for that entry — and, since every reader
+// parses the whole diary, took the Records screen, the charts and the saves
+// that read the diary down with it.
+whatBodyParts: ((json['whatBodyParts'] as List<dynamic>?) ?? const <dynamic>[]).map((e) => K32Model.fromJson(e)).toList(),
       firstThoughts: (json['firstThoughts'] as String?),
         pathToAudio: json['pathToAudio'] as String?,
 

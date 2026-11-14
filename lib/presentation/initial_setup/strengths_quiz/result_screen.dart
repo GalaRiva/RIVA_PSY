@@ -56,35 +56,58 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ),
             ),
           ),
-          Align(
-            alignment: const Alignment(0, 0.15),
-            child: Padding(
-              padding: getPadding(left: 30, right: 30),
-              child: GlassCard(
-                padding: getPadding(left: 24, top: 26, right: 24, bottom: 22),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      trait.resultBodyKey.tr(),
-                      style: AppStyle.txtSFProDisplayLight16.copyWith(
-                        color: ColorConstant.gray800,
-                        height: 1.5,
+          // SafeArea keeps the card (and its button) clear of the system
+          // navigation bar — the app draws edge-to-edge, and on a phone with
+          // the 3-button bar the "Siguiente" button used to sit under it.
+          // The card is centred when it fits and scrolls when it does not
+          // (long Spanish/English text, large system font), so the button is
+          // always reachable.
+          SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Center(
+                    child: Padding(
+                      padding: getPadding(left: 30, right: 30, top: 16, bottom: 16),
+                      child: GlassCard(
+                        padding: getPadding(left: 24, top: 26, right: 24, bottom: 22),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // The result itself: larger and darker than anything
+                            // else on the card.
+                            Text(
+                              trait.resultBodyKey.tr(),
+                              style: AppStyle.txtSFProDisplayLight16.copyWith(
+                                color: ColorConstant.gray900,
+                                fontSize: getFontSize(19),
+                                fontWeight: FontWeight.w500,
+                                height: 1.45,
+                              ),
+                            ),
+                            SizedBox(height: getVerticalSize(16)),
+                            // The technical notes (not a diagnosis, helpline,
+                            // sources) sit below a thin rule, smaller and
+                            // softer, so they no longer read as part of the result.
+                            Divider(height: 1, thickness: 1, color: ColorConstant.gray800.withOpacity(0.12)),
+                            SizedBox(height: getVerticalSize(6)),
+                            MedicalDisclaimer(textColor: ColorConstant.gray800.withOpacity(0.62), compact: true),
+                            SizedBox(height: getVerticalSize(12)),
+                            CustomButton(
+                              height: getVerticalSize(48),
+                              width: double.infinity,
+                              text: 'continue'.tr().toUpperCase(),
+                              variant: ButtonVariant.Cyan,
+                              fontStyle: ButtonFontStyle.White16,
+                              onTap: () => onContinue(context),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    SizedBox(height: getVerticalSize(14)),
-                    MedicalDisclaimer(textColor: ColorConstant.gray800, compact: true),
-                    SizedBox(height: getVerticalSize(10)),
-                    CustomButton(
-                      height: getVerticalSize(48),
-                      width: double.infinity,
-                      text: 'continue'.tr().toUpperCase(),
-                      variant: ButtonVariant.Cyan,
-                      fontStyle: ButtonFontStyle.White16,
-                      onTap: () => onContinue(context),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

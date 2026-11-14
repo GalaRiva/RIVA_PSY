@@ -178,18 +178,18 @@ class _CourseCard extends StatelessWidget {
                                       style: AppStyle.txtSFProDisplayRegular11
                                           .copyWith(color: Colors.white.withOpacity(0.8), letterSpacing: 0.4));
                                 }),
-                                SizedBox(height: getVerticalSize(4)),
-                                Text(course.title,
-                                    maxLines: 2,
+                                SizedBox(height: getVerticalSize(6)),
+                                // Just the name: no description on the cover, so the
+                                // card stays calm. A program may give a shorter
+                                // `card_title` for it.
+                                Text(course.cardTitle,
+                                    maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
-                                    style: AppStyle.txtSFProDisplayLight16
-                                        .copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
-                                SizedBox(height: getVerticalSize(4)),
-                                Text(course.subtitle,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppStyle.txtSFProDisplayLight14
-                                        .copyWith(color: Colors.white.withOpacity(0.88), height: 1.35)),
+                                    style: AppStyle.txtSFProDisplayLight16.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: getFontSize(20),
+                                        height: 1.25)),
                               ],
                             ),
                           ),

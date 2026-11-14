@@ -23,7 +23,7 @@ class PillRemindersScreen extends StatelessWidget {
   @override Widget build(BuildContext context) {
     return Scaffold(backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: false,
-        body: Container(
+        body: SafeArea(top: false, child: Container(
             height: size.height,
             width: double.maxFinite,
             padding: getPadding(left: 6, right: 6),
@@ -91,7 +91,7 @@ class PillRemindersScreen extends StatelessWidget {
                                   onTap: () => onTapOne(context)),
                             ],
                           )
-                        ])))));
+                        ]))))));
   }
 
   onTapOne(BuildContext context) {
@@ -104,7 +104,7 @@ class PillRemindersScreen extends StatelessWidget {
           isScrollControlled: true,
 
           context: context, builder: (_) {
-        return PillsAddBottomSheet();
+        return SafeArea(top: false, child: PillsAddBottomSheet());
       });
 
 

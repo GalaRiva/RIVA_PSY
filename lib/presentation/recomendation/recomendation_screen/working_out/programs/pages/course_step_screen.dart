@@ -137,6 +137,52 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     );
   }
 
+  // Three short segments under the intro — Audio, Task, Days — that fill in as
+  // the person goes, so the order of the page is visible at a glance.
+  Widget _parts(bool dark) {
+    final accent = courseAccent(dark);
+    final step = widget.step;
+    final days = step.micro.isNotEmpty && step.micro.every((m) => _state.microDone.contains(m.id));
+    Widget seg(String key, bool done) => Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(2),
+                child: Container(height: 4, color: done ? accent : courseMuted(dark).withOpacity(0.28)),
+              ),
+              SizedBox(height: getVerticalSize(7)),
+              Row(
+                children: [
+                  if (done) ...[
+                    Icon(Icons.check_circle_rounded, size: getSize(14), color: accent),
+                    SizedBox(width: getHorizontalSize(4)),
+                  ],
+                  Flexible(
+                    child: Text(key.tr(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyle.txtSFProDisplayRegular11
+                            .copyWith(color: done ? courseText(dark) : courseMuted(dark), letterSpacing: 0.2)),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+    return Row(
+      children: [
+        seg('course_part_audio', _state.audioDone),
+        SizedBox(width: getHorizontalSize(10)),
+        seg('course_part_task', _state.taskDone),
+        if (step.micro.isNotEmpty) ...[
+          SizedBox(width: getHorizontalSize(10)),
+          seg('course_part_days_short', days),
+        ],
+      ],
+    );
+  }
+
   Widget _help(bool dark) {
     final color = courseMuted(dark);
     Widget link(String key) => GestureDetector(
@@ -199,12 +245,15 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     final dark = step.night;
     final accent = courseAccent(dark);
     final body = AppStyle.txtSFProDisplayLight16.copyWith(color: courseSoft(dark), height: 1.55);
-    final title = step.number == null ? step.title : '${step.number}. ${step.title}';
+    final numbered = widget.course.steps.where((s) => s.number != null).length;
+    final pillText = step.number != null && numbered > 0
+        ? 'course_step_of'.tr(namedArgs: {'n': '${step.number}', 'total': '$numbered'})
+        : widget.course.groupOf(step).title;
     final taskDone = _progress != null && _state.taskDone;
     return CourseTextScale(
         child: Scaffold(
       backgroundColor: dark ? kNightBg : AppColors.background,
-      body: _progress == null
+      body: SafeArea(top: false, child: _progress == null
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               controller: _scroll,
@@ -213,10 +262,10 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CoverHeader(
-                    coverAsset: wideStepCover(audioCoverAsset(step.title)),
+                    coverAsset: wideStepCover(audioCoverAsset(step.coverKey)),
                     height: 236,
                     dark: dark,
-                    leftScrim: audioCoverAsset(step.title)?.contains('/program_') ?? false,
+                    leftScrim: audioCoverAsset(step.coverKey)?.contains('/program_') ?? false,
                     onBack: () => Navigator.pop(context),
                     // Text in the left ~62%, the picture stays clear on the right.
                     child: FractionallySizedBox(
@@ -226,11 +275,16 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          MetaPill('≈ ${step.minutes} ${'course_min'.tr()}', icon: Icons.schedule_rounded),
-                          SizedBox(height: getVerticalSize(8)),
-                          Text(title,
-                              style: AppStyle.txtH1
-                                  .copyWith(color: Colors.white, fontSize: getFontSize(23), height: 1.15)),
+                          if (pillText.isNotEmpty) ...[
+                            MetaPill(pillText),
+                            SizedBox(height: getVerticalSize(10)),
+                          ],
+                          // The step number is in the pill above, not in the title:
+                          // the page's own sections used to number themselves "1. 2. 3."
+                          // too, which read as two competing sequences.
+                          Text(step.title,
+                              style: AppStyle.txtH1.copyWith(
+                                  color: Colors.white, fontSize: getFontSize(28), fontWeight: FontWeight.w300, height: 1.15)),
                         ],
                       ),
                     ),
@@ -247,8 +301,10 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                               style: AppStyle.txtSFProDisplayRegular11
                                   .copyWith(color: courseMuted(dark), height: 1.45)),
                         ],
-                        SizedBox(height: getVerticalSize(22)),
-                        SectionLabel('course_step_audio'.tr(), dark: dark),
+                        SizedBox(height: getVerticalSize(24)),
+                        _parts(dark),
+                        SizedBox(height: getVerticalSize(30)),
+                        SectionLabel('course_part_audio'.tr(), dark: dark),
                         SizedBox(height: getVerticalSize(10)),
                         CourseAudioPlayer(
                           docId: step.audioDocId,
@@ -261,8 +317,8 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                           onFinished: _onAudioFinished,
                         ),
                         _help(dark),
-                        SizedBox(height: getVerticalSize(22)),
-                        SectionLabel('course_step_task'.tr(), dark: dark),
+                        SizedBox(height: getVerticalSize(32)),
+                        SectionLabel('course_part_task'.tr(), dark: dark),
                         SizedBox(height: getVerticalSize(10)),
                         AnimatedContainer(
                           key: _taskKey,
@@ -283,7 +339,8 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                                 children: [
                                   Expanded(
                                     child: Text(step.task.title,
-                                        style: AppStyle.txtH2.copyWith(color: courseText(dark), height: 1.2)),
+                                        style: AppStyle.txtH2.copyWith(
+                                            color: courseText(dark), fontWeight: FontWeight.w600, height: 1.2)),
                                   ),
                                   if (taskDone) Icon(Icons.check_circle_rounded, color: accent, size: getSize(22)),
                                 ],
@@ -311,12 +368,16 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                         ),
                         ),
                         if (step.micro.isNotEmpty) ...[
-                          SizedBox(height: getVerticalSize(22)),
-                          SectionLabel('course_step_between'.tr(), dark: dark),
-                          SizedBox(height: getVerticalSize(10)),
+                          SizedBox(height: getVerticalSize(32)),
+                          SectionLabel('course_part_days'.tr(), dark: dark),
+                          SizedBox(height: getVerticalSize(4)),
+                          Text('course_micro_hint'.tr(),
+                              style: AppStyle.txtSFProDisplayRegular11
+                                  .copyWith(color: courseMuted(dark), height: 1.45)),
+                          SizedBox(height: getVerticalSize(12)),
                           for (final m in step.micro) _micro(m, dark),
                         ],
-                        SizedBox(height: getVerticalSize(8)),
+                        SizedBox(height: getVerticalSize(18)),
                         Text('course_step_hint'.tr(),
                             style: AppStyle.txtSFProDisplayRegular11
                                 .copyWith(color: courseMuted(dark), height: 1.45)),
@@ -325,7 +386,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                   ),
                 ],
               ),
-            ),
+            )),
     ));
   }
 }

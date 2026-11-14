@@ -17,7 +17,7 @@ class SendPushesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Container(
+      body: SafeArea(top: false, child: Container(
         decoration: AppDecoration.txt,
         child: Center(
           child: CustomMessageBox(
@@ -101,7 +101,7 @@ class SendPushesScreen extends StatelessWidget {
 
           ),),
         ),
-      ),
+      )),
     );
   }
 }

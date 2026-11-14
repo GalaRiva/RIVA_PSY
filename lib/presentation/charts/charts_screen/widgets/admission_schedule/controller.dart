@@ -58,7 +58,7 @@ class AdmissionScheduleController extends GetxController {
         backgroundColor: AppColors.background,
           context: context,
           isScrollControlled: true,
-          builder: (context) => PillsAddBottomSheet()).then((value) async {
+          builder: (context) => SafeArea(top: false, child: PillsAddBottomSheet())).then((value) async {
         pills = await _pillsRepo.getEvent();
         scheduleWasCreated = pills.isNotEmpty;
         update();

@@ -39,7 +39,6 @@ class CourseScreen extends StatefulWidget {
 
 class _CourseScreenState extends State<CourseScreen> {
   CourseProgress? _progress;
-  bool _introOpen = false;
   // Android-only tip about the app-icon shortcut, dismissible for good.
   bool _showShortcutHint = false;
   // The onboarding answer, used to choose which block "today" starts in.
@@ -73,7 +72,8 @@ class _CourseScreenState extends State<CourseScreen> {
         await CourseProgressStore.save(_c.id, p);
         if (mounted) setState(() {});
       } else {
-        Navigator.pop(context);
+        // Closes this course page (the screening already closed itself).
+        if (Navigator.canPop(context)) Navigator.pop(context);
         return;
       }
     }
@@ -215,6 +215,7 @@ class _CourseScreenState extends State<CourseScreen> {
     }
     final body = AppStyle.txtSFProDisplayLight16.copyWith(color: courseSoft(false), height: 1.55);
     final small = AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary, height: 1.45);
+    final nextIdx = _nextIndex();
     return Scaffold(
       backgroundColor: AppColors.background,
       // The program lives inside Рекомендации, but the course is a pushed
@@ -232,6 +233,8 @@ class _CourseScreenState extends State<CourseScreen> {
               leftScrim: true,
               onBack: () => Navigator.pop(context),
               actions: [
+                RoundIconButton(
+                    icon: Icons.info_outline_rounded, onTap: _openInfo, tooltip: 'course_important'.tr()),
                 PopupMenuButton<String>(
                   tooltip: 'course_more'.tr(),
                   color: Colors.white,
@@ -259,18 +262,16 @@ class _CourseScreenState extends State<CourseScreen> {
               ],
               // Text stays in the left ~60%: the bubble on the right is never covered.
               child: FractionallySizedBox(
-                widthFactor: 0.6,
+                widthFactor: 0.72,
                 alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    MetaPill('course_round'.tr(namedArgs: {'n': '${p.round}'}), icon: Icons.autorenew_rounded),
-                    SizedBox(height: getVerticalSize(8)),
-                    Text(_c.title,
-                        style: AppStyle.txtH1.copyWith(color: Colors.white, fontSize: getFontSize(24), height: 1.15)),
-                  ],
-                ),
+                // Just the (short) name, larger but still light (not bolder).
+                // The full name is at the top of the "about" panel.
+                child: Text(_c.cardTitle,
+                    style: AppStyle.txtH1.copyWith(
+                        color: Colors.white,
+                        fontSize: getFontSize(30),
+                        fontWeight: FontWeight.w300,
+                        height: 1.14)),
               ),
             ),
             Padding(
@@ -278,26 +279,17 @@ class _CourseScreenState extends State<CourseScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AnimatedCrossFade(
-                    duration: const Duration(milliseconds: 220),
-                    crossFadeState: _introOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                    firstChild: Text(_c.intro, maxLines: 4, overflow: TextOverflow.ellipsis, style: body),
-                    secondChild: Text(_c.intro, style: body),
-                  ),
+                  Text(_c.intro, maxLines: 2, overflow: TextOverflow.ellipsis, style: body),
                   GestureDetector(
-                    onTap: () => setState(() => _introOpen = !_introOpen),
+                    onTap: _openInfo,
                     behavior: HitTestBehavior.opaque,
                     child: Padding(
                       padding: getPadding(top: 6, bottom: 4),
-                      child: Text((_introOpen ? 'course_read_less' : 'course_read_more').tr(),
+                      child: Text('course_read_more'.tr(),
                           style: AppStyle.txtSFProDisplayLight14
                               .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
                     ),
                   ),
-                  if (_introOpen) ...[
-                    SizedBox(height: getVerticalSize(6)),
-                    Text(_c.paceNote, style: small),
-                  ],
                   if (_c.introAudioDocId != null) ...[
                     SizedBox(height: getVerticalSize(14)),
                     CourseAudioPlayer(
@@ -305,7 +297,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   ],
                   SizedBox(height: getVerticalSize(18)),
                   _todayCard(p),
-                  SizedBox(height: getVerticalSize(26)),
+                  SizedBox(height: getVerticalSize(34)),
                   SectionLabel('course_my_tools'.tr()),
                   SizedBox(height: getVerticalSize(12)),
                   SizedBox(
@@ -346,7 +338,7 @@ class _CourseScreenState extends State<CourseScreen> {
                         ],
                       ),
                     ),
-                  SizedBox(height: getVerticalSize(18)),
+                  SizedBox(height: getVerticalSize(22)),
                   SoftCard(
                     padding: EdgeInsets.zero,
                     child: Column(
@@ -369,10 +361,19 @@ class _CourseScreenState extends State<CourseScreen> {
                       ],
                     ),
                   ),
-                  for (final g in _c.groups) ..._groupSection(g, p, small),
+                  for (final g in _c.groups) ..._groupSection(g, p, small, nextIdx),
                   if (_c.freeNote.isNotEmpty && !_isOrion)
-                    Padding(padding: getPadding(top: 6), child: Text(_c.freeNote, style: small)),
-                  const MedicalDisclaimer(compact: true),
+                    Padding(padding: getPadding(top: 10), child: Text(_c.freeNote, style: small)),
+                  // The long "not a diagnosis / helplines / sources" text lives in the
+                  // panel that slides down from the top; this is just the way to it.
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: _openInfo,
+                      icon: Icon(Icons.info_outline_rounded, size: getSize(16), color: AppColors.textSecondary),
+                      label: Text('course_important'.tr(),
+                          style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.textSecondary)),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -447,104 +448,191 @@ class _CourseScreenState extends State<CourseScreen> {
     );
   }
 
+  // "Today": the one thing to do now. A large card of its own — the step's
+  // artwork behind, its number, its name, one line on what it is, and a big
+  // button — so it is clear at a glance that THIS is what to do today.
   Widget _todayCard(CourseProgress p) {
     final next = _nextIndex();
     final last = _lastStartedIndex();
-    final step = next == null ? null : _c.steps[next];
-    final cover = step == null ? null : audioCoverAsset(step.title);
-    return Container(
-      width: double.infinity,
-      padding: getPadding(left: 18, top: 18, right: 18, bottom: 16),
-      decoration: BoxDecoration(
-        color: AppColors.primaryLight,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionLabel('course_today'.tr()),
-          SizedBox(height: getVerticalSize(10)),
-          if (step != null) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_label(step),
-                          style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary, height: 1.2)),
-                      SizedBox(height: getVerticalSize(4)),
-                      Text('≈ ${step.minutes} ${'course_min'.tr()}',
-                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: AppColors.textSecondary)),
-                    ],
+    if (next == null) {
+      return Container(
+        width: double.infinity,
+        padding: getPadding(left: 18, top: 18, right: 18, bottom: 16),
+        decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(24)),
+        child: Text('course_all_done'.tr(),
+            style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary, height: 1.5)),
+      );
+    }
+    final step = _c.steps[next];
+    final cover = wideStepCover(audioCoverAsset(step.coverKey));
+    final total = _c.steps.where((s) => s.number != null).length;
+    final locked = !step.free && !_isOrion;
+    const white = Colors.white;
+    final pill = StringBuffer('course_today'.tr().toUpperCase());
+    if (step.number != null && total > 0) pill.write('  ·  ${step.number} / $total');
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: Container(
+        width: double.infinity,
+        constraints: BoxConstraints(minHeight: getVerticalSize(330)),
+        decoration: BoxDecoration(
+          color: const Color(0xFF16302C),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.14), blurRadius: 18, offset: const Offset(0, 8))],
+        ),
+        child: Stack(
+          children: [
+            if (cover != null) Positioned.fill(child: Image.asset(cover, fit: BoxFit.cover)),
+            // Dark at the bottom where the text sits, the artwork stays visible above.
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black.withOpacity(0.10), Colors.black.withOpacity(0.35), Colors.black.withOpacity(0.82)],
+                    stops: const [0.0, 0.38, 1.0],
                   ),
                 ),
-                if (cover != null)
-                  Padding(
-                    padding: getPadding(left: 12),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Image.asset(cover, width: getSize(64), height: getSize(64), fit: BoxFit.cover),
-                    ),
-                  ),
-              ],
-            ),
-            SizedBox(height: getVerticalSize(16)),
-            CapsuleButton(label: 'course_open_step'.tr(), onTap: () => _openStep(next!)),
-          ] else
-            Text('course_all_done'.tr(),
-                style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary, height: 1.5)),
-          if (last != null && last != next)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                onPressed: () => _openStep(last),
-                style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 36)),
-                child: Text('course_repeat_prev'.tr(),
-                    style: AppStyle.txtSFProDisplayLight14
-                        .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
               ),
             ),
-        ],
+            Padding(
+              padding: getPadding(left: 22, top: 20, right: 22, bottom: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: getPadding(left: 12, right: 14, top: 6, bottom: 6),
+                    decoration: BoxDecoration(
+                      color: white.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(pill.toString(),
+                        style: AppStyle.txtSFProDisplayRegular11
+                            .copyWith(color: white, letterSpacing: 1.2, fontWeight: FontWeight.w600)),
+                  ),
+                  SizedBox(height: getVerticalSize(104)),
+                  Text(step.title,
+                      style: AppStyle.txtH1.copyWith(
+                          color: white, fontSize: getFontSize(28), fontWeight: FontWeight.w300, height: 1.15)),
+                  if (step.card.isNotEmpty) ...[
+                    SizedBox(height: getVerticalSize(10)),
+                    Text(step.card,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyle.txtSFProDisplayLight14.copyWith(color: white.withOpacity(0.86), height: 1.45)),
+                  ],
+                  SizedBox(height: getVerticalSize(20)),
+                  Semantics(
+                    button: true,
+                    label: 'course_open_step'.tr(),
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      onTap: () => _openStep(next),
+                      child: Container(
+                        height: getVerticalSize(54),
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(30)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(locked ? Icons.lock_outline_rounded : Icons.play_arrow_rounded,
+                                color: AppColors.primary, size: getSize(22)),
+                            SizedBox(width: getHorizontalSize(8)),
+                            Flexible(
+                              child: Text('course_open_step'.tr(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppStyle.txtSFProDisplayLight16
+                                      .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (last != null && last != next)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: () => _openStep(last),
+                        style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 40)),
+                        child: Text('course_repeat_prev'.tr(),
+                            style: AppStyle.txtSFProDisplayLight14
+                                .copyWith(color: white.withOpacity(0.9), fontWeight: FontWeight.w600)),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   // A named block of steps (the support blocks have no numbers).
-  List<Widget> _groupSection(CourseGroup g, CourseProgress p, TextStyle small) {
+  List<Widget> _groupSection(CourseGroup g, CourseProgress p, TextStyle small, int? nextIdx) {
     final idx = [for (var i = 0; i < _c.steps.length; i++) if (_c.steps[i].groupId == g.id) i];
     if (idx.isEmpty) return const [];
     return [
-      SizedBox(height: getVerticalSize(28)),
+      SizedBox(height: getVerticalSize(38)),
       if (g.title.isNotEmpty)
         Text(g.title, style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary))
       else
         SectionLabel('course_steps_title'.tr()),
       if (g.subtitle.isNotEmpty)
         Padding(padding: getPadding(top: 4), child: Text(g.subtitle, style: small)),
-      SizedBox(height: getVerticalSize(12)),
-      for (final i in idx) _stepTile(i, p),
+      if (g.numbered)
+        Builder(builder: (_) {
+          final done = idx.where((i) => p.step(_c.steps[i].id).complete).length;
+          return Padding(
+            padding: getPadding(top: 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2),
+                    child: LinearProgressIndicator(
+                      value: idx.isEmpty ? 0 : done / idx.length,
+                      minHeight: 3,
+                      backgroundColor: AppColors.divider,
+                      valueColor: const AlwaysStoppedAnimation(AppColors.primary),
+                    ),
+                  ),
+                ),
+                SizedBox(width: getHorizontalSize(12)),
+                Text('course_progress_of'.tr(namedArgs: {'done': '$done', 'total': '${idx.length}'}), style: small),
+              ],
+            ),
+          );
+        }),
+      SizedBox(height: getVerticalSize(16)),
+      for (final i in idx) _stepTile(i, p, isNext: i == nextIdx),
     ];
   }
 
   // A step as a cover card, like the program cards: the wide dark cover with
   // the picture on the right, white text on the left.
-  Widget _stepTile(int i, CourseProgress p) {
+  Widget _stepTile(int i, CourseProgress p, {bool isNext = false}) {
     final step = _c.steps[i];
     final state = p.step(step.id);
     final locked = !step.free && !_isOrion;
-    final cover = wideStepCover(audioCoverAsset(step.title));
-    final meta = StringBuffer('≈ ${step.minutes} ${'course_min'.tr()}');
-    if (state.complete) {
-      meta.write(' · ${'course_state_done'.tr()}');
-    } else if (state.started) {
-      meta.write(' · ${'course_state_started'.tr()}');
-    }
+    final cover = wideStepCover(audioCoverAsset(step.coverKey));
+    // No duration any more: only where the person is with this step.
+    final meta = state.complete
+        ? 'course_state_done'.tr()
+        : state.started
+            ? 'course_state_started'.tr()
+            : '';
     const white = Colors.white;
     return Padding(
-      padding: getPadding(bottom: 12),
-      child: Semantics(
+      padding: getPadding(bottom: 14),
+      child: Opacity(
+        // Finished steps recede a little so the eye goes to what is next.
+        opacity: state.complete ? 0.78 : 1.0,
+        child: Semantics(
         button: true,
         label: _label(step),
         excludeSemantics: true,
@@ -556,30 +644,40 @@ class _CourseScreenState extends State<CourseScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: Container(
-                height: getVerticalSize(104),
+                // At least the designed height; grows when the title takes three
+                // lines (long Spanish names) instead of overflowing.
+                constraints: BoxConstraints(minHeight: getVerticalSize(104)),
                 decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.14), blurRadius: 10, offset: const Offset(0, 4))],
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: 14, offset: const Offset(0, 5))],
                 ),
+                // A fine light ring marks the step that is next.
+                foregroundDecoration: isNext
+                    ? BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.white.withOpacity(0.9), width: 1.6))
+                    : null,
                 child: Stack(
-                  fit: StackFit.expand,
                   children: [
-                    if (cover != null)
-                      Image.asset(cover, fit: BoxFit.cover)
-                    else
-                      Container(color: const Color(0xFF16302C)),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.0)],
-                          stops: const [0.0, 0.62],
+                    Positioned.fill(
+                      child: cover != null
+                          ? Image.asset(cover, fit: BoxFit.cover)
+                          : Container(color: const Color(0xFF16302C)),
+                    ),
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.0)],
+                            stops: const [0.0, 0.62],
+                          ),
                         ),
                       ),
                     ),
-                    if (locked) Container(color: Colors.black.withOpacity(0.28)),
+                    if (locked) Positioned.fill(child: Container(color: Colors.black.withOpacity(0.28))),
                     Padding(
-                      padding: getPadding(left: 14, right: 12),
+                      padding: getPadding(left: 14, right: 12, top: 14, bottom: 14),
                       child: Row(
                         children: [
                           if (step.number != null)
@@ -600,24 +698,25 @@ class _CourseScreenState extends State<CourseScreen> {
                             ),
                           if (step.number != null) SizedBox(width: getHorizontalSize(12)),
                           Expanded(
-                            flex: 11,
+                            flex: 14,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Never cut a title short: the tile grows instead.
                                 Text(step.title,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
                                     style: AppStyle.txtSFProDisplayLight16
                                         .copyWith(color: white, fontWeight: FontWeight.w600, height: 1.2)),
-                                SizedBox(height: getVerticalSize(4)),
-                                Text(meta.toString(),
-                                    style: AppStyle.txtSFProDisplayRegular11
-                                        .copyWith(color: white.withOpacity(0.82), letterSpacing: 0.3)),
+                                if (meta.isNotEmpty) ...[
+                                  SizedBox(height: getVerticalSize(4)),
+                                  Text(meta,
+                                      style: AppStyle.txtSFProDisplayRegular11
+                                          .copyWith(color: white.withOpacity(0.82), letterSpacing: 0.3)),
+                                ],
                               ],
                             ),
                           ),
-                          const Spacer(flex: 8),
+                          const Spacer(flex: 5),
                           Icon(locked ? Icons.lock_outline_rounded : Icons.chevron_right_rounded,
                               color: white.withOpacity(0.9), size: getSize(locked ? 20 : 26)),
                         ],
@@ -629,6 +728,74 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
           ),
         ),
+        ),
+      ),
+    );
+  }
+
+  // The "about / not a diagnosis / helplines / sources" panel: slides down from
+  // the top, over a light veil, and closes on a tap outside or on the cross.
+  void _openInfo() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'close'.tr(),
+      barrierColor: Colors.black.withOpacity(0.32),
+      transitionDuration: const Duration(milliseconds: 280),
+      pageBuilder: (ctx, _, __) => CourseTextScale(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Material(
+            color: AppColors.background,
+            borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
+            clipBehavior: Clip.antiAlias,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.86),
+              child: SafeArea(
+                bottom: false,
+                child: SingleChildScrollView(
+                  padding: getPadding(left: 22, right: 22, top: 8, bottom: 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(child: SectionLabel('course_about_title'.tr())),
+                          IconButton(
+                            tooltip: 'close'.tr(),
+                            onPressed: () => Navigator.pop(ctx),
+                            icon: Icon(Icons.close_rounded, color: AppColors.textSecondary),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: getVerticalSize(2)),
+                      Text(_c.title, style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary, height: 1.2)),
+                      // Safety first: what this is not, and where to find help.
+                      const MedicalDisclaimer(),
+                      SizedBox(height: getVerticalSize(10)),
+                      Divider(height: 1, color: AppColors.divider),
+                      SizedBox(height: getVerticalSize(16)),
+                      Text(_c.intro,
+                          style: AppStyle.txtSFProDisplayLight14
+                              .copyWith(color: courseSoft(false), height: 1.5)),
+                      if (_c.paceNote.isNotEmpty) ...[
+                        SizedBox(height: getVerticalSize(12)),
+                        Text(_c.paceNote,
+                            style: AppStyle.txtSFProDisplayRegular11
+                                .copyWith(color: AppColors.textSecondary, height: 1.5)),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      transitionBuilder: (ctx, anim, _, child) => SlideTransition(
+        position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
+            .animate(CurvedAnimation(parent: anim, curve: Curves.easeOutCubic)),
+        child: child,
       ),
     );
   }

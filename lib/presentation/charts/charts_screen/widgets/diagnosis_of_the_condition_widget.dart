@@ -42,6 +42,11 @@ class DiagnosticOfTheConditionWidget extends StatelessWidget {
               // and a translucent gradient fill under the line natively.
               child: LineChart(
                 LineChartData(
+                  // The state slider on the main screen runs 0..10. Without a
+                  // fixed range the line was stretched to the entries' own
+                  // min/max, so a move from 5 to 6 looked like a crash.
+                  minY: 0,
+                  maxY: 10,
                   gridData: const FlGridData(show: false),
                   titlesData: const FlTitlesData(show: false),
                   borderData: FlBorderData(show: false),

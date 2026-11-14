@@ -28,7 +28,7 @@ class PillsController extends GetxController {
         context: context,
         elevation: 0,
         isScrollControlled: true,
-        builder: (context) => PillsAddBottomSheet()).then((value) {
+        builder: (context) => SafeArea(top: false, child: PillsAddBottomSheet())).then((value) {
 
           update();});
   }

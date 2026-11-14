@@ -212,7 +212,7 @@ class NegativeEmotionsModel {
       if (item.tag == 'panic') controller.panicTab = item.tabIndex;
       final tab = NegativeTab(
           funAudioAssets: audios,
-          funTitleText: 'breathing_relaxation_instruction'.tr(),
+          funTitleText: 'quiz_bridge_headphones_note'.tr(),
           funButtons: await _funButtons(item.tag),
           funTitleImage: localImageOverrides[item.tag] ?? item.imagePath);
       final tabHeight = ((audios?.length ?? 0) * (getVerticalSize(65) + 30)) + 200;

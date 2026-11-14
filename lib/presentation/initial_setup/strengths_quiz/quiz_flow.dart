@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/db/firebase_firestore/data/repository.dart';
 import '../../../core/models/quiz/strength_trait.dart';
 import '../../../core/user_data/user.dart';
+import '../../../core/utils/quiz_offer_anchor.dart';
 import '../../../routes/app_routes.dart';
 import '../onboarding/onboarding_concern.dart';
 import '../../recomendation/recomendation_screen/working_out/programs/data/course_repository.dart';
@@ -85,6 +86,10 @@ Future<void> startPostRegistrationQuizFlow(BuildContext context, {bool skipBridg
 
 Future<void> _showPaywall(BuildContext context, {required StrengthTrait? leadingTrait}) async {
   final quizCompletedAt = DateTime.now();
+  // Always keep the moment on the phone too: without an account there is no
+  // Users/{id} document to hold it, and the main-screen offer banner reads it
+  // from here.
+  await QuizOfferAnchor.saveLocalIfAbsent(quizCompletedAt);
   final userId = CurrentUser.repo.userId();
   if (userId.isNotEmpty) {
     await FireStoreRepositoryImpl().updateUser(

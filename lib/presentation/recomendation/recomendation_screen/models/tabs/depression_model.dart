@@ -15,7 +15,7 @@ import 'package:path_provider/path_provider.dart';
 class DepressionModel extends NegativeEmotionsModelTab{
    String imageTitle = ImageConstant.depressionImage;
 
-   String titleText () => 'breathing_relaxation_instruction'.tr();
+   String titleText () => 'quiz_bridge_headphones_note'.tr();
 
   DateTime? lastListen () =>null;
 

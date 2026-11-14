@@ -17,7 +17,7 @@ Widget PillCardWidget(BuildContext context, {required PillModel pillModel, requi
         backgroundColor: AppColors.background,
         elevation: 0,
         isScrollControlled: true,
-        context: context, builder: (context) => PillsEditBottomSheet(pill: pillModel)).then((value) {
+        context: context, builder: (context) => SafeArea(top: false, child: PillsEditBottomSheet(pill: pillModel))).then((value) {
           update();});
   }
 

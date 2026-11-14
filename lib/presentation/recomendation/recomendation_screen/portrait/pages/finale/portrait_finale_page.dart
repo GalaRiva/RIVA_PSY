@@ -168,9 +168,9 @@ class _PortraitFinalePageState extends State<PortraitFinalePage> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: _results == null
+      body: SafeArea(top: false, child: _results == null
           ? const Center(child: CircularProgressIndicator())
-          : _buildBody(context, _results!),
+          : _buildBody(context, _results!)),
     );
   }
 

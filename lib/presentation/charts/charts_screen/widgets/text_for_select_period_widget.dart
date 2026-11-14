@@ -26,8 +26,10 @@ class TextForSelectPeriodWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        // Leaving the calendar with the back button returns null — it used to be
+        // cast to a non-null Map first, which threw instead of just doing nothing.
         final result = (await Navigator.pushNamed(context, AppRoutes.charts_calendar))
-            as Map<String, dynamic>;
+            as Map<String, dynamic>?;
         if (result != null) {
           DateTime start = result['start'];
           DateTime end = result['end'];

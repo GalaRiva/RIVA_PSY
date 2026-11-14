@@ -37,7 +37,7 @@ class AudioTrackSheet extends StatelessWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (_) => AudioTrackSheet(trackId: trackId, title: title),
+      builder: (_) => SafeArea(top: false, child: AudioTrackSheet(trackId: trackId, title: title)),
     );
   }
 

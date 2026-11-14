@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
 import '../core/db/firebase_firestore/data/repository.dart';
+import '../core/utils/quiz_offer_anchor.dart';
 import '../presentation/initial_setup/strengths_quiz/paywall_screen.dart';
 import '../theme/app_colors.dart';
 
@@ -42,7 +43,7 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
   @override
   void initState() {
     super.initState();
-    FireStoreRepositoryImpl().getQuizCompletedAt().then((value) {
+    _loadAnchor().then((value) {
       if (!mounted) return;
       setState(() {
         _quizCompletedAt = value;
@@ -53,6 +54,13 @@ class _WelcomeOfferBannerState extends State<WelcomeOfferBanner>
         _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
       }
     });
+  }
+
+  // Registered: the server-side moment. Not registered (anonymous-first): the
+  // moment kept on the phone — see QuizOfferAnchor.
+  Future<DateTime?> _loadAnchor() async {
+    final remote = await FireStoreRepositoryImpl().getQuizCompletedAt();
+    return remote ?? await QuizOfferAnchor.loadLocal();
   }
 
   void _tick() {

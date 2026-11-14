@@ -40,10 +40,19 @@ class Audio {
         nameEs: json['name_es'] as String?,
         fileNameEn: json['fileName_en'] as String?,
         nameEn: json['name_en'] as String?,
-        durationMs: (json['duration_ms'] as num?)?.toInt(),
-        durationMsEn: (json['duration_ms_en'] as num?)?.toInt(),
-        durationMsEs: (json['duration_ms_es'] as num?)?.toInt(),
+        durationMs: _asInt(json['duration_ms']),
+        durationMsEn: _asInt(json['duration_ms_en']),
+        durationMsEs: _asInt(json['duration_ms_es']),
     );
+  }
+
+  // A duration stored as text ("524320") instead of a number used to make
+  // `as num?` throw, which dropped the whole Audio document and left the track
+  // with no audio. Accept both.
+  static int? _asInt(dynamic v) {
+    if (v == null) return null;
+    if (v is num) return v.toInt();
+    return int.tryParse(v.toString().trim());
   }
 
   // Localized display name/file, following the same `_localizedField`

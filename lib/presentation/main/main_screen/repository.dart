@@ -23,7 +23,8 @@ class K20Repo {
     list.add(event);
     await HiveDB.deleteBox(_eventTag);
     for(var item in list) {
-      HiveDB.setBox(item.toJson(), _eventTag);
+      // Awaited: a second save right after this one must not read a half-written box.
+      await HiveDB.setBox(item.toJson(), _eventTag);
     }
   }
 }

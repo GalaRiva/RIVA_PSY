@@ -189,12 +189,27 @@ class CustomButton extends StatelessWidget {
                     style: textStyle ?? _setFontStyle(),
                   ),
                 )
-              : Text(
-                  text ?? "",
-                  textAlign: TextAlign.center,
-                  style: textStyle ?? _setFontStyle(),
-                )),
+              : _fitIfTooBig()),
     );
+  }
+
+  // A fixed-height button used to let a longer translation (Spanish/English
+  // are often longer than the Russian the screens were drawn for, and large
+  // system fonts make it worse) spill out of the button. The label now sits in
+  // a FittedBox that only ever scales DOWN: if the text, laid out and wrapped
+  // exactly as it will be drawn, is taller than the button it is shrunk just
+  // enough to fit; if it fits, nothing changes. (An earlier version measured
+  // the text separately and missed the theme's letter spacing, so labels that
+  // really wrapped were reported as fitting.)
+  Widget _fitIfTooBig() {
+    final label = Text(text ?? "", textAlign: TextAlign.center, style: textStyle ?? _setFontStyle());
+    return LayoutBuilder(builder: (context, c) {
+      if (!c.hasBoundedWidth || !c.hasBoundedHeight || (text ?? "").isEmpty) return label;
+      return FittedBox(
+        fit: BoxFit.scaleDown,
+        child: ConstrainedBox(constraints: BoxConstraints(maxWidth: c.maxWidth), child: label),
+      );
+    });
   }
 
   _buildTextButtonStyle() {

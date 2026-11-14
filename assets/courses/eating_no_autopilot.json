@@ -1352,7 +1352,11 @@
       "es": "Si tienes hambre, come con calma, sentado/a. Si se trata de una emoción, puedes hacer una de tus acciones."
      },
      "show_card": "pause_card:action1,action2",
-     "show_card_fallback": "Здесь появятся ваши действия после шага 4."
+     "show_card_fallback": {
+      "ru": "Здесь появятся ваши действия после шага 4.",
+      "en": "Your actions will appear here after step 4.",
+      "es": "Tus acciones aparecerán aquí tras el paso 4."
+     }
     },
     {
      "title": {

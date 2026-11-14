@@ -123,6 +123,10 @@ class CourseMicro {
 class CourseStep {
   final String id;
   final String title;
+  // The Russian title: the key the step's artwork is stored under
+  // (audioCoverAssets), the same in every language. Looking the picture up by
+  // the displayed title lost it in Spanish and English.
+  final String coverKey;
   final String card;
   final int minutes;
   final String? audioDocId;
@@ -148,6 +152,7 @@ class CourseStep {
   CourseStep({
     required this.id,
     required this.title,
+    String? coverKey,
     required this.card,
     required this.minutes,
     required this.audioDocId,
@@ -161,11 +166,12 @@ class CourseStep {
     this.followUpMinutes,
     this.followUpTitle = '',
     this.followUpBody = '',
-  });
+  }) : coverKey = (coverKey ?? '').isEmpty ? title : coverKey!;
 
   factory CourseStep.fromJson(Map<String, dynamic> j, String lang) => CourseStep(
         id: j['id'] as String,
         title: loc(j['title'], lang),
+        coverKey: loc(j['title'], 'ru'),
         card: loc(j['card'], lang),
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
         audioDocId: j['audio_doc_id'] as String?,
@@ -275,6 +281,8 @@ class Course {
   final int order;
   final List<String> languages;
   final String title;
+  // Short name for the program card (cover); falls back to [title].
+  final String cardTitle;
   final String subtitle;
   final String intro;
   final String paceNote;
@@ -301,6 +309,7 @@ class Course {
     required this.order,
     required this.languages,
     required this.title,
+    String? cardTitle,
     required this.subtitle,
     required this.intro,
     required this.paceNote,
@@ -318,7 +327,7 @@ class Course {
     required this.maxNewPerDay,
     this.calmStepId,
     this.welcome = const [],
-  });
+  }) : cardTitle = (cardTitle ?? '').trim().isEmpty ? title : cardTitle!;
 
   CourseGroup groupOf(CourseStep step) =>
       groups.firstWhere((g) => g.id == step.groupId, orElse: () => groups.first);
@@ -339,6 +348,7 @@ class Course {
         order: (j['order'] as num?)?.toInt() ?? 0,
         languages: ((j['languages'] as List?) ?? ['ru']).map((e) => e.toString()).toList(),
         title: loc(j['title'], lang),
+        cardTitle: j['card_title'] == null ? null : loc(j['card_title'], lang),
         subtitle: loc(j['subtitle'], lang),
         intro: loc(j['intro'], lang),
         paceNote: loc(j['pace_note'], lang),

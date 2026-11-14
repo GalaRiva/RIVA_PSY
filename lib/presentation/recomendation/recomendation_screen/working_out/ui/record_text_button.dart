@@ -106,7 +106,9 @@ class RecordTextButton extends StatelessWidget {
                                   style: _style,
                                 ),]),
                               _recordRow(title: 'diary_body_reaction'.tr(), dayEventVariable: [Text(
-                                dayEventModel.whatBodyParts!.first.bodyPartsModel.localizedBodyPart,
+                                (dayEventModel.whatBodyParts?.isNotEmpty ?? false)
+                                    ? dayEventModel.whatBodyParts!.first.bodyPartsModel.localizedBodyPart
+                                    : '—',
                                 style: _style,
                               )]),
                               Padding(

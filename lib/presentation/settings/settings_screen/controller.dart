@@ -20,7 +20,7 @@ class K6Controller extends GetxController {
       Navigator.pushNamed(context, AppRoutes.pills);
     else
       showModalBottomSheet(
-          context: context, builder: (context) => PillsAddBottomSheet(),
+          context: context, builder: (context) => SafeArea(top: false, child: PillsAddBottomSheet()),
       backgroundColor: AppColors.background.withOpacity(1),
       elevation: 0,
       isScrollControlled: true

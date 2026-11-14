@@ -37,7 +37,7 @@ class GuidedJournalPaywallPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
+      body: SafeArea(top: false, child: SingleChildScrollView(
         padding: getPadding(left: 20, right: 20, top: 0, bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,7 +118,7 @@ class GuidedJournalPaywallPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }

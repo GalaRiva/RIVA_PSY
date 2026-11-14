@@ -31,8 +31,11 @@ void showPauseSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (_) => Container(
-      padding: getPadding(left: 20, right: 20, top: 24, bottom: 32),
+    builder: (sheetContext) => Container(
+      // Extra room at the bottom for the system navigation bar, inside the
+      // white card so no differently coloured strip shows under it.
+      padding: getPadding(left: 20, right: 20, top: 24, bottom: 32)
+          .add(EdgeInsets.only(bottom: MediaQuery.paddingOf(sheetContext).bottom)),
       decoration: BoxDecoration(
         color: ColorConstant.whiteA700,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),

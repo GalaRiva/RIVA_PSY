@@ -164,17 +164,23 @@ class SocialBatteryService {
     final flaggedTimeline = <MoodPoint>[];
     double cumHours = 0;
     DateTime? sessionPrev;
+    // Only the FIRST entry of a session past the limit is marked. It used to
+    // mark every later entry of the same session too, so one long stretch with
+    // people showed a row of red dots instead of one.
+    bool sessionFlagged = false;
     for (final p in moodTimeline) {
       bool flagged = false;
       if (p.isAlone) {
         cumHours = 0;
         sessionPrev = null;
+        sessionFlagged = false;
       } else {
         final gap = sessionPrev == null ? 0.0 : p.date.difference(sessionPrev).inMinutes / 60.0;
         cumHours += gap.clamp(0.0, _maxGapHours);
         sessionPrev = p.date;
-        if (breakPointHours != null && cumHours >= breakPointHours && !breakPointDates.contains(p.date)) {
+        if (breakPointHours != null && cumHours >= breakPointHours && !sessionFlagged) {
           flagged = true;
+          sessionFlagged = true;
           breakPointDates.add(p.date);
         }
       }

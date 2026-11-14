@@ -30,11 +30,15 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
 
   bool get _allAnswered => widget.course.screening.every((q) => _answers[q.id] != null);
 
-  void _continue() {
+  Future<void> _continue() async {
     final stop = widget.course.screening.any((q) => q.level == 'stop' && _answers[q.id] == true);
     if (stop) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const HelpNowScreen()));
+      // The help page opens ON TOP of this screen, and this screen closes with
+      // "do not continue" only after the person comes back from it. It used to
+      // REPLACE this screen: the course took that as "cancelled", popped the
+      // top route (the help page itself) and was left on an endless spinner.
+      await Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpNowScreen()));
+      if (mounted) Navigator.pop(context, false);
       return;
     }
     final specialist =

@@ -2,38 +2,82 @@
  "id": "return_to_self",
  "order": 3,
  "languages": [
-  "ru"
+  "ru",
+  "es"
  ],
  "cover": "assets/images/courses/return_to_self.jpg",
- "title": "После расставания. Вернуться к себе",
- "subtitle": "Аудио-практики для тех, кому тяжело после расставания или трудно перестать думать о партнёре или бывшем партнёре",
- "intro": "Пять навыков, каждый опирается на предыдущий: заметить тягу, отойти от мыслей, отделить свою ценность от чужого выбора, отпустить контроль, вернуть внимание к своей жизни. Программа не требует ни разрыва, ни сохранения отношений: навыки подходят и после расставания, и в отношениях. Блоки «Первая опора» и «На трудные часы» открыты в любой момент: там то, что помогает, когда накрывает, не спится или сорвалось. Каждое аудио заканчивается приёмом, который можно повторить за 1–3 минуты. Это инструмент самопомощи: он может поддержать изменения, но не заменяет психотерапию, если трудности сильные или длятся давно.",
- "pace_note": "Рекомендуем одно новое упражнение раз в 2–3 дня и каждое прослушать минимум дважды. Блоки «Первая опора» и «На трудные часы» открыты в любой момент и не входят в этот темп. Программу можно проходить с начала столько раз, сколько захочется.",
- "free_note": "Бесплатно: блок «Первая опора» и первое упражнение. Остальное открывается с подпиской Orion. Инструменты, опрос безопасности и страница помощи всегда бесплатны.",
+ "title": {
+  "ru": "После расставания. Вернуться к себе",
+  "es": "Después de la ruptura. Volver a ti"
+ },
+ "card_title": {
+  "ru": "После расставания",
+  "es": "Después de la ruptura"
+ },
+ "subtitle": {
+  "ru": "Аудио-практики для тех, кому тяжело после расставания или трудно перестать думать о партнёре или бывшем партнёре",
+  "es": "Prácticas de audio para quien lo pasa mal tras una ruptura o le cuesta dejar de pensar en su pareja o expareja"
+ },
+ "intro": {
+  "ru": "Пять навыков, каждый опирается на предыдущий: заметить тягу, отойти от мыслей, отделить свою ценность от чужого выбора, отпустить контроль, вернуть внимание к своей жизни. Программа не требует ни разрыва, ни сохранения отношений: навыки подходят и после расставания, и в отношениях. Блоки «Первая опора» и «На трудные часы» открыты в любой момент: там то, что помогает, когда накрывает, не спится или сорвалось. Каждое аудио заканчивается приёмом, который можно повторить за 1–3 минуты. Это инструмент самопомощи: он может поддержать изменения, но не заменяет психотерапию, если трудности сильные или длятся давно.",
+  "es": "Cinco habilidades, cada una apoyada en la anterior: notar el impulso, distanciarte de los pensamientos, separar tu valor de la decisión de otra persona, soltar el control y volver a poner la atención en tu propia vida. El programa no exige ni romper la relación ni mantenerla: las habilidades sirven tanto después de una ruptura como dentro de una relación. Los bloques «Primer apoyo» y «Para las horas difíciles» están abiertos en todo momento: ahí está lo que ayuda cuando todo te desborda, cuando no puedes dormir o cuando has recaído. Cada audio termina con un recurso que puedes repetir en 1 a 3 minutos. Es una herramienta de autoayuda: puede apoyar los cambios, pero no sustituye la psicoterapia si las dificultades son intensas o llevan mucho tiempo."
+ },
+ "pace_note": {
+  "ru": "Рекомендуем одно новое упражнение раз в 2–3 дня и каждое прослушать минимум дважды. Блоки «Первая опора» и «На трудные часы» открыты в любой момент и не входят в этот темп. Программу можно проходить с начала столько раз, сколько захочется.",
+  "es": "Recomendamos un ejercicio nuevo cada 2 o 3 días y escuchar cada uno al menos dos veces. Los bloques «Primer apoyo» y «Para las horas difíciles» están abiertos en todo momento y no entran en este ritmo. Puedes recorrer el programa desde el principio tantas veces como quieras."
+ },
+ "free_note": {
+  "ru": "Бесплатно: блок «Первая опора» и первое упражнение. Остальное открывается с подпиской Orion. Инструменты, опрос безопасности и страница помощи всегда бесплатны.",
+  "es": "Gratis: el bloque «Primer apoyo» y el primer ejercicio. El resto se abre con la suscripción Orion. Las herramientas, las preguntas de seguridad y la página de ayuda son siempre gratuitas."
+ },
  "intro_audio_doc_id": null,
  "max_new_per_day": 1,
  "calm_step_id": "wave",
- "specialist_title": "Сначала лучше обратиться за поддержкой",
- "specialist_body": "Из ваших ответов видно, что сейчас важны поддержка специалиста или помощь служб, которые работают с безопасностью. Этот курс не заменяет помощь. Вы можете пройти его как дополнение, но, пожалуйста, обратитесь за поддержкой.",
+ "specialist_title": {
+  "ru": "Сначала лучше обратиться за поддержкой",
+  "es": "Es mejor buscar apoyo primero"
+ },
+ "specialist_body": {
+  "ru": "Из ваших ответов видно, что сейчас важны поддержка специалиста или помощь служб, которые работают с безопасностью. Этот курс не заменяет помощь. Вы можете пройти его как дополнение, но, пожалуйста, обратитесь за поддержкой.",
+  "es": "Por tus respuestas, ahora es importante el apoyo de un especialista o de servicios que trabajan con la seguridad. Este programa no sustituye la ayuda. Puedes recorrerlo como complemento, pero, por favor, busca apoyo."
+ },
  "groups": [
   {
    "id": "support1",
-   "title": "Первая опора",
-   "subtitle": "Открыты в любой момент: когда накрывает и когда хочется погоревать.",
+   "title": {
+    "ru": "Первая опора",
+    "es": "Primer apoyo"
+   },
+   "subtitle": {
+    "ru": "Открыты в любой момент: когда накрывает и когда хочется погоревать.",
+    "es": "Abiertos en todo momento: cuando todo te desborda y cuando necesitas hacer el duelo."
+   },
    "numbered": false,
    "suggest": false
   },
   {
    "id": "support2",
-   "title": "На трудные часы",
-   "subtitle": "Для ночи, вечера и случаев, когда сорвалось.",
+   "title": {
+    "ru": "На трудные часы",
+    "es": "Para las horas difíciles"
+   },
+   "subtitle": {
+    "ru": "Для ночи, вечера и случаев, когда сорвалось.",
+    "es": "Para la noche, la tarde y los momentos en que has recaído."
+   },
    "numbered": false,
    "suggest": false
   },
   {
    "id": "main",
-   "title": "Вернуться к себе",
-   "subtitle": "Одиннадцать упражнений: каждое опирается на предыдущее. Лучше идти по порядку. Подходят и тем, кто расстался, и тем, кто остаётся в отношениях.",
+   "title": {
+    "ru": "Вернуться к себе",
+    "es": "Volver a ti"
+   },
+   "subtitle": {
+    "ru": "Одиннадцать упражнений: каждое опирается на предыдущее. Лучше идти по порядку. Подходят и тем, кто расстался, и тем, кто остаётся в отношениях.",
+    "es": "Once ejercicios, cada uno apoyado en el anterior. Es mejor seguir el orden. Sirven tanto para quien ha roto como para quien sigue en la relación."
+   },
    "numbered": true,
    "suggest": true
   }
@@ -41,33 +85,57 @@
  "weekly": [
   {
    "id": "pain",
-   "label": "Насколько сильной была эмоциональная боль на этой неделе?",
+   "label": {
+    "ru": "Насколько сильной была эмоциональная боль на этой неделе?",
+    "es": "¿Qué intensidad tuvo el dolor emocional esta semana?"
+   },
    "record": {
-    "name": "Эмоциональная боль",
+    "name": {
+     "ru": "Эмоциональная боль",
+     "es": "Dolor emocional"
+    },
     "kind": "negative"
    }
   },
   {
    "id": "urge",
-   "label": "Насколько сильно тянуло написать или проверить на этой неделе?",
+   "label": {
+    "ru": "Насколько сильно тянуло написать или проверить на этой неделе?",
+    "es": "¿Con qué fuerza sentiste el impulso de escribir o de comprobar esta semana?"
+   },
    "record": {
-    "name": "Тяга написать или проверить",
+    "name": {
+     "ru": "Тяга написать или проверить",
+     "es": "Impulso de escribir o comprobar"
+    },
     "kind": "negative"
    }
   },
   {
    "id": "checks",
-   "label": "Сколько проверяющих действий было вчера? (0–10, где 10 — десять и больше)",
+   "label": {
+    "ru": "Сколько проверяющих действий было вчера? (0–10, где 10 — десять и больше)",
+    "es": "¿Cuántas acciones de comprobación hiciste ayer? (0–10, donde 10 significa diez o más)"
+   },
    "record": {
-    "name": "Проверяющие действия",
+    "name": {
+     "ru": "Проверяющие действия",
+     "es": "Acciones de comprobación"
+    },
     "kind": "negative"
    }
   },
   {
    "id": "support",
-   "label": "Насколько я чувствовал(а) опору в себе или в людях?",
+   "label": {
+    "ru": "Насколько я чувствовал(а) опору в себе или в людях?",
+    "es": "¿Cuánto apoyo sentí esta semana, en mí o en otras personas?"
+   },
    "record": {
-    "name": "Опора",
+    "name": {
+     "ru": "Опора",
+     "es": "Apoyo"
+    },
     "kind": "positive"
    }
   }
@@ -84,49 +152,91 @@
   {
    "id": "self_harm",
    "level": "stop",
-   "q": "Бывают ли у вас мысли о том, чтобы причинить себе вред или что не хочется жить?"
+   "q": {
+    "ru": "Бывают ли у вас мысли о том, чтобы причинить себе вред или что не хочется жить?",
+    "es": "¿Tienes a veces pensamientos de hacerte daño o de no querer vivir?"
+   }
   },
   {
    "id": "safety",
    "level": "specialist",
-   "q": "Рядом с партнёром или бывшим партнёром вам страшно: вас запугивают, преследуют, контролируют или принуждают?"
+   "q": {
+    "ru": "Рядом с партнёром или бывшим партнёром вам страшно: вас запугивают, преследуют, контролируют или принуждают?",
+    "es": "¿Junto a tu pareja o expareja sientes miedo: te intimida, te persigue, te controla o te obliga?"
+   }
   },
   {
    "id": "daily",
    "level": "specialist",
-   "q": "Вам трудно справляться с повседневными делами уже несколько недель?"
+   "q": {
+    "ru": "Вам трудно справляться с повседневными делами уже несколько недель?",
+    "es": "¿Te cuesta llevar el día a día desde hace varias semanas?"
+   }
   }
  ],
  "steps": [
   {
    "id": "wave",
    "group": "support1",
-   "title": "Острая волна",
-   "card": "Когда накрывает и думать не получается. Три минуты, которые ничего не решают, но помогают дожить до момента, когда решать станет возможно.",
+   "title": {
+    "ru": "Острая волна",
+    "es": "Ola aguda"
+   },
+   "card": {
+    "ru": "Когда накрывает и думать не получается. Три минуты, которые ничего не решают, но помогают дожить до момента, когда решать станет возможно.",
+    "es": "Cuando todo te desborda y no puedes pensar. Tres minutos que no resuelven nada, pero ayudan a llegar al momento en que decidir será posible."
+   },
    "minutes": 4,
    "audio_doc_id": "program_return__wave",
    "task": {
-    "title": "Одно простое действие",
+    "title": {
+     "ru": "Одно простое действие",
+     "es": "Una acción sencilla"
+    },
     "card_type": "wave_action",
-    "intro": "Выберите одно простое физическое действие из названных в записи и сделайте его. Телефон пусть пока полежит.",
+    "intro": {
+     "ru": "Выберите одно простое физическое действие из названных в записи и сделайте его. Телефон пусть пока полежит.",
+     "es": "Elige una acción física sencilla de las que se nombran en el audio y hazla. Deja el teléfono a un lado por ahora."
+    },
     "fields": [
      {
       "id": "action",
-      "label": "Что я сделаю",
+      "label": {
+       "ru": "Что я сделаю",
+       "es": "Qué voy a hacer"
+      },
       "type": "text",
-      "hint": "Выпить воды, умыться прохладной водой или выйти на воздух на пару минут",
+      "hint": {
+       "ru": "Выпить воды, умыться прохладной водой или выйти на воздух на пару минут",
+       "es": "Beber agua, lavarte la cara con agua fresca o salir a tomar el aire un par de minutos"
+      },
       "chips": [
-       "Выпить воды",
-       "Умыться прохладной водой",
-       "Выйти на воздух"
+       {
+        "ru": "Выпить воды",
+        "es": "Beber agua"
+       },
+       {
+        "ru": "Умыться прохладной водой",
+        "es": "Lavarme la cara con agua fresca"
+       },
+       {
+        "ru": "Выйти на воздух",
+        "es": "Salir a tomar el aire"
+       }
       ]
      },
      {
       "id": "urge",
-      "label": "Сила тяги сейчас, 0–10",
+      "label": {
+       "ru": "Сила тяги сейчас, 0–10",
+       "es": "Intensidad del impulso ahora, de 0 a 10"
+      },
       "type": "scale",
       "record": {
-       "name": "Тяга написать или проверить",
+       "name": {
+        "ru": "Тяга написать или проверить",
+        "es": "Impulso de escribir o comprobar"
+       },
        "kind": "negative"
       }
      }
@@ -135,49 +245,91 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Через десять минут",
-     "body": "Если всё ещё очень тяжело, откройте «Хочется написать или проверить» или страницу помощи. Спокойнее станет не сразу, и это нормально."
+     "title": {
+      "ru": "Через десять минут",
+      "es": "Pasados diez minutos"
+     },
+     "body": {
+      "ru": "Если всё ещё очень тяжело, откройте «Хочется написать или проверить» или страницу помощи. Спокойнее станет не сразу, и это нормально.",
+      "es": "Si sigue siendo muy difícil, abre «Quiero escribir o comprobar» o la página de ayuda. La calma no llega enseguida, y es normal."
+     }
     }
    ],
    "always_available": true,
    "free": true,
    "follow_up": {
     "minutes": 10,
-    "title": "Как вы сейчас?",
-    "body": "Прошло десять минут. Если всё ещё тяжело, откройте в курсе «Хочется написать или проверить» или страницу помощи."
+    "title": {
+     "ru": "Как вы сейчас?",
+     "es": "¿Cómo estás ahora?"
+    },
+    "body": {
+     "ru": "Прошло десять минут. Если всё ещё тяжело, откройте в курсе «Хочется написать или проверить» или страницу помощи.",
+     "es": "Han pasado diez minutos. Si sigue siendo difícil, abre en el programa «Quiero escribir o comprobar» o la página de ayuda."
+    }
    }
   },
   {
    "id": "loss",
    "group": "support1",
-   "title": "Место для потери",
-   "card": "Расставание приносит не только тягу, но и горе. Учимся давать печали место и время, не проваливаясь в неё на весь день.",
+   "title": {
+    "ru": "Место для потери",
+    "es": "Un espacio para la pérdida"
+   },
+   "card": {
+    "ru": "Расставание приносит не только тягу, но и горе. Учимся давать печали место и время, не проваливаясь в неё на весь день.",
+    "es": "Una ruptura trae no solo el impulso, sino también el duelo. Aprendemos a dar un lugar y un tiempo a la tristeza, sin hundirnos en ella todo el día."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__loss",
    "task": {
-    "title": "Два коротких списка",
+    "title": {
+     "ru": "Два коротких списка",
+     "es": "Dos listas cortas"
+    },
     "card_type": "loss_lists",
-    "intro": "Запишите два списка, не больше пяти строк в каждом. Свободное письмо «обо всём, что чувствую» здесь намеренно не предлагается. Потом сразу займитесь выбранным делом.",
+    "intro": {
+     "ru": "Запишите два списка, не больше пяти строк в каждом. Свободное письмо «обо всём, что чувствую» здесь намеренно не предлагается. Потом сразу займитесь выбранным делом.",
+     "es": "Escribe dos listas, de no más de cinco líneas cada una. Aquí no se propone a propósito escribir libremente «sobre todo lo que siento». Después ponte enseguida con la tarea que hayas elegido."
+    },
     "fields": [
      {
       "id": "missing",
-      "label": "Чего мне не хватает",
+      "label": {
+       "ru": "Чего мне не хватает",
+       "es": "Lo que echo de menos"
+      },
       "type": "text",
-      "hint": "До пяти строк, коротко"
+      "hint": {
+       "ru": "До пяти строк, коротко",
+       "es": "Hasta cinco líneas, breves"
+      }
      },
      {
       "id": "stays",
-      "label": "Что остаётся со мной",
+      "label": {
+       "ru": "Что остаётся со мной",
+       "es": "Lo que se queda conmigo"
+      },
       "type": "text",
-      "hint": "То, что вы знаете или умеете теперь, и то, что есть в жизни помимо потери"
+      "hint": {
+       "ru": "То, что вы знаете или умеете теперь, и то, что есть в жизни помимо потери",
+       "es": "Lo que sabes o sabes hacer ahora, y lo que hay en tu vida además de la pérdida"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Дело руками",
-     "body": "Сразу после упражнения займитесь чем-то простым: помойте чашку, разберите сумку, выйдите за хлебом. Печали можно дать своё время, например пятнадцать минут вечером, но не весь день."
+     "title": {
+      "ru": "Дело руками",
+      "es": "Algo con las manos"
+     },
+     "body": {
+      "ru": "Сразу после упражнения займитесь чем-то простым: помойте чашку, разберите сумку, выйдите за хлебом. Печали можно дать своё время, например пятнадцать минут вечером, но не весь день.",
+      "es": "Justo después del ejercicio, ocúpate de algo sencillo: lava una taza, ordena el bolso, sal a comprar el pan. Puedes darle a la tristeza su tiempo, por ejemplo quince minutos por la tarde, pero no el día entero."
+     }
     }
    ],
    "always_available": true,
@@ -186,21 +338,39 @@
   {
    "id": "night",
    "group": "support2",
-   "title": "Ночные мысли",
-   "card": "Когда в постели мысли об этом человеке не дают уснуть. Запись не обещает сна, но помогает отложить разговор с собой до утра и занять ум чем-то спокойным.",
+   "title": {
+    "ru": "Ночные мысли",
+    "es": "Pensamientos nocturnos"
+   },
+   "card": {
+    "ru": "Когда в постели мысли об этом человеке не дают уснуть. Запись не обещает сна, но помогает отложить разговор с собой до утра и занять ум чем-то спокойным.",
+    "es": "Cuando en la cama los pensamientos sobre esa persona no te dejan dormir. El audio no promete el sueño, pero ayuda a aplazar la conversación contigo hasta la mañana y a ocupar la mente con algo tranquilo."
+   },
    "minutes": 11,
    "audio_doc_id": "program_return__night",
    "task": {
-    "title": "Ящик для ночных мыслей",
+    "title": {
+     "ru": "Ящик для ночных мыслей",
+     "es": "Caja para pensamientos nocturnos"
+    },
     "card_type": "night_thought",
-    "intro": "Назовите мысли одним-двумя словами и положите в ящик. Утром, в назначенное время, откройте его: на разбор не больше пятнадцати минут.",
+    "intro": {
+     "ru": "Назовите мысли одним-двумя словами и положите в ящик. Утром, в назначенное время, откройте его: на разбор не больше пятнадцати минут.",
+     "es": "Nombra los pensamientos con una o dos palabras y ponlos en la caja. Por la mañana, a la hora acordada, ábrela: no más de quince minutos para revisarlos."
+    },
     "fields": []
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Утром",
-     "body": "Откройте ящик в назначенное время. Если мысль требует решения, запишите один следующий шаг. Если нет, отметьте её как «историю» из упражнения «Разорвать круг навязчивых мыслей»."
+     "title": {
+      "ru": "Утром",
+      "es": "Por la mañana"
+     },
+     "body": {
+      "ru": "Откройте ящик в назначенное время. Если мысль требует решения, запишите один следующий шаг. Если нет, отметьте её как «историю» из упражнения «Разорвать круг навязчивых мыслей».",
+      "es": "Abre la caja a la hora acordada. Si un pensamiento pide una decisión, apunta un único paso siguiente. Si no, márcalo como «historia», como en el ejercicio «Romper el ciclo de los pensamientos obsesivos»."
+     }
     }
    ],
    "always_available": true,
@@ -210,42 +380,90 @@
   {
    "id": "slip",
    "group": "support2",
-   "title": "После срыва",
-   "card": "Сообщение отправлено, страница открыта, хотя решение было другим. Разбираемся без упрёков: что произошло, что к этому привело и что изменить на завтра.",
+   "title": {
+    "ru": "После срыва",
+    "es": "Después de una recaída"
+   },
+   "card": {
+    "ru": "Сообщение отправлено, страница открыта, хотя решение было другим. Разбираемся без упрёков: что произошло, что к этому привело и что изменить на завтра.",
+    "es": "El mensaje está enviado, la página abierta, aunque la decisión era otra. Lo revisamos sin reproches: qué pasó, qué llevó a ello y qué cambiar para mañana."
+   },
    "minutes": 6,
    "audio_doc_id": "program_return__slip",
    "task": {
-    "title": "Звено и план",
+    "title": {
+     "ru": "Звено и план",
+     "es": "Eslabón y plan"
+    },
     "card_type": "slip_plan",
-    "intro": "Запишите две строки: найденное звено и план «если — то». Счётчиков «дней без контакта» здесь нет и не будет.",
+    "intro": {
+     "ru": "Запишите две строки: найденное звено и план «если — то». Счётчиков «дней без контакта» здесь нет и не будет.",
+     "es": "Escribe dos líneas: el eslabón que encontraste y un plan «si… entonces». Aquí no hay contador de «días sin contacto», ni lo habrá."
+    },
     "fields": [
      {
       "id": "link",
-      "label": "Что было раньше",
+      "label": {
+       "ru": "Что было раньше",
+       "es": "Qué hubo antes"
+      },
       "type": "text",
-      "hint": "Звено, где можно было поступить иначе: усталость, голод, одиночество, телефон под рукой",
+      "hint": {
+       "ru": "Звено, где можно было поступить иначе: усталость, голод, одиночество, телефон под рукой",
+       "es": "El eslabón donde se podía actuar de otra manera: cansancio, hambre, soledad, el teléfono a mano"
+      },
       "chips": [
-       "Усталость",
-       "Голод",
-       "Одиночество",
-       "Алкоголь",
-       "Телефон рядом"
+       {
+        "ru": "Усталость",
+        "es": "Cansancio"
+       },
+       {
+        "ru": "Голод",
+        "es": "Hambre"
+       },
+       {
+        "ru": "Одиночество",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Алкоголь",
+        "es": "Alcohol"
+       },
+       {
+        "ru": "Телефон рядом",
+        "es": "El teléfono cerca"
+       }
       ]
      },
      {
       "id": "plan",
-      "label": "Если …, я …",
+      "label": {
+       "ru": "Если …, я …",
+       "es": "Si …, yo …"
+      },
       "type": "text",
-      "hint": "На ближайшие сутки",
-      "default": "Если …, я …"
+      "hint": {
+       "ru": "На ближайшие сутки",
+       "es": "Para las próximas veinticuatro horas"
+      },
+      "default": {
+       "ru": "Если …, я …",
+       "es": "Si …, yo …"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Без счёта",
-     "body": "Один срыв не отменяет пройденного. Серий и подсчёта дней в курсе нет: возвращаться можно в любой момент."
+     "title": {
+      "ru": "Без счёта",
+      "es": "Sin contar"
+     },
+     "body": {
+      "ru": "Один срыв не отменяет пройденного. Серий и подсчёта дней в курсе нет: возвращаться можно в любой момент.",
+      "es": "Una recaída no anula lo recorrido. En el programa no hay rachas ni cuenta de días: puedes volver en cualquier momento."
+     }
     }
    ],
    "always_available": true
@@ -253,72 +471,153 @@
   {
    "id": "evening",
    "group": "support2",
-   "title": "Трудный вечер",
-   "card": "У тяги есть расписание. Заранее, в спокойном состоянии, собираем план на то время суток, когда труднее всего.",
+   "title": {
+    "ru": "Трудный вечер",
+    "es": "Una tarde difícil"
+   },
+   "card": {
+    "ru": "У тяги есть расписание. Заранее, в спокойном состоянии, собираем план на то время суток, когда труднее всего.",
+    "es": "El impulso tiene su horario. De antemano, con calma, preparamos un plan para el momento del día en que cuesta más."
+   },
    "minutes": 6,
    "audio_doc_id": "program_return__evening",
    "task": {
-    "title": "Мой план на трудный вечер",
+    "title": {
+     "ru": "Мой план на трудный вечер",
+     "es": "Mi plan para la tarde difícil"
+    },
     "card_type": "evening_plan",
-    "intro": "Заполните план из пяти строк и сегодня же выполните один пункт из «Убрать лишнее». План, который лежит перед глазами, выполнить проще, чем план в голове.",
+    "intro": {
+     "ru": "Заполните план из пяти строк и сегодня же выполните один пункт из «Убрать лишнее». План, который лежит перед глазами, выполнить проще, чем план в голове.",
+     "es": "Rellena un plan de cinco líneas y hoy mismo cumple uno de los puntos de «Quitar de en medio». Un plan que tienes delante es más fácil de cumplir que uno que solo está en la cabeza."
+    },
     "fields": [
      {
       "id": "hour",
-      "label": "Мой трудный час",
+      "label": {
+       "ru": "Мой трудный час",
+       "es": "Mi hora difícil"
+      },
       "type": "text",
-      "hint": "Время и место, когда тянет сильнее всего"
+      "hint": {
+       "ru": "Время и место, когда тянет сильнее всего",
+       "es": "La hora y el lugar en que el impulso es más fuerte"
+      }
      },
      {
       "id": "time",
-      "label": "Время для напоминания",
+      "label": {
+       "ru": "Время для напоминания",
+       "es": "Hora del recordatorio"
+      },
       "type": "time",
       "notify_before": 30,
-      "notify_body": "Скоро ваш трудный час. Ваш план на вечер ждёт в курсе «Вернуться к себе»."
+      "notify_body": {
+       "ru": "Скоро ваш трудный час. Ваш план на вечер ждёт в курсе «Вернуться к себе».",
+       "es": "Se acerca tu hora difícil. Tu plan para la tarde te espera en el programa «Volver a ti»."
+      }
      },
      {
       "id": "remove",
-      "label": "До него я убираю…",
+      "label": {
+       "ru": "До него я убираю…",
+       "es": "Antes de ella quito de en medio…"
+      },
       "type": "text",
-      "hint": "Что можно изменить заранее",
+      "hint": {
+       "ru": "Что можно изменить заранее",
+       "es": "Lo que se puede cambiar de antemano"
+      },
       "chips": [
-       "Отключить уведомления от этого человека",
-       "Убрать переписку из закреплённых",
-       "Телефон на зарядку в другую комнату",
-       "Сложить фото и вещи в коробку"
+       {
+        "ru": "Отключить уведомления от этого человека",
+        "es": "Silenciar las notificaciones de esa persona"
+       },
+       {
+        "ru": "Убрать переписку из закреплённых",
+        "es": "Quitar la conversación de los chats fijados"
+       },
+       {
+        "ru": "Телефон на зарядку в другую комнату",
+        "es": "Poner el teléfono a cargar en otra habitación"
+       },
+       {
+        "ru": "Сложить фото и вещи в коробку",
+        "es": "Guardar las fotos y los objetos en una caja"
+       }
       ]
      },
      {
       "id": "doing",
-      "label": "В это время я занимаюсь…",
+      "label": {
+       "ru": "В это время я занимаюсь…",
+       "es": "A esa hora me ocupo de…"
+      },
       "type": "text",
-      "hint": "Выполнимое дело, лучше руками или телом",
+      "hint": {
+       "ru": "Выполнимое дело, лучше руками или телом",
+       "es": "Algo factible, mejor con las manos o con el cuerpo"
+      },
       "chips": [
-       "Душ или ванна",
-       "Прогулка вокруг квартала",
-       "Готовка на завтра",
-       "Фильм не про любовь",
-       "Растяжка"
+       {
+        "ru": "Душ или ванна",
+        "es": "Una ducha o un baño"
+       },
+       {
+        "ru": "Прогулка вокруг квартала",
+        "es": "Un paseo alrededor de la manzana"
+       },
+       {
+        "ru": "Готовка на завтра",
+        "es": "Cocinar para mañana"
+       },
+       {
+        "ru": "Фильм не про любовь",
+        "es": "Una película que no sea de amor"
+       },
+       {
+        "ru": "Растяжка",
+        "es": "Estiramientos"
+       }
       ]
      },
      {
       "id": "people",
-      "label": "И пишу или звоню…",
+      "label": {
+       "ru": "И пишу или звоню…",
+       "es": "Y escribo o llamo a…"
+      },
       "type": "text",
-      "hint": "Кому можно написать вечером без повода"
+      "hint": {
+       "ru": "Кому можно написать вечером без повода",
+       "es": "A quién puedes escribir por la tarde sin motivo"
+      }
      },
      {
       "id": "plan_b",
-      "label": "Если меня потянет написать…",
+      "label": {
+       "ru": "Если меня потянет написать…",
+       "es": "Si me entran ganas de escribir…"
+      },
       "type": "text",
-      "default": "Я включу короткую запись «Острая волна» и сделаю десять длинных выдохов"
+      "default": {
+       "ru": "Я включу короткую запись «Острая волна» и сделаю десять длинных выдохов",
+       "es": "Pondré el audio corto «Ola aguda» y haré diez exhalaciones largas"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Сегодня",
-     "body": "Выполните один пункт из «До него я убираю…». Если что-то не подошло, замените пункт. Вы не сдаёте экзамен, вы подбираете то, что подходит именно вам."
+     "title": {
+      "ru": "Сегодня",
+      "es": "Hoy"
+     },
+     "body": {
+      "ru": "Выполните один пункт из «До него я убираю…». Если что-то не подошло, замените пункт. Вы не сдаёте экзамен, вы подбираете то, что подходит именно вам.",
+      "es": "Cumple un punto de «Antes de ella quito de en medio…». Si algo no encaja, cámbialo. No estás haciendo un examen: estás eligiendo lo que te sirve a ti."
+     }
     }
    ],
    "always_available": true
@@ -326,45 +625,93 @@
   {
    "id": "urge",
    "group": "main",
-   "title": "Когда меня тянет к нему или к ней",
-   "card": "Желание написать может быть очень сильным, и всё же это не приказ. Учимся замечать тягу и пережидать её пик, ничего не делая.",
+   "title": {
+    "ru": "Когда меня тянет к нему или к ней",
+    "es": "Cuando siento atracción por esa persona"
+   },
+   "card": {
+    "ru": "Желание написать может быть очень сильным, и всё же это не приказ. Учимся замечать тягу и пережидать её пик, ничего не делая.",
+    "es": "El deseo de escribir puede ser muy fuerte, y aun así no es una orden. Aprendemos a notar el impulso y a esperar su pico sin hacer nada."
+   },
    "minutes": 7,
    "audio_doc_id": "program_return__urge",
    "task": {
-    "title": "Моя пауза",
+    "title": {
+     "ru": "Моя пауза",
+     "es": "Mi pausa"
+    },
     "card_type": "urge_pause",
-    "intro": "При ближайшей тяге выполните «стоп — назови — десять дыханий» один раз и отметьте три вещи. Оценивается не решение, а сам факт паузы.",
+    "intro": {
+     "ru": "При ближайшей тяге выполните «стоп — назови — десять дыханий» один раз и отметьте три вещи. Оценивается не решение, а сам факт паузы.",
+     "es": "La próxima vez que sientas el impulso, haz una vez «para, nómbralo, diez respiraciones» y anota tres cosas. No se valora la decisión, sino el hecho mismo de la pausa."
+    },
     "fields": [
      {
       "id": "trigger",
-      "label": "Что послужило толчком",
+      "label": {
+       "ru": "Что послужило толчком",
+       "es": "Qué lo desencadenó"
+      },
       "type": "text",
-      "hint": "Молчание, напоминание, неопределённость…"
+      "hint": {
+       "ru": "Молчание, напоминание, неопределённость…",
+       "es": "Silencio, un recordatorio, incertidumbre…"
+      }
      },
      {
       "id": "word",
-      "label": "Какое слово подошло чувству",
+      "label": {
+       "ru": "Какое слово подошло чувству",
+       "es": "Qué palabra encajó con el sentimiento"
+      },
       "type": "text",
       "chips": [
-       "Тревога",
-       "Одиночество",
-       "Обида",
-       "Пустота",
-       "Стыд",
-       "Тоска"
+       {
+        "ru": "Тревога",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Одиночество",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Обида",
+        "es": "Resentimiento"
+       },
+       {
+        "ru": "Пустота",
+        "es": "Vacío"
+       },
+       {
+        "ru": "Стыд",
+        "es": "Vergüenza"
+       },
+       {
+        "ru": "Тоска",
+        "es": "Añoranza"
+       }
       ]
      },
      {
       "id": "decision",
-      "label": "Что было решено после паузы",
+      "label": {
+       "ru": "Что было решено после паузы",
+       "es": "Qué decidí después de la pausa"
+      },
       "type": "text"
      },
      {
       "id": "urge",
-      "label": "Сила тяги, 0–10",
+      "label": {
+       "ru": "Сила тяги, 0–10",
+       "es": "Intensidad del impulso, de 0 a 10"
+      },
       "type": "scale",
       "record": {
-       "name": "Тяга написать или проверить",
+       "name": {
+        "ru": "Тяга написать или проверить",
+        "es": "Impulso de escribir o comprobar"
+       },
        "kind": "negative"
       }
      }
@@ -373,8 +720,14 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Стоп — назови — десять дыханий",
-     "body": "Когда потянет: остановиться, назвать про себя чувство одним словом, сделать десять длинных выдохов. Решать ничего не нужно. Иногда написать — нормальное решение, но не на пике."
+     "title": {
+      "ru": "Стоп — назови — десять дыханий",
+      "es": "Para, nómbralo, diez respiraciones"
+     },
+     "body": {
+      "ru": "Когда потянет: остановиться, назвать про себя чувство одним словом, сделать десять длинных выдохов. Решать ничего не нужно. Иногда написать — нормальное решение, но не на пике.",
+      "es": "Cuando te entre el impulso: detente, nombra para ti el sentimiento con una palabra y haz diez exhalaciones largas. No hace falta decidir nada. A veces escribir es una decisión normal, pero no en el pico."
+     }
     }
    ],
    "free": true
@@ -382,31 +735,58 @@
   {
    "id": "thoughts",
    "group": "main",
-   "title": "Разорвать круг навязчивых мыслей",
-   "card": "Мысли об этом человеке идут по кругу? Запрещать их бесполезно. Учимся замечать мысль, называть её и возвращать внимание туда, где вы сейчас.",
+   "title": {
+    "ru": "Разорвать круг навязчивых мыслей",
+    "es": "Romper el ciclo de los pensamientos obsesivos"
+   },
+   "card": {
+    "ru": "Мысли об этом человеке идут по кругу? Запрещать их бесполезно. Учимся замечать мысль, называть её и возвращать внимание туда, где вы сейчас.",
+    "es": "¿Los pensamientos sobre esa persona dan vueltas en círculo? Prohibirlos no sirve. Aprendemos a notar el pensamiento, ponerle nombre y devolver la atención a donde estás ahora."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__thoughts",
    "task": {
-    "title": "Мои истории",
+    "title": {
+     "ru": "Мои истории",
+     "es": "Mis historias"
+    },
     "card_type": "thought_stories",
-    "intro": "Запишите названия двух-трёх своих «историй» — мыслей, которые возвращаются чаще всего. Короткое название, как у фильма.",
+    "intro": {
+     "ru": "Запишите названия двух-трёх своих «историй» — мыслей, которые возвращаются чаще всего. Короткое название, как у фильма.",
+     "es": "Escribe los títulos de dos o tres de tus «historias»: los pensamientos que vuelven con más frecuencia. Un título corto, como el de una película."
+    },
     "fields": [
      {
       "id": "s1",
-      "label": "История 1",
+      "label": {
+       "ru": "История 1",
+       "es": "Historia 1"
+      },
       "type": "text",
-      "hint": "Например: «Он обо мне забыл», «Всё было зря»"
+      "hint": {
+       "ru": "Например: «Он обо мне забыл», «Всё было зря»",
+       "es": "Por ejemplo: «Se ha olvidado de mí», «Todo fue en vano»"
+      }
      },
      {
       "id": "s2",
-      "label": "История 2",
+      "label": {
+       "ru": "История 2",
+       "es": "Historia 2"
+      },
       "type": "text"
      },
      {
       "id": "s3",
-      "label": "История 3",
+      "label": {
+       "ru": "История 3",
+       "es": "Historia 3"
+      },
       "type": "text",
-      "hint": "Необязательно",
+      "hint": {
+       "ru": "Необязательно",
+       "es": "Opcional"
+      },
       "optional": true
      }
     ]
@@ -414,37 +794,67 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Замечаю мысль",
-     "body": "В течение дня один раз поймайте любую из историй: «замечаю мысль» — назвать её по имени — вернуть внимание в руки."
+     "title": {
+      "ru": "Замечаю мысль",
+      "es": "Noto el pensamiento"
+     },
+     "body": {
+      "ru": "В течение дня один раз поймайте любую из историй: «замечаю мысль» — назвать её по имени — вернуть внимание в руки.",
+      "es": "A lo largo del día, atrapa una vez cualquiera de las historias: «noto el pensamiento», nómbrala por su nombre y devuelve la atención a las manos."
+     }
     }
    ]
   },
   {
    "id": "worth",
    "group": "main",
-   "title": "Вернуть себе собственную ценность",
-   "card": "Когда важный человек отдаляется, легко решить: «со мной что-то не так». Учимся отделять то, что произошло, от приговора себе и говорить с собой по-человечески.",
+   "title": {
+    "ru": "Вернуть себе собственную ценность",
+    "es": "Recupera tu propio valor"
+   },
+   "card": {
+    "ru": "Когда важный человек отдаляется, легко решить: «со мной что-то не так». Учимся отделять то, что произошло, от приговора себе и говорить с собой по-человечески.",
+    "es": "Cuando una persona importante se aleja, es fácil concluir: «algo va mal en mí». Aprendemos a separar lo que ha pasado de una sentencia sobre ti y a hablarte con humanidad."
+   },
    "minutes": 8,
    "audio_doc_id": "program_return__worth",
    "task": {
-    "title": "Три предложения себе",
+    "title": {
+     "ru": "Три предложения себе",
+     "es": "Tres frases para ti"
+    },
     "card_type": "letter_to_self",
-    "intro": "Напишите себе три предложения от лица близкого человека, начав со своего имени. Перечитайте при следующем приступе самокритики.",
+    "intro": {
+     "ru": "Напишите себе три предложения от лица близкого человека, начав со своего имени. Перечитайте при следующем приступе самокритики.",
+     "es": "Escríbete tres frases con la voz de alguien cercano, empezando por tu nombre. Vuelve a leerlas en el próximo ataque de autocrítica."
+    },
     "fields": [
      {
       "id": "fact",
-      "label": "Что произошло (факт)",
+      "label": {
+       "ru": "Что произошло (факт)",
+       "es": "Qué ha pasado (el hecho)"
+      },
       "type": "text",
-      "hint": "«Имя, …»"
+      "hint": {
+       "ru": "«Имя, …»",
+       "es": "«Nombre, …»"
+      }
      },
      {
       "id": "feel",
-      "label": "Что ты чувствуешь",
+      "label": {
+       "ru": "Что ты чувствуешь",
+       "es": "Qué sientes"
+      },
       "type": "text"
      },
      {
       "id": "notme",
-      "label": "Что это не говорит о тебе",
+      "label": {
+       "ru": "Что это не говорит о тебе",
+       "es": "Lo que esto no dice de ti"
+      },
       "type": "text"
      }
     ]
@@ -452,39 +862,72 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Перечитать",
-     "body": "При самокритике откройте эту карточку в «Моей библиотеке» и прочитайте её вслух."
+     "title": {
+      "ru": "Перечитать",
+      "es": "Volver a leer"
+     },
+     "body": {
+      "ru": "При самокритике откройте эту карточку в «Моей библиотеке» и прочитайте её вслух.",
+      "es": "Cuando te autocritiques, abre esta tarjeta en «Mi biblioteca» y léela en voz alta."
+     }
     }
    ]
   },
   {
    "id": "traits",
    "group": "main",
-   "title": "Принятие своих неудобных черт",
-   "card": "Есть черта, за которую стыдно и которую хочется спрятать, особенно от того, чьё внимание важно. Учимся смотреть на неё без приговора и отличать принятие от смирения.",
+   "title": {
+    "ru": "Принятие своих неудобных черт",
+    "es": "Aceptar tus rasgos incómodos"
+   },
+   "card": {
+    "ru": "Есть черта, за которую стыдно и которую хочется спрятать, особенно от того, чьё внимание важно. Учимся смотреть на неё без приговора и отличать принятие от смирения.",
+    "es": "Hay un rasgo del que te avergüenzas y que quieres esconder, sobre todo de quien te importa. Aprendemos a mirarlo sin sentencia y a distinguir la aceptación de la resignación."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__traits",
    "task": {
-    "title": "Черта без ярлыка",
+    "title": {
+     "ru": "Черта без ярлыка",
+     "es": "Un rasgo sin etiqueta"
+    },
     "card_type": "trait_card",
-    "intro": "Запишите три строки: черту в форме описания, ответ на вопрос «От чего она меня защищает?» и одно поведение, которое хочется попробовать изменить на этой неделе.",
+    "intro": {
+     "ru": "Запишите три строки: черту в форме описания, ответ на вопрос «От чего она меня защищает?» и одно поведение, которое хочется попробовать изменить на этой неделе.",
+     "es": "Escribe tres líneas: el rasgo como descripción, la respuesta a «¿De qué me protege?» y una conducta que quieras intentar cambiar esta semana."
+    },
     "fields": [
      {
       "id": "trait",
-      "label": "Когда …, я …, и чувствую …",
+      "label": {
+       "ru": "Когда …, я …, и чувствую …",
+       "es": "Cuando …, yo …, y siento …"
+      },
       "type": "text",
-      "hint": "Описание поведения вместо ярлыка"
+      "hint": {
+       "ru": "Описание поведения вместо ярлыка",
+       "es": "Descripción de la conducta en lugar de una etiqueta"
+      }
      },
      {
       "id": "protects",
-      "label": "От чего она меня защищает?",
+      "label": {
+       "ru": "От чего она меня защищает?",
+       "es": "¿De qué me protege?"
+      },
       "type": "text"
      },
      {
       "id": "change",
-      "label": "Одно поведение на эту неделю",
+      "label": {
+       "ru": "Одно поведение на эту неделю",
+       "es": "Una conducta para esta semana"
+      },
       "type": "text",
-      "hint": "Из заботы о себе, а не из самокритики"
+      "hint": {
+       "ru": "Из заботы о себе, а не из самокритики",
+       "es": "Desde el cuidado de ti, no desde la autocrítica"
+      }
      }
     ]
    },
@@ -493,43 +936,88 @@
   {
    "id": "compassion",
    "group": "main",
-   "title": "Сострадательное «я»",
-   "card": "Внутри у многих есть громкий критик и тихий голос поддержки. Учимся делать второй голос сильнее: через позу, дыхание, тон и память о том, как вам уже удавалось поддерживать других.",
+   "title": {
+    "ru": "Сострадательное «я»",
+    "es": "Yo compasivo"
+   },
+   "card": {
+    "ru": "Внутри у многих есть громкий критик и тихий голос поддержки. Учимся делать второй голос сильнее: через позу, дыхание, тон и память о том, как вам уже удавалось поддерживать других.",
+    "es": "Dentro de mucha gente hay un crítico que grita y una voz de apoyo que habla bajito. Aprendemos a reforzar la segunda voz: con la postura, la respiración, el tono y el recuerdo de cómo ya has sabido apoyar a otras personas."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__compassion",
    "task": {
-    "title": "Мой якорь",
+    "title": {
+     "ru": "Мой якорь",
+     "es": "Mi ancla"
+    },
     "card_type": "anchor",
-    "intro": "Запишите свой якорь из трёх частей и используйте его в течение дня хотя бы раз. Он занимает пятнадцать секунд.",
+    "intro": {
+     "ru": "Запишите свой якорь из трёх частей и используйте его в течение дня хотя бы раз. Он занимает пятнадцать секунд.",
+     "es": "Escribe tu ancla de tres partes y úsala a lo largo del día al menos una vez. Dura quince segundos."
+    },
     "fields": [
      {
       "id": "posture",
-      "label": "Поза",
+      "label": {
+       "ru": "Поза",
+       "es": "Postura"
+      },
       "type": "text",
       "chips": [
-       "Ладонь на груди",
-       "Опущенные плечи",
-       "Стопы на полу"
+       {
+        "ru": "Ладонь на груди",
+        "es": "La palma en el pecho"
+       },
+       {
+        "ru": "Опущенные плечи",
+        "es": "Los hombros relajados"
+       },
+       {
+        "ru": "Стопы на полу",
+        "es": "Los pies en el suelo"
+       }
       ]
      },
      {
       "id": "breath",
-      "label": "Дыхание",
+      "label": {
+       "ru": "Дыхание",
+       "es": "Respiración"
+      },
       "type": "text",
-      "default": "Длинный выдох"
+      "default": {
+       "ru": "Длинный выдох",
+       "es": "Una exhalación larga"
+      }
      },
      {
       "id": "phrase",
-      "label": "Фраза сострадательного «я»",
+      "label": {
+       "ru": "Фраза сострадательного «я»",
+       "es": "La frase del yo compasivo"
+      },
       "type": "text",
-      "hint": "Что сказало бы это «я»",
-      "default": "Мне тяжело, и это понятно. Я рядом."
+      "hint": {
+       "ru": "Что сказало бы это «я»",
+       "es": "Qué diría este yo"
+      },
+      "default": {
+       "ru": "Мне тяжело, и это понятно. Я рядом.",
+       "es": "Lo estoy pasando mal, y es comprensible. Estoy aquí contigo."
+      }
      },
      {
       "id": "where",
-      "label": "Где я использовал(а) якорь",
+      "label": {
+       "ru": "Где я использовал(а) якорь",
+       "es": "Dónde he usado el ancla"
+      },
       "type": "text",
-      "hint": "После того как попробуете",
+      "hint": {
+       "ru": "После того как попробуете",
+       "es": "Después de probarla"
+      },
       "optional": true
      }
     ]
@@ -537,40 +1025,76 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Якорь на 15 секунд",
-     "body": "Когда заметите критика, тягу или стыд: поза, длинный выдох, фраза. Он не исправит ситуацию, но изменит то, с какого места внутри вы ею занимаетесь."
+     "title": {
+      "ru": "Якорь на 15 секунд",
+      "es": "Un ancla de 15 segundos"
+     },
+     "body": {
+      "ru": "Когда заметите критика, тягу или стыд: поза, длинный выдох, фраза. Он не исправит ситуацию, но изменит то, с какого места внутри вы ею занимаетесь.",
+      "es": "Cuando notes al crítico, el impulso o la vergüenza: postura, exhalación larga, frase. No arregla la situación, pero cambia desde qué lugar de ti te ocupas de ella."
+     }
     }
    ]
   },
   {
    "id": "control",
    "group": "main",
-   "title": "Отпустить контроль и вернуть границы",
-   "card": "Проверить, переспросить, угадать — и на минуту станет легче. Учимся отличать то, что в ваших руках, от того, что не в них, выдерживать «не знаю» и формулировать свою границу.",
+   "title": {
+    "ru": "Отпустить контроль и вернуть границы",
+    "es": "Soltar el control y recuperar los límites"
+   },
+   "card": {
+    "ru": "Проверить, переспросить, угадать — и на минуту станет легче. Учимся отличать то, что в ваших руках, от того, что не в них, выдерживать «не знаю» и формулировать свою границу.",
+    "es": "Comprobar, volver a preguntar, adivinar: y por un minuto se alivia. Aprendemos a distinguir lo que está en tus manos de lo que no, a soportar el «no lo sé» y a formular tu límite."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__control",
    "task": {
-    "title": "Моя граница и план",
+    "title": {
+     "ru": "Моя граница и план",
+     "es": "Mi límite y mi plan"
+    },
     "card_type": "boundary_plan",
-    "intro": "Запишите две строки: свою границу и план «если — то». Выдержите выбранный отрезок без одного проверяющего действия. Если не получилось, отметьте, сколько удалось, и повторите завтра.",
+    "intro": {
+     "ru": "Запишите две строки: свою границу и план «если — то». Выдержите выбранный отрезок без одного проверяющего действия. Если не получилось, отметьте, сколько удалось, и повторите завтра.",
+     "es": "Escribe dos líneas: tu límite y un plan «si… entonces». Aguanta el tramo elegido sin una sola acción de comprobación. Si no lo consigues, anota cuánto aguantaste y repítelo mañana."
+    },
     "fields": [
      {
       "id": "boundary",
-      "label": "Моя граница: «Я …»",
+      "label": {
+       "ru": "Моя граница: «Я …»",
+       "es": "Mi límite: «Yo …»"
+      },
       "type": "text",
-      "hint": "Только о вашем поведении"
+      "hint": {
+       "ru": "Только о вашем поведении",
+       "es": "Solo sobre tu propia conducta"
+      }
      },
      {
       "id": "if_then",
-      "label": "Если мне захочется … — я сделаю десять дыханий и …",
+      "label": {
+       "ru": "Если мне захочется … — я сделаю десять дыханий и …",
+       "es": "Si me entran ganas de … haré diez respiraciones y …"
+      },
       "type": "text",
-      "default": "Если мне захочется …, я сделаю десять дыханий и …"
+      "default": {
+       "ru": "Если мне захочется …, я сделаю десять дыханий и …",
+       "es": "Si me entran ganas de …, haré diez respiraciones y …"
+      }
      },
      {
       "id": "held",
-      "label": "Сколько удалось продержаться без проверок",
+      "label": {
+       "ru": "Сколько удалось продержаться без проверок",
+       "es": "Cuánto he aguantado sin comprobar"
+      },
       "type": "text",
-      "hint": "Необязательно",
+      "hint": {
+       "ru": "Необязательно",
+       "es": "Opcional"
+      },
       "optional": true
      }
     ]
@@ -578,46 +1102,88 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Без проверок",
-     "body": "Выберите отрезок: час, вечер, день. Страницу, переписку и «просто узнаю» оставьте в стороне. Если сорвалось, это информация, а не провал."
+     "title": {
+      "ru": "Без проверок",
+      "es": "Sin comprobar"
+     },
+     "body": {
+      "ru": "Выберите отрезок: час, вечер, день. Страницу, переписку и «просто узнаю» оставьте в стороне. Если сорвалось, это информация, а не провал.",
+      "es": "Elige un tramo: una hora, una tarde, un día. Deja a un lado la página, la conversación y el «solo voy a ver». Si recaes, es información, no un fracaso."
+     }
     }
    ]
   },
   {
    "id": "direct",
    "group": "main",
-   "title": "Сказать прямо",
-   "card": "Вместо намёков, проверок и пятого вопроса подряд: одна спокойная просьба. Учимся формулировать её и выдерживать любой ответ.",
+   "title": {
+    "ru": "Сказать прямо",
+    "es": "Hablar directamente"
+   },
+   "card": {
+    "ru": "Вместо намёков, проверок и пятого вопроса подряд: одна спокойная просьба. Учимся формулировать её и выдерживать любой ответ.",
+    "es": "En lugar de indirectas, comprobaciones y la quinta pregunta seguida: una petición tranquila. Aprendemos a formularla y a soportar cualquier respuesta."
+   },
    "minutes": 8,
    "audio_doc_id": "program_return__direct",
    "task": {
-    "title": "Три предложения",
+    "title": {
+     "ru": "Три предложения",
+     "es": "Tres frases"
+    },
     "card_type": "direct_request",
-    "intro": "Запишите три предложения: факт, чувство, просьба. Выберите день и обстановку для разговора. После разговора отметьте, какой из ответов прозвучал, без оценки «хорошо» или «плохо».",
+    "intro": {
+     "ru": "Запишите три предложения: факт, чувство, просьба. Выберите день и обстановку для разговора. После разговора отметьте, какой из ответов прозвучал, без оценки «хорошо» или «плохо».",
+     "es": "Escribe tres frases: hecho, sentimiento, petición. Elige el día y el lugar para hablar. Después de la conversación, anota qué respuesta hubo, sin valorarla como «buena» o «mala»."
+    },
     "fields": [
      {
       "id": "fact",
-      "label": "Факт: «Когда …»",
+      "label": {
+       "ru": "Факт: «Когда …»",
+       "es": "Hecho: «Cuando …»"
+      },
       "type": "text",
-      "hint": "Без «всегда» и «никогда»"
+      "hint": {
+       "ru": "Без «всегда» и «никогда»",
+       "es": "Sin «siempre» ni «nunca»"
+      }
      },
      {
       "id": "feel",
-      "label": "Чувство: «Я чувствую …»",
+      "label": {
+       "ru": "Чувство: «Я чувствую …»",
+       "es": "Sentimiento: «Siento …»"
+      },
       "type": "text",
-      "hint": "От первого лица"
+      "hint": {
+       "ru": "От первого лица",
+       "es": "En primera persona"
+      }
      },
      {
       "id": "ask",
-      "label": "Просьба: «Я хочу попросить …»",
+      "label": {
+       "ru": "Просьба: «Я хочу попросить …»",
+       "es": "Petición: «Quiero pedirte …»"
+      },
       "type": "text",
-      "hint": "Конкретная и выполнимая"
+      "hint": {
+       "ru": "Конкретная и выполнимая",
+       "es": "Concreta y posible"
+      }
      },
      {
       "id": "when",
-      "label": "День и обстановка",
+      "label": {
+       "ru": "День и обстановка",
+       "es": "Día y lugar"
+      },
       "type": "text",
-      "hint": "Не в переписке, не ночью, не в разгар ссоры",
+      "hint": {
+       "ru": "Не в переписке, не ночью, не в разгар ссоры",
+       "es": "No por mensaje, no de noche, no en plena discusión"
+      },
       "optional": true
      }
     ]
@@ -625,39 +1191,72 @@
    "micro": [
     {
      "id": "m1",
-     "title": "Один раз",
-     "body": "Просьба произносится один раз. Если ответа нет, вернуться к ней можно через несколько дней, но не через час. Сначала десять дыханий, потом разговор."
+     "title": {
+      "ru": "Один раз",
+      "es": "Una vez"
+     },
+     "body": {
+      "ru": "Просьба произносится один раз. Если ответа нет, вернуться к ней можно через несколько дней, но не через час. Сначала десять дыханий, потом разговор.",
+      "es": "La petición se dice una sola vez. Si no hay respuesta, puedes volver a ella pasados unos días, pero no una hora después. Primero diez respiraciones, luego la conversación."
+     }
     }
    ]
   },
   {
    "id": "life",
    "group": "main",
-   "title": "Моя жизнь больше этих отношений",
-   "card": "Когда один человек занимает всё место, остальная жизнь сжимается. Находим то, по чему вы скучаете в своей жизни, и планируем один маленький шаг на ближайшие сутки.",
+   "title": {
+    "ru": "Моя жизнь больше этих отношений",
+    "es": "Mi vida es más grande que esta relación"
+   },
+   "card": {
+    "ru": "Когда один человек занимает всё место, остальная жизнь сжимается. Находим то, по чему вы скучаете в своей жизни, и планируем один маленький шаг на ближайшие сутки.",
+    "es": "Cuando una persona ocupa todo el espacio, el resto de la vida se encoge. Encontramos lo que echas de menos de tu propia vida y planificamos un pequeño paso para las próximas veinticuatro horas."
+   },
    "minutes": 9,
    "audio_doc_id": "program_return__life",
    "task": {
-    "title": "Мой шаг",
+    "title": {
+     "ru": "Мой шаг",
+     "es": "Mi paso"
+    },
     "card_type": "life_step",
-    "intro": "Запишите три строки: фразу о важном, шаг со временем и ответ на препятствие. Выполните шаг и отметьте это. На следующий день выберите новый.",
+    "intro": {
+     "ru": "Запишите три строки: фразу о важном, шаг со временем и ответ на препятствие. Выполните шаг и отметьте это. На следующий день выберите новый.",
+     "es": "Escribe tres líneas: una frase sobre lo importante, un paso con su hora y la respuesta a un obstáculo. Da el paso y anótalo. Al día siguiente elige uno nuevo."
+    },
     "fields": [
      {
       "id": "important",
-      "label": "Мне важно…",
+      "label": {
+       "ru": "Мне важно…",
+       "es": "Para mí es importante…"
+      },
       "type": "text"
      },
      {
       "id": "step",
-      "label": "Завтра, после …, я …",
+      "label": {
+       "ru": "Завтра, после …, я …",
+       "es": "Mañana, después de …, yo …"
+      },
       "type": "text",
-      "hint": "Один маленький шаг со временем"
+      "hint": {
+       "ru": "Один маленький шаг со временем",
+       "es": "Un pequeño paso con su hora"
+      }
      },
      {
       "id": "obstacle",
-      "label": "Если …, я …",
+      "label": {
+       "ru": "Если …, я …",
+       "es": "Si …, yo …"
+      },
       "type": "text",
-      "hint": "Ответ на препятствие"
+      "hint": {
+       "ru": "Ответ на препятствие",
+       "es": "La respuesta a un obstáculo"
+      }
      }
     ]
    },
@@ -666,76 +1265,151 @@
   {
    "id": "meeting",
    "group": "main",
-   "title": "Когда видеться неизбежно",
-   "card": "Общие дети, работа или одна компания: полностью прекратить контакт нельзя. Готовимся к встрече или переписке так, чтобы она оставалась деловой и не отбрасывала назад.",
+   "title": {
+    "ru": "Когда видеться неизбежно",
+    "es": "Cuando verse es inevitable"
+   },
+   "card": {
+    "ru": "Общие дети, работа или одна компания: полностью прекратить контакт нельзя. Готовимся к встрече или переписке так, чтобы она оставалась деловой и не отбрасывала назад.",
+    "es": "Hijos en común, el trabajo o el mismo grupo de amistades: cortar el contacto del todo no es posible. Nos preparamos para el encuentro o la conversación de modo que siga siendo práctica y no te haga retroceder."
+   },
    "minutes": 7,
    "audio_doc_id": "program_return__meeting",
    "task": {
-    "title": "Карточка встречи",
+    "title": {
+     "ru": "Карточка встречи",
+     "es": "Tarjeta del encuentro"
+    },
     "card_type": "meeting_card",
-    "intro": "Запишите три строки перед ближайшим контактом. После контакта отметьте в инструменте «Перед встречей и после», удалось ли удержаться в рамке, без оценки.",
+    "intro": {
+     "ru": "Запишите три строки перед ближайшим контактом. После контакта отметьте в инструменте «Перед встречей и после», удалось ли удержаться в рамке, без оценки.",
+     "es": "Escribe tres líneas antes del próximo contacto. Después del contacto, marca en la herramienta «Antes y después del encuentro» si lograste mantenerte dentro del marco, sin valorarlo."
+    },
     "fields": [
      {
       "id": "goal",
-      "label": "Цель контакта одной фразой",
+      "label": {
+       "ru": "Цель контакта одной фразой",
+       "es": "El objetivo del contacto en una frase"
+      },
       "type": "text",
-      "hint": "Передать ребёнка в субботу, согласовать отчёт…"
+      "hint": {
+       "ru": "Передать ребёнка в субботу, согласовать отчёт…",
+       "es": "Entregar a mi hijo o hija el sábado, acordar el informe…"
+      }
      },
      {
       "id": "exit",
-      "label": "Фраза-выход",
+      "label": {
+       "ru": "Фраза-выход",
+       "es": "Frase de salida"
+      },
       "type": "text",
-      "hint": "«Давай об этом не сейчас. Сегодня только про субботу»"
+      "hint": {
+       "ru": "«Давай об этом не сейчас. Сегодня только про субботу»",
+       "es": "«Ahora no hablemos de eso. Hoy solo del sábado»"
+      }
      },
      {
       "id": "after",
-      "label": "План на час после",
+      "label": {
+       "ru": "План на час после",
+       "es": "Plan para la hora siguiente"
+      },
       "type": "text",
-      "hint": "Звонок другу, прогулка, «Острая волна», дело руками"
+      "hint": {
+       "ru": "Звонок другу, прогулка, «Острая волна», дело руками",
+       "es": "Llamar a un amigo, pasear, «Ola aguda», algo con las manos"
+      }
      }
     ]
    },
    "micro": [
     {
      "id": "m1",
-     "title": "Разбор не в тот же вечер",
-     "body": "Если хочется обдумать встречу, сделайте это на следующий день по двум вопросам: что прошло нормально и что в следующий раз можно сделать иначе."
+     "title": {
+      "ru": "Разбор не в тот же вечер",
+      "es": "El análisis, no la misma noche"
+     },
+     "body": {
+      "ru": "Если хочется обдумать встречу, сделайте это на следующий день по двум вопросам: что прошло нормально и что в следующий раз можно сделать иначе.",
+      "es": "Si quieres darle vueltas al encuentro, hazlo al día siguiente con dos preguntas: qué salió bien y qué se puede hacer distinto la próxima vez."
+     }
     }
    ]
   },
   {
    "id": "jealousy",
    "group": "main",
-   "title": "Ревность и сравнение",
-   "card": "Новый партнёр бывшего, чужие фотографии, мысль «чем этот человек лучше меня». Учимся замечать сравнение, не идти за новой порцией информации и возвращать себе то, что в ваших руках.",
+   "title": {
+    "ru": "Ревность и сравнение",
+    "es": "Celos y comparación"
+   },
+   "card": {
+    "ru": "Новый партнёр бывшего, чужие фотографии, мысль «чем этот человек лучше меня». Учимся замечать сравнение, не идти за новой порцией информации и возвращать себе то, что в ваших руках.",
+    "es": "La nueva pareja de tu ex, las fotos de otras personas, el pensamiento «en qué es mejor esa persona que yo». Aprendemos a notar la comparación, a no ir a por otra dosis de información y a recuperar lo que está en tus manos."
+   },
    "minutes": 7,
    "audio_doc_id": "program_return__jealousy",
    "task": {
-    "title": "Источник, потребность, действие",
+    "title": {
+     "ru": "Источник, потребность, действие",
+     "es": "Fuente, necesidad, acción"
+    },
     "card_type": "jealousy_card",
-    "intro": "Сегодня скройте или отключите один источник информации. Запишите одну потребность, которая стоит за ревностью, и одно действие для себя на этой неделе.",
+    "intro": {
+     "ru": "Сегодня скройте или отключите один источник информации. Запишите одну потребность, которая стоит за ревностью, и одно действие для себя на этой неделе.",
+     "es": "Hoy oculta o desactiva una fuente de información. Escribe una necesidad que hay detrás de los celos y una acción para ti esta semana."
+    },
     "fields": [
      {
       "id": "source",
-      "label": "Источник, который я скрою или отключу",
+      "label": {
+       "ru": "Источник, который я скрою или отключу",
+       "es": "La fuente que ocultaré o desactivaré"
+      },
       "type": "text",
-      "hint": "Страница, чат, подписка, закладка"
+      "hint": {
+       "ru": "Страница, чат, подписка, закладка",
+       "es": "Una página, un chat, una suscripción, un marcador"
+      }
      },
      {
       "id": "need",
-      "label": "Потребность за ревностью",
+      "label": {
+       "ru": "Потребность за ревностью",
+       "es": "La necesidad detrás de los celos"
+      },
       "type": "text",
       "chips": [
-       "Близость",
-       "Уверенность",
-       "Внимание",
-       "Признание",
-       "Безопасность"
+       {
+        "ru": "Близость",
+        "es": "Cercanía"
+       },
+       {
+        "ru": "Уверенность",
+        "es": "Confianza"
+       },
+       {
+        "ru": "Внимание",
+        "es": "Atención"
+       },
+       {
+        "ru": "Признание",
+        "es": "Reconocimiento"
+       },
+       {
+        "ru": "Безопасность",
+        "es": "Seguridad"
+       }
       ]
      },
      {
       "id": "action",
-      "label": "Одно действие для себя на этой неделе",
+      "label": {
+       "ru": "Одно действие для себя на этой неделе",
+       "es": "Una acción para mí esta semana"
+      },
       "type": "text"
      }
     ]
@@ -745,36 +1419,75 @@
   {
    "id": "intimacy",
    "group": "main",
-   "title": "Новая близость",
-   "card": "Для тех, кто готов к новым знакомствам. Учимся отличать тревожную тягу от симпатии, не торопиться и замечать, рядом с кем спокойно.",
+   "title": {
+    "ru": "Новая близость",
+    "es": "Nueva intimidad"
+   },
+   "card": {
+    "ru": "Для тех, кто готов к новым знакомствам. Учимся отличать тревожную тягу от симпатии, не торопиться и замечать, рядом с кем спокойно.",
+    "es": "Para quien está listo para conocer a gente nueva. Aprendemos a distinguir el impulso ansioso de la simpatía, a no precipitarnos y a notar junto a quién estás tranquilo."
+   },
    "minutes": 7,
    "audio_doc_id": "program_return__intimacy",
    "task": {
-    "title": "Мои вопросы и темп",
+    "title": {
+     "ru": "Мои вопросы и темп",
+     "es": "Mis preguntas y mi ritmo"
+    },
     "card_type": "intimacy_card",
-    "intro": "Запишите два выбранных вопроса и одно правило медленного темпа. После каждого из первых свиданий отвечайте на эти два вопроса одной строкой.",
+    "intro": {
+     "ru": "Запишите два выбранных вопроса и одно правило медленного темпа. После каждого из первых свиданий отвечайте на эти два вопроса одной строкой.",
+     "es": "Escribe las dos preguntas elegidas y una regla de ritmo lento. Después de cada una de las primeras citas, responde a esas dos preguntas con una línea."
+    },
     "fields": [
      {
       "id": "q1",
-      "label": "Вопрос 1",
+      "label": {
+       "ru": "Вопрос 1",
+       "es": "Pregunta 1"
+      },
       "type": "text",
-      "hint": "Например: «Этот человек делает то, что говорит?»"
+      "hint": {
+       "ru": "Например: «Этот человек делает то, что говорит?»",
+       "es": "Por ejemplo: «¿Esta persona hace lo que dice?»"
+      }
      },
      {
       "id": "q2",
-      "label": "Вопрос 2",
+      "label": {
+       "ru": "Вопрос 2",
+       "es": "Pregunta 2"
+      },
       "type": "text",
-      "hint": "Например: «После встречи во мне больше спокойствия или тревоги?»"
+      "hint": {
+       "ru": "Например: «После встречи во мне больше спокойствия или тревоги?»",
+       "es": "Por ejemplo: «Después del encuentro, ¿hay en mí más calma o más ansiedad?»"
+      }
      },
      {
       "id": "pace",
-      "label": "Правило медленного темпа",
+      "label": {
+       "ru": "Правило медленного темпа",
+       "es": "Regla de ritmo lento"
+      },
       "type": "text",
       "chips": [
-       "Сохранить свои вечера с друзьями",
-       "Не переписываться ночами",
-       "Не отменять свои планы ради встречи",
-       "Не рассказывать всё о себе в первые дни"
+       {
+        "ru": "Сохранить свои вечера с друзьями",
+        "es": "Conservar mis tardes con amistades"
+       },
+       {
+        "ru": "Не переписываться ночами",
+        "es": "No escribirnos por las noches"
+       },
+       {
+        "ru": "Не отменять свои планы ради встречи",
+        "es": "No cancelar mis planes por una cita"
+       },
+       {
+        "ru": "Не рассказывать всё о себе в первые дни",
+        "es": "No contarlo todo de mí los primeros días"
+       }
       ]
      }
     ]
@@ -785,41 +1498,92 @@
  "tools": [
   {
    "id": "contact",
-   "title": "Хочется написать или проверить",
-   "subtitle": "Когда тянет написать, позвонить или зайти на страницу",
+   "title": {
+    "ru": "Хочется написать или проверить",
+    "es": "Quiero escribir o comprobar"
+   },
+   "subtitle": {
+    "ru": "Когда тянет написать, позвонить или зайти на страницу",
+    "es": "Cuando te entran ganas de escribir, llamar o entrar en su página"
+   },
    "pages": [
     {
-     "title": "Стоп",
-     "body": "Поставьте ступни на пол, сделайте выдох чуть длиннее вдоха. Тяга — сильное чувство, и оно меняется. Ничего не нужно запрещать себе прямо сейчас.",
+     "title": {
+      "ru": "Стоп",
+      "es": "Para"
+     },
+     "body": {
+      "ru": "Поставьте ступни на пол, сделайте выдох чуть длиннее вдоха. Тяга — сильное чувство, и оно меняется. Ничего не нужно запрещать себе прямо сейчас.",
+      "es": "Pon los pies en el suelo y haz una exhalación algo más larga que la inhalación. El impulso es un sentimiento fuerte, y cambia. No hace falta prohibirte nada ahora mismo."
+     },
      "scale": {
       "id": "before",
-      "label": "Сила тяги сейчас, 0–10",
+      "label": {
+       "ru": "Сила тяги сейчас, 0–10",
+       "es": "Intensidad del impulso ahora, de 0 a 10"
+      },
       "record": {
-       "name": "Тяга написать или проверить",
+       "name": {
+        "ru": "Тяга написать или проверить",
+        "es": "Impulso de escribir o comprobar"
+       },
        "kind": "negative"
       }
      }
     },
     {
-     "title": "Назовите чувство",
-     "body": "Что сейчас внутри: тревога, одиночество, обида, пустота? Назовите одним словом. Иногда этого достаточно, чтобы тяга стала чуть тише.",
+     "title": {
+      "ru": "Назовите чувство",
+      "es": "Nombra el sentimiento"
+     },
+     "body": {
+      "ru": "Что сейчас внутри: тревога, одиночество, обида, пустота? Назовите одним словом. Иногда этого достаточно, чтобы тяга стала чуть тише.",
+      "es": "¿Qué hay dentro ahora: ansiedad, soledad, resentimiento, vacío? Nómbralo con una palabra. A veces basta para que el impulso se calme un poco."
+     },
      "show_card": "urge_pause:word",
      "inline": {
       "field": "word",
-      "label": "Моё слово для чувства",
+      "label": {
+       "ru": "Моё слово для чувства",
+       "es": "Mi palabra para el sentimiento"
+      },
       "chips": [
-       "Тревога",
-       "Одиночество",
-       "Обида",
-       "Пустота",
-       "Стыд",
-       "Тоска"
+       {
+        "ru": "Тревога",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Одиночество",
+        "es": "Soledad"
+       },
+       {
+        "ru": "Обида",
+        "es": "Resentimiento"
+       },
+       {
+        "ru": "Пустота",
+        "es": "Vacío"
+       },
+       {
+        "ru": "Стыд",
+        "es": "Vergüenza"
+       },
+       {
+        "ru": "Тоска",
+        "es": "Añoranza"
+       }
       ]
      }
     },
     {
-     "title": "Десять длинных выдохов",
-     "body": "Вдох короче, выдох длиннее: следуйте за кругом. Десять дыханий занимают меньше двух минут. Если очень накрывает, можно включить «Острую волну» из блока «Первая опора».",
+     "title": {
+      "ru": "Десять длинных выдохов",
+      "es": "Diez exhalaciones largas"
+     },
+     "body": {
+      "ru": "Вдох короче, выдох длиннее: следуйте за кругом. Десять дыханий занимают меньше двух минут. Если очень накрывает, можно включить «Острую волну» из блока «Первая опора».",
+      "es": "Inhalación más corta, exhalación más larga: sigue el círculo. Diez respiraciones llevan menos de dos minutos. Si te desborda mucho, puedes poner la «Ola aguda» del bloque «Primer apoyo»."
+     },
      "breath": {
       "in": 4,
       "out": 6,
@@ -827,28 +1591,52 @@
      }
     },
     {
-     "title": "Подождать немного?",
-     "body": "Если хочется, можно отложить решение на десять минут. Иногда написать — нормальное решение, но решение, принятое на пике, потом часто хочется отменить.",
+     "title": {
+      "ru": "Подождать немного?",
+      "es": "¿Esperar un poco?"
+     },
+     "body": {
+      "ru": "Если хочется, можно отложить решение на десять минут. Иногда написать — нормальное решение, но решение, принятое на пике, потом часто хочется отменить.",
+      "es": "Si quieres, puedes aplazar la decisión diez minutos. A veces escribir es una decisión normal, pero una decisión tomada en el pico suele dar ganas de deshacerla después."
+     },
      "timer_minutes": 10
     },
     {
-     "title": "Как вы сейчас?",
-     "body": "Иногда тяга слабеет, иногда нет. Оба варианта нормальны. Если вы всё-таки написали, это не катастрофа.",
+     "title": {
+      "ru": "Как вы сейчас?",
+      "es": "¿Cómo estás ahora?"
+     },
+     "body": {
+      "ru": "Иногда тяга слабеет, иногда нет. Оба варианта нормальны. Если вы всё-таки написали, это не катастрофа.",
+      "es": "A veces el impulso baja y a veces no. Las dos cosas son normales. Si al final has escrito, no es una catástrofe."
+     },
      "scale": {
       "id": "after",
-      "label": "Сила тяги теперь, 0–10",
+      "label": {
+       "ru": "Сила тяги теперь, 0–10",
+       "es": "Intensidad del impulso ahora, de 0 a 10"
+      },
       "record": {
-       "name": "Тяга написать или проверить",
+       "name": {
+        "ru": "Тяга написать или проверить",
+        "es": "Impulso de escribir o comprobar"
+       },
        "kind": "negative"
       }
      },
      "buttons": [
       {
-       "label": "Стало легче",
+       "label": {
+        "ru": "Стало легче",
+        "es": "Me ha aliviado"
+       },
        "action": "close"
       },
       {
-       "label": "Я всё-таки написал(а)",
+       "label": {
+        "ru": "Я всё-таки написал(а)",
+        "es": "Al final he escrito"
+       },
        "action": "tool:after_contact"
       }
      ],
@@ -858,24 +1646,51 @@
   },
   {
    "id": "after_contact",
-   "title": "Я всё-таки написал(а)",
-   "subtitle": "Если сорвались и написали",
+   "title": {
+    "ru": "Я всё-таки написал(а)",
+    "es": "Al final he escrito"
+   },
+   "subtitle": {
+    "ru": "Если сорвались и написали",
+    "es": "Si has recaído y has escrito"
+   },
    "pages": [
     {
-     "title": "Это информация, а не провал",
-     "body": "Сделайте медленный выдох. Тяга была сильной, и вы сделали то, что смогли сейчас. Одно сообщение не отменяет пройденного."
+     "title": {
+      "ru": "Это информация, а не провал",
+      "es": "Es información, no un fracaso"
+     },
+     "body": {
+      "ru": "Сделайте медленный выдох. Тяга была сильной, и вы сделали то, что смогли сейчас. Одно сообщение не отменяет пройденного.",
+      "es": "Haz una exhalación lenta. El impulso era fuerte y has hecho lo que pudiste ahora. Un mensaje no anula lo recorrido."
+     }
     },
     {
-     "title": "Звено раньше",
-     "body": "Разбор можно оставить на потом. Когда будете готовы, откройте «После срыва» в блоке «На трудные часы»: там можно найти звено, где в следующий раз можно свернуть."
+     "title": {
+      "ru": "Звено раньше",
+      "es": "El eslabón de antes"
+     },
+     "body": {
+      "ru": "Разбор можно оставить на потом. Когда будете готовы, откройте «После срыва» в блоке «На трудные часы»: там можно найти звено, где в следующий раз можно свернуть.",
+      "es": "El análisis puede esperar. Cuando te sientas preparado/a, abre «Después de una recaída» en el bloque «Para las horas difíciles»: ahí puedes encontrar el eslabón en el que la próxima vez se puede girar."
+     }
     },
     {
-     "title": "Следующий небольшой шаг",
-     "body": "Можно отложить телефон, поесть или выйти на воздух. Ожидание ответа — тоже волна: с ней не нужно ничего делать.",
+     "title": {
+      "ru": "Следующий небольшой шаг",
+      "es": "Un pequeño paso siguiente"
+     },
+     "body": {
+      "ru": "Можно отложить телефон, поесть или выйти на воздух. Ожидание ответа — тоже волна: с ней не нужно ничего делать.",
+      "es": "Puedes dejar el teléfono, comer algo o salir a tomar el aire. Esperar la respuesta también es una ola: no hay que hacer nada con ella."
+     },
      "helpline": true,
      "buttons": [
       {
-       "label": "Готово",
+       "label": {
+        "ru": "Готово",
+        "es": "Hecho"
+       },
        "action": "close"
       }
      ]
@@ -884,22 +1699,46 @@
   },
   {
    "id": "evening_plan",
-   "title": "Мой вечер",
-   "subtitle": "План на трудное время суток",
+   "title": {
+    "ru": "Мой вечер",
+    "es": "Mi tarde"
+   },
+   "subtitle": {
+    "ru": "План на трудное время суток",
+    "es": "Plan para la hora del día más difícil"
+   },
    "pages": [
     {
-     "title": "Мой план",
-     "body": "Вот ваш план на трудный вечер.",
+     "title": {
+      "ru": "Мой план",
+      "es": "Mi plan"
+     },
+     "body": {
+      "ru": "Вот ваш план на трудный вечер.",
+      "es": "Este es tu plan para la tarde difícil."
+     },
      "show_card": "evening_plan:hour,remove,doing,people,plan_b",
-     "show_card_fallback": "Составьте план в блоке «На трудные часы» → «Трудный вечер»."
+     "show_card_fallback": {
+      "ru": "Составьте план в блоке «На трудные часы» → «Трудный вечер».",
+      "es": "Crea el plan en el bloque «Para las horas difíciles» → «Una tarde difícil»."
+     }
     },
     {
-     "title": "Если тянет написать",
-     "body": "Включите «Острую волну» и сделайте десять длинных выдохов. Если совсем тяжело, откройте страницу помощи.",
+     "title": {
+      "ru": "Если тянет написать",
+      "es": "Si te entran ganas de escribir"
+     },
+     "body": {
+      "ru": "Включите «Острую волну» и сделайте десять длинных выдохов. Если совсем тяжело, откройте страницу помощи.",
+      "es": "Pon la «Ola aguda» y haz diez exhalaciones largas. Si es muy duro, abre la página de ayuda."
+     },
      "helpline": true,
      "buttons": [
       {
-       "label": "Готово",
+       "label": {
+        "ru": "Готово",
+        "es": "Hecho"
+       },
        "action": "close"
       }
      ]
@@ -908,35 +1747,74 @@
   },
   {
    "id": "meeting",
-   "title": "Перед встречей и после",
-   "subtitle": "Когда видеться неизбежно",
+   "title": {
+    "ru": "Перед встречей и после",
+    "es": "Antes y después del encuentro"
+   },
+   "subtitle": {
+    "ru": "Когда видеться неизбежно",
+    "es": "Cuando verse es inevitable"
+   },
    "pages": [
     {
-     "title": "Цель и фраза-выход",
-     "body": "Вспомните, зачем нужен этот контакт, и приготовьте фразу, с которой выйдете из разговора.",
+     "title": {
+      "ru": "Цель и фраза-выход",
+      "es": "Objetivo y frase de salida"
+     },
+     "body": {
+      "ru": "Вспомните, зачем нужен этот контакт, и приготовьте фразу, с которой выйдете из разговора.",
+      "es": "Recuerda para qué hace falta este contacto y prepara la frase con la que saldrás de la conversación."
+     },
      "show_card": "meeting_card:goal,exit",
-     "show_card_fallback": "Составьте карточку в упражнении «Когда видеться неизбежно»."
+     "show_card_fallback": {
+      "ru": "Составьте карточку в упражнении «Когда видеться неизбежно».",
+      "es": "Crea la tarjeta en el ejercicio «Cuando verse es inevitable»."
+     }
     },
     {
-     "title": "Час после",
-     "body": "Самое уязвимое время — не сама встреча, а час после неё.",
+     "title": {
+      "ru": "Час после",
+      "es": "La hora siguiente"
+     },
+     "body": {
+      "ru": "Самое уязвимое время — не сама встреча, а час после неё.",
+      "es": "El momento más vulnerable no es el encuentro en sí, sino la hora después."
+     },
      "show_card": "meeting_card:after",
-     "show_card_fallback": "Решите заранее, что вы делаете сразу после встречи."
+     "show_card_fallback": {
+      "ru": "Решите заранее, что вы делаете сразу после встречи.",
+      "es": "Decide de antemano qué harás justo después del encuentro."
+     }
     },
     {
-     "title": "После контакта",
-     "body": "Удалось ли удержаться в рамке цели? Это не оценка, а наблюдение.",
+     "title": {
+      "ru": "После контакта",
+      "es": "Después del contacto"
+     },
+     "body": {
+      "ru": "Удалось ли удержаться в рамке цели? Это не оценка, а наблюдение.",
+      "es": "¿Lograste mantenerte dentro del objetivo? No es una valoración, es una observación."
+     },
      "buttons": [
       {
-       "label": "Удалось",
+       "label": {
+        "ru": "Удалось",
+        "es": "Lo logré"
+       },
        "action": "log:meeting_result:result=held"
       },
       {
-       "label": "Частично",
+       "label": {
+        "ru": "Частично",
+        "es": "En parte"
+       },
        "action": "log:meeting_result:result=partly"
       },
       {
-       "label": "Было трудно",
+       "label": {
+        "ru": "Было трудно",
+        "es": "Fue difícil"
+       },
        "action": "log:meeting_result:result=hard"
       }
      ],
@@ -946,23 +1824,44 @@
   },
   {
    "id": "direct_result",
-   "title": "Как прошёл разговор",
-   "subtitle": "После прямой просьбы",
+   "title": {
+    "ru": "Как прошёл разговор",
+    "es": "Cómo fue la conversación"
+   },
+   "subtitle": {
+    "ru": "После прямой просьбы",
+    "es": "Después de una petición directa"
+   },
    "pages": [
     {
-     "title": "Какой ответ прозвучал?",
-     "body": "Любой ответ — это сведения. Здесь не нужно ставить оценку «хорошо» или «плохо».",
+     "title": {
+      "ru": "Какой ответ прозвучал?",
+      "es": "¿Qué respuesta hubo?"
+     },
+     "body": {
+      "ru": "Любой ответ — это сведения. Здесь не нужно ставить оценку «хорошо» или «плохо».",
+      "es": "Cualquier respuesta es información. Aquí no hace falta valorarla como «buena» o «mala»."
+     },
      "buttons": [
       {
-       "label": "Согласие",
+       "label": {
+        "ru": "Согласие",
+        "es": "Acuerdo"
+       },
        "action": "log:direct_answer:answer=agree"
       },
       {
-       "label": "Встречное предложение",
+       "label": {
+        "ru": "Встречное предложение",
+        "es": "Contrapropuesta"
+       },
        "action": "log:direct_answer:answer=counter"
       },
       {
-       "label": "Отказ или молчание",
+       "label": {
+        "ru": "Отказ или молчание",
+        "es": "Negativa o silencio"
+       },
        "action": "log:direct_answer:answer=no"
       }
      ],
@@ -974,24 +1873,48 @@
  "welcome": [
   {
    "icon": "route",
-   "title": "Как устроена программа",
-   "body": "В программе три блока. «Первая опора» и «На трудные часы» открыты в любой момент: туда можно прийти, когда накрывает, не спится или сорвалось. «Вернуться к себе» — путь из одиннадцати упражнений, каждое опирается на предыдущее. Лучше идти по порядку."
+   "title": {
+    "ru": "Как устроена программа",
+    "es": "Cómo está organizado el programa"
+   },
+   "body": {
+    "ru": "В программе три блока. «Первая опора» и «На трудные часы» открыты в любой момент: туда можно прийти, когда накрывает, не спится или сорвалось. «Вернуться к себе» — путь из одиннадцати упражнений, каждое опирается на предыдущее. Лучше идти по порядку.",
+    "es": "El programa tiene tres bloques. «Primer apoyo» y «Para las horas difíciles» están abiertos en todo momento: puedes ir cuando todo te desborda, cuando no duermes o cuando has recaído. «Volver a ti» es un camino de once ejercicios, cada uno apoyado en el anterior. Es mejor seguir el orden."
+   }
   },
   {
    "icon": "pace",
-   "title": "Не спешите",
-   "body": "Лучше одно новое упражнение раз в 2–3 дня и прослушать его не меньше двух раз. Здесь нет серий, подсчёта дней и «провалов»: пропуск — это просто пауза. К любому упражнению можно вернуться."
+   "title": {
+    "ru": "Не спешите",
+    "es": "Sin prisa"
+   },
+   "body": {
+    "ru": "Лучше одно новое упражнение раз в 2–3 дня и прослушать его не меньше двух раз. Здесь нет серий, подсчёта дней и «провалов»: пропуск — это просто пауза. К любому упражнению можно вернуться.",
+    "es": "Mejor un ejercicio nuevo cada 2 o 3 días y escucharlo al menos dos veces. Aquí no hay rachas, ni cuenta de días, ni «fracasos»: saltarse un día es solo una pausa. Puedes volver a cualquier ejercicio."
+   }
   },
   {
    "icon": "help",
-   "title": "Если тяжело прямо сейчас",
-   "body": "Откройте «Острую волну»: это три минуты, которые помогают дожить до момента, когда решать станет легче. Или инструмент «Хочется написать или проверить». Кнопки «Срочная помощь» и «Мне небезопасно» есть на каждом экране."
+   "title": {
+    "ru": "Если тяжело прямо сейчас",
+    "es": "Si lo estás pasando mal ahora mismo"
+   },
+   "body": {
+    "ru": "Откройте «Острую волну»: это три минуты, которые помогают дожить до момента, когда решать станет легче. Или инструмент «Хочется написать или проверить». Кнопки «Срочная помощь» и «Мне небезопасно» есть на каждом экране.",
+    "es": "Abre la «Ola aguda»: son tres minutos que ayudan a llegar al momento en que decidir será más fácil. O la herramienta «Quiero escribir o comprobar». Los botones «Ayuda urgente» y «No me siento seguro/a» están en todas las pantallas."
+   }
   },
   {
    "icon": "shortcut",
    "android_only": true,
-   "title": "Быстрый доступ",
-   "body": "Нажмите и удерживайте иконку приложения на экране телефона: появится пункт «Хочется написать». Он сразу откроет инструмент, который помогает в момент тяги, без поиска по приложению."
+   "title": {
+    "ru": "Быстрый доступ",
+    "es": "Acceso rápido"
+   },
+   "body": {
+    "ru": "Нажмите и удерживайте иконку приложения на экране телефона: появится пункт «Хочется написать». Он сразу откроет инструмент, который помогает в момент тяги, без поиска по приложению.",
+    "es": "Mantén pulsado el icono de la app en la pantalla del teléfono: aparecerá la opción «Quiero escribir». Abre al instante la herramienta que ayuda en el momento del impulso, sin buscar por la app."
+   }
   }
  ]
 }

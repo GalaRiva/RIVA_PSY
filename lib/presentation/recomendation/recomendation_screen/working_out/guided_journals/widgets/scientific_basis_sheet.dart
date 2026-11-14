@@ -15,7 +15,7 @@ class ScientificBasisSheet extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (_) => ScientificBasisSheet(text: text),
+      builder: (_) => SafeArea(top: false, child: ScientificBasisSheet(text: text)),
     );
   }
 

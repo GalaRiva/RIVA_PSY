@@ -82,9 +82,13 @@ class _AudioCardWidgetState extends State<AudioCardWidget> {
           opacity: dimmed ? 0.65 : 1.0,
           child: Padding(
             padding: EdgeInsets.only(bottom: getVerticalSize(23)),
-            child: SizedBox(
-              height: getVerticalSize(80),
+            // At least the designed height, but it grows when the title line is
+            // taller (large system font): a fixed height overflowed by a few
+            // pixels and clipped the bottom of the card.
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: getVerticalSize(80)),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(

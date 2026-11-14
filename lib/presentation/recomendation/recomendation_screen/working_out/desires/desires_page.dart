@@ -14,7 +14,7 @@ class DesiresPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(create: (_) {
+      body: SafeArea(top: false, child: BlocProvider(create: (_) {
         return DesiresBloc();
       }, child: BlocBuilder<DesiresBloc, DesiresState>(
         builder: (context, state) {
@@ -33,7 +33,7 @@ class DesiresPage extends StatelessWidget {
             }
           );
         },
-      ),),
+      ),)),
     );
   }
 }

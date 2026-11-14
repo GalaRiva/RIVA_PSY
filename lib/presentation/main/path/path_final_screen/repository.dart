@@ -23,7 +23,8 @@ class K39Repo {
     await HiveDB.deleteBox(_eventTag);
     events.sort((d1,d2) => d1.compareTo(d2));
     for (var item in events) {
-      HiveDB.setBox(item.toJson(), _eventTag);
+      // Awaited: a second save right after this one must not read a half-written box.
+      await HiveDB.setBox(item.toJson(), _eventTag);
     }
     OnboardingPrefs.changes.value++; // first-steps checklist re-reads
   }

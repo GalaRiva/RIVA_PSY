@@ -39,16 +39,33 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
   }
 
   var pills = <PillModel>[];
-  void init() async {
+  // Each part is calculated on its own and the screen is refreshed after the
+  // first one, so a problem in one tab's data can no longer leave every tab
+  // (the first chart included) stuck on its empty starting state. Before, one
+  // exception anywhere in here ended the function before update() ran.
+  Future<void> init() async {
     loading = false;
-    dataForChart = await getIntensity();
-    emotions = await getEmotions();
-    // Unbounded (ignores the shared week-range date picker used by the
-    // other tabs) — Экраны 1/2/3 are accumulated-pattern retrospectives,
-    // not a snapshot of the current week, and a week window would almost
-    // never clear their per-tag/per-cell minimum sample sizes.
-    allDayEvents = (await _k49Repo.getEvent()).where((e) => e.showInCharts).toList();
-    energyMatrixPoints = EnergyMatrixService.compute(allDayEvents);
+    try {
+      dataForChart = await getIntensity();
+    } catch (e) {
+      print('[CHARTS] state line failed: $e');
+    }
+    update();
+    try {
+      emotions = await getEmotions();
+    } catch (e) {
+      print('[CHARTS] emotions failed: $e');
+    }
+    try {
+      // Unbounded (ignores the shared week-range date picker used by the
+      // other tabs) — Экраны 1/2/3 are accumulated-pattern retrospectives,
+      // not a snapshot of the current week, and a week window would almost
+      // never clear their per-tag/per-cell minimum sample sizes.
+      allDayEvents = (await _k49Repo.getEvent()).where((e) => e.showInCharts).toList();
+      energyMatrixPoints = EnergyMatrixService.compute(allDayEvents);
+    } catch (e) {
+      print('[CHARTS] dashboards failed: $e');
+    }
     update();
   }
 
@@ -90,14 +107,13 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     ColorConstant.fromHex('#7F7F90')
   ];
 
+  // The chosen period runs from the start of its first day to the end of its
+  // last day. (It used to begin one whole day earlier, so a "week" showed
+  // eight days of entries.)
   bool _dateInRange(DateTime date) {
-    var start = DateTime(dateStart.year, dateStart.month, dateStart.day -1 );
-    var end = DateTime(dateEnd.year, dateEnd.month, dateEnd.day +1 );
-
-    if (start.isBefore(date) && end.isAfter(date)) {
-      return true;
-    }
-    return false;
+    final start = DateTime(dateStart.year, dateStart.month, dateStart.day);
+    final end = DateTime(dateEnd.year, dateEnd.month, dateEnd.day + 1);
+    return !date.isBefore(start) && date.isBefore(end);
   }
 
   Future<List<DayEventModel>> getDayEventModel() async {
@@ -140,33 +156,32 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     emotionsTypes = [];
     emotionsInBody = [];
     emotionTypesInBody = [];
+    // Everything below is rebuilt from scratch on every call. The places list
+    // used to be kept between calls, so each period change or return to the
+    // tab added the same entries again and the counts doubled.
+    _places = [];
+    // Re-read the positive list too: a custom positive emotion added since the
+    // screen was first opened must count as positive, not negative.
+    positive = await _k27Repo.getEvent(HiveDBTags.emotions2);
 
-    if(positiveType!.bodyParts.isNotEmpty)
-    positiveType!.bodyParts.removeRange(0, positiveType!.bodyParts.length);
-    if(negativeType!.bodyParts.isNotEmpty)
-      negativeType!.bodyParts.removeRange(0, negativeType!.bodyParts.length );
-    if(neutralType!.bodyParts.isNotEmpty)
-      neutralType!.bodyParts.removeRange(0, neutralType!.bodyParts.length );
+    positiveType!.bodyParts = [];
+    negativeType!.bodyParts = [];
+    neutralType!.bodyParts = [];
 
     for (var event in await getDayEventModel()) {
       _getPlaces(event);
       for (var emotion in event.whatEmotion ?? const []) {
-        final emotionType = await getEmotionTypes(event, emotion);
-        if (emotionType != null) {
-          emotionsTypes.add(emotionType);
-        }
-        final emotionTypeInStr = await getEmotionTypesInString(event, emotion);
-        // NOTE: pre-existing bug, left as-is per explicit instruction — the
-        // `else` binds to the second `if`, so any non-negative (i.e. also
-        // positive) emotion falls into neutralType too, and the dedup check
-        // runs against negativeType!.bodyParts while appending to
-        // neutralType!.bodyParts. See PROJECT_CONTEXT.md.
-        if (emotionTypeInStr == 'positive_emotions')
-          positiveType!.bodyParts += _getBodyPartsType(positiveType!, event);
-        if (emotionTypeInStr == 'negative_emotions')
-          negativeType!.bodyParts += _getBodyPartsType(negativeType!, event);
-        else
-          neutralType!.bodyParts += _getBodyPartsType(negativeType!, event);
+        // One category per emotion: positive, negative or one of the two
+        // neutral kinds. Both the pie and the body map use the same answer,
+        // so they can no longer disagree.
+        final category = _categoryOf(emotion);
+        _countEmotionType(category);
+        final bucket = category == 'positive_emotions'
+            ? positiveType!
+            : category == 'negative_emotions'
+                ? negativeType!
+                : neutralType!;
+        bucket.bodyParts += _getBodyPartsType(bucket, event);
 
         _getBodyParts(emotion, event);
         bool listContainEmotion() {
@@ -225,149 +240,67 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
 
   List<EventModel> positive = [];
 
-  Future<String> getEmotionTypesInString(
-      DayEventModel dayEventModel, EventModel emotion) async {
-    String model;
-
-    if (positive.isEmpty) {
-      positive = await _k27Repo.getEvent(HiveDBTags.emotions2);
-    }
-    if (emotion.isNeutralPositive) {
-      model = 'neutral_positive_emotions';
-    }
-    if (emotion.isNeutralNegative) {
-      model = 'neutral_negative_emotions';
-    }
-    bool positiveContains = false;
-    for (var item in positive) {
-      if (item.identity == emotion.identity) {
-        positiveContains = true;
-        break;
-      }
-    }
-    if (positiveContains) {
-      model = 'positive_emotions';
-    } else {
-      model = 'negative_emotions';
-    }
-    return model;
+  // positive_emotions / negative_emotions / neutral_positive_emotions /
+  // neutral_negative_emotions. The neutral "+"/"-" pairs are their own
+  // categories (the legend already has names for them in all three
+  // languages); before, they fell through to "negative".
+  String _categoryOf(EventModel emotion) {
+    if (emotion.isNeutralPositive) return 'neutral_positive_emotions';
+    if (emotion.isNeutralNegative) return 'neutral_negative_emotions';
+    final isPositive = positive.any((item) => item.identity == emotion.identity);
+    return isPositive ? 'positive_emotions' : 'negative_emotions';
   }
 
-  Future<EmotionModel?> getEmotionTypes(
-      DayEventModel dayEventModel, EventModel emotion) async {
-    EmotionModel? model;
+  static final Map<String, Color> _typeColors = {
+    // Fixed colors per spec: white = positive, black = negative.
+    'positive_emotions': Colors.white,
+    'negative_emotions': Colors.black,
+    'neutral_positive_emotions': ColorConstant.fromHex('#66C1BD'),
+    'neutral_negative_emotions': ColorConstant.fromHex('#7F7F90'),
+  };
 
-    if (positive.isEmpty) {
-      positive = await _k27Repo.getEvent(HiveDBTags.emotions2);
-    }
-    if (emotion.isNeutralPositive) {
-      bool createNew = true;
-      if (emotionsTypes.isNotEmpty)
-        for (var item in emotionsTypes) {
-          if (item.name == 'neutral_positive_emotions') {
-            createNew = false;
-            item.quantity++;
-          }
-        }
-      if (createNew)
-        model = (EmotionModel(1, 'neutral_positive_emotions',
-            getColor(emotionsTypes.length)));
-    }
-    if (emotion.isNeutralNegative) {
-      bool createNew = true;
-      if (emotionsTypes.isNotEmpty)
-        for (var item in emotionsTypes) {
-          if (item.name == 'neutral_negative_emotions') {
-            createNew = false;
-            item.quantity++;
-          }
-        }
-      if (createNew)
-        model = (EmotionModel(1, 'neutral_negative_emotions',
-            getColor(emotionsTypes.length)));
-    }
-    bool positiveContains = false;
-    for (var item in positive) {
-      if (item.identity == emotion.identity) {
-        positiveContains = true;
-        break;
+  void _countEmotionType(String category) {
+    for (final item in emotionsTypes) {
+      if (item.name == category) {
+        item.quantity++;
+        return;
       }
     }
-    if (positiveContains) {
-      bool createNew = true;
-      if (emotionsTypes.isNotEmpty)
-        for (var item in emotionsTypes) {
-          if (item.name == 'positive_emotions') {
-            createNew = false;
-            item.quantity++;
-          }
-        }
-      if (createNew)
-        // Fixed colors per spec (white = positive, black = negative) rather
-        // than the positional palette — that was assigning palette[0]=white
-        // to whichever of the two categories happened to be logged first,
-        // so "negative" could just as easily end up white as "positive".
-        model = (EmotionModel(1, 'positive_emotions', Colors.white));
-    } else {
-      bool createNew = true;
-      if (emotionsTypes.isNotEmpty)
-        for (var item in emotionsTypes) {
-          if (item.name == 'negative_emotions') {
-            createNew = false;
-            item.quantity++;
-          }
-        }
-      if (createNew)
-        model = (EmotionModel(1, 'negative_emotions', Colors.black));
-    }
-    return model;
+    emotionsTypes.add(EmotionModel(1, category, _typeColors[category] ?? getColor(emotionsTypes.length)));
   }
 
+  // Adds this entry's body zones to the emotion's own map, once each. (The
+  // old version created the emotion with all of the entry's zones and then,
+  // still inside the per-zone loop, counted every zone but the first a second
+  // time, so e.g. "chest" showed 2 after a single entry.)
   void _getBodyParts(EventModel emotion, DayEventModel dayEventModel) {
-    for (var bodyParts in dayEventModel.whatBodyParts!) {
-      if (emotionsInBody.isNotEmpty) {
-        bool createNew = true;
-        for (var item in emotionsInBody) {
-          bool containBodyPart() {
-            for (var _item in item.bodyParts) {
-              if (_item.bodyPart.bodyPartsModel.identity ==
-                  bodyParts.bodyPartsModel.identity) {
-                _item.quantity++;
-                return true;
-              }
-            }
-            return false;
-          }
+    final zones = dayEventModel.whatBodyParts ?? const [];
+    if (zones.isEmpty) return;
 
-          if (item.identity == emotion.identity) {
-            createNew = false;
-            if (!containBodyPart())
-              item.bodyParts.add(
-                  BodyPartModel(bodyParts, 1, getColor(item.bodyParts.length)));
-          }
-        }
-//
-        if (createNew) {
-          int index = 0;
-          emotionsInBody.add(EmotionInBodyModel(
-              emotion.localizedName,
-              1,
-              dayEventModel.whatBodyParts!.map((e) {
-                index++;
-                return BodyPartModel(e, 1, getColor(index - 1));
-              }).toList(), emotionKey: emotion.key));
+    EmotionInBodyModel? target;
+    for (final item in emotionsInBody) {
+      if (item.identity == emotion.identity) {
+        target = item;
+        break;
+      }
+    }
+    if (target == null) {
+      target = EmotionInBodyModel(emotion.localizedName, 1, [], emotionKey: emotion.key);
+      emotionsInBody.add(target);
+    }
+
+    for (final zone in zones) {
+      BodyPartModel? existing;
+      for (final part in target.bodyParts) {
+        if (part.bodyPart.bodyPartsModel.identity == zone.bodyPartsModel.identity) {
+          existing = part;
+          break;
         }
       }
-      if (emotionsInBody.isEmpty) {
-        int index = 0;
-
-        emotionsInBody.add(EmotionInBodyModel(
-            emotion.localizedName,
-            1,
-            dayEventModel.whatBodyParts!.map((e) {
-              index++;
-              return BodyPartModel(e, 1, getColor(index - 1));
-            }).toList(), emotionKey: emotion.key));
+      if (existing != null) {
+        existing.quantity++;
+      } else {
+        target.bodyParts.add(BodyPartModel(zone, 1, getColor(target.bodyParts.length)));
       }
     }
   }
@@ -375,7 +308,7 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
   List<BodyPartModel> _getBodyPartsType(
       EmotionTypeInBodyModel model, DayEventModel dayEventModel) {
     final list = <BodyPartModel>[];
-    for (var bodyParts in dayEventModel.whatBodyParts!) {
+    for (var bodyParts in dayEventModel.whatBodyParts ?? const []) {
       int quantity = 1;
       bool createNew = true;
       for (var item in model.bodyParts) {
@@ -448,26 +381,22 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     else placesResult = _places;
   }
 
-  List<BodyPartModel> sortBodyPartsList (List<BodyPartModel> list) {
-    final listToReturn = <BodyPartModel>[];
-    bool contain(BodyPartModel second) {
-      for(var item in listToReturn)
-     if (item.bodyPart.bodyPartsModel.identity == second.bodyPart.bodyPartsModel.identity){
-       item.quantity++;
-       // Was positional (getColor(listToReturn.length)) — this ran *after*
-       // _getBodyPartsType already set the correct zone color, silently
-       // overwriting it with palette[0]=white (or whatever else) whenever a
-       // zone landed at that index. Zone identity determines the color now,
-       // same as everywhere else this data is drawn.
-       item.color = bodyZoneColor(item.bodyPart.bodyPartsModel.identity, getColor(listToReturn.length));
-       return true;
-     }
-     return false;
+  // Merges the same zone coming from several lists (positive + negative +
+  // neutral) into one entry whose count is the SUM of theirs, on fresh copies.
+  // It used to add 1 instead of the real count, and it edited the originals in
+  // place, so the positive/negative maps changed every time the screen rebuilt.
+  List<BodyPartModel> sortBodyPartsList(List<BodyPartModel> list) {
+    final merged = <BodyPartModel>[];
+    for (final item in list) {
+      final id = item.bodyPart.bodyPartsModel.identity;
+      final i = merged.indexWhere((m) => m.bodyPart.bodyPartsModel.identity == id);
+      if (i >= 0) {
+        merged[i].quantity += item.quantity;
+      } else {
+        merged.add(BodyPartModel(item.bodyPart, item.quantity, bodyZoneColor(id, getColor(merged.length))));
+      }
     }
-    for(var item in list) {
-      if(!contain(item)) listToReturn.add(item..color = bodyZoneColor(item.bodyPart.bodyPartsModel.identity, getColor(listToReturn.length)));
-    }
-    return listToReturn;
+    return merged;
   }
 
   @override

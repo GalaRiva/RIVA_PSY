@@ -16,7 +16,7 @@ class VerificationScreen extends StatelessWidget {
     (ModalRoute.of(context)?.settings.arguments ?? '') as String;
     final controller = Get.put(VerificationController(verificationId));
     return Scaffold(
-      body: Column(
+      body: SafeArea(top: false, child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children:[ CustomTextFormField(
           focusNode: FocusNode(),
@@ -44,7 +44,7 @@ class VerificationScreen extends StatelessWidget {
               alignment: Alignment.center),
 
         ]
-      ),
+      )),
     );
   }
 }

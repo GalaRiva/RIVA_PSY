@@ -142,7 +142,7 @@ class _TabWidgetState extends State<TabWidget> {
                   context: context,
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
-                  builder: (_) => PostAudioCheckinSheet(trackTitle: assets[i].title),
+                  builder: (_) => SafeArea(top: false, child: PostAudioCheckinSheet(trackTitle: assets[i].title)),
                 );
               }
             : null,
@@ -183,9 +183,12 @@ class _TabWidgetState extends State<TabWidget> {
                         Visibility(
                           visible: tab.titleImage() != null && tab.titleText() != null,
                           child: Padding(
-                            padding: getPadding(left: 16, right: 16),
+                            // More air around the picture and the short line
+                            // (the long breathing instruction it used to hold
+                            // is now just "listen with headphones").
+                            padding: getPadding(left: 20, right: 20, top: 20, bottom: 16),
                             child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   (tab.titleImage() ?? '').startsWith('assets/')
                                     ? ((tab.titleImage() ?? '').endsWith('.svg')
@@ -215,7 +218,7 @@ class _TabWidgetState extends State<TabWidget> {
                                     width: getHorizontalSize(60),
                                     fit: BoxFit.contain,
                                   ),
-                                  SizedBox(width: getHorizontalSize(10),),
+                                  SizedBox(width: getHorizontalSize(18),),
                                   // No fixed height here — was clipping
                                   // translations longer than the Russian
                                   // original (e.g. Spanish "Termina cada
@@ -223,14 +226,15 @@ class _TabWidgetState extends State<TabWidget> {
                                   // grows to fit instead.
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    width: size.width -getHorizontalSize( 140),
+                                    width: size.width - getHorizontalSize(158),
                                     child: Text(
                                       tab.titleText() ?? '',
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtSFProDisplayMedium9.copyWith(
-                                          fontSize: 14,
+                                          fontSize: 15,
+                                          height: 1.5,
                                           color: ColorConstant.fromHex('#3B3B4A'),
-                                        fontWeight: FontWeight.w300
+                                        fontWeight: FontWeight.w400
                                       ),
                                     ),
                                   )
@@ -240,7 +244,7 @@ class _TabWidgetState extends State<TabWidget> {
                         ),
                         if (widget.showBreathing)
                           Padding(
-                            padding: getPadding(left: 16, right: 16, top: 20),
+                            padding: getPadding(left: 16, right: 16, top: 28),
                             child: _BreathingCard(),
                           ),
                         Visibility(
@@ -254,11 +258,11 @@ class _TabWidgetState extends State<TabWidget> {
                           // already handled by the ternary right underneath.
                           visible: true,
                             child: Padding(
-                          padding: getPadding(top: 23,right: 16, left: 16),
+                          padding: getPadding(top: 36, right: 16, left: 16),
                           child:
                           _audios.isEmpty ? Center(child: CircularProgressIndicator(color: ColorConstant.cyan700,),) :  Wrap(
                               direction: Axis.vertical,
-                              spacing: getVerticalSize(33),
+                              spacing: getVerticalSize(40),
                               children: _audios,
                             ),
 
@@ -268,7 +272,7 @@ class _TabWidgetState extends State<TabWidget> {
                           child: Visibility(
                               visible: tab.buttons() != null,
                               child: Padding(
-                                padding: getPadding(left: 16, right: 16, top: 33),
+                                padding: getPadding(left: 16, right: 16, top: 44),
                                 child: SizedBox(
                                   width: size.width - 32,
                                   child: Wrap(
@@ -279,7 +283,7 @@ class _TabWidgetState extends State<TabWidget> {
                                 ),
                               )),
                         ),
-                        SizedBox(height: 20,)
+                        SizedBox(height: 40,)
                       ],
                 ),
                     ),
