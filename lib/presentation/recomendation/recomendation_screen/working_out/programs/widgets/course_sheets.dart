@@ -48,7 +48,11 @@ Future<void> showStepDoneSheet({
 }
 
 /// Sheet shown when someone taps a new step that today's pace does not allow.
-Future<void> showTomorrowSheet({required BuildContext context, required Course course, required CourseStep step}) {
+Future<void> showTomorrowSheet(
+    {required BuildContext context,
+    required Course course,
+    required CourseStep step,
+    bool previousFirst = false}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -57,7 +61,8 @@ Future<void> showTomorrowSheet({required BuildContext context, required Course c
       child: _SheetFrame(
         child: Padding(
           padding: getPadding(left: 24, right: 24, top: 8, bottom: 8),
-          child: _TomorrowCard(course: course, step: step, onClose: () => Navigator.pop(ctx)),
+          child: _TomorrowCard(
+              course: course, step: step, onClose: () => Navigator.pop(ctx), previousFirst: previousFirst),
         ),
       ),
     ),
@@ -148,7 +153,7 @@ class _DoneBody extends StatelessWidget {
               onPressed: onClose,
               style: TextButton.styleFrom(minimumSize: const Size(0, 48)),
               child: Text('course_later'.tr(),
-                  style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                  style: courseBody().copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
             ),
           ),
         ],
@@ -166,7 +171,7 @@ class _NextTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cover = audioCoverAsset(step.coverKey);
+    final cover = step.cover ?? audioCoverAsset(step.coverKey);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,7 +207,14 @@ class _TomorrowCard extends StatefulWidget {
   final CourseStep step;
   final VoidCallback onClose;
   final bool embedded;
-  const _TomorrowCard({required this.course, required this.step, required this.onClose, this.embedded = false});
+  // The previous step is not finished yet: no reminder, just the reason.
+  final bool previousFirst;
+  const _TomorrowCard(
+      {required this.course,
+      required this.step,
+      required this.onClose,
+      this.embedded = false,
+      this.previousFirst = false});
 
   @override
   State<_TomorrowCard> createState() => _TomorrowCardState();
@@ -236,23 +248,25 @@ class _TomorrowCardState extends State<_TomorrowCard> {
             Icon(Icons.wb_twilight_rounded, color: AppColors.primary, size: getSize(22)),
             SizedBox(width: getHorizontalSize(10)),
             Expanded(
-              child: Text('course_next_tomorrow_title'.tr(),
+              child: Text((widget.previousFirst ? 'course_prev_first_title' : 'course_next_tomorrow_title').tr(),
                   style: AppStyle.txtH2.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600, height: 1.2)),
             ),
           ],
         ),
         SizedBox(height: getVerticalSize(8)),
-        Text('course_next_tomorrow_body'.tr(),
-            style: AppStyle.txtSFProDisplayLight14.copyWith(color: courseSoft(false), height: 1.5)),
+        Text((widget.previousFirst ? 'course_prev_first_body' : 'course_next_tomorrow_body').tr(),
+            style: courseBody().copyWith(color: courseSoft(false), height: 1.5)),
         SizedBox(height: getVerticalSize(8)),
         Text(widget.step.title,
-            style: AppStyle.txtSFProDisplayLight14.copyWith(color: courseMuted(false), fontWeight: FontWeight.w600)),
+            style: courseBody().copyWith(color: courseMuted(false), fontWeight: FontWeight.w600)),
         SizedBox(height: getVerticalSize(16)),
-        if (_set == null)
+        if (widget.previousFirst)
+          const SizedBox.shrink()
+        else if (_set == null)
           CapsuleButton(label: 'course_remind_me'.tr(), icon: Icons.notifications_none_rounded, onTap: _remind)
         else
           Text((_set! ? 'course_reminder_set' : 'course_reminder_off').tr(),
-              style: AppStyle.txtSFProDisplayLight14
+              style: courseBody()
                   .copyWith(color: _set! ? AppColors.primary : courseMuted(false), fontWeight: FontWeight.w600)),
         if (!widget.embedded) ...[
           SizedBox(height: getVerticalSize(6)),
@@ -261,7 +275,7 @@ class _TomorrowCardState extends State<_TomorrowCard> {
               onPressed: widget.onClose,
               style: TextButton.styleFrom(minimumSize: const Size(0, 48)),
               child: Text('course_later'.tr(),
-                  style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                  style: courseBody().copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
             ),
           ),
         ],

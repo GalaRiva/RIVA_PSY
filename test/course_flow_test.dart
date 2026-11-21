@@ -52,4 +52,53 @@ void main() {
     final t = tomorrowMorning(DateTime(2026, 11, 30, 22, 15));
     expect([t.year, t.month, t.day, t.hour, t.minute], [2026, 12, 1, 9, 0]);
   });
+
+  test('depression course: a week opens the day AFTER the previous one is completed', () {
+    final c = load('depression_support');
+    expect(c.dailyGate, true);
+    final w1 = c.steps.firstWhere((s) => s.id == 'w1');
+    final w2 = c.steps.firstWhere((s) => s.id == 'w2');
+    final w3 = c.steps.firstWhere((s) => s.id == 'w3');
+    final p = CourseProgress();
+    expect(stepBlock(c, p, w1), StepBlock.none);
+    // Week 1 opened but not finished: week 2 stays closed, however many days pass.
+    p.markOpened(w1.id);
+    expect(stepBlock(c, p, w2), StepBlock.previousNotDone);
+    // Finished today: week 2 opens tomorrow.
+    p.step(w1.id)..audioDone = true..taskDone = true;
+    p.stampCompletions();
+    expect(stepBlock(c, p, w2), StepBlock.tomorrow);
+    // Finished yesterday: week 2 is open.
+    final y = DateTime.now().subtract(const Duration(days: 1));
+    p.step(w1.id).completedOn = CourseProgress.dayKey(y);
+    expect(stepBlock(c, p, w2), StepBlock.none);
+    // Week 3 still needs week 2 first, and a started step is never blocked again.
+    expect(stepBlock(c, p, w3), StepBlock.previousNotDone);
+    p.markOpened(w2.id);
+    expect(stepBlock(c, p, w2), StepBlock.none);
+    // Support blocks are never gated.
+    expect(stepBlock(c, p, c.steps.firstWhere((s) => s.id == 'plan')), StepBlock.none);
+  });
+
+  test('every step of the depression course has its own picture that exists', () {
+    final c = load('depression_support');
+    for (final s in c.steps) {
+      expect(s.cover, isNotNull, reason: s.id);
+      expect(File(s.cover!).existsSync(), true, reason: s.cover);
+    }
+  });
+
+  test('week 1 is not complete until its required reading cards are marked', () {
+    final c = load('depression_support');
+    final w1 = c.steps.firstWhere((s) => s.id == 'w1');
+    final need = w1.micro.where((m) => m.required).map((m) => m.id).toSet();
+    expect(need, isNotEmpty);
+    final p = CourseProgress()..applyRequired({w1.id: need});
+    p.step(w1.id)..audioDone = true..taskDone = true;
+    expect(p.step(w1.id).complete, false);
+    p.step(w1.id).microDone.addAll(need);
+    expect(p.step(w1.id).complete, true);
+    // Steps without required cards are unchanged.
+    expect(CourseProgress().step('x').requiredRead, true);
+  });
 }

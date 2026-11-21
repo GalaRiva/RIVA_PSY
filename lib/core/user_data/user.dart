@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riva_psy/core/db/firebase_firestore/data/repository.dart';
 import 'package:riva_psy/core/models/tariff_model.dart';
 import 'package:riva_psy/core/user_data/user_repo.dart';
@@ -73,7 +74,20 @@ class CurrentUser extends UserModel {
     usedOreonTrials = false;
   }
 
+  // Debug builds only: opens everything that is paid, so new content can be
+  // looked through on a test phone without a subscription. Release builds
+  // (kDebugMode == false) are never affected. Set to false to test paywalls.
+  static const bool kDebugUnlockPaid = true;
+
+  // Debug builds only: the "next step opens tomorrow" pace is skipped so every
+  // week can be looked through on a test phone. Never active in release.
+  static const bool kDebugUnlockPace = true;
+  static bool get debugUnlockPace => kDebugMode && kDebugUnlockPace;
+
+  static bool get debugUnlockPaid => kDebugMode && kDebugUnlockPaid;
+
   static bool tariffIsOrion() {
+    if (kDebugMode && kDebugUnlockPaid) return true;
     if (user.currentTariff!.name == TariffModel.ORION_TARIFF_YEAR.name)
       return true;
     return false;

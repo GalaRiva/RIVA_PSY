@@ -96,12 +96,12 @@ class _CourseLibraryScreenState extends State<CourseLibraryScreen> {
                       _reload();
                     },
                     child: Text('course_delete'.tr(),
-                        style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray500)),
+                        style: courseBody().copyWith(color: ColorConstant.gray500)),
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(ctx),
                     child: Text('close'.tr(),
-                        style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
+                        style: courseBody().copyWith(color: ColorConstant.gray800)),
                   ),
                 ],
               ),
@@ -172,11 +172,11 @@ class _CourseLibraryScreenState extends State<CourseLibraryScreen> {
                                         '${'course_card_round'.tr(namedArgs: {'n': '${c.round}'})} · '
                                         '${c.createdAt.day.toString().padLeft(2, '0')}.${c.createdAt.month.toString().padLeft(2, '0')}.${c.createdAt.year}',
                                         style: courseCaption()
-                                            .copyWith(color: AppColors.textSecondary)),
+                                            .copyWith(color: courseMuted(false))),
                                   ],
                                 ),
                               ),
-                              Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+                              Icon(Icons.chevron_right_rounded, color: courseMuted(false)),
                             ],
                           ),
                         ),

@@ -1,0 +1,3440 @@
+{
+ "id": "depression_support",
+ "order": 4,
+ "languages": [
+  "ru",
+  "es"
+ ],
+ "cover": "assets/images/courses/melancholia.jpg",
+ "title": {
+  "ru": "Меланхолия",
+  "es": "Melancolía"
+ },
+ "card_title": {
+  "ru": "Меланхолия",
+  "es": "Melancolía"
+ },
+ "subtitle": {
+  "ru": "Двенадцать недель навыков из когнитивно-поведенческой терапии и поведенческой активации: мысли, активность, люди. Дополнение к помощи специалиста, не лечение.",
+  "es": "Doce semanas de habilidades de la terapia cognitivo-conductual y la activación conductual: pensamientos, actividad, personas. Complemento de la ayuda profesional, no un tratamiento."
+ },
+ "intro": {
+  "ru": "Курс опирается на принципы когнитивно-поведенческой терапии и поведенческой активации, которые описаны в клинических руководствах. Три модуля по четыре недели. «Мысли»: замечать вредные мысли и отвечать им. «Активность»: планировать приятные дела, замечать желания и ставить небольшие цели. «Люди»: отношения и общение. Тексты и упражнения написаны заново и рассчитаны на самостоятельную работу. Курс помогает закрепить то, что вы осваиваете вне приложения, у врача или психолога. Он не лечит, не ставит диагноз и не заменяет специалиста, и лучше проходить его параллельно с помощью. Если вы принимаете лекарства, решения о них принимает только врач.",
+  "es": "El curso se apoya en los principios de la terapia cognitivo-conductual y la activación conductual descritos en las guías clínicas. Tres módulos de cuatro semanas. «Pensamientos»: notar los pensamientos dañinos y responderles. «Actividad»: planificar actividades agradables, notar los deseos y ponerte pequeñas metas. «Personas»: las relaciones y la comunicación. Los textos y los ejercicios están escritos desde cero y pensados para el trabajo por tu cuenta. El curso ayuda a afianzar lo que aprendes fuera de la aplicación, con tu médico o psicólogo. No trata, no diagnostica y no sustituye a un profesional, y es mejor hacerlo junto con su ayuda. Si tomas medicación, las decisiones sobre ella las toma solo el médico."
+ },
+ "pace_note": {
+  "ru": "Каждому шагу рекомендуем посвятить около недели. Не спешите и не давите на себя: когда торопишься, может стать хуже. На этой неделе выберите главный инструмент: проработку иррациональных мыслей, «Желания» или работу со своими эмоциями. Шаг полезно повторить или пройти ещё несколько раз. Следующий шаг открывается на следующий день после завершения предыдущего, но это не повод спешить. Здесь нет серий, подсчёта дней и «провалов»: пропуск это просто пауза. Блоки «Опора на трудные дни» и «Для близких» открыты в любой момент.",
+  "es": "Te recomendamos dedicar a cada paso alrededor de una semana. No tengas prisa ni te presiones: cuando se va deprisa, puede empeorar. Esta semana elige una herramienta principal: trabajar los pensamientos irracionales, los «Deseos» o el trabajo con tus emociones. Conviene repetir el paso o hacerlo varias veces más. El siguiente paso se abre al día siguiente de completar el anterior, pero eso no es motivo para correr. Aquí no hay rachas, ni cuentas de días, ni «fracasos»: saltarse un día es solo una pausa. Los bloques «Apoyo para los días difíciles» y «Para los cercanos» están abiertos en cualquier momento."
+ },
+ "free_note": {
+  "ru": "Бесплатно: блок «Опора на трудные дни», блок «Для близких», первая и вторая недели. Остальное открывается с подпиской Orion. Инструмент, опрос безопасности и страница помощи всегда бесплатны.",
+  "es": "Gratis: el bloque «Apoyo para los días difíciles», el bloque «Para los cercanos», la primera y la segunda semana. El resto se abre con la suscripción Orion. La herramienta, el cuestionario de seguridad y la página de ayuda son siempre gratuitos."
+ },
+ "science_note": {
+  "ru": "Курс опирается на методы, которые рекомендуют клинические руководства при депрессивных состояниях: когнитивно-поведенческую терапию и поведенческую активацию (NICE, APA и другие, см. источники). Запись «ситуация, мысль, эмоция, реакция» (СМЭР) и работа с вредными мыслями берутся из когнитивной терапии А. Бека. Порядок модулей «мысли, активность, люди» соответствует опубликованным руководствам, в том числе руководству по групповой когнитивно-поведенческой терапии Muñoz и соавторов (2000), оно указано среди источников. Эти методы изучали при работе со специалистом или обученными консультантами. Курс адаптирован для самостоятельной работы и сам как приложение в исследованиях не проверялся. Он не заменяет лечение. Навыки ДБТ в блоке «Опора на трудные дни» опираются на меньшую доказательную базу.",
+  "es": "El curso se apoya en métodos que recomiendan las guías clínicas ante estados depresivos: la terapia cognitivo-conductual y la activación conductual (NICE, APA y otras, ver fuentes). El registro «situación, pensamiento, emoción, reacción» y el trabajo con los pensamientos dañinos proceden de la terapia cognitiva de A. Beck. El orden de los módulos «pensamientos, actividad, personas» corresponde a manuales publicados, entre ellos el manual de terapia cognitivo-conductual de grupo de Muñoz y colaboradores (2000), que figura entre las fuentes. Estos métodos se estudiaron con la guía de un profesional o de consejeros formados. El curso está adaptado para el trabajo autónomo y, como aplicación, no se ha evaluado en investigaciones. No sustituye al tratamiento. Las habilidades de TDC del bloque «Apoyo para los días difíciles» se apoyan en una base de evidencia menor."
+ },
+ "source_ids": [
+  "munoz2000",
+  "munoz1986",
+  "zeiss1979",
+  "wells2000",
+  "nice_ng222",
+  "apa_2019",
+  "mhgap",
+  "ru_kr",
+  "beck1979",
+  "greenberger2016",
+  "martell2021",
+  "lejuez2011",
+  "ekers2014",
+  "richards2016",
+  "patel2017",
+  "cuijpers2013",
+  "cuijpers2007",
+  "noetel2024",
+  "nolen2008",
+  "neff2003",
+  "ferrari2019",
+  "kuyken2016",
+  "stanley2012",
+  "linehan2015",
+  "lynch2003",
+  "harley2008"
+ ],
+ "intro_audio_doc_id": null,
+ "max_new_per_day": 1,
+ "calm_step_id": "now",
+ "specialist_title": {
+  "ru": "Сначала лучше обратиться за поддержкой",
+  "es": "Primero es mejor buscar apoyo"
+ },
+ "specialist_body": {
+  "ru": "Из ваших ответов видно, что сейчас важна помощь врача или службы поддержки. Этот курс не заменяет помощь. Вы можете проходить его как дополнение, но, пожалуйста, обратитесь к врачу или психологу, а если появились мысли причинить себе вред, позвоните в экстренную службу или на линию поддержки.",
+  "es": "Por tus respuestas, ahora es importante la ayuda de un médico o de un servicio de apoyo. Este curso no sustituye esa ayuda. Puedes hacerlo como complemento, pero por favor acude a un médico o psicólogo y, si han aparecido pensamientos de hacerte daño, llama al servicio de emergencias o a una línea de ayuda."
+ },
+ "groups": [
+  {
+   "id": "support",
+   "title": {
+    "ru": "Опора на трудные дни",
+    "es": "Apoyo para los días difíciles"
+   },
+   "subtitle": {
+    "ru": "Открыты в любой момент: когда накрывает, трудно спать или нужен план.",
+    "es": "Abiertos en cualquier momento: cuando te desborda, cuesta dormir o necesitas un plan."
+   },
+   "numbered": false,
+   "suggest": false
+  },
+  {
+   "id": "main",
+   "title": {
+    "ru": "12 недель",
+    "es": "12 semanas"
+   },
+   "subtitle": {
+    "ru": "Три модуля по четыре недели: «Мысли», «Активность», «Люди». Каждая неделя опирается на предыдущую, но к любой можно вернуться.",
+    "es": "Tres módulos de cuatro semanas: «Pensamientos», «Actividad», «Personas». Cada semana se apoya en la anterior, pero puedes volver a cualquiera."
+   },
+   "numbered": true,
+   "suggest": true
+  },
+  {
+   "id": "family",
+   "title": {
+    "ru": "Для близких",
+    "es": "Para los cercanos"
+   },
+   "subtitle": {
+    "ru": "Для тех, кто рядом с человеком, которому тяжело.",
+    "es": "Para quienes están cerca de una persona que lo está pasando mal."
+   },
+   "numbered": false,
+   "suggest": false
+  },
+  {
+   "id": "extra",
+   "title": {
+    "ru": "Аудио на выбор",
+    "es": "Audios a elegir"
+   },
+   "subtitle": {
+    "ru": "Дополнительные записи из раздела «Депрессия». Слушайте в любом порядке.",
+    "es": "Grabaciones adicionales de la sección «Depresión». Escúchalas en el orden que quieras."
+   },
+   "numbered": false,
+   "suggest": false
+  }
+ ],
+ "weekly": [
+  {
+   "id": "mood",
+   "label": {
+    "ru": "Настроение на этой неделе, 0-10",
+    "es": "Estado de ánimo esta semana, 0-10"
+   },
+   "record": {
+    "name": {
+     "ru": "Настроение (курс «Опора»)",
+     "es": "Estado de ánimo (curso «Melancolía»)"
+    },
+    "kind": "positive"
+   }
+  },
+  {
+   "id": "interest",
+   "label": {
+    "ru": "Интерес и удовольствие от дел на этой неделе, 0-10",
+    "es": "Interés y disfrute de las cosas esta semana, 0-10"
+   },
+   "record": {
+    "name": {
+     "ru": "Интерес и удовольствие (курс «Опора»)",
+     "es": "Interés y disfrute (curso «Melancolía»)"
+    },
+    "kind": "positive"
+   }
+  },
+  {
+   "id": "energy",
+   "label": {
+    "ru": "Энергия на этой неделе, 0-10",
+    "es": "Energía esta semana, 0-10"
+   },
+   "record": {
+    "name": {
+     "ru": "Энергия (курс «Опора»)",
+     "es": "Energía (curso «Melancolía»)"
+    },
+    "kind": "positive"
+   }
+  },
+  {
+   "id": "sleep",
+   "label": {
+    "ru": "Насколько удавалось выспаться, 0-10",
+    "es": "Cuánto has logrado dormir, 0-10"
+   },
+   "record": {
+    "name": {
+     "ru": "Сон (курс «Опора»)",
+     "es": "Sueño (curso «Melancolía»)"
+    },
+    "kind": "positive"
+   }
+  }
+ ],
+ "plan_types": [
+  "hard_days_plan",
+  "thought_reply",
+  "helpful_thoughts",
+  "roadblock_plan",
+  "goals_week8",
+  "relapse_review"
+ ],
+ "screening": [
+  {
+   "id": "self_harm",
+   "level": "stop",
+   "q": {
+    "ru": "Бывают ли у вас мысли о том, чтобы причинить себе вред или что не хочется жить?",
+    "es": "¿Tienes a veces pensamientos de hacerte daño o de que no quieres vivir?"
+   }
+  },
+  {
+   "id": "daily",
+   "level": "specialist",
+   "q": {
+    "ru": "Вам трудно справляться с повседневными делами (работа или учёба, еда, сон, уход за собой) уже больше двух недель?",
+    "es": "¿Te cuesta hacer frente a las tareas cotidianas (trabajo o estudios, comida, sueño, cuidado personal) desde hace más de dos semanas?"
+   }
+  },
+  {
+   "id": "mania",
+   "level": "specialist",
+   "q": {
+    "ru": "Бывали ли у вас периоды, когда несколько дней почти не хотелось спать, но было много сил, а окружающие замечали необычное поведение?",
+    "es": "¿Has tenido períodos en los que durante varios días casi no tenías ganas de dormir pero te sobraba energía y los demás notaban un comportamiento inusual?"
+   }
+  },
+  {
+   "id": "psychosis",
+   "level": "specialist",
+   "q": {
+    "ru": "Бывает ли, что вы слышите или видите то, чего другие не замечают, или чувствуете сильную подозрительность?",
+    "es": "¿A veces oyes o ves cosas que los demás no notan, o sientes una desconfianza muy fuerte?"
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "plan",
+   "group": "support",
+   "title": {
+    "ru": "План на трудные дни",
+    "es": "Plan para los días difíciles"
+   },
+   "card": {
+    "ru": "Бывают дни, когда становится тяжелее. Пока вам не так тяжело, мы подготовим небольшой план: что вы замечаете, что помогает, кому сказать и что сказать врачу. Лучше сделать его в самом начале.",
+    "es": "Hay días en que todo se vuelve más duro. Mientras no estés tan mal, prepararemos un plan sencillo: qué notas, qué te ayuda, a quién se lo cuentas y qué le dirás al médico. Es mejor hacerlo al principio."
+   },
+   "minutes": 4,
+   "audio_doc_id": "program_depression__hard_days_plan",
+   "task": {
+    "title": {
+     "ru": "Мой план",
+     "es": "Mi plan"
+    },
+    "card_type": "hard_days_plan",
+    "intro": {
+     "ru": "Заполните, пока есть силы. Сюда можно вернуться и дополнить. План хранится только на вашем устройстве. Покажите его врачу или психологу, если захотите.",
+     "es": "Rellénalo mientras tengas fuerzas. Puedes volver y completarlo. El plan se guarda solo en tu dispositivo. Enséñaselo a tu médico o psicólogo si quieres."
+    },
+    "fields": [
+     {
+      "id": "signs",
+      "label": {
+       "ru": "Что я замечаю, когда становится тяжелее",
+       "es": "Qué noto cuando todo se vuelve más duro"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Сон, аппетит, раздражение, нежелание выходить, мысли",
+       "es": "Sueño, apetito, irritabilidad, ganas de no salir, pensamientos"
+      },
+      "chips": [
+       {
+        "ru": "Плохо сплю",
+        "es": "Duermo mal"
+       },
+       {
+        "ru": "Пропадает аппетит",
+        "es": "Se me quita el apetito"
+       },
+       {
+        "ru": "Раздражаюсь",
+        "es": "Me irrito"
+       },
+       {
+        "ru": "Не хочу выходить из дома",
+        "es": "No quiero salir de casa"
+       },
+       {
+        "ru": "Больше самокритики",
+        "es": "Más autocrítica"
+       }
+      ]
+     },
+     {
+      "id": "helped",
+      "label": {
+       "ru": "Что мне помогало в эти недели",
+       "es": "Qué me ayudó en estas semanas"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Маленький шаг, прогулка, разговор, режим сна",
+       "es": "Un pequeño paso, un paseo, una conversación, el horario de sueño"
+      },
+      "chips": [
+       {
+        "ru": "Маленький шаг",
+        "es": "Un pequeño paso"
+       },
+       {
+        "ru": "Прогулка",
+        "es": "Un paseo"
+       },
+       {
+        "ru": "Разговор с близким",
+        "es": "Hablar con alguien cercano"
+       },
+       {
+        "ru": "Режим сна",
+        "es": "Horario de sueño"
+       }
+      ]
+     },
+     {
+      "id": "people",
+      "label": {
+       "ru": "Кому я могу сказать, что мне тяжело",
+       "es": "A quién puedo decirle que lo estoy pasando mal"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Один или два человека",
+       "es": "Una o dos personas"
+      }
+     },
+     {
+      "id": "doctor",
+      "label": {
+       "ru": "Что я скажу врачу или психологу, если станет тяжелее",
+       "es": "Qué le diré al médico o al psicólogo si empeoro"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Например: «Последние две недели мне стало тяжелее. Вот что я замечаю»",
+       "es": "Por ejemplo: «Las últimas dos semanas me siento peor. Esto es lo que noto»"
+      }
+     },
+     {
+      "id": "urgent",
+      "label": {
+       "ru": "Я знаю, где кнопка «Срочная помощь», и помню: при мыслях причинить себе вред нужно звонить в экстренную службу или на линию поддержки",
+       "es": "Sé dónde está el botón «Ayuda urgente» y recuerdo: ante pensamientos de hacerme daño debo llamar al servicio de emergencias o a una línea de ayuda"
+      },
+      "type": "check"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Зачем нужен план",
+      "es": "Para qué sirve el plan"
+     },
+     "body": {
+      "ru": "Когда становится тяжело, думать и выбирать труднее. Поэтому лучше заранее записать, что вы замечаете, что помогает и к кому обратиться. Тогда в трудный день не нужно придумывать это заново.",
+      "es": "Cuando todo se pone difícil, pensar y elegir cuesta más. Por eso es mejor anotar de antemano qué notas, qué te ayuda y a quién acudir. Así, en un día difícil no tendrás que inventarlo de nuevo."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Он не заменяет помощь",
+      "es": "No sustituye a la ayuda"
+     },
+     "body": {
+      "ru": "План помогает заметить ухудшение и быстрее обратиться за помощью. Это не лечение. Если плохое состояние держится больше двух недель, расскажите об этом врачу или психологу. Решения о лекарствах принимает только врач.",
+      "es": "El plan ayuda a notar un empeoramiento y a pedir ayuda antes. No es un tratamiento. Si el malestar dura más de dos semanas, cuéntaselo a tu médico o psicólogo. Las decisiones sobre la medicación las toma solo el médico."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Если мысли о причинении себе вреда",
+      "es": "Si tienes pensamientos de hacerte daño"
+     },
+     "body": {
+      "ru": "Не оставайтесь с ними одни. Позвоните в экстренную службу или на линию поддержки, или скажите близкому человеку. Кнопка «Срочная помощь» есть на каждом экране.",
+      "es": "No te quedes a solas con ellos. Llama al servicio de emergencias o a una línea de ayuda, o díselo a una persona cercana. El botón «Ayuda urgente» está en cada pantalla."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Структурированный личный план из предупреждающих признаков, способов справляться и людей, к которым можно обратиться, описан как «Safety Planning Intervention». Он создан для работы со специалистом. Здесь используется упрощённая, не клиническая версия, и она не заменяет оценку риска специалистом.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. Un plan personal estructurado con señales de alarma, formas de afrontar y personas a las que acudir se describe como «Safety Planning Intervention». Está pensado para trabajarlo con un profesional. Aquí se usa una versión simplificada, no clínica, que no sustituye la valoración del riesgo por un profesional."
+   },
+   "basis_refs": [
+    "stanley2012",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/plan.jpg"
+  },
+  {
+   "id": "now",
+   "group": "support",
+   "title": {
+    "ru": "Возврат в сейчас",
+    "es": "Volver al presente"
+   },
+   "card": {
+    "ru": "Когда накрывает и трудно сделать что-то ещё. Короткая практика, которая возвращает внимание к телу и к тому, что вокруг.",
+    "es": "Para cuando te desborda y cuesta hacer otra cosa. Una práctica breve que lleva la atención al cuerpo y a lo que te rodea."
+   },
+   "minutes": 3,
+   "audio_doc_id": "fear2__vozvrat_v_seychas",
+   "task": {
+    "title": {
+     "ru": "Одно простое действие",
+     "es": "Una acción sencilla"
+    },
+    "card_type": "grounding",
+    "intro": {
+     "ru": "Выберите одно простое действие из тех, что названы в записи, и сделайте его. Отметьте, как вы себя чувствуете до и после.",
+     "es": "Elige una acción sencilla de las que se nombran en la grabación y hazla. Anota cómo te sientes antes y después."
+    },
+    "fields": [
+     {
+      "id": "before",
+      "label": {
+       "ru": "Насколько тяжело сейчас, 0-10",
+       "es": "Qué difícil es ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Тяжесть состояния (курс «Опора»)",
+        "es": "Dificultad del estado (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     {
+      "id": "action",
+      "label": {
+       "ru": "Что я сделаю",
+       "es": "Qué voy a hacer"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Назвать пять предметов вокруг, выпить воды, выйти на воздух",
+       "es": "Nombrar cinco objetos a mi alrededor, beber agua, salir a tomar el aire"
+      },
+      "chips": [
+       {
+        "ru": "Назвать пять предметов вокруг",
+        "es": "Nombrar cinco objetos a mi alrededor"
+       },
+       {
+        "ru": "Поставить ступни на пол",
+        "es": "Apoyar los pies en el suelo"
+       },
+       {
+        "ru": "Выпить воды",
+        "es": "Beber agua"
+       },
+       {
+        "ru": "Выйти на воздух",
+        "es": "Salir a tomar el aire"
+       }
+      ]
+     },
+     {
+      "id": "after",
+      "label": {
+       "ru": "Насколько тяжело теперь, 0-10",
+       "es": "Qué difícil es ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Тяжесть состояния (курс «Опора»)",
+        "es": "Dificultad del estado (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Что это за практика",
+      "es": "Qué es esta práctica"
+     },
+     "body": {
+      "ru": "Это короткое упражнение на внимание в настоящем моменте. Оно ничего не решает, но помогает пережить самый сильный момент и вернуться к делам.",
+      "es": "Es un ejercicio breve de atención al momento presente. No resuelve nada, pero ayuda a pasar el momento más intenso y a volver a tus cosas."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Если не стало легче",
+      "es": "Si no has mejorado"
+     },
+     "body": {
+      "ru": "Это нормально, состояние может меняться не сразу. Попробуйте ещё раз позже, позвоните близкому человеку или откройте инструмент «Сейчас очень тяжело». Если появились мысли причинить себе вред, звоните в экстренную службу.",
+      "es": "Es normal, el estado puede no cambiar enseguida. Inténtalo otra vez más tarde, llama a una persona cercana o abre la herramienta «Ahora es muy difícil». Si han aparecido pensamientos de hacerte daño, llama al servicio de emergencias."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Навыки осознанности и переживания острого стресса входят в программы диалектической поведенческой терапии (ДБТ). Данные о ДБТ-навыках при депрессивных состояниях получены в небольших исследованиях, часть из них пилотные.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. Las habilidades de atención plena y de tolerancia al malestar forman parte de los programas de terapia dialéctico-conductual (TDC). Los datos sobre las habilidades de TDC en estados depresivos proceden de estudios pequeños, algunos piloto."
+   },
+   "basis_refs": [
+    "linehan2015",
+    "lynch2003",
+    "harley2008"
+   ],
+   "cover": "assets/images/courses/dep/now.jpg"
+  },
+  {
+   "id": "sleep",
+   "group": "support",
+   "title": {
+    "ru": "Бессонница",
+    "es": "Insomnio"
+   },
+   "card": {
+    "ru": "Когда сон нарушен, всё остальное даётся труднее. Несколько понятных опор для вечера и утра. Ниже ещё две записи, чтобы расслабиться перед сном: «Мыльный пузырь» и «Расслабление зажимов».",
+    "es": "Cuando el sueño se altera, todo lo demás cuesta más. Algunos apoyos sencillos para la tarde y la mañana. Debajo hay dos grabaciones más para relajarte antes de dormir: «Burbuja de jabón» y «El hilo de la respiración»."
+   },
+   "minutes": 4,
+   "audio_doc_id": "depression__bessonnica",
+   "task": {
+    "title": {
+     "ru": "Мой вечер",
+     "es": "Mi tarde-noche"
+    },
+    "card_type": "sleep_plan",
+    "intro": {
+     "ru": "Выберите один-два маленьких изменения на эту неделю. Это наблюдение, а не экзамен.",
+     "es": "Elige uno o dos cambios pequeños para esta semana. Es observación, no un examen."
+    },
+    "fields": [
+     {
+      "id": "wake",
+      "label": {
+       "ru": "Во сколько я буду вставать",
+       "es": "A qué hora me levantaré"
+      },
+      "type": "time"
+     },
+     {
+      "id": "wind",
+      "label": {
+       "ru": "Что помогает мне готовиться ко сну",
+       "es": "Qué me ayuda a prepararme para dormir"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Приглушить свет, убрать телефон, тёплый душ",
+       "es": "Bajar la luz, apartar el móvil, una ducha caliente"
+      },
+      "chips": [
+       {
+        "ru": "Приглушить свет",
+        "es": "Bajar la luz"
+       },
+       {
+        "ru": "Убрать телефон",
+        "es": "Apartar el móvil"
+       },
+       {
+        "ru": "Тёплый душ",
+        "es": "Una ducha caliente"
+       },
+       {
+        "ru": "Спокойная музыка",
+        "es": "Música tranquila"
+       }
+      ]
+     },
+     {
+      "id": "blocks",
+      "label": {
+       "ru": "Что мешает",
+       "es": "Qué lo dificulta"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Кофе вечером, мысли, шум",
+       "es": "Café por la tarde, pensamientos, ruido"
+      }
+     },
+     {
+      "id": "doctor",
+      "label": {
+       "ru": "Если плохой сон держится больше двух недель, я расскажу об этом врачу",
+       "es": "Si el mal sueño dura más de dos semanas, se lo contaré al médico"
+      },
+      "type": "check"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Опоры, а не правила",
+      "es": "Apoyos, no reglas"
+     },
+     "body": {
+      "ru": "Регулярное время подъёма, свет утром и спокойный вечер обычно помогают больше, чем попытки заснуть любой ценой.",
+      "es": "Levantarte a una hora regular, la luz por la mañana y una tarde tranquila suelen ayudar más que intentar dormirse a toda costa."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Когда к врачу",
+      "es": "Cuándo ir al médico"
+     },
+     "body": {
+      "ru": "Если проблемы со сном держатся больше двух недель или заметно мешают днём, расскажите об этом врачу. Снотворные и добавки подбирает только врач.",
+      "es": "Si los problemas de sueño duran más de dos semanas o molestan claramente durante el día, cuéntaselo al médico. Los somníferos y los suplementos los pauta solo el médico."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "cover": "assets/images/courses/dep/sleep.jpg",
+   "extra_audio_doc_ids": [
+    "introduction__mylnyy_puzyr",
+    "meditation__meditaciya_rasslablenie_zazhimov"
+   ]
+  },
+  {
+   "id": "hard",
+   "group": "support",
+   "title": {
+    "ru": "Когда эмоции захлёстывают",
+    "es": "Cuando las emociones te desbordan"
+   },
+   "card": {
+    "ru": "Приёмы из диалектической поведенческой терапии: назвать чувство, дать волне пройти, проверить факты, сделать маленький шаг в сторону от избегания. Дополнение к основному пути.",
+    "es": "Recursos de la terapia dialéctico-conductual: nombrar el sentimiento, dejar pasar la ola, comprobar los hechos, dar un pequeño paso para salir de la evitación. Complemento del camino principal."
+   },
+   "minutes": 4,
+   "audio_doc_id": "panic__regulyator_gromkosti",
+   "task": {
+    "title": {
+     "ru": "Мой навык",
+     "es": "Mi habilidad"
+    },
+    "card_type": "dbt_skills",
+    "intro": {
+     "ru": "В следующий раз, когда чувство будет сильным, выберите один навык и отметьте, что изменилось.",
+     "es": "La próxima vez que el sentimiento sea fuerte, elige una habilidad y anota qué cambió."
+    },
+    "fields": [
+     {
+      "id": "emotion",
+      "label": {
+       "ru": "Что я чувствовал(а)",
+       "es": "Lo que sentí"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Одним словом",
+       "es": "En una palabra"
+      },
+      "chips": [
+       {
+        "ru": "Тревога",
+        "es": "Ansiedad"
+       },
+       {
+        "ru": "Грусть",
+        "es": "Tristeza"
+       },
+       {
+        "ru": "Злость",
+        "es": "Rabia"
+       },
+       {
+        "ru": "Стыд",
+        "es": "Vergüenza"
+       },
+       {
+        "ru": "Пустота",
+        "es": "Vacío"
+       }
+      ]
+     },
+     {
+      "id": "before",
+      "label": {
+       "ru": "Сила чувства до, 0-10",
+       "es": "Intensidad del sentimiento antes, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Сила чувства (курс «Опора»)",
+        "es": "Intensidad del sentimiento (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     {
+      "id": "skill",
+      "label": {
+       "ru": "Какой навык попробовал(а)",
+       "es": "Qué habilidad probé"
+      },
+      "type": "text",
+      "chips": [
+       {
+        "ru": "Назвать чувство",
+        "es": "Nombrar el sentimiento"
+       },
+       {
+        "ru": "Дыхание с длинным выдохом",
+        "es": "Respiración con exhalación larga"
+       },
+       {
+        "ru": "Проверить факты",
+        "es": "Comprobar los hechos"
+       },
+       {
+        "ru": "Действие наоборот",
+        "es": "Acción opuesta"
+       },
+       {
+        "ru": "Занять руки и внимание",
+        "es": "Ocupar las manos y la atención"
+       },
+       {
+        "ru": "Выйти на воздух",
+        "es": "Salir a tomar el aire"
+       }
+      ]
+     },
+     {
+      "id": "after",
+      "label": {
+       "ru": "Сила чувства после, 0-10",
+       "es": "Intensidad del sentimiento después, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Сила чувства (курс «Опора»)",
+        "es": "Intensidad del sentimiento (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     {
+      "id": "helped",
+      "label": {
+       "ru": "Что помогло",
+       "es": "Qué ayudó"
+      },
+      "type": "text"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Волна",
+      "es": "La ola"
+     },
+     "body": {
+      "ru": "Сильные чувства приходят волной: нарастают, достигают пика и спадают. Иногда достаточно пережить пик, ничего не решая.",
+      "es": "Los sentimientos fuertes llegan como una ola: crecen, alcanzan un pico y bajan. A veces basta con atravesar el pico sin resolver nada."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Назвать, проверить, сделать шаг",
+      "es": "Nombrar, comprobar, dar un paso"
+     },
+     "body": {
+      "ru": "Название чувства одним словом, проверка фактов (что я знаю точно, а что додумал) и действие наоборот (когда чувство подталкивает спрятаться, сделать небольшой шаг навстречу) помогают не застревать.",
+      "es": "Poner nombre al sentimiento en una palabra, comprobar los hechos (qué sé con certeza y qué he supuesto) y la acción opuesta (cuando el sentimiento empuja a esconderse, dar un pequeño paso hacia fuera) ayudan a no quedarse atascado."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Если не получилось",
+      "es": "Si no te ha salido"
+     },
+     "body": {
+      "ru": "Навыки осваиваются неделями. Можно вернуться к «Возврату в сейчас» и «Сейчас очень тяжело». Если чувства часто выходят из-под контроля, обсудите это со специалистом.",
+      "es": "Las habilidades se aprenden durante semanas. Puedes volver a «Volver al presente» y a «Ahora es muy difícil». Si los sentimientos se descontrolan con frecuencia, coméntalo con un profesional."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Навыки осознанности, переносимости стресса и регуляции эмоций описаны в руководстве по ДБТ. Данные о ДБТ-навыках при депрессивных состояниях получены в небольших исследованиях, в том числе пилотных (дополнение к антидепрессантам у пожилых людей; групповая программа при депрессии, устойчивой к лечению), поэтому доказательная база меньше, чем у когнитивно-поведенческой терапии и поведенческой активации.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. Las habilidades de atención plena, tolerancia al malestar y regulación emocional se describen en el manual de TDC. Los datos sobre las habilidades de TDC en estados depresivos proceden de estudios pequeños, algunos piloto (como complemento de los antidepresivos en personas mayores; un programa grupal en depresión resistente al tratamiento), por lo que la base de evidencia es menor que la de la terapia cognitivo-conductual y la activación conductual."
+   },
+   "basis_refs": [
+    "linehan2015",
+    "lynch2003",
+    "harley2008"
+   ],
+   "cover": "assets/images/courses/dep/hard.jpg"
+  },
+  {
+   "id": "w1",
+   "group": "main",
+   "title": {
+    "ru": "Мысли и настроение",
+    "es": "Pensamientos y estado de ánimo"
+   },
+   "card": {
+    "ru": "Модуль «Мысли», неделя 1. Знакомимся с тем, как устроен курс: настроение связано с тем, что вы думаете, что делаете и с кем проводите время. Начинаем с мыслей и с ежедневной отметки настроения.",
+    "es": "Módulo «Pensamientos», semana 1. Conocemos cómo funciona el curso: el estado de ánimo está relacionado con lo que piensas, con lo que haces y con quién pasas el tiempo. Empezamos por los pensamientos y por anotar cada día el estado de ánimo."
+   },
+   "minutes": 5,
+   "audio_doc_id": "depression__mysli_irracionalnye",
+   "task": {
+    "title": {
+     "ru": "Личный проект: настроение и мысли",
+     "es": "Proyecto personal: estado de ánimo y pensamientos"
+    },
+    "card_type": "thoughts_week1",
+    "intro": {
+     "ru": "Каждый день отмечайте настроение по шкале от 0 до 10. Мысли записывайте и прорабатывайте каждый день в «Пути» (карточка ниже, на этой странице). Здесь раз в неделю достаточно выписать две мысли: одну вредную и одну полезную.",
+     "es": "Cada día anota tu estado de ánimo en una escala de 0 a 10. Escribe y trabaja tus pensamientos cada día en el «Camino» (la tarjeta de abajo, en esta misma página). Aquí basta una vez a la semana con apuntar dos pensamientos: uno dañino y uno útil."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сегодня, 0-10",
+       "es": "Estado de ánimo hoy, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     },
+     {
+      "id": "harmful",
+      "label": {
+       "ru": "Мысль за эту неделю, после которой стало хуже",
+       "es": "Un pensamiento de esta semana después del cual te sentiste peor"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Как она прозвучала в голове",
+       "es": "Cómo sonó en tu cabeza"
+      }
+     },
+     {
+      "id": "helpful",
+      "label": {
+       "ru": "Мысль, после которой стало лучше или спокойнее",
+       "es": "Un pensamiento después del cual te sentiste mejor o más tranquilo"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Даже небольшая",
+       "es": "Aunque sea pequeño"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как устроен курс",
+      "es": "Cómo funciona el curso"
+     },
+     "body": {
+      "ru": "Двенадцать недель, три модуля по четыре недели: «Мысли», «Активность», «Люди». В каждом модуле вы по-новому смотрите на одну из трёх областей, которые влияют на настроение. Каждую неделю есть короткая запись, пояснения и личный проект. Это небольшое дело для себя в течение недели, не домашнее задание.",
+      "es": "Doce semanas, tres módulos de cuatro semanas: «Pensamientos», «Actividad», «Personas». En cada módulo miras de una manera nueva una de las tres áreas que influyen en el estado de ánimo. Cada semana hay una grabación corta, explicaciones y un proyecto personal. Es una pequeña tarea para ti durante la semana, no un deber escolar."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Что такое депрессивное состояние, простыми словами",
+      "es": "Qué es un estado depresivo, en palabras sencillas"
+     },
+     "body": {
+      "ru": "Депрессивное состояние: это не слабость и не лень. Снижается настроение или пропадает интерес, меняются сон, энергия, внимание и отношение к себе. Причин обычно несколько сразу: особенности организма, обстоятельства жизни, пережитое, стресс, привычные мысли и поведение.",
+      "es": "Un estado depresivo no es debilidad ni pereza. Baja el ánimo o desaparece el interés, cambian el sueño, la energía, la atención y la forma de verte a ti mismo. Las causas suelen ser varias a la vez: características del organismo, circunstancias de la vida, lo vivido, el estrés, los pensamientos y hábitos de conducta."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Некоторые мысли ухудшают настроение, а некоторые улучшают. Если замечать, какие именно, ими можно пользоваться. Наши мысли это наша внутренняя реальность, и за её состоянием можно следить, как за чистотой в доме.",
+      "es": "Algunos pensamientos empeoran el ánimo y otros lo mejoran. Si notas cuáles son, puedes aprovecharlos. Nuestros pensamientos son nuestra realidad interior, y se puede vigilar su estado como se cuida la limpieza de una casa."
+     },
+     "required": true
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Мысль на каждый день",
+      "es": "Un pensamiento cada día"
+     },
+     "body": {
+      "ru": "Главный навык курса тренируется каждый день. Один раз в день запишите в «Путь» вредную мысль: что произошло, о чём вы подумали, что почувствовали и что сделали (в когнитивной терапии, начиная с работ А. Бека, такую запись ведут по схеме «ситуация, мысль, эмоция, реакция», по-русски СМЭР). Затем проработайте её в разделе «Проработать иррациональное»: найдите ловушку мышления и подберите мысль, которая точнее и полезнее. Достаточно одной мысли в день. Так навык закрепляется, а не остаётся знанием.",
+      "es": "La habilidad principal del curso se entrena cada día. Una vez al día anota en el «Camino» un pensamiento dañino: qué pasó, qué pensaste, qué sentiste y qué hiciste (en la terapia cognitiva, desde los trabajos de A. Beck, este registro sigue el esquema «situación, pensamiento, emoción, reacción»). Después trabájalo en la sección «Trabajar lo irracional»: encuentra la trampa de pensamiento y elige un pensamiento más exacto y útil. Basta con un pensamiento al día. Así la habilidad se afianza en lugar de quedarse en conocimiento."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Чем курс не является",
+      "es": "Lo que el curso no es"
+     },
+     "body": {
+      "ru": "Он не лечит, не ставит диагноз и не заменяет врача или психолога. Лучше проходить его параллельно с помощью специалиста и показывать записи врачу. Если вы принимаете лекарства, решения о них принимает только врач. Если сниженное настроение или потеря интереса держатся больше двух недель, обратитесь к врачу.",
+      "es": "No trata, no diagnostica y no sustituye al médico ni al psicólogo. Es mejor hacerlo junto con la ayuda de un profesional y enseñarle los registros al médico. Si tomas medicación, las decisiones sobre ella las toma solo el médico. Si el ánimo bajo o la pérdida de interés duran más de dos semanas, acude al médico."
+     },
+     "required": true
+    }
+   ],
+   "free": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Связь настроения и мыслей и отметка настроения по шкале входят в основу когнитивной терапии депрессивных состояний.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. La relación entre el estado de ánimo y los pensamientos y el registro del ánimo en una escala forman parte de la base de la terapia cognitiva de los estados depresivos."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "beck1979",
+    "nice_ng222",
+    "ru_kr"
+   ],
+   "cover": "assets/images/courses/dep/w1.jpg"
+  },
+  {
+   "id": "w2",
+   "group": "main",
+   "title": {
+    "ru": "Вредные и полезные мысли: замечать",
+    "es": "Pensamientos dañinos y útiles: notarlos"
+   },
+   "card": {
+    "ru": "Модуль «Мысли», неделя 2. Учимся замечать мысли, которые тянут настроение вниз, и мысли, которые поднимают его. Помогает простое упражнение: одна ситуация и лестница мыслей вниз и вверх.",
+    "es": "Módulo «Pensamientos», semana 2. Aprendemos a notar los pensamientos que arrastran el ánimo hacia abajo y los que lo levantan. Ayuda un ejercicio sencillo: una situación y la escalera de pensamientos hacia abajo y hacia arriba."
+   },
+   "minutes": 7,
+   "audio_doc_id": "depression__ubezhdeniya_irracionalnye",
+   "task": {
+    "title": {
+     "ru": "Лестница мыслей",
+     "es": "La escalera de pensamientos"
+    },
+    "card_type": "thought_ladder",
+    "intro": {
+     "ru": "Возьмите один небольшой жизненный факт, например: «Мне поставили диагноз» или «Мне не позвонили». Подумайте, какие мысли о нём тянут настроение вниз шаг за шагом, а какие поднимают.",
+     "es": "Toma un pequeño hecho de la vida, por ejemplo: «Me han dado un diagnóstico» o «No me han llamado». Piensa qué pensamientos sobre él arrastran el ánimo hacia abajo paso a paso y cuáles lo levantan."
+    },
+    "fields": [
+     {
+      "id": "fact",
+      "label": {
+       "ru": "Ситуация, только факт",
+       "es": "La situación, solo el hecho"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Что произошло, без оценок",
+       "es": "Qué ocurrió, sin valoraciones"
+      }
+     },
+     {
+      "id": "down",
+      "label": {
+       "ru": "Мысли, которые тянут вниз, от лёгких к тяжёлым",
+       "es": "Pensamientos que arrastran hacia abajo, de leves a duros"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Например: «Это плохо», потом «Почему именно я»",
+       "es": "Por ejemplo: «Esto es malo», luego «¿Por qué yo?»"
+      }
+     },
+     {
+      "id": "up",
+      "label": {
+       "ru": "Мысли, которые поднимают, от лёгких к сильным",
+       "es": "Pensamientos que levantan, de leves a fuertes"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Например: «Я пока не знаю», потом «Я могу о себе позаботиться»",
+       "es": "Por ejemplo: «Todavía no lo sé», luego «Puedo cuidarme»"
+      }
+     },
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сейчас, 0-10",
+       "es": "Estado de ánimo ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Настроение зависит не только от событий, но и от того, что мы о них думаем. На прошлой неделе вы начали следить за настроением и мыслями.",
+      "es": "El estado de ánimo depende no solo de los acontecimientos, sino de lo que pensamos sobre ellos. La semana pasada empezaste a observar tu estado de ánimo y tus pensamientos."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Привычные ловушки мышления",
+      "es": "Trampas de pensamiento habituales"
+     },
+     "body": {
+      "ru": "Вредные мысли часто следуют одним и тем же узорам. «Всё или ничего»: если не идеально, то плохо. «Катастрофа»: самое худшее обязательно случится. «Чтение мыслей»: я знаю, что они обо мне думают. «Обесценивание хорошего»: это не считается. «Я должен»: жёсткие правила к себе. «Ярлык»: «я неудачник». Названия условные, они нужны, чтобы мысль стало проще заметить.",
+      "es": "Los pensamientos dañinos suelen seguir los mismos patrones. «Todo o nada»: si no es perfecto, es malo. «Catástrofe»: lo peor sucederá seguro. «Leer la mente»: sé lo que piensan de mí. «Quitar valor a lo bueno»: eso no cuenta. «Debería»: reglas rígidas hacia uno mismo. «Etiqueta»: «soy un fracaso». Los nombres son convencionales; sirven para que sea más fácil notar el pensamiento."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Наблюдать мысли",
+      "es": "Observar los pensamientos"
+     },
+     "body": {
+      "ru": "Попробуйте несколько минут просто наблюдать за мыслями, как за облаками: появилась, прошла. Не нужно с ними спорить или их прогонять.",
+      "es": "Prueba durante unos minutos a observar los pensamientos como nubes: aparece, pasa. No hace falta discutir con ellos ni espantarlos."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Мои мысли могут помогать и могут вредить. Я могу научиться думать так, чтобы настроение улучшалось.",
+      "es": "Mis pensamientos pueden ayudarme y pueden hacerme daño. Puedo aprender a pensar de modo que mi ánimo mejore."
+     }
+    }
+   ],
+   "free": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Распознавание привычных искажений мышления и работа с цепочкой «ситуация, мысль, настроение» относятся к когнитивной терапии. Метаанализы показывают пользу когнитивно-поведенческой терапии при депрессивных состояниях, хотя авторы отмечают, что в исследованиях низкого качества эффекты могут быть завышены.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Reconocer las distorsiones habituales del pensamiento y trabajar la cadena «situación, pensamiento, ánimo» pertenece a la terapia cognitiva. Los metaanálisis muestran el beneficio de la terapia cognitivo-conductual en los estados depresivos, aunque sus autores señalan que en los estudios de baja calidad los efectos pueden estar sobrestimados."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "beck1979",
+    "greenberger2016",
+    "cuijpers2013"
+   ],
+   "cover": "assets/images/courses/dep/w2.jpg"
+  },
+  {
+   "id": "w3",
+   "group": "main",
+   "title": {
+    "ru": "Отвечать на вредные мысли",
+    "es": "Responder a los pensamientos dañinos"
+   },
+   "card": {
+    "ru": "Модуль «Мысли», неделя 3. Вредную мысль можно не принимать на веру: проверить, ответить ей и, если нужно, отложить. Это не споры с собой, а спокойный разговор.",
+    "es": "Módulo «Pensamientos», semana 3. No hace falta creerse un pensamiento dañino: se puede comprobar, responderle y, si hace falta, aplazarlo. No es discutir contigo mismo, sino una conversación tranquila."
+   },
+   "minutes": 5,
+   "audio_doc_id": "depression__ubezhdeniya_racionalnye",
+   "task": {
+    "title": {
+     "ru": "Мой ответ мысли",
+     "es": "Mi respuesta al pensamiento"
+    },
+    "card_type": "thought_reply",
+    "intro": {
+     "ru": "Выберите одну вредную мысль недели и ответьте ей одним из способов.",
+     "es": "Elige un pensamiento dañino de la semana y respóndele de una de estas maneras."
+    },
+    "fields": [
+     {
+      "id": "thought",
+      "label": {
+       "ru": "Мысль",
+       "es": "Pensamiento"
+      },
+      "type": "text"
+     },
+     {
+      "id": "method",
+      "label": {
+       "ru": "Каким способом отвечаю",
+       "es": "De qué manera respondo"
+      },
+      "type": "text",
+      "chips": [
+       {
+        "ru": "Проверить факты",
+        "es": "Comprobar los hechos"
+       },
+       {
+        "ru": "Сказать так, как сказал(а) бы другу",
+        "es": "Decírmelo como se lo diría a un amigo"
+       },
+       {
+        "ru": "Отложить на «час для мыслей»",
+        "es": "Aplazarlo a una «hora de los pensamientos»"
+       },
+       {
+        "ru": "Переключиться на конкретное дело",
+        "es": "Pasar a una tarea concreta"
+       }
+      ]
+     },
+     {
+      "id": "reply",
+      "label": {
+       "ru": "Мой ответ",
+       "es": "Mi respuesta"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Например: «Сейчас не получилось, но раньше получалось иначе»",
+       "es": "Por ejemplo: «Ahora no me ha salido, pero antes me salía de otra manera»"
+      }
+     },
+     {
+      "id": "before",
+      "label": {
+       "ru": "Сила чувства до, 0-10",
+       "es": "Intensidad del sentimiento antes, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Сила чувства при мысли (курс «Опора»)",
+        "es": "Intensidad del sentimiento con el pensamiento (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     {
+      "id": "after",
+      "label": {
+       "ru": "Сила чувства после, 0-10",
+       "es": "Intensidad del sentimiento después, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Сила чувства при мысли (курс «Опора»)",
+        "es": "Intensidad del sentimiento con el pensamiento (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "На прошлой неделе вы заметили, как мысли тянут настроение вниз и поднимают его, и увидели привычные ловушки мышления.",
+      "es": "La semana pasada notaste cómo los pensamientos arrastran el ánimo hacia abajo y lo levantan, y viste las trampas de pensamiento habituales."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Четыре способа ответить",
+      "es": "Cuatro maneras de responder"
+     },
+     "body": {
+      "ru": "Проверить факты: что говорит за мысль, что против. Сказать так, как сказали бы близкому человеку с такой же мыслью. Отложить: записать мысль и отвести ей время в определённый час, а не весь день. Переключиться на конкретное дело, если мысли ходят по кругу.",
+      "es": "Comprobar los hechos: qué está a favor del pensamiento y qué en contra. Decírtelo como se lo dirías a una persona cercana con el mismo pensamiento. Aplazar: anotar el pensamiento y darle un tiempo a una hora determinada, no todo el día. Pasar a una tarea concreta si los pensamientos dan vueltas en círculo."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Когда мысли идут по кругу",
+      "es": "Cuando los pensamientos dan vueltas en círculo"
+     },
+     "body": {
+      "ru": "Если вы часами прокручиваете одно и то же, не пытайтесь выиграть спор. Долгое прокручивание обычно усиливает подавленность. Лучше переключитесь на небольшое действие или дыхательную паузу.",
+      "es": "Si llevas horas dando vueltas a lo mismo, no intentes ganar la discusión. Rumiar durante mucho tiempo suele aumentar el abatimiento. Mejor pasa a una pequeña acción o a una pausa de respiración."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Если мысли о причинении себе вреда",
+      "es": "Si tienes pensamientos de hacerte daño"
+     },
+     "body": {
+      "ru": "Не разбирайте их в одиночку. Позвоните в экстренную службу или на линию поддержки или скажите близкому человеку. Кнопка «Срочная помощь» есть на каждом экране.",
+      "es": "No los analices a solas. Llama al servicio de emergencias o a una línea de ayuda, o díselo a una persona cercana. El botón «Ayuda urgente» está en cada pantalla."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Я могу научиться уменьшать вредные мысли и отвечать им, и от этого настроение улучшается.",
+      "es": "Puedo aprender a reducir los pensamientos dañinos y a responderles, y con ello mejora mi ánimo."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Проверка мыслей и поиск более взвешенных ответов лежат в основе когнитивной терапии депрессивных состояний. Прокручивание одних и тех же мыслей (руминация) в исследованиях связано с углублением депрессивного состояния, поэтому курс предлагает переключение на конкретное действие.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Comprobar los pensamientos y buscar respuestas más equilibradas está en la base de la terapia cognitiva de los estados depresivos. Rumiar los mismos pensamientos se ha relacionado en los estudios con un agravamiento del estado depresivo, por eso el curso propone pasar a una acción concreta."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "beck1979",
+    "greenberger2016",
+    "cuijpers2013",
+    "nolen2008"
+   ],
+   "cover": "assets/images/courses/dep/w3.jpg"
+  },
+  {
+   "id": "w4",
+   "group": "main",
+   "title": {
+    "ru": "Больше полезных мыслей",
+    "es": "Más pensamientos útiles"
+   },
+   "card": {
+    "ru": "Модуль «Мысли», неделя 4. Не только уменьшаем вредные мысли, но и намеренно прибавляем полезные. И смотрим вперёд: какой жизни вы хотите.",
+    "es": "Módulo «Pensamientos», semana 4. No solo reducimos los pensamientos dañinos, sino que sumamos a propósito los útiles. Y miramos adelante: qué vida quieres."
+   },
+   "minutes": 6,
+   "audio_doc_id": "depression__samoocenka_i_samocennost",
+   "task": {
+    "title": {
+     "ru": "Мои полезные мысли",
+     "es": "Mis pensamientos útiles"
+    },
+    "card_type": "helpful_thoughts",
+    "intro": {
+     "ru": "Составьте короткий список и читайте его, когда настроение падает.",
+     "es": "Haz una lista corta y léela cuando el ánimo decaiga."
+    },
+    "fields": [
+     {
+      "id": "helpful",
+      "label": {
+       "ru": "Три полезные мысли, которые мне подходят",
+       "es": "Tres pensamientos útiles que me sirven"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Правдивые и мягкие. Например: «Я справлялся(лась) и раньше»",
+       "es": "Verdaderos y amables. Por ejemplo: «Ya he podido con esto antes»"
+      }
+     },
+     {
+      "id": "done",
+      "label": {
+       "ru": "Три вещи, которые мне удались за последние недели",
+       "es": "Tres cosas que me han salido bien en las últimas semanas"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Даже небольшие",
+       "es": "Aunque sean pequeñas"
+      }
+     },
+     {
+      "id": "future",
+      "label": {
+       "ru": "Одно, что я хочу изменить в жизни в ближайшие месяцы",
+       "es": "Una cosa que quiero cambiar en mi vida en los próximos meses"
+      },
+      "type": "text"
+     },
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сейчас, 0-10",
+       "es": "Estado de ánimo ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы научились замечать вредные мысли и отвечать им. Сегодня добавляем вторую половину: увеличивать полезные.",
+      "es": "Ya has aprendido a notar los pensamientos dañinos y a responderles. Hoy añadimos la segunda mitad: aumentar los útiles."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Полезные мысли",
+      "es": "Pensamientos útiles"
+     },
+     "body": {
+      "ru": "Это не «позитивное мышление» и не самообман. Это правдивые мысли, которые поддерживают: о том, что вам удаётся, что вы можете сделать, что у вас было хорошего. Их можно записать на карточку или в телефон и перечитывать.",
+      "es": "No es «pensamiento positivo» ni autoengaño. Son pensamientos verdaderos que te sostienen: sobre lo que te sale bien, lo que puedes hacer, lo bueno que has tenido. Puedes escribirlos en una tarjeta o en el móvil y releerlos."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Мысли и будущее",
+      "es": "Pensamientos y futuro"
+     },
+     "body": {
+      "ru": "Мысли влияют на то, что вы выбираете делать. Если думать только вредными мыслями, будущее кажется закрытым. Если добавлять полезные, видно, куда можно шагнуть.",
+      "es": "Los pensamientos influyen en lo que eliges hacer. Si piensas solo con pensamientos dañinos, el futuro parece cerrado. Si añades los útiles, se ve hacia dónde se puede dar un paso."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Итог модуля",
+      "es": "Resumen del módulo"
+     },
+     "body": {
+      "ru": "Вы можете улучшить настроение, улучшая внутреннюю реальность: больше полезных мыслей, меньше вредных. Дальше модуль «Активность»: что вы делаете в течение дня.",
+      "es": "Puedes mejorar tu ánimo mejorando tu realidad interior: más pensamientos útiles, menos dañinos. Ahora viene el módulo «Actividad»: lo que haces durante el día."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Расширение набора полезных, реалистичных мыслей и самосострадание изучались в исследованиях: метаанализ вмешательств по самосостраданию нашёл небольшой и умеренный эффект.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Ampliar el conjunto de pensamientos útiles y realistas y la autocompasión se han estudiado en investigaciones: un metaanálisis de intervenciones de autocompasión encontró un efecto pequeño a moderado."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "beck1979",
+    "neff2003",
+    "ferrari2019"
+   ],
+   "cover": "assets/images/courses/dep/w4.jpg"
+  },
+  {
+   "id": "w5",
+   "group": "main",
+   "title": {
+    "ru": "Дела и настроение",
+    "es": "Actividades y estado de ánimo"
+   },
+   "card": {
+    "ru": "Модуль «Активность», неделя 5. От мыслей переходим к делам: что вы делаете в течение дня и как это связано с настроением. Начинаем с небольшого шага и отметок.",
+    "es": "Módulo «Actividad», semana 5. De los pensamientos pasamos a las actividades: qué haces durante el día y cómo se relaciona con el estado de ánimo. Empezamos con un pequeño paso y con anotaciones."
+   },
+   "minutes": 4,
+   "audio_doc_id": "program_depression__small_step",
+   "task": {
+    "title": {
+     "ru": "Личный проект: дела и настроение",
+     "es": "Proyecto personal: actividades y estado de ánimo"
+    },
+    "card_type": "activities_week5",
+    "intro": {
+     "ru": "В течение недели отмечайте настроение и число приятных или полезных дел за день. Начните с одного маленького шага.",
+     "es": "Durante la semana anota tu estado de ánimo y el número de actividades agradables o útiles de cada día. Empieza con un pequeño paso."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сегодня, 0-10",
+       "es": "Estado de ánimo hoy, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     },
+     {
+      "id": "count",
+      "label": {
+       "ru": "Сколько приятных или значимых дел было вчера, 0-10",
+       "es": "Cuántas actividades agradables o significativas tuviste ayer, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Приятные дела за день (курс «Опора»)",
+        "es": "Actividades agradables del día (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     },
+     {
+      "id": "step",
+      "label": {
+       "ru": "Один маленький шаг на ближайшие дни",
+       "es": "Un pequeño paso para los próximos días"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Выйти на пять минут, выпить тёплое, полить растение, принять душ",
+       "es": "Salir cinco minutos, tomar algo caliente, regar una planta, darme una ducha"
+      },
+      "chips": [
+       {
+        "ru": "Выйти на улицу на пять минут",
+        "es": "Salir a la calle cinco minutos"
+       },
+       {
+        "ru": "Выпить тёплое",
+        "es": "Tomar algo caliente"
+       },
+       {
+        "ru": "Полить растение",
+        "es": "Regar una planta"
+       },
+       {
+        "ru": "Принять душ",
+        "es": "Darme una ducha"
+       },
+       {
+        "ru": "Написать одно сообщение",
+        "es": "Escribir un mensaje"
+       }
+      ]
+     },
+     {
+      "id": "when",
+      "label": {
+       "ru": "Когда",
+       "es": "Cuándo"
+      },
+      "type": "time",
+      "notify_before": 15,
+      "notify_body": {
+       "ru": "Ваш маленький шаг из курса «Опора» ждёт.",
+       "es": "Tu pequeño paso del curso «Melancolía» te espera."
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "В модуле «Мысли» вы смотрели на внутреннюю реальность. Теперь смотрим на внешнюю: что вы делаете в течение дня.",
+      "es": "En el módulo «Pensamientos» miraste la realidad interior. Ahora miramos la exterior: lo que haces durante el día."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Дела и настроение",
+      "es": "Actividades y estado de ánimo"
+     },
+     "body": {
+      "ru": "Когда настроение низкое, дел становится меньше, а чем меньше приятных и значимых дел, тем ниже настроение. Это замкнутый круг. Его можно разорвать с любой стороны, например, добавив небольшое действие.",
+      "es": "Cuando el ánimo está bajo, hay menos actividades, y cuantas menos actividades agradables y significativas, más bajo el ánimo. Es un círculo cerrado. Se puede romper por cualquier lado, por ejemplo añadiendo una pequeña acción."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Блоки времени",
+      "es": "Bloques de tiempo"
+     },
+     "body": {
+      "ru": "День состоит из блоков времени. Если в них постепенно становится больше приятного и полезного, личная реальность становится ровнее и приятнее. Начинать нужно с очень небольшого.",
+      "es": "El día se compone de bloques de tiempo. Si poco a poco hay más cosas agradables y útiles en ellos, tu realidad personal se vuelve más pareja y agradable. Hay que empezar por algo muy pequeño."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Шаг, а не настроение",
+      "es": "El paso, no el ánimo"
+     },
+     "body": {
+      "ru": "Не нужно ждать, пока станет лучше. Маленькое действие приходит первым, настроение может откликнуться позже, не всегда сразу. Если сил совсем нет, уменьшите шаг вдвое. Он всё равно считается.",
+      "es": "No hace falta esperar a sentirte mejor. La pequeña acción llega primero, el ánimo puede responder más tarde, no siempre enseguida. Si no tienes fuerzas, reduce el paso a la mitad. Sigue contando."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Приятные дела формируют мою внешнюю реальность. Чем больше таких блоков времени, тем лучше я буду себя чувствовать.",
+      "es": "Las actividades agradables dan forma a mi realidad exterior. Cuantos más bloques de tiempo así, mejor me sentiré."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Поведенческая активация (планирование небольших действий и отметка настроения) входит в рекомендованные вмешательства при депрессивных состояниях. В исследованиях, где её проводили специалисты или обученные консультанты, результаты были сопоставимы с когнитивно-поведенческой терапией.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. La activación conductual (planificar pequeñas acciones y anotar el ánimo) forma parte de las intervenciones recomendadas en los estados depresivos. En los estudios en los que la aplicaron profesionales o consejeros formados, los resultados fueron comparables a los de la terapia cognitivo-conductual."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "lejuez2011",
+    "ekers2014",
+    "richards2016",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/w5.jpg"
+  },
+  {
+   "id": "w6",
+   "group": "main",
+   "title": {
+    "ru": "Расслабление и приятные дела",
+    "es": "Relajación y actividades agradables"
+   },
+   "card": {
+    "ru": "Модуль «Активность», неделя 6. Учимся замедляться и планировать приятные дела заранее. Когда они запланированы, начать проще.",
+    "es": "Módulo «Actividad», semana 6. Aprendemos a ir más despacio y a planificar de antemano las actividades agradables. Si están planificadas, empezar es más fácil."
+   },
+   "minutes": 2,
+   "audio_doc_id": "depression__vernut_vkusy",
+   "task": {
+    "title": {
+     "ru": "План приятных дел",
+     "es": "Plan de actividades agradables"
+    },
+    "card_type": "pleasant_plan",
+    "intro": {
+     "ru": "Составьте небольшой список приятных дел и запланируйте их на неделю. Сочетайте дела в одиночестве и с людьми.",
+     "es": "Haz una pequeña lista de actividades agradables y planifícalas para la semana. Combina las que haces a solas y las que haces con otras personas."
+    },
+    "fields": [
+     {
+      "id": "list",
+      "label": {
+       "ru": "Приятные дела, которые мне подходят",
+       "es": "Actividades agradables que me van bien"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Вкусный чай, музыка, прогулка, разговор, тёплый душ",
+       "es": "Un buen té, música, un paseo, una conversación, una ducha caliente"
+      }
+     },
+     {
+      "id": "plan",
+      "label": {
+       "ru": "Что и когда я запланирую на эту неделю",
+       "es": "Qué y cuándo planificaré esta semana"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "День и время",
+       "es": "Día y hora"
+      }
+     },
+     {
+      "id": "when",
+      "label": {
+       "ru": "Первое запланированное дело",
+       "es": "La primera actividad planificada"
+      },
+      "type": "time",
+      "notify_before": 15,
+      "notify_body": {
+       "ru": "Ваше запланированное приятное дело из курса «Опора».",
+       "es": "Tu actividad agradable planificada del curso «Melancolía»."
+      }
+     },
+     {
+      "id": "relax",
+      "label": {
+       "ru": "Я попробовал(а) расслабление или дыхание",
+       "es": "Probé la relajación o la respiración"
+      },
+      "type": "check"
+     },
+     {
+      "id": "pleasure",
+      "label": {
+       "ru": "Насколько было приятно, 0-10",
+       "es": "Qué agradable fue, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Приятность дела (курс «Опора»)",
+        "es": "Lo agradable de la actividad (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы смотрели, как дела и настроение связаны. Сейчас учимся делать приятные дела регулярными.",
+      "es": "Viste cómo se relacionan las actividades y el ánimo. Ahora aprendemos a hacer regulares las actividades agradables."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Расслабление",
+      "es": "Relajación"
+     },
+     "body": {
+      "ru": "Короткое расслабление или дыхание помогает снизить напряжение, которое часто сопровождает подавленность. Подойдёт любая запись из блока «Аудио на выбор»: дыхание или расслабление мышц.",
+      "es": "Una relajación o respiración breve ayuda a bajar la tensión que suele acompañar al abatimiento. Sirve cualquier grabación del bloque «Audios a elegir»: respiración o relajación muscular."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Планировать, а не ждать",
+      "es": "Planificar, no esperar"
+     },
+     "body": {
+      "ru": "Когда я подавлен(а), начинать трудно. Поэтому приятные дела лучше планировать заранее: что, когда и с кем. Начинайте с небольшого, и по мере того как вы втягиваетесь, делать станет легче.",
+      "es": "Cuando estoy decaído, empezar cuesta. Por eso conviene planificar de antemano las actividades agradables: qué, cuándo y con quién. Empieza por algo pequeño, y a medida que entres en ritmo será más fácil."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Если радость не приходит",
+      "es": "Si la alegría no llega"
+     },
+     "body": {
+      "ru": "Если интерес и радость не возвращаются больше двух недель, обсудите это с врачом или психологом.",
+      "es": "Si el interés y la alegría no vuelven durante más de dos semanas, coméntalo con un médico o psicólogo."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Приятные дела так же нужны, как еда и сон. В депрессивном состоянии начать трудно, поэтому их нужно заранее планировать.",
+      "es": "Las actividades agradables hacen tanta falta como la comida y el sueño. En un estado depresivo empezar cuesta, por eso hay que planificarlas de antemano."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Планирование приятных событий входит в классическую поведенческую модель депрессии (Lewinsohn) и в поведенческую активацию.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Planificar acontecimientos agradables forma parte del modelo conductual clásico de la depresión (Lewinsohn) y de la activación conductual."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "lejuez2011",
+    "martell2021",
+    "ekers2014"
+   ],
+   "cover": "assets/images/courses/dep/w6.jpg"
+  },
+  {
+   "id": "w7",
+   "group": "main",
+   "title": {
+    "ru": "Что мешает приятным делам",
+    "es": "Qué dificulta las actividades agradables"
+   },
+   "card": {
+    "ru": "Модуль «Активность», неделя 7. Находим препятствия, из-за которых запланированное не получается, и решаем их по одному.",
+    "es": "Módulo «Actividad», semana 7. Buscamos los obstáculos por los que lo planificado no sale y los resolvemos uno por uno."
+   },
+   "minutes": 4,
+   "audio_doc_id": "program_depression__one_problem",
+   "task": {
+    "title": {
+     "ru": "Препятствие и шаг",
+     "es": "Obstáculo y paso"
+    },
+    "card_type": "roadblock_plan",
+    "intro": {
+     "ru": "Выберите одно препятствие, которое чаще всего мешает.",
+     "es": "Elige el obstáculo que más suele estorbar."
+    },
+    "fields": [
+     {
+      "id": "roadblock",
+      "label": {
+       "ru": "Что мешает",
+       "es": "Qué lo dificulta"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Нет сил, мысль «не получится», нет времени или денег, нет компании",
+       "es": "Sin fuerzas, pensamiento «no va a salir», sin tiempo o dinero, sin compañía"
+      },
+      "chips": [
+       {
+        "ru": "Нет сил",
+        "es": "Sin fuerzas"
+       },
+       {
+        "ru": "Мысль «не получится»",
+        "es": "Pensamiento «no va a salir»"
+       },
+       {
+        "ru": "Нет времени или денег",
+        "es": "Sin tiempo o dinero"
+       },
+       {
+        "ru": "Не с кем",
+        "es": "Sin compañía"
+       }
+      ]
+     },
+     {
+      "id": "options",
+      "label": {
+       "ru": "Что можно сделать: любые варианты, даже странные",
+       "es": "Qué se puede hacer: cualquier opción, incluso las raras"
+      },
+      "type": "text"
+     },
+     {
+      "id": "chosen",
+      "label": {
+       "ru": "Что выбираю",
+       "es": "Qué elijo"
+      },
+      "type": "text"
+     },
+     {
+      "id": "first",
+      "label": {
+       "ru": "Самый маленький первый шаг, до десяти минут",
+       "es": "El primer paso más pequeño, de hasta diez minutos"
+      },
+      "type": "text"
+     },
+     {
+      "id": "when",
+      "label": {
+       "ru": "Когда",
+       "es": "Cuándo"
+      },
+      "type": "time",
+      "notify_before": 15,
+      "notify_body": {
+       "ru": "Ваш шаг из курса «Опора» ждёт.",
+       "es": "Tu paso del curso «Melancolía» te espera."
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы запланировали приятные дела. Часто что-то мешает, и это нормально.",
+      "es": "Planificaste actividades agradables. A menudo algo lo impide, y es normal."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Виды препятствий",
+      "es": "Tipos de obstáculos"
+     },
+     "body": {
+      "ru": "Усталость и нехватка сил. Мысли вроде «всё равно не получится». Нет времени или денег. Нет подходящих людей. С мыслями вы работали в первом модуле, с остальным помогает решение проблем.",
+      "es": "Cansancio y falta de fuerzas. Pensamientos como «de todos modos no va a salir». Falta de tiempo o de dinero. No hay personas adecuadas. Con los pensamientos trabajaste en el primer módulo; con el resto ayuda la resolución de problemas."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Одна проблема за раз",
+      "es": "Un problema a la vez"
+     },
+     "body": {
+      "ru": "Выберите одну трудность, придумайте варианты, выберите посильный, разбейте на шаги, попробуйте и посмотрите, что получилось. Если не вышло, это не провал: возьмите шаг меньше.",
+      "es": "Elige una dificultad, piensa opciones, escoge una que puedas, divídela en pasos, pruébala y mira qué ha resultado. Si no sale, no es un fracaso: toma un paso más pequeño."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Если препятствия настоящие",
+      "es": "Si los obstáculos son reales"
+     },
+     "body": {
+      "ru": "Работа, деньги, жильё, безопасность: за этим можно и нужно обращаться к специалистам и службам поддержки. Курс не заменяет такую помощь.",
+      "es": "Trabajo, dinero, vivienda, seguridad: para esto se puede y se debe acudir a profesionales y a servicios de apoyo. El curso no sustituye esa ayuda."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Я могу распознать, что мешает, и найти способ преодолеть это маленькими шагами.",
+      "es": "Puedo reconocer qué me estorba y encontrar la manera de superarlo con pequeños pasos."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Обучение решению проблем входит в рекомендованные вмешательства при депрессивных состояниях. Метаанализ нашёл, что оно снижает симптомы, хотя результаты исследований различаются между собой.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. El entrenamiento en resolución de problemas forma parte de las intervenciones recomendadas en los estados depresivos. Un metaanálisis encontró que reduce los síntomas, aunque los resultados de los estudios difieren entre sí."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "cuijpers2007",
+    "patel2017",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/w7.jpg"
+  },
+  {
+   "id": "w8",
+   "group": "main",
+   "title": {
+    "ru": "Цели и своя жизнь",
+    "es": "Metas y vida propia"
+   },
+   "card": {
+    "ru": "Модуль «Активность», неделя 8. Чтобы день было ради чего начинать, нужны небольшие радости каждый день и что-то, чего ждёшь. Ставим небольшие цели.",
+    "es": "Módulo «Actividad», semana 8. Para que valga la pena empezar el día hacen falta pequeñas alegrías cada día y algo que esperar. Nos ponemos pequeñas metas."
+   },
+   "minutes": 8,
+   "audio_doc_id": "depression__cennosti",
+   "task": {
+    "title": {
+     "ru": "Мои цели",
+     "es": "Mis metas"
+    },
+    "card_type": "goals_week8",
+    "intro": {
+     "ru": "Одна цель на ближайшие недели и одна на несколько месяцев. Разбейте их на шаги.",
+     "es": "Una meta para las próximas semanas y otra para dentro de unos meses. Divídelas en pasos."
+    },
+    "fields": [
+     {
+      "id": "short",
+      "label": {
+       "ru": "Короткая цель, на одну-две недели",
+       "es": "Meta corta, para una o dos semanas"
+      },
+      "type": "text"
+     },
+     {
+      "id": "long",
+      "label": {
+       "ru": "Цель на несколько месяцев, к которой хочется идти",
+       "es": "Meta para dentro de unos meses a la que quiero ir"
+      },
+      "type": "text"
+     },
+     {
+      "id": "value",
+      "label": {
+       "ru": "Что для меня здесь важно",
+       "es": "Qué es importante para mí en esto"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Одной фразой",
+       "es": "En una frase"
+      }
+     },
+     {
+      "id": "first",
+      "label": {
+       "ru": "Первый шаг к короткой цели",
+       "es": "Primer paso hacia la meta corta"
+      },
+      "type": "text"
+     },
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сейчас, 0-10",
+       "es": "Estado de ánimo ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы планируете приятные дела и учитесь обходить препятствия. Теперь добавим смотрение вперёд.",
+      "es": "Estás planificando actividades agradables y aprendiendo a sortear obstáculos. Ahora añadimos mirar hacia delante."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Радость сегодня и ожидание завтра",
+      "es": "Alegría hoy y expectativa de mañana"
+     },
+     "body": {
+      "ru": "Для хорошего самочувствия помогают две вещи: ежедневные приятные и значимые дела и то, чего вы ждёте в ближайшем и в дальнем будущем. Это хорошее противоядие от безнадёжности и беспомощности.",
+      "es": "Para encontrarse bien ayudan dos cosas: las actividades agradables y significativas de cada día y lo que esperas en el futuro cercano y lejano. Es un buen antídoto contra la desesperanza y la impotencia."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Цели шагами",
+      "es": "Metas por pasos"
+     },
+     "body": {
+      "ru": "Цель становится посильной, когда она разбита на шаги. Задайте себе: что я могу сделать в ближайшие дни? Как я узнаю, что шаг сделан?",
+      "es": "Una meta se vuelve posible cuando se divide en pasos. Pregúntate: ¿qué puedo hacer en los próximos días? ¿Cómo sabré que he dado el paso?"
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Итог модуля",
+      "es": "Resumen del módulo"
+     },
+     "body": {
+      "ru": "Я в любой момент могу выбрать, что делать и как реагировать. Выбирая то, что поддерживает моё состояние, я постепенно меняю личную реальность. Дальше модуль «Люди».",
+      "es": "En cualquier momento puedo elegir qué hacer y cómo reaccionar. Eligiendo lo que sostiene mi estado, voy cambiando poco a poco mi realidad personal. Ahora viene el módulo «Personas»."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Определение сфер жизни, ценностей и действий разной сложности описано в кратком руководстве по поведенческой активации при депрессивных состояниях.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. La identificación de áreas de la vida, valores y acciones de distinta dificultad se describe en la breve guía de activación conductual para estados depresivos."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "lejuez2011",
+    "martell2021"
+   ],
+   "cover": "assets/images/courses/dep/w8.jpg"
+  },
+  {
+   "id": "w9",
+   "group": "main",
+   "title": {
+    "ru": "Люди и настроение",
+    "es": "Personas y estado de ánimo"
+   },
+   "card": {
+    "ru": "Модуль «Люди», неделя 9. Отношения с людьми влияют на настроение, и наоборот. Смотрим, кто вас поддерживает и какие встречи помогают, а какие ранят.",
+    "es": "Módulo «Personas», semana 9. Las relaciones con la gente influyen en el ánimo, y al revés. Miramos quién te apoya y qué encuentros ayudan y cuáles hieren."
+   },
+   "minutes": 5,
+   "audio_doc_id": "loneliness__pogovorim_po_dusham",
+   "task": {
+    "title": {
+     "ru": "Личный проект: контакты и настроение",
+     "es": "Proyecto personal: contactos y estado de ánimo"
+    },
+    "card_type": "people_week9",
+    "intro": {
+     "ru": "В течение недели отмечайте настроение и считайте, сколько контактов за день были приятными или поддерживающими и сколько тяжёлыми.",
+     "es": "Durante la semana anota tu estado de ánimo y cuenta cuántos contactos al día fueron agradables o de apoyo y cuántos fueron difíciles."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сегодня, 0-10",
+       "es": "Estado de ánimo hoy, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     },
+     {
+      "id": "helpful",
+      "label": {
+       "ru": "Приятных или поддерживающих контактов вчера, 0-10",
+       "es": "Contactos agradables o de apoyo ayer, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Поддерживающие контакты (курс «Опора»)",
+        "es": "Contactos de apoyo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     },
+     {
+      "id": "harmful",
+      "label": {
+       "ru": "Тяжёлых контактов вчера, 0-10",
+       "es": "Contactos difíciles ayer, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Тяжёлые контакты (курс «Опора»)",
+        "es": "Contactos difíciles (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     {
+      "id": "support",
+      "label": {
+       "ru": "Кто меня поддерживает",
+       "es": "Quién me apoya"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Один-два человека, даже если это редкие разговоры",
+       "es": "Una o dos personas, aunque sean conversaciones poco frecuentes"
+      }
+     },
+     {
+      "id": "area",
+      "label": {
+       "ru": "Что я хотел(а) бы улучшить",
+       "es": "Qué me gustaría mejorar"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Одно",
+       "es": "Una cosa"
+      },
+      "chips": [
+       {
+        "ru": "Потеря близкого",
+        "es": "Pérdida de un ser querido"
+       },
+       {
+        "ru": "Перемены в жизни",
+        "es": "Cambios en la vida"
+       },
+       {
+        "ru": "Конфликт с кем-то",
+        "es": "Un conflicto con alguien"
+       },
+       {
+        "ru": "Трудно общаться и сближаться",
+        "es": "Cuesta comunicarse y acercarse"
+       }
+      ]
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы научились смотреть на мысли и на дела. Теперь третья область: люди рядом с вами.",
+      "es": "Has aprendido a mirar los pensamientos y las actividades. Ahora la tercera área: las personas que tienes cerca."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Люди и настроение",
+      "es": "Personas y estado de ánimo"
+     },
+     "body": {
+      "ru": "Контакты с людьми могут улучшать настроение и ухудшать его. Цель в том, чтобы чувствовать себя лучше и в одиночестве, и рядом с другими.",
+      "es": "Los contactos con la gente pueden mejorar el ánimo y empeorarlo. El objetivo es sentirte mejor tanto a solas como junto a otros."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Моя опора",
+      "es": "Mi apoyo"
+     },
+     "body": {
+      "ru": "Оцените, кто сейчас рядом: с кем можно поговорить, кто помогает делами, кто выслушивает. Если людей мало, это не вина, это повод постепенно что-то менять и вспомнить о группах поддержки.",
+      "es": "Valora quién está cerca ahora: con quién puedes hablar, quién ayuda con cosas concretas, quién te escucha. Si hay pocas personas, no es culpa tuya, es un motivo para ir cambiando algo poco a poco y pensar en los grupos de apoyo."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Что хочется улучшить",
+      "es": "Qué quiero mejorar"
+     },
+     "body": {
+      "ru": "Часто трудности связаны с потерей близкого, большими переменами, конфликтом или с тем, что трудно общаться. Выберите одну область на ближайшие недели.",
+      "es": "A menudo las dificultades tienen que ver con la pérdida de un ser querido, grandes cambios, un conflicto o con que cuesta comunicarse. Elige un área para las próximas semanas."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Отношения могут делать моё настроение лучше или хуже. Цель в том, чтобы чувствовать себя лучше и наедине с собой, и рядом с людьми.",
+      "es": "Las relaciones pueden mejorar o empeorar mi ánimo. El objetivo es sentirme mejor tanto conmigo mismo como junto a otras personas."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Влияние отношений на настроение и обучение навыкам общения входили в исходное исследование этого подхода и в межличностную терапию депрессивных состояний, которую рекомендуют руководства.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. La influencia de las relaciones en el ánimo y el aprendizaje de habilidades de comunicación formaban parte del estudio original de este enfoque y de la terapia interpersonal de los estados depresivos, que recomiendan las guías."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "nice_ng222",
+    "apa_2019"
+   ],
+   "cover": "assets/images/courses/dep/w9.jpg"
+  },
+  {
+   "id": "w10",
+   "group": "main",
+   "title": {
+    "ru": "Трудности в отношениях и умение слушать",
+    "es": "Dificultades en las relaciones y saber escuchar"
+   },
+   "card": {
+    "ru": "Модуль «Люди», неделя 10. Как чувства, мысли и поведение влияют на отношения. Учимся слушать так, чтобы человек чувствовал, что его услышали.",
+    "es": "Módulo «Personas», semana 10. Cómo influyen los sentimientos, los pensamientos y la conducta en las relaciones. Aprendemos a escuchar de modo que la persona sienta que la han escuchado."
+   },
+   "minutes": 3,
+   "audio_doc_id": "loneliness__ne_sloman",
+   "task": {
+    "title": {
+     "ru": "Попытка услышать",
+     "es": "Un intento de escuchar"
+    },
+    "card_type": "active_listening",
+    "intro": {
+     "ru": "Попробуйте один раз за неделю поговорить с кем-то, слушая по-новому.",
+     "es": "Prueba una vez a lo largo de la semana a hablar con alguien escuchando de una manera nueva."
+    },
+    "fields": [
+     {
+      "id": "situation",
+      "label": {
+       "ru": "Ситуация, которая вызывает трудности",
+       "es": "La situación que genera dificultades"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "С кем и о чём",
+       "es": "Con quién y de qué"
+      }
+     },
+     {
+      "id": "thought",
+      "label": {
+       "ru": "Какая мысль при этом приходит",
+       "es": "Qué pensamiento aparece"
+      },
+      "type": "text"
+     },
+     {
+      "id": "listen",
+      "label": {
+       "ru": "Я попробовал(а) пересказать услышанное и уточнить, правильно ли понял(а)",
+       "es": "Probé a repetir lo que oí y a preguntar si lo había entendido bien"
+      },
+      "type": "check"
+     },
+     {
+      "id": "noticed",
+      "label": {
+       "ru": "Что я заметил(а)",
+       "es": "Qué noté"
+      },
+      "type": "text"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы определили, кто вас поддерживает, и выбрали одну область отношений, которую хотите улучшить.",
+      "es": "Identificaste quién te apoya y elegiste un área de las relaciones que quieres mejorar."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Чувства, мысли, поведение",
+      "es": "Sentimientos, pensamientos, conducta"
+     },
+     "body": {
+      "ru": "В отношениях действует та же цепочка: ситуация, мысль, чувство, поведение. Например, мысль «ему всё равно» вызывает обиду, и вы молчите, и человек действительно не знает о вашем состоянии.",
+      "es": "En las relaciones actúa la misma cadena: situación, pensamiento, sentimiento, conducta. Por ejemplo, el pensamiento «le da igual» provoca resentimiento, tú te callas, y la persona de verdad no sabe cómo estás."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Умение слушать",
+      "es": "Saber escuchar"
+     },
+     "body": {
+      "ru": "Активное слушание: дать договорить, пересказать своими словами, уточнить, не пытаться сразу советовать или защищаться. Так человеку проще открыться, а вам понятнее, что он имеет в виду.",
+      "es": "Escucha activa: dejar terminar de hablar, repetir con tus palabras, preguntar, no intentar aconsejar ni defenderte enseguida. Así a la persona le resulta más fácil abrirse y a ti te queda más claro qué quiere decir."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Приятное вместе",
+      "es": "Lo agradable juntos"
+     },
+     "body": {
+      "ru": "Приятные дела вместе с другими людьми часто легче начинать и они дольше радуют. Подумайте об одном небольшом совместном деле.",
+      "es": "Las actividades agradables con otras personas suelen ser más fáciles de empezar y alegran más tiempo. Piensa en una pequeña actividad conjunta."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Главная мысль недели",
+      "es": "La idea de la semana"
+     },
+     "body": {
+      "ru": "Я могу понимать, как отношения влияют на мои мысли, поведение и настроение, и делать здоровые выборы.",
+      "es": "Puedo entender cómo influyen las relaciones en mis pensamientos, mi conducta y mi ánimo, y hacer elecciones sanas."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Обучение навыкам общения было одним из трёх компонентов подхода в исходном исследовании.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. El entrenamiento en habilidades de comunicación era uno de los tres componentes del enfoque en el estudio original."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/w10.jpg"
+  },
+  {
+   "id": "w11",
+   "group": "main",
+   "title": {
+    "ru": "Ясные просьбы и границы",
+    "es": "Peticiones claras y límites"
+   },
+   "card": {
+    "ru": "Модуль «Люди», неделя 11. Учимся говорить о своих потребностях спокойно и ясно. И понимать, когда это небезопасно.",
+    "es": "Módulo «Personas», semana 11. Aprendemos a hablar de tus necesidades con calma y con claridad. Y a entender cuándo no es seguro."
+   },
+   "minutes": 5,
+   "audio_doc_id": "disgust__anatomiya_granicy",
+   "task": {
+    "title": {
+     "ru": "Моя просьба",
+     "es": "Mi petición"
+    },
+    "card_type": "assertive_request",
+    "intro": {
+     "ru": "Сформулируйте одну небольшую просьбу. Если рядом с этим человеком вам небезопасно, не делайте её, а обратитесь за помощью.",
+     "es": "Formula una petición pequeña. Si junto a esa persona no te sientes seguro, no la hagas y busca ayuda."
+    },
+    "fields": [
+     {
+      "id": "request",
+      "label": {
+       "ru": "Что я хочу попросить",
+       "es": "Qué quiero pedir"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Спокойно и конкретно: «Когда..., я чувствую..., мне нужно...»",
+       "es": "Con calma y de forma concreta: «Cuando..., siento..., necesito...»"
+      }
+     },
+     {
+      "id": "whom",
+      "label": {
+       "ru": "У кого и когда",
+       "es": "A quién y cuándo"
+      },
+      "type": "text"
+     },
+     {
+      "id": "safe",
+      "label": {
+       "ru": "Мне безопасно это сказать",
+       "es": "Me siento seguro al decirlo"
+      },
+      "type": "check"
+     },
+     {
+      "id": "result",
+      "label": {
+       "ru": "Как прошло",
+       "es": "Cómo fue"
+      },
+      "type": "text"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы тренировали слушать. Теперь вторая половина общения: говорить о себе.",
+      "es": "Has practicado escuchar. Ahora la segunda mitad de la comunicación: hablar de ti."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Ясная просьба",
+      "es": "Una petición clara"
+     },
+     "body": {
+      "ru": "Уверенное общение не значит давить или уступать. Это спокойно назвать, что происходит и что вам нужно, и дать человеку возможность ответить. Просьба лучше, когда она конкретная и небольшая.",
+      "es": "La comunicación asertiva no significa presionar ni ceder. Es nombrar con calma lo que ocurre y lo que necesitas, y dejar que la persona responda. Una petición funciona mejor cuando es concreta y pequeña."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Если небезопасно",
+      "es": "Si no es seguro"
+     },
+     "body": {
+      "ru": "Если рядом человек, который унижает, запугивает, угрожает или применяет насилие, просьбы и разговоры могут быть опасны. В таких случаях важно обратиться за помощью: на линии помощи пострадавшим, к специалистам, к близким. Это не слабость и не вина.",
+      "es": "Si cerca hay una persona que humilla, intimida, amenaza o ejerce violencia, las peticiones y las conversaciones pueden ser peligrosas. En esos casos es importante buscar ayuda: en las líneas de ayuda a víctimas, con profesionales, con personas cercanas. No es debilidad ni culpa."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Что мешает",
+      "es": "Qué lo dificulta"
+     },
+     "body": {
+      "ru": "Страх, что человек рассердится или уйдёт, и мысль «мне не положено просить». Подумайте, какая из мыслей недели 2 и 3 здесь работает.",
+      "es": "El miedo a que la persona se enfade o se vaya, y el pensamiento «no tengo derecho a pedir». Piensa cuál de los pensamientos de las semanas 2 y 3 funciona aquí."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Навыки ясного общения и разбор препятствий к ним, включая страх ответной агрессии, входят в соответствующий модуль руководства.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Las habilidades de comunicación clara y el análisis de los obstáculos para ellas, incluido el miedo a una respuesta agresiva, forman parte del módulo correspondiente del manual."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/w11.jpg"
+  },
+  {
+   "id": "w12",
+   "group": "main",
+   "title": {
+    "ru": "Гибкость, итоги и дальше",
+    "es": "Flexibilidad, balance y lo que viene"
+   },
+   "card": {
+    "ru": "Модуль «Люди», неделя 12. Общение бывает пассивным, агрессивным и уверенным, и правила отношений полезны, когда гибкие. Подводим итоги двенадцати недель.",
+    "es": "Módulo «Personas», semana 12. La comunicación puede ser pasiva, agresiva y asertiva, y las reglas de las relaciones son útiles cuando son flexibles. Hacemos el balance de las doce semanas."
+   },
+   "minutes": 11,
+   "audio_doc_id": "meditation__meditaciya_prinyatie_sebya",
+   "task": {
+    "title": {
+     "ru": "Итоги",
+     "es": "Balance"
+    },
+    "card_type": "relapse_review",
+    "intro": {
+     "ru": "Ответьте так, как вам удобно. Покажите записи врачу или психологу, если захотите.",
+     "es": "Responde como te resulte cómodo. Enséñale los registros a tu médico o psicólogo si quieres."
+    },
+    "fields": [
+     {
+      "id": "style",
+      "label": {
+       "ru": "Как я чаще общаюсь",
+       "es": "Cómo me comunico con más frecuencia"
+      },
+      "type": "text",
+      "chips": [
+       {
+        "ru": "Пассивно",
+        "es": "De forma pasiva"
+       },
+       {
+        "ru": "Агрессивно",
+        "es": "De forma agresiva"
+       },
+       {
+        "ru": "Уверенно",
+        "es": "De forma asertiva"
+       },
+       {
+        "ru": "По-разному",
+        "es": "Depende"
+       }
+      ]
+     },
+     {
+      "id": "rule",
+      "label": {
+       "ru": "Жёсткое правило отношений, которое хочу смягчить",
+       "es": "Una regla rígida de las relaciones que quiero suavizar"
+      },
+      "type": "text"
+     },
+     {
+      "id": "helped",
+      "label": {
+       "ru": "Что из курса помогло больше всего",
+       "es": "Qué del curso me ayudó más"
+      },
+      "type": "text"
+     },
+     {
+      "id": "signs",
+      "label": {
+       "ru": "Мои ранние признаки, что становится тяжелее",
+       "es": "Mis primeras señales de que todo se pone más duro"
+      },
+      "type": "text"
+     },
+     {
+      "id": "next",
+      "label": {
+       "ru": "Мой следующий шаг и с кем его обсудить",
+       "es": "Mi siguiente paso y con quién lo comentaré"
+      },
+      "type": "text"
+     },
+     {
+      "id": "doctor",
+      "label": {
+       "ru": "Я обсужу итоги с врачом или психологом",
+       "es": "Comentaré el balance con mi médico o psicólogo"
+      },
+      "type": "check"
+     },
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Настроение сегодня, 0-10",
+       "es": "Estado de ánimo hoy, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Настроение (курс «Опора»)",
+        "es": "Estado de ánimo (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Повторение",
+      "es": "Repaso"
+     },
+     "body": {
+      "ru": "Вы научились слушать и просить. Осталось посмотреть, как вы обычно общаетесь и какие правила для отношений у вас внутри.",
+      "es": "Has aprendido a escuchar y a pedir. Queda ver cómo te comunicas normalmente y qué reglas sobre las relaciones llevas dentro."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Стили общения",
+      "es": "Estilos de comunicación"
+     },
+     "body": {
+      "ru": "Пассивный стиль: молчать и уступать. Агрессивный: давить и обвинять. Уверенный: говорить о своём и уважать другого. Бывают разные ситуации, и стиль можно выбирать.",
+      "es": "Estilo pasivo: callar y ceder. Agresivo: presionar y acusar. Asertivo: hablar de lo tuyo y respetar al otro. Hay situaciones diferentes, y el estilo se puede elegir."
+     }
+    },
+    {
+     "id": "m3",
+     "title": {
+      "ru": "Гибкость",
+      "es": "Flexibilidad"
+     },
+     "body": {
+      "ru": "Жёсткие правила («люди должны быть всегда рядом», «просить нельзя») мешают отношениям. Смягчить их можно, как и вредные мысли первых недель.",
+      "es": "Las reglas rígidas («la gente debe estar siempre a mi lado», «no se puede pedir») dañan las relaciones. Se pueden suavizar, igual que los pensamientos dañinos de las primeras semanas."
+     }
+    },
+    {
+     "id": "m4",
+     "title": {
+      "ru": "Что дальше",
+      "es": "Y después"
+     },
+     "body": {
+      "ru": "Завершение курса не значит завершение навыков. Выберите два-три приёма, которые помогли, и оставьте их в расписании. «План на трудные дни» можно обновлять. Курс можно пройти заново.",
+      "es": "Terminar el curso no significa terminar las habilidades. Elige dos o tres recursos que te hayan ayudado y déjalos en tu rutina. El «Plan para los días difíciles» se puede actualizar. El curso se puede hacer de nuevo."
+     }
+    },
+    {
+     "id": "m5",
+     "title": {
+      "ru": "Ранние признаки",
+      "es": "Señales tempranas"
+     },
+     "body": {
+      "ru": "Раннее замеченное ухудшение проще остановить. Если плохое состояние возвращается и держится больше двух недель, обратитесь к врачу или психологу и покажите им ваши записи.",
+      "es": "Un empeoramiento que se nota pronto es más fácil de frenar. Si el malestar vuelve y dura más de dos semanas, acude a un médico o psicólogo y enséñale tus registros."
+     }
+    }
+   ],
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Порядок модулей (мысли, активность, люди) соответствует опубликованным руководствам по когнитивно-поведенческой терапии депрессивных состояний, в том числе руководству Muñoz и соавторов. Тексты курса написаны заново. Такие руководства рассчитаны на работу со специалистом, поэтому курс их не заменяет. Для профилактики возврата депрессивного состояния у людей с повторяющимися эпизодами в исследованиях подтверждена польза программы, основанной на осознанности и когнитивной терапии (MBCT), которую проводит специалист. Этот курс такой программой не является. Заметить ранние признаки и иметь план действий рекомендуют руководства.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. El orden de los módulos (pensamientos, actividad, personas) corresponde a manuales publicados de terapia cognitivo-conductual de los estados depresivos, entre ellos el manual de Muñoz y colaboradores. Los textos del curso están escritos desde cero. Estos manuales están pensados para trabajar con un profesional, por eso el curso no los sustituye. Para prevenir la recaída del estado depresivo en personas con episodios repetidos, los estudios han confirmado el beneficio de un programa basado en la atención plena y la terapia cognitiva (MBCT), que dirige un profesional. Este curso no es un programa así. Las guías recomiendan notar las señales tempranas y tener un plan de acción."
+   },
+   "basis_refs": [
+    "munoz2000",
+    "munoz1986",
+    "zeiss1979",
+    "kuyken2016",
+    "nice_ng222",
+    "stanley2012"
+   ],
+   "cover": "assets/images/courses/dep/w12.jpg"
+  },
+  {
+   "id": "helper",
+   "group": "family",
+   "title": {
+    "ru": "Помощь близкому в депрессивном состоянии",
+    "es": "Ayudar a un ser querido en un estado depresivo"
+   },
+   "card": {
+    "ru": "Для тех, кто рядом с человеком, которому тяжело. Что обычно помогает, что нет и когда стоит позвать врача.",
+    "es": "Para quienes están cerca de una persona que lo está pasando mal. Qué suele ayudar, qué no y cuándo conviene llamar al médico."
+   },
+   "minutes": 3,
+   "audio_doc_id": "depression__pomosch_blizkomu_v_depressii",
+   "task": {
+    "title": {
+     "ru": "Что я могу",
+     "es": "Qué puedo hacer"
+    },
+    "card_type": "helper_plan",
+    "intro": {
+     "ru": "Отметьте один небольшой способ поддержать близкого и один способ позаботиться о себе.",
+     "es": "Anota una pequeña forma de apoyar a la otra persona y una forma de cuidarte a ti."
+    },
+    "fields": [
+     {
+      "id": "help",
+      "label": {
+       "ru": "Что я могу сделать для близкого",
+       "es": "Qué puedo hacer por la persona cercana"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Побыть рядом, помочь с едой или записью к врачу",
+       "es": "Estar a su lado, ayudar con la comida o con pedir cita con el médico"
+      }
+     },
+     {
+      "id": "self",
+      "label": {
+       "ru": "Что я сделаю для себя",
+       "es": "Qué haré por mí"
+      },
+      "type": "text",
+      "hint": {
+       "ru": "Отдых, сон, разговор с кем-то",
+       "es": "Descanso, sueño, hablar con alguien"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Не врач и не ответственность",
+      "es": "Ni médico ni responsable"
+     },
+     "body": {
+      "ru": "Вы не врач и не отвечаете за результат. Можно мягко предложить обратиться к специалисту и помочь записаться, если человеку трудно.",
+      "es": "No eres médico y no respondes del resultado. Puedes sugerir con suavidad que acuda a un profesional y ayudarle a pedir cita si le cuesta."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Если человек говорит, что не хочет жить",
+      "es": "Si la persona dice que no quiere vivir"
+     },
+     "body": {
+      "ru": "Не оставляйте его одного. Позвоните в экстренную службу. Кнопка «Срочная помощь» есть на каждом экране.",
+      "es": "No la dejes sola. Llama al servicio de emergencias. El botón «Ayuda urgente» está en cada pantalla."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "cover": "assets/images/courses/dep/helper.jpg"
+  },
+  {
+   "id": "burnout",
+   "group": "family",
+   "title": {
+    "ru": "Как поддержать и не выгореть",
+    "es": "Cómo apoyar sin agotarte"
+   },
+   "card": {
+    "ru": "Хочется помочь, и хочется, чтобы стало лучше быстро. Это нормально и утомляет. Несколько слов о том, как остаться рядом и не потерять себя.",
+    "es": "Quieres ayudar, y quieres que mejore rápido. Es normal y cansa. Unas palabras sobre cómo seguir a su lado sin perderte a ti."
+   },
+   "minutes": 4,
+   "audio_doc_id": "program_depression__supporter",
+   "task": {
+    "title": {
+     "ru": "Моя опора",
+     "es": "Mi apoyo"
+    },
+    "card_type": "supporter_plan",
+    "intro": {
+     "ru": "Два коротких ответа.",
+     "es": "Dos respuestas cortas."
+    },
+    "fields": [
+     {
+      "id": "rest",
+      "label": {
+       "ru": "Когда у меня есть время только для себя",
+       "es": "Cuando tengo tiempo solo para mí"
+      },
+      "type": "text"
+     },
+     {
+      "id": "who",
+      "label": {
+       "ru": "С кем я могу поговорить о том, как мне самому(ой)",
+       "es": "Con quién puedo hablar de cómo estoy yo"
+      },
+      "type": "text"
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Что обычно помогает",
+      "es": "Qué suele ayudar"
+     },
+     "body": {
+      "ru": "Быть рядом, слушать без советов, спросить, что сейчас было бы полезно, предложить небольшую помощь: поесть вместе, прогуляться, съездить к врачу.",
+      "es": "Estar a su lado, escuchar sin dar consejos, preguntar qué sería útil ahora, ofrecer una pequeña ayuda: comer juntos, dar un paseo, acompañar al médico."
+     }
+    },
+    {
+     "id": "m2",
+     "title": {
+      "ru": "Что обычно не помогает",
+      "es": "Qué suele no ayudar"
+     },
+     "body": {
+      "ru": "Фразы вроде «соберись» или «у тебя же всё хорошо». Они звучат как упрёк, даже когда не задумывались так.",
+      "es": "Frases como «anímate» o «si tienes de todo». Suenan a reproche, aunque no se dijeran con esa intención."
+     }
+    }
+   ],
+   "free": true,
+   "always_available": true,
+   "cover": "assets/images/courses/dep/burnout.jpg"
+  },
+  {
+   "id": "e_relax",
+   "group": "extra",
+   "title": {
+    "ru": "Расслабление зажимов",
+    "es": "El hilo de la respiración"
+   },
+   "card": {
+    "ru": "Длинная практика расслабления тела. Подходит к неделе про приятные дела.",
+    "es": "Una práctica larga de relajación del cuerpo. Encaja con la semana de las actividades agradables."
+   },
+   "minutes": 16,
+   "audio_doc_id": "meditation__meditaciya_rasslablenie_zazhimov",
+   "task": {
+    "title": {
+     "ru": "Как я сейчас",
+     "es": "Cómo estoy ahora"
+    },
+    "card_type": "extra_e_relax",
+    "intro": {
+     "ru": "Если хотите, отметьте, как вы себя чувствуете после записи.",
+     "es": "Si quieres, anota cómo te sientes después de la grabación."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Самочувствие сейчас, 0-10",
+       "es": "Bienestar ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Самочувствие (курс «Опора»)",
+        "es": "Bienestar (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как пользоваться",
+      "es": "Cómo usarla"
+     },
+     "body": {
+      "ru": "Это отдельная запись. Её можно слушать в любое время, не по порядку. Она не заменяет помощь специалиста.",
+      "es": "Es una grabación independiente. Puedes escucharla en cualquier momento, sin orden. No sustituye la ayuda de un profesional."
+     }
+    }
+   ],
+   "always_available": true,
+   "cover": "assets/images/courses/dep/e_relax.jpg"
+  },
+  {
+   "id": "e_breath",
+   "group": "extra",
+   "title": {
+    "ru": "Дыхание",
+    "es": "Respiración"
+   },
+   "card": {
+    "ru": "Дыхательная практика на несколько минут.",
+    "es": "Una práctica de respiración de unos minutos."
+   },
+   "minutes": 9,
+   "audio_doc_id": "meditation__meditaciya_dyhanie",
+   "task": {
+    "title": {
+     "ru": "Как я сейчас",
+     "es": "Cómo estoy ahora"
+    },
+    "card_type": "extra_e_breath",
+    "intro": {
+     "ru": "Если хотите, отметьте, как вы себя чувствуете после записи.",
+     "es": "Si quieres, anota cómo te sientes después de la grabación."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Самочувствие сейчас, 0-10",
+       "es": "Bienestar ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Самочувствие (курс «Опора»)",
+        "es": "Bienestar (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как пользоваться",
+      "es": "Cómo usarla"
+     },
+     "body": {
+      "ru": "Это отдельная запись. Её можно слушать в любое время, не по порядку. Она не заменяет помощь специалиста.",
+      "es": "Es una grabación independiente. Puedes escucharla en cualquier momento, sin orden. No sustituye la ayuda de un profesional."
+     }
+    }
+   ],
+   "always_available": true,
+   "cover": "assets/images/courses/dep/e_breath.jpg"
+  },
+  {
+   "id": "e_move",
+   "group": "extra",
+   "title": {
+    "ru": "Небольшое движение",
+    "es": "Un poco de movimiento"
+   },
+   "card": {
+    "ru": "Небольшая нагрузка, которая по силам сегодня: прогулка, лестница, растяжка.",
+    "es": "Una pequeña carga que puedas hoy: un paseo, unas escaleras, estiramientos."
+   },
+   "minutes": 3,
+   "audio_doc_id": "program_depression__movement",
+   "task": {
+    "title": {
+     "ru": "Как я сейчас",
+     "es": "Cómo estoy ahora"
+    },
+    "card_type": "extra_e_move",
+    "intro": {
+     "ru": "Если хотите, отметьте, как вы себя чувствуете после записи.",
+     "es": "Si quieres, anota cómo te sientes después de la grabación."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Самочувствие сейчас, 0-10",
+       "es": "Bienestar ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Самочувствие (курс «Опора»)",
+        "es": "Bienestar (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как пользоваться",
+      "es": "Cómo usarla"
+     },
+     "body": {
+      "ru": "Это отдельная запись. Её можно слушать в любое время, не по порядку. Она не заменяет помощь специалиста.",
+      "es": "Es una grabación independiente. Puedes escucharla en cualquier momento, sin orden. No sustituye la ayuda de un profesional."
+     }
+    }
+   ],
+   "always_available": true,
+   "basis": {
+    "ru": "Это приём из подходов, которые используют специалисты. В курсе он закрепляет навык и не заменяет работу с врачом или психологом. Крупный обзор исследований (Noetel и соавторы, 2024) показал, что физическая активность в среднем снижает выраженность депрессивных симптомов, однако авторы оценили уверенность в выводах как невысокую. Если у вас есть заболевания или трудно двигаться, обсудите посильную нагрузку с врачом.",
+    "es": "Es un recurso de los enfoques que usan los profesionales. En el curso sirve para afianzar la habilidad y no sustituye el trabajo con un médico o psicólogo. Una gran revisión de estudios (Noetel y colaboradores, 2024) mostró que la actividad física reduce en promedio la intensidad de los síntomas depresivos, aunque sus autores valoraron la confianza en las conclusiones como no muy alta. Si tienes alguna enfermedad o te cuesta moverte, comenta con el médico la carga que puedes asumir."
+   },
+   "basis_refs": [
+    "noetel2024",
+    "nice_ng222"
+   ],
+   "cover": "assets/images/courses/dep/e_move.jpg"
+  },
+  {
+   "id": "e_phys",
+   "group": "extra",
+   "title": {
+    "ru": "Рекомендации: физическая сфера",
+    "es": "Recomendaciones: aspectos físicos"
+   },
+   "card": {
+    "ru": "Дополнение к неделям про дела и режим дня.",
+    "es": "Complemento de las semanas sobre actividades y rutina diaria."
+   },
+   "minutes": 6,
+   "audio_doc_id": "depression__rekomendacii_fizicheskaya_sfera",
+   "task": {
+    "title": {
+     "ru": "Как я сейчас",
+     "es": "Cómo estoy ahora"
+    },
+    "card_type": "extra_e_phys",
+    "intro": {
+     "ru": "Если хотите, отметьте, как вы себя чувствуете после записи.",
+     "es": "Si quieres, anota cómo te sientes después de la grabación."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Самочувствие сейчас, 0-10",
+       "es": "Bienestar ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Самочувствие (курс «Опора»)",
+        "es": "Bienestar (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как пользоваться",
+      "es": "Cómo usarla"
+     },
+     "body": {
+      "ru": "Это отдельная запись. Её можно слушать в любое время, не по порядку. Она не заменяет помощь специалиста.",
+      "es": "Es una grabación independiente. Puedes escucharla en cualquier momento, sin orden. No sustituye la ayuda de un profesional."
+     }
+    }
+   ],
+   "always_available": true,
+   "cover": "assets/images/courses/dep/e_phys.jpg"
+  },
+  {
+   "id": "e_psy",
+   "group": "extra",
+   "title": {
+    "ru": "Рекомендации: психологическая сфера",
+    "es": "Recomendaciones: aspectos psicológicos"
+   },
+   "card": {
+    "ru": "Дополнение к неделям про мысли и решение проблем.",
+    "es": "Complemento de las semanas sobre pensamientos y resolución de problemas."
+   },
+   "minutes": 7,
+   "audio_doc_id": "depression__rekomendacii_psihologicheskaya_sfera",
+   "task": {
+    "title": {
+     "ru": "Как я сейчас",
+     "es": "Cómo estoy ahora"
+    },
+    "card_type": "extra_e_psy",
+    "intro": {
+     "ru": "Если хотите, отметьте, как вы себя чувствуете после записи.",
+     "es": "Si quieres, anota cómo te sientes después de la grabación."
+    },
+    "fields": [
+     {
+      "id": "mood",
+      "label": {
+       "ru": "Самочувствие сейчас, 0-10",
+       "es": "Bienestar ahora, 0-10"
+      },
+      "type": "scale",
+      "record": {
+       "name": {
+        "ru": "Самочувствие (курс «Опора»)",
+        "es": "Bienestar (curso «Melancolía»)"
+       },
+       "kind": "positive"
+      }
+     }
+    ]
+   },
+   "micro": [
+    {
+     "id": "m1",
+     "title": {
+      "ru": "Как пользоваться",
+      "es": "Cómo usarla"
+     },
+     "body": {
+      "ru": "Это отдельная запись. Её можно слушать в любое время, не по порядку. Она не заменяет помощь специалиста.",
+      "es": "Es una grabación independiente. Puedes escucharla en cualquier momento, sin orden. No sustituye la ayuda de un profesional."
+     }
+    }
+   ],
+   "always_available": true,
+   "cover": "assets/images/courses/dep/e_psy.jpg"
+  }
+ ],
+ "tools": [
+  {
+   "id": "hard",
+   "title": {
+    "ru": "Сейчас очень тяжело",
+    "es": "Ahora es muy difícil"
+   },
+   "subtitle": {
+    "ru": "Когда накрывает и трудно что-либо делать",
+    "es": "Cuando te desborda y cuesta hacer algo"
+   },
+   "pages": [
+    {
+     "title": {
+      "ru": "Остановиться",
+      "es": "Detente"
+     },
+     "body": {
+      "ru": "Поставьте ступни на пол. Сделайте выдох чуть длиннее вдоха. Состояние может быть очень сильным, но оно меняется со временем. Ничего не нужно решать прямо сейчас.",
+      "es": "Apoya los pies en el suelo. Haz una exhalación un poco más larga que la inhalación. El estado puede ser muy intenso, pero cambia con el tiempo. No hace falta resolver nada ahora mismo."
+     },
+     "scale": {
+      "id": "before",
+      "label": {
+       "ru": "Насколько тяжело сейчас, 0-10",
+       "es": "Qué difícil es ahora, 0-10"
+      },
+      "record": {
+       "name": {
+        "ru": "Тяжесть состояния (курс «Опора»)",
+        "es": "Dificultad del estado (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     }
+    },
+    {
+     "title": {
+      "ru": "Десять длинных выдохов",
+      "es": "Diez exhalaciones largas"
+     },
+     "body": {
+      "ru": "Вдох короче, выдох длиннее. Следуйте за кругом. Десять дыханий занимают меньше двух минут.",
+      "es": "Inhalación más corta, exhalación más larga. Sigue el círculo. Diez respiraciones llevan menos de dos minutos."
+     },
+     "breath": {
+      "in": 4,
+      "out": 6,
+      "cycles": 10
+     }
+    },
+    {
+     "title": {
+      "ru": "Одно простое действие",
+      "es": "Una acción sencilla"
+     },
+     "body": {
+      "ru": "Выберите одно: выпить воды, умыться прохладной водой, выйти на воздух, написать близкому: «Мне сейчас тяжело».",
+      "es": "Elige una cosa: beber agua, lavarte la cara con agua fresca, salir a tomar el aire, escribir a alguien cercano: «Ahora lo estoy pasando mal»."
+     }
+    },
+    {
+     "title": {
+      "ru": "Как вы сейчас?",
+      "es": "¿Cómo estás ahora?"
+     },
+     "body": {
+      "ru": "Если стало немного легче, это хорошо. Если нет, это тоже бывает. Если появились мысли причинить себе вред или не хочется жить, не оставайтесь одни: позвоните в экстренную службу или на линию поддержки, или скажите близкому человеку.",
+      "es": "Si has mejorado un poco, está bien. Si no, también ocurre. Si han aparecido pensamientos de hacerte daño o de que no quieres vivir, no te quedes a solas: llama al servicio de emergencias o a una línea de ayuda, o díselo a una persona cercana."
+     },
+     "scale": {
+      "id": "after",
+      "label": {
+       "ru": "Насколько тяжело теперь, 0-10",
+       "es": "Qué difícil es ahora, 0-10"
+      },
+      "record": {
+       "name": {
+        "ru": "Тяжесть состояния (курс «Опора»)",
+        "es": "Dificultad del estado (curso «Melancolía»)"
+       },
+       "kind": "negative"
+      }
+     },
+     "buttons": [
+      {
+       "label": {
+        "ru": "Стало легче",
+        "es": "Estoy mejor"
+       },
+       "action": "close"
+      }
+     ],
+     "helpline": true
+    }
+   ]
+  }
+ ],
+ "welcome": [
+  {
+   "icon": "route",
+   "title": {
+    "ru": "Что это за курс и чем он не является",
+    "es": "Qué es este curso y qué no es"
+   },
+   "body": {
+    "ru": "Это курс самопомощи по принципам когнитивно-поведенческой терапии и поведенческой активации. Он не лечит, не ставит диагноз и не заменяет врача или психолога. Лучше проходить его параллельно с помощью специалиста. Если вы принимаете лекарства, решения о них принимает только врач.",
+    "es": "Es un curso de autoayuda basado en los principios de la terapia cognitivo-conductual y la activación conductual. No trata, no diagnostica y no sustituye al médico ni al psicólogo. Es mejor hacerlo junto con la ayuda de un profesional. Si tomas medicación, las decisiones sobre ella las toma solo el médico."
+   }
+  },
+  {
+   "icon": "pace",
+   "title": {
+    "ru": "Как устроены двенадцать недель",
+    "es": "Cómo se organizan las doce semanas"
+   },
+   "body": {
+    "ru": "Три модуля по четыре недели: «Мысли», «Активность», «Люди». Каждая неделя: короткая запись, пояснения и личный проект: небольшое дело для себя. Каждому шагу рекомендуем посвятить около недели. Не спешите и не давите на себя: когда торопишься, может стать хуже. Лучше повторить шаг или пройти его ещё несколько раз. Здесь нет серий и «провалов», пропуск это просто пауза. К любой неделе можно вернуться.",
+    "es": "Tres módulos de cuatro semanas: «Pensamientos», «Actividad», «Personas». Cada semana: una grabación corta, explicaciones y un proyecto personal: una pequeña tarea para ti. Te recomendamos dedicar a cada paso alrededor de una semana. No tengas prisa ni te presiones: cuando se va deprisa, puede empeorar. Es mejor repetir el paso o hacerlo varias veces más. Aquí no hay rachas ni «fracasos», saltarse un día es solo una pausa. Puedes volver a cualquier semana."
+   }
+  },
+  {
+   "icon": "route",
+   "title": {
+    "ru": "Одна мысль на каждый день",
+    "es": "Un pensamiento cada día"
+   },
+   "body": {
+    "ru": "Главный навык курса тренируется каждый день. Один раз в день запишите в «Путь» вредную мысль: что произошло, о чём вы подумали, что почувствовали и что сделали (в когнитивной терапии, начиная с работ А. Бека, такую запись ведут по схеме «ситуация, мысль, эмоция, реакция», по-русски СМЭР). Затем проработайте её в разделе «Проработать иррациональное»: найдите ловушку мышления и подберите мысль, которая точнее и полезнее. Достаточно одной мысли в день. Так навык закрепляется, а не остаётся знанием.",
+    "es": "La habilidad principal del curso se entrena cada día. Una vez al día anota en el «Camino» un pensamiento dañino: qué pasó, qué pensaste, qué sentiste y qué hiciste (en la terapia cognitiva, desde los trabajos de A. Beck, este registro sigue el esquema «situación, pensamiento, emoción, reacción»). Después trabájalo en la sección «Trabajar lo irracional»: encuentra la trampa de pensamiento y elige un pensamiento más exacto y útil. Basta con un pensamiento al día. Así la habilidad se afianza en lugar de quedarse en conocimiento."
+   }
+  },
+  {
+   "icon": "route",
+   "title": {
+    "ru": "Желания и эмоции",
+    "es": "Deseos y emociones"
+   },
+   "body": {
+    "ru": "При депрессивном состоянии часто пропадают желания: ничего не хочется, и это тоже часть состояния. Поэтому вместе с мыслями мы тренируем и желания: раз в день запишите в разделе «Желания» одно, даже самое простое, например выпить чай не спеша. Эту неделю можно сделать главным инструментом: иррациональные мысли, «Желания» или работа со своими эмоциями. Выберите то, что откликается, и не берите всё сразу.",
+    "es": "En un estado depresivo los deseos suelen apagarse: no apetece nada, y eso también es parte del estado. Por eso, junto con los pensamientos, entrenamos también los deseos: una vez al día anota en la sección «Deseos» uno, aunque sea el más sencillo, por ejemplo tomar un té sin prisa. Puedes hacer de esta semana tu herramienta principal: los pensamientos irracionales, los «Deseos» o el trabajo con tus emociones. Elige lo que te hable y no lo cojas todo a la vez."
+   }
+  },
+  {
+   "icon": "help",
+   "title": {
+    "ru": "Если станет хуже",
+    "es": "Si empeoras"
+   },
+   "body": {
+    "ru": "Откройте «План на трудные дни» и заполните его в первые дни. Инструмент «Сейчас очень тяжело» всегда под рукой. Если появились мысли причинить себе вред или не хочется жить, позвоните в экстренную службу или на линию поддержки. Кнопка «Срочная помощь» есть на каждом экране.",
+    "es": "Abre el «Plan para los días difíciles» y rellénalo en los primeros días. La herramienta «Ahora es muy difícil» siempre está a mano. Si han aparecido pensamientos de hacerte daño o de que no quieres vivir, llama al servicio de emergencias o a una línea de ayuda. El botón «Ayuda urgente» está en cada pantalla."
+   }
+  },
+  {
+   "icon": "route",
+   "title": {
+    "ru": "Научная основа",
+    "es": "Base científica"
+   },
+   "body": {
+    "ru": "У каждой недели есть значок «Научная основа и источники»: там описано, на чём построен приём, и есть ссылки на клинические руководства и исследования. Важно знать: доказательства получены при работе со специалистом, а сам курс как приложение в исследованиях не проверялся.",
+    "es": "Cada semana tiene un icono «Base científica y fuentes»: describe en qué se apoya el recurso y enlaza con guías clínicas e investigaciones. Es importante saber que la evidencia se obtuvo trabajando con un profesional, y que el curso, como aplicación, no se ha evaluado en investigaciones."
+   }
+  }
+ ],
+ "daily_gate": true,
+ "gate_days": 1,
+ "daily_thought": true,
+ "micro_read": true,
+ "about": [
+  {
+   "icon": "spa",
+   "title": {
+    "ru": "Что это",
+    "es": "Qué es"
+   },
+   "body": {
+    "ru": "Курс самопомощи по принципам когнитивно-поведенческой терапии и поведенческой активации. Он помогает закреплять навыки в обычной жизни, дополняет помощь специалиста и не заменяет её.",
+    "es": "Un curso de autoayuda basado en los principios de la terapia cognitivo-conductual y la activación conductual. Te ayuda a afianzar las habilidades en la vida diaria, complementa la ayuda profesional y no la sustituye."
+   }
+  },
+  {
+   "icon": "layers",
+   "title": {
+    "ru": "Три модуля по четыре недели",
+    "es": "Tres módulos de cuatro semanas"
+   },
+   "body": "",
+   "items": [
+    {
+     "title": {
+      "ru": "Мысли.",
+      "es": "Pensamientos."
+     },
+     "body": {
+      "ru": "Замечать вредные мысли и отвечать им.",
+      "es": "Notar los pensamientos dañinos y responderles."
+     }
+    },
+    {
+     "title": {
+      "ru": "Активность.",
+      "es": "Actividad."
+     },
+     "body": {
+      "ru": "Приятные дела, желания и небольшие цели.",
+      "es": "Actividades agradables, deseos y pequeñas metas."
+     }
+    },
+    {
+     "title": {
+      "ru": "Люди.",
+      "es": "Personas."
+     },
+     "body": {
+      "ru": "Отношения, общение, ясные просьбы и границы.",
+      "es": "Relaciones, comunicación, peticiones claras y límites."
+     }
+    }
+   ]
+  },
+  {
+   "icon": "time",
+   "title": {
+    "ru": "Как идти",
+    "es": "Cómo avanzar"
+   },
+   "tone": "plain",
+   "body": "",
+   "numbered": false,
+   "items": [
+    {
+     "title": {
+      "ru": "Неделя на шаг.",
+      "es": "Una semana por paso."
+     },
+     "body": {
+      "ru": "Не спешите и не давите на себя: когда торопишься, может стать хуже. Шаг можно повторять.",
+      "es": "No tengas prisa ni te presiones: cuando se va deprisa, puede empeorar. El paso se puede repetir."
+     }
+    },
+    {
+     "title": {
+      "ru": "Один главный инструмент.",
+      "es": "Una herramienta principal."
+     },
+     "body": {
+      "ru": "На неделю выберите: иррациональные мысли, «Желания» или работу с эмоциями.",
+      "es": "Para la semana elige: los pensamientos irracionales, los «Deseos» o el trabajo con las emociones."
+     }
+    },
+    {
+     "title": {
+      "ru": "Каждый день.",
+      "es": "Cada día."
+     },
+     "body": {
+      "ru": "Запись в «Путь», проработка и одно желание. Достаточно одного шага.",
+      "es": "Un registro en el «Camino», trabajarlo y un deseo. Basta con un paso."
+     }
+    },
+    {
+     "title": {
+      "ru": "Следующий шаг",
+      "es": "El siguiente paso"
+     },
+     "body": {
+      "ru": "открывается на следующий день после завершения предыдущего, но это не повод спешить.",
+      "es": "se abre al día siguiente de completar el anterior, pero eso no es motivo para correr."
+     }
+    },
+    {
+     "title": {
+      "ru": "Без серий.",
+      "es": "Sin rachas."
+     },
+     "body": {
+      "ru": "Пропуск это просто пауза. «Опора на трудные дни» и «Для близких» открыты всегда.",
+      "es": "Saltarse un día es solo una pausa. «Apoyo para los días difíciles» y «Para los cercanos» están siempre abiertos."
+     }
+    }
+   ]
+  },
+  {
+   "icon": "warn",
+   "title": {
+    "ru": "Важно",
+    "es": "Importante"
+   },
+   "tone": "warn",
+   "body": {
+    "ru": "Курс не лечит, не ставит диагноз и не заменяет врача или психолога. Если вы принимаете лекарства, решения о них принимает только врач. Если сниженное настроение держится больше двух недель, обратитесь к врачу.",
+    "es": "El curso no trata, no diagnostica y no sustituye al médico ni al psicólogo. Si tomas medicación, las decisiones sobre ella las toma solo el médico. Si el ánimo bajo dura más de dos semanas, acude al médico."
+   }
+  }
+ ],
+ "help_block": true,
+ "modules": [
+  {
+   "id": "thoughts",
+   "title": {
+    "ru": "Мысли",
+    "es": "Pensamientos"
+   },
+   "subtitle": {
+    "ru": "Замечать вредные мысли и отвечать им.",
+    "es": "Notar los pensamientos dañinos y responderles."
+   },
+   "steps": [
+    "w1",
+    "w2",
+    "w3",
+    "w4"
+   ]
+  },
+  {
+   "id": "activity",
+   "title": {
+    "ru": "Активность",
+    "es": "Actividad"
+   },
+   "subtitle": {
+    "ru": "Приятные дела, желания и небольшие цели.",
+    "es": "Actividades agradables, deseos y pequeñas metas."
+   },
+   "steps": [
+    "w5",
+    "w6",
+    "w7",
+    "w8"
+   ]
+  },
+  {
+   "id": "people",
+   "title": {
+    "ru": "Люди",
+    "es": "Personas"
+   },
+   "subtitle": {
+    "ru": "Отношения, общение, ясные просьбы и границы.",
+    "es": "Relaciones, comunicación, peticiones claras y límites."
+   },
+   "steps": [
+    "w9",
+    "w10",
+    "w11",
+    "w12"
+   ]
+  }
+ ]
+}

@@ -17,6 +17,8 @@ import 'course_checkin.dart';
 import 'form_task_screen.dart';
 import 'night_box_screen.dart';
 import '../widgets/course_ui.dart';
+import '../widgets/course_basis.dart';
+import '../widgets/daily_thought_card.dart';
 
 
 // One step: audio -> task -> small practices for the next days. Opening a
@@ -38,6 +40,11 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
   final _scroll = ScrollController();
   final _taskKey = GlobalKey();
   final _audioKey = GlobalKey();
+  final _microKey = GlobalKey();
+  final _dailyKey = GlobalKey();
+  // Reading cards folded into one line until opened (courses with `micro_read`).
+  bool? _microSecOpen;
+  int _dailyCount = 0;
   // Soft glow around the task card after the audio ends.
   bool _glow = false;
   // Soft glow around the player when the big button says "listen".
@@ -78,7 +85,31 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     });
   }
 
+  // First sentence of the description: enough to know what the week is about
+  // without opening it. Short descriptions are shown whole.
+  String _lead(String card) {
+    if (card.length <= 140) return card;
+    final m = RegExp(r'^.{20,}?[.!?](?=\s)').firstMatch(card);
+    final first = m?.group(0) ?? card;
+    return first.length < card.length ? first : card;
+  }
+
   CourseStepState get _state => _progress!.step(widget.step.id);
+
+  // Reading cards the course requires before the step counts as done (the
+  // "what this course is not" texts): the step cannot finish without them.
+  int get _unreadRequired => widget.step.micro.where((m) => m.required && !_state.microDone.contains(m.id)).length;
+
+  Future<void> _focusMicro() async {
+    if (widget.course.microRead && _microSecOpen != true) {
+      setState(() => _microSecOpen = true);
+      await Future.delayed(const Duration(milliseconds: 80));
+    }
+    final ctx = _microKey.currentContext;
+    if (ctx == null) return;
+    await Scrollable.ensureVisible(ctx,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut, alignment: 0.05);
+  }
 
   Future<void> _persist() async {
     await CourseProgressStore.save(widget.course.id, _progress!);
@@ -103,7 +134,14 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     if (saved == true) {
       _state.taskDone = true;
       await _persist();
-      await _showDone();
+      if (_state.complete) {
+        await _showDone();
+      } else if (_unreadRequired > 0 && mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text('course_read_required_snack'.tr())));
+        await _focusMicro();
+      }
     }
   }
 
@@ -119,7 +157,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
       context: context,
       course: c,
       next: n,
-      nextBlocked: n != null && stepBlockedByPace(c, p, n),
+      nextBlocked: n != null && stepBlockedByPace(c, p, n) && !CurrentUser.debugUnlockPace,
       nextLocked: n != null && !n.free && !CurrentUser.tariffIsOrion(),
       onOpenNext: () {
         if (i != null && mounted) Navigator.pop(context, i);
@@ -182,66 +220,160 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     );
   }
 
-  // Three short segments — Audio, Task, Days — that fill in as the person goes,
-  // so the order of the page is visible at a glance.
-  Widget _parts(bool dark) {
+  // Three status chips — Audio, Task, Every day — that say at a glance what is
+  // done; each one is a shortcut to its part of the page.
+  Widget _chips(bool dark) {
     final accent = courseAccent(dark);
     final step = widget.step;
-    final days = step.micro.isNotEmpty && step.micro.every((m) => _state.microDone.contains(m.id));
-    Widget seg(String key, bool done) => Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 4,
-                child: TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: done ? 1 : 0),
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeOutCubic,
-                  builder: (_, v, __) => ClipRRect(
-                    borderRadius: BorderRadius.circular(2),
-                    child: Stack(
-                      children: [
-                        Positioned.fill(child: Container(color: courseMuted(dark).withOpacity(0.25))),
-                        Positioned.fill(
-                          child: FractionallySizedBox(
-                            alignment: Alignment.centerLeft,
-                            widthFactor: v,
-                            child: Container(color: accent),
-                          ),
-                        ),
-                      ],
-                    ),
+    final c = widget.course;
+    Widget chip(IconData icon, String labelKey, String status, bool done, VoidCallback onTap, {bool partial = false}) {
+      final on = done || partial;
+      return Expanded(
+        child: Semantics(
+          button: true,
+          label: '${labelKey.tr()}, $status',
+          excludeSemantics: true,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: onTap,
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 88),
+              padding: getPadding(left: 10, top: 10, right: 8, bottom: 10),
+              decoration: BoxDecoration(
+                color: done
+                    ? accent.withOpacity(0.14)
+                    : (dark ? Colors.white.withOpacity(0.06) : AppColors.surface),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: on ? accent.withOpacity(0.55) : (dark ? Colors.white12 : AppColors.divider)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(icon, size: getSize(20), color: on ? accent : courseMuted(dark)),
+                      const Spacer(),
+                      if (done) Icon(Icons.check_circle_rounded, size: getSize(18), color: accent),
+                    ],
                   ),
+                  SizedBox(height: getVerticalSize(6)),
+                  Text(labelKey.tr(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: courseBody().copyWith(
+                          color: courseText(dark), fontWeight: FontWeight.w600, height: 1.2)),
+                  SizedBox(height: getVerticalSize(2)),
+                  Text(status,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: courseCaption().copyWith(color: on ? accent : courseMuted(dark), height: 1.25)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    final items = <Widget>[
+      chip(Icons.headphones_rounded, 'course_chip_audio', (_state.audioDone ? 'course_chip_done' : 'course_chip_todo').tr(),
+          _state.audioDone, _focusAudio),
+      chip(Icons.edit_outlined, 'course_chip_task', (_state.taskDone ? 'course_chip_done' : 'course_chip_todo').tr(),
+          _state.taskDone, () async {
+        final ctx = _taskKey.currentContext;
+        if (ctx != null) {
+          await Scrollable.ensureVisible(ctx,
+              duration: const Duration(milliseconds: 450), curve: Curves.easeInOut, alignment: 0.1);
+        }
+      }),
+      if (c.dailyThought && step.number != null)
+        chip(Icons.edit_note_rounded, 'course_chip_daily',
+            'course_chip_daily_n'.tr(namedArgs: {'n': '$_dailyCount'}), _dailyCount >= 3, () async {
+          final ctx = _dailyKey.currentContext;
+          if (ctx != null) {
+            await Scrollable.ensureVisible(ctx,
+                duration: const Duration(milliseconds: 450), curve: Curves.easeInOut, alignment: 0.1);
+          }
+        }, partial: _dailyCount > 0)
+      else if (step.micro.isNotEmpty && !c.microRead)
+        chip(Icons.event_note_outlined, 'course_part_days_short',
+            (step.micro.every((m) => _state.microDone.contains(m.id)) ? 'course_chip_done' : 'course_chip_todo').tr(),
+            step.micro.every((m) => _state.microDone.contains(m.id)), () {}),
+    ];
+    // Equal height chips: IntrinsicHeight, because the page scrolls (no bounded height).
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < items.length; i++) ...[
+            if (i > 0) SizedBox(width: getHorizontalSize(8)),
+            items[i],
+          ],
+        ],
+      ),
+    );
+  }
+
+  // The reading cards as one line "Коротко о главном · прочитано 2 из 5" that opens
+  // the cards. Open by itself while a required card is still unread.
+  Widget _microSection(bool dark) {
+    final step = widget.step;
+    final accent = courseAccent(dark);
+    final done = step.micro.where((m) => _state.microDone.contains(m.id)).length;
+    final open = _microSecOpen ?? (_unreadRequired > 0);
+    return Column(
+      key: _microKey,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SoftCard(
+          dark: dark,
+          padding: getPadding(left: 16, top: 12, right: 10, bottom: 12),
+          onTap: () => setState(() => _microSecOpen = !open),
+          child: Row(
+            children: [
+              Icon(Icons.menu_book_outlined, size: getSize(22), color: accent),
+              SizedBox(width: getHorizontalSize(12)),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('course_micro_summary'.tr(),
+                        style: AppStyle.txtSFProDisplayLight16
+                            .copyWith(color: courseText(dark), fontWeight: FontWeight.w600)),
+                    Text(
+                        'course_micro_summary_n'.tr(namedArgs: {'done': '$done', 'total': '${step.micro.length}'}) +
+                            (_unreadRequired > 0 ? '  ·  ' + 'course_micro_required'.tr() : ''),
+                        style: courseCaption().copyWith(color: _unreadRequired > 0 ? accent : courseMuted(dark))),
+                  ],
                 ),
               ),
-              SizedBox(height: getVerticalSize(7)),
-              Row(
-                children: [
-                  if (done) ...[
-                    Icon(Icons.check_circle_rounded, size: getSize(15), color: accent),
-                    SizedBox(width: getHorizontalSize(4)),
-                  ],
-                  Flexible(
-                    child: Text(key.tr(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: courseCaption().copyWith(color: done ? courseText(dark) : courseMuted(dark))),
-                  ),
-                ],
+              AnimatedRotation(
+                turns: open ? 0.5 : 0,
+                duration: const Duration(milliseconds: 220),
+                child: Icon(Icons.expand_more_rounded, color: courseMuted(dark), size: getSize(26)),
               ),
             ],
           ),
-        );
-    return Row(
-      children: [
-        seg('course_part_audio', _state.audioDone),
-        SizedBox(width: getHorizontalSize(10)),
-        seg('course_part_task', _state.taskDone),
-        if (step.micro.isNotEmpty) ...[
-          SizedBox(width: getHorizontalSize(10)),
-          seg('course_part_days_short', days),
-        ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeInOut,
+          alignment: Alignment.topCenter,
+          child: open
+              ? Padding(
+                  padding: getPadding(top: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('course_micro_hint_read'.tr(),
+                          style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
+                      SizedBox(height: getVerticalSize(10)),
+                      for (final m in step.micro) _micro(m, dark),
+                    ],
+                  ),
+                )
+              : const SizedBox(width: double.infinity),
+        ),
       ],
     );
   }
@@ -269,42 +401,100 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
     return Wrap(children: [link('course_urgent_help'), link('course_unsafe')]);
   }
 
+  // Reading/practice cards. Tapping a card marks it; a marked card folds
+  // into one line "Прочитано" (tap to open it again, with a way to un-mark).
+  final Set<String> _microOpen = {};
+
   Widget _micro(CourseMicro m, bool dark) {
     final done = _state.microDone.contains(m.id);
+    final open = !done || _microOpen.contains(m.id);
     final accent = courseAccent(dark);
+    final doneKey = widget.course.microRead ? 'course_micro_read' : 'course_micro_marked';
     return Padding(
       padding: getPadding(bottom: 10),
-      child: SoftCard(
-        dark: dark,
-        padding: getPadding(left: 16, top: 14, right: 12, bottom: 14),
-        onTap: () {
-          if (done) {
-            _state.microDone.remove(m.id);
-          } else {
-            _state.microDone.add(m.id);
-          }
-          _persist();
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeInOut,
+        alignment: Alignment.topCenter,
+        child: SoftCard(
+          dark: dark,
+          padding: getPadding(left: 16, top: 14, right: 12, bottom: open ? 14 : 12),
+          onTap: () {
+            if (!done) {
+              final was = _state.complete;
+              _state.microDone.add(m.id);
+              _microOpen.remove(m.id);
+              _persist().then((_) {
+                // The last required card read: the step is complete now.
+                if (!was && _state.complete) _showDone();
+              });
+            } else {
+              setState(() => _microOpen.contains(m.id) ? _microOpen.remove(m.id) : _microOpen.add(m.id));
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(m.title,
-                      style: AppStyle.txtSFProDisplayLight16
-                          .copyWith(color: courseText(dark), fontWeight: FontWeight.w600)),
-                  SizedBox(height: getVerticalSize(4)),
-                  Text(m.body,
-                      style: AppStyle.txtSFProDisplayLight14.copyWith(color: courseSoft(dark), height: 1.5)),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(m.title,
+                            style: AppStyle.txtSFProDisplayLight16.copyWith(
+                                color: done ? courseSoft(dark) : courseText(dark), fontWeight: FontWeight.w600)),
+                        if (done) ...[
+                          SizedBox(height: getVerticalSize(2)),
+                          Text(doneKey.tr(), style: courseCaption().copyWith(color: accent)),
+                        ] else ...[
+                          if (m.required) ...[
+                            SizedBox(height: getVerticalSize(2)),
+                            Text('course_micro_required'.tr(),
+                                style: courseCaption().copyWith(color: accent, fontWeight: FontWeight.w700)),
+                          ],
+                          SizedBox(height: getVerticalSize(4)),
+                          Text(m.body,
+                              style: courseBody().copyWith(color: courseSoft(dark), height: 1.5)),
+                        ],
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: getHorizontalSize(10)),
+                  Icon(done ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+                      size: getSize(24), color: done ? accent : courseMuted(dark)),
                 ],
               ),
-            ),
-            SizedBox(width: getHorizontalSize(10)),
-            Icon(done ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
-                size: getSize(24), color: done ? accent : courseMuted(dark)),
-          ],
+              if (done && open) ...[
+                SizedBox(height: getVerticalSize(8)),
+                Text(m.body, style: courseBody().copyWith(color: courseSoft(dark), height: 1.5)),
+                SizedBox(height: getVerticalSize(4)),
+                // The reading marks of the safety texts cannot be taken back:
+                // they record that the person has read what the course is not.
+                if (!widget.course.microRead) GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    _state.microDone.remove(m.id);
+                    _microOpen.remove(m.id);
+                    _persist();
+                  },
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 44),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: 1,
+                      child: Text('course_micro_unmark'.tr(),
+                          style: courseCaption().copyWith(
+                              color: courseMuted(dark),
+                              decoration: TextDecoration.underline,
+                              decorationColor: courseMuted(dark))),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -327,6 +517,10 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
       label = 'course_task_open';
       icon = Icons.edit_outlined;
       onTap = _openTask;
+    } else if (_unreadRequired > 0) {
+      label = 'course_cta_read';
+      icon = Icons.menu_book_outlined;
+      onTap = _focusMicro;
     } else if (next != null) {
       label = 'course_next_step';
       icon = Icons.arrow_forward_rounded;
@@ -393,7 +587,8 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
         ? 'course_step_of'.tr(namedArgs: {'n': '${step.number}', 'total': '$numbered'})
         : widget.course.groupOf(step).title;
     final taskDone = _progress != null && _state.taskDone;
-    final longDesc = step.card.length > 120;
+    final lead = _lead(step.card);
+    final longDesc = lead.length < step.card.length;
     return CourseTextScale(
         child: Scaffold(
       backgroundColor: dark ? kNightBg : AppColors.background,
@@ -407,10 +602,10 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CoverHeader(
-                    coverAsset: wideStepCover(audioCoverAsset(step.coverKey)),
+                    coverAsset: stepCoverAsset(step),
                     height: 236,
                     dark: dark,
-                    leftScrim: audioCoverAsset(step.coverKey)?.contains('/program_') ?? false,
+                    leftScrim: step.cover != null || (audioCoverAsset(step.coverKey)?.contains('/program_') ?? false),
                     onBack: () => Navigator.pop(context),
                     // Text in the left ~62%, the picture stays clear on the right.
                     child: FractionallySizedBox(
@@ -439,7 +634,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                       children: [
                         // The description: three lines, the rest on request, so the
                         // player is in view without scrolling.
-                        Text(step.card,
+                        Text(_descOpen ? step.card : lead,
                             maxLines: _descOpen ? null : 3,
                             overflow: _descOpen ? TextOverflow.visible : TextOverflow.ellipsis,
                             style: body),
@@ -453,7 +648,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                                 alignment: Alignment.centerLeft,
                                 widthFactor: 1,
                                 child: Text((_descOpen ? 'course_read_less' : 'course_read_more').tr(),
-                                    style: AppStyle.txtSFProDisplayLight14
+                                    style: courseBody()
                                         .copyWith(color: accent, fontWeight: FontWeight.w600)),
                               ),
                             ),
@@ -463,8 +658,16 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                           Text('course_night_sleep_hint'.tr(),
                               style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
                         ],
+                        if (step.basis.isNotEmpty) ...[
+                          SizedBox(height: getVerticalSize(6)),
+                          CourseBasisRow(text: step.basis, refIds: step.basisRefs, accent: accent),
+                        ],
                         SizedBox(height: getVerticalSize(18)),
-                        _parts(dark),
+                        _chips(dark),
+                        if (widget.course.microRead && step.micro.isNotEmpty) ...[
+                          SizedBox(height: getVerticalSize(16)),
+                          _microSection(dark),
+                        ],
                         SizedBox(height: getVerticalSize(26)),
                         SectionLabel('course_part_audio'.tr(), dark: dark),
                         SizedBox(height: getVerticalSize(10)),
@@ -488,6 +691,17 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                             onFinished: _onAudioFinished,
                           ),
                         ),
+                        // More audios of the same step (not part of "listened").
+                        for (final id in step.extraAudioDocIds) ...[
+                          SizedBox(height: getVerticalSize(12)),
+                          CourseAudioPlayer(
+                              key: ValueKey('extra_$id'),
+                              docId: id,
+                              listened: false,
+                              dark: dark,
+                              showMark: false,
+                              onListened: () {}),
+                        ],
                         _help(dark),
                         SizedBox(height: getVerticalSize(28)),
                         SectionLabel('course_part_task'.tr(), dark: dark),
@@ -520,7 +734,7 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                               if (step.task.intro.isNotEmpty) ...[
                                 SizedBox(height: getVerticalSize(8)),
                                 Text(step.task.intro,
-                                    style: AppStyle.txtSFProDisplayLight14
+                                    style: courseBody()
                                         .copyWith(color: courseSoft(dark), height: 1.5)),
                               ],
                               SizedBox(height: getVerticalSize(16)),
@@ -538,11 +752,21 @@ class _CourseStepScreenState extends State<CourseStepScreen> {
                           ),
                         ),
                         ),
-                        if (step.micro.isNotEmpty) ...[
-                          SizedBox(height: getVerticalSize(30)),
-                          SectionLabel('course_part_days'.tr(), dark: dark),
+                        if (widget.course.dailyThought && step.number != null) ...[
+                          SizedBox(height: getVerticalSize(22)),
+                          DailyThoughtCard(
+                              key: _dailyKey,
+                              dark: dark,
+                              onChanged: (n) {
+                                if (mounted && n != _dailyCount) setState(() => _dailyCount = n);
+                              }),
+                        ],
+                        if (step.micro.isNotEmpty && !widget.course.microRead) ...[
+                          SizedBox(key: _microKey, height: getVerticalSize(30)),
+                          SectionLabel((widget.course.microRead ? 'course_part_days_read' : 'course_part_days').tr(),
+                              dark: dark),
                           SizedBox(height: getVerticalSize(4)),
-                          Text('course_micro_hint'.tr(),
+                          Text((widget.course.microRead ? 'course_micro_hint_read' : 'course_micro_hint').tr(),
                               style: courseCaption().copyWith(color: courseMuted(dark), height: 1.45)),
                           SizedBox(height: getVerticalSize(12)),
                           for (final m in step.micro) _micro(m, dark),

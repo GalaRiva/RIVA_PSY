@@ -82,29 +82,9 @@ mainAxisAlignment: MainAxisAlignment.end,          children: [
                 alignment: Alignment.center,
               )),
               const SubscriptionTermsDisclosure(),
-              if(goToFreeRecommendation)
-              CustomButton(
-                height: getVerticalSize(
-                  54,
-                ),
-                width: getHorizontalSize(
-                  288,
-                ),
-                margin: getMargin(top: 40),
-                suffixWidget: Padding(
-                  padding: getPadding(left: 10),
-                  child: Icon(AppIcons.caretRight, size: getSize(10), color: ColorConstant.deepPurple600,),
-                ),
-                text: 'to_free_recommendations'.tr().toUpperCase(),
-                textIsFitted: true,
-                onTap: () async {
-                  if (onSecondButtonTap == null) {
-                    Navigator.pushNamed(context, AppRoutes.recommendations);
-                    AppRoutes.currentRoute = AppRoutes.recommendations;
-                  } else onSecondButtonTap!();
-                },
-                alignment: Alignment.center,
-              ),
+              // The "К бесплатным рекомендациям" button was removed on purpose:
+              // the screen already has a back arrow, and the button only led
+              // to another place with the same teaser.
               SizedBox(height: 27,)
             ],
           ),

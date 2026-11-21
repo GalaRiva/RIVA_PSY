@@ -1,0 +1,142 @@
+{
+ "program_depression__small_step": {
+  "name": "projects/rigel-psy-9361c/databases/(default)/documents/Audio/program_depression__small_step",
+  "fields": {
+   "format": {
+    "stringValue": "mp3"
+   },
+   "duration_ms": {
+    "integerValue": "207600"
+   },
+   "emotions": {
+    "stringValue": ""
+   },
+   "folder": {
+    "stringValue": "audio"
+   },
+   "fileName": {
+    "stringValue": "program_depression/odin_malenkiy_shag"
+   },
+   "name": {
+    "stringValue": "Один маленький шаг"
+   },
+   "tab": {
+    "stringValue": "program_depression"
+   }
+  },
+  "createTime": "2026-11-21T09:30:38.292547Z",
+  "updateTime": "2026-11-21T09:30:38.292547Z"
+ },
+ "program_depression__hard_days_plan": {
+  "name": "projects/rigel-psy-9361c/databases/(default)/documents/Audio/program_depression__hard_days_plan",
+  "fields": {
+   "duration_ms": {
+    "integerValue": "231440"
+   },
+   "fileName": {
+    "stringValue": "program_depression/plan_na_trudnye_dni"
+   },
+   "tab": {
+    "stringValue": "program_depression"
+   },
+   "name": {
+    "stringValue": "План на трудные дни"
+   },
+   "emotions": {
+    "stringValue": ""
+   },
+   "folder": {
+    "stringValue": "audio"
+   },
+   "format": {
+    "stringValue": "mp3"
+   }
+  },
+  "createTime": "2026-11-21T09:30:38.648562Z",
+  "updateTime": "2026-11-21T09:30:38.648562Z"
+ },
+ "program_depression__one_problem": {
+  "name": "projects/rigel-psy-9361c/databases/(default)/documents/Audio/program_depression__one_problem",
+  "fields": {
+   "folder": {
+    "stringValue": "audio"
+   },
+   "emotions": {
+    "stringValue": ""
+   },
+   "name": {
+    "stringValue": "Одна проблема за раз"
+   },
+   "fileName": {
+    "stringValue": "program_depression/odna_problema_za_raz"
+   },
+   "tab": {
+    "stringValue": "program_depression"
+   },
+   "duration_ms": {
+    "integerValue": "240440"
+   },
+   "format": {
+    "stringValue": "mp3"
+   }
+  },
+  "createTime": "2026-11-21T09:30:38.899258Z",
+  "updateTime": "2026-11-21T09:30:38.899258Z"
+ },
+ "program_depression__movement": {
+  "name": "projects/rigel-psy-9361c/databases/(default)/documents/Audio/program_depression__movement",
+  "fields": {
+   "fileName": {
+    "stringValue": "program_depression/nebolshoe_dvizhenie"
+   },
+   "tab": {
+    "stringValue": "program_depression"
+   },
+   "name": {
+    "stringValue": "Небольшое движение"
+   },
+   "emotions": {
+    "stringValue": ""
+   },
+   "folder": {
+    "stringValue": "audio"
+   },
+   "duration_ms": {
+    "integerValue": "157120"
+   },
+   "format": {
+    "stringValue": "mp3"
+   }
+  },
+  "createTime": "2026-11-21T09:30:39.150793Z",
+  "updateTime": "2026-11-21T09:30:39.150793Z"
+ },
+ "program_depression__supporter": {
+  "name": "projects/rigel-psy-9361c/databases/(default)/documents/Audio/program_depression__supporter",
+  "fields": {
+   "name": {
+    "stringValue": "Как поддержать и не выгореть"
+   },
+   "emotions": {
+    "stringValue": ""
+   },
+   "duration_ms": {
+    "integerValue": "214880"
+   },
+   "tab": {
+    "stringValue": "program_depression"
+   },
+   "format": {
+    "stringValue": "mp3"
+   },
+   "fileName": {
+    "stringValue": "program_depression/kak_podderzhat_i_ne_vygoret"
+   },
+   "folder": {
+    "stringValue": "audio"
+   }
+  },
+  "createTime": "2026-11-21T09:30:39.410361Z",
+  "updateTime": "2026-11-21T09:30:39.410361Z"
+ }
+}

@@ -117,33 +117,17 @@ class WhereInBodyWidget extends StatelessWidget {
                     left: 20,
                     top: 30,
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      'where_body_emotions_prefix'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800,
-                    ),
-                    Text(
-                      'positive'.tr().toLowerCase(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800.copyWith(
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    Text(
-                      'where_body_emotions_suffix'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800,
-                    ),
-                  ],
-                ),
+                child: Padding(
+ padding: const EdgeInsets.only(right: 20),
+ child: Text.rich(TextSpan(
+ style: AppStyle.txtSFProDisplayLight14Gray800,
+ children: [
+ TextSpan(text: 'where_body_emotions_prefix'.tr()),
+ TextSpan(text: 'positive'.tr().toLowerCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+ TextSpan(text: 'where_body_emotions_suffix'.tr()),
+ ],
+ )),
+ ),
               ),
               Padding(
                   padding: getPadding(top: 18),
@@ -192,33 +176,17 @@ class WhereInBodyWidget extends StatelessWidget {
                   left: 20,
                   top: 30,
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      'where_body_emotions_prefix'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800,
-                    ),
-                    Text(
-                      'negative'.tr().toLowerCase(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800.copyWith(
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    Text(
-                      'where_body_emotions_suffix'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle
-                          .txtSFProDisplayLight14Gray800,
-                    ),
-                  ],
-                ),
+                child: Padding(
+ padding: const EdgeInsets.only(right: 20),
+ child: Text.rich(TextSpan(
+ style: AppStyle.txtSFProDisplayLight14Gray800,
+ children: [
+ TextSpan(text: 'where_body_emotions_prefix'.tr()),
+ TextSpan(text: 'negative'.tr().toLowerCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+ TextSpan(text: 'where_body_emotions_suffix'.tr()),
+ ],
+ )),
+ ),
               ),
               Padding(
                   padding: getPadding(top: 18),
@@ -393,33 +361,17 @@ class WhereInBodyWidget extends StatelessWidget {
                     left: 20,
                     top: 30,
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'where_body_emotions_prefix'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800,
-                      ),
-                      Text(
-                        'positive'.tr().toLowerCase(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800.copyWith(
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      Text(
-                        'where_body_emotions_suffix'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800,
-                      ),
-                    ],
-                  ),
+                  child: Padding(
+ padding: const EdgeInsets.only(right: 20),
+ child: Text.rich(TextSpan(
+ style: AppStyle.txtSFProDisplayLight14Gray800,
+ children: [
+ TextSpan(text: 'where_body_emotions_prefix'.tr()),
+ TextSpan(text: 'positive'.tr().toLowerCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+ TextSpan(text: 'where_body_emotions_suffix'.tr()),
+ ],
+ )),
+ ),
                 ),
                 Padding(
                     padding: getPadding(top: 18),
@@ -439,33 +391,17 @@ class WhereInBodyWidget extends StatelessWidget {
                     left: 20,
                     top: 30,
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'where_body_emotions_prefix'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800,
-                      ),
-                      Text(
-                        'negative'.tr().toLowerCase(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800.copyWith(
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      Text(
-                        'where_body_emotions_suffix'.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle
-                            .txtSFProDisplayLight14Gray800,
-                      ),
-                    ],
-                  ),
+                  child: Padding(
+ padding: const EdgeInsets.only(right: 20),
+ child: Text.rich(TextSpan(
+ style: AppStyle.txtSFProDisplayLight14Gray800,
+ children: [
+ TextSpan(text: 'where_body_emotions_prefix'.tr()),
+ TextSpan(text: 'negative'.tr().toLowerCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+ TextSpan(text: 'where_body_emotions_suffix'.tr()),
+ ],
+ )),
+ ),
                 ),
                 Padding(
                     padding: getPadding(top: 18),

@@ -1,0 +1,37 @@
+[
+ {
+  "docId": "program_depression__small_step",
+  "name": "Один маленький шаг",
+  "fileName": "program_depression/odin_malenkiy_shag",
+  "duration_ms": 207600,
+  "size": 4879952
+ },
+ {
+  "docId": "program_depression__hard_days_plan",
+  "name": "План на трудные дни",
+  "fileName": "program_depression/plan_na_trudnye_dni",
+  "duration_ms": 231440,
+  "size": 5293137
+ },
+ {
+  "docId": "program_depression__one_problem",
+  "name": "Одна проблема за раз",
+  "fileName": "program_depression/odna_problema_za_raz",
+  "duration_ms": 240440,
+  "size": 4790897
+ },
+ {
+  "docId": "program_depression__movement",
+  "name": "Небольшое движение",
+  "fileName": "program_depression/nebolshoe_dvizhenie",
+  "duration_ms": 157120,
+  "size": 3734229
+ },
+ {
+  "docId": "program_depression__supporter",
+  "name": "Как поддержать и не выгореть",
+  "fileName": "program_depression/kak_podderzhat_i_ne_vygoret",
+  "duration_ms": 214880,
+  "size": 4938200
+ }
+]

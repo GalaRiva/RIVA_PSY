@@ -1,3 +1,5 @@
+import 'package:riva_psy/core/utils/audio_cover_map.dart';
+
 import '../models/course.dart';
 import 'course_progress_store.dart';
 
@@ -22,9 +24,42 @@ int? nextStepIndexAfter(Course c, CourseProgress p, int index) {
   return null;
 }
 
-/// True when [step] is a NEW step that today's pace does not allow yet.
-bool stepBlockedByPace(Course c, CourseProgress p, CourseStep step) =>
-    !p.canOpen(step.id, alwaysAvailable: step.alwaysAvailable, maxPerDay: c.maxNewPerDay);
+/// Why a NEW step cannot be opened right now.
+enum StepBlock { none, pace, previousNotDone, tomorrow }
+
+/// For courses with [Course.dailyGate] a numbered step opens on the day AFTER
+/// the previous numbered step of its block was completed (audio + task).
+/// Other courses keep the plain "N new steps a day" pace.
+StepBlock stepBlock(Course c, CourseProgress p, CourseStep step) {
+  if (step.alwaysAvailable || p.step(step.id).started) return StepBlock.none;
+  if (c.dailyGate) {
+    if (step.number == null) return StepBlock.none;
+    if (step.number! <= 1) return StepBlock.none;
+    CourseStep? prev;
+    for (final s in c.steps) {
+      if (s.groupId == step.groupId && s.number == step.number! - 1) prev = s;
+    }
+    if (prev == null) return StepBlock.none;
+    final ps = p.step(prev.id);
+    if (!ps.complete) return StepBlock.previousNotDone;
+    // Steps finished before the date was recorded count as "an earlier day".
+    final done = DateTime.tryParse(ps.completedOn ?? '');
+    if (done == null) return StepBlock.none;
+    final n = DateTime.now();
+    final days = DateTime(n.year, n.month, n.day).difference(DateTime(done.year, done.month, done.day)).inDays;
+    return days >= c.gateDays ? StepBlock.none : StepBlock.tomorrow;
+  }
+  return p.canOpen(step.id, alwaysAvailable: step.alwaysAvailable, maxPerDay: c.maxNewPerDay)
+      ? StepBlock.none
+      : StepBlock.pace;
+}
+
+/// True when [step] is a NEW step that is not allowed yet.
+bool stepBlockedByPace(Course c, CourseProgress p, CourseStep step) => stepBlock(c, p, step) != StepBlock.none;
+
+/// The picture of a step: its own `cover`, else the audio cover.
+String? stepCoverAsset(CourseStep step) =>
+    step.cover ?? wideStepCover(audioCoverAsset(step.coverKey));
 
 /// The urge/contact tool: the one a person may need in the worst moment.
 CourseTool? urgeTool(Course c) {

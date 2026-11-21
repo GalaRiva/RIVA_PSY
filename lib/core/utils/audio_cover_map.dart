@@ -7,6 +7,15 @@ import '../../widgets/animated_meditation_cover.dart';
 // asset. Tracks with no entry here render a generated accent-color card
 // instead of crashing/blanking — see HeroAudioCarousel's fallback cover.
 const Map<String, String> audioCoverAssets = {
+  // Опора (депрессия): covers match the step pictures of the course.
+  'Один маленький шаг': 'assets/images/audio_covers/dep_small_step.jpg',
+  'План на трудные дни': 'assets/images/audio_covers/dep_hard_days_plan.jpg',
+  'Одна проблема за раз': 'assets/images/audio_covers/dep_one_problem.jpg',
+  'Небольшое движение': 'assets/images/audio_covers/dep_movement.jpg',
+  'Как поддержать и не выгореть': 'assets/images/audio_covers/dep_supporter.jpg',
+  'Больше чем отражение': 'assets/images/audio_covers/disgust_mirror.jpg',
+  'Зеркало неприязни': 'assets/images/audio_covers/disgust_mirror.jpg',
+  'Тревога': 'assets/images/audio_covers/anxiety_plain.jpg',
   'Апатия': 'assets/images/audio_covers/apathy.jpg',
   'Архитектура тревоги': 'assets/images/audio_covers/anxiety_architecture.jpg',
   'Аффект 1': 'assets/images/audio_covers/affect_1.jpg',

@@ -96,6 +96,7 @@ class K37Screen extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 'what_did_I_do'.tr(),
+                                maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),

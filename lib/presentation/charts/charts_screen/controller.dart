@@ -9,6 +9,7 @@ import '../../main/main_screen/repository.dart';
 import '../../main/path/what_emotion_screen/repository.dart';
 import '../../records/records_screen/repository.dart';
 import '../../settings/settings_pills/models/pill_model.dart';
+import '../../recomendation/recomendation_screen/controller.dart' show K70Controller;
 import 'models/place_model.dart';
 import '../../../core/models/day_event_model.dart';
 import '../../../core/models/emotional_state_model.dart';
@@ -24,7 +25,7 @@ import '../../../widgets/body_zone_colors.dart';
 class K61Controller extends GetxController with GetSingleTickerProviderStateMixin {
   bool loading = true;
 
-  static const int tabCount = 8;
+  static const int tabCount = 9;
   TabController? tabController;
 
   void initTabController() {
@@ -33,6 +34,8 @@ class K61Controller extends GetxController with GetSingleTickerProviderStateMixi
     tabController!.addListener(() {
       if (!tabController!.indexIsChanging) {
         currentTab = tabController!.index + 1;
+        // A portrait test left mid-way must not leave the chrome hidden.
+        if (Get.isRegistered<K70Controller>()) Get.find<K70Controller>().setImmersiveMode(false);
         update();
       }
     });

@@ -415,7 +415,7 @@ class K2Screen extends GetWidget<K2Controller> {
                             builder: (K2Controller _c) => TextButton(
                               onPressed: () {
                                 controller.changeRegistrationMethod();
-                              }, child: Text(_c.useEmail ? "Использовать для регистрации номер телефона" : "Использовать почту для регистрации",
+                              }, child: Text(_c.useEmail ? 'use_phone_for_signup'.tr() : 'use_email_for_signup'.tr(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle

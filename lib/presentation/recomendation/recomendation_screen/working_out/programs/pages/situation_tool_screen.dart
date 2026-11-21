@@ -223,7 +223,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                     .copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
             SizedBox(height: getVerticalSize(4)),
             Text('course_inline_hint'.tr(),
-                style: courseCaption().copyWith(color: AppColors.textSecondary, height: 1.4)),
+                style: courseCaption().copyWith(color: courseMuted(false), height: 1.4)),
             SizedBox(height: getVerticalSize(12)),
             Wrap(
               spacing: 8,
@@ -243,7 +243,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: Text(c,
-                          style: AppStyle.txtSFProDisplayLight14.copyWith(
+                          style: courseBody().copyWith(
                               color: ctrl.text == c ? Colors.white : AppColors.primary,
                               fontWeight: FontWeight.w600)),
                     ),
@@ -314,7 +314,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
             onPressed: () => setState(() => _editing.add(_index)),
             style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 36)),
             child: Text('course_inline_change'.tr(),
-                style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                style: courseBody().copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
           ),
         ],
       );
@@ -331,7 +331,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
         radius: 22,
         child: Text(text,
             style: AppStyle.txtSFProDisplayLight16.copyWith(
-                color: hasOwn ? AppColors.textPrimary : AppColors.textSecondary,
+                color: hasOwn ? AppColors.textPrimary : courseMuted(false),
                 height: 1.55,
                 fontStyle: hasOwn ? FontStyle.normal : FontStyle.italic)),
       ),
@@ -355,7 +355,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
               children: [
                 Expanded(
                   child: Text(page.scaleLabel,
-                      style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.textSecondary, height: 1.3)),
+                      style: courseBody().copyWith(color: courseMuted(false), height: 1.3)),
                 ),
                 SizedBox(width: getHorizontalSize(12)),
                 Text(set ? '${v.round()}' : '–',
@@ -454,7 +454,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: courseCaption()
-                            .copyWith(color: AppColors.textSecondary, letterSpacing: 0.4)),
+                            .copyWith(color: courseMuted(false), letterSpacing: 0.4)),
                   ),
                   IconButton(
                     tooltip: 'close'.tr(),
@@ -523,7 +523,7 @@ class _SituationToolScreenState extends State<SituationToolScreen> {
                               context, MaterialPageRoute(builder: (_) => const HelpNowScreen())),
                           style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 32)),
                           child: Text('helpline_settings'.tr(),
-                              style: courseCaption().copyWith(color: AppColors.textSecondary)),
+                              style: courseCaption().copyWith(color: courseMuted(false))),
                         ),
                       ],
                     ],

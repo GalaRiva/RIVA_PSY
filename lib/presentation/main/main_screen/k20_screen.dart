@@ -26,6 +26,7 @@ import '../../../core/services/in_app_update_service.dart';
 import '../../../providers/language_provider.dart';
 import '../../../widgets/chip_selector.dart';
 import '../../../widgets/inner_shadow.dart';
+import '../../../widgets/hero_banner.dart';
 import '../../../widgets/pressable_scale.dart';
 import '../../../widgets/spark_burst.dart';
 import '../../../widgets/welcome_offer_banner.dart';
@@ -102,38 +103,24 @@ class K20Screen extends GetWidget<K20Controller> {
                       const WelcomeOfferBanner(),
                       const ReengagementHook(),
                       const QuickActionHook(),
-                      const NextStepCard(),
-                      const CheckInNudgeCard(),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: getPadding(
-                            top: 20,
-                          ),
-                          child: Text(
-                            DateTime.now().weekday.dayInText() +
-                                ", " +
-                                DateTime.now().day.toString() +
-                                " " +
-                                DateTime.now().month.monthInText(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtSFProDisplayLight10Gray800,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: getPadding(
-                            top: 20,
-                          ),
-                          child: CustomText(
-                            "hi",
-                            args: ["${CurrentUser.user.login!.isNotEmpty ? '' :''} ${CurrentUser.user.login!}"],
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtH1,
+                      Padding(
+                        padding: getPadding(top: 14),
+                        child: HeroBanner(
+                          asset: 'assets/images/hub/star_07.jpg',
+                          height: 96,
+                          imageAlignment: Alignment.center,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                "hi",
+                                args: ["${CurrentUser.user.login!.isNotEmpty ? '' :''} ${CurrentUser.user.login!}"],
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtH1.copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -470,7 +457,10 @@ class K20Screen extends GetWidget<K20Controller> {
                         textStyle: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white),
                         borderRadius: 12,
                       ),
+                      const NextStepCard(),
+                      const CheckInNudgeCard(),
                       FirstStepsChecklist(
+                        compact: true,
                         onNoteState: () => Navigator.pushNamed(context, AppRoutes.whatHappened,
                             arguments: DayEventModel().copyWith(
                                 howDoYouFeel: controller.sliderValue.round(), showInCharts: true)),

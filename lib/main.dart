@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:riva_psy/core/utils/app_text_localizer.dart';
+import 'package:riva_psy/core/services/notifications/channel_texts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -53,6 +55,9 @@ void main() async {
     }
 
     await EasyLocalization.ensureInitialized();
+    // Table of the app's own wordings in every language (see AppTextLocalizer);
+    // loads in the background, nothing waits for it.
+    AppTextLocalizer.init();
     print('[STARTUP-DIAG] after EasyLocalization.ensureInitialized: ${_mainSw.elapsedMilliseconds}ms');
     print('[STARTUP-DIAG] total before runApp: ${_mainSw.elapsedMilliseconds}ms');
 
@@ -112,7 +117,7 @@ Future<void> bootstrapApp() async {
     // every AppAudioService.play() call there.
     await JustAudioBackground.init(
       androidNotificationChannelId: 'com.riva_psy.app.channel.audio',
-      androidNotificationChannelName: 'Аудио',
+      androidNotificationChannelName: await ChannelTexts.audioChannelName(),
       androidNotificationOngoing: true,
     );
     print('[STARTUP-DIAG] after JustAudioBackground.init: ${_sw.elapsedMilliseconds}ms');

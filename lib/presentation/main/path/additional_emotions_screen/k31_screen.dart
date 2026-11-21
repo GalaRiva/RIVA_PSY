@@ -86,6 +86,7 @@ class K31Screen extends GetWidget {
                           Expanded(
                             child: Text(
                               'which_emotion_felt'.tr(),
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),
                             ),

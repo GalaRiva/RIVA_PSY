@@ -14,6 +14,9 @@ import '../../../core/utils/size_utils.dart';
 import '../../../theme/app_style.dart';
 import '../../../widgets/custom_bottom_bar.dart';
 import 'controller.dart';
+import '../../../widgets/hero_banner.dart';
+import '../../recomendation/recomendation_screen/controller.dart' show K70Controller;
+import '../../recomendation/recomendation_screen/portrait/portrait_page.dart';
 import 'widgets/where_and_what_emotions_widget.dart';
 import '../../../theme/app_colors.dart';
 
@@ -22,6 +25,7 @@ class K61Screen extends GetWidget{
 
   @override
   Widget build(BuildContext context) {
+    if (!Get.isRegistered<K70Controller>()) Get.put(K70Controller());
     final controller = Get.put(K61Controller());
     controller.init();
     controller.initTabController();
@@ -39,31 +43,23 @@ class K61Screen extends GetWidget{
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverToBoxAdapter(
-              child: Column(
+              child: _chrome(Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: getPadding(top: 39, left: 16, right: 16),
-                    child: Text(
-                      'charts'.tr(),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtSFProDisplayLight10Gray800,
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(top: 8, left: 16, right: 16),
-                    child: Divider(
-                      height: getVerticalSize(1),
-                      thickness: getVerticalSize(1),
-                      color: ColorConstant.gray50,
+                    padding: getPadding(top: 14, left: 16, right: 16),
+                    child: HeroBanner(
+                      asset: 'assets/images/hub/star_05.jpg',
+                      height: 92,
+                      imageAlignment: const Alignment(0, -0.3),
+                      child: Text('charts'.tr(), style: AppStyle.txtH1.copyWith(color: Colors.white)),
                     ),
                   ),
                 ],
-              ),
+              )),
             ),
             SliverToBoxAdapter(
-              child: Padding(
+              child: _chrome(Padding(
                 padding: getPadding(top: 4),
                 child: Align(
                   alignment: Alignment.topCenter,
@@ -102,7 +98,7 @@ class K61Screen extends GetWidget{
                     ),
                   ),
                 ),
-              ),
+              )),
             ),
           ],
           body: controller.loading == true
@@ -119,11 +115,17 @@ class K61Screen extends GetWidget{
                 ),
         ),
       ),
-      bottomNavigationBar: CustomBottomBar(
-        onChanged: (BottomBarEnum type) {},
+      bottomNavigationBar: GetBuilder<K70Controller>(
+        builder: (c) =>
+            c.immersiveMode ? const SizedBox.shrink() : CustomBottomBar(onChanged: (BottomBarEnum type) {}),
       ),
     );
   }
+
+  // While a portrait test is running ("О себе" tab) the header, tab row and
+  // bottom bar step aside so the test gets the whole screen.
+  Widget _chrome(Widget child) =>
+      GetBuilder<K70Controller>(builder: (c) => c.immersiveMode ? const SizedBox.shrink() : child);
 
   List<Widget> _tabs() {
     const keys = [
@@ -132,6 +134,7 @@ class K61Screen extends GetWidget{
       'tab_body_map',
       'tab_places',
       'tab_medication_dynamics',
+      'self_eyebrow',
       'energy_matrix',
       'synergy_heatmap',
       'social_battery',
@@ -182,6 +185,9 @@ class K61Screen extends GetWidget{
       )),
       scrollable(WhereAndWhatEmotionsWidget(controller: controller)),
       scrollable(AdmissionScheduleWidget()),
+      // "О себе" (Проекция «Я»): one of the charts, not a card above them. It
+      // scrolls on its own, and hides this screen's chrome while a test runs.
+      const PortraitPage(),
       scrollable(EnergyMatrixWidget(points: controller.energyMatrixPoints)),
       scrollable(SynergyHeatmapWidget(events: controller.allDayEvents)),
       scrollable(SocialBatteryWidget(events: controller.allDayEvents)),

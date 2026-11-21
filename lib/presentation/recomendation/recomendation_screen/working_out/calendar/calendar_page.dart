@@ -10,6 +10,7 @@ import '../../../../../widgets/custom_button.dart';
 import '../../../../../widgets/custom_pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
+import 'package:riva_psy/widgets/period_confirm_bar.dart';
 
 import 'controller.dart';
 import '../../../../../theme/app_colors.dart';
@@ -47,16 +48,16 @@ class WorkingOutCalendarPage extends GetWidget {
                       children: [
                         Padding(
                             padding: getPadding(
-                              top: 39,
+                              top: 14,
                             ),
                             child: CustomPopButton(text: 'recommendations'.tr(),)
                         ),
                         Padding(
                           padding: getPadding(
-                            top: 20,
+                            top: 6,
                           ),
                           child: Text(
-                            "Календарь",
+                            'calendar'.tr(),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtH1,
@@ -65,11 +66,11 @@ class WorkingOutCalendarPage extends GetWidget {
                         Padding(
                           padding: getPadding(
                             left: 31,
-                            top: 26,
+                            top: 12,
                           ),
                           child: GetBuilder(
                             builder: (WorkingOutCalendarController _c) => Text(
-                              controller.periodStart == null ? 'Выберите начало периода' : 'Выберите конец периода',
+                              controller.periodStart == null ? 'select_start_period'.tr() : 'select_end_period'.tr(),
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style:
@@ -83,9 +84,31 @@ class WorkingOutCalendarPage extends GetWidget {
                           ),
                         ),
                         Padding(
+                          padding: getPadding(left: 31, top: 6, right: 12),
+                          child: GetBuilder(
+                            builder: (WorkingOutCalendarController _c) {
+                              String d(DateTime? x) => x == null
+                                  ? '...'
+                                  : '${x.day.toString().padLeft(2, '0')}.${x.month.toString().padLeft(2, '0')}.${x.year}';
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('${d(controller.periodStart)}  →  ${d(controller.periodEnd)}',
+                                      style: AppStyle.txtSFProDisplayLight16
+                                          .copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                                  SizedBox(height: getVerticalSize(4)),
+                                  Text('period_hint_months'.tr(),
+                                      style: AppStyle.txtSFProDisplayLight14
+                                          .copyWith(color: const Color(0xFF4A545A), height: 1.4)),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
                           padding: getPadding(
                             left: 14,
-                            top: 26,
+                            top: 8,
                           ),
                           child: GetBuilder(
                             builder: (WorkingOutCalendarController _c) => ListView.separated(
@@ -94,7 +117,7 @@ class WorkingOutCalendarPage extends GetWidget {
                               separatorBuilder: (context, index) {
                                 return SizedBox(
                                   height: getVerticalSize(
-                                    35,
+                                    4,
                                   ),
                                 );
                               },
@@ -108,7 +131,7 @@ class WorkingOutCalendarPage extends GetWidget {
                         Padding(
                           padding: getPadding(
                             left: 14,
-                            top: 26,
+                            top: 8,
                           ),
                           child: GetBuilder(
                             builder: (WorkingOutCalendarController _c) => ListView.separated(
@@ -117,7 +140,7 @@ class WorkingOutCalendarPage extends GetWidget {
                               separatorBuilder: (context, index) {
                                 return SizedBox(
                                   height: getVerticalSize(
-                                    35,
+                                    4,
                                   ),
                                 );
                               },
@@ -133,7 +156,7 @@ class WorkingOutCalendarPage extends GetWidget {
                           child: Padding(
                             padding: getPadding(
                               left: 29,
-                              top: 33,
+                              top: 12,
                               right: 29,
                             ),
                             child: ListView.separated(
@@ -142,7 +165,7 @@ class WorkingOutCalendarPage extends GetWidget {
                               separatorBuilder: (context, index) {
                                 return SizedBox(
                                   height: getVerticalSize(
-                                    21,
+                                    10,
                                   ),
                                 );
                               },
@@ -158,7 +181,7 @@ class WorkingOutCalendarPage extends GetWidget {
                           child: Padding(
                             padding: getPadding(
                               left: 29,
-                              top: 33,
+                              top: 12,
                               right: 29,
                             ),
                             child: GetBuilder(
@@ -168,7 +191,7 @@ class WorkingOutCalendarPage extends GetWidget {
                                 separatorBuilder: (context, index) {
                                   return SizedBox(
                                     height: getVerticalSize(
-                                      21,
+                                      10,
                                     ),
                                   );
                                 },
@@ -180,27 +203,16 @@ class WorkingOutCalendarPage extends GetWidget {
                             ),
                           ),
                         ),
-                        CustomButton(
-                            height: getVerticalSize(32),
-                            width: getHorizontalSize(186),
-                            onTap: () async {
-                              controller.popWithData(context);
-                            },
-                            text: 'save'.tr().toUpperCase(),
-                            padding: ButtonPadding.PaddingT8,
-                            margin: getMargin(top: 90),
-                            alignment: Alignment.center),
-                        CustomButton(
-                            height: getVerticalSize(32),
-                            width: getHorizontalSize(186),
-                            onTap: () => Navigator.pop(context),
-                            text: 'cancel'.tr().toUpperCase(),
-                            padding: ButtonPadding.PaddingT8,
-                            alignment: Alignment.center),
                       ],
                     ),
                   ),
                 ),
+              ),
+              PeriodConfirmBar(
+                onSave: () async {
+                  controller.popWithData(context);
+                },
+                onCancel: () => Navigator.pop(context),
               ),
             ],
           ),

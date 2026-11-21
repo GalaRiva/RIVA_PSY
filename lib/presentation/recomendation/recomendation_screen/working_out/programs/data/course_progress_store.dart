@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:riva_psy/core/db/hive_db.dart';
 
 // Everything here stays on the device (Hive), same privacy principle as the
@@ -13,17 +14,27 @@ class CourseStepState {
   bool audioDone;
   bool taskDone;
   Set<String> microDone;
+  // 'yyyy-mm-dd' of the day the step became complete (audio + task); null
+  // for steps finished before this was recorded.
+  String? completedOn;
+  // Reading cards that must be marked before the step is complete. Not stored:
+  // it comes from the course file (CourseProgressStore.load applies it).
+  Set<String> required = {};
 
-  CourseStepState({this.started = false, this.audioDone = false, this.taskDone = false, Set<String>? microDone})
+  CourseStepState(
+      {this.started = false, this.audioDone = false, this.taskDone = false, Set<String>? microDone, this.completedOn})
       : microDone = microDone ?? {};
 
-  bool get complete => audioDone && taskDone;
+  bool get requiredRead => required.every(microDone.contains);
+
+  bool get complete => audioDone && taskDone && requiredRead;
 
   Map<String, dynamic> toJson() => {
         'started': started,
         'audio': audioDone,
         'task': taskDone,
         'micro': microDone.toList(),
+        if (completedOn != null) 'done_on': completedOn,
       };
 
   factory CourseStepState.fromJson(Map<String, dynamic> j) => CourseStepState(
@@ -31,6 +42,7 @@ class CourseStepState {
         audioDone: j['audio'] == true,
         taskDone: j['task'] == true,
         microDone: ((j['micro'] as List?) ?? []).map((e) => e.toString()).toSet(),
+        completedOn: j['done_on'] as String?,
       );
 }
 
@@ -57,7 +69,31 @@ class CourseProgress {
   static String dayKey(DateTime d) =>
       '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-  CourseStepState step(String id) => steps.putIfAbsent(id, () => CourseStepState());
+  // step id -> ids of the reading cards that must be read (from the course file).
+  Map<String, Set<String>> requiredMicro = {};
+
+  CourseStepState step(String id) =>
+      steps.putIfAbsent(id, () => CourseStepState()..required = requiredMicro[id] ?? {});
+
+  void applyRequired(Map<String, Set<String>> r) {
+    requiredMicro = r;
+    for (final e in steps.entries) {
+      e.value.required = r[e.key] ?? {};
+    }
+  }
+
+  /// Stamps today on every step that has just become complete, and clears the
+  /// stamp when it is no longer complete (the person un-marked the audio).
+  void stampCompletions() {
+    final today = dayKey(DateTime.now());
+    for (final s in steps.values) {
+      if (s.complete) {
+        s.completedOn ??= today;
+      } else {
+        s.completedOn = null;
+      }
+    }
+  }
 
   int get openedTodayCount => (opened[dayKey(DateTime.now())] ?? const []).length;
 
@@ -149,19 +185,44 @@ class CourseProgressStore {
     }
   }
 
+  static final Map<String, Map<String, Set<String>>> _requiredCache = {};
+
+  // The reading cards a course marks `required: true`, per step.
+  static Future<Map<String, Set<String>>> _requiredFor(String courseId) async {
+    final cached = _requiredCache[courseId];
+    if (cached != null) return cached;
+    final out = <String, Set<String>>{};
+    try {
+      final raw = jsonDecode(await rootBundle.loadString('assets/courses/$courseId.json')) as Map<String, dynamic>;
+      for (final st in (raw['steps'] as List? ?? [])) {
+        final ids = <String>{
+          for (final m in (st['micro'] as List? ?? []))
+            if (m['required'] == true) m['id'] as String
+        };
+        if (ids.isNotEmpty) out[st['id'] as String] = ids;
+      }
+    } catch (_) {}
+    return _requiredCache[courseId] = out;
+  }
+
   static Future<CourseProgress> load(String courseId) async {
     final all = await _entries(_pTag);
+    CourseProgress? found;
     for (final e in all.reversed) {
       if (e['courseId'] == courseId) {
         try {
-          return CourseProgress.fromJson(Map<String, dynamic>.from(e['data'] as Map));
+          found = CourseProgress.fromJson(Map<String, dynamic>.from(e['data'] as Map));
+          break;
         } catch (_) {}
       }
     }
-    return CourseProgress();
+    final p = found ?? CourseProgress();
+    p.applyRequired(await _requiredFor(courseId));
+    return p;
   }
 
   static Future<void> save(String courseId, CourseProgress p) async {
+    p.stampCompletions();
     final all = await _entries(_pTag);
     all.removeWhere((e) => e['courseId'] == courseId);
     all.add({'courseId': courseId, 'data': p.toJson()});
@@ -170,7 +231,8 @@ class CourseProgressStore {
 
   /// Starts the course over: step marks reset, personal cards are kept.
   static Future<CourseProgress> newRound(String courseId, CourseProgress p) async {
-    final fresh = CourseProgress(round: p.round + 1, screened: p.screened, worseStreak: p.worseStreak, opened: p.opened);
+    final fresh = CourseProgress(round: p.round + 1, screened: p.screened, worseStreak: p.worseStreak, opened: p.opened)
+      ..applyRequired(p.requiredMicro);
     await save(courseId, fresh);
     return fresh;
   }

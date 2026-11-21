@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
 
@@ -29,9 +30,9 @@ class InAppUpdateService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(days: 1),
-          content: const Text('Доступно обновление приложения'),
+          content: Text('update_available'.tr()),
           action: SnackBarAction(
-            label: 'ПЕРЕЗАПУСТИТЬ',
+            label: 'update_restart'.tr(),
             onPressed: () => InAppUpdate.completeFlexibleUpdate(),
           ),
         ),

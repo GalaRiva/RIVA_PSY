@@ -174,7 +174,7 @@ class K2AuthScreen extends GetWidget<K2AuthController> {
                       builder: (K2AuthController _c) => TextButton(
                         onPressed: () {
                           controller.changeAuthMethod();
-                        }, child: Text(_c.useEmail ? "Использовать для авторизации номер телефона" : "Использовать почту для авторизации",
+                        }, child: Text(_c.useEmail ? 'use_phone_for_auth'.tr() : 'use_email_for_auth'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle

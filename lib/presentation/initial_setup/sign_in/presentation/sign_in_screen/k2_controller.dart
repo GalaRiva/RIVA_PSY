@@ -89,13 +89,13 @@ class K2AuthController extends GetxController {
       /*if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.WrongData) {
         showMessage(context,
-            title: 'auth_error_title'.tr(), content: 'Неверный логин или пароль');
+            title: 'auth_error_title'.tr(), content: 'auth_error_wrong_password'.tr());
       }
       if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.NotExist) {
         showMessage(context,
             title: 'auth_error_title'.tr(),
-            content: 'Данного пользователя не существует');
+            content: 'auth_error_user_not_found'.tr());
       }
       if (userStateCheck.userResultStatus ==
           FirebaseUserResultStatus.Exception) {

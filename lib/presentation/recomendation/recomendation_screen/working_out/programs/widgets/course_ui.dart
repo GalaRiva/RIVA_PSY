@@ -11,14 +11,17 @@ const Color kNightBg = Color(0xFF0B1917);
 const Color kNightAccent = Color(0xFF7FBDBA);
 
 Color courseText(bool dark) => dark ? Colors.white : AppColors.textPrimary;
-Color courseSoft(bool dark) => dark ? Colors.white70 : AppColors.textPrimary.withOpacity(0.78);
+Color courseSoft(bool dark) => dark ? Colors.white.withOpacity(0.82) : AppColors.textPrimary.withOpacity(0.88);
 // Quiet text, but readable: AppColors.textSecondary (#7A8287) is only about 3.7:1
 // on the page background; this is about 5.6:1 (the 4.5:1 minimum for small text).
-Color courseMuted(bool dark) => dark ? Colors.white60 : const Color(0xFF5B6469);
+Color courseMuted(bool dark) => dark ? Colors.white70 : const Color(0xFF4A545A);
 
 // The smallest text of the Programs screens. It used to be 11 (hard to read,
-// especially in Spanish); 13 is the floor now.
-TextStyle courseCaption() => AppStyle.txtSFProDisplayRegular11.copyWith(fontSize: getFontSize(13), height: 1.35);
+// especially in Spanish); then 13; now 14, for people who are tired and low
+// (the courses are for them).
+TextStyle courseCaption() => AppStyle.txtSFProDisplayRegular11.copyWith(fontSize: getFontSize(14), height: 1.38);
+// Body text of the course pages: one step above the app default (14 -> 15).
+TextStyle courseBody() => AppStyle.txtSFProDisplayLight14.copyWith(fontSize: getFontSize(15));
 Color courseAccent(bool dark) => dark ? kNightAccent : AppColors.primary;
 
 class SoftCard extends StatelessWidget {

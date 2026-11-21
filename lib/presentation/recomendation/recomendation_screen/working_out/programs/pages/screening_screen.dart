@@ -82,7 +82,7 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
                 TextButton(
                   onPressed: () => Navigator.pop(context, false),
                   child: Text('back'.tr(),
-                      style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
+                      style: courseBody().copyWith(color: ColorConstant.gray800)),
                 ),
               ],
             ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart' show StringTranslateExtension;
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
 
@@ -50,7 +51,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
                       setState(() {
                         hidden = !hidden;
                       });
-                      }, child: Text(hidden ? 'Показать полностью' : 'Скрыть', style: widget.textButtonStyle ?? AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700),)),
+                      }, child: Text((hidden ? 'show_more' : 'hide_text').tr(), style: widget.textButtonStyle ?? AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700),)),
                   )
                 ],
               ),
@@ -68,7 +69,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
                     setState(() {
                       hidden = !hidden;
                     });
-                  }, child: Text(hidden ? 'Показать полностью' : 'Скрыть', style: widget.textButtonStyle ?? AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700),)),
+                  }, child: Text((hidden ? 'show_more' : 'hide_text').tr(), style: widget.textButtonStyle ?? AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.cyan700),)),
                 )
               ],
             ),

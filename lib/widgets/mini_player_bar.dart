@@ -188,32 +188,45 @@ class MiniPlayerBar extends StatelessWidget {
                         ),
                         SizedBox(width: getHorizontalSize(8)),
                         GestureDetector(
+                          // Opaque and at least 44 px: a miss used to fall through
+                          // to the whole bar, which opens the full-screen player.
+                          behavior: HitTestBehavior.opaque,
                           onTap: () =>
                               AppAudioService.instance.togglePlayPause(),
-                          child: Container(
-                            width: getSize(40),
-                            height: getSize(40),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorConstant.cyan700),
-                            child: Icon(
-                              audioState.playing
-                                  ? Icons.pause_rounded
-                                  : Icons.play_arrow_rounded,
-                              color: Colors.white,
-                              size: getSize(22),
+                          child: SizedBox(
+                            width: getSize(48),
+                            height: getSize(48),
+                            child: Center(
+                              child: Container(
+                                width: getSize(40),
+                                height: getSize(40),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ColorConstant.cyan700),
+                                child: Icon(
+                                  audioState.playing
+                                      ? Icons.pause_rounded
+                                      : Icons.play_arrow_rounded,
+                                  color: Colors.white,
+                                  size: getSize(22),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         SizedBox(width: getHorizontalSize(2)),
                         GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () => AppAudioService.instance.stop(),
-                          child: Padding(
-                            padding: EdgeInsets.all(getHorizontalSize(8)),
-                            child: Icon(Icons.close_rounded,
-                                color: ColorConstant.gray500,
-                                size: getSize(18)),
+                          child: SizedBox(
+                            width: getSize(48),
+                            height: getSize(56),
+                            child: Center(
+                              child: Icon(Icons.close_rounded,
+                                  color: ColorConstant.gray500,
+                                  size: getSize(22)),
+                            ),
                           ),
                         ),
                       ],

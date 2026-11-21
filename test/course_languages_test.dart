@@ -8,7 +8,7 @@ import 'package:riva_psy/presentation/recomendation/recomendation_screen/working
 // no Russian letters left in any text the person can see.
 void main() {
   final cyr = RegExp(r'[А-Яа-яЁё]');
-  for (final id in ['eating_no_autopilot', 'return_to_self']) {
+  for (final id in ['eating_no_autopilot', 'return_to_self', 'depression_support']) {
     final raw = jsonDecode(File('assets/courses/$id.json').readAsStringSync()) as Map<String, dynamic>;
     final langs = (raw['languages'] as List).cast<String>();
 

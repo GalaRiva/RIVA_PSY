@@ -100,6 +100,7 @@ class K32Screen extends GetWidget {
                                 Expanded(
                                   child: Text(
                                     'what_was_happening_with_body'.tr(),
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),

@@ -7,6 +7,7 @@ import 'package:riva_psy/widgets/pause_content.dart';
 
 import '../data/course_progress_store.dart';
 import '../models/course.dart';
+import '../widgets/course_ui.dart';
 
 // "Как ты сейчас?" after a course audio: three plain answers, nothing is
 // scored. "Тяжелее" gets a pause instruction, a pointer to the calm practice
@@ -135,7 +136,7 @@ class _CheckinSheetState extends State<_CheckinSheet> {
                   child: TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: Text('close'.tr(),
-                        style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
+                        style: courseBody().copyWith(color: ColorConstant.gray800)),
                   ),
                 ),
               ],

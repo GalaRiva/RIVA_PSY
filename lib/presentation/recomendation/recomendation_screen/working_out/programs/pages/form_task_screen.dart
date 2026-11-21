@@ -40,6 +40,9 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
   final Map<String, double> _scale = {};
   final Map<String, TimeOfDay?> _time = {};
   bool _saving = false;
+  // Tasks with several fields are asked one question at a time.
+  int _page = 0;
+  bool get _multi => widget.task.fields.length > 1;
 
   @override
   void initState() {
@@ -172,7 +175,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
           Padding(
             padding: getPadding(top: 3),
             child: Text(f.hint,
-                style: courseCaption().copyWith(color: AppColors.textSecondary, height: 1.4)),
+                style: courseCaption().copyWith(color: courseMuted(false), height: 1.4)),
           ),
       ],
     );
@@ -191,7 +194,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
                   style: AppStyle.txtSFProDisplayLight16.copyWith(color: AppColors.textPrimary)),
             ),
             Icon(on ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
-                color: on ? AppColors.primary : AppColors.textSecondary, size: getSize(26)),
+                color: on ? AppColors.primary : courseMuted(false), size: getSize(26)),
           ],
         ),
       );
@@ -264,7 +267,7 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
             Padding(
               padding: getPadding(top: 6),
               child: Text('course_time_reminder_note'.tr(namedArgs: {'min': '${f.notifyBefore}'}),
-                  style: courseCaption().copyWith(color: AppColors.textSecondary)),
+                  style: courseCaption().copyWith(color: courseMuted(false))),
             ),
         ],
       );
@@ -325,7 +328,101 @@ class _FormTaskScreenState extends State<FormTaskScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => CourseTextScale(child: _buildBody(context));
+  Widget build(BuildContext context) => CourseTextScale(child: _multi ? _buildStepper(context) : _buildBody(context));
+
+  // One question per screen: the explanation on top, a single field, "Дальше".
+  // Back goes to the previous question, not out of the task. Nothing is lost:
+  // every answer stays in its controller until the last page saves them all.
+  Widget _buildStepper(BuildContext context) {
+    final fields = widget.task.fields;
+    final last = _page == fields.length - 1;
+    final f = fields[_page];
+    return PopScope(
+      canPop: _page == 0,
+      onPopInvoked: (didPop) {
+        if (!didPop && _page > 0) setState(() => _page--);
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: getPadding(left: 20, right: 20, top: 10),
+                child: Row(
+                  children: [
+                    RoundIconButton(
+                        icon: Icons.arrow_back_rounded,
+                        onTap: () => _page > 0 ? setState(() => _page--) : Navigator.pop(context),
+                        tooltip: 'back'.tr(),
+                        onImage: false),
+                    SizedBox(width: getHorizontalSize(14)),
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: LinearProgressIndicator(
+                          value: (_page + 1) / fields.length,
+                          minHeight: 4,
+                          backgroundColor: AppColors.divider,
+                          valueColor: const AlwaysStoppedAnimation(AppColors.primary),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: getHorizontalSize(14)),
+                    Text('course_progress_of'.tr(namedArgs: {'done': '${_page + 1}', 'total': '${fields.length}'}),
+                        style: courseCaption().copyWith(color: courseMuted(false))),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: getPadding(left: 20, right: 20, top: 22, bottom: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.task.title,
+                          style: AppStyle.txtH1.copyWith(
+                              color: AppColors.textPrimary, fontSize: getFontSize(_page == 0 ? 27 : 22), height: 1.15)),
+                      if (_page == 0 && widget.task.intro.isNotEmpty) ...[
+                        SizedBox(height: getVerticalSize(10)),
+                        Text(widget.task.intro,
+                            style: AppStyle.txtSFProDisplayLight16
+                                .copyWith(color: AppColors.textPrimary.withOpacity(0.8), height: 1.55)),
+                      ],
+                      SizedBox(height: getVerticalSize(26)),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 260),
+                        transitionBuilder: (c, a) => FadeTransition(
+                            opacity: a,
+                            child: SlideTransition(
+                                position: Tween<Offset>(begin: const Offset(0.04, 0), end: Offset.zero).animate(a),
+                                child: c)),
+                        child: KeyedSubtree(key: ValueKey(f.id), child: _field(f)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: getPadding(left: 20, right: 20, top: 6, bottom: 16),
+                child: CapsuleButton(
+                  label: (last ? 'course_save' : 'course_form_next').tr(),
+                  icon: last ? null : Icons.arrow_forward_rounded,
+                  onTap: _saving
+                      ? null
+                      : () {
+                          FocusScope.of(context).unfocus();
+                          last ? _save() : setState(() => _page++);
+                        },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _buildBody(BuildContext context) {
     return Scaffold(

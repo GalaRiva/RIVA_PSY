@@ -33,7 +33,7 @@ class RecoveryMessage {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Подтвердите',
+                      'recovery_confirm_title'.tr(),
                       style: AppStyle.txtSFProDisplayLight16.copyWith(fontSize: 20),
                     ),
                     SizedBox(
@@ -47,7 +47,7 @@ class RecoveryMessage {
                       height: getVerticalSize(30),
                     ),
                     Text(
-                      'Все существующие данные будут заменены данными копии, которую вы открыли. Вы уверены,что хотите восстановить?',
+                      'recovery_replace_warning'.tr(),
                       textAlign: TextAlign.center,
                       style: AppStyle.txtSFProDisplayLight14Black,
                     ),

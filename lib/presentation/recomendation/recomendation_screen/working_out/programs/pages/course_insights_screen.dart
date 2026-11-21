@@ -103,7 +103,7 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
                     children: [
                       Expanded(
                         child: Text(q.label,
-                            style: AppStyle.txtSFProDisplayLight14
+                            style: courseBody()
                                 .copyWith(color: AppColors.textPrimary, height: 1.35)),
                       ),
                       SizedBox(width: getHorizontalSize(10)),
@@ -244,7 +244,7 @@ class _CourseInsightsScreenState extends State<CourseInsightsScreen> {
                       child: Text(display[e.key]!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: AppStyle.txtSFProDisplayLight14.copyWith(color: ColorConstant.gray800)),
+                          style: courseBody().copyWith(color: ColorConstant.gray800)),
                     ),
                     Expanded(
                       child: Stack(

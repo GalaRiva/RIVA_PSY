@@ -115,21 +115,8 @@ Future<void> _showPaywall(BuildContext context, {required StrengthTrait? leading
 Future<void> goToAppAfterOnboarding(BuildContext context) => _goToApp(context);
 
 Future<void> _goToApp(BuildContext context) async {
-  // Someone who said "тяжело с едой" / "после расставания" lands directly on
-  // Обретение -> Программы, where their course is.
-  var courseId = await OnboardingPrefs.courseToOpen();
-  // Courses exist per language (Russian first): don't send someone to an
-  // empty Programs tab.
-  if (courseId != null && await CourseRepository().load(courseId) == null) courseId = null;
+  // Everyone lands on the home screen after the first tests; the program
+  // they asked about is one tap away in "Практики" ("Продолжить" / "Мои программы").
   if (!context.mounted) return;
-  if (courseId != null) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRoutes.recommendations,
-      (route) => false,
-      arguments: {'initialTab': 2, 'workingOutTab': 3},
-    );
-    return;
-  }
   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.splashScreen, (route) => false);
 }

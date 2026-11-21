@@ -222,7 +222,7 @@ class EmotionBlobState extends State<EmotionBlob> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 520));
     if (widget.pulse) _controller.repeat(reverse: true);
   }
 
@@ -250,15 +250,21 @@ class EmotionBlobState extends State<EmotionBlob> with SingleTickerProviderState
       animation: _controller,
       builder: (context, _) {
         final t = widget.pulse ? Curves.easeInOut.transform(_controller.value) : 0.0;
-        final scale = 1.0 + (t * 0.1);
-        final glow = 24 + (t * 12);
-        final spread = 4 + (t * 3);
+        // Chosen emotion: the circle grows a lot (easeOutBack settles it with a
+        // little spring) and then "blinks" quickly, so the choice is felt.
+        final pulseScale = 1.0 + (t * 0.16);
+        final glow = 24 + (t * 26);
+        final spread = 4 + (t * 8);
         return SizedBox(
           width: blobSize,
           height: blobSize,
           child: Center(
-            child: Transform.scale(
-              scale: scale,
+            child: AnimatedScale(
+              scale: widget.pulse ? 1.5 : 1.0,
+              duration: const Duration(milliseconds: 280),
+              curve: Curves.easeOutBack,
+              child: Transform.scale(
+              scale: pulseScale,
               child: Container(
                 width: blobSize * 0.72,
                 height: blobSize * 0.72,
@@ -274,7 +280,7 @@ class EmotionBlobState extends State<EmotionBlob> with SingleTickerProviderState
                   ],
                 ),
               ),
-            ),
+            )),
           ),
         );
       },

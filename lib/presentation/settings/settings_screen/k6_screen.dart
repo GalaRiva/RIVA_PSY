@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
-import '../../initial_setup/onboarding/onboarding_flow.dart';
 import '../sources_screen/sources_screen.dart';
 import '../help_now_screen/help_now_screen.dart';
 import 'package:flutter/material.dart';
@@ -65,20 +64,6 @@ class K6Screen extends GetWidget {
                               bgColor: ColorConstant.cyan700,
                               textColor: Colors.white,
                               iconColor: Colors.white,
-                            ),
-                            SizedBox(
-                              height: getVerticalSize(12),
-                            ),
-                            // The welcome "first step" (concern -> short
-                            // practice -> how do you feel), reopenable any
-                            // time after it was closed or already done.
-                            CardSettingsButtonWidget(
-                              context,
-                              onTap: () => startOnboardingFlow(context, fromSettings: true),
-                              title: 'onb_first_step',
-                              svgIcon: ImageConstant.imgFootprints,
-                              controller: controller,
-                              svgSize: 24,
                             ),
                             SizedBox(
                               height: getVerticalSize(21),

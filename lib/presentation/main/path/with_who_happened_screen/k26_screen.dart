@@ -102,6 +102,7 @@ class K26Screen extends GetWidget {
                                 Expanded(
                                   child: Text(
                                     'with_whom_it_happened'.tr(),
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),

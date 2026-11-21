@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../../../core/models/event_model.dart';
 import '../../../../core/utils/image_constant.dart';
@@ -109,7 +110,7 @@ class BottomSheetWidget extends StatelessWidget {
                                 height: getVerticalSize(29),
                               ),
                               Text(
-                                'Хотите добавить части тела?',
+                                'want_add_body_parts'.tr(),
                                 style: AppStyle.txtSFProDisplayLight14Gray800a0,
                               ),
                               SizedBox(

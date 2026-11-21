@@ -136,7 +136,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   ),
                   /*Padding(
                       padding: getPadding(top: 69),
-                      child: Text("Новый пароль",
+                      child: Text('new_password'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle
@@ -153,16 +153,16 @@ class ResetPasswordScreen extends StatelessWidget {
                       maxLength: 26,
                       counterText: '',
                       validator: (text) {
-                        if(text!.trim() == "") return "Заполните поле";
+                        if(text!.trim() == "") return 'fill_the_field'.tr();
                         else if (text!.trim().length < 8) {
-                          return 'Длина пароля должна быть больше чем 8 символов';
+                          return 'password_length_min'.tr();
                         }
                         else if (text!.trim().length > 26) {
-                          return 'Длина пароля должна быть меньше чем 26 символов';
+                          return 'password_length_max'.tr();
                         }
 
                         else if(!isPasswordCompliant(text)){
-                          return 'Пароль должен содержать по крайней мере одну\nцифру, одну строчкую и заглавную букву\nи один уникальныйсимвол, такой как !#\$%&?';
+                          return 'password_complexity'.tr();
 
                         }
                       },
@@ -170,7 +170,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       TextInputAction.done),
                   Padding(
                       padding: getPadding(top: 38),
-                      child: Text("Подтвердждение пароля",
+                      child: Text('confirm_password'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle
@@ -187,9 +187,9 @@ class ResetPasswordScreen extends StatelessWidget {
                       maxLength: 26,
                       counterText: '',
                       validator: (text) {
-                        if(text!.trim() == "") return "Заполните поле";
+                        if(text!.trim() == "") return 'fill_the_field'.tr();
                         else if (text != controller.passwordController.text) {
-                          return 'Пароли должны совпадать';
+                          return 'passwords_do_not_match'.tr();
                         }
                       },
                       textInputAction:
@@ -200,7 +200,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       builder: (ResetPasswordController _c) => TextButton(
                         onPressed: () {
                           controller.changeResetPasswordMethod();
-                        }, child: Text(_c.useEmail ? "Использовать для восстановления номер телефона" : "Использовать почту для восстановления",
+                        }, child: Text(_c.useEmail ? 'use_phone_for_recovery'.tr() : 'use_email_for_recovery'.tr(),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: AppStyle

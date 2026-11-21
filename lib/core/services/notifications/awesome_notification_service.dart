@@ -1,4 +1,6 @@
 import 'dart:io';
+
+import 'channel_texts.dart';
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -203,6 +205,7 @@ class AwesomeNotificationService extends NotificationService {
         .toLowerCase();
     final channelGroupName =
         channelGroupNameByLanguage[languageCode] ?? 'Reminders';
+    final channelDescription = await ChannelTexts.description();
     await AwesomeNotifications().initialize(
       'resource://drawable/ic_stat_notify',
       [
@@ -210,7 +213,7 @@ class AwesomeNotificationService extends NotificationService {
           channelGroupKey: 'reminders',
           channelKey: 'open',
           channelName: 'RIVA PSY',
-          channelDescription: 'Notification channel for RIVA PSY',
+          channelDescription: channelDescription,
           channelShowBadge: true,
           importance: NotificationImportance.High,
           enableVibration: true,
@@ -220,7 +223,7 @@ class AwesomeNotificationService extends NotificationService {
           channelGroupKey: 'reminders',
           channelKey: 'scheduled',
           channelName: 'RIVA PSY',
-          channelDescription: 'Notification channel for RIVA PSY',
+          channelDescription: channelDescription,
           channelShowBadge: true,
           importance: NotificationImportance.High,
           enableVibration: true,

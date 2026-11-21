@@ -62,7 +62,7 @@ class _NextStepCardState extends State<NextStepCard> {
     final topic = _topic;
     if (topic == null) return const SizedBox.shrink();
     return Padding(
-      padding: getPadding(top: 12, bottom: 4),
+      padding: getPadding(top: 4, bottom: 8),
       child: Semantics(
         button: true,
         label: '${'onb_next_step_eyebrow'.tr()}: ${topic.title}',
@@ -79,45 +79,46 @@ class _NextStepCardState extends State<NextStepCard> {
               setState(() => _topic = null);
             }
           },
+          // A soft, quiet card (same family as the violet "first steps" line):
+          // no big frame, no long hint. Where the other topics live is
+          // already clear from "Практики".
           child: Container(
             width: double.infinity,
-            padding: getPadding(left: 16, top: 14, right: 8, bottom: 14),
+            padding: getPadding(left: 12, top: 10, right: 12, bottom: 10),
             decoration: BoxDecoration(
-              color: AppColors.background,
+              color: AppColors.primaryLight,
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: ColorConstant.cyan700.withOpacity(0.35), width: 1.2),
+              border: Border.all(color: AppColors.primary.withOpacity(0.12)),
             ),
             child: Row(
               children: [
+                Container(
+                  width: getSize(34),
+                  height: getSize(34),
+                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                  child: Icon(Icons.edit_note_rounded, size: getSize(20), color: AppColors.primary),
+                ),
+                SizedBox(width: getHorizontalSize(10)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('onb_next_step_eyebrow'.tr().toUpperCase(),
+                      Text('onb_next_step_eyebrow'.tr(),
                           style: AppStyle.txtSFProDisplayRegular11
-                              .copyWith(color: ColorConstant.cyan700, letterSpacing: 0.6)),
-                      SizedBox(height: getVerticalSize(4)),
+                              .copyWith(fontSize: getFontSize(11), color: AppColors.primary, letterSpacing: 0.3)),
                       Text(topic.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: AppStyle.txtSFProDisplayLight16
-                              .copyWith(color: ColorConstant.gray800, fontWeight: FontWeight.w600)),
-                      SizedBox(height: getVerticalSize(2)),
-                      Text(
-                          _freeOnce ? 'onb_next_step_free'.tr() : 'onb_next_step_subtitle'.tr(),
-                          style: AppStyle.txtSFProDisplayRegular11Gray800),
-                      SizedBox(height: getVerticalSize(8)),
-                      // Stays on the home screen until it is done; this line says
-                      // where to find the other topics later.
-                      Text('onb_next_step_more'.tr(),
-                          style: AppStyle.txtSFProDisplayRegular11.copyWith(color: ColorConstant.gray500)),
+                          style: AppStyle.txtSFProDisplayRegular11.copyWith(
+                              fontSize: getFontSize(14), fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                      if (_freeOnce)
+                        Text('onb_next_step_free'.tr(),
+                            style: AppStyle.txtSFProDisplayRegular11
+                                .copyWith(fontSize: getFontSize(12), color: AppColors.textSecondary)),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: getPadding(right: 8),
-                  child: Icon(Icons.chevron_right_rounded, color: ColorConstant.cyan700),
-                ),
+                Icon(Icons.chevron_right_rounded, size: getSize(22), color: AppColors.primary),
               ],
             ),
           ),

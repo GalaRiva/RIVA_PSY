@@ -70,7 +70,7 @@ class _CourseWelcomeScreenState extends State<CourseWelcomeScreen> {
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text('onb_skip'.tr(),
-                          style: AppStyle.txtSFProDisplayLight14.copyWith(color: AppColors.textSecondary)),
+                          style: courseBody().copyWith(color: courseMuted(false))),
                     ),
                   ],
                 ),

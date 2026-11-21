@@ -96,6 +96,7 @@ class K39Screen extends GetWidget {
                                ),
                                child: Text(
                                  'how_to_live_through_emotions'.tr(),
+                                 maxLines: 2,
                                  overflow: TextOverflow.ellipsis,
                                  textAlign: TextAlign.left,
                                  style: AppStyle.txtH1,

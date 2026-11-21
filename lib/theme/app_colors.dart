@@ -15,6 +15,13 @@ abstract class AppColors {
   static const Color textPrimary = Color(0xFF1A1C1E);
   static const Color textSecondary = Color(0xFF7A8287);
 
+  /// The app's violet, used sparingly as a second accent for variety (the
+  /// "first steps" strip, the "О себе" card) — never for primary actions.
+  static const Color violet = Color(0xFF5B4EA8);
+  static const Color violetDeep = Color(0xFF3F3585);
+  static const Color violetSoft = Color(0xFFEEEBF8);
+  static const Color violetLine = Color(0xFFDDD8F0);
+
   static const Color error = Color(0xFFD94A4A);
   static const Color divider = Color(0xFFEAEEEE);
 

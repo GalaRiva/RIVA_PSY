@@ -117,7 +117,39 @@ class CourseMicro {
   final String id;
   final String title;
   final String body;
-  CourseMicro({required this.id, required this.title, required this.body});
+  // Must be read before the step counts as complete (the safety texts).
+  final bool required;
+  CourseMicro({required this.id, required this.title, required this.body, this.required = false});
+}
+
+/// A module of a long course (e.g. «Мысли», «Активность», «Люди»): a named
+/// group of steps with its own progress, instead of one flat list.
+class CourseModule {
+  final String id;
+  final String title;
+  final String subtitle;
+  final List<String> stepIds;
+  const CourseModule({required this.id, required this.title, required this.subtitle, required this.stepIds});
+}
+
+/// One visual block of the "О программе" panel (optional, per course).
+class AboutBlock {
+  final String icon;
+  final String title;
+  final String body;
+  // 'card' (soft green), 'plain', 'warn' (calm amber note).
+  final String tone;
+  // Small rows under the body, e.g. the three modules: [title, text].
+  final List<List<String>> items;
+  // Numbered circles (a sequence) or plain dots.
+  final bool numbered;
+  const AboutBlock(
+      {required this.icon,
+      required this.title,
+      required this.body,
+      this.tone = 'card',
+      this.items = const [],
+      this.numbered = true});
 }
 
 class CourseStep {
@@ -130,6 +162,8 @@ class CourseStep {
   final String card;
   final int minutes;
   final String? audioDocId;
+  // More audios offered in the same step (e.g. sleep: the main one plus two more).
+  final List<String> extraAudioDocIds;
   final CourseTask task;
   final List<CourseMicro> micro;
   // Never gated by the "2 new steps a day" pace and never locked.
@@ -146,6 +180,12 @@ class CourseStep {
   final int? followUpMinutes;
   final String followUpTitle;
   final String followUpBody;
+  // "Научная основа" of this step: a short, honest sentence about the method it uses,
+  // and the ids of its sources (see core/utils/course_sources.dart).
+  final String basis;
+  final List<String> basisRefs;
+  // Own picture for the step header / tile (asset path), when the audio has no cover.
+  final String? cover;
   // Assigned by Course: position among the numbered steps, null if unnumbered.
   int? number;
 
@@ -156,6 +196,7 @@ class CourseStep {
     required this.card,
     required this.minutes,
     required this.audioDocId,
+    this.extraAudioDocIds = const [],
     required this.task,
     required this.micro,
     required this.alwaysAvailable,
@@ -166,6 +207,9 @@ class CourseStep {
     this.followUpMinutes,
     this.followUpTitle = '',
     this.followUpBody = '',
+    this.basis = '',
+    this.basisRefs = const [],
+    this.cover,
   }) : coverKey = (coverKey ?? '').isEmpty ? title : coverKey!;
 
   factory CourseStep.fromJson(Map<String, dynamic> j, String lang) => CourseStep(
@@ -175,10 +219,14 @@ class CourseStep {
         card: loc(j['card'], lang),
         minutes: (j['minutes'] as num?)?.toInt() ?? 0,
         audioDocId: j['audio_doc_id'] as String?,
+        extraAudioDocIds: ((j['extra_audio_doc_ids'] as List?) ?? []).map((e) => e.toString()).toList(),
         task: CourseTask.fromJson(j['task'] as Map<String, dynamic>, lang),
         micro: ((j['micro'] as List?) ?? [])
             .map((m) => CourseMicro(
-                id: m['id'] as String, title: loc(m['title'], lang), body: loc(m['body'], lang)))
+                id: m['id'] as String,
+                title: loc(m['title'], lang),
+                body: loc(m['body'], lang),
+                required: (m['required'] as bool?) ?? false))
             .toList(),
         alwaysAvailable: (j['always_available'] as bool?) ?? false,
         free: (j['free'] as bool?) ?? false,
@@ -188,6 +236,9 @@ class CourseStep {
         followUpMinutes: j['follow_up'] == null ? null : ((j['follow_up'] as Map)['minutes'] as num?)?.toInt(),
         followUpTitle: j['follow_up'] == null ? '' : loc((j['follow_up'] as Map)['title'], lang),
         followUpBody: j['follow_up'] == null ? '' : loc((j['follow_up'] as Map)['body'], lang),
+        basis: loc(j['basis'], lang),
+        basisRefs: ((j['basis_refs'] as List?) ?? []).map((e) => e.toString()).toList(),
+        cover: j['cover'] as String?,
       );
 }
 
@@ -303,6 +354,24 @@ class Course {
   // Step offered first when someone answers "worse" after an audio.
   final String? calmStepId;
   final List<WelcomePage> welcome;
+  // Course-level "Научная основа": an honest note on what the evidence covers and
+  // the ids of all sources (core/utils/course_sources.dart). Empty for older courses.
+  final String scienceNote;
+  final List<String> sourceIds;
+  // The next numbered step opens on the calendar day AFTER the previous one
+  // was completed (audio + task), not simply every 24 hours.
+  final bool dailyGate;
+  // How many calendar days after completing a step the next one opens (1 = the next day).
+  final int gateDays;
+  // Every numbered step carries the "one thought a day" practice (a Path
+  // record + working out the irrational thought).
+  final bool dailyThought;
+  // Reading cards ("micro") say "Прочитано" once marked and fold away.
+  final bool microRead;
+  final List<AboutBlock> about;
+  final List<CourseModule> modules;
+  // A calm "if it is hard right now" block at the top of the course page.
+  final bool helpBlock;
 
   Course({
     required this.id,
@@ -327,6 +396,15 @@ class Course {
     required this.maxNewPerDay,
     this.calmStepId,
     this.welcome = const [],
+    this.scienceNote = '',
+    this.sourceIds = const [],
+    this.dailyGate = false,
+    this.gateDays = 1,
+    this.dailyThought = false,
+    this.microRead = false,
+    this.about = const [],
+    this.modules = const [],
+    this.helpBlock = false,
   }) : cardTitle = (cardTitle ?? '').trim().isEmpty ? title : cardTitle!;
 
   CourseGroup groupOf(CourseStep step) =>
@@ -419,6 +497,32 @@ class Course {
         welcome: ((j['welcome'] as List?) ?? [])
             .map((w) => WelcomePage(loc(w['title'], lang), loc(w['body'], lang), (w['icon'] as String?) ?? 'route',
                 androidOnly: (w['android_only'] as bool?) ?? false))
+            .toList(),
+        scienceNote: loc(j['science_note'], lang),
+        sourceIds: ((j['source_ids'] as List?) ?? []).map((e) => e.toString()).toList(),
+        dailyGate: (j['daily_gate'] as bool?) ?? false,
+        gateDays: (j['gate_days'] as num?)?.toInt() ?? 1,
+        dailyThought: (j['daily_thought'] as bool?) ?? false,
+        microRead: (j['micro_read'] as bool?) ?? false,
+        helpBlock: (j['help_block'] as bool?) ?? false,
+        modules: ((j['modules'] as List?) ?? [])
+            .map((m) => CourseModule(
+                id: m['id'] as String,
+                title: loc(m['title'], lang),
+                subtitle: loc(m['subtitle'], lang),
+                stepIds: ((m['steps'] as List?) ?? []).map((e) => e.toString()).toList()))
+            .toList(),
+        about: ((j['about'] as List?) ?? [])
+            .map((b) => AboutBlock(
+                  icon: (b['icon'] as String?) ?? 'info',
+                  title: loc(b['title'], lang),
+                  body: loc(b['body'], lang),
+                  tone: (b['tone'] as String?) ?? 'card',
+                  numbered: (b['numbered'] as bool?) ?? true,
+                  items: ((b['items'] as List?) ?? [])
+                      .map((i) => [loc(i['title'], lang), loc(i['body'], lang)])
+                      .toList(),
+                ))
             .toList(),
       );
 }

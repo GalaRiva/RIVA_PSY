@@ -195,7 +195,7 @@ class _NightBoxScreenState extends State<NightBoxScreen> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: _accent.withOpacity(0.5)),
         ),
-        child: Text(label, style: AppStyle.txtSFProDisplayLight14.copyWith(color: Colors.white)),
+        child: Text(label, style: courseBody().copyWith(color: Colors.white)),
       ),
     );
   }

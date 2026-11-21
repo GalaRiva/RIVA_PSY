@@ -17,6 +17,16 @@ import '../../widgets/select_botton_widget.dart';
 import '../../widgets/tab_widget.dart';
 import 'negative_tab_model.dart';
 
+const _emotionHeroTags = ['wrath', 'panic', 'fear2', 'sorrow', 'resentment', 'uncertainty', 'disgust', 'guilt', 'laziness', 'loneliness', 'lostness'];
+
+/// Picture for an emotion's header: by its tag, else by its position (the tabs
+/// come in this same order), else a calm default.
+String emotionHeroAsset(String tag, int index) {
+  if (_emotionHeroTags.contains(tag)) return 'assets/images/hub/emo_$tag.jpg';
+  if (index >= 0 && index < _emotionHeroTags.length) return 'assets/images/hub/emo_${_emotionHeroTags[index]}.jpg';
+  return 'assets/images/hub/hub_calm.jpg';
+}
+
 class NegativeEmotionsModel {
   final K70Controller controller;
 
@@ -223,6 +233,8 @@ class NegativeEmotionsModel {
         height: tabHeight,
         isStandardCheck: item.tag == 'panic' ? false : true,
         showBreathing: item.tag == 'panic' || item.tag == 'fear2',
+        heroAsset: emotionHeroAsset(item.tag, item.tabIndex),
+        heroTitle: item.title,
       ));
     }
     tabBodies = list;

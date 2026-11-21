@@ -9,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/data/course_progress_store.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/models/course.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/pages/course_screen.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/pages/form_task_screen.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/widgets/course_about.dart';
+import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/widgets/daily_thought_card.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/pages/course_step_screen.dart';
 import 'package:riva_psy/presentation/recomendation/recomendation_screen/working_out/programs/pages/screening_screen.dart';
 
@@ -47,6 +50,7 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({
       'course_welcome_seen_return_to_self': true,
+      'course_welcome_seen_depression_support': true,
       'course_welcome_seen_eating_no_autopilot': true,
       'shortcut_hint_dismissed_v1': true,
     });
@@ -129,6 +133,8 @@ void main() {
     ['eating_no_autopilot', 'es'],
     ['return_to_self', 'ru'],
     ['return_to_self', 'es'],
+    ['depression_support', 'ru'],
+    ['depression_support', 'es'],
   ];
 
   for (final scale in [1.0, 1.3]) {
@@ -168,5 +174,51 @@ void main() {
         noOverflow(tester);
       });
     }
+
+    testWidgets('about panel blocks and folds at x$scale do not overflow', (tester) async {
+      final c = await prepared(tester, 'depression_support', 'ru');
+      await show(tester, (c) => Scaffold(body: SafeArea(child: SingleChildScrollView(padding: const EdgeInsets.all(20), child: Column(children: [CourseAboutBody(course: c), const DailyThoughtCard()])))), c, 'ru', scale);
+      noOverflow(tester, 'closed');
+      for (final label in ['Научная основа', 'Источники']) {
+        final f = find.textContaining(label);
+        if (f.evaluate().isNotEmpty) {
+          await tester.ensureVisible(f.first);
+          await tester.tap(f.first);
+          await tester.pump(const Duration(milliseconds: 400));
+        }
+      }
+      noOverflow(tester, 'opened');
+    });
+
+    testWidgets('task form asks one question at a time at x$scale', (tester) async {
+      final c = await prepared(tester, 'depression_support', 'ru');
+      final step = c.steps.firstWhere((s) => s.task.fields.length >= 3);
+      await show(tester, (c) => FormTaskScreen(courseId: c.id, task: step.task, round: 1, course: c, stepTitle: step.title), c, 'ru', scale);
+      noOverflow(tester, 'first question');
+      expect(find.text('Дальше'), findsOneWidget);
+      for (var k = 0; k < step.task.fields.length - 1; k++) {
+        await tester.tap(find.text('Дальше'));
+        await tester.pump(const Duration(milliseconds: 400));
+        noOverflow(tester, 'question ${k + 2}');
+      }
+      expect(find.text('Сохранить в библиотеку'), findsOneWidget);
+    });
+
+    testWidgets('course page modules open and close at x$scale', (tester) async {
+      final c = await prepared(tester, 'depression_support', 'ru');
+      await show(tester, (c) => CourseScreen(course: c), c, 'ru', scale);
+      noOverflow(tester);
+      expect(c.modules.length, 3);
+      for (final m in c.modules) {
+        final f = find.text(m.title);
+        if (f.evaluate().isEmpty) {
+          await tester.dragUntilVisible(f, find.byType(SingleChildScrollView).first, const Offset(0, -300));
+        }
+        await tester.ensureVisible(f.first);
+        await tester.tap(f.first);
+        await tester.pump(const Duration(milliseconds: 400));
+        noOverflow(tester, 'module ${m.id}');
+      }
+    });
   }
 }

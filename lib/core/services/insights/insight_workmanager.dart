@@ -1,3 +1,4 @@
+import '../notifications/channel_texts.dart';
 import 'dart:io';
 import 'dart:math';
 
@@ -33,11 +34,7 @@ const Map<String, String> _reminderChannelGroupNameByLanguage = {
   'es': 'Recordatorios',
 };
 
-String _localizedReminderChannelGroupName() {
-  final languageCode =
-      Platform.localeName.split(RegExp('[_-]')).first.toLowerCase();
-  return _reminderChannelGroupNameByLanguage[languageCode] ?? 'Reminders';
-}
+Future<String> _localizedReminderChannelGroupName() => ChannelTexts.groupName();
 
 /// Runs in a separate background isolate spawned by the native WorkManager
 /// plugin (not a plain `compute()` isolate) — that isolate does get a real
@@ -78,7 +75,7 @@ Future<void> _runNightlyInsightAnalysis() async {
       channelGroupKey: 'reminders',
       channelKey: 'scheduled',
       channelName: 'RIVA PSY',
-      channelDescription: 'Notification channel for RIVA PSY',
+      channelDescription: await ChannelTexts.description(),
       channelShowBadge: true,
       importance: NotificationImportance.High,
       enableVibration: true,
@@ -87,7 +84,7 @@ Future<void> _runNightlyInsightAnalysis() async {
   ], channelGroups: [
     NotificationChannelGroup(
       channelGroupKey: 'reminders',
-      channelGroupName: _localizedReminderChannelGroupName(),
+      channelGroupName: await _localizedReminderChannelGroupName(),
     ),
   ]);
   final batch = await InsightEngine().run();
@@ -119,7 +116,7 @@ Future<void> _runGratitudeNudge() async {
       channelGroupKey: 'reminders',
       channelKey: 'gratitude',
       channelName: 'RIVA PSY',
-      channelDescription: 'Notification channel for RIVA PSY',
+      channelDescription: await ChannelTexts.description(),
       channelShowBadge: true,
       importance: NotificationImportance.High,
       enableVibration: true,
@@ -128,7 +125,7 @@ Future<void> _runGratitudeNudge() async {
   ], channelGroups: [
     NotificationChannelGroup(
       channelGroupKey: 'reminders',
-      channelGroupName: _localizedReminderChannelGroupName(),
+      channelGroupName: await _localizedReminderChannelGroupName(),
     ),
   ]);
   final translations = await OfflineTranslations.load();

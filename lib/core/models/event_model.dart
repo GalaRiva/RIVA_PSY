@@ -1,3 +1,4 @@
+import 'package:riva_psy/core/utils/app_text_localizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class EventModel {
@@ -19,7 +20,7 @@ class EventModel {
   // `key` for seeded entries is the literal translation key itself (e.g.
   // "doubt_positive", "curiosity_+" — see standardEventListThree), so this
   // is a direct .tr(), no stripping needed.
-  String get localizedName => key != null ? key!.tr() : name;
+  String get localizedName => key != null ? key!.tr() : AppTextLocalizer.of(name);
 
   // Neutral-emotion polarity (standardEventListThree's +/- pairs). Seeded
   // entries encode it in the key suffix (_positive/_+ or _negative/_-);

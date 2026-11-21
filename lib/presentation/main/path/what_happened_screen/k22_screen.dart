@@ -98,6 +98,7 @@ class K22Screen extends GetWidget {
                                 Expanded(
                                   child: Text(
                                     'what_happened'.tr(),
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtH1.copyWith(fontWeight: FontWeight.w700),

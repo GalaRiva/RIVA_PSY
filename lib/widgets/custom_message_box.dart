@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:riva_psy/core/app_export.dart';
-import '../theme/app_icons.dart';
+import 'package:riva_psy/theme/app_colors.dart';
 
+// The app's small pop-up window (emotion intensity, body sensations, notices).
+// Soft rounded card instead of a green strip: the title reads as a heading, the
+// cross is a quiet round button, and the window grows with its content (it used
+// to be a fixed height, which overflowed on longer lists). [height] is now the
+// minimum height of the content area.
 class CustomMessageBox extends StatelessWidget {
   final String title;
   final dynamic content;
@@ -15,82 +20,89 @@ class CustomMessageBox extends StatelessWidget {
       required this.title,
       required this.content,
       this.height = 150,
-      this.onPop, this.canPop = true, this.width = 340, this.bgColor})
+      this.onPop,
+      this.canPop = true,
+      this.width = 340,
+      this.bgColor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final w = (media.size.width - 32).clamp(240.0, 360.0);
+    final maxH = media.size.height * 0.84;
     return Center(
-      child: Card(
+      child: Material(
         color: Colors.transparent,
-        elevation: 0,
-        child: SizedBox(
-          height: getVerticalSize(30 + height),
-          width: getHorizontalSize(340),
+        child: Container(
+          width: w,
+          constraints: BoxConstraints(maxHeight: maxH),
+          decoration: BoxDecoration(
+            color: bgColor ?? AppColors.background,
+            borderRadius: BorderRadius.circular(28),
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.16), blurRadius: 30, offset: const Offset(0, 12))],
+          ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                width: getHorizontalSize(340),
-                height: getVerticalSize(30),
-                color: ColorConstant.cyan700,
+              Padding(
+                padding: EdgeInsets.fromLTRB(22, 14, canPop ? 8 : 22, 0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding: getPadding(left: 6, right: 6),
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.left,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: ColorConstant.gray200,
-                              fontSize: 13,
-
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Manrope'),
-                        ),
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 18,
+                            height: 1.25,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Manrope'),
                       ),
                     ),
-                        Visibility(
-                          visible: canPop,
-                          child: IconButton(
-                              alignment: Alignment.center,
-                              onPressed: () => onPop != null ? onPop!() : Navigator.pop(context),
-                              icon: Icon(
-                                AppIcons.x,
-                                size: getSize(18),
-                                color: Colors.white,
-                              )),
-                        )
+                    if (canPop)
+                      IconButton(
+                        tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                        onPressed: () => onPop != null ? onPop!() : Navigator.pop(context),
+                        icon: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLight),
+                          child: Icon(Icons.close_rounded, size: 18, color: AppColors.primary),
+                        ),
+                      ),
                   ],
                 ),
               ),
-               Container(
-                  width: getHorizontalSize(width),
-                  height: getVerticalSize(height),
-                  color: bgColor?? Colors.white,
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: getVerticalSize(height)),
                   child: Center(
                     child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      child:content is String
-                        ? Padding(
-                            padding: getPadding(all: 6),
-                            child: Text(
-                              content ?? '',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                  fontFamily: 'Manrope'),
-                            ),
-                          )
-                        : content ?? Container(),
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(10, 6, 10, 18),
+                      child: content is String
+                          ? Padding(
+                              padding: getPadding(all: 6),
+                              child: Text(
+                                content ?? '',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: AppColors.textPrimary,
+                                    fontSize: 15,
+                                    height: 1.45,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Manrope'),
+                              ),
+                            )
+                          : content ?? Container(),
+                    ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

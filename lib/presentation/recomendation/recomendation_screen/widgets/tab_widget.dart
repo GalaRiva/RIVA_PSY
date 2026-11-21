@@ -18,6 +18,7 @@ import '../models/tabs/medetation_model.dart';
 import '../models/tabs/negative_emotion_tabs/negative_emotions_tab.dart';
 import '../../../../widgets/soft_audio_card.dart';
 import 'glass_panel.dart';
+import '../../../../widgets/hero_banner.dart';
 import '../../../../theme/app_colors.dart';
 import 'post_audio_checkin_sheet.dart';
 import '../working_out/programs/pages/breathing_screen.dart';
@@ -34,11 +35,17 @@ class TabWidget extends StatefulWidget {
   // the tracks.
   final bool showBreathing;
 
+  /// A picture header for the area (its own image, the title over it and the
+  /// headphones hint as a quiet line) instead of the plain "headphones" pill.
+  /// Same idea as the picture of a "Хлебные крошки" topic.
+  final String? heroAsset;
+  final String? heroTitle;
+
   const TabWidget(
       {Key? key,
       required this.tab,
       required this.controller,
-      required this.height, this.enableScroll = true, this.isStandardCheck = true, this.showBreathing = false})
+      required this.height, this.enableScroll = true, this.isStandardCheck = true, this.showBreathing = false, this.heroAsset, this.heroTitle})
       : super(key: key);
 
   @override
@@ -163,7 +170,11 @@ class _TabWidgetState extends State<TabWidget> {
             width: size.width,
             child: Stack(
               children: [
-            Padding(
+            // Locked (free tier): nothing under the teaser may be played or
+            // scrolled into view.
+            IgnorePointer(
+              ignoring: CurrentUser.user.currentTariff!.name == 'Базовый' && isStandardCheck == true && !CurrentUser.debugUnlockPaid,
+              child: Padding(
                   padding: getPadding(top: 16),
                   child: SingleChildScrollView(
                     // Fill only moved here, from the outer Container — that
@@ -179,7 +190,41 @@ class _TabWidgetState extends State<TabWidget> {
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (tab.titleText() != null && (tab.titleText() ?? '').isNotEmpty)
+                        if (widget.heroAsset != null)
+                          Padding(
+                            padding: getPadding(left: 16, right: 16, top: 6, bottom: 4),
+                            child: HeroBanner(
+                              asset: widget.heroAsset!,
+                              height: 150,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if ((widget.heroTitle ?? '').isNotEmpty)
+                                    Text(widget.heroTitle!,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppStyle.txtH1.copyWith(color: Colors.white)),
+                                  if ((tab.titleText() ?? '').isNotEmpty) ...[
+                                    SizedBox(height: getVerticalSize(6)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.headphones_rounded, color: Colors.white70, size: getSize(18)),
+                                        SizedBox(width: getHorizontalSize(6)),
+                                        Flexible(
+                                          child: Text(tab.titleText() ?? '',
+                                              style: AppStyle.txtSFProDisplayMedium9.copyWith(
+                                                  fontSize: getFontSize(13), color: Colors.white70)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                          )
+                        else if (tab.titleText() != null && (tab.titleText() ?? '').isNotEmpty)
                           Padding(
                             // A calm one-line hint instead of the big picture
                             // with a floating caption ("listen with headphones").
@@ -250,28 +295,16 @@ class _TabWidgetState extends State<TabWidget> {
                     ),
                   ),
                 ),
-                Visibility(
-                    visible: CurrentUser.user.currentTariff!.name == 'Базовый' && isStandardCheck == true,
-                    // Used to start 100px down, to clear this tab's own
-                    // header/instruction text — but that gap also left the
-                    // first audio card's real, working play/scrub controls
-                    // exposed and usable on the free tier. The teaser
-                    // overlay is already semi-transparent (you can see
-                    // there's real content under it), so covering the
-                    // header too is a small loss next to leaving actual
-                    // playback reachable without a subscription.
-                    // No `height:` here — this used to inherit tabHeight,
-                    // which is derived from this tab's own audio count and
-                    // collapses to ~200px when that list is empty. The
-                    // overlay's own promo content (title/image/buttons/
-                    // disclaimer) needs far more than that, so a low-audio
-                    // tab clipped it down to an apparently blank gray box.
-                    // Omitting height lets the widget fall back to its own
-                    // sensible full-screen-ish default.
+                ),
+                // The teaser covers the whole area (not just a fixed height),
+                // so no track below it is left exposed.
+                if (CurrentUser.user.currentTariff!.name == 'Базовый' && isStandardCheck == true && !CurrentUser.debugUnlockPaid)
+                  Positioned.fill(
                     child: GoToNewTariffWidget(onSecondButtonTap: () {
                       controller.tabController!.animateTo(0);
                       controller.currentTab = 0;
-                    })),
+                    }),
+                  ),
                 // Temporary on-screen diagnostic (debug builds only) — a
                 // blank tab here has had two different suspected causes
                 // already; this shows the actual values live instead of
