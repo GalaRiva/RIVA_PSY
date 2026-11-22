@@ -213,7 +213,7 @@ class _PracticesHubState extends State<PracticesHub> {
 
   // ---- blocks -----------------------------------------------------------
 
-  Widget _block({required String title, String? action, VoidCallback? onAction, required Widget child, Color? color}) {
+  Widget _block({required String title, String? action, VoidCallback? onAction, required Widget child, Color? color, double titleSize = 15}) {
     return Container(
       width: double.infinity,
       margin: getMargin(bottom: 14),
@@ -228,7 +228,7 @@ class _PracticesHubState extends State<PracticesHub> {
         children: [
           Row(
             children: [
-              Expanded(child: Text(title, style: _ts(15, w: FontWeight.w600))),
+              Expanded(child: Text(title, style: _ts(titleSize, w: FontWeight.w600))),
               if (action != null)
                 InkWell(
                   onTap: onAction,
@@ -271,8 +271,6 @@ class _PracticesHubState extends State<PracticesHub> {
                         padding: getPadding(left: 14, right: 12),
                         child: Row(
                           children: [
-                            Icon(Icons.support_rounded, color: Colors.white, size: getSize(24)),
-                            SizedBox(width: getHorizontalSize(10)),
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -322,8 +320,6 @@ class _PracticesHubState extends State<PracticesHub> {
                         padding: getPadding(left: 14, right: 12),
                         child: Row(
                           children: [
-                            Icon(Icons.auto_awesome_rounded, color: Colors.white, size: getSize(22)),
-                            SizedBox(width: getHorizontalSize(10)),
                             Expanded(child: Text('hub_request'.tr(), style: _ts(15, w: FontWeight.w600, color: Colors.white))),
                           ],
                         ),
@@ -408,26 +404,25 @@ class _PracticesHubState extends State<PracticesHub> {
     if (courses == null || courses.isEmpty) return const SizedBox.shrink();
     return _block(
       title: 'hub_programs'.tr(),
+      titleSize: 18,
       action: 'hub_all'.tr(),
       onAction: _openPrograms,
       // All courses in a row that scrolls sideways: the next card peeks in, and a
       // tap opens the course straight away.
       child: SizedBox(
-        height: getVerticalSize(118),
+        height: getVerticalSize(200),
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
           itemCount: courses.length,
           separatorBuilder: (_, __) => SizedBox(width: getHorizontalSize(8)),
-          itemBuilder: (_, i) => SizedBox(width: getHorizontalSize(150), child: _programCard(courses[i])),
+          itemBuilder: (_, i) => SizedBox(width: getHorizontalSize(236), child: _programCard(courses[i])),
         ),
       ),
     );
   }
 
   Widget _programCard(Course c) {
-    final total = c.steps.where((s) => s.number != null).length;
-    final done = _done[c.id] ?? 0;
     return Semantics(
       button: true,
       label: c.cardTitle,
@@ -444,9 +439,19 @@ class _PracticesHubState extends State<PracticesHub> {
                 Image.asset(c.cover!, fit: BoxFit.cover)
               else
                 Container(color: AppColors.primary),
-              Container(color: const Color(0xFF0A181A).withOpacity(0.42)),
+              // Darker toward the bottom, where the text sits.
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [const Color(0xFF0A181A).withOpacity(0.10), const Color(0xFF0A181A).withOpacity(0.78)],
+                    stops: const [0.35, 1.0],
+                  ),
+                ),
+              ),
               Padding(
-                padding: getPadding(left: 10, right: 10, bottom: 10),
+                padding: getPadding(left: 14, right: 14, bottom: 14),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Column(
@@ -454,12 +459,9 @@ class _PracticesHubState extends State<PracticesHub> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(c.cardTitle,
-                          maxLines: 3,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: _ts(13, w: FontWeight.w600, color: Colors.white, height: 1.2)),
-                      if (done > 0 && total > 0)
-                        Text('course_progress_of'.tr(namedArgs: {'done': '$done', 'total': '$total'}),
-                            style: _ts(11, color: const Color(0xFFDBE7E5))),
+                          style: _ts(19, w: FontWeight.w600, color: Colors.white, height: 1.15)),
                     ],
                   ),
                 ),
@@ -479,7 +481,10 @@ class _PracticesHubState extends State<PracticesHub> {
     final tiles = <Widget>[
       for (final t in tabs)
         EmotionTile(label: t.title, color: emotionTileColor(t.tag), onTap: () => _openEmotion(t.tabIndex)),
-      EmotionTile(label: 'depression'.tr(), color: emotionTileColor('depression'), onTap: _openDepression),
+      // Hidden (not removed) where the "Меланхолия" program exists, which is now
+      // the place for it; English has no such program yet, so it stays there.
+      if (!const {'ru', 'es'}.contains('app_lang_code'.tr()))
+        EmotionTile(label: 'depression'.tr(), color: emotionTileColor('depression'), onTap: _openDepression),
     ];
     final gap = getHorizontalSize(8);
     // A colourful backdrop that drifts slower than the page, so the glass tiles
@@ -508,8 +513,11 @@ class _PracticesHubState extends State<PracticesHub> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(child: tiles[i]),
-                          SizedBox(width: gap),
-                          Expanded(child: i + 1 < tiles.length ? tiles[i + 1] : const SizedBox.shrink()),
+                          // An odd last tile takes the whole row instead of leaving a gap.
+                          if (i + 1 < tiles.length) ...[
+                            SizedBox(width: gap),
+                            Expanded(child: tiles[i + 1]),
+                          ],
                         ],
                       ),
                     ),
