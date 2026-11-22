@@ -68,7 +68,7 @@ class _EmotionTileState extends State<EmotionTile> {
             child: ClipRRect(
               borderRadius: radius,
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
                 child: Stack(
                   children: [
                     // Liquid body: translucent colour, lighter at the top left.
@@ -78,7 +78,9 @@ class _EmotionTileState extends State<EmotionTile> {
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            colors: [light.withOpacity(0.86), deep.withOpacity(0.78)],
+                            // Translucent on purpose: the blurred picture behind has to
+                            // show through, otherwise it reads as a flat coloured button.
+                            colors: [light.withOpacity(0.30), deep.withOpacity(0.22)],
                           ),
                         ),
                       ),
@@ -95,7 +97,7 @@ class _EmotionTileState extends State<EmotionTile> {
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.white.withOpacity(0.50), Colors.white.withOpacity(0.02)],
+                            colors: [Colors.white.withOpacity(0.34), Colors.white.withOpacity(0.01)],
                           ),
                         ),
                       ),
@@ -136,7 +138,7 @@ class _EmotionTileState extends State<EmotionTile> {
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                             height: 1.2,
-                            shadows: [Shadow(color: Colors.black.withOpacity(0.35), blurRadius: 4)],
+                            shadows: [Shadow(color: Colors.black.withOpacity(0.55), blurRadius: 5)],
                           ),
                         ),
                       ),

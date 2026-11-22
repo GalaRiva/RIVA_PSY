@@ -25,6 +25,7 @@ import '../working_out/working_out_irrational/bloc/cubit.dart';
 import '../working_out/working_out_irrational/working_out_irrational_tab.dart';
 import 'emotion_tile.dart';
 import 'hub_section_screen.dart';
+import 'parallax_backdrop.dart';
 import 'sos_screen.dart';
 import 'package:riva_psy/presentation/initial_setup/onboarding/onboarding_flow.dart';
 
@@ -281,7 +282,6 @@ class _PracticesHubState extends State<PracticesHub> {
                                 ],
                               ),
                             ),
-                            Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.9)),
                           ],
                         ),
                       ),
@@ -316,8 +316,8 @@ class _PracticesHubState extends State<PracticesHub> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset('assets/images/hub/star_01.jpg', fit: BoxFit.cover),
-                      Container(color: const Color(0xFF1A1033).withOpacity(0.46)),
+                      Image.asset('assets/images/hub/star_13.jpg', fit: BoxFit.cover),
+                      Container(color: const Color(0xFF0E2628).withOpacity(0.52)),
                       Padding(
                         padding: getPadding(left: 14, right: 12),
                         child: Row(
@@ -325,7 +325,6 @@ class _PracticesHubState extends State<PracticesHub> {
                             Icon(Icons.auto_awesome_rounded, color: Colors.white, size: getSize(22)),
                             SizedBox(width: getHorizontalSize(10)),
                             Expanded(child: Text('hub_request'.tr(), style: _ts(15, w: FontWeight.w600, color: Colors.white))),
-                            Icon(Icons.chevron_right_rounded, color: Colors.white.withOpacity(0.9)),
                           ],
                         ),
                       ),
@@ -483,7 +482,8 @@ class _PracticesHubState extends State<PracticesHub> {
       EmotionTile(label: 'depression'.tr(), color: emotionTileColor('depression'), onTap: _openDepression),
     ];
     final gap = getHorizontalSize(8);
-    // A dark starry backdrop so the glass tiles have something to refract.
+    // A colourful backdrop that drifts slower than the page, so the glass tiles
+    // have something that changes behind them as the screen moves.
     return Container(
       width: double.infinity,
       margin: getMargin(bottom: 14),
@@ -491,8 +491,8 @@ class _PracticesHubState extends State<PracticesHub> {
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
-          Positioned.fill(child: Image.asset('assets/images/hub/star_09.jpg', fit: BoxFit.cover)),
-          Positioned.fill(child: Container(color: const Color(0xFF031A22).withOpacity(0.52))),
+          const Positioned.fill(child: ParallaxBackdrop(asset: 'assets/images/hub/glass_backdrop.jpg')),
+          Positioned.fill(child: Container(color: const Color(0xFF031A22).withOpacity(0.12))),
           Padding(
             padding: getPadding(left: 14, top: 14, right: 14, bottom: 16),
             child: Column(
@@ -608,8 +608,8 @@ class _PracticesHubState extends State<PracticesHub> {
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
-            // The whole star is shown (contain, on its own dark background),
-            // not cropped: the name sits in the empty top-left corner.
+            // The planet picture is 16:10 and centred, so it fills the block
+            // (cover); the name sits in the empty top-left sky.
             Container(
               height: getVerticalSize(210),
               width: double.infinity,
@@ -617,7 +617,7 @@ class _PracticesHubState extends State<PracticesHub> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset('assets/images/hub/star_04.jpg', fit: BoxFit.contain),
+                  Image.asset('assets/images/hub/b612_planet.jpg', fit: BoxFit.cover),
                   Padding(
                     padding: getPadding(left: 16, top: 14),
                     child: Align(
