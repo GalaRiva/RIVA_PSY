@@ -67,7 +67,7 @@ Nothing in this clause limits any non-waivable rights granted to the User under 
         '''These Terms are governed by Spanish law. Any dispute shall be submitted to the Courts of Alicante, without prejudice to any rights recognized by consumer protection law allowing the User to bring proceedings in the courts of their own domicile.'''
       ]),
       DropTextModel('15. Refund Policy', <String>[
-        '''For information on cancellations and refunds for your subscription, please refer to the specific terms shown at the time of purchase on our website, or contact support@rivapsy.com. EU residents generally have a 14-day right of withdrawal under consumer protection law, unless that right is lost due to the start of digital content delivery with the User's express consent.'''
+        '''A subscription bought in the App Store or Google Play is cancelled and refunded through that store: cancel in your account settings and request a refund on the store's support page (for the App Store, reportaproblem.apple.com). For a subscription bought on our website, see the terms shown at the time of purchase or contact support@rivapsy.com. EU residents generally have a 14-day right of withdrawal under consumer protection law, unless that right is lost due to the start of digital content delivery with the User's express consent.'''
       ]),
       DropTextModel('16. Other Conditions', <String>[
         '''Use while driving: the User must not interact with the App while driving. RIVA is not responsible for accidents or damages resulting from use of the App while driving.'''

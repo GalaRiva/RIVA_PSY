@@ -131,7 +131,7 @@ class _CourseScreenState extends State<CourseScreen> {
     final step = _c.steps[index];
     final p = _progress!;
     if (!step.free && !_isOrion) {
-      await Navigator.push(context, MaterialPageRoute(builder: (_) => const CoursePaywallPage()));
+      await Navigator.push(context, MaterialPageRoute(builder: (_) => CoursePaywallPage(freeNote: _c.freeNote)));
       return;
     }
     if (stepBlockedByPace(_c, p, step) && !CurrentUser.debugUnlockPace) {

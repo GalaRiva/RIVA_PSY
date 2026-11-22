@@ -98,6 +98,11 @@ class ServicesAuthService {
     return digest.toString();
   }
 
+  /// Apple's one-time authorization code from the latest Sign in with Apple in
+  /// this session. Needed at account deletion: Apple requires the app to revoke
+  /// the user's Sign in with Apple token when the account is deleted.
+  static String? lastAppleAuthorizationCode;
+
   Future<bool> authWithApple() async {
     // To prevent replay attacks with the credential returned from Apple, we
     // include a nonce in the credential request. The nonce in the identity
@@ -146,6 +151,7 @@ class ServicesAuthService {
       final authResult =
           await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       _appleUser = authResult.user;
+      lastAppleAuthorizationCode = appleCredential.authorizationCode;
       return true;
     } on FirebaseAuthException catch (exception) {
       print(exception);

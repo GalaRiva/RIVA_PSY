@@ -7,7 +7,11 @@ import '../widgets/course_ui.dart';
 // Shown when a locked (non-free) course step is opened without Orion. Same
 // dark template as the journals/portrait paywalls — no discount, no timer.
 class CoursePaywallPage extends StatelessWidget {
-  const CoursePaywallPage({Key? key}) : super(key: key);
+  /// The course's own "what is free" sentence (differs per course); falls back
+  /// to the generic text only if a course has none.
+  final String? freeNote;
+
+  const CoursePaywallPage({Key? key, this.freeNote}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class CoursePaywallPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppStyle.txtH1WhiteA700.copyWith(fontSize: getFontSize(24), height: 1.25)),
             SizedBox(height: getVerticalSize(10)),
-            Text('course_paywall_subtitle'.tr(),
+            Text((freeNote != null && freeNote!.isNotEmpty) ? freeNote! : 'course_paywall_subtitle'.tr(),
                 textAlign: TextAlign.center,
                 style: AppStyle.txtSFProDisplayLight16.copyWith(color: Colors.white.withOpacity(0.75))),
             SizedBox(height: getVerticalSize(24)),

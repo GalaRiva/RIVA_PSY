@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kDebugMode;
 import '../sources_screen/sources_screen.dart';
 import '../help_now_screen/help_now_screen.dart';
@@ -98,7 +99,7 @@ class K6Screen extends GetWidget {
                             SizedBox(
                               height: getVerticalSize(21),
                             ),
-                            if (context.locale.languageCode == 'ru')
+                            if (context.locale.languageCode == 'ru' && !Platform.isIOS)
                               CardSettingsButtonWidget(
                                 context,
                                 onTap: () => Navigator.push(

@@ -479,6 +479,16 @@ class K18Controller extends GetxController {
   Future<void> _performAccountDeletion(User user) async {
     await FireStoreRepositoryImpl()
         .deleteAccountData(userId: CurrentUser.repo.userId());
+    // App Store Guideline 5.1.1(v): an account created with Sign in with Apple
+    // must have its Apple token revoked when it is deleted. A failure here must
+    // not leave the person with an account they asked to delete, so it is not fatal.
+    final appleCode = ServicesAuthService.lastAppleAuthorizationCode;
+    if (appleCode != null && user.providerData.any((p) => p.providerId == 'apple.com')) {
+      try {
+        await _authInstance.revokeTokenWithAuthorizationCode(appleCode);
+      } catch (_) {}
+      ServicesAuthService.lastAppleAuthorizationCode = null;
+    }
     await user.delete();
   }
 
@@ -493,8 +503,20 @@ class K18Controller extends GetxController {
     final confirmed = await _showDeleteAccountConfirmDialog(context);
     if (confirmed != true) return;
 
-    final user = _authInstance.currentUser;
+    var user = _authInstance.currentUser;
     if (user == null) return;
+
+    // Sign in with Apple accounts: sign in once more so there is a fresh
+    // authorization code to revoke the Apple token with (see below).
+    if (user.providerData.any((p) => p.providerId == 'apple.com') &&
+        ServicesAuthService.lastAppleAuthorizationCode == null) {
+      final reauthed = await ServicesAuthService().authWithApple();
+      user = _authInstance.currentUser;
+      if (!reauthed || user == null) {
+        _showSimpleError(context, 'delete_account_failed'.tr());
+        return;
+      }
+    }
 
     try {
       await _performAccountDeletion(user);

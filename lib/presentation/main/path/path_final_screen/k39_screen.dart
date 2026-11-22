@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
   import 'package:easy_localization/easy_localization.dart';
 import '../../../../widgets/medical_disclaimer.dart';
 import '../../../../widgets/pause_content.dart';
@@ -115,7 +116,7 @@ class K39Screen extends GetWidget {
                                padding: getPadding(left: 16, right: 16, top: 24),
                                child: const MedicalDisclaimer(compact: true),
                              ),
-                             if (context.locale.languageCode == 'ru')
+                             if (context.locale.languageCode == 'ru' && !Platform.isIOS)
                                // More top clearance than before (20 -> 40) —
                                // enough of a gap that this reads as a
                                // separate, secondary footer nudge, not the
